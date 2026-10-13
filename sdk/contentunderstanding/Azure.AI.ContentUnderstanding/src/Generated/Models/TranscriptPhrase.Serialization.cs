@@ -219,7 +219,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TranscriptPhrase(
@@ -230,7 +230,7 @@ namespace Azure.AI.ContentUnderstanding
                 text,
                 confidence,
                 span,
-                words,
+                words ?? new ChangeTrackingList<TranscriptWord>(),
                 additionalBinaryDataProperties);
         }
     }

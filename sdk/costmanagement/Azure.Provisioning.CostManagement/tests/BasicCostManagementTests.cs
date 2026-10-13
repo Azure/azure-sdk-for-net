@@ -55,23 +55,23 @@ public class BasicCostManagementTests
 
             resource export 'Microsoft.CostManagement/exports@2025-03-01' = {
               name: take('export${uniqueString(resourceGroup().id)}', 24)
+              location: location
               properties: {
+                definition: {
+                  timeframe: 'MonthToDate'
+                  type: 'ActualCost'
+                }
                 deliveryInfo: {
                   destination: {
                     container: 'exports'
                     rootFolderPath: 'cost-data'
                   }
                 }
-                definition: {
-                  type: 'ActualCost'
-                  timeframe: 'MonthToDate'
-                }
                 schedule: {
-                  status: 'Active'
                   recurrence: 'Weekly'
+                  status: 'Active'
                 }
               }
-              location: location
             }
             """);
     }

@@ -127,5 +127,23 @@ namespace Azure.ResourceManager.Network
                 Properties.ManagedRules = value;
             }
         }
+
+        /// <summary> Tier of a web application firewall policy. </summary>
+        [WirePath("properties.tier")]
+        public WebApplicationFirewallPolicyTier? Tier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Tier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebApplicationFirewallPolicyPropertiesFormat();
+                }
+                Properties.Tier = value;
+            }
+        }
     }
 }

@@ -17,14 +17,14 @@ namespace Azure.AI.Language.Text
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobState"/>. </summary>
-        /// <param name="createdAt"> Date and time job created. </param>
-        /// <param name="lastUpdatedAt"> last updated date and time. </param>
+        /// <param name="createdOn"> Date and time job created. </param>
+        /// <param name="lastUpdatedOn"> last updated date and time. </param>
         /// <param name="status"> status. </param>
         /// <param name="tasks"> List of tasks. </param>
-        internal AnalyzeTextJobState(DateTimeOffset createdAt, DateTimeOffset lastUpdatedAt, TextActionState status, TextActions tasks)
+        internal AnalyzeTextJobState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, TextActionState status, TextActions tasks)
         {
-            CreatedAt = createdAt;
-            LastUpdatedAt = lastUpdatedAt;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
             Status = status;
             Errors = new ChangeTrackingList<AnalyzeTextError>();
             Tasks = tasks;
@@ -32,23 +32,23 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobState"/>. </summary>
         /// <param name="displayName"> display name. </param>
-        /// <param name="createdAt"> Date and time job created. </param>
+        /// <param name="createdOn"> Date and time job created. </param>
         /// <param name="expiresOn"> Date and time job expires. </param>
         /// <param name="jobId"> job ID. </param>
-        /// <param name="lastUpdatedAt"> last updated date and time. </param>
+        /// <param name="lastUpdatedOn"> last updated date and time. </param>
         /// <param name="status"> status. </param>
         /// <param name="errors"> errors. </param>
         /// <param name="nextLink"> next link. </param>
         /// <param name="tasks"> List of tasks. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextJobState(string displayName, DateTimeOffset createdAt, DateTimeOffset? expiresOn, Guid jobId, DateTimeOffset lastUpdatedAt, TextActionState status, IList<AnalyzeTextError> errors, string nextLink, TextActions tasks, RequestStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeTextJobState(string displayName, DateTimeOffset createdOn, DateTimeOffset? expiresOn, Guid jobId, DateTimeOffset lastUpdatedOn, TextActionState status, IList<AnalyzeTextError> errors, string nextLink, TextActions tasks, RequestStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             ExpiresOn = expiresOn;
             JobId = jobId;
-            LastUpdatedAt = lastUpdatedAt;
+            LastUpdatedOn = lastUpdatedOn;
             Status = status;
             Errors = errors;
             NextLink = nextLink;
@@ -61,7 +61,7 @@ namespace Azure.AI.Language.Text
         public string DisplayName { get; }
 
         /// <summary> Date and time job created. </summary>
-        public DateTimeOffset CreatedAt { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary> Date and time job expires. </summary>
         public DateTimeOffset? ExpiresOn { get; }
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Text
         public Guid JobId { get; }
 
         /// <summary> last updated date and time. </summary>
-        public DateTimeOffset LastUpdatedAt { get; }
+        public DateTimeOffset LastUpdatedOn { get; }
 
         /// <summary> status. </summary>
         public TextActionState Status { get; }

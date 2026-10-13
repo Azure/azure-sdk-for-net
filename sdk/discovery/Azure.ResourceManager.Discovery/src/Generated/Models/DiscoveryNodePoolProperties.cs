@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Discovery.Models
             MaxNodeCount = maxNodeCount;
             MinNodeCount = minNodeCount;
             ScaleSetPriority = scaleSetPriority;
-            OsDiskSizeGb = osDiskSizeGb;
+            OSDiskSizeGb = osDiskSizeGb;
             ImageCacheLowerThreshold = imageCacheLowerThreshold;
             ImageCacheUpperThreshold = imageCacheUpperThreshold;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Discovery.Models
         public DiscoveryScaleSetPriority? ScaleSetPriority { get; set; }
 
         /// <summary> The size of the OS disk in GB. If not specified, the default is 120 GB. </summary>
-        public int? OsDiskSizeGb { get; set; }
+        public int? OSDiskSizeGb { get; set; }
 
         /// <summary> The percent of disk usage before which image garbage collection is never run. This cannot be set higher than imageCacheUpperThreshold. The default is 40%. </summary>
         public int? ImageCacheLowerThreshold { get; set; }

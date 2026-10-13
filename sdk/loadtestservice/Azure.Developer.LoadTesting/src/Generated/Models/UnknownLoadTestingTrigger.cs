@@ -19,12 +19,12 @@ namespace Azure.Developer.LoadTesting
         /// <param name="kind"> The type of the trigger. </param>
         /// <param name="state"> The current state of the trigger. </param>
         /// <param name="stateDetails"> Details of current state of the trigger. </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownLoadTestingTrigger(string triggerId, string displayName, string description, TriggerType kind, TriggerState? state, StateDetails stateDetails, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(triggerId, displayName, description, kind != default ? kind : "unknown", state, stateDetails, createdDateTime, createdBy, lastModifiedDateTime, lastModifiedBy, additionalBinaryDataProperties)
+        internal UnknownLoadTestingTrigger(string triggerId, string displayName, string description, TriggerType kind, TriggerState? state, StateDetails stateDetails, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(triggerId, displayName, description, kind != default ? kind : "unknown", state, stateDetails, createdOn, createdBy, lastModifiedOn, lastModifiedBy, additionalBinaryDataProperties)
         {
         }
     }

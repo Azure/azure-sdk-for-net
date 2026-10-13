@@ -29,10 +29,10 @@ namespace Azure.Security.KeyVault.Secrets.Models
         /// <param name="contentType"> Type of the secret value such as a password. </param>
         /// <param name="managed"> True if the secret's lifetime is managed by key vault. If this is a key backing a certificate, then managed will be true. </param>
         /// <param name="recoveryId"> The url of the recovery object, used to identify and recover the deleted secret. </param>
-        /// <param name="scheduledPurgeDate"> The time when the secret is scheduled to be purged, in UTC. </param>
-        /// <param name="deletedDate"> The time when the secret was deleted, in UTC. </param>
+        /// <param name="scheduledPurgeOn"> The time when the secret is scheduled to be purged, in UTC. </param>
+        /// <param name="deletedOn"> The time when the secret was deleted, in UTC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedSecretItem(string id, SecretAttributesBundle attributes, IDictionary<string, string> tags, string contentType, bool? @managed, string recoveryId, DateTimeOffset? scheduledPurgeDate, DateTimeOffset? deletedDate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedSecretItem(string id, SecretAttributesBundle attributes, IDictionary<string, string> tags, string contentType, bool? @managed, string recoveryId, DateTimeOffset? scheduledPurgeOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Attributes = attributes;
@@ -40,8 +40,8 @@ namespace Azure.Security.KeyVault.Secrets.Models
             ContentType = contentType;
             Managed = @managed;
             RecoveryId = recoveryId;
-            ScheduledPurgeDate = scheduledPurgeDate;
-            DeletedDate = deletedDate;
+            ScheduledPurgeOn = scheduledPurgeOn;
+            DeletedOn = deletedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -64,9 +64,9 @@ namespace Azure.Security.KeyVault.Secrets.Models
         public string RecoveryId { get; }
 
         /// <summary> The time when the secret is scheduled to be purged, in UTC. </summary>
-        public DateTimeOffset? ScheduledPurgeDate { get; }
+        public DateTimeOffset? ScheduledPurgeOn { get; }
 
         /// <summary> The time when the secret was deleted, in UTC. </summary>
-        public DateTimeOffset? DeletedDate { get; }
+        public DateTimeOffset? DeletedOn { get; }
     }
 }

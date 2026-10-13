@@ -80,6 +80,7 @@ public class BasicServiceBusTests
 
             resource queue 'Microsoft.ServiceBus/namespaces/queues@2021-11-01' = {
               name: queueName
+              parent: sb
               properties: {
                 autoDeleteOnIdle: 'P10675199DT2H48M5.4775807S'
                 deadLetteringOnMessageExpiration: false
@@ -93,7 +94,6 @@ public class BasicServiceBusTests
                 requiresDuplicateDetection: false
                 requiresSession: false
               }
-              parent: sb
             }
             """);
     }

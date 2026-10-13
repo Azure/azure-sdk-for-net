@@ -56,16 +56,16 @@ namespace Azure.Search.Documents
             V2026_04_01 = 5,
 
             /// <summary>
-            /// The 2026-05-01-preview version of the Azure AI Search service.
+            /// The 2026-08-01-preview version of the Azure AI Search service.
             /// </summary>
-            V2026_05_01_Preview = 6,
+            V2026_08_01_Preview = 7,
 #pragma warning restore CA1707
         }
 
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2026_05_01_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2026_08_01_Preview;
 
         /// <summary>
         /// The service version to use when creating continuation tokens that
@@ -244,8 +244,8 @@ namespace Azure.Search.Documents
                 case "2026-04-01":
                     serviceVersion = ServiceVersion.V2026_04_01;
                     return true;
-                case "2026-05-01-preview":
-                    serviceVersion = ServiceVersion.V2026_05_01_Preview;
+                case "2026-08-01-preview":
+                    serviceVersion = ServiceVersion.V2026_08_01_Preview;
                     return true;
                 default:
                     return false;
@@ -279,7 +279,7 @@ namespace Azure.Search.Documents
                 SearchClientOptions.ServiceVersion.V2024_07_01 => version,
                 SearchClientOptions.ServiceVersion.V2025_09_01 => version,
                 SearchClientOptions.ServiceVersion.V2026_04_01 => version,
-                SearchClientOptions.ServiceVersion.V2026_05_01_Preview => version,
+                SearchClientOptions.ServiceVersion.V2026_08_01_Preview => version,
                 _ => throw CreateInvalidVersionException(version)
             };
 
@@ -306,7 +306,7 @@ namespace Azure.Search.Documents
                 SearchClientOptions.ServiceVersion.V2024_07_01 => "2024-07-01",
                 SearchClientOptions.ServiceVersion.V2025_09_01 => "2025-09-01",
                 SearchClientOptions.ServiceVersion.V2026_04_01 => "2026-04-01",
-                SearchClientOptions.ServiceVersion.V2026_05_01_Preview => "2026-05-01-preview",
+                SearchClientOptions.ServiceVersion.V2026_08_01_Preview => "2026-08-01-preview",
                 _ => throw CreateInvalidVersionException(version)
             };
 
@@ -321,7 +321,7 @@ namespace Azure.Search.Documents
                 "2024-07-01" => SearchClientOptions.ServiceVersion.V2024_07_01,
                 "2025-09-01" => SearchClientOptions.ServiceVersion.V2025_09_01,
                 "2026-04-01" => SearchClientOptions.ServiceVersion.V2026_04_01,
-                "2026-05-01-preview" => SearchClientOptions.ServiceVersion.V2026_05_01_Preview,
+                "2026-08-01-preview" => SearchClientOptions.ServiceVersion.V2026_08_01_Preview,
                 _ => throw new ArgumentOutOfRangeException(
                     nameof(version),
                     version,

@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Network.Models
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProvider"/>. </summary>
+        public ExpressRouteServiceProvider() : this(default)
+        {
+        }
+
         /// <summary> Properties of the express route service provider. </summary>
         [WirePath("properties")]
         internal ExpressRouteServiceProviderPropertiesFormat Properties { get; }

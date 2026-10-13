@@ -33,7 +33,7 @@ internal sealed class AksResourceProcessor
 
     public string? K8sStatefulSetName { get; set; } = null;
 
-     public string? GetRoleName()
+    public string? GetRoleName()
     {
         if (!string.IsNullOrEmpty(K8sDeploymentName))
         {

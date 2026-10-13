@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         }
 
         /// <summary> Parameters to reconcile to the GitRepository source kind type. </summary>
-        public GitRepositoryPatch GitRepository
+        public FluxGitRepositoryPatch GitRepository
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         }
 
         /// <summary> Parameters to reconcile to the Bucket source kind type. </summary>
-        public BucketPatch Bucket
+        public FluxBucketPatch Bucket
         {
             get
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         }
 
         /// <summary> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </summary>
-        public IDictionary<string, KustomizationPatch> Kustomizations
+        public IDictionary<string, FluxConfigurationsKustomizationPatch> Kustomizations
         {
             get
             {

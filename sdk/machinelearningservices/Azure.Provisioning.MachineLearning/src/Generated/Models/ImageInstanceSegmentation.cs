@@ -26,6 +26,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new ImageInstanceSegmentation. </summary>
         public ImageInstanceSegmentation()
         {
+            TaskType.Assign(MachineLearning.TaskType.ImageInstanceSegmentation);
         }
 
         /// <summary> Gets or sets the ModelSettings. </summary>
@@ -137,7 +138,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("taskType", new string[] { "taskType" }, defaultValue: "ImageInstanceSegmentation");
             _modelSettings = DefineModelProperty<ImageModelSettingsObjectDetection>(nameof(ModelSettings), new string[] { "modelSettings" });
             _searchSpace = DefineListProperty<ImageModelDistributionSettingsObjectDetection>(nameof(SearchSpace), new string[] { "searchSpace" });
             _limitSettings = DefineModelProperty<ImageLimitSettings>(nameof(LimitSettings), new string[] { "limitSettings" }, isRequired: true);

@@ -42,8 +42,8 @@ namespace Azure.Provisioning.ServiceFabric
         private BicepValue<VmssZonalUpgradeMode> _vmssZonalUpgradeMode;
         private BicepValue<bool> _isInfrastructureServiceManagerEnabled;
         private BicepValue<ClusterUpgradeCadence> _upgradeWave;
-        private BicepValue<DateTimeOffset> _upgradePauseStartOn;
-        private BicepValue<DateTimeOffset> _upgradePauseEndOn;
+        private BicepValue<DateTimeOffset> _upgradePauseStartsOn;
+        private BicepValue<DateTimeOffset> _upgradePauseEndsOn;
         private BicepValue<bool> _isWaveUpgradePaused;
         private BicepList<ClusterNotification> _notifications;
         private BicepValue<bool> _isHttpGatewayExclusiveAuthModeEnabled;
@@ -448,33 +448,33 @@ namespace Azure.Provisioning.ServiceFabric
             }
         }
 
-        /// <summary> Gets or sets the UpgradePauseStartOn. </summary>
-        public BicepValue<DateTimeOffset> UpgradePauseStartOn
+        /// <summary> Gets or sets the UpgradePauseStartsOn. </summary>
+        public BicepValue<DateTimeOffset> UpgradePauseStartsOn
         {
             get
             {
                 Initialize();
-                return _upgradePauseStartOn;
+                return _upgradePauseStartsOn;
             }
             set
             {
                 Initialize();
-                _upgradePauseStartOn.Assign(value);
+                _upgradePauseStartsOn.Assign(value);
             }
         }
 
-        /// <summary> Gets or sets the UpgradePauseEndOn. </summary>
-        public BicepValue<DateTimeOffset> UpgradePauseEndOn
+        /// <summary> Gets or sets the UpgradePauseEndsOn. </summary>
+        public BicepValue<DateTimeOffset> UpgradePauseEndsOn
         {
             get
             {
                 Initialize();
-                return _upgradePauseEndOn;
+                return _upgradePauseEndsOn;
             }
             set
             {
                 Initialize();
-                _upgradePauseEndOn.Assign(value);
+                _upgradePauseEndsOn.Assign(value);
             }
         }
 
@@ -572,8 +572,8 @@ namespace Azure.Provisioning.ServiceFabric
             _vmssZonalUpgradeMode = DefineProperty<VmssZonalUpgradeMode>(nameof(VmssZonalUpgradeMode), new string[] { "vmssZonalUpgradeMode" });
             _isInfrastructureServiceManagerEnabled = DefineProperty<bool>(nameof(IsInfrastructureServiceManagerEnabled), new string[] { "infrastructureServiceManager" });
             _upgradeWave = DefineProperty<ClusterUpgradeCadence>(nameof(UpgradeWave), new string[] { "upgradeWave" });
-            _upgradePauseStartOn = DefineProperty<DateTimeOffset>(nameof(UpgradePauseStartOn), new string[] { "upgradePauseStartTimestampUtc" }, format: "O");
-            _upgradePauseEndOn = DefineProperty<DateTimeOffset>(nameof(UpgradePauseEndOn), new string[] { "upgradePauseEndTimestampUtc" }, format: "O");
+            _upgradePauseStartsOn = DefineProperty<DateTimeOffset>(nameof(UpgradePauseStartsOn), new string[] { "upgradePauseStartTimestampUtc" }, format: "O");
+            _upgradePauseEndsOn = DefineProperty<DateTimeOffset>(nameof(UpgradePauseEndsOn), new string[] { "upgradePauseEndTimestampUtc" }, format: "O");
             _isWaveUpgradePaused = DefineProperty<bool>(nameof(IsWaveUpgradePaused), new string[] { "waveUpgradePaused" });
             _notifications = DefineListProperty<ClusterNotification>(nameof(Notifications), new string[] { "notifications" });
             _isHttpGatewayExclusiveAuthModeEnabled = DefineProperty<bool>(nameof(IsHttpGatewayExclusiveAuthModeEnabled), new string[] { "enableHttpGatewayExclusiveAuthMode" });

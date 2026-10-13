@@ -15,6 +15,7 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new WebChatChannel. </summary>
         public WebChatChannel()
         {
+            ChannelName.Assign("WebChatChannel");
         }
 
         /// <summary> Gets the Properties. </summary>
@@ -31,7 +32,6 @@ namespace Azure.Provisioning.BotService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("channelName", new string[] { "channelName" }, defaultValue: "WebChatChannel");
             _properties = DefineModelProperty<WebChatChannelProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

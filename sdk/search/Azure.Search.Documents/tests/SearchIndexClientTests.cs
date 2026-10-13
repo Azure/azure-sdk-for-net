@@ -562,7 +562,7 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
 
-            string deploymentName = "gpt-5-mini";
+            string deploymentName = "gpt-5.4-mini";
             SearchIndexClient client = resources.GetIndexClient();
             var knowledgeBaseName = Recording.Random.GetName(8);
             var knowledgeSourceName = Recording.Random.GetName(8);
@@ -587,7 +587,7 @@ namespace Azure.Search.Documents.Tests
                         ResourceUri = new Uri(TestEnvironment.OpenAIEndpoint),
                         ApiKey = TestEnvironment.OpenAIKey,
                         DeploymentName = deploymentName,
-                        ModelName = AzureOpenAIModelName.Gpt5Mini
+                        ModelName = AzureOpenAIModelName.Gpt54Mini
                     }));
 
             KnowledgeBase actualAgent = await client.CreateKnowledgeBaseAsync(knowledgeBase);

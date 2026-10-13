@@ -75,50 +75,99 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 throw new FormatException($"The model {nameof(KnowledgeSourceIngestionParameters)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Identity))
+            if (_identityIsDefined || Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity, options);
+                }
+                else
+                {
+                    writer.WriteNull("identity"u8);
+                }
             }
-            if (Optional.IsDefined(EmbeddingModel))
+            if (_embeddingModelIsDefined || Optional.IsDefined(EmbeddingModel))
             {
-                writer.WritePropertyName("embeddingModel"u8);
-                writer.WriteObjectValue(EmbeddingModel, options);
+                if (EmbeddingModel != null)
+                {
+                    writer.WritePropertyName("embeddingModel"u8);
+                    writer.WriteObjectValue(EmbeddingModel, options);
+                }
+                else
+                {
+                    writer.WriteNull("embeddingModel"u8);
+                }
             }
-            if (Optional.IsDefined(ChatCompletionModel))
+            if (_chatCompletionModelIsDefined || Optional.IsDefined(ChatCompletionModel))
             {
-                writer.WritePropertyName("chatCompletionModel"u8);
-                writer.WriteObjectValue(ChatCompletionModel, options);
+                if (ChatCompletionModel != null)
+                {
+                    writer.WritePropertyName("chatCompletionModel"u8);
+                    writer.WriteObjectValue(ChatCompletionModel, options);
+                }
+                else
+                {
+                    writer.WriteNull("chatCompletionModel"u8);
+                }
             }
             if (Optional.IsDefined(DisableImageVerbalization))
             {
                 writer.WritePropertyName("disableImageVerbalization"u8);
                 writer.WriteBooleanValue(DisableImageVerbalization.Value);
             }
-            if (Optional.IsDefined(IngestionSchedule))
+            if (_ingestionScheduleIsDefined || Optional.IsDefined(IngestionSchedule))
             {
-                writer.WritePropertyName("ingestionSchedule"u8);
-                writer.WriteObjectValue(IngestionSchedule, options);
+                if (IngestionSchedule != null)
+                {
+                    writer.WritePropertyName("ingestionSchedule"u8);
+                    writer.WriteObjectValue(IngestionSchedule, options);
+                }
+                else
+                {
+                    writer.WriteNull("ingestionSchedule"u8);
+                }
             }
             if (Optional.IsCollectionDefined(IngestionPermissionOptions))
             {
-                writer.WritePropertyName("ingestionPermissionOptions"u8);
-                writer.WriteStartArray();
-                foreach (KnowledgeSourceIngestionPermissionOption item in IngestionPermissionOptions)
+                if (IngestionPermissionOptions != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("ingestionPermissionOptions"u8);
+                    writer.WriteStartArray();
+                    foreach (KnowledgeSourceIngestionPermissionOption item in IngestionPermissionOptions)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("ingestionPermissionOptions"u8);
+                }
             }
-            if (Optional.IsDefined(ContentExtractionMode))
+            if (_contentExtractionModeIsDefined || Optional.IsDefined(ContentExtractionMode))
             {
-                writer.WritePropertyName("contentExtractionMode"u8);
-                writer.WriteStringValue(ContentExtractionMode.Value.ToString());
+                if (ContentExtractionMode != null)
+                {
+                    writer.WritePropertyName("contentExtractionMode"u8);
+                    writer.WriteStringValue(ContentExtractionMode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("contentExtractionMode"u8);
+                }
             }
-            if (Optional.IsDefined(AiServices))
+            if (_aiServicesIsDefined || Optional.IsDefined(AiServices))
             {
-                writer.WritePropertyName("aiServices"u8);
-                writer.WriteObjectValue(AiServices, options);
+                if (AiServices != null)
+                {
+                    writer.WritePropertyName("aiServices"u8);
+                    writer.WriteObjectValue(AiServices, options);
+                }
+                else
+                {
+                    writer.WriteNull("aiServices"u8);
+                }
             }
             if (Optional.IsDefined(AssetStore))
             {
@@ -129,6 +178,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 writer.WritePropertyName("freshnessPolicy"u8);
                 writer.WriteObjectValue(FreshnessPolicy, options);
+            }
+            if (Optional.IsDefined(NetworkAccessMode))
+            {
+                writer.WritePropertyName("networkAccessMode"u8);
+                writer.WriteStringValue(NetworkAccessMode.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -172,21 +226,29 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 return null;
             }
+            bool identityIsDefined = false;
             SearchIndexerDataIdentity identity = default;
+            bool embeddingModelIsDefined = false;
             KnowledgeSourceVectorizer embeddingModel = default;
+            bool chatCompletionModelIsDefined = false;
             KnowledgeBaseModel chatCompletionModel = default;
             bool? disableImageVerbalization = default;
+            bool ingestionScheduleIsDefined = false;
             IndexingSchedule ingestionSchedule = default;
-            IList<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions = default;
+            IList<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions = new ChangeTrackingList<KnowledgeSourceIngestionPermissionOption>();
+            bool contentExtractionModeIsDefined = false;
             KnowledgeSourceContentExtractionMode? contentExtractionMode = default;
+            bool aiServicesIsDefined = false;
             AIServices aiServices = default;
             AssetStore assetStore = default;
             FreshnessPolicy freshnessPolicy = default;
+            KnowledgeSourceNetworkAccessMode? networkAccessMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("identity"u8))
                 {
+                    identityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         identity = null;
@@ -197,6 +259,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("embeddingModel"u8))
                 {
+                    embeddingModelIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         embeddingModel = null;
@@ -207,6 +270,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("chatCompletionModel"u8))
                 {
+                    chatCompletionModelIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         chatCompletionModel = null;
@@ -226,6 +290,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("ingestionSchedule"u8))
                 {
+                    ingestionScheduleIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         ingestionSchedule = null;
@@ -238,6 +303,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        ingestionPermissionOptions = null;
                         continue;
                     }
                     List<KnowledgeSourceIngestionPermissionOption> array = new List<KnowledgeSourceIngestionPermissionOption>();
@@ -250,6 +316,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("contentExtractionMode"u8))
                 {
+                    contentExtractionModeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         contentExtractionMode = null;
@@ -260,6 +327,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("aiServices"u8))
                 {
+                    aiServicesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         aiServices = null;
@@ -286,9 +354,18 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     freshnessPolicy = FreshnessPolicy.DeserializeFreshnessPolicy(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("networkAccessMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkAccessMode = new KnowledgeSourceNetworkAccessMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new KnowledgeSourceIngestionParameters(
@@ -297,12 +374,21 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 chatCompletionModel,
                 disableImageVerbalization,
                 ingestionSchedule,
-                ingestionPermissionOptions ?? new ChangeTrackingList<KnowledgeSourceIngestionPermissionOption>(),
+                ingestionPermissionOptions,
                 contentExtractionMode,
                 aiServices,
                 assetStore,
                 freshnessPolicy,
-                additionalBinaryDataProperties);
+                networkAccessMode,
+                additionalBinaryDataProperties)
+            {
+                _identityIsDefined = identityIsDefined,
+                _embeddingModelIsDefined = embeddingModelIsDefined,
+                _chatCompletionModelIsDefined = chatCompletionModelIsDefined,
+                _ingestionScheduleIsDefined = ingestionScheduleIsDefined,
+                _contentExtractionModeIsDefined = contentExtractionModeIsDefined,
+                _aiServicesIsDefined = aiServicesIsDefined
+            };
         }
     }
 }

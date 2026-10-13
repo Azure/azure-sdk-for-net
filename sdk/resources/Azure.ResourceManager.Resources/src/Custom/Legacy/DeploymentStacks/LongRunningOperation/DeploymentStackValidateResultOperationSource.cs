@@ -1,0 +1,32 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
+
+namespace Azure.ResourceManager.Resources
+{
+    [Obsolete("Use Azure.ResourceManager.Resources.DeploymentStacks instead.", false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    internal class DeploymentStackValidateResultOperationSource : IOperationSource<DeploymentStackValidateResult>
+    {
+        DeploymentStackValidateResult IOperationSource<DeploymentStackValidateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeploymentStackValidateResult.DeserializeDeploymentStackValidateResult(document.RootElement);
+        }
+
+        async ValueTask<DeploymentStackValidateResult> IOperationSource<DeploymentStackValidateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        {
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+            return DeploymentStackValidateResult.DeserializeDeploymentStackValidateResult(document.RootElement);
+        }
+    }
+}

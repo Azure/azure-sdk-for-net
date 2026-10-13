@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Reimage payload with common profile and per-resource overrides. </summary>
+    /// <summary> The shared and per-virtual-machine configuration for a bulk reimage action. </summary>
     public partial class ReimagePayload : IJsonModel<ReimagePayload>
     {
         /// <param name="data"> The data to parse. </param>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ReimagePayload(baseProfile, resourceOverrides ?? new ChangeTrackingList<ReimageResourceOverride>(), additionalBinaryDataProperties);

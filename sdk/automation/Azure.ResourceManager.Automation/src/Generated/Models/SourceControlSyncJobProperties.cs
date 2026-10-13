@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
         /// <param name="createdOn"> The creation time of the job. </param>
         /// <param name="provisioningState"> The provisioning state of the job. </param>
-        /// <param name="startOn"> The start time of the job. </param>
-        /// <param name="endOn"> The end time of the job. </param>
+        /// <param name="startsOn"> The start time of the job. </param>
+        /// <param name="endsOn"> The end time of the job. </param>
         /// <param name="syncType"> The sync type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SourceControlSyncJobProperties(string sourceControlSyncJobId, DateTimeOffset? createdOn, SourceControlProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, SourceControlSyncType? syncType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SourceControlSyncJobProperties(string sourceControlSyncJobId, DateTimeOffset? createdOn, SourceControlProvisioningState? provisioningState, DateTimeOffset? startsOn, DateTimeOffset? endsOn, SourceControlSyncType? syncType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceControlSyncJobId = sourceControlSyncJobId;
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             SyncType = syncType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Automation.Models
         public SourceControlProvisioningState? ProvisioningState { get; }
 
         /// <summary> The start time of the job. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The end time of the job. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The sync type. </summary>
         public SourceControlSyncType? SyncType { get; }

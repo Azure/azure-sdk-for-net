@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="name"> Name of the Endpoint. </param>
         /// <param name="target"> Application port inside the container. </param>
         /// <param name="published"> Port over which the application is exposed from container. </param>
-        /// <param name="hostIp"> Host IP over which the application is exposed from the container. </param>
+        /// <param name="hostIP"> Host IP over which the application is exposed from the container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerEndpoint(ContainerCommunicationProtocol? protocol, string name, int? target, int? published, string hostIp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerEndpoint(ContainerCommunicationProtocol? protocol, string name, int? target, int? published, string hostIP, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Protocol = protocol;
             Name = name;
             Target = target;
             Published = published;
-            HostIp = hostIp;
+            HostIP = hostIP;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -54,9 +54,5 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Port over which the application is exposed from container. </summary>
         [WirePath("published")]
         public int? Published { get; set; }
-
-        /// <summary> Host IP over which the application is exposed from the container. </summary>
-        [WirePath("hostIp")]
-        public string HostIp { get; set; }
     }
 }

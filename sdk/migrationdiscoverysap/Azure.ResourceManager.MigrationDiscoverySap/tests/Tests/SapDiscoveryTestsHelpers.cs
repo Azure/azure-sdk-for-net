@@ -35,7 +35,9 @@ public static class SapDiscoveryTestsHelpers
                 .Replace("__MigrateProjectId__", migrateProjectId)
                 .Replace("__Location__", region.Name)).RootElement;
 
-        var discoverySiteData = SapDiscoverySiteData.DeserializeSapDiscoverySiteData(discoverySiteDataElement);
+        var discoverySiteData = SapDiscoverySiteData.DeserializeSapDiscoverySiteData(
+            discoverySiteDataElement,
+            ModelSerializationExtensions.WireOptions);
 
         // Create Sap DiscoverySite
         ArmOperation<SapDiscoverySiteResource> createDiscoverySiteOperation =
@@ -59,7 +61,9 @@ public static class SapDiscoveryTestsHelpers
             for (int i = 0; i < listEnumerator.Count(); i++)
             {
                 JsonElement instance = listEnumerator.ElementAt(i);
-                instanceList.Add(SapInstanceData.DeserializeSapInstanceData(instance));
+                instanceList.Add(SapInstanceData.DeserializeSapInstanceData(
+                    instance,
+                    ModelSerializationExtensions.WireOptions));
             }
         }
 
@@ -79,7 +83,9 @@ public static class SapDiscoveryTestsHelpers
             for (int i = 0; i < listEnumerator.Count(); i++)
             {
                 JsonElement instance = listEnumerator.ElementAt(i);
-                instanceList.Add(SapDiscoveryServerInstanceData.DeserializeSapDiscoveryServerInstanceData(instance));
+                instanceList.Add(SapDiscoveryServerInstanceData.DeserializeSapDiscoveryServerInstanceData(
+                    instance,
+                    ModelSerializationExtensions.WireOptions));
             }
         }
 

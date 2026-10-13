@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     public readonly partial struct ProvisionedClusterAzureHybridBenefit : IEquatable<ProvisionedClusterAzureHybridBenefit>
     {
         private readonly string _value;
+        /// <summary> Indicates Azure Hybrid Benefit is opted in. </summary>
+        private const string TrueValue = "True";
+        /// <summary> Indicates Azure Hybrid Benefit is not opted in. </summary>
+        private const string FalseValue = "False";
+        /// <summary> Indicates Azure Hybrid Benefit is not applicable. </summary>
+        private const string NotApplicableValue = "NotApplicable";
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterAzureHybridBenefit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProvisionedClusterAzureHybridBenefit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
-        private const string NotApplicableValue = "NotApplicable";
-
-        /// <summary> True. </summary>
+        /// <summary> Indicates Azure Hybrid Benefit is opted in. </summary>
         public static ProvisionedClusterAzureHybridBenefit True { get; } = new ProvisionedClusterAzureHybridBenefit(TrueValue);
-        /// <summary> False. </summary>
+
+        /// <summary> Indicates Azure Hybrid Benefit is not opted in. </summary>
         public static ProvisionedClusterAzureHybridBenefit False { get; } = new ProvisionedClusterAzureHybridBenefit(FalseValue);
-        /// <summary> NotApplicable. </summary>
+
+        /// <summary> Indicates Azure Hybrid Benefit is not applicable. </summary>
         public static ProvisionedClusterAzureHybridBenefit NotApplicable { get; } = new ProvisionedClusterAzureHybridBenefit(NotApplicableValue);
+
         /// <summary> Determines if two <see cref="ProvisionedClusterAzureHybridBenefit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProvisionedClusterAzureHybridBenefit left, ProvisionedClusterAzureHybridBenefit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProvisionedClusterAzureHybridBenefit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProvisionedClusterAzureHybridBenefit left, ProvisionedClusterAzureHybridBenefit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProvisionedClusterAzureHybridBenefit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProvisionedClusterAzureHybridBenefit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProvisionedClusterAzureHybridBenefit(string value) => new ProvisionedClusterAzureHybridBenefit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProvisionedClusterAzureHybridBenefit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProvisionedClusterAzureHybridBenefit?(string value) => value == null ? null : new ProvisionedClusterAzureHybridBenefit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProvisionedClusterAzureHybridBenefit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProvisionedClusterAzureHybridBenefit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

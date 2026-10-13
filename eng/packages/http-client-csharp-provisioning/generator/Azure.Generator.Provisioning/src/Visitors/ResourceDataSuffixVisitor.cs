@@ -12,7 +12,7 @@ namespace Azure.Generator.Provisioning.Visitors;
 
 /// <summary>
 /// Visitor that removes the "Data" suffix from resource model names.
-/// The mgmt ResourceVisitor appends "Data" to resource models (e.g., ConfigurationStore → ConfigurationStoreData).
+/// Management naming appends "Data" to resource models (e.g., ConfigurationStore → ConfigurationStoreData).
 /// Provisioning libraries do not use the "Data" suffix (e.g., AppConfigurationStore, not AppConfigurationStoreData).
 /// This visitor runs after the inherited mgmt visitors and reverts the rename.
 /// </summary>

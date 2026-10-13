@@ -8,6 +8,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "RepeatabilityResult",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Azure.Core.RepeatabilityResult",
       "valueType": {
         "$id": "2",
@@ -60,6 +61,9 @@
       "$id": "5",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.Versions",
       "valueType": {
         "$id": "6",
@@ -152,6 +156,9 @@
       "$id": "14",
       "kind": "model",
       "name": "User",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Core.Traits",
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.User",
       "usage": "Output,Json",
@@ -168,6 +175,9 @@
           "$id": "15",
           "kind": "property",
           "name": "id",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "id",
           "doc": "The user's id.",
           "type": {
@@ -195,6 +205,9 @@
           "$id": "17",
           "kind": "property",
           "name": "name",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "name",
           "doc": "The user's name.",
           "type": {
@@ -224,6 +237,7 @@
       "$id": "19",
       "kind": "model",
       "name": "ErrorResponse",
+      "apiVersions": [],
       "namespace": "Azure.Core.Foundations",
       "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse",
       "usage": "Json,Exception",
@@ -240,12 +254,14 @@
           "$id": "20",
           "kind": "property",
           "name": "error",
+          "apiVersions": [],
           "serializedName": "error",
           "doc": "The error object.",
           "type": {
             "$id": "21",
             "kind": "model",
             "name": "Error",
+            "apiVersions": [],
             "namespace": "Azure.Core.Foundations",
             "crossLanguageDefinitionId": "Azure.Core.Foundations.Error",
             "usage": "Json,Exception",
@@ -262,6 +278,7 @@
                 "$id": "22",
                 "kind": "property",
                 "name": "code",
+                "apiVersions": [],
                 "serializedName": "code",
                 "doc": "One of a server-defined set of error codes.",
                 "type": {
@@ -289,6 +306,7 @@
                 "$id": "24",
                 "kind": "property",
                 "name": "message",
+                "apiVersions": [],
                 "serializedName": "message",
                 "doc": "A human-readable representation of the error.",
                 "type": {
@@ -316,6 +334,7 @@
                 "$id": "26",
                 "kind": "property",
                 "name": "target",
+                "apiVersions": [],
                 "serializedName": "target",
                 "doc": "The target of the error.",
                 "type": {
@@ -343,6 +362,7 @@
                 "$id": "28",
                 "kind": "property",
                 "name": "details",
+                "apiVersions": [],
                 "serializedName": "details",
                 "doc": "An array of details about specific errors that led to this reported error.",
                 "type": {
@@ -373,12 +393,14 @@
                 "$id": "30",
                 "kind": "property",
                 "name": "innererror",
+                "apiVersions": [],
                 "serializedName": "innererror",
                 "doc": "An object containing more specific information than the current object about the error.",
                 "type": {
                   "$id": "31",
                   "kind": "model",
                   "name": "InnerError",
+                  "apiVersions": [],
                   "namespace": "Azure.Core.Foundations",
                   "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
                   "usage": "Json,Exception",
@@ -395,6 +417,7 @@
                       "$id": "32",
                       "kind": "property",
                       "name": "code",
+                      "apiVersions": [],
                       "serializedName": "code",
                       "doc": "One of a server-defined set of error codes.",
                       "type": {
@@ -422,6 +445,7 @@
                       "$id": "34",
                       "kind": "property",
                       "name": "innererror",
+                      "apiVersions": [],
                       "serializedName": "innererror",
                       "doc": "Inner error.",
                       "type": {
@@ -477,6 +501,7 @@
           "$id": "35",
           "kind": "property",
           "name": "errorCode",
+          "apiVersions": [],
           "serializedName": "errorCode",
           "doc": "String error code indicating what went wrong.",
           "type": {
@@ -512,6 +537,9 @@
       "$id": "37",
       "kind": "model",
       "name": "UserActionParam",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Core.Traits",
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.UserActionParam",
       "usage": "Input,Json",
@@ -528,6 +556,9 @@
           "$id": "38",
           "kind": "property",
           "name": "userActionValue",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "userActionValue",
           "doc": "User action value.",
           "type": {
@@ -557,6 +588,9 @@
       "$id": "40",
       "kind": "model",
       "name": "UserActionResponse",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Core.Traits",
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.UserActionResponse",
       "usage": "Output,Json",
@@ -573,6 +607,9 @@
           "$id": "41",
           "kind": "property",
           "name": "userActionResult",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "userActionResult",
           "doc": "User action result.",
           "type": {

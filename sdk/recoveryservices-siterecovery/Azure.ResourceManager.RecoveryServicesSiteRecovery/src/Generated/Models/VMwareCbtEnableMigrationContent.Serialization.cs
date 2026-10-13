@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             string instanceType = "VMwareCbt";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResourceIdentifier vMwareMachineId = default;
+            ResourceIdentifier vmwareMachineId = default;
             IList<VMwareCbtDiskContent> disksToInclude = default;
             SiteRecoveryLicenseType? licenseType = default;
             SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (prop.NameEquals("vmwareMachineId"u8))
                 {
-                    vMwareMachineId = new ResourceIdentifier(prop.Value.GetString());
+                    vmwareMachineId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("disksToInclude"u8))
@@ -563,13 +563,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VMwareCbtEnableMigrationContent(
                 instanceType,
                 additionalBinaryDataProperties,
-                vMwareMachineId,
+                vmwareMachineId,
                 disksToInclude,
                 licenseType,
                 sqlServerLicenseType,

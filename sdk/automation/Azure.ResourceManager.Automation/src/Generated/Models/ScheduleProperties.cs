@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduleProperties"/>. </summary>
-        /// <param name="startOn"> Gets or sets the start time of the schedule. </param>
+        /// <param name="startsOn"> Gets or sets the start time of the schedule. </param>
         /// <param name="startInMinutes"> Gets the start time's offset in minutes. </param>
-        /// <param name="expireOn"> Gets or sets the end time of the schedule. </param>
+        /// <param name="expiresOn"> Gets or sets the end time of the schedule. </param>
         /// <param name="expireInMinutes"> Gets or sets the expiry time's offset in minutes. </param>
         /// <param name="isEnabled"> Gets or sets a value indicating whether this schedule is enabled. </param>
         /// <param name="nextRunOn"> Gets or sets the next run time of the schedule. </param>
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduleProperties(DateTimeOffset? startOn, double? startInMinutes, DateTimeOffset? expireOn, double? expireInMinutes, bool? isEnabled, DateTimeOffset? nextRunOn, double? nextRunInMinutes, BinaryData interval, AutomationScheduleFrequency? frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduleProperties(DateTimeOffset? startsOn, double? startInMinutes, DateTimeOffset? expiresOn, double? expireInMinutes, bool? isEnabled, DateTimeOffset? nextRunOn, double? nextRunInMinutes, BinaryData interval, AutomationScheduleFrequency? frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
+            StartsOn = startsOn;
             StartInMinutes = startInMinutes;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             ExpireInMinutes = expireInMinutes;
             IsEnabled = isEnabled;
             NextRunOn = nextRunOn;
@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Gets or sets the start time of the schedule. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> Gets the start time's offset in minutes. </summary>
         public double? StartInMinutes { get; }
 
         /// <summary> Gets or sets the end time of the schedule. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary> Gets or sets the expiry time's offset in minutes. </summary>
         public double? ExpireInMinutes { get; set; }

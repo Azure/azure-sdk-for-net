@@ -138,5 +138,26 @@ namespace Azure.ResourceManager.OperationTemplates
             request.Content = content;
             return message;
         }
+
+        internal HttpMessage CreateGetLroRequest(string scope, string operationId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Azure.ResourceManager.OperationTemplates/costReports/", false);
+            uri.AppendPath(operationId, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
     }
 }

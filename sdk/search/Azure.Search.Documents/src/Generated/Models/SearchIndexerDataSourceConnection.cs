@@ -15,6 +15,14 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private SearchIndexerDataIdentity _identity;
+        internal bool _identityIsDefined;
+        private DataChangeDetectionPolicy _dataChangeDetectionPolicy;
+        internal bool _dataChangeDetectionPolicyIsDefined;
+        private DataDeletionDetectionPolicy _dataDeletionDetectionPolicy;
+        internal bool _dataDeletionDetectionPolicyIsDefined;
+        private SearchResourceEncryptionKey _encryptionKey;
+        internal bool _encryptionKeyIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceConnection"/>. </summary>
         /// <param name="name"> The name of the datasource. </param>
@@ -38,11 +46,11 @@ namespace Azure.Search.Documents.Indexes.Models
             SubType = subType;
             CredentialsInternal = credentialsInternal;
             Container = container;
-            Identity = identity;
+            _identity = identity;
             IndexerPermissionOptions = indexerPermissionOptions;
-            DataChangeDetectionPolicy = dataChangeDetectionPolicy;
-            DataDeletionDetectionPolicy = dataDeletionDetectionPolicy;
-            EncryptionKey = encryptionKey;
+            _dataChangeDetectionPolicy = dataChangeDetectionPolicy;
+            _dataDeletionDetectionPolicy = dataDeletionDetectionPolicy;
+            _encryptionKey = encryptionKey;
             _etag = etag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -63,18 +71,62 @@ namespace Azure.Search.Documents.Indexes.Models
         public SearchIndexerDataContainer Container { get; set; }
 
         /// <summary> An explicit managed identity to use for this datasource. If not specified and the connection string is a managed identity, the system-assigned managed identity is used. If not specified, the value remains unchanged. If "none" is specified, the value of this property is cleared. </summary>
-        public SearchIndexerDataIdentity Identity { get; set; }
+        public SearchIndexerDataIdentity Identity
+        {
+            get
+            {
+                return _identity;
+            }
+            set
+            {
+                _identity = value;
+                _identityIsDefined = true;
+            }
+        }
 
         /// <summary> Ingestion options with various types of permission data. </summary>
         public IList<IndexerPermissionOption> IndexerPermissionOptions { get; set; }
 
         /// <summary> The data change detection policy for the datasource. </summary>
-        public DataChangeDetectionPolicy DataChangeDetectionPolicy { get; set; }
+        public DataChangeDetectionPolicy DataChangeDetectionPolicy
+        {
+            get
+            {
+                return _dataChangeDetectionPolicy;
+            }
+            set
+            {
+                _dataChangeDetectionPolicy = value;
+                _dataChangeDetectionPolicyIsDefined = true;
+            }
+        }
 
         /// <summary> The data deletion detection policy for the datasource. </summary>
-        public DataDeletionDetectionPolicy DataDeletionDetectionPolicy { get; set; }
+        public DataDeletionDetectionPolicy DataDeletionDetectionPolicy
+        {
+            get
+            {
+                return _dataDeletionDetectionPolicy;
+            }
+            set
+            {
+                _dataDeletionDetectionPolicy = value;
+                _dataDeletionDetectionPolicyIsDefined = true;
+            }
+        }
 
         /// <summary> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your datasource definition when you want full assurance that no one, not even Microsoft, can decrypt your data source definition. Once you have encrypted your data source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your datasource definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </summary>
-        public SearchResourceEncryptionKey EncryptionKey { get; set; }
+        public SearchResourceEncryptionKey EncryptionKey
+        {
+            get
+            {
+                return _encryptionKey;
+            }
+            set
+            {
+                _encryptionKey = value;
+                _encryptionKeyIsDefined = true;
+            }
+        }
     }
 }

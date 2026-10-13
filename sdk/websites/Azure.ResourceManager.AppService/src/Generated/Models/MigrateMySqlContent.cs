@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.MigrationType;
+                return Properties is null ? (MySqlMigrationType?)default : Properties.MigrationType;
             }
             set
             {

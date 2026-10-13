@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Entity represents security group in the system. </summary>
         private const string SecurityGroupValue = "SecurityGroup";
         /// <summary> Entity represents url in the system. </summary>
-        private const string UrlValue = "URL";
+        private const string UriValue = "URL";
         /// <summary> Entity represents IoT device in the system. </summary>
         private const string IoTDeviceValue = "IoTDevice";
         /// <summary> Entity represents security alert in the system. </summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsEntityType SecurityGroup { get; } = new SecurityInsightsEntityType(SecurityGroupValue);
 
         /// <summary> Entity represents url in the system. </summary>
-        public static SecurityInsightsEntityType Url { get; } = new SecurityInsightsEntityType(UrlValue);
+        public static SecurityInsightsEntityType Uri { get; } = new SecurityInsightsEntityType(UriValue);
 
         /// <summary> Entity represents IoT device in the system. </summary>
         public static SecurityInsightsEntityType IoTDevice { get; } = new SecurityInsightsEntityType(IoTDeviceValue);

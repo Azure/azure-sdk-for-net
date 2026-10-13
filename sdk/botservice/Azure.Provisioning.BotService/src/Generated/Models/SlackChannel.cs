@@ -15,6 +15,7 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new SlackChannel. </summary>
         public SlackChannel()
         {
+            ChannelName.Assign("SlackChannel");
         }
 
         /// <summary> Gets the Properties. </summary>
@@ -31,7 +32,6 @@ namespace Azure.Provisioning.BotService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("channelName", new string[] { "channelName" }, defaultValue: "SlackChannel");
             _properties = DefineModelProperty<SlackChannelProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

@@ -30,8 +30,19 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="totalBytes"> Total bytes (if available). </param>
         /// <param name="syncMode"> Sync mode. </param>
         /// <param name="sessionMinutesRemaining"> Session minutes remaining (if available). </param>
+        /// <param name="remainingFileCount"> Remaining file count (if totals are final). </param>
+        /// <param name="remainingDirectoryCount"> Remaining directory count (if totals are final). </param>
+        /// <param name="remainingDeleteCount"> Remaining delete count (if totals are final). </param>
+        /// <param name="remainingLogicalSizeBytes"> Remaining logical size in bytes (if totals are final). </param>
+        /// <param name="isRemainingFinal"> Whether the remaining counts are final. </param>
+        /// <param name="recentItemsPerSecond"> Recent throughput in items per second. </param>
+        /// <param name="recentMegabytesPerSecond"> Recent throughput in megabytes per second. </param>
+        /// <param name="inProgressLargeFilePath"> Path of large file currently in progress. </param>
+        /// <param name="inProgressLargeFileSizeBytes"> Size in bytes of large file currently in progress. </param>
+        /// <param name="inProgressLargeFilePercentComplete"> Percent complete (0-100) of large file currently in progress. </param>
+        /// <param name="warning"> Warning type (if any). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerEndpointSyncActivityStatus(DateTimeOffset? timestamp, long? perItemErrorCount, long? appliedItemCount, long? totalItemCount, long? appliedBytes, long? totalBytes, ServerEndpointSyncMode? syncMode, int? sessionMinutesRemaining, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServerEndpointSyncActivityStatus(DateTimeOffset? timestamp, long? perItemErrorCount, long? appliedItemCount, long? totalItemCount, long? appliedBytes, long? totalBytes, ServerEndpointSyncMode? syncMode, int? sessionMinutesRemaining, long? remainingFileCount, long? remainingDirectoryCount, long? remainingDeleteCount, long? remainingLogicalSizeBytes, bool? isRemainingFinal, double? recentItemsPerSecond, double? recentMegabytesPerSecond, string inProgressLargeFilePath, long? inProgressLargeFileSizeBytes, int? inProgressLargeFilePercentComplete, ServerEndpointSyncSessionWarningType? warning, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             PerItemErrorCount = perItemErrorCount;
@@ -41,6 +52,17 @@ namespace Azure.ResourceManager.StorageSync.Models
             TotalBytes = totalBytes;
             SyncMode = syncMode;
             SessionMinutesRemaining = sessionMinutesRemaining;
+            RemainingFileCount = remainingFileCount;
+            RemainingDirectoryCount = remainingDirectoryCount;
+            RemainingDeleteCount = remainingDeleteCount;
+            RemainingLogicalSizeBytes = remainingLogicalSizeBytes;
+            IsRemainingFinal = isRemainingFinal;
+            RecentItemsPerSecond = recentItemsPerSecond;
+            RecentMegabytesPerSecond = recentMegabytesPerSecond;
+            InProgressLargeFilePath = inProgressLargeFilePath;
+            InProgressLargeFileSizeBytes = inProgressLargeFileSizeBytes;
+            InProgressLargeFilePercentComplete = inProgressLargeFilePercentComplete;
+            Warning = warning;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -67,5 +89,38 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Session minutes remaining (if available). </summary>
         public int? SessionMinutesRemaining { get; }
+
+        /// <summary> Remaining file count (if totals are final). </summary>
+        public long? RemainingFileCount { get; }
+
+        /// <summary> Remaining directory count (if totals are final). </summary>
+        public long? RemainingDirectoryCount { get; }
+
+        /// <summary> Remaining delete count (if totals are final). </summary>
+        public long? RemainingDeleteCount { get; }
+
+        /// <summary> Remaining logical size in bytes (if totals are final). </summary>
+        public long? RemainingLogicalSizeBytes { get; }
+
+        /// <summary> Whether the remaining counts are final. </summary>
+        public bool? IsRemainingFinal { get; }
+
+        /// <summary> Recent throughput in items per second. </summary>
+        public double? RecentItemsPerSecond { get; }
+
+        /// <summary> Recent throughput in megabytes per second. </summary>
+        public double? RecentMegabytesPerSecond { get; }
+
+        /// <summary> Path of large file currently in progress. </summary>
+        public string InProgressLargeFilePath { get; }
+
+        /// <summary> Size in bytes of large file currently in progress. </summary>
+        public long? InProgressLargeFileSizeBytes { get; }
+
+        /// <summary> Percent complete (0-100) of large file currently in progress. </summary>
+        public int? InProgressLargeFilePercentComplete { get; }
+
+        /// <summary> Warning type (if any). </summary>
+        public ServerEndpointSyncSessionWarningType? Warning { get; }
     }
 }

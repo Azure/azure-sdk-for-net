@@ -15,6 +15,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new SimpleRetentionPolicy. </summary>
         public SimpleRetentionPolicy()
         {
+            RetentionPolicyType.Assign("SimpleRetentionPolicy");
         }
 
         /// <summary> Gets or sets the RetentionDuration. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("retentionPolicyType", new string[] { "retentionPolicyType" }, defaultValue: "SimpleRetentionPolicy");
             _retentionDuration = DefineModelProperty<RetentionDuration>(nameof(RetentionDuration), new string[] { "retentionDuration" });
             DefineAdditionalProperties();
         }

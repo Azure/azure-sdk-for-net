@@ -19,7 +19,7 @@ namespace Azure.Provisioning.ContainerRegistry
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ContainerRegistryPrivateLinkResourceProperties _properties;
-        private ResourceReference<Registry> _parent;
+        private ResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Creates a new RegistryMyPrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -74,7 +74,7 @@ namespace Azure.Provisioning.ContainerRegistry
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public Registry Parent
+        public ContainerRegistryService Parent
         {
             get
             {
@@ -93,7 +93,7 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                return Properties.GroupId;
+                return Properties is null ? default : Properties.GroupId;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                return Properties.RequiredMembers;
+                return Properties is null ? default : Properties.RequiredMembers;
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                return Properties.RequiredZoneNames;
+                return Properties is null ? default : Properties.RequiredZoneNames;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.ContainerRegistry
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ContainerRegistryPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<Registry>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ContainerRegistryService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

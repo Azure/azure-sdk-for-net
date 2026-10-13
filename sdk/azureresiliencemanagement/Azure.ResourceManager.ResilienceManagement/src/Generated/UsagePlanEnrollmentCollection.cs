@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<UsagePlanEnrollmentData, UsagePlanEnrollmentResource>(new EnrollmentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<UsagePlanEnrollmentData, UsagePlanEnrollmentResource>(new UsagePlanEnrollmentDataAsyncCollectionResultOfT(
                 _enrollmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<UsagePlanEnrollmentData, UsagePlanEnrollmentResource>(new EnrollmentsGetAllCollectionResultOfT(
+            return new PageableWrapper<UsagePlanEnrollmentData, UsagePlanEnrollmentResource>(new UsagePlanEnrollmentDataCollectionResultOfT(
                 _enrollmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

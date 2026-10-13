@@ -33,8 +33,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="lastWorkflowId"> CloudEndpoint lastWorkflowId. </param>
         /// <param name="lastOperationName"> Resource Last Operation Name. </param>
         /// <param name="changeEnumerationStatus"> Cloud endpoint change enumeration status. </param>
+        /// <param name="changeEnumerationIntervalDays"> The interval for enumerating changes on the cloud endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudEndpointProperties(ResourceIdentifier storageAccountResourceId, string azureFileShareName, Guid? storageAccountTenantId, string partnershipId, string friendlyName, string isBackupEnabled, string provisioningState, string lastWorkflowId, string lastOperationName, CloudEndpointChangeEnumerationStatus changeEnumerationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudEndpointProperties(ResourceIdentifier storageAccountResourceId, string azureFileShareName, Guid? storageAccountTenantId, string partnershipId, string friendlyName, string isBackupEnabled, string provisioningState, string lastWorkflowId, string lastOperationName, CloudEndpointChangeEnumerationStatus changeEnumerationStatus, int? changeEnumerationIntervalDays, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountResourceId = storageAccountResourceId;
             AzureFileShareName = azureFileShareName;
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             LastWorkflowId = lastWorkflowId;
             LastOperationName = lastOperationName;
             ChangeEnumerationStatus = changeEnumerationStatus;
+            ChangeEnumerationIntervalDays = changeEnumerationIntervalDays;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -78,5 +80,8 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Cloud endpoint change enumeration status. </summary>
         public CloudEndpointChangeEnumerationStatus ChangeEnumerationStatus { get; }
+
+        /// <summary> The interval for enumerating changes on the cloud endpoint. </summary>
+        public int? ChangeEnumerationIntervalDays { get; set; }
     }
 }

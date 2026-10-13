@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,14 +15,19 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _authenticationKey;
+        internal bool _authenticationKeyIsDefined;
+        private string _resourceId;
+        internal bool _resourceIdIsDefined;
+        private TimeSpan? _timeout;
+        internal bool _timeoutIsDefined;
+        private string _region;
+        internal bool _regionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AzureMachineLearningParameters"/>. </summary>
         /// <param name="scoringUri"> (Required for no authentication or key authentication) The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scoringUri"/> is null. </exception>
         public AzureMachineLearningParameters(Uri scoringUri)
         {
-            Argument.AssertNotNull(scoringUri, nameof(scoringUri));
-
             ScoringUri = scoringUri;
         }
 
@@ -38,10 +42,10 @@ namespace Azure.Search.Documents.Indexes.Models
         internal AzureMachineLearningParameters(Uri scoringUri, string authenticationKey, string resourceId, TimeSpan? timeout, string region, AIFoundryModelCatalogName? modelName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScoringUri = scoringUri;
-            AuthenticationKey = authenticationKey;
-            ResourceId = resourceId;
-            Timeout = timeout;
-            Region = region;
+            _authenticationKey = authenticationKey;
+            _resourceId = resourceId;
+            _timeout = timeout;
+            _region = region;
             ModelName = modelName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -50,16 +54,60 @@ namespace Azure.Search.Documents.Indexes.Models
         public Uri ScoringUri { get; set; }
 
         /// <summary> (Required for key authentication) The key for the AML service. </summary>
-        public string AuthenticationKey { get; set; }
+        public string AuthenticationKey
+        {
+            get
+            {
+                return _authenticationKey;
+            }
+            set
+            {
+                _authenticationKey = value;
+                _authenticationKeyIsDefined = true;
+            }
+        }
 
         /// <summary> (Required for token authentication). The Azure Resource Manager resource ID of the AML service. It should be in the format subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}. </summary>
-        public string ResourceId { get; set; }
+        public string ResourceId
+        {
+            get
+            {
+                return _resourceId;
+            }
+            set
+            {
+                _resourceId = value;
+                _resourceIdIsDefined = true;
+            }
+        }
 
         /// <summary> (Optional) When specified, indicates the timeout for the http client making the API call. </summary>
-        public TimeSpan? Timeout { get; set; }
+        public TimeSpan? Timeout
+        {
+            get
+            {
+                return _timeout;
+            }
+            set
+            {
+                _timeout = value;
+                _timeoutIsDefined = true;
+            }
+        }
 
         /// <summary> (Optional for token authentication). The region the AML service is deployed in. </summary>
-        public string Region { get; set; }
+        public string Region
+        {
+            get
+            {
+                return _region;
+            }
+            set
+            {
+                _region = value;
+                _regionIsDefined = true;
+            }
+        }
 
         /// <summary> The name of the embedding model from the Azure AI Foundry Catalog that is deployed at the provided endpoint. </summary>
         public AIFoundryModelCatalogName? ModelName { get; set; }

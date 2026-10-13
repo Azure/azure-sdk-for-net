@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            CustomIpPrefixPropertiesFormat properties = default;
+            CustomIPPrefixPropertiesFormat properties = default;
             ExtendedLocation extendedLocation = default;
             ETag? eTag = default;
             IList<string> zones = default;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    properties = CustomIpPrefixPropertiesFormat.DeserializeCustomIpPrefixPropertiesFormat(prop.Value, options);
+                    properties = CustomIPPrefixPropertiesFormat.DeserializeCustomIPPrefixPropertiesFormat(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("extendedLocation"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CustomIPPrefixData(

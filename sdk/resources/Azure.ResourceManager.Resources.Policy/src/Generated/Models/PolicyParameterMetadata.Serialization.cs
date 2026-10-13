@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     allowedValues = array;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    defaultValue = BinaryData.FromString(prop.Value.GetRawText());
+                    defaultValue = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("schema"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    schema = BinaryData.FromString(prop.Value.GetRawText());
+                    schema = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PolicyParameterMetadata(

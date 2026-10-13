@@ -256,7 +256,7 @@ namespace Azure.Provisioning.Compute
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<GalleryInVmAccessControlProfileVersionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<GalleryInVMAccessControlProfile>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<GalleryInVMAccessControlProfile>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

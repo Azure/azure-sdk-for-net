@@ -1,0 +1,4 @@
+directory: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/ServiceLinker
+commit: 07608d4b1ca2ec6719cda1541c54d5f53f686585
+repo: cxznmhdcxz/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

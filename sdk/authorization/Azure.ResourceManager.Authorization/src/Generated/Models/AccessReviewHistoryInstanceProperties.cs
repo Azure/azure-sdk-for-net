@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewHistoryInstanceProperties"/>. </summary>
-        /// <param name="reviewHistoryPeriodStartOn"> Date time used when selecting review data, all reviews included in data start on or after this date. For use only with one-time/non-recurring reports. </param>
-        /// <param name="reviewHistoryPeriodEndOn"> Date time used when selecting review data, all reviews included in data end on or before this date. For use only with one-time/non-recurring reports. </param>
+        /// <param name="reviewHistoryPeriodStartsOn"> Date time used when selecting review data, all reviews included in data start on or after this date. For use only with one-time/non-recurring reports. </param>
+        /// <param name="reviewHistoryPeriodEndsOn"> Date time used when selecting review data, all reviews included in data end on or before this date. For use only with one-time/non-recurring reports. </param>
         /// <param name="displayName"> The display name for the parent history definition. </param>
         /// <param name="status"> Status of the requested review history instance data. This is either requested, in-progress, done or error. The state transitions are as follows - Requested -&gt; InProgress -&gt; Done -&gt; Expired. </param>
         /// <param name="runOn"> Date time when the history data report is scheduled to be generated. </param>
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="downloadUri"> Uri which can be used to retrieve review history data. To generate this Uri, generateDownloadUri() must be called for a specific accessReviewHistoryDefinitionInstance. The link expires after a 24 hour period. Callers can see the expiration date time by looking at the 'se' parameter in the generated uri. </param>
         /// <param name="expiration"> Date time when history data report expires and the associated data is deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessReviewHistoryInstanceProperties(DateTimeOffset? reviewHistoryPeriodStartOn, DateTimeOffset? reviewHistoryPeriodEndOn, string displayName, AccessReviewHistoryDefinitionStatus? status, DateTimeOffset? runOn, DateTimeOffset? fulfilledOn, string downloadUri, DateTimeOffset? expiration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessReviewHistoryInstanceProperties(DateTimeOffset? reviewHistoryPeriodStartsOn, DateTimeOffset? reviewHistoryPeriodEndsOn, string displayName, AccessReviewHistoryDefinitionStatus? status, DateTimeOffset? runOn, DateTimeOffset? fulfilledOn, string downloadUri, DateTimeOffset? expiration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ReviewHistoryPeriodStartOn = reviewHistoryPeriodStartOn;
-            ReviewHistoryPeriodEndOn = reviewHistoryPeriodEndOn;
+            ReviewHistoryPeriodStartsOn = reviewHistoryPeriodStartsOn;
+            ReviewHistoryPeriodEndsOn = reviewHistoryPeriodEndsOn;
             DisplayName = displayName;
             Status = status;
             RunOn = runOn;
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Date time used when selecting review data, all reviews included in data start on or after this date. For use only with one-time/non-recurring reports. </summary>
         [WirePath("reviewHistoryPeriodStartDateTime")]
-        public DateTimeOffset? ReviewHistoryPeriodStartOn { get; set; }
+        public DateTimeOffset? ReviewHistoryPeriodStartsOn { get; set; }
 
         /// <summary> Date time used when selecting review data, all reviews included in data end on or before this date. For use only with one-time/non-recurring reports. </summary>
         [WirePath("reviewHistoryPeriodEndDateTime")]
-        public DateTimeOffset? ReviewHistoryPeriodEndOn { get; set; }
+        public DateTimeOffset? ReviewHistoryPeriodEndsOn { get; set; }
 
         /// <summary> The display name for the parent history definition. </summary>
         [WirePath("displayName")]

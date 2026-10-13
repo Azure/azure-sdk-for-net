@@ -83,10 +83,17 @@ namespace Azure.AI.Agents.Persistent
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStringValue(Arguments);
             }
-            if (Optional.IsDefined(Output))
+            if (_outputIsDefined || Optional.IsDefined(Output))
             {
-                writer.WritePropertyName("output"u8);
-                writer.WriteStringValue(Output);
+                if (Output != null)
+                {
+                    writer.WritePropertyName("output"u8);
+                    writer.WriteStringValue(Output);
+                }
+                else
+                {
+                    writer.WriteNull("output"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,6 +139,7 @@ namespace Azure.AI.Agents.Persistent
             }
             string name = default;
             string arguments = default;
+            bool outputIsDefined = false;
             string output = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,6 +156,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("output"u8))
                 {
+                    outputIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         output = null;
@@ -158,10 +167,13 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RunStepDeltaFunction(name, arguments, output, additionalBinaryDataProperties);
+            return new RunStepDeltaFunction(name, arguments, output, additionalBinaryDataProperties)
+            {
+                _outputIsDefined = outputIsDefined
+            };
         }
     }
 }

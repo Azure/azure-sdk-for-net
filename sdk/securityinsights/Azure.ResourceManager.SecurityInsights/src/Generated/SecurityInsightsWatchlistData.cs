@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> Describes provisioning state. </summary>
         [WirePath("properties.provisioningState")]
-        public TriggeredAnalyticsRuleRunProvisioningState? ProvisioningState
+        public WatchlistProvisioningState? ProvisioningState
         {
             get
             {

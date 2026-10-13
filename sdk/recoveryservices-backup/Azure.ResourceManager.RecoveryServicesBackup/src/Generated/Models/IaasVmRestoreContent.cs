@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Target extended location where the VM should be restored,
         /// should be null if restore is to be done in public cloud
         /// </param>
-        /// <param name="securedVMDetails"> Stores Secured VM Details. </param>
+        /// <param name="securedVmDetails"> Stores Secured VM Details. </param>
         /// <param name="targetDiskNetworkAccessSettings"> Specifies target network access settings for disks of VM to be restored,. </param>
-        internal IaasVmRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointId, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, ResourceIdentifier targetVirtualMachineId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageAccountId, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier targetDomainNameId, AzureLocation? region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, BackupIdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails, ExtendedLocation extendedLocation, SecuredVMDetails securedVMDetails, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings) : base(objectType, resourceGuardOperationRequests, additionalBinaryDataProperties)
+        internal IaasVmRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointId, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, ResourceIdentifier targetVirtualMachineId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageAccountId, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier targetDomainNameId, AzureLocation? region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, BackupIdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails, ExtendedLocation extendedLocation, SecuredVmDetails securedVmDetails, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings) : base(objectType, resourceGuardOperationRequests, additionalBinaryDataProperties)
         {
             RecoveryPointId = recoveryPointId;
             RecoveryType = recoveryType;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IdentityInfo = identityInfo;
             IdentityBasedRestoreDetails = identityBasedRestoreDetails;
             ExtendedLocation = extendedLocation;
-            SecuredVMDetails = securedVMDetails;
+            SecuredVmDetails = securedVmDetails;
             TargetDiskNetworkAccessSettings = targetDiskNetworkAccessSettings;
         }
 
@@ -193,26 +193,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> Stores Secured VM Details. </summary>
-        internal SecuredVMDetails SecuredVMDetails { get; set; }
+        public SecuredVmDetails SecuredVmDetails { get; set; }
 
         /// <summary> Specifies target network access settings for disks of VM to be restored,. </summary>
         public BackupTargetDiskNetworkAccessSettings TargetDiskNetworkAccessSettings { get; set; }
-
-        /// <summary> Gets or Sets Disk Encryption Set Id for Secured VM OS Disk. </summary>
-        public ResourceIdentifier SecuredVmOSDiskEncryptionSetId
-        {
-            get
-            {
-                return SecuredVMDetails is null ? default : SecuredVMDetails.SecuredVmOSDiskEncryptionSetId;
-            }
-            set
-            {
-                if (SecuredVMDetails is null)
-                {
-                    SecuredVMDetails = new SecuredVMDetails();
-                }
-                SecuredVMDetails.SecuredVmOSDiskEncryptionSetId = value;
-            }
-        }
     }
 }

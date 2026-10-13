@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="logLevel"> The log level for the monitoring configuration status of the bare metal machine. </param>
         /// <param name="metricsLevel"> The metrics level for the monitoring configuration status of the bare metal machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BareMetalMachineMonitoringConfigurationStatus(BareMetalMachineMetricsConfigurationStatusLogLevel? logLevel, BareMetalMachineMetricsConfigurationStatusMetricsLevel? metricsLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BareMetalMachineMonitoringConfigurationStatus(BareMetalMachineMonitoringConfigurationStatusLogLevel? logLevel, BareMetalMachineMonitoringConfigurationStatusMetricsLevel? metricsLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LogLevel = logLevel;
             MetricsLevel = metricsLevel;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The log level for the monitoring configuration status of the bare metal machine. </summary>
-        public BareMetalMachineMetricsConfigurationStatusLogLevel? LogLevel { get; }
+        public BareMetalMachineMonitoringConfigurationStatusLogLevel? LogLevel { get; }
 
         /// <summary> The metrics level for the monitoring configuration status of the bare metal machine. </summary>
-        public BareMetalMachineMetricsConfigurationStatusMetricsLevel? MetricsLevel { get; }
+        public BareMetalMachineMonitoringConfigurationStatusMetricsLevel? MetricsLevel { get; }
     }
 }

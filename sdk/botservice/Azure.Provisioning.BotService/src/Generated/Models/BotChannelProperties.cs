@@ -14,10 +14,11 @@ namespace Azure.Provisioning.BotService
 {
     /// <summary>
     /// Channel definition
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AlexaChannel"/>, <see cref="FacebookChannel"/>, <see cref="EmailChannel"/>, <see cref="OutlookChannel"/>, <see cref="MsTeamsChannel"/>, <see cref="SkypeChannel"/>, <see cref="KikChannel"/>, <see cref="WebChatChannel"/>, <see cref="DirectLineChannel"/>, <see cref="TelegramChannel"/>, <see cref="SmsChannel"/>, <see cref="SlackChannel"/>, <see cref="LineChannel"/>, <see cref="DirectLineSpeechChannel"/>, <see cref="Dynamics365OmnichannelChannel"/>, <see cref="TelephonyChannel"/>, <see cref="AcsChatChannel"/>, <see cref="SearchAssistant"/>, and <see cref="M365Extensions"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AcsChatChannel"/>, <see cref="AlexaChannel"/>, <see cref="DirectLineChannel"/>, <see cref="DirectLineSpeechChannel"/>, <see cref="Dynamics365OmnichannelChannel"/>, <see cref="EmailChannel"/>, <see cref="FacebookChannel"/>, <see cref="KikChannel"/>, <see cref="LineChannel"/>, <see cref="M365Extensions"/>, <see cref="MsTeamsChannel"/>, <see cref="OutlookChannel"/>, <see cref="SearchAssistant"/>, <see cref="SkypeChannel"/>, <see cref="SlackChannel"/>, <see cref="SmsChannel"/>, <see cref="TelegramChannel"/>, <see cref="TelephonyChannel"/>, and <see cref="WebChatChannel"/>.
     /// </summary>
     public partial class BotChannelProperties : ProvisionableConstruct
     {
+        private BicepValue<string> _channelName;
         private BicepValue<ETag> _eTag;
         private BicepValue<string> _provisioningState;
         private BicepValue<AzureLocation> _location;
@@ -25,6 +26,16 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new BotChannelProperties. </summary>
         public BotChannelProperties()
         {
+        }
+
+        /// <summary> The channel name. </summary>
+        internal BicepValue<string> ChannelName
+        {
+            get
+            {
+                Initialize();
+                return _channelName;
+            }
         }
 
         /// <summary> Gets the ETag. </summary>
@@ -61,6 +72,7 @@ namespace Azure.Provisioning.BotService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _channelName = DefineProperty<string>(nameof(ChannelName), new string[] { "channelName" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         {
             get
             {
-                return ExecutionConfigurations is null ? default : ExecutionConfigurations.UserConsent;
+                return ExecutionConfigurations is null ? (UserConsent?)default : ExecutionConfigurations.UserConsent;
             }
             set
             {

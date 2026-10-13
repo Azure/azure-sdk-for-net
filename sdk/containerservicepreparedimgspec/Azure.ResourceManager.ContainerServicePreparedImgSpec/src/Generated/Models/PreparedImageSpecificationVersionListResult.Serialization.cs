@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PreparedImageSpecificationVersionListResult(value, nextLink, additionalBinaryDataProperties);

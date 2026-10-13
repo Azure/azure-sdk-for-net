@@ -50,9 +50,9 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="desiredDirection"> The desired direction for changes in the metric value. </param>
         /// <param name="definition"> The metric definition specifying how the metric value is calculated from event data. </param>
         /// <param name="eTag"> ETag of the experiment metric. </param>
-        /// <param name="lastModifiedAt"> The timestamp (UTC) of the last modification to the experiment metric resource. </param>
+        /// <param name="lastModifiedOn"> The timestamp (UTC) of the last modification to the experiment metric resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExperimentMetric(string id, LifecycleStage lifecycle, string displayName, string description, IList<string> categories, DesiredDirection desiredDirection, ExperimentMetricDefinition definition, ETag eTag, DateTimeOffset lastModifiedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExperimentMetric(string id, LifecycleStage lifecycle, string displayName, string description, IList<string> categories, DesiredDirection desiredDirection, ExperimentMetricDefinition definition, ETag eTag, DateTimeOffset lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Lifecycle = lifecycle;
@@ -62,7 +62,7 @@ namespace Azure.Analytics.OnlineExperimentation
             DesiredDirection = desiredDirection;
             Definition = definition;
             ETag = eTag;
-            LastModifiedAt = lastModifiedAt;
+            LastModifiedOn = lastModifiedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -91,6 +91,6 @@ namespace Azure.Analytics.OnlineExperimentation
         public ETag ETag { get; }
 
         /// <summary> The timestamp (UTC) of the last modification to the experiment metric resource. </summary>
-        public DateTimeOffset LastModifiedAt { get; }
+        public DateTimeOffset LastModifiedOn { get; }
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
     /// Field extracted from the content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentStringField"/>, <see cref="ContentDateTimeOffsetField"/>, <see cref="ContentTimeField"/>, <see cref="ContentNumberField"/>, <see cref="ContentIntegerField"/>, <see cref="ContentBooleanField"/>, <see cref="ContentArrayField"/>, <see cref="ContentObjectField"/>, and <see cref="ContentJsonField"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentArrayField"/>, <see cref="ContentBooleanField"/>, <see cref="ContentDateTimeOffsetField"/>, <see cref="ContentIntegerField"/>, <see cref="ContentJsonField"/>, <see cref="ContentNumberField"/>, <see cref="ContentObjectField"/>, <see cref="ContentStringField"/>, and <see cref="ContentTimeField"/>.
     /// </summary>
     public abstract partial class ContentField
     {

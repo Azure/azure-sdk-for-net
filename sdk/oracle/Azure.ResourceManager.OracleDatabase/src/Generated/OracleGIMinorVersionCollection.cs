@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleGIMinorVersionData, OracleGIMinorVersionResource>(new GiMinorVersionsGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OracleGIMinorVersionData, OracleGIMinorVersionResource>(new OracleGIMinorVersionDataAsyncCollectionResultOfT(
                 _giMinorVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleGIMinorVersionData, OracleGIMinorVersionResource>(new GiMinorVersionsGetByParentCollectionResultOfT(
+            return new PageableWrapper<OracleGIMinorVersionData, OracleGIMinorVersionResource>(new OracleGIMinorVersionDataCollectionResultOfT(
                 _giMinorVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,

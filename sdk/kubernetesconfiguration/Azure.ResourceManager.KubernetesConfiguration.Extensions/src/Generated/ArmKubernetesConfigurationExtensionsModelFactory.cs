@@ -90,6 +90,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
             return new KubernetesClusterExtensionScope(clusterReleaseNamespace is null ? default : new KubernetesClusterExtensionScopeCluster(clusterReleaseNamespace, default), targetNamespace is null ? default : new KubernetesClusterExtensionScopeNamespace(targetNamespace, default), default);
         }
 
+        /// <summary> Status from the extension. </summary>
         /// <param name="code"> Status code provided by the Extension. </param>
         /// <param name="displayStatus"> Short description of status of the extension. </param>
         /// <param name="level"> Level of the status. </param>
@@ -107,6 +108,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 default);
         }
 
+        /// <summary> Metadata about the managing entity of the extension and the permitted operations. </summary>
         /// <param name="category"> The category of the managing entity. </param>
         /// <param name="accessDetails"> The list of access details of the managing entity. </param>
         /// <returns> A new <see cref="Models.KubernetesClusterManagementDetails"/> instance for mocking. </returns>
@@ -117,6 +119,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
             return new KubernetesClusterManagementDetails(category, (accessDetails ?? new ChangeTrackingList<KubernetesClusterAccessDetail>()).ToList(), default);
         }
 
+        /// <summary> Metadata about the access details of the managing entity of the extension. </summary>
         /// <param name="entity"> The entity to which the access details apply. </param>
         /// <param name="allowedActions"> The list of allowed actions for the entity. </param>
         /// <param name="description"> The description of the entity. </param>
@@ -128,6 +131,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
             return new KubernetesClusterAccessDetail(entity, (allowedActions ?? new ChangeTrackingList<string>()).ToList(), description, default);
         }
 
+        /// <summary> Additional details provided by the publisher of the extension. </summary>
         /// <param name="docs"> Documentation for the extension. </param>
         /// <param name="releaseNotes"> Release Notes of the extension. </param>
         /// <param name="troubleshootingGuide"> Troubleshooting guide for the extension. </param>

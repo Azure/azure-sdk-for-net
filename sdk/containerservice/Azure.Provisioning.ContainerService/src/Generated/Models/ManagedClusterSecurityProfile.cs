@@ -125,7 +125,7 @@ namespace Azure.Provisioning.ContainerService
             _azureKeyVaultKms = DefineModelProperty<ManagedClusterSecurityProfileKeyVaultKms>(nameof(AzureKeyVaultKms), new string[] { "azureKeyVaultKms" });
             _workloadIdentity = DefineModelProperty<ManagedClusterSecurityProfileWorkloadIdentity>(nameof(WorkloadIdentity), new string[] { "workloadIdentity" });
             _imageCleaner = DefineModelProperty<ManagedClusterSecurityProfileImageCleaner>(nameof(ImageCleaner), new string[] { "imageCleaner" });
-            _customCATrustCertificates = DefineListProperty<BinaryData>(nameof(CustomCATrustCertificates), new string[] { "customCATrustCertificates" });
+            _customCATrustCertificates = DefineListProperty<BinaryData>(nameof(CustomCATrustCertificates), new string[] { "customCATrustCertificates" }, format: "base64");
             DefineAdditionalProperties();
         }
 

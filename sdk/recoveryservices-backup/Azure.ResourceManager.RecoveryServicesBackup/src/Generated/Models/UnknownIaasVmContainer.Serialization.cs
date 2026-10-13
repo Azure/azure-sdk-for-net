@@ -119,6 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string healthStatus = default;
             ProtectableContainerType containerType = default;
             string protectableObjectType = default;
+            AzureLocation? sourceLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier virtualMachineId = default;
             string virtualMachineVersion = default;
@@ -159,6 +160,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectableObjectType = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("sourceLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceLocation = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("virtualMachineId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -180,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UnknownIaasVmContainer(
@@ -190,6 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 healthStatus,
                 containerType,
                 protectableObjectType,
+                sourceLocation,
                 additionalBinaryDataProperties,
                 virtualMachineId,
                 virtualMachineVersion,

@@ -12,7 +12,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of an emitted output from a code interpreter tool.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepCodeInterpreterLogOutput"/> and <see cref="RunStepCodeInterpreterImageOutput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepCodeInterpreterImageOutput"/> and <see cref="RunStepCodeInterpreterLogOutput"/>.
     /// </summary>
     public abstract partial class RunStepCodeInterpreterToolCallOutput
     {
@@ -33,6 +33,11 @@ namespace Azure.AI.Agents.Persistent
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterToolCallOutput"/>. </summary>
+        protected RunStepCodeInterpreterToolCallOutput() : this(default)
+        {
         }
 
         /// <summary> The object type. </summary>

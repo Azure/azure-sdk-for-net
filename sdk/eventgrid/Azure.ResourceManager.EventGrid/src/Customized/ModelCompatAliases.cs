@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.EventGrid.Models
         [WirePath("properties.expirationTimeUtc")]
         public DateTimeOffset? ExpireOn
         {
-            get => Properties is null ? default : Properties.ExpireOn;
+            get => Properties is null ? default : Properties.ExpiresOn;
             set
             {
                 Properties ??= new SubscriptionUpdateParametersProperties();
-                Properties.ExpireOn = value;
+                Properties.ExpiresOn = value;
             }
         }
     }

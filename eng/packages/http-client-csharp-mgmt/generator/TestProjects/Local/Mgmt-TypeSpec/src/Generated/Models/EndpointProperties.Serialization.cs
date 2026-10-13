@@ -134,7 +134,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                 }
             }
             return new EndpointProperties(prop, additionalBinaryDataProperties);

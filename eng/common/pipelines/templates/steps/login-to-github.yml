@@ -16,10 +16,14 @@ parameters:
   default: false
 - name: ScriptDirectory
   default: eng/common/scripts
+- name: Condition
+  type: string
+  default: succeeded()
 
 steps:
 - task: AzureCLI@2
   displayName: "Login to GitHub"
+  condition: ${{ parameters.Condition }}
   inputs:
     azureSubscription: 'AzureSDKEngKeyVault Secrets'
     scriptType: pscore

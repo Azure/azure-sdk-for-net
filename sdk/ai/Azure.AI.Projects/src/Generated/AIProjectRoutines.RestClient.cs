@@ -2,6 +2,7 @@
 
 #nullable disable
 
+using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 
@@ -105,7 +106,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetRoutinesRequest(string foundryFeatures, int? limit, string after, string before, string order, RequestOptions options)
+        internal PipelineMessage CreateGetRoutinesRequest(string foundryFeatures, int? limit, string after, string order, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -117,10 +118,6 @@ namespace Azure.AI.Projects
             if (after != null)
             {
                 uri.AppendQuery("after", after, true);
-            }
-            if (before != null)
-            {
-                uri.AppendQuery("before", before, true);
             }
             if (order != null)
             {
@@ -136,6 +133,28 @@ namespace Azure.AI.Projects
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateNextGetRoutinesRequest(Uri nextPage, string foundryFeatures, int? limit, string after, string order, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
@@ -161,7 +180,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetRoutineRunsRequest(string routineName, string foundryFeatures, string filter, int? limit, string after, string before, string order, RequestOptions options)
+        internal PipelineMessage CreateGetRoutineRunsRequest(string routineName, string foundryFeatures, string filter, int? limit, string after, string order, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -180,10 +199,6 @@ namespace Azure.AI.Projects
             {
                 uri.AppendQuery("after", after, true);
             }
-            if (before != null)
-            {
-                uri.AppendQuery("before", before, true);
-            }
             if (order != null)
             {
                 uri.AppendQuery("order", order, true);
@@ -198,6 +213,28 @@ namespace Azure.AI.Projects
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateNextGetRoutineRunsRequest(Uri nextPage, string routineName, string foundryFeatures, string filter, int? limit, string after, string order, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;

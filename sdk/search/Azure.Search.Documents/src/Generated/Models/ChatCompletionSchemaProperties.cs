@@ -15,6 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _name;
+        internal bool _nameIsDefined;
+        private string _description;
+        internal bool _descriptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionSchemaProperties"/>. </summary>
         public ChatCompletionSchemaProperties()
@@ -29,18 +33,40 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ChatCompletionSchemaProperties(string name, string description, bool? isStrict, ChatCompletionSchema schema, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Name = name;
-            Description = description;
+            _name = name;
+            _description = description;
             IsStrict = isStrict;
             Schema = schema;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the json schema the model will adhere to. </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+                _nameIsDefined = true;
+            }
+        }
 
         /// <summary> Description of the json schema the model will adhere to. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+                _descriptionIsDefined = true;
+            }
+        }
 
         /// <summary> Whether or not the model's response should use structured outputs. Default is true. </summary>
         public bool? IsStrict { get; set; }

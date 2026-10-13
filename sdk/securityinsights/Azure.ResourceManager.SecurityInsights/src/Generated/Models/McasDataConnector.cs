@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.TenantId;
+                return Properties is null ? (Guid?)default : Properties.TenantId;
             }
             set
             {
@@ -58,24 +58,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     Properties.TenantId = value.Value;
                 }
-            }
-        }
-
-        /// <summary> The available data types for the connector. </summary>
-        [WirePath("properties.dataTypes")]
-        public McasDataConnectorDataTypes DataTypes
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DataTypes;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new McasDataConnectorProperties();
-                }
-                Properties.DataTypes = value;
             }
         }
     }

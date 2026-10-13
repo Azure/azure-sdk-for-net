@@ -75,15 +75,29 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(BM25Similarity)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(K1))
+            if (_k1IsDefined || Optional.IsDefined(K1))
             {
-                writer.WritePropertyName("k1"u8);
-                writer.WriteNumberValue(K1.Value);
+                if (K1 != null)
+                {
+                    writer.WritePropertyName("k1"u8);
+                    writer.WriteNumberValue(K1.Value);
+                }
+                else
+                {
+                    writer.WriteNull("k1"u8);
+                }
             }
-            if (Optional.IsDefined(B))
+            if (_bIsDefined || Optional.IsDefined(B))
             {
-                writer.WritePropertyName("b"u8);
-                writer.WriteNumberValue(B.Value);
+                if (B != null)
+                {
+                    writer.WritePropertyName("b"u8);
+                    writer.WriteNumberValue(B.Value);
+                }
+                else
+                {
+                    writer.WriteNull("b"u8);
+                }
             }
         }
 
@@ -114,7 +128,9 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string odataType = "#Microsoft.Azure.Search.BM25Similarity";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool k1IsDefined = false;
             double? k1 = default;
+            bool bIsDefined = false;
             double? b = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -125,6 +141,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("k1"u8))
                 {
+                    k1IsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         k1 = null;
@@ -135,6 +152,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("b"u8))
                 {
+                    bIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         b = null;
@@ -145,10 +163,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BM25Similarity(odataType, additionalBinaryDataProperties, k1, b);
+            return new BM25Similarity(odataType, additionalBinaryDataProperties, k1, b)
+            {
+                _k1IsDefined = k1IsDefined,
+                _bIsDefined = bIsDefined
+            };
         }
     }
 }

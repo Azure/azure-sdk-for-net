@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </summary>
     public enum ErrorDeploymentType

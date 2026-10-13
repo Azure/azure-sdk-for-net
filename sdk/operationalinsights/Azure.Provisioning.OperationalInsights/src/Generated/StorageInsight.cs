@@ -22,7 +22,7 @@ namespace Azure.Provisioning.OperationalInsights
         private StorageInsightProperties _properties;
         private BicepValue<ETag> _eTag;
         private BicepDictionary<string> _tags;
-        private ResourceReference<Workspace> _parent;
+        private ResourceReference<OperationalInsightsWorkspace> _parent;
 
         /// <summary> Creates a new StorageInsight. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.OperationalInsights
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public Workspace Parent
+        public OperationalInsightsWorkspace Parent
         {
             get
             {
@@ -196,7 +196,7 @@ namespace Azure.Provisioning.OperationalInsights
             _properties = DefineModelProperty<StorageInsightProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<Workspace>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<OperationalInsightsWorkspace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

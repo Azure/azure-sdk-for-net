@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> The predicted change to the resource property. </summary>
     public partial class WhatIfPropertyChange : IJsonModel<WhatIfPropertyChange>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WhatIfPropertyChange)} does not support writing '{options.Format}' format.");
             }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    before = BinaryData.FromString(prop.Value.GetRawText());
+                    before = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("after"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    after = BinaryData.FromString(prop.Value.GetRawText());
+                    after = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("children"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WhatIfPropertyChange(

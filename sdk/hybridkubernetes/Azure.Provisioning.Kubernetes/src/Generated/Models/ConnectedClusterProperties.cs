@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Kubernetes
         private BicepValue<string> _distributionVersion;
         private BicepValue<string> _infrastructure;
         private BicepValue<string> _offering;
-        private BicepValue<DateTimeOffset> _managedIdentityCertificateExpirationOn;
+        private BicepValue<DateTimeOffset> _managedIdentityCertificateExpiresOn;
         private BicepValue<DateTimeOffset> _lastConnectivityOn;
         private BicepValue<ConnectedClusterConnectivityStatus> _connectivityStatus;
         private BicepValue<ConnectedClusterPrivateLinkState> _privateLinkState;
@@ -169,13 +169,13 @@ namespace Azure.Provisioning.Kubernetes
             }
         }
 
-        /// <summary> Gets the ManagedIdentityCertificateExpirationOn. </summary>
-        public BicepValue<DateTimeOffset> ManagedIdentityCertificateExpirationOn
+        /// <summary> Gets the ManagedIdentityCertificateExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ManagedIdentityCertificateExpiresOn
         {
             get
             {
                 Initialize();
-                return _managedIdentityCertificateExpirationOn;
+                return _managedIdentityCertificateExpiresOn;
             }
         }
 
@@ -392,7 +392,7 @@ namespace Azure.Provisioning.Kubernetes
             _distributionVersion = DefineProperty<string>(nameof(DistributionVersion), new string[] { "distributionVersion" });
             _infrastructure = DefineProperty<string>(nameof(Infrastructure), new string[] { "infrastructure" });
             _offering = DefineProperty<string>(nameof(Offering), new string[] { "offering" }, isOutput: true);
-            _managedIdentityCertificateExpirationOn = DefineProperty<DateTimeOffset>(nameof(ManagedIdentityCertificateExpirationOn), new string[] { "managedIdentityCertificateExpirationTime" }, isOutput: true, format: "O");
+            _managedIdentityCertificateExpiresOn = DefineProperty<DateTimeOffset>(nameof(ManagedIdentityCertificateExpiresOn), new string[] { "managedIdentityCertificateExpirationTime" }, isOutput: true, format: "O");
             _lastConnectivityOn = DefineProperty<DateTimeOffset>(nameof(LastConnectivityOn), new string[] { "lastConnectivityTime" }, isOutput: true, format: "O");
             _connectivityStatus = DefineProperty<ConnectedClusterConnectivityStatus>(nameof(ConnectivityStatus), new string[] { "connectivityStatus" }, isOutput: true);
             _privateLinkState = DefineProperty<ConnectedClusterPrivateLinkState>(nameof(PrivateLinkState), new string[] { "privateLinkState" });

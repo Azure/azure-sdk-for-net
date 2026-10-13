@@ -198,12 +198,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    configurations = BinaryData.FromString(prop.Value.GetRawText());
+                    configurations = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HDInsightClusterDefinition(blueprint, kind, componentVersion ?? new ChangeTrackingDictionary<string, string>(), configurations, additionalBinaryDataProperties);

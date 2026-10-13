@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated code generation from AutoRest to the TypeSpec management-plane generator.
+
 ## 1.0.2 (2026-04-27)
 
 ### Other Changes

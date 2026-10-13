@@ -12,12 +12,16 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Contains configuration options specific to the compression method used during indexing or querying.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ScalarQuantizationCompression"/> and <see cref="BinaryQuantizationCompression"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BinaryQuantizationCompression"/> and <see cref="ScalarQuantizationCompression"/>.
     /// </summary>
     public abstract partial class VectorSearchCompression
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private RescoringOptions _rescoringOptions;
+        internal bool _rescoringOptionsIsDefined;
+        private int? _truncationDimension;
+        internal bool _truncationDimensionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VectorSearchCompression"/>. </summary>
         /// <param name="compressionName"> The name to associate with this particular configuration. </param>
@@ -37,17 +41,39 @@ namespace Azure.Search.Documents.Indexes.Models
         internal VectorSearchCompression(string compressionName, RescoringOptions rescoringOptions, int? truncationDimension, VectorSearchCompressionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CompressionName = compressionName;
-            RescoringOptions = rescoringOptions;
-            TruncationDimension = truncationDimension;
+            _rescoringOptions = rescoringOptions;
+            _truncationDimension = truncationDimension;
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Contains the options for rescoring. </summary>
-        public RescoringOptions RescoringOptions { get; set; }
+        public RescoringOptions RescoringOptions
+        {
+            get
+            {
+                return _rescoringOptions;
+            }
+            set
+            {
+                _rescoringOptions = value;
+                _rescoringOptionsIsDefined = true;
+            }
+        }
 
         /// <summary> The number of dimensions to truncate the vectors to. Truncating the vectors reduces the size of the vectors and the amount of data that needs to be transferred during search. This can save storage cost and improve search performance at the expense of recall. It should be only used for embeddings trained with Matryoshka Representation Learning (MRL) such as OpenAI text-embedding-3-large (small). The default value is null, which means no truncation. </summary>
-        public int? TruncationDimension { get; set; }
+        public int? TruncationDimension
+        {
+            get
+            {
+                return _truncationDimension;
+            }
+            set
+            {
+                _truncationDimension = value;
+                _truncationDimensionIsDefined = true;
+            }
+        }
 
         /// <summary> Type of VectorSearchCompression. </summary>
         internal VectorSearchCompressionKind Kind { get; set; }

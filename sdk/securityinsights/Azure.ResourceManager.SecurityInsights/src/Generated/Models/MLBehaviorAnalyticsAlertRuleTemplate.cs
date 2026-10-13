@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Severity;
+                return Properties is null ? (SecurityInsightsAlertSeverity?)default : Properties.Severity;
             }
             set
             {

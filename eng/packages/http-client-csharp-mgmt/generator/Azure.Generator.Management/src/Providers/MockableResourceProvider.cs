@@ -113,7 +113,7 @@ namespace Azure.Generator.Management.Providers
                     ResourceHelpers.GetRestClientPropertyName(restClientProvider.Name),
                     new ExpressionPropertyBody(
                         restClientField.Assign(
-                            New.Instance(restClientProvider.Type, clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisResource.Endpoint(), Literal(inputClient.CurrentApiVersion)),
+                            New.Instance(restClientProvider.Type, [clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisResource.Endpoint(), Literal(inputClient.CurrentApiVersion), .. inputClient.HasOperationApiVersionDefaults ? new[] { InputClientExtensions.BuildApiVersionResolver() } : []]),
                             nullCoalesce: true)),
                     enclosingType);
 
@@ -316,32 +316,27 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
+        internal IEnumerable<ArrayResponseCollectionResultPlan> ArrayCollectionResultPlans =>
+            _resourceMethods.SelectMany(pair => pair.Value
+                .Where(method => ArrayResponseCollectionResultPlan.IsArrayResponse(method.InputMethod))
+                .Select(method => new ArrayResponseCollectionResultPlan(this, method.InputClient, method.InputMethod,
+                    GetResourceMethodNameOverride(pair.Key, method, false), GetResourceMethodNameOverride(pair.Key, method, true))))
+                .Concat(_nonResourceMethods.Where(method => ArrayResponseCollectionResultPlan.IsArrayResponse(method.InputMethod))
+                    .Select(method => new ArrayResponseCollectionResultPlan(this, method.InputClient, method.InputMethod)));
+
+        private static string? GetResourceMethodNameOverride(ResourceClientProvider resource, ResourceMethod method, bool isAsync)
+        {
+            var name = ResourceHelpers.GetExtensionOperationMethodName(method.Kind, resource.ResourceName, isAsync);
+            // Explicit List client names override the synthesized plural extension method name.
+            return method.Kind == ResourceOperationKind.List &&
+                ManagementClientGenerator.Instance.InputLibrary.ClientNameOverriddenMethods.Contains(method.InputMethod) ? null : name;
+        }
+
         private protected MethodProvider BuildResourceServiceMethod(ResourceClientProvider resource, ResourceMethod resourceMethod, bool isAsync, OperationContext operationContext, ParameterProvider? scopeParameter = null)
         {
-            var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
-
-            // If the user provided a @@clientName(.., "csharp") on the underlying tsp method,
-            // honor it instead of fabricating from (kind, ResourceName). The TCGC name on
-            // resourceMethod.InputMethod.Name already reflects the override.
-            // Scope: only List operations for now. Other kinds (Read/Create/Update/Delete/Action)
-            // can be opted into in a follow-up.
-            if (methodName != null
-                && resourceMethod.Kind == ResourceOperationKind.List
-                && ManagementClientGenerator.Instance.InputLibrary.ClientNameOverriddenMethods.Contains(resourceMethod.InputMethod))
-            {
-                var baseName = resourceMethod.InputMethod.Name;
-                methodName = isAsync ? $"{baseName}Async" : baseName;
-            }
-
-            // Only fall back to the raw SDK method name when no standard name was generated.
-            // This handles non-CRUD operations (e.g., GetReports, GetReport) that don't map to
-            // standard CRUD method naming patterns.
-            if (methodName == null)
-            {
-                var baseName = resourceMethod.InputMethod.Name;
-                methodName = isAsync ? $"{baseName}Async" : baseName;
-            }
-
+            var methodName = GetResourceMethodNameOverride(resource, resourceMethod, isAsync) ??
+                _clientInfos[resourceMethod.InputClient].RestClientProvider
+                    .GetConvenienceMethodByOperation(resourceMethod.InputMethod.Operation, isAsync, this).Signature.Name;
             return BuildServiceMethodWithContext(resourceMethod.InputMethod, resourceMethod.InputClient, operationContext, isAsync, methodName, resource, scopeParameter);
         }
 

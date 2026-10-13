@@ -15,6 +15,10 @@ namespace Azure.AI.Agents.Persistent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _name;
+        internal bool _nameIsDefined;
+        private VectorStoreExpirationPolicy _expiresAfter;
+        internal bool _expiresAfterIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ModifyVectorStoreRequest"/>. </summary>
         internal ModifyVectorStoreRequest()
@@ -29,17 +33,29 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ModifyVectorStoreRequest(string name, VectorStoreExpirationPolicy expiresAfter, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Name = name;
-            ExpiresAfter = expiresAfter;
+            _name = name;
+            _expiresAfter = expiresAfter;
             Metadata = metadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the vector store. </summary>
-        public string Name { get; }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+        }
 
         /// <summary> Details on when this vector store expires. </summary>
-        public VectorStoreExpirationPolicy ExpiresAfter { get; }
+        public VectorStoreExpirationPolicy ExpiresAfter
+        {
+            get
+            {
+                return _expiresAfter;
+            }
+        }
 
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
         public IDictionary<string, string> Metadata { get; }

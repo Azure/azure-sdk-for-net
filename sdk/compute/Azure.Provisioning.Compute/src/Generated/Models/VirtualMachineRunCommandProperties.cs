@@ -12,7 +12,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Compute
 {
     /// <summary> Describes the properties of a Virtual Machine run command. </summary>
-    public partial class VirtualMachineRunCommandProperties : ProvisionableConstruct
+    internal partial class VirtualMachineRunCommandProperties : ProvisionableConstruct
     {
         private VirtualMachineRunCommandScriptSource _source;
         private BicepList<RunCommandInputParameter> _parameters;

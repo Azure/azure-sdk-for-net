@@ -26,7 +26,7 @@ namespace Azure.Provisioning.OperationalInsights
         private WorkspaceProperties _properties;
         private ManagedServiceIdentity _identity;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<Workspace> _parent;
+        private ResourceReference<OperationalInsightsWorkspace> _parent;
 
         /// <summary> Creates a new WorkspacesOperations. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -146,7 +146,7 @@ namespace Azure.Provisioning.OperationalInsights
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public Workspace Parent
+        public OperationalInsightsWorkspace Parent
         {
             get
             {
@@ -407,7 +407,7 @@ namespace Azure.Provisioning.OperationalInsights
             _properties = DefineModelProperty<WorkspaceProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
-            _parent = DefineResource<Workspace>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<OperationalInsightsWorkspace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

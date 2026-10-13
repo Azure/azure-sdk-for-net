@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    additionalColumns = BinaryData.FromString(prop.Value.GetRawText());
+                    additionalColumns = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("numberPrecision"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadNumberScale(prop, ref numberScale);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new OracleSource(
                 copySourceType,

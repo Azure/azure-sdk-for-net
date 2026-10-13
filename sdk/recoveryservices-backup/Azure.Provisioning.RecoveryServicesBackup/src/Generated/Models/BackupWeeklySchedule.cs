@@ -57,7 +57,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         {
             base.DefineProvisionableProperties();
             _scheduleRunDays = DefineListProperty<BackupDayOfWeek>(nameof(ScheduleRunDays), new string[] { "scheduleRunDays" });
-            _scheduleRunTimes = DefineListProperty<DateTimeOffset>(nameof(ScheduleRunTimes), new string[] { "scheduleRunTimes" });
+            _scheduleRunTimes = DefineListProperty<DateTimeOffset>(nameof(ScheduleRunTimes), new string[] { "scheduleRunTimes" }, format: "O");
             DefineAdditionalProperties();
         }
 

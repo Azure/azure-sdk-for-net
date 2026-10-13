@@ -15,6 +15,15 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> The AML skill allows you to extend AI enrichment with a custom Azure Machine Learning (AML) model. Once an AML model is trained and deployed, an AML skill integrates it into AI enrichment. </summary>
     public partial class AzureMachineLearningSkill : SearchIndexerSkill
     {
+        private Uri _scoringUri;
+        internal bool _scoringUriIsDefined;
+        private string _authenticationKey;
+        internal bool _authenticationKeyIsDefined;
+        private TimeSpan? _timeout;
+        internal bool _timeoutIsDefined;
+        private int? _degreeOfParallelism;
+        internal bool _degreeOfParallelismIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="AzureMachineLearningSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
@@ -42,30 +51,74 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="degreeOfParallelism"> (Optional) When specified, indicates the number of calls the indexer will make in parallel to the endpoint you have provided. You can decrease this value if your endpoint is failing under too high of a request load, or raise it if your endpoint is able to accept more requests and you would like an increase in the performance of the indexer. If not set, a default value of 5 is used. The degreeOfParallelism can be set to a maximum of 10 and a minimum of 1. </param>
         internal AzureMachineLearningSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri scoringUri, string authenticationKey, ResourceIdentifier resourceId, TimeSpan? timeout, AzureLocation? location, int? degreeOfParallelism) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
-            ScoringUri = scoringUri;
-            AuthenticationKey = authenticationKey;
+            _scoringUri = scoringUri;
+            _authenticationKey = authenticationKey;
             ResourceId = resourceId;
-            Timeout = timeout;
+            _timeout = timeout;
             Location = location;
-            DegreeOfParallelism = degreeOfParallelism;
+            _degreeOfParallelism = degreeOfParallelism;
         }
 
         /// <summary> (Required for no authentication or key authentication) The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed. </summary>
-        public Uri ScoringUri { get; set; }
+        public Uri ScoringUri
+        {
+            get
+            {
+                return _scoringUri;
+            }
+            set
+            {
+                _scoringUri = value;
+                _scoringUriIsDefined = true;
+            }
+        }
 
         /// <summary> (Required for key authentication) The key for the AML service. </summary>
-        public string AuthenticationKey { get; set; }
+        public string AuthenticationKey
+        {
+            get
+            {
+                return _authenticationKey;
+            }
+            set
+            {
+                _authenticationKey = value;
+                _authenticationKeyIsDefined = true;
+            }
+        }
 
         /// <summary> (Required for token authentication). The Azure Resource Manager resource ID of the AML service. It should be in the format subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}. </summary>
         public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> (Optional) When specified, indicates the timeout for the http client making the API call. </summary>
-        public TimeSpan? Timeout { get; set; }
+        public TimeSpan? Timeout
+        {
+            get
+            {
+                return _timeout;
+            }
+            set
+            {
+                _timeout = value;
+                _timeoutIsDefined = true;
+            }
+        }
 
         /// <summary> (Optional for token authentication). The region the AML service is deployed in. </summary>
         public AzureLocation? Location { get; set; }
 
         /// <summary> (Optional) When specified, indicates the number of calls the indexer will make in parallel to the endpoint you have provided. You can decrease this value if your endpoint is failing under too high of a request load, or raise it if your endpoint is able to accept more requests and you would like an increase in the performance of the indexer. If not set, a default value of 5 is used. The degreeOfParallelism can be set to a maximum of 10 and a minimum of 1. </summary>
-        public int? DegreeOfParallelism { get; set; }
+        public int? DegreeOfParallelism
+        {
+            get
+            {
+                return _degreeOfParallelism;
+            }
+            set
+            {
+                _degreeOfParallelism = value;
+                _degreeOfParallelismIsDefined = true;
+            }
+        }
     }
 }

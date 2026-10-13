@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,6 +16,20 @@ namespace Azure.Search.Documents.Indexes
     public partial class SearchIndexClient
     {
         #region KnowledgeBases Operations
+
+        /// <summary> Lists all knowledge bases available for a search service. </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<BinaryData> GetKnowledgeBases(RequestContext context) =>
+            GetKnowledgeBases(search: default, pageSize: default, searchType: default, context: context);
+
+        /// <summary> Lists all knowledge bases available for a search service. </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<BinaryData> GetKnowledgeBasesAsync(RequestContext context) =>
+            GetKnowledgeBasesAsync(search: default, pageSize: default, searchType: default, context: context);
 
         /// <summary> Creates a new knowledge base. </summary>
         /// <param name="knowledgeBase"> The definition of the knowledge base to create. </param>

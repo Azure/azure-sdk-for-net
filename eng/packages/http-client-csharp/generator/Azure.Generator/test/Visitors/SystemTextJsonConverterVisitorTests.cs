@@ -156,6 +156,28 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
+        public void DynamicModelReadConverterPreservesRawData()
+        {
+            var visitor = new TestSystemTextJsonConverterVisitor();
+            var decorator = new InputDecoratorInfo("Azure.ClientGenerator.Core.@useSystemTextJsonConverter", null);
+            var inputModel = InputFactory.Model("TestModel", decorators: [decorator], isDynamicModel: true);
+            MockHelpers.LoadMockGenerator(inputModels: () => [inputModel]);
+
+            var modelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+            Assert.IsNotNull(modelProvider);
+
+            var updatedModel = visitor.InvokePreVisitModel(inputModel, modelProvider);
+            var converterType = updatedModel!.SerializationProviders[0].NestedTypes
+                .First(t => t.Name.EndsWith("Converter"));
+            var readMethod = converterType.Methods.First(m => m.Signature.Name == "Read");
+            var readMethodBody = readMethod.BodyStatements!.ToDisplayString();
+
+            Assert.That(
+                readMethodBody,
+                Does.Contain("DeserializeTestModel(document.RootElement, document.RootElement.GetUtf8Bytes(), global::Samples.ModelSerializationExtensions.WireOptions)"));
+        }
+
+        [Test]
         public void WriteConverterMethodHasCorrectBody()
         {
             // Arrange

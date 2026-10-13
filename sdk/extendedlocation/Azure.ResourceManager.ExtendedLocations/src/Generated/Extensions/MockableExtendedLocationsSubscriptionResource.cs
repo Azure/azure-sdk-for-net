@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationsGetBySubscriptionAsyncCollectionResultOfT(CustomLocationsRestClient, Id.SubscriptionId, context, "MockableExtendedLocationsSubscriptionResource.GetCustomLocations"), data => new CustomLocationResource(Client, data));
+            return new AsyncPageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationDataAsync0CollectionResultOfT(CustomLocationsRestClient, Id.SubscriptionId, context, "MockableExtendedLocationsSubscriptionResource.GetCustomLocations"), data => new CustomLocationResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationsGetBySubscriptionCollectionResultOfT(CustomLocationsRestClient, Id.SubscriptionId, context, "MockableExtendedLocationsSubscriptionResource.GetCustomLocations"), data => new CustomLocationResource(Client, data));
+            return new PageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationData0CollectionResultOfT(CustomLocationsRestClient, Id.SubscriptionId, context, "MockableExtendedLocationsSubscriptionResource.GetCustomLocations"), data => new CustomLocationResource(Client, data));
         }
     }
 }

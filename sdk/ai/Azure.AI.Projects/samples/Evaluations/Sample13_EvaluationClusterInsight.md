@@ -277,7 +277,7 @@ ProjectsInsight clusterInsight = projectClient.Insights.Generate(
         displayName: "Cluster analysis",
         request: new EvaluationRunClusterInsightRequest(
             evalId: evaluationId,
-            runIds: [ runId ])
+            runIds: [runId])
         {
             ModelConfiguration = new InsightModelConfiguration(modelDeploymentName)
         }));
@@ -291,7 +291,7 @@ ProjectsInsight clusterInsight = await projectClient.Insights.GenerateAsync(
         displayName: "Cluster analysis",
         request: new EvaluationRunClusterInsightRequest(
             evalId: evaluationId,
-            runIds: [ runId ])
+            runIds: [runId])
         {
             ModelConfiguration = new InsightModelConfiguration(modelDeploymentName)
         }));

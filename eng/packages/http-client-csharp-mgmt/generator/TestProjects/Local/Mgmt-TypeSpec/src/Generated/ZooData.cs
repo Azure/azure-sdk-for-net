@@ -34,7 +34,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"></param>
+        /// <param name="extendedLocation"> The extended location of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ZooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ZooProperties properties, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -47,7 +47,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         [WirePath("properties")]
         internal ZooProperties Properties { get; set; }
 
-        /// <summary> Gets or sets the ExtendedLocation. </summary>
+        /// <summary> The extended location of the resource. </summary>
         [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
 
@@ -80,7 +80,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             get
             {
-                return Properties is null ? default : Properties.RequiredInt;
+                return Properties is null ? (int?)default : Properties.RequiredInt;
             }
             set
             {
@@ -101,7 +101,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             get
             {
-                return Properties is null ? default : Properties.RequiredFixedEnum;
+                return Properties is null ? (ZooFixedMode?)default : Properties.RequiredFixedEnum;
             }
             set
             {
@@ -122,7 +122,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             get
             {
-                return Properties is null ? default : Properties.RequiredExtensibleEnum;
+                return Properties is null ? (ZooProvisioningState?)default : Properties.RequiredExtensibleEnum;
             }
             set
             {

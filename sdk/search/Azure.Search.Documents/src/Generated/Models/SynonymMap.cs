@@ -17,6 +17,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private SearchResourceEncryptionKey _encryptionKey;
+        internal bool _encryptionKeyIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SynonymMap"/>. </summary>
         /// <param name="name"> The name of the synonym map. </param>
@@ -43,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
             Format = format;
             SynonymsList = synonymsList;
-            EncryptionKey = encryptionKey;
+            _encryptionKey = encryptionKey;
             _etag = etag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,6 +54,17 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Name { get; set; }
 
         /// <summary> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data. Once you have encrypted your data, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </summary>
-        public SearchResourceEncryptionKey EncryptionKey { get; set; }
+        public SearchResourceEncryptionKey EncryptionKey
+        {
+            get
+            {
+                return _encryptionKey;
+            }
+            set
+            {
+                _encryptionKey = value;
+                _encryptionKeyIsDefined = true;
+            }
+        }
     }
 }

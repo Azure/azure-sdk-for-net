@@ -65,30 +65,30 @@ public class BasicTrafficManagerTests
               name: take('profile${uniqueString(resourceGroup().id)}', 24)
               location: 'global'
               properties: {
-                trafficRoutingMethod: 'Weighted'
                 dnsConfig: {
                   relativeName: 'contoso'
                   ttl: 30
                 }
                 monitorConfig: {
-                  protocol: 'HTTPS'
-                  port: 443
-                  path: '/'
                   intervalInSeconds: 30
+                  path: '/'
+                  port: 443
+                  protocol: 'HTTPS'
                   timeoutInSeconds: 10
                   toleratedNumberOfFailures: 3
                 }
+                trafficRoutingMethod: 'Weighted'
               }
             }
 
             resource endpoint 'Microsoft.Network/trafficmanagerprofiles/AzureEndpoints@2022-04-01' = {
               name: take('endpoint${uniqueString(resourceGroup().id)}', 24)
+              parent: profile
               properties: {
-                targetResourceId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRg/providers/Microsoft.Network/publicIPAddresses/myPublicIp'
                 endpointStatus: 'Enabled'
+                targetResourceId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRg/providers/Microsoft.Network/publicIPAddresses/myPublicIp'
                 weight: 1
               }
-              parent: profile
             }
             """);
     }

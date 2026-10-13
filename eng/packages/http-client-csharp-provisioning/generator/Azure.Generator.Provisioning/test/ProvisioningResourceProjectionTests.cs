@@ -12,6 +12,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -97,6 +98,93 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(projection.ReadableScopes, Is.EqualTo(new[] { ResourceScope.ResourceGroup }));
             Assert.That(projection.WritableScopes, Is.EqualTo(new[] { ResourceScope.Extension }));
             Assert.That(projection.IsExtensionResource, Is.True);
+        }
+
+        [Test]
+        public void ResolvedResourceNamePreservesOriginalModelCustomization()
+        {
+            var model = CreateModel("Api");
+            var resource = CreateMetadata(
+                model, "/providers/Microsoft.Test/apis/{apiName}", "Microsoft.Test/apis",
+                ResourceScope.Tenant, [], resourceName: "ServiceApis");
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                customizationSources:
+                [
+                    """
+                    namespace Azure.Provisioning.Tests;
+                    public class CodeGenTypeAttribute : System.Attribute
+                    {
+                        public CodeGenTypeAttribute(string name) { }
+                    }
+                    [CodeGenType("Api")]
+                    public partial class ApiManagementApi { }
+                    """
+                ]);
+            var provider = CreateResourceProvider(resource);
+            RegisterResourceProviders(provider);
+
+            Assert.That(provider.Name, Is.EqualTo("ApiManagementApi"));
+            Assert.That(provider.CustomCodeView, Is.Not.Null);
+            Assert.That(provider.RelativeFilePath, Does.EndWith("ApiManagementApi.cs"));
+        }
+
+        [Test]
+        public void ResolvedResourceCustomizationTakesPrecedenceOverModelCustomization()
+        {
+            var model = CreateModel("Api");
+            var resource = CreateMetadata(
+                model, "/providers/Microsoft.Test/apis/{apiName}", "Microsoft.Test/apis",
+                ResourceScope.Tenant, [], resourceName: "ServiceApis");
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                customizationSources:
+                [
+                    """
+                    namespace Azure.Provisioning.Tests;
+                    public class CodeGenTypeAttribute : System.Attribute
+                    {
+                        public CodeGenTypeAttribute(string name) { }
+                    }
+                    [CodeGenType("Api")]
+                    public partial class ApiManagementApi { }
+                    [CodeGenType("ServiceApis")]
+                    public partial class CustomServiceApi { }
+                    """
+                ]);
+            var provider = CreateResourceProvider(resource);
+            RegisterResourceProviders(provider);
+
+            Assert.That(provider.Name, Is.EqualTo("CustomServiceApi"));
+        }
+
+        [Test]
+        public void SharedModelCustomizationDoesNotCollapseResolvedResourceNames()
+        {
+            var model = CreateModel("Api");
+            var first = CreateMetadata(
+                model, "/providers/Microsoft.Test/apis/{apiName}", "Microsoft.Test/apis",
+                ResourceScope.Tenant, [], resourceName: "ServiceApis");
+            var second = CreateMetadata(
+                model, "/providers/Microsoft.Test/workspaces/{workspaceName}/apis/{apiName}", "Microsoft.Test/workspaces/apis",
+                ResourceScope.Tenant, [], resourceName: "WorkspaceApis");
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                customizationSources:
+                [
+                    """
+                    namespace Azure.Provisioning.Tests;
+                    public class CodeGenTypeAttribute : System.Attribute
+                    {
+                        public CodeGenTypeAttribute(string name) { }
+                    }
+                    [CodeGenType("Api")]
+                    public partial class ApiManagementApi { }
+                    """
+                ]);
+            var providers = CreateAndRegisterResourceProviders(first, second);
+
+            Assert.That(providers.Select(provider => provider.Name), Is.EqualTo(new[] { "ApiManagementApi", "WorkspaceApis" }));
         }
 
         [Test]
@@ -1008,6 +1096,116 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(propertyInfo.IsSettable, Is.True);
         }
 
+        [Test]
+        public void DiscriminatedResourceUsesInternalPropertyAndDerivedAssignment()
+        {
+            var discriminatorEnum = CreateStringEnum(
+                "WidgetKind",
+                ("Base", "base"),
+                ("Derived", "derived"));
+            var discriminatorProperty = CreateProperty(
+                "Kind",
+                isRequired: true,
+                isDiscriminator: true,
+                type: discriminatorEnum,
+                serializedName: "type");
+            var armResourceType = CreateProperty("Type", serializedName: "type");
+            var armResource = CreateModel("Resource", [armResourceType]);
+            var baseModel = CreateModel(
+                "WritableWidget",
+                [discriminatorProperty],
+                armResource,
+                discriminatorProperty: discriminatorProperty);
+            var derivedDiscriminator = CreateProperty(
+                "Kind",
+                isRequired: true,
+                type: discriminatorEnum.Values.Single(value => Equals(value.Value, "derived")),
+                serializedName: "type");
+            var derivedModel = CreateModel(
+                "DerivedWritableWidget",
+                [derivedDiscriminator],
+                baseModel,
+                discriminatorValue: "derived");
+            AddDiscriminatedSubtype(baseModel, derivedModel);
+            var writableResource = CreateMetadata(
+                baseModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputEnums: () => [discriminatorEnum],
+                inputModels: () => [armResource, baseModel, derivedModel]);
+            var baseProvider = CreateResourceProvider(writableResource);
+            RegisterResourceProviders(baseProvider);
+            var derivedProvider = new ProvisioningResourceProvider(derivedModel);
+            var property = (ProvisioningPropertyProvider)baseProvider.Properties.Single();
+            var constructorBody = derivedProvider.Constructors.Single().BodyStatements!.ToDisplayString();
+
+            Assert.That(property.IsDiscriminator, Is.True);
+            Assert.That(property.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.True);
+            Assert.That(property.Body.HasSetter, Is.False);
+            Assert.That(property.BicepPath, Is.EqualTo(new[] { "type" }));
+            Assert.That(property.Type.Arguments[0].Name, Is.EqualTo("WidgetKind"));
+            Assert.That(derivedProvider.Properties, Is.Empty);
+            Assert.That(constructorBody, Does.Contain("WidgetKind.Derived"));
+            Assert.That(constructorBody, Does.Not.Contain("defaultValue: \"derived\""));
+        }
+
+        [Test]
+        public void NestedResourceDiscriminatorsDefineAndAssignEachLevel()
+        {
+            var kind = CreateProperty("Kind", isRequired: true, isDiscriminator: true, serializedName: "type");
+            var baseModel = CreateModel("WritableWidget", [kind], discriminatorProperty: kind);
+            var breed = CreateProperty("Breed", isRequired: true, isDiscriminator: true);
+            var intermediateModel = CreateModel(
+                "IntermediateWritableWidget",
+                [kind, breed],
+                baseModel,
+                discriminatorValue: "intermediate",
+                discriminatorProperty: breed);
+            var leafModel = CreateModel(
+                "LeafWritableWidget",
+                [breed],
+                intermediateModel,
+                discriminatorValue: "leaf");
+            AddDiscriminatedSubtype(baseModel, intermediateModel);
+            AddDiscriminatedSubtype(intermediateModel, leafModel);
+            var writableResource = CreateMetadata(
+                baseModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, intermediateModel, leafModel]);
+            var baseProvider = CreateResourceProvider(writableResource);
+            RegisterResourceProviders(baseProvider);
+            var intermediateProvider = new ProvisioningResourceProvider(intermediateModel);
+            var leafProvider = new ProvisioningResourceProvider(leafModel);
+            var intermediateConstructorBody = intermediateProvider.Constructors.Single().BodyStatements!.ToDisplayString();
+            var leafConstructorBody = leafProvider.Constructors.Single().BodyStatements!.ToDisplayString();
+            var intermediateBody = intermediateProvider.Methods
+                .Single(method => method.Signature.Name == "DefineProvisionableProperties")
+                .BodyStatements!
+                .ToDisplayString();
+
+            Assert.That(intermediateProvider.Properties.Single().Name, Is.EqualTo("Breed"));
+            Assert.That(intermediateProvider.Properties.Single().IsDiscriminator, Is.True);
+            Assert.That(intermediateConstructorBody, Does.Contain("Kind.Assign(\"intermediate\");"));
+            Assert.That(intermediateBody, Does.Contain("nameof(Breed)"));
+            Assert.That(leafConstructorBody, Does.Contain("Breed.Assign(\"leaf\");"));
+        }
+
         private static ArmResourceMetadata CreateMetadata(
             InputModelType model,
             string resourceIdPattern,
@@ -1303,5 +1501,35 @@ namespace Azure.Generator.Provisioning.Tests
                 isDiscriminator: isDiscriminator,
                 serializedName: serializedName ?? name.ToVariableName(),
                 serializationOptions: new(json: new(serializedName ?? name.ToVariableName())));
+
+        private static InputEnumType CreateStringEnum(
+            string name,
+            params (string Name, string Value)[] members)
+        {
+            var values = new List<InputEnumTypeValue>();
+            var enumType = new InputEnumType(
+                name,
+                "Sample.Models",
+                $"Sample.Models.{name}",
+                "public",
+                null,
+                string.Empty,
+                $"{name} enum.",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+                InputPrimitiveType.String,
+                values,
+                true);
+            foreach (var member in members)
+            {
+                values.Add(new InputEnumTypeValue(
+                    member.Name,
+                    member.Value,
+                    InputPrimitiveType.String,
+                    string.Empty,
+                    $"{member.Name}.",
+                    enumType));
+            }
+            return enumType;
+        }
     }
 }

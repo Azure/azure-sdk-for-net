@@ -107,14 +107,14 @@ namespace Azure.AI.Discovery
     public partial class DiscoveryConversation : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.DiscoveryConversation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.DiscoveryConversation>
     {
         public DiscoveryConversation() { }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } set { } }
         public Azure.AI.Discovery.DiscoveryActorType? CreatedByType { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string InvestigationName { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedAt { get { throw null; } set { } }
         public string LastModifiedBy { get { throw null; } set { } }
         public Azure.AI.Discovery.DiscoveryActorType? LastModifiedByType { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public string ProjectName { get { throw null; } set { } }
         protected virtual Azure.AI.Discovery.DiscoveryConversation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -155,13 +155,13 @@ namespace Azure.AI.Discovery
     {
         internal DiscoveryEngine() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Configuration { get { throw null; } }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } }
         public string CreatedBy { get { throw null; } }
         public Azure.AI.Discovery.DiscoveryActorType? CreatedByType { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.AI.Discovery.DiscoveryEngineStatus DiscoveryEngineStatus { get { throw null; } }
-        public System.DateTimeOffset? LastModifiedAt { get { throw null; } }
         public string LastModifiedBy { get { throw null; } }
         public Azure.AI.Discovery.DiscoveryActorType? LastModifiedByType { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string SystemPrompt { get { throw null; } }
         protected virtual Azure.AI.Discovery.DiscoveryEngine JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -194,14 +194,14 @@ namespace Azure.AI.Discovery
     public partial class DiscoveryInvestigation : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.DiscoveryInvestigation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.DiscoveryInvestigation>
     {
         public DiscoveryInvestigation() { }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } }
         public string CreatedBy { get { throw null; } }
         public Azure.AI.Discovery.DiscoveryActorType? CreatedByType { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedAt { get { throw null; } }
         public string LastModifiedBy { get { throw null; } }
         public Azure.AI.Discovery.DiscoveryActorType? LastModifiedByType { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string Name { get { throw null; } }
         public string ProjectName { get { throw null; } }
         public Azure.AI.Discovery.InvestigationStatus? Status { get { throw null; } }
@@ -267,22 +267,22 @@ namespace Azure.AI.Discovery
     {
         public static Azure.AI.Discovery.ComputeUsage ComputeUsage(System.Collections.Generic.IDictionary<string, Azure.AI.Discovery.SupercomputerUsage> supercomputers = null) { throw null; }
         public static Azure.AI.Discovery.DiscoveryCitation DiscoveryCitation(Azure.AI.Discovery.CitationType type = default(Azure.AI.Discovery.CitationType), int? index = default(int?), string fileName = null, int? startOffset = default(int?), int? endOffset = default(int?)) { throw null; }
-        public static Azure.AI.Discovery.DiscoveryConversation DiscoveryConversation(string name = null, System.DateTimeOffset? createdAt = default(System.DateTimeOffset?), string createdBy = null, Azure.AI.Discovery.DiscoveryActorType? createdByType = default(Azure.AI.Discovery.DiscoveryActorType?), System.DateTimeOffset? lastModifiedAt = default(System.DateTimeOffset?), string lastModifiedBy = null, Azure.AI.Discovery.DiscoveryActorType? lastModifiedByType = default(Azure.AI.Discovery.DiscoveryActorType?), string displayName = null, string investigationName = null, string projectName = null) { throw null; }
-        public static Azure.AI.Discovery.DiscoveryEngine DiscoveryEngine(Azure.AI.Discovery.DiscoveryEngineStatus discoveryEngineStatus = default(Azure.AI.Discovery.DiscoveryEngineStatus), string systemPrompt = null, System.Collections.Generic.IDictionary<string, System.BinaryData> configuration = null, System.DateTimeOffset? createdAt = default(System.DateTimeOffset?), string createdBy = null, Azure.AI.Discovery.DiscoveryActorType? createdByType = default(Azure.AI.Discovery.DiscoveryActorType?), System.DateTimeOffset? lastModifiedAt = default(System.DateTimeOffset?), string lastModifiedBy = null, Azure.AI.Discovery.DiscoveryActorType? lastModifiedByType = default(Azure.AI.Discovery.DiscoveryActorType?)) { throw null; }
-        public static Azure.AI.Discovery.DiscoveryInvestigation DiscoveryInvestigation(string name = null, string projectName = null, System.DateTimeOffset? createdAt = default(System.DateTimeOffset?), string createdBy = null, Azure.AI.Discovery.DiscoveryActorType? createdByType = default(Azure.AI.Discovery.DiscoveryActorType?), System.DateTimeOffset? lastModifiedAt = default(System.DateTimeOffset?), string lastModifiedBy = null, Azure.AI.Discovery.DiscoveryActorType? lastModifiedByType = default(Azure.AI.Discovery.DiscoveryActorType?), Azure.AI.Discovery.InvestigationStatus? status = default(Azure.AI.Discovery.InvestigationStatus?), string description = null, System.Collections.Generic.IEnumerable<Azure.AI.Discovery.DiscoveryTag> tags = null, string displayName = null) { throw null; }
+        public static Azure.AI.Discovery.DiscoveryConversation DiscoveryConversation(string name = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string createdBy = null, Azure.AI.Discovery.DiscoveryActorType? createdByType = default(Azure.AI.Discovery.DiscoveryActorType?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string lastModifiedBy = null, Azure.AI.Discovery.DiscoveryActorType? lastModifiedByType = default(Azure.AI.Discovery.DiscoveryActorType?), string displayName = null, string investigationName = null, string projectName = null) { throw null; }
+        public static Azure.AI.Discovery.DiscoveryEngine DiscoveryEngine(Azure.AI.Discovery.DiscoveryEngineStatus discoveryEngineStatus = default(Azure.AI.Discovery.DiscoveryEngineStatus), string systemPrompt = null, System.Collections.Generic.IDictionary<string, System.BinaryData> configuration = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string createdBy = null, Azure.AI.Discovery.DiscoveryActorType? createdByType = default(Azure.AI.Discovery.DiscoveryActorType?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string lastModifiedBy = null, Azure.AI.Discovery.DiscoveryActorType? lastModifiedByType = default(Azure.AI.Discovery.DiscoveryActorType?)) { throw null; }
+        public static Azure.AI.Discovery.DiscoveryInvestigation DiscoveryInvestigation(string name = null, string projectName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string createdBy = null, Azure.AI.Discovery.DiscoveryActorType? createdByType = default(Azure.AI.Discovery.DiscoveryActorType?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string lastModifiedBy = null, Azure.AI.Discovery.DiscoveryActorType? lastModifiedByType = default(Azure.AI.Discovery.DiscoveryActorType?), Azure.AI.Discovery.InvestigationStatus? status = default(Azure.AI.Discovery.InvestigationStatus?), string description = null, System.Collections.Generic.IEnumerable<Azure.AI.Discovery.DiscoveryTag> tags = null, string displayName = null) { throw null; }
         public static Azure.AI.Discovery.DiscoveryTag DiscoveryTag(string key = null, string value = null) { throw null; }
-        public static Azure.AI.Discovery.DiscoveryTask DiscoveryTask(string name = null, string title = null, Azure.AI.Discovery.TaskPriority? priority = default(Azure.AI.Discovery.TaskPriority?), string description = null, System.Collections.Generic.IEnumerable<string> validationRequirements = null, string parentId = null, System.Collections.Generic.IEnumerable<string> dependsOn = null, System.Collections.Generic.IEnumerable<string> relatedTo = null, Azure.AI.Discovery.TaskAssignee assignedTo = null, System.Collections.Generic.IEnumerable<Azure.AI.Discovery.TaskComment> comments = null, Azure.AI.Discovery.TaskStatus? status = default(Azure.AI.Discovery.TaskStatus?), System.DateTimeOffset? createdAt = default(System.DateTimeOffset?), string createdBy = null, Azure.AI.Discovery.DiscoveryActorType? createdByType = default(Azure.AI.Discovery.DiscoveryActorType?), System.DateTimeOffset? lastModifiedAt = default(System.DateTimeOffset?), string lastModifiedBy = null, Azure.AI.Discovery.DiscoveryActorType? lastModifiedByType = default(Azure.AI.Discovery.DiscoveryActorType?), System.Collections.Generic.IEnumerable<Azure.AI.Discovery.ExecutionHistoryEntry> executionHistory = null, string investigationId = null, Azure.AI.Discovery.TaskResult taskResult = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> storageAssetIds = null) { throw null; }
-        public static Azure.AI.Discovery.ExecutionHistoryEntry ExecutionHistoryEntry(System.DateTimeOffset createdAt = default(System.DateTimeOffset), string action = null, string createdBy = null, Azure.AI.Discovery.DiscoveryActorType createdByType = default(Azure.AI.Discovery.DiscoveryActorType), string summary = null, string responseMessageText = null, string responseMessageId = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalDetails = null) { throw null; }
+        public static Azure.AI.Discovery.DiscoveryTask DiscoveryTask(string name = null, string title = null, Azure.AI.Discovery.TaskPriority? priority = default(Azure.AI.Discovery.TaskPriority?), string description = null, System.Collections.Generic.IEnumerable<string> validationRequirements = null, string parentId = null, System.Collections.Generic.IEnumerable<string> dependsOn = null, System.Collections.Generic.IEnumerable<string> relatedTo = null, Azure.AI.Discovery.TaskAssignee assignedTo = null, System.Collections.Generic.IEnumerable<Azure.AI.Discovery.TaskComment> comments = null, Azure.AI.Discovery.TaskStatus? status = default(Azure.AI.Discovery.TaskStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string createdBy = null, Azure.AI.Discovery.DiscoveryActorType? createdByType = default(Azure.AI.Discovery.DiscoveryActorType?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string lastModifiedBy = null, Azure.AI.Discovery.DiscoveryActorType? lastModifiedByType = default(Azure.AI.Discovery.DiscoveryActorType?), System.Collections.Generic.IEnumerable<Azure.AI.Discovery.ExecutionHistoryEntry> executionHistory = null, string investigationId = null, Azure.AI.Discovery.TaskResult taskResult = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> storageAssetIds = null) { throw null; }
+        public static Azure.AI.Discovery.ExecutionHistoryEntry ExecutionHistoryEntry(System.DateTimeOffset createdOn = default(System.DateTimeOffset), string action = null, string createdBy = null, Azure.AI.Discovery.DiscoveryActorType createdByType = default(Azure.AI.Discovery.DiscoveryActorType), string summary = null, string responseMessageText = null, string responseMessageId = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalDetails = null) { throw null; }
         public static Azure.AI.Discovery.IndexingMetrics IndexingMetrics(int documentsProcessed = 0, int documentsFailed = 0, int documentsTotal = 0, int indexingPercentageComplete = 0, System.DateTimeOffset? enrichmentStartTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? enrichmentEndTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? indexingStartTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? indexingEndTimeUtc = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.AI.Discovery.IndexingOperationResult IndexingOperationResult(string runId = null, Azure.AI.Discovery.IndexingMetrics metrics = null) { throw null; }
         public static Azure.AI.Discovery.InfrastructureOverrides InfrastructureOverrides(string cpu = null, string ram = null, string gpu = null, int? replicaCount = default(int?), string imageUri = null, string maxCpu = null, string maxRam = null, string maxGpu = null) { throw null; }
         public static Azure.AI.Discovery.InlineFile InlineFile(string mountPath = null, string encodedFile = null) { throw null; }
         public static Azure.AI.Discovery.InputDataMount InputDataMount(string storageUri = null, string mountPath = null, Azure.AI.Discovery.StorageMountProtocol? mountProtocol = default(Azure.AI.Discovery.StorageMountProtocol?)) { throw null; }
         public static Azure.AI.Discovery.InvestigationOperationStatus InvestigationOperationStatus(string id = null, Azure.AI.Discovery.OperationState status = default(Azure.AI.Discovery.OperationState), Azure.ResponseError error = null, Azure.AI.Discovery.DiscoveryInvestigation result = null) { throw null; }
-        public static Azure.AI.Discovery.KnowledgeBase KnowledgeBase(string name = null, string id = null, string bookshelfName = null, System.Collections.Generic.IEnumerable<Azure.AI.Discovery.StorageAssetReference> storageAssetReferences = null, string knowledgeBaseUrl = null, Azure.AI.Discovery.DiscoveryProvisioningState? provisioningState = default(Azure.AI.Discovery.DiscoveryProvisioningState?), Azure.ResponseError error = null, Azure.AI.Discovery.IndexingStatus? status = default(Azure.AI.Discovery.IndexingStatus?), string createdByApiVersion = null, Azure.AI.Discovery.LastIndexingRun lastIndexingRun = null, System.DateTimeOffset? createdAt = default(System.DateTimeOffset?), string createdBy = null, Azure.AI.Discovery.DiscoveryActorType? createdByType = default(Azure.AI.Discovery.DiscoveryActorType?), System.DateTimeOffset? lastModifiedAt = default(System.DateTimeOffset?), string lastModifiedBy = null, Azure.AI.Discovery.DiscoveryActorType? lastModifiedByType = default(Azure.AI.Discovery.DiscoveryActorType?), System.Collections.Generic.IEnumerable<Azure.AI.Discovery.DiscoveryTag> tags = null, string description = null, string copilotInstruction = null) { throw null; }
-        public static Azure.AI.Discovery.KnowledgeBaseIndexingOperationResponse KnowledgeBaseIndexingOperationResponse(string id = null, Azure.AI.Discovery.OperationState status = default(Azure.AI.Discovery.OperationState), Azure.ResponseError error = null, Azure.AI.Discovery.IndexingOperationResult indexingResult = null) { throw null; }
-        public static Azure.AI.Discovery.KnowledgeBaseOperationResponse KnowledgeBaseOperationResponse(string id = null, Azure.AI.Discovery.OperationState status = default(Azure.AI.Discovery.OperationState), Azure.ResponseError error = null, string operationType = null) { throw null; }
-        public static Azure.AI.Discovery.KnowledgeBaseSearchOperationResponse KnowledgeBaseSearchOperationResponse(string id = null, Azure.AI.Discovery.OperationState status = default(Azure.AI.Discovery.OperationState), Azure.ResponseError error = null, Azure.AI.Discovery.SearchResponse searchResult = null) { throw null; }
+        public static Azure.AI.Discovery.KnowledgeBase KnowledgeBase(string name = null, string id = null, string bookshelfName = null, System.Collections.Generic.IEnumerable<Azure.AI.Discovery.StorageAssetReference> storageAssetReferences = null, string knowledgeBaseUrl = null, Azure.AI.Discovery.DiscoveryProvisioningState? provisioningState = default(Azure.AI.Discovery.DiscoveryProvisioningState?), Azure.ResponseError error = null, Azure.AI.Discovery.IndexingStatus? status = default(Azure.AI.Discovery.IndexingStatus?), string createdByApiVersion = null, Azure.AI.Discovery.LastIndexingRun lastIndexingRun = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string createdBy = null, Azure.AI.Discovery.DiscoveryActorType? createdByType = default(Azure.AI.Discovery.DiscoveryActorType?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string lastModifiedBy = null, Azure.AI.Discovery.DiscoveryActorType? lastModifiedByType = default(Azure.AI.Discovery.DiscoveryActorType?), System.Collections.Generic.IEnumerable<Azure.AI.Discovery.DiscoveryTag> tags = null, string description = null, string copilotInstruction = null) { throw null; }
+        public static Azure.AI.Discovery.KnowledgeBaseIndexingOperationResult KnowledgeBaseIndexingOperationResult(string id = null, Azure.AI.Discovery.OperationState status = default(Azure.AI.Discovery.OperationState), Azure.ResponseError error = null, Azure.AI.Discovery.IndexingOperationResult indexingResult = null) { throw null; }
+        public static Azure.AI.Discovery.KnowledgeBaseOperationResult KnowledgeBaseOperationResult(string id = null, Azure.AI.Discovery.OperationState status = default(Azure.AI.Discovery.OperationState), Azure.ResponseError error = null, string operationType = null) { throw null; }
+        public static Azure.AI.Discovery.KnowledgeBaseSearchOperationResult KnowledgeBaseSearchOperationResult(string id = null, Azure.AI.Discovery.OperationState status = default(Azure.AI.Discovery.OperationState), Azure.ResponseError error = null, Azure.AI.Discovery.SearchResult searchResult = null) { throw null; }
         public static Azure.AI.Discovery.LastIndexingRun LastIndexingRun(string runId = null, Azure.AI.Discovery.IndexingStatus? status = default(Azure.AI.Discovery.IndexingStatus?), Azure.ResponseError error = null, Azure.AI.Discovery.IndexingMetrics indexingMetrics = null) { throw null; }
         public static Azure.AI.Discovery.NodePoolUsage NodePoolUsage(string reservedCPUs = null, string allocatableCPUs = null, string reservedMemory = null, string allocatableMemory = null, string reservedGPUs = null, string allocatableGPUs = null) { throw null; }
         public static Azure.AI.Discovery.OutputDataMount OutputDataMount(string storageUri = null, string mountPath = null, Azure.AI.Discovery.StorageMountProtocol? mountProtocol = default(Azure.AI.Discovery.StorageMountProtocol?)) { throw null; }
@@ -293,11 +293,11 @@ namespace Azure.AI.Discovery
         public static Azure.AI.Discovery.PagedWorkingMemoryEntry PagedWorkingMemoryEntry(System.Collections.Generic.IEnumerable<Azure.AI.Discovery.WorkingMemoryEntry> value = null, System.Uri nextLink = null) { throw null; }
         public static Azure.AI.Discovery.RunOperationStatus RunOperationStatus(string id = null, Azure.AI.Discovery.OperationState status = default(Azure.AI.Discovery.OperationState), Azure.ResponseError error = null, Azure.AI.Discovery.RunResult result = null) { throw null; }
         public static Azure.AI.Discovery.RunRequestEnvironmentVariable RunRequestEnvironmentVariable(string name = null, string value = null) { throw null; }
-        public static Azure.AI.Discovery.RunResult RunResult(string status = null, string runtimeDetails = null, System.DateTimeOffset? createdAt = default(System.DateTimeOffset?), System.DateTimeOffset? completedAt = default(System.DateTimeOffset?), string createdBy = null, Azure.AI.Discovery.RunResultToolReport toolReport = null, System.Collections.Generic.IEnumerable<Azure.AI.Discovery.OutputDataUri> outputData = null, string debugInfo = null) { throw null; }
+        public static Azure.AI.Discovery.RunResult RunResult(string status = null, string runtimeDetails = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), string createdBy = null, Azure.AI.Discovery.RunResultToolReport toolReport = null, System.Collections.Generic.IEnumerable<Azure.AI.Discovery.OutputDataUri> outputData = null, string debugInfo = null) { throw null; }
         public static Azure.AI.Discovery.RunResultToolReport RunResultToolReport(int percentageComplete = 0, Azure.AI.Discovery.RunResultToolReportStatusInformation statusInformation = null, string logs = null) { throw null; }
         public static Azure.AI.Discovery.RunResultToolReportStatusInformation RunResultToolReportStatusInformation() { throw null; }
         public static Azure.AI.Discovery.SearchRequest SearchRequest(string query = null) { throw null; }
-        public static Azure.AI.Discovery.SearchResponse SearchResponse(System.Collections.Generic.IEnumerable<Azure.AI.Discovery.SearchResultItem> searchResults = null) { throw null; }
+        public static Azure.AI.Discovery.SearchResult SearchResult(System.Collections.Generic.IEnumerable<Azure.AI.Discovery.SearchResultItem> searchResults = null) { throw null; }
         public static Azure.AI.Discovery.SearchResultItem SearchResultItem(string text = null, System.Collections.Generic.IEnumerable<Azure.AI.Discovery.DiscoveryCitation> citations = null) { throw null; }
         public static Azure.AI.Discovery.StartTaskRequest StartTaskRequest(Azure.AI.Discovery.TaskAssignee assignee = null) { throw null; }
         public static Azure.AI.Discovery.StorageAssetReference StorageAssetReference(Azure.Core.ResourceIdentifier id = null, Azure.Core.ResourceIdentifier userAssignedIdentity = null) { throw null; }
@@ -305,8 +305,8 @@ namespace Azure.AI.Discovery
         public static Azure.AI.Discovery.TaskAssignee TaskAssignee(string id = null, Azure.AI.Discovery.DiscoveryActorType type = default(Azure.AI.Discovery.DiscoveryActorType)) { throw null; }
         public static Azure.AI.Discovery.TaskComment TaskComment(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string createdBy = null, Azure.AI.Discovery.DiscoveryActorType createdByType = default(Azure.AI.Discovery.DiscoveryActorType), string text = null) { throw null; }
         public static Azure.AI.Discovery.TaskResult TaskResult(string text = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> storageAssetIds = null) { throw null; }
-        public static Azure.AI.Discovery.WorkingMemoryEntry WorkingMemoryEntry(string content = null, Azure.AI.Discovery.WorkingMemoryEntryType type = default(Azure.AI.Discovery.WorkingMemoryEntryType), System.DateTimeOffset? createdAt = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.AI.Discovery.WorkspaceOperation WorkspaceOperation(string id = null, string nodepoolId = null, Azure.AI.Discovery.RunStatus status = default(Azure.AI.Discovery.RunStatus), string runtimeDetails = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset? completedAt = default(System.DateTimeOffset?), string createdBy = null) { throw null; }
+        public static Azure.AI.Discovery.WorkingMemoryEntry WorkingMemoryEntry(string content = null, Azure.AI.Discovery.WorkingMemoryEntryType type = default(Azure.AI.Discovery.WorkingMemoryEntryType), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.Discovery.WorkspaceOperation WorkspaceOperation(string id = null, string nodepoolId = null, Azure.AI.Discovery.RunStatus status = default(Azure.AI.Discovery.RunStatus), string runtimeDetails = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), string createdBy = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiscoveryProvisioningState : System.IEquatable<Azure.AI.Discovery.DiscoveryProvisioningState>
@@ -350,16 +350,16 @@ namespace Azure.AI.Discovery
         public DiscoveryTask() { }
         public Azure.AI.Discovery.TaskAssignee AssignedTo { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Discovery.TaskComment> Comments { get { throw null; } }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } }
         public string CreatedBy { get { throw null; } }
         public Azure.AI.Discovery.DiscoveryActorType? CreatedByType { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Collections.Generic.IList<string> DependsOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Discovery.ExecutionHistoryEntry> ExecutionHistory { get { throw null; } }
         public string InvestigationId { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedAt { get { throw null; } }
         public string LastModifiedBy { get { throw null; } }
         public Azure.AI.Discovery.DiscoveryActorType? LastModifiedByType { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string Name { get { throw null; } }
         public string ParentId { get { throw null; } set { } }
         public Azure.AI.Discovery.TaskPriority? Priority { get { throw null; } set { } }
@@ -443,12 +443,12 @@ namespace Azure.AI.Discovery
     }
     public partial class ExecutionHistoryEntry : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.ExecutionHistoryEntry>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.ExecutionHistoryEntry>
     {
-        public ExecutionHistoryEntry(System.DateTimeOffset createdAt, string action, string createdBy, Azure.AI.Discovery.DiscoveryActorType createdByType) { }
+        public ExecutionHistoryEntry(System.DateTimeOffset createdOn, string action, string createdBy, Azure.AI.Discovery.DiscoveryActorType createdByType) { }
         public string Action { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalDetails { get { throw null; } }
-        public System.DateTimeOffset CreatedAt { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } set { } }
         public Azure.AI.Discovery.DiscoveryActorType CreatedByType { get { throw null; } set { } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } set { } }
         public string ResponseMessageId { get { throw null; } set { } }
         public string ResponseMessageText { get { throw null; } set { } }
         public string Summary { get { throw null; } set { } }
@@ -612,18 +612,18 @@ namespace Azure.AI.Discovery
         public KnowledgeBase(string description, string copilotInstruction) { }
         public string BookshelfName { get { throw null; } }
         public string CopilotInstruction { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } }
         public string CreatedBy { get { throw null; } }
         public string CreatedByApiVersion { get { throw null; } }
         public Azure.AI.Discovery.DiscoveryActorType? CreatedByType { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.ResponseError Error { get { throw null; } }
         public string Id { get { throw null; } }
         public string KnowledgeBaseUrl { get { throw null; } }
         public Azure.AI.Discovery.LastIndexingRun LastIndexingRun { get { throw null; } }
-        public System.DateTimeOffset? LastModifiedAt { get { throw null; } }
         public string LastModifiedBy { get { throw null; } }
         public Azure.AI.Discovery.DiscoveryActorType? LastModifiedByType { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.AI.Discovery.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.AI.Discovery.IndexingStatus? Status { get { throw null; } }
@@ -640,36 +640,36 @@ namespace Azure.AI.Discovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KnowledgeBaseIndexingOperationResponse : Azure.AI.Discovery.KnowledgeBaseOperationResponse, System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseIndexingOperationResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseIndexingOperationResponse>
+    public partial class KnowledgeBaseIndexingOperationResult : Azure.AI.Discovery.KnowledgeBaseOperationResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseIndexingOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseIndexingOperationResult>
     {
-        internal KnowledgeBaseIndexingOperationResponse() { }
+        internal KnowledgeBaseIndexingOperationResult() { }
         public Azure.AI.Discovery.IndexingOperationResult IndexingResult { get { throw null; } }
-        protected override Azure.AI.Discovery.KnowledgeBaseOperationResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.AI.Discovery.KnowledgeBaseOperationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Discovery.KnowledgeBaseOperationResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.AI.Discovery.KnowledgeBaseOperationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Discovery.KnowledgeBaseIndexingOperationResponse System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseIndexingOperationResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseIndexingOperationResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Discovery.KnowledgeBaseIndexingOperationResponse System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseIndexingOperationResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseIndexingOperationResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseIndexingOperationResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Discovery.KnowledgeBaseIndexingOperationResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseIndexingOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseIndexingOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Discovery.KnowledgeBaseIndexingOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseIndexingOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseIndexingOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseIndexingOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class KnowledgeBaseOperationResponse : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseOperationResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseOperationResponse>
+    public abstract partial class KnowledgeBaseOperationResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseOperationResult>
     {
-        internal KnowledgeBaseOperationResponse() { }
+        internal KnowledgeBaseOperationResult() { }
         public Azure.ResponseError Error { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.AI.Discovery.OperationState Status { get { throw null; } }
-        protected virtual Azure.AI.Discovery.KnowledgeBaseOperationResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.AI.Discovery.KnowledgeBaseOperationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.AI.Discovery.KnowledgeBaseOperationResponse (Azure.Response response) { throw null; }
-        protected virtual Azure.AI.Discovery.KnowledgeBaseOperationResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public static explicit operator Azure.AI.Discovery.KnowledgeBaseOperationResult (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Discovery.KnowledgeBaseOperationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Discovery.KnowledgeBaseOperationResponse System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseOperationResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseOperationResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Discovery.KnowledgeBaseOperationResponse System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseOperationResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseOperationResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseOperationResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Discovery.KnowledgeBaseOperationResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Discovery.KnowledgeBaseOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class KnowledgeBases
     {
@@ -694,9 +694,9 @@ namespace Azure.AI.Discovery
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(string knowledgeBaseName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Discovery.KnowledgeBase>> GetAsync(string knowledgeBaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetOperationStatus(string knowledgeBaseName, string operationId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.Discovery.KnowledgeBaseOperationResponse> GetOperationStatus(string knowledgeBaseName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Discovery.KnowledgeBaseOperationResult> GetOperationStatus(string knowledgeBaseName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationStatusAsync(string knowledgeBaseName, string operationId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Discovery.KnowledgeBaseOperationResponse>> GetOperationStatusAsync(string knowledgeBaseName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Discovery.KnowledgeBaseOperationResult>> GetOperationStatusAsync(string knowledgeBaseName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation Search(Azure.WaitUntil waitUntil, string knowledgeBaseName, Azure.AI.Discovery.SearchRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation Search(Azure.WaitUntil waitUntil, string knowledgeBaseName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> SearchAsync(Azure.WaitUntil waitUntil, string knowledgeBaseName, Azure.AI.Discovery.SearchRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -706,19 +706,19 @@ namespace Azure.AI.Discovery
         public virtual System.Threading.Tasks.Task<Azure.Operation> StartIndexingAsync(Azure.WaitUntil waitUntil, string knowledgeBaseName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> StartIndexingAsync(Azure.WaitUntil waitUntil, string knowledgeBaseName, string nodePoolId = null, string projectId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class KnowledgeBaseSearchOperationResponse : Azure.AI.Discovery.KnowledgeBaseOperationResponse, System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseSearchOperationResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseSearchOperationResponse>
+    public partial class KnowledgeBaseSearchOperationResult : Azure.AI.Discovery.KnowledgeBaseOperationResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseSearchOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseSearchOperationResult>
     {
-        internal KnowledgeBaseSearchOperationResponse() { }
-        public Azure.AI.Discovery.SearchResponse SearchResult { get { throw null; } }
-        protected override Azure.AI.Discovery.KnowledgeBaseOperationResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        internal KnowledgeBaseSearchOperationResult() { }
+        public Azure.AI.Discovery.SearchResult SearchResult { get { throw null; } }
+        protected override Azure.AI.Discovery.KnowledgeBaseOperationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Discovery.KnowledgeBaseOperationResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.AI.Discovery.KnowledgeBaseOperationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Discovery.KnowledgeBaseSearchOperationResponse System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseSearchOperationResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseSearchOperationResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Discovery.KnowledgeBaseSearchOperationResponse System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseSearchOperationResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseSearchOperationResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseSearchOperationResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Discovery.KnowledgeBaseSearchOperationResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseSearchOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBaseSearchOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Discovery.KnowledgeBaseSearchOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseSearchOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseSearchOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBaseSearchOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LastIndexingRun : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.LastIndexingRun>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.LastIndexingRun>
     {
@@ -907,9 +907,9 @@ namespace Azure.AI.Discovery
     public partial class RunResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.RunResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.RunResult>
     {
         internal RunResult() { }
-        public System.DateTimeOffset? CompletedAt { get { throw null; } }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } }
+        public System.DateTimeOffset? CompletedOn { get { throw null; } }
         public string CreatedBy { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DebugInfo { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Discovery.OutputDataUri> OutputData { get { throw null; } }
         public string RuntimeDetails { get { throw null; } }
@@ -989,19 +989,19 @@ namespace Azure.AI.Discovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SearchResponse : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.SearchResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchResponse>
+    public partial class SearchResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.SearchResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchResult>
     {
-        internal SearchResponse() { }
+        internal SearchResult() { }
         public System.Collections.Generic.IList<Azure.AI.Discovery.SearchResultItem> SearchResults { get { throw null; } }
-        protected virtual Azure.AI.Discovery.SearchResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.AI.Discovery.SearchResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Discovery.SearchResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.AI.Discovery.SearchResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Discovery.SearchResponse System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.SearchResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.SearchResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Discovery.SearchResponse System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Discovery.SearchResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.SearchResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.SearchResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Discovery.SearchResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SearchResultItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.SearchResultItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchResultItem>
     {
@@ -1177,7 +1177,7 @@ namespace Azure.AI.Discovery
     {
         internal WorkingMemoryEntry() { }
         public string Content { get { throw null; } }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.AI.Discovery.WorkingMemoryEntryType Type { get { throw null; } }
         protected virtual Azure.AI.Discovery.WorkingMemoryEntry JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1242,9 +1242,9 @@ namespace Azure.AI.Discovery
     public partial class WorkspaceOperation : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.WorkspaceOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.WorkspaceOperation>
     {
         internal WorkspaceOperation() { }
-        public System.DateTimeOffset? CompletedAt { get { throw null; } }
-        public System.DateTimeOffset CreatedAt { get { throw null; } }
+        public System.DateTimeOffset? CompletedOn { get { throw null; } }
         public string CreatedBy { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
         public string Id { get { throw null; } }
         public string NodepoolId { get { throw null; } }
         public string RuntimeDetails { get { throw null; } }

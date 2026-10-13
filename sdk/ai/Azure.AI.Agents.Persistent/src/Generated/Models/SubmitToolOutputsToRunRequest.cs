@@ -15,6 +15,8 @@ namespace Azure.AI.Agents.Persistent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _stream;
+        internal bool _streamIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SubmitToolOutputsToRunRequest"/>. </summary>
         internal SubmitToolOutputsToRunRequest()
@@ -32,7 +34,7 @@ namespace Azure.AI.Agents.Persistent
         {
             ToolOutputs = toolOutputs;
             ToolApprovals = toolApprovals;
-            Stream = stream;
+            _stream = stream;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,6 +45,12 @@ namespace Azure.AI.Agents.Persistent
         public IList<ToolApproval> ToolApprovals { get; }
 
         /// <summary> If true, returns a stream of events that happen during the Run as SSE, terminating at `[DONE]`. </summary>
-        public bool? Stream { get; }
+        public bool? Stream
+        {
+            get
+            {
+                return _stream;
+            }
+        }
     }
 }

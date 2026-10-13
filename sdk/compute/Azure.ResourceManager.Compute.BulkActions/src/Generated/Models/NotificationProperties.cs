@@ -11,16 +11,16 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The information about notifications to be send to about upcoming operations. </summary>
+    /// <summary> Settings for notifications about upcoming scheduled action operations. </summary>
     public partial class NotificationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NotificationProperties"/>. </summary>
-        /// <param name="destination"> Where the notification should be sent. For email, it should follow email format. </param>
-        /// <param name="type"> Type of notification to be sent. </param>
-        /// <param name="language"> The language the notification should be sent on. </param>
+        /// <param name="destination"> The notification destination. For email notifications, specify a valid email address. </param>
+        /// <param name="type"> The notification delivery method. </param>
+        /// <param name="language"> The language used for the notification. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="destination"/> is null. </exception>
         public NotificationProperties(string destination, NotificationType @type, ScheduledActionLanguage language)
         {
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationProperties"/>. </summary>
-        /// <param name="destination"> Where the notification should be sent. For email, it should follow email format. </param>
-        /// <param name="type"> Type of notification to be sent. </param>
-        /// <param name="language"> The language the notification should be sent on. </param>
-        /// <param name="disabled"> Tells if the notification is enabled or not. </param>
+        /// <param name="destination"> The notification destination. For email notifications, specify a valid email address. </param>
+        /// <param name="type"> The notification delivery method. </param>
+        /// <param name="language"> The language used for the notification. </param>
+        /// <param name="disabled"> If true, notifications to this destination are disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NotificationProperties(string destination, NotificationType @type, ScheduledActionLanguage language, bool? disabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Where the notification should be sent. For email, it should follow email format. </summary>
+        /// <summary> The notification destination. For email notifications, specify a valid email address. </summary>
         public string Destination { get; set; }
 
-        /// <summary> Type of notification to be sent. </summary>
+        /// <summary> The notification delivery method. </summary>
         public NotificationType Type { get; set; }
 
-        /// <summary> The language the notification should be sent on. </summary>
+        /// <summary> The language used for the notification. </summary>
         public ScheduledActionLanguage Language { get; set; }
 
-        /// <summary> Tells if the notification is enabled or not. </summary>
+        /// <summary> If true, notifications to this destination are disabled. </summary>
         public bool? Disabled { get; set; }
     }
 }

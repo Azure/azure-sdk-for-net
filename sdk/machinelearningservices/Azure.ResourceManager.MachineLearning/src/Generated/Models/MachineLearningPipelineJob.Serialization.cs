@@ -177,7 +177,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             bool? isArchived = default;
             JobType jobType = default;
             NotificationSetting notificationSetting = default;
-            string parentJobName = default;
             IDictionary<string, MachineLearningJobService> services = default;
             MachineLearningJobStatus? status = default;
             IDictionary<string, MachineLearningJobInput> inputs = default;
@@ -306,16 +305,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     notificationSetting = NotificationSetting.DeserializeNotificationSetting(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("parentJobName"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        parentJobName = null;
-                        continue;
-                    }
-                    parentJobName = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("services"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -368,7 +357,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     jobs = dictionary;
@@ -395,7 +384,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         settings = null;
                         continue;
                     }
-                    settings = BinaryData.FromString(prop.Value.GetRawText());
+                    settings = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("sourceJobId"u8))
@@ -409,7 +398,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MachineLearningPipelineJob(
@@ -425,7 +414,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 isArchived,
                 jobType,
                 notificationSetting,
-                parentJobName,
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status,
                 inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),

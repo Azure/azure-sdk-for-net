@@ -15,6 +15,7 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new SkypeChannel. </summary>
         public SkypeChannel()
         {
+            ChannelName.Assign("SkypeChannel");
         }
 
         /// <summary> Gets the Properties. </summary>
@@ -31,7 +32,6 @@ namespace Azure.Provisioning.BotService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("channelName", new string[] { "channelName" }, defaultValue: "SkypeChannel");
             _properties = DefineModelProperty<SkypeChannelProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

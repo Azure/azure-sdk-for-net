@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CustomLocationsGetOperationsAsyncCollectionResultOfT(CustomLocationsRestClient, context, "MockableExtendedLocationsTenantResource.GetOperations");
+            return new CustomLocationOperationInfoAsyncCollectionResultOfT(CustomLocationsRestClient, context, "MockableExtendedLocationsTenantResource.GetOperations");
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CustomLocationsGetOperationsCollectionResultOfT(CustomLocationsRestClient, context, "MockableExtendedLocationsTenantResource.GetOperations");
+            return new CustomLocationOperationInfoCollectionResultOfT(CustomLocationsRestClient, context, "MockableExtendedLocationsTenantResource.GetOperations");
         }
     }
 }

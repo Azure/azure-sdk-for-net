@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MigrationDiscoverySap;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     public readonly partial struct SapDiscoveryOperatingSystem : IEquatable<SapDiscoveryOperatingSystem>
     {
         private readonly string _value;
+        /// <summary> The type of Operating system- IBMAIX. </summary>
+        private const string IbmAixValue = "IBMAIX";
+        /// <summary> The type of Operating system- RedHat. </summary>
+        private const string RedHatValue = "RedHat";
+        /// <summary> The type of Operating system- SUSE. </summary>
+        private const string SuseValue = "SUSE";
+        /// <summary> The type of Operating system- Solaris. </summary>
+        private const string SolarisValue = "Solaris";
+        /// <summary> The type of Operating system- Unix. </summary>
+        private const string UnixValue = "Unix";
+        /// <summary> The type of Operating system- WindowsServer. </summary>
+        private const string WindowsServerValue = "WindowsServer";
 
         /// <summary> Initializes a new instance of <see cref="SapDiscoveryOperatingSystem"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapDiscoveryOperatingSystem(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IbmAixValue = "IBMAIX";
-        private const string RedHatValue = "RedHat";
-        private const string SuseValue = "SUSE";
-        private const string SolarisValue = "Solaris";
-        private const string UnixValue = "Unix";
-        private const string WindowsServerValue = "WindowsServer";
+            _value = value;
+        }
 
         /// <summary> The type of Operating system- IBMAIX. </summary>
         public static SapDiscoveryOperatingSystem IbmAix { get; } = new SapDiscoveryOperatingSystem(IbmAixValue);
+
         /// <summary> The type of Operating system- RedHat. </summary>
         public static SapDiscoveryOperatingSystem RedHat { get; } = new SapDiscoveryOperatingSystem(RedHatValue);
+
         /// <summary> The type of Operating system- SUSE. </summary>
         public static SapDiscoveryOperatingSystem Suse { get; } = new SapDiscoveryOperatingSystem(SuseValue);
+
         /// <summary> The type of Operating system- Solaris. </summary>
         public static SapDiscoveryOperatingSystem Solaris { get; } = new SapDiscoveryOperatingSystem(SolarisValue);
+
         /// <summary> The type of Operating system- Unix. </summary>
         public static SapDiscoveryOperatingSystem Unix { get; } = new SapDiscoveryOperatingSystem(UnixValue);
+
         /// <summary> The type of Operating system- WindowsServer. </summary>
         public static SapDiscoveryOperatingSystem WindowsServer { get; } = new SapDiscoveryOperatingSystem(WindowsServerValue);
+
         /// <summary> Determines if two <see cref="SapDiscoveryOperatingSystem"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapDiscoveryOperatingSystem left, SapDiscoveryOperatingSystem right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapDiscoveryOperatingSystem"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapDiscoveryOperatingSystem left, SapDiscoveryOperatingSystem right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapDiscoveryOperatingSystem"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapDiscoveryOperatingSystem"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapDiscoveryOperatingSystem(string value) => new SapDiscoveryOperatingSystem(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapDiscoveryOperatingSystem"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapDiscoveryOperatingSystem?(string value) => value == null ? null : new SapDiscoveryOperatingSystem(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapDiscoveryOperatingSystem other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapDiscoveryOperatingSystem other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

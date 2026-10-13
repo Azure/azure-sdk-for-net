@@ -2,10 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 #region Snippet:Azure_Search_Documents_Tests_Samples_Sample11_KnowledgeSource_Namespaces
+using System.IO;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases.Models;
@@ -60,6 +63,28 @@ namespace Azure.Search.Documents.Tests.Samples
                         {
                             new SearchIndexFieldReference("hotelId"),
                             new SearchIndexFieldReference("hotelName"),
+                        },
+
+                        // Guide query planning toward useful filters and boosts.
+                        QueryHints = new SearchIndexKnowledgeSourceQueryHints
+                        {
+                            Filters =
+                            {
+                                new SearchIndexKnowledgeSourceFilterHint(
+                                    "category",
+                                    new[] { "Luxury", "Budget" })
+                                {
+                                    FilterInstructions = "Use this field when the user specifies a hotel category."
+                                }
+                            },
+                            Boosts =
+                            {
+                                new SearchIndexKnowledgeSourceFieldValueBoost("category", 2.0)
+                                {
+                                    FieldValues = { "Luxury" },
+                                    BoostInstructions = "Boost luxury hotels when premium amenities are requested."
+                                }
+                            }
                         }
                     })
                 {
@@ -72,6 +97,8 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 Assert.AreEqual(testSourceName, createdSource.Name);
                 Assert.IsTrue(createdSource is SearchIndexKnowledgeSource);
+                Assert.AreEqual(1, searchIndexSource.SearchIndexParameters.QueryHints.Filters.Count);
+                Assert.AreEqual(1, searchIndexSource.SearchIndexParameters.QueryHints.Boosts.Count);
             }
             finally
             {
@@ -79,6 +106,134 @@ namespace Azure.Search.Documents.Tests.Samples
                 try
                 { await client.DeleteKnowledgeSourceAsync(testSourceName, cancellationToken: CancellationToken.None); }
                 catch { }
+            }
+        }
+
+        [Test]
+        [LiveOnly]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_08_01_Preview)]
+        public async Task CreatePrivateBlobKnowledgeSourceAndInspectAnalyzer()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithBlobStorageAsync(
+                this,
+                populate: true,
+                isSample: true);
+
+            Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
+            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
+            Environment.SetEnvironmentVariable("STORAGE_CONNECTION_STRING", resources.StorageAccountConnectionString);
+            Environment.SetEnvironmentVariable("STORAGE_CONTAINER_NAME", resources.BlobContainerName);
+            Environment.SetEnvironmentVariable("AI_SERVICES_ENDPOINT", resources.CognitiveServicesEndpoint);
+            Environment.SetEnvironmentVariable("AI_SERVICES_KEY", resources.CognitiveServicesKey);
+            Environment.SetEnvironmentVariable("OPENAI_ENDPOINT", TestEnvironment.OpenAIEndpoint);
+            Environment.SetEnvironmentVariable("OPENAI_KEY", TestEnvironment.OpenAIKey);
+
+            string testSourceName = Recording.Random.GetName();
+            SearchIndexClient testClient = null;
+
+            try
+            {
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample11_KnowledgeSource_PrivateBlob
+                Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+                AzureKeyCredential credential = new AzureKeyCredential(
+                    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+                SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
+#if !SNIPPET
+                indexClient = InstrumentClient(new SearchIndexClient(endpoint, credential, GetSearchClientOptions()));
+                testClient = indexClient;
+#endif
+
+                string knowledgeSourceName = "my-private-blob-source";
+#if !SNIPPET
+                knowledgeSourceName = testSourceName;
+#endif
+                string storageConnectionString = Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING");
+                string containerName = Environment.GetEnvironmentVariable("STORAGE_CONTAINER_NAME");
+                string aiServicesEndpoint = Environment.GetEnvironmentVariable("AI_SERVICES_ENDPOINT");
+                string aiServicesKey = Environment.GetEnvironmentVariable("AI_SERVICES_KEY");
+                string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
+                string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
+
+                KnowledgeSourceIngestionParameters ingestion = new KnowledgeSourceIngestionParameters
+                {
+                    // Private is a create-time setting for supported indexed sources.
+                    NetworkAccessMode = KnowledgeSourceNetworkAccessMode.Private,
+                    ContentExtractionMode = KnowledgeSourceContentExtractionMode.Minimal,
+                    AiServices = new AIServices(new Uri(aiServicesEndpoint))
+                    {
+                        ApiKey = aiServicesKey
+                    },
+                    EmbeddingModel = new KnowledgeSourceAzureOpenAIVectorizer
+                    {
+                        AzureOpenAIParameters = new AzureOpenAIVectorizerParameters
+                        {
+                            ResourceUri = new Uri(openAIEndpoint),
+                            ApiKey = openAIKey,
+                            DeploymentName = "text-embedding-3-large",
+                            ModelName = "text-embedding-3-large"
+                        }
+                    }
+                };
+
+                AzureBlobKnowledgeSource blobSource = new AzureBlobKnowledgeSource(
+                    knowledgeSourceName,
+                    new AzureBlobKnowledgeSourceParameters(storageConnectionString, containerName)
+                    {
+                        IngestionParameters = ingestion
+                    });
+
+                await indexClient.CreateKnowledgeSourceAsync(blobSource);
+
+                // Wait for the service to report the generated index. Creation is asynchronous.
+                AzureBlobKnowledgeSource persisted = null;
+                for (int attempt = 0; attempt < 12; attempt++)
+                {
+                    persisted = (AzureBlobKnowledgeSource)await indexClient.GetKnowledgeSourceAsync(knowledgeSourceName);
+                    if (persisted.AzureBlobParameters.CreatedResources?.AdditionalProperties.ContainsKey("index") == true)
+                    {
+                        break;
+                    }
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+                }
+
+                KnowledgeSourceStatus status = await indexClient.GetKnowledgeSourceStatusAsync(knowledgeSourceName);
+
+                Console.WriteLine($"Synchronization status: {status.SynchronizationStatus}");
+                if (persisted?.AzureBlobParameters.CreatedResources is null)
+                {
+                    throw new InvalidOperationException("The service did not report generated resources.");
+                }
+                foreach (KeyValuePair<string, string> resource in persisted.AzureBlobParameters.CreatedResources.AdditionalProperties)
+                {
+                    Console.WriteLine($"Generated {resource.Key}: {resource.Value}");
+                }
+
+                if (!persisted.AzureBlobParameters.CreatedResources.AdditionalProperties.TryGetValue(
+                    "index",
+                    out string generatedIndexName))
+                {
+                    throw new InvalidOperationException("The service did not report a generated index.");
+                }
+
+                SearchIndex generatedIndex = await indexClient.GetIndexAsync(generatedIndexName);
+                SearchField microsoftAnalyzerField = generatedIndex.Fields.FirstOrDefault(
+                    field => field.AnalyzerName == LexicalAnalyzerName.EnMicrosoft);
+                Console.WriteLine($"Service-selected analyzer: {microsoftAnalyzerField?.AnalyzerName}");
+                #endregion Snippet:Azure_Search_Documents_Tests_Samples_Sample11_KnowledgeSource_PrivateBlob
+
+                Assert.AreEqual(
+                    KnowledgeSourceNetworkAccessMode.Private,
+                    persisted.AzureBlobParameters.IngestionParameters.NetworkAccessMode);
+                Assert.IsNotNull(microsoftAnalyzerField);
+            }
+            finally
+            {
+                if (testClient != null)
+                {
+                    try
+                    { await testClient.DeleteKnowledgeSourceAsync(testSourceName, cancellationToken: CancellationToken.None); }
+                    catch { }
+                }
             }
         }
 
@@ -193,12 +348,21 @@ namespace Azure.Search.Documents.Tests.Samples
             indexClient = InstrumentClient(new SearchIndexClient(endpoint, credential, GetSearchClientOptions()));
 #endif
 
-            // List all knowledge sources
-            await foreach (KnowledgeSource source in indexClient.GetKnowledgeSourcesAsync())
+            // Request small pages and let AsyncPageable follow opaque continuation
+            // state internally. Do not parse or modify continuation tokens.
+            HashSet<string> sourceNames = new HashSet<string>();
+            await foreach (KnowledgeSource source in indexClient.GetKnowledgeSourcesAsync(pageSize: 1))
             {
+                if (!sourceNames.Add(source.Name))
+                {
+                    throw new InvalidDataException($"Duplicate knowledge source '{source.Name}' was returned.");
+                }
                 Console.WriteLine($"Knowledge source: {source.Name} ({source.GetType().Name})");
             }
+            Console.WriteLine($"Listed {sourceNames.Count} unique knowledge sources.");
             #endregion Snippet:Azure_Search_Documents_Tests_Samples_Sample11_KnowledgeSource_List
+
+            Assert.Contains(resources.KnowledgeSourceName, new List<string>(sourceNames));
         }
 
         [Test]

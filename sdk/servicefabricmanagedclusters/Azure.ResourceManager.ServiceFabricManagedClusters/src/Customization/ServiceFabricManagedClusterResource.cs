@@ -97,5 +97,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             return Response.FromValue(Update(WaitUntil.Completed, patch, cancellationToken).Value, null);
         }
+
+        /// <summary> Applies the maintenance window immediately. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Task<Response> PostManagedApplyMaintenanceWindowAsync(CancellationToken cancellationToken = default)
+            => PostManagedApplyMaintenanceWindowWithContentAsync(content: default, cancellationToken);
+
+        /// <summary> Applies the maintenance window immediately. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response PostManagedApplyMaintenanceWindow(CancellationToken cancellationToken = default)
+            => PostManagedApplyMaintenanceWindowWithContent(content: default, cancellationToken);
     }
 }

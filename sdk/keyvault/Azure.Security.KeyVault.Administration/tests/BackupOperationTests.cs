@@ -105,8 +105,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync(default));
 
             Assert.Throws<RequestFailedException>(() => { KeyVaultBackupResult x = operation.Value; });
-            Assert.That(operation.StartTime, Is.EqualTo(failedBackup.StartTime));
-            Assert.That(operation.EndTime, Is.EqualTo(failedBackup.EndTime));
+            Assert.That(operation.StartTime, Is.EqualTo(failedBackup.StartsOn));
+            Assert.That(operation.EndTime, Is.EqualTo(failedBackup.EndsOn));
         }
 
         [Test]
@@ -121,8 +121,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var operation = new KeyVaultBackupOperation(incompleteBackup, Mock.Of<Response>(), Mock.Of<KeyVaultBackupClient>());
 
             Assert.Throws<InvalidOperationException>(() => { KeyVaultBackupResult x = operation.Value; });
-            Assert.That(operation.StartTime, Is.EqualTo(incompleteBackup.StartTime));
-            Assert.That(operation.EndTime, Is.EqualTo(incompleteBackup.EndTime));
+            Assert.That(operation.StartTime, Is.EqualTo(incompleteBackup.StartsOn));
+            Assert.That(operation.EndTime, Is.EqualTo(incompleteBackup.EndsOn));
         }
 
         [Test(Description = "https://github.com/Azure/azure-sdk-for-net/issues/41855")]

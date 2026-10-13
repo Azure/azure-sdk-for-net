@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WritePropertyName("certificateCommonName"u8);
             writer.WriteStringValue(CertificateCommonName);
             writer.WritePropertyName("certificateIssuerThumbprint"u8);
-            writer.WriteBase64StringValue(CertificateIssuerThumbprint.ToArray(), "D");
+            writer.WriteBase64StringValue(CertificateIssuerThumbprint, "D");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ClusterServerCertificateCommonName(certificateCommonName, certificateIssuerThumbprint, additionalBinaryDataProperties);

@@ -29,12 +29,12 @@ namespace Azure.Developer.LoadTesting
         /// <param name="testId"> Associated test ID for the test profile. This property is required for creating a Test Profile and it's not allowed to be updated. </param>
         /// <param name="targetResourceId"> Target resource ID on which the test profile is created. This property is required for creating a Test Profile and it's not allowed to be updated. </param>
         /// <param name="targetResourceConfigurations"> Configurations of the target resource on which testing would be done. </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestProfile(string testProfileId, string displayName, string description, string testId, ResourceIdentifier targetResourceId, TargetResourceConfigurations targetResourceConfigurations, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestProfile(string testProfileId, string displayName, string description, string testId, ResourceIdentifier targetResourceId, TargetResourceConfigurations targetResourceConfigurations, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TestProfileId = testProfileId;
             DisplayName = displayName;
@@ -42,9 +42,9 @@ namespace Azure.Developer.LoadTesting
             TestId = testId;
             TargetResourceId = targetResourceId;
             TargetResourceConfigurations = targetResourceConfigurations;
-            CreatedDateTime = createdDateTime;
+            CreatedOn = createdOn;
             CreatedBy = createdBy;
-            LastModifiedDateTime = lastModifiedDateTime;
+            LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -68,13 +68,13 @@ namespace Azure.Developer.LoadTesting
         public TargetResourceConfigurations TargetResourceConfigurations { get; set; }
 
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>
-        public DateTimeOffset? CreatedDateTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The user that created. </summary>
         public string CreatedBy { get; }
 
         /// <summary> The last Modified datetime(RFC 3339 literal format). </summary>
-        public DateTimeOffset? LastModifiedDateTime { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> The user that last modified. </summary>
         public string LastModifiedBy { get; }

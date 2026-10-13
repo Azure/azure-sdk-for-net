@@ -98,43 +98,43 @@ namespace Azure.ResourceManager.Compute.Mocking
 
         private ClientDiagnostics VirtualMachineScaleSetsSubscriptionClientDiagnostics => _virtualMachineScaleSetsSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineScaleSetsSubscription VirtualMachineScaleSetsSubscriptionRestClient => _virtualMachineScaleSetsSubscriptionRestClient ??= new VirtualMachineScaleSetsSubscription(VirtualMachineScaleSetsSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private VirtualMachineScaleSetsSubscription VirtualMachineScaleSetsSubscriptionRestClient => _virtualMachineScaleSetsSubscriptionRestClient ??= new VirtualMachineScaleSetsSubscription(VirtualMachineScaleSetsSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics VirtualMachinesSubscriptionClientDiagnostics => _virtualMachinesSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachinesSubscription VirtualMachinesSubscriptionRestClient => _virtualMachinesSubscriptionRestClient ??= new VirtualMachinesSubscription(VirtualMachinesSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private VirtualMachinesSubscription VirtualMachinesSubscriptionRestClient => _virtualMachinesSubscriptionRestClient ??= new VirtualMachinesSubscription(VirtualMachinesSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics AvailabilitySetsClientDiagnostics => _availabilitySetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailabilitySets AvailabilitySetsRestClient => _availabilitySetsRestClient ??= new AvailabilitySets(AvailabilitySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private AvailabilitySets AvailabilitySetsRestClient => _availabilitySetsRestClient ??= new AvailabilitySets(AvailabilitySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics ProximityPlacementGroupsClientDiagnostics => _proximityPlacementGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProximityPlacementGroups ProximityPlacementGroupsRestClient => _proximityPlacementGroupsRestClient ??= new ProximityPlacementGroups(ProximityPlacementGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private ProximityPlacementGroups ProximityPlacementGroupsRestClient => _proximityPlacementGroupsRestClient ??= new ProximityPlacementGroups(ProximityPlacementGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics DedicatedHostGroupsClientDiagnostics => _dedicatedHostGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DedicatedHostGroups DedicatedHostGroupsRestClient => _dedicatedHostGroupsRestClient ??= new DedicatedHostGroups(DedicatedHostGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private DedicatedHostGroups DedicatedHostGroupsRestClient => _dedicatedHostGroupsRestClient ??= new DedicatedHostGroups(DedicatedHostGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics SshPublicKeyResourcesClientDiagnostics => _sshPublicKeyResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SshPublicKeyResources SshPublicKeyResourcesRestClient => _sshPublicKeyResourcesRestClient ??= new SshPublicKeyResources(SshPublicKeyResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private SshPublicKeyResources SshPublicKeyResourcesRestClient => _sshPublicKeyResourcesRestClient ??= new SshPublicKeyResources(SshPublicKeyResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics ImagesClientDiagnostics => _imagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Images ImagesRestClient => _imagesRestClient ??= new Images(ImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private Images ImagesRestClient => _imagesRestClient ??= new Images(ImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics RestorePointCollectionsSubscriptionClientDiagnostics => _restorePointCollectionsSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RestorePointCollectionsSubscription RestorePointCollectionsSubscriptionRestClient => _restorePointCollectionsSubscriptionRestClient ??= new RestorePointCollectionsSubscription(RestorePointCollectionsSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private RestorePointCollectionsSubscription RestorePointCollectionsSubscriptionRestClient => _restorePointCollectionsSubscriptionRestClient ??= new RestorePointCollectionsSubscription(RestorePointCollectionsSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics CapacityReservationGroupsClientDiagnostics => _capacityReservationGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CapacityReservationGroups CapacityReservationGroupsRestClient => _capacityReservationGroupsRestClient ??= new CapacityReservationGroups(CapacityReservationGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private CapacityReservationGroups CapacityReservationGroupsRestClient => _capacityReservationGroupsRestClient ??= new CapacityReservationGroups(CapacityReservationGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics InterconnectBlocksClientDiagnostics => _interconnectBlocksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private InterconnectBlocks InterconnectBlocksRestClient => _interconnectBlocksRestClient ??= new InterconnectBlocks(InterconnectBlocksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private InterconnectBlocks InterconnectBlocksRestClient => _interconnectBlocksRestClient ??= new InterconnectBlocks(InterconnectBlocksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics DisksClientDiagnostics => _disksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -158,35 +158,35 @@ namespace Azure.ResourceManager.Compute.Mocking
 
         private ClientDiagnostics UsageOperationGroupClientDiagnostics => _usageOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private UsageOperationGroup UsageOperationGroupRestClient => _usageOperationGroupRestClient ??= new UsageOperationGroup(UsageOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private UsageOperationGroup UsageOperationGroupRestClient => _usageOperationGroupRestClient ??= new UsageOperationGroup(UsageOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics VirtualMachineSizesOperationGroupClientDiagnostics => _virtualMachineSizesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineSizesOperationGroup VirtualMachineSizesOperationGroupRestClient => _virtualMachineSizesOperationGroupRestClient ??= new VirtualMachineSizesOperationGroup(VirtualMachineSizesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private VirtualMachineSizesOperationGroup VirtualMachineSizesOperationGroupRestClient => _virtualMachineSizesOperationGroupRestClient ??= new VirtualMachineSizesOperationGroup(VirtualMachineSizesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics VirtualMachineScaleSetsOperationGroupClientDiagnostics => _virtualMachineScaleSetsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineScaleSetsOperationGroup VirtualMachineScaleSetsOperationGroupRestClient => _virtualMachineScaleSetsOperationGroupRestClient ??= new VirtualMachineScaleSetsOperationGroup(VirtualMachineScaleSetsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private VirtualMachineScaleSetsOperationGroup VirtualMachineScaleSetsOperationGroupRestClient => _virtualMachineScaleSetsOperationGroupRestClient ??= new VirtualMachineScaleSetsOperationGroup(VirtualMachineScaleSetsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics VirtualMachinesOperationGroupClientDiagnostics => _virtualMachinesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachinesOperationGroup VirtualMachinesOperationGroupRestClient => _virtualMachinesOperationGroupRestClient ??= new VirtualMachinesOperationGroup(VirtualMachinesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private VirtualMachinesOperationGroup VirtualMachinesOperationGroupRestClient => _virtualMachinesOperationGroupRestClient ??= new VirtualMachinesOperationGroup(VirtualMachinesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics VirtualMachineImagesEdgeZoneOperationGroupClientDiagnostics => _virtualMachineImagesEdgeZoneOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineImagesEdgeZoneOperationGroup VirtualMachineImagesEdgeZoneOperationGroupRestClient => _virtualMachineImagesEdgeZoneOperationGroupRestClient ??= new VirtualMachineImagesEdgeZoneOperationGroup(VirtualMachineImagesEdgeZoneOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private VirtualMachineImagesEdgeZoneOperationGroup VirtualMachineImagesEdgeZoneOperationGroupRestClient => _virtualMachineImagesEdgeZoneOperationGroupRestClient ??= new VirtualMachineImagesEdgeZoneOperationGroup(VirtualMachineImagesEdgeZoneOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics VirtualMachineImagesOperationGroupClientDiagnostics => _virtualMachineImagesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineImagesOperationGroup VirtualMachineImagesOperationGroupRestClient => _virtualMachineImagesOperationGroupRestClient ??= new VirtualMachineImagesOperationGroup(VirtualMachineImagesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private VirtualMachineImagesOperationGroup VirtualMachineImagesOperationGroupRestClient => _virtualMachineImagesOperationGroupRestClient ??= new VirtualMachineImagesOperationGroup(VirtualMachineImagesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics LogAnalyticsOperationGroupClientDiagnostics => _logAnalyticsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LogAnalyticsOperationGroup LogAnalyticsOperationGroupRestClient => _logAnalyticsOperationGroupRestClient ??= new LogAnalyticsOperationGroup(LogAnalyticsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private LogAnalyticsOperationGroup LogAnalyticsOperationGroupRestClient => _logAnalyticsOperationGroupRestClient ??= new LogAnalyticsOperationGroup(LogAnalyticsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics VirtualMachineRunCommandsOperationGroupClientDiagnostics => _virtualMachineRunCommandsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineRunCommandsOperationGroup VirtualMachineRunCommandsOperationGroupRestClient => _virtualMachineRunCommandsOperationGroupRestClient ??= new VirtualMachineRunCommandsOperationGroup(VirtualMachineRunCommandsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private VirtualMachineRunCommandsOperationGroup VirtualMachineRunCommandsOperationGroupRestClient => _virtualMachineRunCommandsOperationGroupRestClient ??= new VirtualMachineRunCommandsOperationGroup(VirtualMachineRunCommandsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics SharedGalleriesClientDiagnostics => _sharedGalleriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsSubscriptionGetAllAsyncCollectionResultOfT(VirtualMachineScaleSetsSubscriptionRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetVirtualMachineScaleSets"), data => new VirtualMachineScaleSetResource(Client, data));
+            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetDataAsync0CollectionResultOfT(VirtualMachineScaleSetsSubscriptionRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetVirtualMachineScaleSets"), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsSubscriptionGetAllCollectionResultOfT(VirtualMachineScaleSetsSubscriptionRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetVirtualMachineScaleSets"), data => new VirtualMachineScaleSetResource(Client, data));
+            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetData0CollectionResultOfT(VirtualMachineScaleSetsSubscriptionRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetVirtualMachineScaleSets"), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesSubscriptionGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachineDataAsync0CollectionResultOfT(
                 VirtualMachinesSubscriptionRestClient,
                 Id.SubscriptionId,
                 statusOnly,
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesSubscriptionGetAllCollectionResultOfT(
+            return new PageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachineData0CollectionResultOfT(
                 VirtualMachinesSubscriptionRestClient,
                 Id.SubscriptionId,
                 statusOnly,
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvailabilitySetData, AvailabilitySetResource>(new AvailabilitySetsGetBySubscriptionAsyncCollectionResultOfT(AvailabilitySetsRestClient, Id.SubscriptionId, expand, context, "MockableComputeSubscriptionResource.GetAvailabilitySets"), data => new AvailabilitySetResource(Client, data));
+            return new AsyncPageableWrapper<AvailabilitySetData, AvailabilitySetResource>(new AvailabilitySetDataAsync0CollectionResultOfT(AvailabilitySetsRestClient, Id.SubscriptionId, expand, context, "MockableComputeSubscriptionResource.GetAvailabilitySets"), data => new AvailabilitySetResource(Client, data));
         }
 
         /// <summary>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvailabilitySetData, AvailabilitySetResource>(new AvailabilitySetsGetBySubscriptionCollectionResultOfT(AvailabilitySetsRestClient, Id.SubscriptionId, expand, context, "MockableComputeSubscriptionResource.GetAvailabilitySets"), data => new AvailabilitySetResource(Client, data));
+            return new PageableWrapper<AvailabilitySetData, AvailabilitySetResource>(new AvailabilitySetData0CollectionResultOfT(AvailabilitySetsRestClient, Id.SubscriptionId, expand, context, "MockableComputeSubscriptionResource.GetAvailabilitySets"), data => new AvailabilitySetResource(Client, data));
         }
 
         /// <summary>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProximityPlacementGroupData, ProximityPlacementGroupResource>(new ProximityPlacementGroupsGetBySubscriptionAsyncCollectionResultOfT(ProximityPlacementGroupsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetProximityPlacementGroups"), data => new ProximityPlacementGroupResource(Client, data));
+            return new AsyncPageableWrapper<ProximityPlacementGroupData, ProximityPlacementGroupResource>(new ProximityPlacementGroupDataAsync0CollectionResultOfT(ProximityPlacementGroupsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetProximityPlacementGroups"), data => new ProximityPlacementGroupResource(Client, data));
         }
 
         /// <summary>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProximityPlacementGroupData, ProximityPlacementGroupResource>(new ProximityPlacementGroupsGetBySubscriptionCollectionResultOfT(ProximityPlacementGroupsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetProximityPlacementGroups"), data => new ProximityPlacementGroupResource(Client, data));
+            return new PageableWrapper<ProximityPlacementGroupData, ProximityPlacementGroupResource>(new ProximityPlacementGroupData0CollectionResultOfT(ProximityPlacementGroupsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetProximityPlacementGroups"), data => new ProximityPlacementGroupResource(Client, data));
         }
 
         /// <summary>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedHostGroupData, DedicatedHostGroupResource>(new DedicatedHostGroupsGetBySubscriptionAsyncCollectionResultOfT(DedicatedHostGroupsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDedicatedHostGroups"), data => new DedicatedHostGroupResource(Client, data));
+            return new AsyncPageableWrapper<DedicatedHostGroupData, DedicatedHostGroupResource>(new DedicatedHostGroupDataAsync0CollectionResultOfT(DedicatedHostGroupsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDedicatedHostGroups"), data => new DedicatedHostGroupResource(Client, data));
         }
 
         /// <summary>
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedHostGroupData, DedicatedHostGroupResource>(new DedicatedHostGroupsGetBySubscriptionCollectionResultOfT(DedicatedHostGroupsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDedicatedHostGroups"), data => new DedicatedHostGroupResource(Client, data));
+            return new PageableWrapper<DedicatedHostGroupData, DedicatedHostGroupResource>(new DedicatedHostGroupData0CollectionResultOfT(DedicatedHostGroupsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDedicatedHostGroups"), data => new DedicatedHostGroupResource(Client, data));
         }
 
         /// <summary>
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SshPublicKeyData, SshPublicKeyResource>(new SshPublicKeyResourcesGetBySubscriptionAsyncCollectionResultOfT(SshPublicKeyResourcesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetSshPublicKeys"), data => new SshPublicKeyResource(Client, data));
+            return new AsyncPageableWrapper<SshPublicKeyData, SshPublicKeyResource>(new SshPublicKeyDataAsync0CollectionResultOfT(SshPublicKeyResourcesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetSshPublicKeys"), data => new SshPublicKeyResource(Client, data));
         }
 
         /// <summary>
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SshPublicKeyData, SshPublicKeyResource>(new SshPublicKeyResourcesGetBySubscriptionCollectionResultOfT(SshPublicKeyResourcesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetSshPublicKeys"), data => new SshPublicKeyResource(Client, data));
+            return new PageableWrapper<SshPublicKeyData, SshPublicKeyResource>(new SshPublicKeyData0CollectionResultOfT(SshPublicKeyResourcesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetSshPublicKeys"), data => new SshPublicKeyResource(Client, data));
         }
 
         /// <summary>
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiskImageData, DiskImageResource>(new ImagesGetAllAsyncCollectionResultOfT(ImagesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskImages"), data => new DiskImageResource(Client, data));
+            return new AsyncPageableWrapper<DiskImageData, DiskImageResource>(new DiskImageDataAsync0CollectionResultOfT(ImagesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskImages"), data => new DiskImageResource(Client, data));
         }
 
         /// <summary>
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiskImageData, DiskImageResource>(new ImagesGetAllCollectionResultOfT(ImagesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskImages"), data => new DiskImageResource(Client, data));
+            return new PageableWrapper<DiskImageData, DiskImageResource>(new DiskImageData0CollectionResultOfT(ImagesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskImages"), data => new DiskImageResource(Client, data));
         }
 
         /// <summary>
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointCollectionsSubscriptionGetAllAsyncCollectionResultOfT(RestorePointCollectionsSubscriptionRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetRestorePointGroups"), data => new RestorePointGroupResource(Client, data));
+            return new AsyncPageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointGroupDataAsync0CollectionResultOfT(RestorePointCollectionsSubscriptionRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetRestorePointGroups"), data => new RestorePointGroupResource(Client, data));
         }
 
         /// <summary>
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointCollectionsSubscriptionGetAllCollectionResultOfT(RestorePointCollectionsSubscriptionRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetRestorePointGroups"), data => new RestorePointGroupResource(Client, data));
+            return new PageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointGroupData0CollectionResultOfT(RestorePointCollectionsSubscriptionRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetRestorePointGroups"), data => new RestorePointGroupResource(Client, data));
         }
 
         /// <summary>
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CapacityReservationGroupData, CapacityReservationGroupResource>(new CapacityReservationGroupsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CapacityReservationGroupData, CapacityReservationGroupResource>(new CapacityReservationGroupDataAsync0CollectionResultOfT(
                 CapacityReservationGroupsRestClient,
                 Id.SubscriptionId,
                 expand?.ToString(),
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CapacityReservationGroupData, CapacityReservationGroupResource>(new CapacityReservationGroupsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<CapacityReservationGroupData, CapacityReservationGroupResource>(new CapacityReservationGroupData0CollectionResultOfT(
                 CapacityReservationGroupsRestClient,
                 Id.SubscriptionId,
                 expand?.ToString(),
@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InterconnectBlockData, InterconnectBlockResource>(new InterconnectBlocksGetBySubscriptionAsyncCollectionResultOfT(InterconnectBlocksRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetInterconnectBlocks"), data => new InterconnectBlockResource(Client, data));
+            return new AsyncPageableWrapper<InterconnectBlockData, InterconnectBlockResource>(new InterconnectBlockDataAsync0CollectionResultOfT(InterconnectBlocksRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetInterconnectBlocks"), data => new InterconnectBlockResource(Client, data));
         }
 
         /// <summary>
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InterconnectBlockData, InterconnectBlockResource>(new InterconnectBlocksGetBySubscriptionCollectionResultOfT(InterconnectBlocksRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetInterconnectBlocks"), data => new InterconnectBlockResource(Client, data));
+            return new PageableWrapper<InterconnectBlockData, InterconnectBlockResource>(new InterconnectBlockData0CollectionResultOfT(InterconnectBlocksRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetInterconnectBlocks"), data => new InterconnectBlockResource(Client, data));
         }
 
         /// <summary>
@@ -918,7 +918,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedDiskData, ManagedDiskResource>(new DisksGetAllAsyncCollectionResultOfT(DisksRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetManagedDisks"), data => new ManagedDiskResource(Client, data));
+            return new AsyncPageableWrapper<ManagedDiskData, ManagedDiskResource>(new ManagedDiskDataAsync0CollectionResultOfT(DisksRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetManagedDisks"), data => new ManagedDiskResource(Client, data));
         }
 
         /// <summary>
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedDiskData, ManagedDiskResource>(new DisksGetAllCollectionResultOfT(DisksRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetManagedDisks"), data => new ManagedDiskResource(Client, data));
+            return new PageableWrapper<ManagedDiskData, ManagedDiskResource>(new ManagedDiskData0CollectionResultOfT(DisksRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetManagedDisks"), data => new ManagedDiskResource(Client, data));
         }
 
         /// <summary>
@@ -974,7 +974,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiskAccessData, DiskAccessResource>(new DiskAccessesGetAllAsyncCollectionResultOfT(DiskAccessesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskAccesses"), data => new DiskAccessResource(Client, data));
+            return new AsyncPageableWrapper<DiskAccessData, DiskAccessResource>(new DiskAccessDataAsync0CollectionResultOfT(DiskAccessesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskAccesses"), data => new DiskAccessResource(Client, data));
         }
 
         /// <summary>
@@ -1002,7 +1002,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiskAccessData, DiskAccessResource>(new DiskAccessesGetAllCollectionResultOfT(DiskAccessesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskAccesses"), data => new DiskAccessResource(Client, data));
+            return new PageableWrapper<DiskAccessData, DiskAccessResource>(new DiskAccessData0CollectionResultOfT(DiskAccessesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskAccesses"), data => new DiskAccessResource(Client, data));
         }
 
         /// <summary>
@@ -1030,7 +1030,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiskEncryptionSetData, DiskEncryptionSetResource>(new DiskEncryptionSetsGetAllAsyncCollectionResultOfT(DiskEncryptionSetsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskEncryptionSets"), data => new DiskEncryptionSetResource(Client, data));
+            return new AsyncPageableWrapper<DiskEncryptionSetData, DiskEncryptionSetResource>(new DiskEncryptionSetDataAsync0CollectionResultOfT(DiskEncryptionSetsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskEncryptionSets"), data => new DiskEncryptionSetResource(Client, data));
         }
 
         /// <summary>
@@ -1058,7 +1058,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiskEncryptionSetData, DiskEncryptionSetResource>(new DiskEncryptionSetsGetAllCollectionResultOfT(DiskEncryptionSetsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskEncryptionSets"), data => new DiskEncryptionSetResource(Client, data));
+            return new PageableWrapper<DiskEncryptionSetData, DiskEncryptionSetResource>(new DiskEncryptionSetData0CollectionResultOfT(DiskEncryptionSetsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskEncryptionSets"), data => new DiskEncryptionSetResource(Client, data));
         }
 
         /// <summary>
@@ -1086,7 +1086,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SnapshotData, SnapshotResource>(new SnapshotsGetAllAsyncCollectionResultOfT(SnapshotsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetSnapshots"), data => new SnapshotResource(Client, data));
+            return new AsyncPageableWrapper<SnapshotData, SnapshotResource>(new SnapshotDataAsync0CollectionResultOfT(SnapshotsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetSnapshots"), data => new SnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -1114,7 +1114,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SnapshotData, SnapshotResource>(new SnapshotsGetAllCollectionResultOfT(SnapshotsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetSnapshots"), data => new SnapshotResource(Client, data));
+            return new PageableWrapper<SnapshotData, SnapshotResource>(new SnapshotData0CollectionResultOfT(SnapshotsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetSnapshots"), data => new SnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -1142,7 +1142,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GalleryData, GalleryResource>(new GalleriesGetAllAsyncCollectionResultOfT(GalleriesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetGalleries"), data => new GalleryResource(Client, data));
+            return new AsyncPageableWrapper<GalleryData, GalleryResource>(new GalleryDataAsync0CollectionResultOfT(GalleriesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetGalleries"), data => new GalleryResource(Client, data));
         }
 
         /// <summary>
@@ -1170,7 +1170,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GalleryData, GalleryResource>(new GalleriesGetAllCollectionResultOfT(GalleriesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetGalleries"), data => new GalleryResource(Client, data));
+            return new PageableWrapper<GalleryData, GalleryResource>(new GalleryData0CollectionResultOfT(GalleriesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetGalleries"), data => new GalleryResource(Client, data));
         }
 
         /// <summary>
@@ -1186,7 +1186,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1199,7 +1199,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsageOperationGroupGetUsagesAsyncCollectionResultOfT(UsageOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetUsages");
+            return new ComputeUsageAsyncCollectionResultOfT(UsageOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -1215,7 +1215,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1228,7 +1228,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsageOperationGroupGetUsagesCollectionResultOfT(UsageOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetUsages");
+            return new ComputeUsageCollectionResultOfT(UsageOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -1244,7 +1244,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1257,7 +1257,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineSizesOperationGroupGetVirtualMachineSizesAsyncCollectionResultOfT(VirtualMachineSizesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineSizes");
+            return new VirtualMachineSizeAsync1CollectionResultOfT(VirtualMachineSizesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineSizes");
         }
 
         /// <summary>
@@ -1273,7 +1273,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1286,7 +1286,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineSizesOperationGroupGetVirtualMachineSizesCollectionResultOfT(VirtualMachineSizesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineSizes");
+            return new VirtualMachineSize1CollectionResultOfT(VirtualMachineSizesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineSizes");
         }
 
         /// <summary>
@@ -1302,7 +1302,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1315,7 +1315,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsOperationGroupGetVirtualMachineScaleSetsByLocationAsyncCollectionResultOfT(VirtualMachineScaleSetsOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineScaleSetsByLocation"), data => new VirtualMachineScaleSetResource(Client, data));
+            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetDataAsync1CollectionResultOfT(VirtualMachineScaleSetsOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineScaleSetsByLocation"), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>
@@ -1331,7 +1331,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1344,7 +1344,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsOperationGroupGetVirtualMachineScaleSetsByLocationCollectionResultOfT(VirtualMachineScaleSetsOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineScaleSetsByLocation"), data => new VirtualMachineScaleSetResource(Client, data));
+            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetData1CollectionResultOfT(VirtualMachineScaleSetsOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineScaleSetsByLocation"), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>
@@ -1360,7 +1360,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesOperationGroupGetVirtualMachinesByLocationAsyncCollectionResultOfT(VirtualMachinesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachinesByLocation"), data => new VirtualMachineResource(Client, data));
+            return new AsyncPageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachineDataAsync1CollectionResultOfT(VirtualMachinesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachinesByLocation"), data => new VirtualMachineResource(Client, data));
         }
 
         /// <summary>
@@ -1389,7 +1389,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1402,7 +1402,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesOperationGroupGetVirtualMachinesByLocationCollectionResultOfT(VirtualMachinesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachinesByLocation"), data => new VirtualMachineResource(Client, data));
+            return new PageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachineData1CollectionResultOfT(VirtualMachinesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachinesByLocation"), data => new VirtualMachineResource(Client, data));
         }
 
         /// <summary>
@@ -1418,7 +1418,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1436,7 +1436,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListPublishersAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1458,7 +1458,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1476,7 +1476,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListPublishersCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1498,7 +1498,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1518,7 +1518,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListOffersAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetOffersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1541,7 +1541,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1561,7 +1561,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListOffersCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetOffersVirtualMachineImagesEdgeZonesCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1584,7 +1584,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1606,7 +1606,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListSkusAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusAsyncCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1630,7 +1630,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1652,7 +1652,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListSkusCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1676,7 +1676,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1734,7 +1734,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1792,7 +1792,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1810,7 +1810,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineImagesOperationGroupGetVirtualMachineImagesByEdgeZoneAsyncCollectionResultOfT(
+            return new VirtualMachineImageBaseAsyncCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1832,7 +1832,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1850,7 +1850,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineImagesOperationGroupGetVirtualMachineImagesByEdgeZoneCollectionResultOfT(
+            return new VirtualMachineImageBaseCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1872,7 +1872,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1885,7 +1885,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListPublishersAsyncCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers");
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagePublishersAsyncCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers");
         }
 
         /// <summary>
@@ -1901,7 +1901,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1914,7 +1914,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListPublishersCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers");
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagePublishersCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers");
         }
 
         /// <summary>
@@ -1930,7 +1930,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1948,7 +1948,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListOffersAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageOffersAsyncCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1970,7 +1970,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1988,7 +1988,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListOffersCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageOffersCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -2010,7 +2010,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2030,7 +2030,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListSkusAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageSkusAsyncCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -2053,7 +2053,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2073,7 +2073,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListSkusCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageSkusCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -2081,6 +2081,110 @@ namespace Azure.ResourceManager.Compute.Mocking
                 offer,
                 context,
                 "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus");
+        }
+
+        /// <summary>
+        /// Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineImagesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="offer"> A valid image publisher offer. </param>
+        /// <param name="skus"> A valid image SKU. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="top"></param>
+        /// <param name="orderby"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(AzureLocation location, string publisherName, string offer, string skus, string expand = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagesAsyncCollectionResultOfT(
+                VirtualMachineImagesOperationGroupRestClient,
+                Id.SubscriptionId,
+                location,
+                publisherName,
+                offer,
+                skus,
+                expand,
+                top,
+                @orderby,
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImages");
+        }
+
+        /// <summary>
+        /// Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineImagesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="offer"> A valid image publisher offer. </param>
+        /// <param name="skus"> A valid image SKU. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="top"></param>
+        /// <param name="orderby"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImages(AzureLocation location, string publisherName, string offer, string skus, string expand = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagesCollectionResultOfT(
+                VirtualMachineImagesOperationGroupRestClient,
+                Id.SubscriptionId,
+                location,
+                publisherName,
+                offer,
+                skus,
+                expand,
+                top,
+                @orderby,
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImages");
         }
 
         /// <summary>
@@ -2096,7 +2200,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2122,7 +2226,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListWithPropertiesAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagesWithPropertiesAsyncCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -2149,7 +2253,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2175,7 +2279,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListWithPropertiesCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagesWithPropertiesCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -2202,7 +2306,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2258,7 +2362,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2314,7 +2418,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2370,7 +2474,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2426,7 +2530,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2482,7 +2586,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2538,7 +2642,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2551,7 +2655,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineRunCommandsOperationGroupGetVirtualMachineRunCommandsAsyncCollectionResultOfT(VirtualMachineRunCommandsOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineRunCommands");
+            return new RunCommandDocumentBaseAsyncCollectionResultOfT(VirtualMachineRunCommandsOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineRunCommands");
         }
 
         /// <summary>
@@ -2567,7 +2671,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2580,7 +2684,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineRunCommandsOperationGroupGetVirtualMachineRunCommandsCollectionResultOfT(VirtualMachineRunCommandsOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineRunCommands");
+            return new RunCommandDocumentBaseCollectionResultOfT(VirtualMachineRunCommandsOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineRunCommands");
         }
 
         /// <summary>
@@ -2596,7 +2700,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2646,7 +2750,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2810,7 +2914,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SharedGalleriesGetSharedGalleriesAsyncCollectionResultOfT(
+            return new SharedGalleryDataAsyncCollectionResultOfT(
                 SharedGalleriesRestClient,
                 Id.SubscriptionId,
                 location,
@@ -2846,7 +2950,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SharedGalleriesGetSharedGalleriesCollectionResultOfT(
+            return new SharedGalleryDataCollectionResultOfT(
                 SharedGalleriesRestClient,
                 Id.SubscriptionId,
                 location,
@@ -2991,7 +3095,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SharedGalleryImagesGetSharedGalleryImagesAsyncCollectionResultOfT(
+            return new SharedGalleryImageDataAsyncCollectionResultOfT(
                 SharedGalleryImagesRestClient,
                 Id.SubscriptionId,
                 location,
@@ -3033,7 +3137,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SharedGalleryImagesGetSharedGalleryImagesCollectionResultOfT(
+            return new SharedGalleryImageDataCollectionResultOfT(
                 SharedGalleryImagesRestClient,
                 Id.SubscriptionId,
                 location,
@@ -3185,7 +3289,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SharedGalleryImageVersionsGetSharedGalleryImageVersionsAsyncCollectionResultOfT(
+            return new SharedGalleryImageVersionDataAsyncCollectionResultOfT(
                 SharedGalleryImageVersionsRestClient,
                 Id.SubscriptionId,
                 location,
@@ -3230,7 +3334,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SharedGalleryImageVersionsGetSharedGalleryImageVersionsCollectionResultOfT(
+            return new SharedGalleryImageVersionDataCollectionResultOfT(
                 SharedGalleryImageVersionsRestClient,
                 Id.SubscriptionId,
                 location,
@@ -3476,7 +3580,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CommunityGalleryImagesGetCommunityGalleryImagesAsyncCollectionResultOfT(
+            return new CommunityGalleryImageDataAsyncCollectionResultOfT(
                 CommunityGalleryImagesRestClient,
                 Id.SubscriptionId,
                 location,
@@ -3516,7 +3620,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CommunityGalleryImagesGetCommunityGalleryImagesCollectionResultOfT(
+            return new CommunityGalleryImageDataCollectionResultOfT(
                 CommunityGalleryImagesRestClient,
                 Id.SubscriptionId,
                 location,
@@ -3666,7 +3770,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CommunityGalleryImageVersionsGetCommunityGalleryImageVersionsAsyncCollectionResultOfT(
+            return new CommunityGalleryImageVersionDataAsyncCollectionResultOfT(
                 CommunityGalleryImageVersionsRestClient,
                 Id.SubscriptionId,
                 location,
@@ -3709,7 +3813,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CommunityGalleryImageVersionsGetCommunityGalleryImageVersionsCollectionResultOfT(
+            return new CommunityGalleryImageVersionDataCollectionResultOfT(
                 CommunityGalleryImageVersionsRestClient,
                 Id.SubscriptionId,
                 location,
@@ -3958,7 +4062,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceSkusGetComputeResourceSkusAsyncCollectionResultOfT(
+            return new ComputeResourceSkuAsyncCollectionResultOfT(
                 ResourceSkusRestClient,
                 Id.SubscriptionId,
                 filter,
@@ -3994,7 +4098,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceSkusGetComputeResourceSkusCollectionResultOfT(
+            return new ComputeResourceSkuCollectionResultOfT(
                 ResourceSkusRestClient,
                 Id.SubscriptionId,
                 filter,

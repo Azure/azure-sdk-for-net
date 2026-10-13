@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             BackupIdentityInfo identityInfo = default;
             IdentityBasedRestoreDetails identityBasedRestoreDetails = default;
             ExtendedLocation extendedLocation = default;
-            SecuredVMDetails securedVMDetails = default;
+            SecuredVmDetails securedVmDetails = default;
             BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings = default;
             RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default;
             foreach (var prop in element.EnumerateObject())
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    securedVMDetails = SecuredVMDetails.DeserializeSecuredVMDetails(prop.Value, options);
+                    securedVmDetails = SecuredVmDetails.DeserializeSecuredVmDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("targetDiskNetworkAccessSettings"u8))
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new IaasVmRestoreWithRehydrationContent(
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 identityInfo,
                 identityBasedRestoreDetails,
                 extendedLocation,
-                securedVMDetails,
+                securedVmDetails,
                 targetDiskNetworkAccessSettings,
                 recoveryPointRehydrationInfo);
         }

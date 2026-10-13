@@ -14,7 +14,7 @@ namespace Azure.Provisioning.DesktopVirtualization
     /// <summary> Represents a RegistrationInfo definition. </summary>
     public partial class HostPoolRegistrationInfo : ProvisionableConstruct
     {
-        private BicepValue<DateTimeOffset> _expireOn;
+        private BicepValue<DateTimeOffset> _expiresOn;
         private BicepValue<string> _token;
         private BicepValue<HostPoolRegistrationTokenOperation> _registrationTokenOperation;
 
@@ -23,18 +23,18 @@ namespace Azure.Provisioning.DesktopVirtualization
         {
         }
 
-        /// <summary> Gets or sets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets or sets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
                 Initialize();
-                return _expireOn;
+                return _expiresOn;
             }
             set
             {
                 Initialize();
-                _expireOn.Assign(value);
+                _expiresOn.Assign(value);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expirationTime" }, format: "O");
+            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationTime" }, format: "O");
             _token = DefineProperty<string>(nameof(Token), new string[] { "token" });
             _registrationTokenOperation = DefineProperty<HostPoolRegistrationTokenOperation>(nameof(RegistrationTokenOperation), new string[] { "registrationTokenOperation" });
             DefineAdditionalProperties();

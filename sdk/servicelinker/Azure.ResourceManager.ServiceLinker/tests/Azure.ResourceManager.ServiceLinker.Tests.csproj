@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.ServiceLinker.csproj" />
-    <ProjectReference Include="..\..\..\websites\Azure.ResourceManager.AppService\src\Azure.ResourceManager.AppService.csproj" />
-    <ProjectReference Include="..\..\..\keyvault\Azure.ResourceManager.KeyVault\src\Azure.ResourceManager.KeyVault.csproj" />
-    <ProjectReference Include="..\..\..\sqlmanagement\Azure.ResourceManager.Sql\src\Azure.ResourceManager.Sql.csproj" />
-    <ProjectReference Include="..\..\..\webpubsub\Azure.ResourceManager.WebPubSub\src\Azure.ResourceManager.WebPubSub.csproj" />
+    <PackageReference Include="Azure.ResourceManager.AppService" />
+    <PackageReference Include="Azure.ResourceManager.KeyVault" />
+    <PackageReference Include="Azure.ResourceManager.Sql" />
+    <PackageReference Include="Azure.ResourceManager.WebPubSub" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\">

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -1562,12 +1562,6 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
 
-                    if (conditions?.IfMatch != default ||
-                        conditions?.IfNoneMatch != default)
-                    {
-                        throw BlobErrors.BlobConditionsMustBeDefault(nameof(RequestConditions.IfMatch), nameof(RequestConditions.IfNoneMatch));
-                    }
-
                     Response response;
 
                     if (async)
@@ -2429,12 +2423,6 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
 
-                    if (conditions?.IfMatch != default ||
-                        conditions?.IfNoneMatch != default)
-                    {
-                        throw BlobErrors.BlobConditionsMustBeDefault(nameof(RequestConditions.IfMatch), nameof(RequestConditions.IfNoneMatch));
-                    }
-
                     List<BlobSignedIdentifier> sanitizedPermissions = null;
                     if (permissions != null)
                     {
@@ -2669,7 +2657,7 @@ namespace Azure.Storage.Blobs
         /// single segment of blobs in this container, starting
         /// from the specified <paramref name="marker"/>.  Use an empty
         /// <paramref name="marker"/> to start enumeration from the beginning
-        /// and the <see cref="ListBlobsFlatSegmentResponse.NextMarker"/> if it's not
+        /// and the <see cref="ListBlobsFlatSegmentResult.NextMarker"/> if it's not
         /// empty to make subsequent calls to <see cref="GetBlobsAsync(GetBlobsOptions, CancellationToken)"/>
         /// to continue enumerating the blobs segment by segment. Blobs are
         /// ordered lexicographically by name.
@@ -2684,7 +2672,7 @@ namespace Azure.Storage.Blobs
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
         /// of blobs to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="ListBlobsFlatSegmentResponse.NextMarker"/>
+        /// operation returns a non-empty <see cref="ListBlobsFlatSegmentResult.NextMarker"/>
         /// if the listing operation did not return all blobs remaining to be
         /// listed with the current segment.  The NextMarker value can
         /// be used as the value for the <paramref name="marker"/> parameter
@@ -2731,7 +2719,7 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        internal async Task<Response<ListBlobsFlatSegmentResponse>> GetBlobsInternal(
+        internal async Task<Response<ListBlobsFlatSegmentResult>> GetBlobsInternal(
             StorageResponseFormat responseFormat,
             string marker,
             BlobTraits traits,
@@ -2761,7 +2749,7 @@ namespace Azure.Storage.Blobs
 
                     bool useApacheArrow = responseFormat.ResolveAuto() == StorageResponseFormat.Arrow;
 
-                    ListBlobsFlatSegmentResponse listblobFlatResponse;
+                    ListBlobsFlatSegmentResult listblobFlatResponse;
                     Response rawResponse;
 
                     if (useApacheArrow)
@@ -2809,13 +2797,13 @@ namespace Azure.Storage.Blobs
                             var document = XDocument.Load(arrowResponse.Value, LoadOptions.PreserveWhitespace);
                             if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
                             {
-                                listblobFlatResponse = ListBlobsFlatSegmentResponse.DeserializeListBlobsFlatSegmentResponse(enumerationResultsElement, new ModelReaderWriterOptions("W"));
+                                listblobFlatResponse = ListBlobsFlatSegmentResult.DeserializeListBlobsFlatSegmentResult(enumerationResultsElement, new ModelReaderWriterOptions("W"));
                             }
                         }
                     }
                     else
                     {
-                        Response<ListBlobsFlatSegmentResponse> response;
+                        Response<ListBlobsFlatSegmentResult> response;
 
                         if (async)
                         {
@@ -2861,7 +2849,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        private async Task<ListBlobsFlatSegmentResponse> ParseArrowListBlobsFlatResponse(
+        private async Task<ListBlobsFlatSegmentResult> ParseArrowListBlobsFlatResponse(
             Stream arrowStream,
             bool async,
             CancellationToken cancellationToken)
@@ -2872,7 +2860,7 @@ namespace Azure.Storage.Blobs
                 cancellationToken).ConfigureAwait(false);
 
             // Apache Arrow responses only carry the blob segment and next marker.
-            return new ListBlobsFlatSegmentResponse(
+            return new ListBlobsFlatSegmentResult(
                 serviceEndpoint: null,
                 containerName: null,
                 prefix: null,
@@ -2983,7 +2971,7 @@ namespace Azure.Storage.Blobs
                     byte[] contentMD5 = contentMD5Str != null ? Convert.FromBase64String(contentMD5Str) : null;
 
                     var properties = new BlobPropertiesInternal(
-                        creationTime: creationTimeCol?.GetTimestamp(i),
+                        createdOn: creationTimeCol?.GetTimestamp(i),
                         lastModified: lastModifiedCol?.GetTimestamp(i) ?? default,
                         eTag: etagCol?.GetString(i),
                         contentLength: ReadNullableLong(contentLengthCol, i),
@@ -3002,12 +2990,12 @@ namespace Azure.Storage.Blobs
                         copyStatus: ReadEnum(copyStatusCol, i, s => s.ToCopyStatus()),
                         copySource: copySourceCol?.GetString(i),
                         copyProgress: copyProgressCol?.GetString(i),
-                        copyCompletionTime: copyCompletionTimeCol?.GetTimestamp(i),
+                        copyCompletionOn: copyCompletionTimeCol?.GetTimestamp(i),
                         copyStatusDescription: copyStatusDescriptionCol?.GetString(i),
                         serverEncrypted: ReadNullableBool(serverEncryptedCol, i),
                         incrementalCopy: ReadNullableBool(incrementalCopyCol, i),
                         destinationSnapshot: destinationSnapshotCol?.GetString(i),
-                        deletedTime: deletedTimeCol?.GetTimestamp(i),
+                        deletedOn: deletedTimeCol?.GetTimestamp(i),
                         remainingRetentionDays: ReadNullableInt(remainingRetentionDaysCol, i),
                         accessTier: ReadEnum(accessTierCol, i, s => new AccessTier(s)),
                         accessTierInferred: ReadNullableBool(accessTierInferredCol, i),
@@ -3015,7 +3003,7 @@ namespace Azure.Storage.Blobs
                         smartAccessTier: ReadEnum(smartAccessTierCol, i, s => new AccessTier(s)),
                         customerProvidedKeySha256: customerProvidedKeySha256Col?.GetString(i),
                         encryptionScope: encryptionScopeCol?.GetString(i),
-                        accessTierChangeTime: accessTierChangeTimeCol?.GetTimestamp(i),
+                        accessTierChangedOn: accessTierChangeTimeCol?.GetTimestamp(i),
                         tagCount: ReadNullableInt(tagCountCol, i),
                         expiresOn: null,
                         isSealed: ReadNullableBool(sealedCol, i),
@@ -3334,7 +3322,7 @@ namespace Azure.Storage.Blobs
         /// a single segment of blobs in this container, starting
         /// from the specified <paramref name="marker"/>.  Use an empty
         /// <paramref name="marker"/> to start enumeration from the beginning
-        /// and the <see cref="ListBlobsHierarchySegmentResponse.NextMarker"/> if it's not
+        /// and the <see cref="ListBlobsHierarchySegmentResult.NextMarker"/> if it's not
         /// empty to make subsequent calls to <see cref="GetBlobsByHierarchyAsync(GetBlobsByHierarchyOptions, CancellationToken)"/>
         /// to continue enumerating the blobs segment by segment. Blobs are
         /// ordered lexicographically by name.   A <paramref name="delimiter"/>
@@ -3351,7 +3339,7 @@ namespace Azure.Storage.Blobs
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
         /// of blobs to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="ListBlobsHierarchySegmentResponse.NextMarker"/>
+        /// operation returns a non-empty <see cref="ListBlobsHierarchySegmentResult.NextMarker"/>
         /// if the listing operation did not return all blobs remaining to be
         /// listed with the current segment.  The NextMarker value can
         /// be used as the value for the <paramref name="marker"/> parameter
@@ -3416,7 +3404,7 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        internal async Task<Response<ListBlobsHierarchySegmentResponse>> GetBlobsByHierarchyInternal(
+        internal async Task<Response<ListBlobsHierarchySegmentResult>> GetBlobsByHierarchyInternal(
             StorageResponseFormat responseFormat,
             string marker,
             string delimiter,
@@ -3448,7 +3436,7 @@ namespace Azure.Storage.Blobs
 
                     bool useApacheArrow = responseFormat.ResolveAuto() == StorageResponseFormat.Arrow;
 
-                    ListBlobsHierarchySegmentResponse listblobHierachyResponse;
+                    ListBlobsHierarchySegmentResult listblobHierachyResponse;
                     Response rawResponse;
 
                     if (useApacheArrow)
@@ -3498,13 +3486,13 @@ namespace Azure.Storage.Blobs
                             var document = XDocument.Load(arrowResponse.Value, LoadOptions.PreserveWhitespace);
                             if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
                             {
-                                listblobHierachyResponse = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(enumerationResultsElement, new ModelReaderWriterOptions("W"));
+                                listblobHierachyResponse = ListBlobsHierarchySegmentResult.DeserializeListBlobsHierarchySegmentResult(enumerationResultsElement, new ModelReaderWriterOptions("W"));
                             }
                         }
                     }
                     else
                     {
-                        Response<ListBlobsHierarchySegmentResponse> response;
+                        Response<ListBlobsHierarchySegmentResult> response;
 
                         if (async)
                         {
@@ -3552,7 +3540,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        private async Task<ListBlobsHierarchySegmentResponse> ParseArrowListBlobsHierarchyResponse(
+        private async Task<ListBlobsHierarchySegmentResult> ParseArrowListBlobsHierarchyResponse(
             Stream arrowStream,
             bool async,
             CancellationToken cancellationToken)
@@ -3563,7 +3551,7 @@ namespace Azure.Storage.Blobs
                 cancellationToken).ConfigureAwait(false);
 
             // Apache Arrow responses only carry the blob segment and next marker.
-            return new ListBlobsHierarchySegmentResponse(
+            return new ListBlobsHierarchySegmentResult(
                 serviceEndpoint: null,
                 containerName: null,
                 prefix: null,

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.RecoveryServices
     public partial class VaultPropertiesMoveDetails : ProvisionableConstruct
     {
         private BicepValue<string> _operationId;
-        private BicepValue<DateTimeOffset> _startOn;
+        private BicepValue<DateTimeOffset> _startsOn;
         private BicepValue<DateTimeOffset> _completedOn;
         private BicepValue<ResourceIdentifier> _sourceResourceId;
         private BicepValue<ResourceIdentifier> _targetResourceId;
@@ -36,13 +36,13 @@ namespace Azure.Provisioning.RecoveryServices
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.Provisioning.RecoveryServices
         {
             base.DefineProvisionableProperties();
             _operationId = DefineProperty<string>(nameof(OperationId), new string[] { "operationId" }, isOutput: true);
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTimeUtc" }, isOutput: true, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTimeUtc" }, isOutput: true, format: "O");
             _completedOn = DefineProperty<DateTimeOffset>(nameof(CompletedOn), new string[] { "completionTimeUtc" }, isOutput: true, format: "O");
             _sourceResourceId = DefineProperty<ResourceIdentifier>(nameof(SourceResourceId), new string[] { "sourceResourceId" }, isOutput: true);
             _targetResourceId = DefineProperty<ResourceIdentifier>(nameof(TargetResourceId), new string[] { "targetResourceId" }, isOutput: true);

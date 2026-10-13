@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ComputeSchedule
     [ModelReaderWriterBuildable(typeof(VirtualMachineDataDisk))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineDiskSecurityProfile))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineHardwareProfile))]
-    [ModelReaderWriterBuildable(typeof(VirtualMachineIpTag))]
+    [ModelReaderWriterBuildable(typeof(VirtualMachineIPTag))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineNetworkInterfaceConfiguration))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineNetworkInterfaceConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineNetworkInterfaceDnsSettingsConfiguration))]

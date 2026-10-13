@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Parameters for Reimaging Virtual Machine. NOTE: Virtual Machine OS disk will always be reimaged. </summary>
+    /// <summary> The parameters for reimaging a virtual machine. The operating system disk is always reimaged. </summary>
     public partial class BulkActionsVirtualMachineReimageParametersContent : IJsonModel<BulkActionsVirtualMachineReimageParametersContent>
     {
         /// <param name="data"> The data to parse. </param>
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("exactVersion"u8);
                 writer.WriteStringValue(ExactVersion);
             }
-            if (Optional.IsDefined(OsProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OsProfile, options);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             bool? isTempDisk = default;
             string exactVersion = default;
-            BulkActionsOsProfileProvisioningContent osProfile = default;
+            BulkActionsOSProfileProvisioningContent osProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    osProfile = BulkActionsOsProfileProvisioningContent.DeserializeBulkActionsOsProfileProvisioningContent(prop.Value, options);
+                    osProfile = BulkActionsOSProfileProvisioningContent.DeserializeBulkActionsOSProfileProvisioningContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BulkActionsVirtualMachineReimageParametersContent(isTempDisk, exactVersion, osProfile, additionalBinaryDataProperties);

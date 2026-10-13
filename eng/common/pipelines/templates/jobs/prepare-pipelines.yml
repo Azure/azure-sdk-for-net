@@ -24,7 +24,6 @@ jobs:
     InternalVariableGroups: ''
     InternalServiceConnections: ''
     GeneratePublicCIPipeline: ''
-    GenerateUnifiedWeekly: ''
     TestVariableGroups: ''
     TestServiceConnections: ''
 
@@ -82,7 +81,6 @@ jobs:
         }
 
         $generatePublicCIPipeline = 'true'
-        $generateUnifiedWeekly = 'false'
 
         $testServiceConnections = '"Azure" "azure-sdk-tests" "azure-sdk-tests-preview" "azure-sdk-tests-public" "Azure SDK Test Resources - LiveTestSecrets"'
         $internalServiceConnections = '"Azure" "Azure SDK Artifacts" "Azure SDK Engineering System" "opensource-api-connection" "AzureSDKEngKeyVault Secrets" "Azure SDK PME Managed Identity" "APIView prod deployment"'
@@ -110,7 +108,6 @@ jobs:
           }
           "rust" {
             $generatePublicCIPipeline = 'false'
-            $generateUnifiedWeekly = 'true'
             $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
           }
           "net" {
@@ -128,7 +125,6 @@ jobs:
           "go" {
             $generatePublicCIPipeline = 'false'
             $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations) $(Secrets_for_Resource_Provisioner)'
-            $generateUnifiedWeekly = 'true'
           }
           default {
             Write-Error "Language '$lang' is not recognized."
@@ -141,14 +137,12 @@ jobs:
         Write-Host "TestServiceConnections = $testServiceConnections"
         Write-Host "InternalServiceConnections = $internalServiceConnections"
         Write-Host "GeneratePublicCIPipeline = $generatePublicCIPipeline"
-        Write-Host "GenerateUnifiedWeekly = $generateUnifiedWeekly"
 
         Write-Host "##vso[task.setvariable variable=InternalVariableGroups]$internalVariableGroups"
         Write-Host "##vso[task.setvariable variable=TestVariableGroups]$testVariableGroups"
         Write-Host "##vso[task.setvariable variable=TestServiceConnections]$testServiceConnections"
         Write-Host "##vso[task.setvariable variable=InternalServiceConnections]$internalServiceConnections"
         Write-host "##vso[task.setvariable variable=GeneratePublicCIPipeline]$generatePublicCIPipeline"
-        Write-Host "##vso[task.setvariable variable=GenerateUnifiedWeekly]$generateUnifiedWeekly"
       displayName: Setup pipeline generation variables
 
     - task: AzureCLI@2
@@ -220,52 +214,4 @@ jobs:
           --serviceconnections $(TestServiceConnections)
       displayName: 'Generate test pipelines for: ${{ parameters.Repository }}'
       condition: and(succeeded(), ne(variables['TestVariableGroups'],''))
-      continueOnError: true
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: 'opensource-api-connection'
-        scriptType: pscore
-        scriptLocation: inlineScript
-        inlineScript: >
-          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
-          --organization azure-sdk
-          --project internal
-          --prefix $(Prefix)
-          --devopspath "$(DevOpsPath)"
-          --path $(RepositoryPath)
-          --endpoint Azure
-          --repository ${{ parameters.Repository }}
-          --convention testsweekly
-          --agentpool Hosted
-          --branch refs/heads/$(DefaultBranch)
-          --set-managed-variables
-          --debug
-          --variablegroups $(TestVariableGroups)
-          --serviceconnections $(TestServiceConnections)
-      displayName: 'Generate weekly test pipelines (multi-cloud) for: ${{ parameters.Repository }}'
-      condition: and(succeeded(), ne(variables['TestVariableGroups'],''))
-      continueOnError: true
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: 'opensource-api-connection'
-        scriptType: pscore
-        scriptLocation: inlineScript
-        inlineScript: >
-          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
-          --organization azure-sdk
-          --project internal
-          --prefix $(Prefix)
-          --devopspath "$(DevOpsPath)"
-          --path $(RepositoryPath)
-          --endpoint Azure
-          --repository ${{ parameters.Repository }}
-          --convention upweekly
-          --agentpool Hosted
-          --branch refs/heads/$(DefaultBranch)
-          --set-managed-variables
-          --debug
-          --variablegroups $(InternalVariableGroups) $(TestVariableGroups)
-          --serviceconnections $(InternalServiceConnections) $(TestServiceConnections)
-      displayName: 'Generate weekly unified test pipelines (multi-cloud) for: ${{ parameters.Repository }}'
-      condition: and(succeeded(), eq(variables['GenerateUnifiedWeekly'],'true'))
       continueOnError: true

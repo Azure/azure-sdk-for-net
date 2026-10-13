@@ -95,7 +95,7 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                return Properties.BackupNameV2;
+                return Properties is null ? default : Properties.BackupNameV2;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                return Properties.BackupType;
+                return Properties is null ? default : Properties.BackupType;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                return Properties.CompletedOn;
+                return Properties is null ? default : Properties.CompletedOn;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                return Properties.Source;
+                return Properties is null ? default : Properties.Source;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.Provisioning.MySql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ServerBackupPropertiesV2>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<Server>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<Server>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

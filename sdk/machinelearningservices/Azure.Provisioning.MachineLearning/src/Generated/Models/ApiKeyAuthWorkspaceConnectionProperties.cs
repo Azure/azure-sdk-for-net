@@ -35,6 +35,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new ApiKeyAuthWorkspaceConnectionProperties. </summary>
         public ApiKeyAuthWorkspaceConnectionProperties()
         {
+            AuthType.Assign(ConnectionAuthType.ApiKey);
         }
 
         /// <summary> Gets or sets the Credentials. </summary>
@@ -73,7 +74,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "ApiKey");
             _credentials = DefineModelProperty<WorkspaceConnectionApiKey>(nameof(Credentials), new string[] { "credentials" });
             DefineAdditionalProperties();
         }

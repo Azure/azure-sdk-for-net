@@ -13,13 +13,13 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new VmWorkloadSqlDatabaseProtectedItem. </summary>
         public VmWorkloadSqlDatabaseProtectedItem()
         {
+            ProtectedItemType.Assign("AzureVmWorkloadSQLDatabase");
         }
 
         /// <summary> Define all the provisionable properties for VmWorkloadSqlDatabaseProtectedItem. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("protectedItemType", new string[] { "protectedItemType" }, defaultValue: "AzureVmWorkloadSQLDatabase");
             DefineAdditionalProperties();
         }
 

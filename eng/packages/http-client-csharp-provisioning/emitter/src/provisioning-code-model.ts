@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 import { ManagementCodeModelTransformer } from "@azure-typespec/http-client-csharp-mgmt";
+import { CodeModel, InputModelType } from "@typespec/http-client-csharp";
+import pluralize from "pluralize";
 
-type CodeModel = Parameters<ManagementCodeModelTransformer>[0];
-type InputModelType = CodeModel["models"][number];
 type ArmProviderSchema = Parameters<ManagementCodeModelTransformer>[2];
 type ArmResourceSchema = ArmProviderSchema["resources"][number];
 type ArmResourceMetadata = ArmResourceSchema["metadata"];
@@ -19,8 +19,20 @@ type ProjectionScopeOperation = "Create" | "Read";
 
 const provisioningProviderSchema =
   "Azure.ClientGenerator.Core.@provisioningProviderSchema";
+const armProviderSchemaDecorator =
+  "Azure.ClientGenerator.Core.@armProviderSchema";
 
-interface ResourceProjection {
+interface SerializedArmProviderSchema {
+  resources: {
+    resourceModelId: string;
+    resourceIdPattern: string;
+    parentResourceId?: string;
+    methods: { methodId: string }[];
+  }[];
+  nonResourceMethods: { methodId: string }[];
+}
+
+export interface ResourceProjection {
   resourceModel: InputModelType;
   isSettable: boolean;
   resourceModelId: string;
@@ -36,6 +48,82 @@ interface ResourceProjection {
   readableScopes: ResourceScopeKind[];
   writableScopes: ResourceScopeKind[];
   isExtensionResource: boolean;
+}
+
+interface PendingResourceProjection extends Omit<
+  ResourceProjection,
+  "resourceName"
+> {
+  consistentResourceName?: string;
+}
+
+export function filterArmProviderSchemaToCodeModel(
+  codeModel: CodeModel,
+  armProviderSchema: ArmProviderSchema
+): ArmProviderSchema {
+  const modelIds = new Set(
+    codeModel.models.map((model) => model.crossLanguageDefinitionId)
+  );
+  const methodIds = new Set<string>();
+  const clients = [...codeModel.clients];
+  for (const client of clients) {
+    clients.push(...(client.children ?? []));
+    for (const method of client.methods) {
+      methodIds.add(method.crossLanguageDefinitionId);
+    }
+  }
+
+  // The C# input library also reads the serialized management schema.
+  for (const decorator of codeModel.clients[0]?.decorators ?? []) {
+    if (decorator.name !== armProviderSchemaDecorator) {
+      continue;
+    }
+    const argumentsSchema = decorator.arguments as SerializedArmProviderSchema;
+    const resources = argumentsSchema.resources.filter((resource) =>
+      modelIds.has(resource.resourceModelId)
+    );
+    const resourceIdPatterns = new Set(
+      resources.map((resource) => resource.resourceIdPattern)
+    );
+    argumentsSchema.resources = resources.map((resource) => {
+      const filteredResource = {
+        ...resource,
+        methods: resource.methods.filter((method) =>
+          methodIds.has(method.methodId)
+        )
+      };
+      // The management deserializer requires parent edges to stay inside its selected resource graph.
+      if (
+        filteredResource.parentResourceId &&
+        !resourceIdPatterns.has(filteredResource.parentResourceId)
+      ) {
+        delete filteredResource.parentResourceId;
+      }
+      return filteredResource;
+    });
+    argumentsSchema.nonResourceMethods =
+      argumentsSchema.nonResourceMethods.filter((method) =>
+        methodIds.has(method.methodId)
+      );
+  }
+
+  // ARM resolution includes models and operations outside the selected TCGC projection.
+  return {
+    resources: armProviderSchema.resources
+      .filter((resource) => modelIds.has(resource.resourceModelId))
+      .map((resource) => ({
+        ...resource,
+        metadata: {
+          ...resource.metadata,
+          methods: resource.metadata.methods.filter((method) =>
+            methodIds.has(method.methodId)
+          )
+        }
+      })),
+    nonResourceMethods: armProviderSchema.nonResourceMethods.filter((method) =>
+      methodIds.has(method.methodId)
+    )
+  };
 }
 
 export function updateProvisioningCodeModel(
@@ -81,7 +169,7 @@ export function updateProvisioningCodeModel(
   return codeModel;
 }
 
-function buildResourceProjections(
+export function buildResourceProjections(
   codeModel: CodeModel,
   armProviderSchema: ArmProviderSchema
 ): ResourceProjection[] {
@@ -106,7 +194,7 @@ function buildResourceProjections(
     }
   }
 
-  return Array.from(groups.values(), (resources) => {
+  const projections = Array.from(groups.values(), (resources) => {
     const resourceModel = modelsById.get(resources[0].resourceModelId);
     if (!resourceModel) {
       throw new Error(
@@ -117,31 +205,68 @@ function buildResourceProjections(
     // Like Bicep, treat the projection as deployable/settable only when at
     // least one grouped resource has a Create (PUT) operation. PATCH-only
     // resources remain reachable for existing-resource scenarios.
-    const projection = buildResourceProjectionMetadata(
-      resources,
-      resourceModel.name
-    );
+    const projection = buildResourceProjectionMetadata(resources);
     return {
       ...projection,
       resourceModel,
-      isSettable: projection.writableScopes.length > 0
+      isSettable: projection.writableScopes.length > 0,
+      consistentResourceName: getConsistentValue(
+        resources.map((resource) => resource.metadata.resourceName),
+        undefined
+      )
     };
   });
+
+  const projectionCountByModel = new Map<string, number>();
+  for (const projection of projections) {
+    projectionCountByModel.set(
+      projection.resourceModelId,
+      (projectionCountByModel.get(projection.resourceModelId) ?? 0) + 1
+    );
+  }
+
+  const resolvedProjections = projections.map((projection) =>
+    resolveResourceProjectionName(
+      projection,
+      projectionCountByModel.get(projection.resourceModelId) === 1
+    )
+  );
+  const projectionsByName = new Map<string, ResourceProjection[]>();
+  for (const projection of resolvedProjections) {
+    const key = projection.resourceName.toLowerCase();
+    const group = projectionsByName.get(key);
+    if (group) {
+      group.push(projection);
+    } else {
+      projectionsByName.set(key, [projection]);
+    }
+  }
+  for (const group of projectionsByName.values()) {
+    if (
+      group.length > 1 &&
+      group.every(
+        (projection) => projection.resourceModelId === group[0].resourceModelId
+      )
+    ) {
+      for (const projection of group) {
+        projection.resourceName = buildResourceNameFromResourceType(
+          projection.resourceType
+        );
+      }
+    }
+  }
+  validateResourceProjectionNames(resolvedProjections);
+  return resolvedProjections;
 }
 
 export function buildResourceProjectionMetadata(
-  resources: ArmResourceSchema[],
-  defaultResourceName: string
-): Omit<ResourceProjection, "resourceModel" | "isSettable"> {
+  resources: ArmResourceSchema[]
+): Omit<ResourceProjection, "resourceModel" | "resourceName" | "isSettable"> {
   const first = resources[0];
   const writableScopes = collectScopes(resources, "Create");
 
   return {
     resourceModelId: first.resourceModelId,
-    resourceName: getConsistentValue(
-      resources.map((resource) => resource.metadata.resourceName),
-      defaultResourceName
-    ),
     resourceType: first.metadata.resourceType,
     singletonResourceName: getConsistentValue(
       resources.map((resource) => resource.metadata.singletonResourceName),
@@ -176,6 +301,67 @@ export function buildResourceProjectionMetadata(
     writableScopes,
     isExtensionResource: writableScopes.some(isExtensionScope)
   };
+}
+
+function resolveResourceProjectionName(
+  projection: PendingResourceProjection,
+  isResourceModelUnique: boolean
+): ResourceProjection {
+  const { consistentResourceName, ...resolvedProjection } = projection;
+
+  return {
+    ...resolvedProjection,
+    resourceName: determineResourceProjectionName(
+      consistentResourceName,
+      projection.resourceModel.name,
+      isResourceModelUnique,
+      projection.resourceType
+    )
+  };
+}
+
+export function determineResourceProjectionName(
+  consistentResourceName: string | undefined,
+  resourceModelName: string,
+  isResourceModelUnique: boolean,
+  resourceType: string
+): string {
+  return (
+    consistentResourceName ??
+    (isResourceModelUnique
+      ? resourceModelName
+      : buildResourceNameFromResourceType(resourceType))
+  );
+}
+
+export function buildResourceNameFromResourceType(
+  resourceType: string
+): string {
+  const segments = resourceType.split("/").slice(1);
+  return segments
+    .map((segment) => {
+      const singularSegment = pluralize.singular(segment);
+      return singularSegment.length === 0
+        ? singularSegment
+        : singularSegment[0].toUpperCase() + singularSegment.slice(1);
+    })
+    .join("");
+}
+
+export function validateResourceProjectionNames(
+  projections: ResourceProjection[]
+): void {
+  const projectionsByName = new Map<string, ResourceProjection>();
+  for (const projection of projections) {
+    const normalizedName = projection.resourceName.toLowerCase();
+    const existing = projectionsByName.get(normalizedName);
+    if (existing) {
+      throw new Error(
+        `Provisioning resource projections '${existing.resourceType}' (${existing.resourceModelId}) and '${projection.resourceType}' (${projection.resourceModelId}) resolve to the same class name '${projection.resourceName}'. Resource projection class names must be unique.`
+      );
+    }
+    projectionsByName.set(normalizedName, projection);
+  }
 }
 
 function resourcePathsEqual(

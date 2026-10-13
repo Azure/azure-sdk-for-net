@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         /// <summary> The oldest backup copy available for this backup item in vault tier. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public DateTimeOffset? OldestRecoveryPointInVault { get => OldestRecoverOnInVault; set => OldestRecoverOnInVault = value; }
+        public DateTimeOffset? OldestRecoveryPointInVault { get => OldestRecoveryPointInVaultOn; set => OldestRecoveryPointInVaultOn = value; }
         /// <summary> The oldest backup copy available for this backup item in archive tier. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public DateTimeOffset? OldestRecoveryPointInArchive { get => OldestRecoverOnInArchive; set => OldestRecoverOnInArchive = value; }
+        public DateTimeOffset? OldestRecoveryPointInArchive { get => OldestRecoveryPointInArchiveOn; set => OldestRecoveryPointInArchiveOn = value; }
         /// <summary> The latest backup copy available for this backup item in archive tier. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public DateTimeOffset? NewestRecoveryPointInArchive { get => NewestRecoverOnInArchive; set => NewestRecoverOnInArchive = value; }
+        public DateTimeOffset? NewestRecoveryPointInArchive { get => NewestRecoveryPointInArchiveOn; set => NewestRecoveryPointInArchiveOn = value; }
     }
 }

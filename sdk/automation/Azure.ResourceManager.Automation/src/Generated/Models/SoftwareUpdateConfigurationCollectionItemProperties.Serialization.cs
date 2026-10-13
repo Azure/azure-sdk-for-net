@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Automation.Models
             SoftwareUpdateConfigurationSpecificProperties updateConfiguration = default;
             SoftwareUpdateConfigurationTasks tasks = default;
             AutomationScheduleFrequency? frequency = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
             string provisioningState = default;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("creationTime"u8))
@@ -238,14 +238,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SoftwareUpdateConfigurationCollectionItemProperties(
                 updateConfiguration,
                 tasks,
                 frequency,
-                startOn,
+                startsOn,
                 createdOn,
                 lastModifiedOn,
                 provisioningState,

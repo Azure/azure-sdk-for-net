@@ -40,11 +40,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="action"> Action specifying what the policy should do. </param>
         /// <param name="updatedAssetsCount"> Number of assets in inventory that have been updated by this policy. </param>
         /// <param name="user"> The unique name of the user that created the policy user@gmail.com. </param>
-        /// <param name="createdDate"> The date this policy was created, in RFC3339 format. </param>
-        /// <param name="updatedDate"> The date this policy was last updated, in RFC3339 format. </param>
+        /// <param name="createdOn"> The date this policy was created, in RFC3339 format. </param>
+        /// <param name="updatedOn"> The date this policy was last updated, in RFC3339 format. </param>
         /// <param name="actionParameters"> Additional parameters needed to perform the policy action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EasmPolicy(string id, string name, string displayName, string description, string filterName, PolicyAction action, long? updatedAssetsCount, string user, DateTimeOffset? createdDate, DateTimeOffset? updatedDate, ActionParametersContent actionParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EasmPolicy(string id, string name, string displayName, string description, string filterName, PolicyAction action, long? updatedAssetsCount, string user, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, ActionParametersContent actionParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -54,8 +54,8 @@ namespace Azure.Analytics.Defender.Easm
             Action = action;
             UpdatedAssetsCount = updatedAssetsCount;
             User = user;
-            CreatedDate = createdDate;
-            UpdatedDate = updatedDate;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
             ActionParameters = actionParameters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -85,10 +85,10 @@ namespace Azure.Analytics.Defender.Easm
         public string User { get; }
 
         /// <summary> The date this policy was created, in RFC3339 format. </summary>
-        public DateTimeOffset? CreatedDate { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The date this policy was last updated, in RFC3339 format. </summary>
-        public DateTimeOffset? UpdatedDate { get; }
+        public DateTimeOffset? UpdatedOn { get; }
 
         /// <summary> Additional parameters needed to perform the policy action. </summary>
         public ActionParametersContent ActionParameters { get; set; }

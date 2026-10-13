@@ -82,24 +82,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary>
-        /// Creates a <see cref="Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData"/> instance.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DnsForwardingRulesetVirtualNetworkLinkData DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, ResourceIdentifier virtualNetworkId, IDictionary<string, string> metadata, DnsResolverProvisioningState? provisioningState)
-        {
-            return new DnsForwardingRulesetVirtualNetworkLinkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                metadata is null && provisioningState is null && virtualNetworkId is null
-                    ? default
-                    : new VirtualNetworkLinkProperties(virtualNetworkId is null ? default : new SubResource(virtualNetworkId, null), metadata, provisioningState, null),
-                etag,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
         /// Creates a <see cref="Azure.ResourceManager.DnsResolver.DnsResolverData"/> instance.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

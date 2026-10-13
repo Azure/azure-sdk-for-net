@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Streaming.Jsonl.csproj" />
+  <Project Path="tests/Streaming.Jsonl.Tests.csproj" />
+</Solution>

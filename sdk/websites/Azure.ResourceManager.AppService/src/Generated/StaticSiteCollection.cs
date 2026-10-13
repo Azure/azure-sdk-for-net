@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StaticSiteData, StaticSiteResource>(new StaticSiteARMResourcesGetStaticSitesByResourceGroupAsyncCollectionResultOfT(_staticSiteARMResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StaticSiteCollection.GetAll"), data => new StaticSiteResource(Client, data));
+            return new AsyncPageableWrapper<StaticSiteData, StaticSiteResource>(new StaticSiteDataAsyncCollectionResultOfT(_staticSiteARMResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StaticSiteCollection.GetAll"), data => new StaticSiteResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StaticSiteData, StaticSiteResource>(new StaticSiteARMResourcesGetStaticSitesByResourceGroupCollectionResultOfT(_staticSiteARMResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StaticSiteCollection.GetAll"), data => new StaticSiteResource(Client, data));
+            return new PageableWrapper<StaticSiteData, StaticSiteResource>(new StaticSiteDataCollectionResultOfT(_staticSiteARMResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StaticSiteCollection.GetAll"), data => new StaticSiteResource(Client, data));
         }
 
         /// <summary>

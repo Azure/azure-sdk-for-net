@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Recommender.Models
 {
-    /// <summary> Spot priority configuration. Required when priority is Spot. </summary>
+    /// <summary> Spot priority configuration. </summary>
     internal partial class SkuMixPlacementSpotPriorityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Fabric provider specific settings.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SiteRecoveryFabricProviderCreationContent"/>, <see cref="InMageRcmFabricCreationContent"/>, and <see cref="VMwareV2FabricCreationContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InMageRcmFabricCreationContent"/>, <see cref="SiteRecoveryFabricProviderCreationContent"/>, and <see cref="VMwareV2FabricCreationContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownFabricSpecificCreationContent))]
     public abstract partial class FabricSpecificCreationContent : IJsonModel<FabricSpecificCreationContent>
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Azure":
-                        return SiteRecoveryFabricProviderCreationContent.DeserializeSiteRecoveryFabricProviderCreationContent(element, options);
                     case "InMageRcm":
                         return InMageRcmFabricCreationContent.DeserializeInMageRcmFabricCreationContent(element, options);
+                    case "Azure":
+                        return SiteRecoveryFabricProviderCreationContent.DeserializeSiteRecoveryFabricProviderCreationContent(element, options);
                     case "VMwareV2":
                         return VMwareV2FabricCreationContent.DeserializeVMwareV2FabricCreationContent(element, options);
                 }

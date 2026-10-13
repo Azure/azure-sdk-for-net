@@ -2,9 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Specs.Azure.ClientGenerator.Core.Usage;
 using Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation;
+using Specs.Azure.ClientGenerator.Core.Usage.Models;
+using Specs.Azure.ClientGenerator.Core.Usage.Models.Nested;
 using NUnit.Framework;
 
 namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Usage
@@ -31,6 +35,17 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Usage
                         desc = "desc"
                     }));
             Assert.AreEqual(204, response4.Status);
+        });
+
+        [SpectorTest]
+        public Task Azure_ClientGenerator_Core_Usage_NamespaceUsage() => Test(async (host) =>
+        {
+            var response = await new UsageClient(host, null).GetNamespaceUsageClient().NamespaceModelSerializableAsync(
+                ModelReaderWriter.Write(new NamespaceModel("test")));
+            Assert.AreEqual(204, response.Status);
+
+            using var nestedJson = JsonDocument.Parse(ModelReaderWriter.Write(new NestedNamespaceModel("nested")).ToMemory());
+            Assert.AreEqual("nested", nestedJson.RootElement.GetProperty("value").GetString());
         });
     }
 }

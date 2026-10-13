@@ -1,16 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-//using System;
-//using System.Linq;
-//using System.Collections.Generic;
-//using System.Threading;
-//using System.Threading.Tasks;
-//using Azure.AI.Extensions.OpenAI.Models;
+using System;
+using System.Threading;
+using Azure.AI.Extensions.OpenAI.Internal;
 
-//namespace Azure.AI.Extensions.OpenAI;
-
-//public partial class Responses
+namespace Azure.AI.Extensions.OpenAI;
+[CodeGenSuppress("Compactconversation", typeof(string), typeof(BinaryData), typeof(string), typeof(string), typeof(string), typeof(PromptCacheRetentionEnum?), typeof(PromptCacheOptionsParam), typeof(ServiceTierEnum?), typeof(CancellationToken))]
+[CodeGenSuppress("CompactconversationAsync", typeof(string), typeof(BinaryData), typeof(string), typeof(string), typeof(string), typeof(PromptCacheRetentionEnum?), typeof(PromptCacheOptionsParam), typeof(ServiceTierEnum?), typeof(CancellationToken))]
+internal partial class Responses { }
+//public partial class
 //{
 //    /// <summary> Creates a model response. </summary>
 //    /// <param name="metadata">

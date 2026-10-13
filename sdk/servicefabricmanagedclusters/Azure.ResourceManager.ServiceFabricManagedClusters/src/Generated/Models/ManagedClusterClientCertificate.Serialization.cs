@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    thumbprint = BinaryData.FromString(prop.Value.GetRawText());
+                    thumbprint = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("commonName"u8))
@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    issuerThumbprint = BinaryData.FromString(prop.Value.GetRawText());
+                    issuerThumbprint = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ManagedClusterClientCertificate(isAdmin, thumbprint, commonName, issuerThumbprint, additionalBinaryDataProperties);

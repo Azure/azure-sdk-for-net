@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiKeyVaultReferenceData, WebSiteConfigConnectionStringResource>(new SiteConnectionStringKeyVaultReferenceGetSiteConnectionStringKeyVaultReferencesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiKeyVaultReferenceData, WebSiteConfigConnectionStringResource>(new ApiKeyVaultReferenceDataAsync2CollectionResultOfT(
                 _siteConnectionStringKeyVaultReferenceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiKeyVaultReferenceData, WebSiteConfigConnectionStringResource>(new SiteConnectionStringKeyVaultReferenceGetSiteConnectionStringKeyVaultReferencesCollectionResultOfT(
+            return new PageableWrapper<ApiKeyVaultReferenceData, WebSiteConfigConnectionStringResource>(new ApiKeyVaultReferenceData2CollectionResultOfT(
                 _siteConnectionStringKeyVaultReferenceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

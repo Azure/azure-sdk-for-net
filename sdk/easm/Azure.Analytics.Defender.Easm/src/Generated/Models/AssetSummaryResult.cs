@@ -25,7 +25,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Initializes a new instance of <see cref="AssetSummaryResult"/>. </summary>
         /// <param name="displayName"> The name of the summary response.  Depending on the request time this will either be the asset filter, risk category, or risk metric. </param>
         /// <param name="description"> The description of the summary response.  Filters don't have a description. </param>
-        /// <param name="updatedAt"> The last time risk categories or risk metrics were captured. Set to the current time for asset filter requests, which always pull the live asset data. </param>
+        /// <param name="updatedOn"> The last time risk categories or risk metrics were captured. Set to the current time for asset filter requests, which always pull the live asset data. </param>
         /// <param name="metricCategory"> If the request is for a metric category, this will contain the requested unique category name. </param>
         /// <param name="metric"> If the request is for a metric, this will contain the requested unique metric name. </param>
         /// <param name="filter"> If the request is for an asset filter, this will contain the corresponding filter. </param>
@@ -34,11 +34,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="link"> The link to the corresponding asset details. </param>
         /// <param name="children"> The corresponding child entities.  For metric categories this will contain metrics.  For filters with groupBy and segmentBy this will contain facets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssetSummaryResult(string displayName, string description, DateTimeOffset? updatedAt, string metricCategory, string metric, string filter, string labelName, long? count, string link, IList<AssetSummaryResult> children, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AssetSummaryResult(string displayName, string description, DateTimeOffset? updatedOn, string metricCategory, string metric, string filter, string labelName, long? count, string link, IList<AssetSummaryResult> children, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
-            UpdatedAt = updatedAt;
+            UpdatedOn = updatedOn;
             MetricCategory = metricCategory;
             Metric = metric;
             Filter = filter;
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Defender.Easm
         public string Description { get; }
 
         /// <summary> The last time risk categories or risk metrics were captured. Set to the current time for asset filter requests, which always pull the live asset data. </summary>
-        public DateTimeOffset? UpdatedAt { get; }
+        public DateTimeOffset? UpdatedOn { get; }
 
         /// <summary> If the request is for a metric category, this will contain the requested unique category name. </summary>
         public string MetricCategory { get; }

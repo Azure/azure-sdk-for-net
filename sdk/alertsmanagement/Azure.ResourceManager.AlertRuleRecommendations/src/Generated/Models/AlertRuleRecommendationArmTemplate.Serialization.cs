@@ -182,12 +182,12 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
                 }
                 if (prop.NameEquals("variables"u8))
                 {
-                    variables = BinaryData.FromString(prop.Value.GetRawText());
+                    variables = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    parameters = BinaryData.FromString(prop.Value.GetRawText());
+                    parameters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("resources"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     resources = array;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AlertRuleRecommendationArmTemplate(

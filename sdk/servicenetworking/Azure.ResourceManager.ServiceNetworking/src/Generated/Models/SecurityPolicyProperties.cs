@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
             PolicyType = policyType;
             WafPolicy = wafPolicy;
-            IpAccessRulesPolicy = ipAccessRulesPolicy;
+            IPAccessRulesPolicy = ipAccessRulesPolicy;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         internal WafPolicy WafPolicy { get; set; }
 
         /// <summary> Ip Access Policy of the Traffic Controller Security Policy. Single Security Policy can have only one policy type set. </summary>
-        internal ServiceNetworkingIPAccessRulesPolicy IpAccessRulesPolicy { get; set; }
+        internal ServiceNetworkingIPAccessRulesPolicy IPAccessRulesPolicy { get; set; }
 
         /// <summary> Provisioning State of Traffic Controller SecurityPolicy Resource. </summary>
         public ServiceNetworkingProvisioningState? ProvisioningState { get; }
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
             get
             {
-                if (IpAccessRulesPolicy is null)
+                if (IPAccessRulesPolicy is null)
                 {
-                    IpAccessRulesPolicy = new ServiceNetworkingIPAccessRulesPolicy();
+                    IPAccessRulesPolicy = new ServiceNetworkingIPAccessRulesPolicy();
                 }
-                return IpAccessRulesPolicy.Rules;
+                return IPAccessRulesPolicy.Rules;
             }
         }
     }

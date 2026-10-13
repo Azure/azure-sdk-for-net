@@ -74,15 +74,29 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(ChatCompletionSchemaProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+            if (_nameIsDefined || Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                if (Name != null)
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+                else
+                {
+                    writer.WriteNull("name"u8);
+                }
             }
-            if (Optional.IsDefined(Description))
+            if (_descriptionIsDefined || Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description"u8);
+                }
             }
             if (Optional.IsDefined(IsStrict))
             {
@@ -136,7 +150,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
+            bool nameIsDefined = false;
             string name = default;
+            bool descriptionIsDefined = false;
             string description = default;
             bool? isStrict = default;
             ChatCompletionSchema schema = default;
@@ -145,6 +161,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (prop.NameEquals("name"u8))
                 {
+                    nameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         name = null;
@@ -155,6 +172,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -183,10 +201,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ChatCompletionSchemaProperties(name, description, isStrict, schema, additionalBinaryDataProperties);
+            return new ChatCompletionSchemaProperties(name, description, isStrict, schema, additionalBinaryDataProperties)
+            {
+                _nameIsDefined = nameIsDefined,
+                _descriptionIsDefined = descriptionIsDefined
+            };
         }
     }
 }

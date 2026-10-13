@@ -478,7 +478,7 @@ namespace Azure.Provisioning.OperationalInsights
         public OperationalInsightsSummaryRule() { }
         public Azure.Provisioning.BicepValue<int> BinDelay { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> BinSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> BinStartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> BinStartsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DestinationTable { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Query { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsSummaryTimeSelector> TimeSelector { get { throw null; } set { } }

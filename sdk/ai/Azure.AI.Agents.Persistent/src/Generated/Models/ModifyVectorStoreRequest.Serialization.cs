@@ -84,31 +84,52 @@ namespace Azure.AI.Agents.Persistent
             {
                 throw new FormatException($"The model {nameof(ModifyVectorStoreRequest)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+            if (_nameIsDefined || Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                if (Name != null)
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+                else
+                {
+                    writer.WriteNull("name"u8);
+                }
             }
-            if (Optional.IsDefined(ExpiresAfter))
+            if (_expiresAfterIsDefined || Optional.IsDefined(ExpiresAfter))
             {
-                writer.WritePropertyName("expires_after"u8);
-                writer.WriteObjectValue(ExpiresAfter, options);
+                if (ExpiresAfter != null)
+                {
+                    writer.WritePropertyName("expires_after"u8);
+                    writer.WriteObjectValue(ExpiresAfter, options);
+                }
+                else
+                {
+                    writer.WriteNull("expires_after"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
+                if (Metadata != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("metadata"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Metadata)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("metadata"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -152,14 +173,17 @@ namespace Azure.AI.Agents.Persistent
             {
                 return null;
             }
+            bool nameIsDefined = false;
             string name = default;
+            bool expiresAfterIsDefined = false;
             VectorStoreExpirationPolicy expiresAfter = default;
-            IDictionary<string, string> metadata = default;
+            IDictionary<string, string> metadata = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
                 {
+                    nameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         name = null;
@@ -170,6 +194,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("expires_after"u8))
                 {
+                    expiresAfterIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         expiresAfter = null;
@@ -182,6 +207,7 @@ namespace Azure.AI.Agents.Persistent
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        metadata = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -201,10 +227,14 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ModifyVectorStoreRequest(name, expiresAfter, metadata ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new ModifyVectorStoreRequest(name, expiresAfter, metadata, additionalBinaryDataProperties)
+            {
+                _nameIsDefined = nameIsDefined,
+                _expiresAfterIsDefined = expiresAfterIsDefined
+            };
         }
     }
 }

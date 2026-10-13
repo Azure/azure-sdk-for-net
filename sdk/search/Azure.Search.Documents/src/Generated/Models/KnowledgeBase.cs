@@ -19,6 +19,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private SearchResourceEncryptionKey _encryptionKey;
+        internal bool _encryptionKeyIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBase"/>. </summary>
         /// <param name="name"> The name of the knowledge base. </param>
@@ -32,6 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
             KnowledgeSources = knowledgeSources.ToList();
             Models = new ChangeTrackingList<KnowledgeBaseModel>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBase"/>. </summary>
@@ -43,11 +46,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="eTag"> The ETag of the knowledge base. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. </param>
         /// <param name="description"> The description of the knowledge base. </param>
+        /// <param name="tags"> User-defined key-value pairs for categorizing the knowledge base and attributing its usage and costs. </param>
         /// <param name="retrievalInstructions"> Instructions considered by the knowledge base when developing query plan. </param>
         /// <param name="answerInstructions"> Instructions considered by the knowledge base when generating answers. </param>
         /// <param name="corsOptions"> Options to control Cross-Origin Resource Sharing (CORS) for the knowledge base. </param>
+        /// <param name="retrieveDefaults"> Persisted request-wide retrieve defaults for this knowledge base. These values apply to retrieve requests that omit the corresponding fields; request-time values take precedence when present. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBase(string name, IList<KnowledgeSourceReference> knowledgeSources, IList<KnowledgeBaseModel> models, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, KnowledgeRetrievalOutputMode? outputMode, ETag? eTag, SearchResourceEncryptionKey encryptionKey, string description, string retrievalInstructions, string answerInstructions, CorsOptions corsOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBase(string name, IList<KnowledgeSourceReference> knowledgeSources, IList<KnowledgeBaseModel> models, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, KnowledgeRetrievalOutputMode? outputMode, ETag? eTag, SearchResourceEncryptionKey encryptionKey, string description, IDictionary<string, string> tags, string retrievalInstructions, string answerInstructions, CorsOptions corsOptions, KnowledgeBaseRetrieveDefaults retrieveDefaults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             KnowledgeSources = knowledgeSources;
@@ -55,11 +60,13 @@ namespace Azure.Search.Documents.Indexes.Models
             RetrievalReasoningEffort = retrievalReasoningEffort;
             OutputMode = outputMode;
             ETag = eTag;
-            EncryptionKey = encryptionKey;
+            _encryptionKey = encryptionKey;
             Description = description;
+            Tags = tags;
             RetrievalInstructions = retrievalInstructions;
             AnswerInstructions = answerInstructions;
             CorsOptions = corsOptions;
+            RetrieveDefaults = retrieveDefaults;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -82,10 +89,24 @@ namespace Azure.Search.Documents.Indexes.Models
         public ETag? ETag { get; set; }
 
         /// <summary> A description of an encryption key that you create in Azure Key Vault. </summary>
-        public SearchResourceEncryptionKey EncryptionKey { get; set; }
+        public SearchResourceEncryptionKey EncryptionKey
+        {
+            get
+            {
+                return _encryptionKey;
+            }
+            set
+            {
+                _encryptionKey = value;
+                _encryptionKeyIsDefined = true;
+            }
+        }
 
         /// <summary> The description of the knowledge base. </summary>
         public string Description { get; set; }
+
+        /// <summary> User-defined key-value pairs for categorizing the knowledge base and attributing its usage and costs. </summary>
+        public IDictionary<string, string> Tags { get; }
 
         /// <summary> Instructions considered by the knowledge base when developing query plan. </summary>
         public string RetrievalInstructions { get; set; }
@@ -95,5 +116,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Options to control Cross-Origin Resource Sharing (CORS) for the knowledge base. </summary>
         public CorsOptions CorsOptions { get; set; }
+
+        /// <summary> Persisted request-wide retrieve defaults for this knowledge base. These values apply to retrieve requests that omit the corresponding fields; request-time values take precedence when present. </summary>
+        public KnowledgeBaseRetrieveDefaults RetrieveDefaults { get; set; }
     }
 }

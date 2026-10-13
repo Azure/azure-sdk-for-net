@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Specifies the content safety options. If omitted, the default content safety settings will be configured. </summary>
         [WirePath("contentSafety")]
-        public ContentSafety ContentSafety { get; set; }
+        internal ContentSafety ContentSafety { get; set; }
 
         /// <summary> The current state of the ServerlessEndpoint. </summary>
         [WirePath("endpointState")]

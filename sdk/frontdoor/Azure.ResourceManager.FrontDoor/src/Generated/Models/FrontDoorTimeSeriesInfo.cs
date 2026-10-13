@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new TimeseriesProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new TimeseriesProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

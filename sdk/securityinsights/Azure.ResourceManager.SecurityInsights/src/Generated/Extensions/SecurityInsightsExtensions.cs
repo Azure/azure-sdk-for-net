@@ -3158,7 +3158,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="content"> IP address (v4 or v6) to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<EnrichmentIpGeodata>> GetGeodataByIpAsync(this ArmClient client, ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<EnrichmentIPGeodata>> GetGeodataByIpAsync(this ArmClient client, ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -3178,7 +3178,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="content"> IP address (v4 or v6) to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<EnrichmentIpGeodata> GetGeodataByIp(this ArmClient client, ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
+        public static Response<EnrichmentIPGeodata> GetGeodataByIp(this ArmClient client, ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 

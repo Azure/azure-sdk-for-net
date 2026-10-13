@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("customerPropertiesOverviewCacheNodesUnhealthyCount"u8);
                 writer.WriteNumberValue(CustomerPropertiesOverviewCacheNodesUnhealthyCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SignupStatus))
+            if (options.Format != "W" && Optional.IsDefined(IsSignupComplete))
             {
                 writer.WritePropertyName("signupStatus"u8);
-                writer.WriteBooleanValue(SignupStatus.Value);
+                writer.WriteBooleanValue(IsSignupComplete.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(SignupStatusCode))
             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             DateTimeOffset? customerPropertiesOverviewMissMbpsMaxOn = default;
             int? customerPropertiesOverviewCacheNodesHealthyCount = default;
             int? customerPropertiesOverviewCacheNodesUnhealthyCount = default;
-            bool? signupStatus = default;
+            bool? isSignupComplete = default;
             int? signupStatusCode = default;
             string signupStatusText = default;
             int? signupPhaseStatusCode = default;
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     {
                         continue;
                     }
-                    signupStatus = prop.Value.GetBoolean();
+                    isSignupComplete = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("signupStatusCode"u8))
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MccCustomerAdditionalProperties(
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 customerPropertiesOverviewMissMbpsMaxOn,
                 customerPropertiesOverviewCacheNodesHealthyCount,
                 customerPropertiesOverviewCacheNodesUnhealthyCount,
-                signupStatus,
+                isSignupComplete,
                 signupStatusCode,
                 signupStatusText,
                 signupPhaseStatusCode,

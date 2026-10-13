@@ -11,7 +11,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore GA acronym/casing aliases over generated vCPU/OS VHD/premium IO names.
     public partial class MachineLearningVmSize
     {
         /// <summary> The number of vCPUs supported by the virtual machine size. </summary>
@@ -19,10 +18,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public int? VCpus => VCPUs;
 
+        // TODO: Remove this workaround after https://github.com/microsoft/typespec/issues/11696 is fixed.
         /// <summary> The OS VHD disk size, in MB, allowed by the virtual machine size. </summary>
+        [CodeGenMember("OsVhdSizeMB")]
         [WirePath("osVhdSizeMB")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public int? OSVhdSizeMB => OsVhdSizeMB;
+        public int? OSVhdSizeMB { get; }
 
         /// <summary> Specifies if the virtual machine size supports premium IO. </summary>
         [WirePath("premiumIO")]

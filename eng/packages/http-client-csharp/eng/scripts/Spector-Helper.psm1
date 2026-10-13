@@ -1,8 +1,6 @@
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
 
 $failingSpecs = @(
-    Join-Path 'http' 'streaming' 'jsonl'
-    Join-Path 'http' 'response' 'status-code-range' # Response namespace conflicts with Azure.Response
     Join-Path 'http' 'type' 'file'
 # Azure scenarios not yet buildable
 
@@ -22,6 +20,7 @@ $failingSpecs = @(
     Join-Path 'http' 'azure' 'resource-manager' 'multi-service-shared-models'
     Join-Path 'http' 'azure' 'resource-manager' 'multi-service-older-versions'
     Join-Path 'http' 'azure' 'resource-manager' 'management-group'
+    Join-Path 'http' 'azure' 'resource-manager' 'service-group'
 )
 
 function Capitalize-FirstLetter {

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(DefaultCustomBlockResponseBody))
             {
                 writer.WritePropertyName("defaultCustomBlockResponseBody"u8);
-                writer.WriteBase64StringValue(DefaultCustomBlockResponseBody.ToArray(), "D");
+                writer.WriteBase64StringValue(DefaultCustomBlockResponseBody, "D");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WafPolicySettings(

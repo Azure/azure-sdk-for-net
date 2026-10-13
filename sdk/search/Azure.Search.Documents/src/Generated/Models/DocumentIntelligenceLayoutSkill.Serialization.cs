@@ -80,35 +80,70 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(DocumentIntelligenceLayoutSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(OutputFormat))
+            if (_outputFormatIsDefined || Optional.IsDefined(OutputFormat))
             {
-                writer.WritePropertyName("outputFormat"u8);
-                writer.WriteStringValue(OutputFormat.Value.ToString());
+                if (OutputFormat != null)
+                {
+                    writer.WritePropertyName("outputFormat"u8);
+                    writer.WriteStringValue(OutputFormat.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("outputFormat"u8);
+                }
             }
-            if (Optional.IsDefined(OutputMode))
+            if (_outputModeIsDefined || Optional.IsDefined(OutputMode))
             {
-                writer.WritePropertyName("outputMode"u8);
-                writer.WriteStringValue(OutputMode.Value.ToString());
+                if (OutputMode != null)
+                {
+                    writer.WritePropertyName("outputMode"u8);
+                    writer.WriteStringValue(OutputMode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("outputMode"u8);
+                }
             }
-            if (Optional.IsDefined(MarkdownHeaderDepth))
+            if (_markdownHeaderDepthIsDefined || Optional.IsDefined(MarkdownHeaderDepth))
             {
-                writer.WritePropertyName("markdownHeaderDepth"u8);
-                writer.WriteStringValue(MarkdownHeaderDepth.Value.ToString());
+                if (MarkdownHeaderDepth != null)
+                {
+                    writer.WritePropertyName("markdownHeaderDepth"u8);
+                    writer.WriteStringValue(MarkdownHeaderDepth.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("markdownHeaderDepth"u8);
+                }
             }
             if (Optional.IsCollectionDefined(ExtractionOptions))
             {
-                writer.WritePropertyName("extractionOptions"u8);
-                writer.WriteStartArray();
-                foreach (DocumentIntelligenceLayoutSkillExtractionOptions item in ExtractionOptions)
+                if (ExtractionOptions != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("extractionOptions"u8);
+                    writer.WriteStartArray();
+                    foreach (DocumentIntelligenceLayoutSkillExtractionOptions item in ExtractionOptions)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("extractionOptions"u8);
+                }
             }
-            if (Optional.IsDefined(ChunkingProperties))
+            if (_chunkingPropertiesIsDefined || Optional.IsDefined(ChunkingProperties))
             {
-                writer.WritePropertyName("chunkingProperties"u8);
-                writer.WriteObjectValue(ChunkingProperties, options);
+                if (ChunkingProperties != null)
+                {
+                    writer.WritePropertyName("chunkingProperties"u8);
+                    writer.WriteObjectValue(ChunkingProperties, options);
+                }
+                else
+                {
+                    writer.WriteNull("chunkingProperties"u8);
+                }
             }
         }
 
@@ -144,10 +179,14 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool outputFormatIsDefined = false;
             DocumentIntelligenceLayoutSkillOutputFormat? outputFormat = default;
+            bool outputModeIsDefined = false;
             DocumentIntelligenceLayoutSkillOutputMode? outputMode = default;
+            bool markdownHeaderDepthIsDefined = false;
             DocumentIntelligenceLayoutSkillMarkdownHeaderDepth? markdownHeaderDepth = default;
-            IList<DocumentIntelligenceLayoutSkillExtractionOptions> extractionOptions = default;
+            IList<DocumentIntelligenceLayoutSkillExtractionOptions> extractionOptions = new ChangeTrackingList<DocumentIntelligenceLayoutSkillExtractionOptions>();
+            bool chunkingPropertiesIsDefined = false;
             DocumentIntelligenceLayoutSkillChunkingProperties chunkingProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -193,6 +232,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("outputFormat"u8))
                 {
+                    outputFormatIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         outputFormat = null;
@@ -203,6 +243,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("outputMode"u8))
                 {
+                    outputModeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         outputMode = null;
@@ -213,6 +254,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("markdownHeaderDepth"u8))
                 {
+                    markdownHeaderDepthIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         markdownHeaderDepth = null;
@@ -225,6 +267,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        extractionOptions = null;
                         continue;
                     }
                     List<DocumentIntelligenceLayoutSkillExtractionOptions> array = new List<DocumentIntelligenceLayoutSkillExtractionOptions>();
@@ -237,6 +280,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("chunkingProperties"u8))
                 {
+                    chunkingPropertiesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         chunkingProperties = null;
@@ -247,7 +291,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DocumentIntelligenceLayoutSkill(
@@ -255,14 +299,20 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 context,
-                inputs,
-                outputs,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                outputs ?? new ChangeTrackingList<OutputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
                 outputFormat,
                 outputMode,
                 markdownHeaderDepth,
-                extractionOptions ?? new ChangeTrackingList<DocumentIntelligenceLayoutSkillExtractionOptions>(),
-                chunkingProperties);
+                extractionOptions,
+                chunkingProperties)
+            {
+                _outputFormatIsDefined = outputFormatIsDefined,
+                _outputModeIsDefined = outputModeIsDefined,
+                _markdownHeaderDepthIsDefined = markdownHeaderDepthIsDefined,
+                _chunkingPropertiesIsDefined = chunkingPropertiesIsDefined
+            };
         }
     }
 }

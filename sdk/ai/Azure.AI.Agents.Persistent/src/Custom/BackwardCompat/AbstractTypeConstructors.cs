@@ -3,11 +3,10 @@
 
 using Microsoft.TypeSpec.Generator.Customizations;
 
-// Backward-compat shims: restore protected constructors that existed in the GA 1.0.0 contract.
-// The new emitter uses private protected constructors with a type discriminator parameter;
-// these shims provide the parameterless protected constructors consumers may depend on.
-// [CodeGenSuppress] is used to suppress the generated private protected parameterless ctors
-// so we can replace them with protected ones.
+// Backward-compat shims: restore constructors from the GA 1.0.0 contract that the current generator
+// does not produce - the RequiredToolCall parameterless ctor and the reduced-arity ctors below.
+// (Parameterless ctors on the other abstract types are now restored by the generator's Model
+// Constructors back-compat, so their shims were removed.)
 
 // This file intentionally groups the small backward-compatibility partial declarations for many
 // types; splitting them into one file per type would obscure that they are a single cohesive shim.
@@ -15,81 +14,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Agents.Persistent
 {
-    [CodeGenSuppress("MessageContent")]
-    public abstract partial class MessageContent
-    {
-        /// <summary> Initializes a new instance of the <see cref="MessageContent"/> class for deserialization. </summary>
-        protected MessageContent() : this((string)null) { }
-    }
-
-    [CodeGenSuppress("MessageInputContentBlock")]
-    public abstract partial class MessageInputContentBlock
-    {
-        /// <summary> Initializes a new instance of the <see cref="MessageInputContentBlock"/> class for deserialization. </summary>
-        protected MessageInputContentBlock() : this(default(MessageBlockType)) { }
-    }
-
-    [CodeGenSuppress("OpenApiAuthDetails")]
-    public abstract partial class OpenApiAuthDetails
-    {
-        /// <summary> Initializes a new instance of the <see cref="OpenApiAuthDetails"/> class for deserialization. </summary>
-        protected OpenApiAuthDetails() : this(default(OpenApiAuthType)) { }
-    }
-
-    [CodeGenSuppress("RequiredAction")]
-    public abstract partial class RequiredAction
-    {
-        /// <summary> Initializes a new instance of the <see cref="RequiredAction"/> class for deserialization. </summary>
-        protected RequiredAction() : this((string)null) { }
-    }
-
     [CodeGenSuppress("RequiredToolCall")]
     public abstract partial class RequiredToolCall
     {
         /// <summary> Initializes a new instance of the <see cref="RequiredToolCall"/> class for deserialization. </summary>
         protected RequiredToolCall() : this((string)null) { }
-    }
-
-    [CodeGenSuppress("RunStepCodeInterpreterToolCallOutput")]
-    public abstract partial class RunStepCodeInterpreterToolCallOutput
-    {
-        /// <summary> Initializes a new instance of the <see cref="RunStepCodeInterpreterToolCallOutput"/> class for deserialization. </summary>
-        protected RunStepCodeInterpreterToolCallOutput() : this((string)null) { }
-    }
-
-    [CodeGenSuppress("RunStepDeltaDetail")]
-    public abstract partial class RunStepDeltaDetail
-    {
-        /// <summary> Initializes a new instance of the <see cref="RunStepDeltaDetail"/> class for deserialization. </summary>
-        protected RunStepDeltaDetail() : this((string)null) { }
-    }
-
-    [CodeGenSuppress("RunStepDetails")]
-    public abstract partial class RunStepDetails
-    {
-        /// <summary> Initializes a new instance of the <see cref="RunStepDetails"/> class for deserialization. </summary>
-        protected RunStepDetails() : this(default(RunStepType)) { }
-    }
-
-    [CodeGenSuppress("ToolDefinition")]
-    public abstract partial class ToolDefinition
-    {
-        /// <summary> Initializes a new instance of the <see cref="ToolDefinition"/> class for deserialization. </summary>
-        protected ToolDefinition() : this((string)null) { }
-    }
-
-    [CodeGenSuppress("VectorStoreChunkingStrategy")]
-    public abstract partial class VectorStoreChunkingStrategy
-    {
-        /// <summary> Initializes a new instance of the <see cref="VectorStoreChunkingStrategy"/> class for deserialization. </summary>
-        protected VectorStoreChunkingStrategy() : this(default(VectorStoreChunkingStrategyRequestType)) { }
-    }
-
-    [CodeGenSuppress("VectorStoreChunkingStrategyResponse")]
-    public abstract partial class VectorStoreChunkingStrategyResponse
-    {
-        /// <summary> Initializes a new instance of the <see cref="VectorStoreChunkingStrategyResponse"/> class for deserialization. </summary>
-        protected VectorStoreChunkingStrategyResponse() : this(default(VectorStoreChunkingStrategyResponseType)) { }
     }
 
     // Types below already have correct protected constructors in the generated code

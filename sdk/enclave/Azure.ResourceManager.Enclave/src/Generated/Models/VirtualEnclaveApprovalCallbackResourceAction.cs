@@ -11,13 +11,17 @@ using Azure.ResourceManager.Enclave;
 
 namespace Azure.ResourceManager.Enclave.Models
 {
-    /// <summary></summary>
+    /// <summary> The resource action for an approval callback. </summary>
     public readonly partial struct VirtualEnclaveApprovalCallbackResourceAction : IEquatable<VirtualEnclaveApprovalCallbackResourceAction>
     {
         private readonly string _value;
+        /// <summary> Create the resource. </summary>
         private const string CreateValue = "Create";
+        /// <summary> Delete the resource. </summary>
         private const string DeleteValue = "Delete";
+        /// <summary> Update the resource. </summary>
         private const string UpdateValue = "Update";
+        /// <summary> Reset the resource. </summary>
         private const string ResetValue = "Reset";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveApprovalCallbackResourceAction"/>. </summary>
@@ -30,16 +34,16 @@ namespace Azure.ResourceManager.Enclave.Models
             _value = value;
         }
 
-        /// <summary> Gets the Create. </summary>
+        /// <summary> Create the resource. </summary>
         public static VirtualEnclaveApprovalCallbackResourceAction Create { get; } = new VirtualEnclaveApprovalCallbackResourceAction(CreateValue);
 
-        /// <summary> Gets the Delete. </summary>
+        /// <summary> Delete the resource. </summary>
         public static VirtualEnclaveApprovalCallbackResourceAction Delete { get; } = new VirtualEnclaveApprovalCallbackResourceAction(DeleteValue);
 
-        /// <summary> Gets the Update. </summary>
+        /// <summary> Update the resource. </summary>
         public static VirtualEnclaveApprovalCallbackResourceAction Update { get; } = new VirtualEnclaveApprovalCallbackResourceAction(UpdateValue);
 
-        /// <summary> Gets the Reset. </summary>
+        /// <summary> Reset the resource. </summary>
         public static VirtualEnclaveApprovalCallbackResourceAction Reset { get; } = new VirtualEnclaveApprovalCallbackResourceAction(ResetValue);
 
         /// <summary> Determines if two <see cref="VirtualEnclaveApprovalCallbackResourceAction"/> values are the same. </summary>

@@ -15,6 +15,7 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new EmailChannel. </summary>
         public EmailChannel()
         {
+            ChannelName.Assign("EmailChannel");
         }
 
         /// <summary> Gets the Properties. </summary>
@@ -31,7 +32,6 @@ namespace Azure.Provisioning.BotService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("channelName", new string[] { "channelName" }, defaultValue: "EmailChannel");
             _properties = DefineModelProperty<EmailChannelProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

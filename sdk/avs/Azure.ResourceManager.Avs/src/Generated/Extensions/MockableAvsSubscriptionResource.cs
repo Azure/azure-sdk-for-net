@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.Avs.Mocking
 
         private ClientDiagnostics PrivateCloudsClientDiagnostics => _privateCloudsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateClouds PrivateCloudsRestClient => _privateCloudsRestClient ??= new PrivateClouds(PrivateCloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private PrivateClouds PrivateCloudsRestClient => _privateCloudsRestClient ??= new PrivateClouds(PrivateCloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
 
         private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Locations LocationsRestClient => _locationsRestClient ??= new Locations(LocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private Locations LocationsRestClient => _locationsRestClient ??= new Locations(LocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
 
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
 
         /// <summary>
         /// List PrivateCloud resources by subscription ID
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsPrivateCloudData, AvsPrivateCloudResource>(new PrivateCloudsGetInSubscriptionAsyncCollectionResultOfT(PrivateCloudsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAvsSubscriptionResource.GetAvsPrivateClouds"), data => new AvsPrivateCloudResource(Client, data));
+            return new AsyncPageableWrapper<AvsPrivateCloudData, AvsPrivateCloudResource>(new AvsPrivateCloudDataAsync0CollectionResultOfT(PrivateCloudsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAvsSubscriptionResource.GetAvsPrivateClouds"), data => new AvsPrivateCloudResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Avs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsPrivateCloudData, AvsPrivateCloudResource>(new PrivateCloudsGetInSubscriptionCollectionResultOfT(PrivateCloudsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAvsSubscriptionResource.GetAvsPrivateClouds"), data => new AvsPrivateCloudResource(Client, data));
+            return new PageableWrapper<AvsPrivateCloudData, AvsPrivateCloudResource>(new AvsPrivateCloudData0CollectionResultOfT(PrivateCloudsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAvsSubscriptionResource.GetAvsPrivateClouds"), data => new AvsPrivateCloudResource(Client, data));
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Avs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetAvsSkusAsyncCollectionResultOfT(SkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAvsSubscriptionResource.GetAvsSkus");
+            return new AvsResourceSkuAsyncCollectionResultOfT(SkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAvsSubscriptionResource.GetAvsSkus");
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Avs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetAvsSkusCollectionResultOfT(SkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAvsSubscriptionResource.GetAvsSkus");
+            return new AvsResourceSkuCollectionResultOfT(SkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAvsSubscriptionResource.GetAvsSkus");
         }
     }
 }

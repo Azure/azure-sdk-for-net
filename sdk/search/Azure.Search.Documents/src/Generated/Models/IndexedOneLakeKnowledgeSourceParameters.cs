@@ -17,6 +17,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _targetPath;
+        internal bool _targetPathIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="IndexedOneLakeKnowledgeSourceParameters"/>. </summary>
         /// <param name="fabricWorkspaceId"> OneLake workspace ID. </param>
@@ -36,14 +38,16 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="lakehouseId"> Specifies which OneLake lakehouse to access. </param>
         /// <param name="targetPath"> Optional OneLakehouse folder or shortcut to filter OneLake content. </param>
         /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
+        /// <param name="queryHints"> Default hints that guide query planning toward useful filters and boosts for this index-backed knowledge source. Request-time query hints replace these defaults as a complete object. </param>
         /// <param name="createdResources"> Resources created by the knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexedOneLakeKnowledgeSourceParameters(string fabricWorkspaceId, string lakehouseId, string targetPath, KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexedOneLakeKnowledgeSourceParameters(string fabricWorkspaceId, string lakehouseId, string targetPath, KnowledgeSourceIngestionParameters ingestionParameters, SearchIndexKnowledgeSourceQueryHints queryHints, CreatedResources createdResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FabricWorkspaceId = fabricWorkspaceId;
             LakehouseId = lakehouseId;
-            TargetPath = targetPath;
+            _targetPath = targetPath;
             IngestionParameters = ingestionParameters;
+            QueryHints = queryHints;
             CreatedResources = createdResources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -55,10 +59,24 @@ namespace Azure.Search.Documents.Indexes.Models
         public string LakehouseId { get; set; }
 
         /// <summary> Optional OneLakehouse folder or shortcut to filter OneLake content. </summary>
-        public string TargetPath { get; set; }
+        public string TargetPath
+        {
+            get
+            {
+                return _targetPath;
+            }
+            set
+            {
+                _targetPath = value;
+                _targetPathIsDefined = true;
+            }
+        }
 
         /// <summary> Consolidates all general ingestion settings. </summary>
         public KnowledgeSourceIngestionParameters IngestionParameters { get; set; }
+
+        /// <summary> Default hints that guide query planning toward useful filters and boosts for this index-backed knowledge source. Request-time query hints replace these defaults as a complete object. </summary>
+        public SearchIndexKnowledgeSourceQueryHints QueryHints { get; set; }
 
         /// <summary> Resources created by the knowledge source. </summary>
         public CreatedResources CreatedResources { get; }

@@ -372,7 +372,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PersistentThreadMessage(
@@ -385,7 +385,7 @@ namespace Azure.AI.Agents.Persistent
                 completedAt,
                 incompleteAt,
                 role,
-                contentItems,
+                contentItems ?? new ChangeTrackingList<MessageContent>(),
                 assistantId,
                 runId,
                 attachments,

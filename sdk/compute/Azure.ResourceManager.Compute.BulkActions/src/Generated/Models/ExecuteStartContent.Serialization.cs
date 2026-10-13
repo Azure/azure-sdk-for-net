@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The ExecuteStartRequest request for executeStart operations. </summary>
+    /// <summary> The virtual machines and execution settings for a bulk start action. </summary>
     public partial class ExecuteStartContent : IJsonModel<ExecuteStartContent>
     {
         /// <summary> Initializes a new instance of <see cref="ExecuteStartContent"/> for deserialization. </summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ExecuteStartContent(executionParameters, resources, resourcesWithContext, additionalBinaryDataProperties);

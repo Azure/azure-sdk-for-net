@@ -187,7 +187,7 @@ namespace Azure.Provisioning.MySql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AdministratorProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<Server>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<Server>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

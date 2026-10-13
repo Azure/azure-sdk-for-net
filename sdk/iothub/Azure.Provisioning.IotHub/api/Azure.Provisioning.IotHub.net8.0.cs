@@ -1,5 +1,23 @@
 namespace Azure.Provisioning.IotHub
 {
+    public partial class CertificateDescription : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public CertificateDescription(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.IotHub.IotHub Parent { get { throw null; } set { } }
+        public Azure.Provisioning.IotHub.IotHubCertificateProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.IotHub.CertificateDescription FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2026_03_01_PREVIEW;
+        }
+    }
     public partial class CloudToDeviceFeedbackQueueProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CloudToDeviceFeedbackQueueProperties() { }
@@ -42,6 +60,26 @@ namespace Azure.Provisioning.IotHub
             public static readonly string V2026_03_01_PREVIEW;
         }
     }
+    public partial class IotHub : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public IotHub(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.IotHub.IotHubProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.IotHub.IotHubSkuInfo Sku { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.IotHub.IotHub FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2026_03_01_PREVIEW;
+        }
+    }
     public enum IotHubAuthenticationType
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="keyBased")]
@@ -54,56 +92,18 @@ namespace Azure.Provisioning.IotHub
         None = 0,
         DeviceManagement = 1,
     }
-    public partial class IotHubCertificateDescription : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public IotHubCertificateDescription(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.IotHub.IotHubDescription Parent { get { throw null; } set { } }
-        public Azure.Provisioning.IotHub.IotHubCertificateProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.IotHub.IotHubCertificateDescription FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2026_03_01_PREVIEW;
-        }
-    }
     public partial class IotHubCertificateProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public IotHubCertificateProperties() { }
         public Azure.Provisioning.BicepValue<string> Certificate { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsVerified { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PolicyResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Subject { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ThumbprintString { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpdatedOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public partial class IotHubDescription : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public IotHubDescription(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.IotHub.IotHubProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.IotHub.IotHubSkuInfo Sku { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.IotHub.IotHubDescription FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2026_03_01_PREVIEW;
-        }
     }
     public partial class IotHubDeviceRegistry : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -164,6 +164,27 @@ namespace Azure.Provisioning.IotHub
         [System.Runtime.Serialization.DataMemberAttribute(Name="ipv4ipv6")]
         IPv4IPv6 = 2,
     }
+    public partial class IotHubJob : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public IotHubJob(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.IotHub.IotHub Parent { get { throw null; } set { } }
+        public Azure.Provisioning.IotHub.IotHubProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.IotHub.IotHubSkuInfo Sku { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.IotHub.IotHubJob FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2026_03_01_PREVIEW;
+        }
+    }
     public partial class IotHubKeyVaultKeyProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public IotHubKeyVaultKeyProperties() { }
@@ -202,22 +223,6 @@ namespace Azure.Provisioning.IotHub
         public Azure.Provisioning.BicepValue<Azure.Provisioning.IotHub.IotHubNetworkRuleSetDefaultAction> DefaultAction { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.IotHub.IotHubNetworkRuleSetIPRule> IPRules { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public partial class IotHubPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public IotHubPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.IotHub.IotHubDescription Parent { get { throw null; } set { } }
-        public Azure.Provisioning.IotHub.IotHubPrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.IotHub.IotHubPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2026_03_01_PREVIEW;
-        }
     }
     public partial class IotHubPrivateEndpointConnectionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -267,7 +272,7 @@ namespace Azure.Provisioning.IotHub
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.IotHub.MessagingEndpointProperties> MessagingEndpoints { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MinTlsVersion { get { throw null; } set { } }
         public Azure.Provisioning.IotHub.IotHubNetworkRuleSetProperties NetworkRuleSets { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.IotHub.IotHubPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.IotHub.IotHubsPrivateEndpointConnections> PrivateEndpointConnections { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.IotHub.IotHubPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> RestrictOutboundNetworkAccess { get { throw null; } set { } }
@@ -372,6 +377,21 @@ namespace Azure.Provisioning.IotHub
         Standard = 1,
         Basic = 2,
         Generation2 = 3,
+    }
+    public partial class IotHubsPrivateEndpointConnections : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public IotHubsPrivateEndpointConnections(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.IotHub.IotHubPrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.IotHub.IotHubsPrivateEndpointConnections FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2026_03_01_PREVIEW;
+        }
     }
     public partial class IotHubStorageEndpointProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

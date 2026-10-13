@@ -15,12 +15,19 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct MonitorNetworkSecurityPerimeterConfigurationProvisioningState : IEquatable<MonitorNetworkSecurityPerimeterConfigurationProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The configuration was provisioned successfully. </summary>
         private const string SucceededValue = "Succeeded";
+        /// <summary> The configuration is being created. </summary>
         private const string CreatingValue = "Creating";
+        /// <summary> The configuration is being updated. </summary>
         private const string UpdatingValue = "Updating";
+        /// <summary> The configuration is being deleted. </summary>
         private const string DeletingValue = "Deleting";
+        /// <summary> The configuration request was accepted and provisioning has not started yet. </summary>
         private const string AcceptedValue = "Accepted";
+        /// <summary> The configuration failed to provision. </summary>
         private const string FailedValue = "Failed";
+        /// <summary> The configuration provisioning was canceled. </summary>
         private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
@@ -33,25 +40,25 @@ namespace Azure.ResourceManager.Monitor.Models
             _value = value;
         }
 
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> The configuration was provisioned successfully. </summary>
         public static MonitorNetworkSecurityPerimeterConfigurationProvisioningState Succeeded { get; } = new MonitorNetworkSecurityPerimeterConfigurationProvisioningState(SucceededValue);
 
-        /// <summary> Gets the Creating. </summary>
+        /// <summary> The configuration is being created. </summary>
         public static MonitorNetworkSecurityPerimeterConfigurationProvisioningState Creating { get; } = new MonitorNetworkSecurityPerimeterConfigurationProvisioningState(CreatingValue);
 
-        /// <summary> Gets the Updating. </summary>
+        /// <summary> The configuration is being updated. </summary>
         public static MonitorNetworkSecurityPerimeterConfigurationProvisioningState Updating { get; } = new MonitorNetworkSecurityPerimeterConfigurationProvisioningState(UpdatingValue);
 
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary> The configuration is being deleted. </summary>
         public static MonitorNetworkSecurityPerimeterConfigurationProvisioningState Deleting { get; } = new MonitorNetworkSecurityPerimeterConfigurationProvisioningState(DeletingValue);
 
-        /// <summary> Gets the Accepted. </summary>
+        /// <summary> The configuration request was accepted and provisioning has not started yet. </summary>
         public static MonitorNetworkSecurityPerimeterConfigurationProvisioningState Accepted { get; } = new MonitorNetworkSecurityPerimeterConfigurationProvisioningState(AcceptedValue);
 
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> The configuration failed to provision. </summary>
         public static MonitorNetworkSecurityPerimeterConfigurationProvisioningState Failed { get; } = new MonitorNetworkSecurityPerimeterConfigurationProvisioningState(FailedValue);
 
-        /// <summary> Gets the Canceled. </summary>
+        /// <summary> The configuration provisioning was canceled. </summary>
         public static MonitorNetworkSecurityPerimeterConfigurationProvisioningState Canceled { get; } = new MonitorNetworkSecurityPerimeterConfigurationProvisioningState(CanceledValue);
 
         /// <summary> Determines if two <see cref="MonitorNetworkSecurityPerimeterConfigurationProvisioningState"/> values are the same. </summary>

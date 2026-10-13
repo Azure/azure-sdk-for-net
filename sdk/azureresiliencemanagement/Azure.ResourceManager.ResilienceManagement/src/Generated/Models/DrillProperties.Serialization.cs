@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary>
     /// Properties of the Resiliency Drill.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ZonalDrillProperties"/> and <see cref="RegionalDrillProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RegionalDrillProperties"/> and <see cref="ZonalDrillProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDrillProperties))]
     public abstract partial class DrillProperties : IJsonModel<DrillProperties>
@@ -211,10 +211,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Zonal":
-                        return ZonalDrillProperties.DeserializeZonalDrillProperties(element, options);
                     case "Regional":
                         return RegionalDrillProperties.DeserializeRegionalDrillProperties(element, options);
+                    case "Zonal":
+                        return ZonalDrillProperties.DeserializeZonalDrillProperties(element, options);
                 }
             }
             return UnknownDrillProperties.DeserializeUnknownDrillProperties(element, options);

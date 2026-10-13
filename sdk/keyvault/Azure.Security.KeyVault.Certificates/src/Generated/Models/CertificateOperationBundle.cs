@@ -14,6 +14,8 @@ namespace Azure.Security.KeyVault.Certificates.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private KeyVaultErrorError _error;
+        internal bool _errorIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CertificateOperationBundle"/>. </summary>
         internal CertificateOperationBundle()
@@ -40,7 +42,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
             CancellationRequested = cancellationRequested;
             Status = status;
             StatusDetails = statusDetails;
-            Error = error;
+            _error = error;
             Target = target;
             PreserveCertOrder = preserveCertOrder;
             RequestId = requestId;
@@ -81,7 +83,13 @@ namespace Azure.Security.KeyVault.Certificates.Models
         public string StatusDetails { get; }
 
         /// <summary> Error encountered, if any, during the certificate operation. </summary>
-        public KeyVaultErrorError Error { get; }
+        public KeyVaultErrorError Error
+        {
+            get
+            {
+                return _error;
+            }
+        }
 
         /// <summary> Location which contains the result of the certificate operation. </summary>
         public string Target { get; }

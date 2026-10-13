@@ -24,10 +24,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="requiredAction"> The required action to address the vulnerability. </param>
         /// <param name="notes"> Any additional notes about the vulnerability. </param>
         /// <param name="dateAdded"> The date the vulnerability was added to the catalog in the format YYYY-MM-DD. </param>
-        /// <param name="dueDate"> The date the required action is due in the format YYYY-MM-DD. </param>
-        /// <param name="updatedAt"> The date the vulnerability was updated. </param>
+        /// <param name="dueOn"> The date the required action is due in the format YYYY-MM-DD. </param>
+        /// <param name="updatedOn"> The date the vulnerability was updated. </param>
         /// <param name="count"> The number of assets affected by the vulnerability. </param>
-        internal CisaCveResult(string vendorProject, string product, string vulnerabilityName, string shortDescription, string requiredAction, string notes, DateTimeOffset dateAdded, DateTimeOffset dueDate, DateTimeOffset updatedAt, long count)
+        internal CisaCveResult(string vendorProject, string product, string vulnerabilityName, string shortDescription, string requiredAction, string notes, DateTimeOffset dateAdded, DateTimeOffset dueOn, DateTimeOffset updatedOn, long count)
         {
             VendorProject = vendorProject;
             Product = product;
@@ -36,8 +36,8 @@ namespace Azure.Analytics.Defender.Easm
             RequiredAction = requiredAction;
             Notes = notes;
             DateAdded = dateAdded;
-            DueDate = dueDate;
-            UpdatedAt = updatedAt;
+            DueOn = dueOn;
+            UpdatedOn = updatedOn;
             Count = count;
         }
 
@@ -50,11 +50,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="requiredAction"> The required action to address the vulnerability. </param>
         /// <param name="notes"> Any additional notes about the vulnerability. </param>
         /// <param name="dateAdded"> The date the vulnerability was added to the catalog in the format YYYY-MM-DD. </param>
-        /// <param name="dueDate"> The date the required action is due in the format YYYY-MM-DD. </param>
-        /// <param name="updatedAt"> The date the vulnerability was updated. </param>
+        /// <param name="dueOn"> The date the required action is due in the format YYYY-MM-DD. </param>
+        /// <param name="updatedOn"> The date the vulnerability was updated. </param>
         /// <param name="count"> The number of assets affected by the vulnerability. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CisaCveResult(string cveId, string vendorProject, string product, string vulnerabilityName, string shortDescription, string requiredAction, string notes, DateTimeOffset dateAdded, DateTimeOffset dueDate, DateTimeOffset updatedAt, long count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CisaCveResult(string cveId, string vendorProject, string product, string vulnerabilityName, string shortDescription, string requiredAction, string notes, DateTimeOffset dateAdded, DateTimeOffset dueOn, DateTimeOffset updatedOn, long count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CveId = cveId;
             VendorProject = vendorProject;
@@ -64,8 +64,8 @@ namespace Azure.Analytics.Defender.Easm
             RequiredAction = requiredAction;
             Notes = notes;
             DateAdded = dateAdded;
-            DueDate = dueDate;
-            UpdatedAt = updatedAt;
+            DueOn = dueOn;
+            UpdatedOn = updatedOn;
             Count = count;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -95,10 +95,10 @@ namespace Azure.Analytics.Defender.Easm
         public DateTimeOffset DateAdded { get; }
 
         /// <summary> The date the required action is due in the format YYYY-MM-DD. </summary>
-        public DateTimeOffset DueDate { get; }
+        public DateTimeOffset DueOn { get; }
 
         /// <summary> The date the vulnerability was updated. </summary>
-        public DateTimeOffset UpdatedAt { get; }
+        public DateTimeOffset UpdatedOn { get; }
 
         /// <summary> The number of assets affected by the vulnerability. </summary>
         public long Count { get; }

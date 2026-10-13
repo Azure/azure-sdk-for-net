@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(SecurityInsightsProductPackageResource.ResourceType, out string securityInsightsProductPackageApiVersion);
             _productPackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsProductPackageResource.ResourceType.Namespace, Diagnostics);
-            _productPackageRestClient = new ProductPackage(_productPackageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsProductPackageApiVersion ?? "2025-07-01-preview");
+            _productPackageRestClient = new ProductPackage(_productPackageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsProductPackageApiVersion ?? "2025-10-01-preview");
             _productPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsProductPackageResource.ResourceType.Namespace, Diagnostics);
-            _productPackagesRestClient = new ProductPackages(_productPackagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsProductPackageApiVersion ?? "2025-07-01-preview");
+            _productPackagesRestClient = new ProductPackages(_productPackagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsProductPackageApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityInsightsProductPackageData, SecurityInsightsProductPackageResource>(new ProductPackagesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityInsightsProductPackageData, SecurityInsightsProductPackageResource>(new SecurityInsightsProductPackageDataAsyncCollectionResultOfT(
                 _productPackagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityInsightsProductPackageData, SecurityInsightsProductPackageResource>(new ProductPackagesGetAllCollectionResultOfT(
+            return new PageableWrapper<SecurityInsightsProductPackageData, SecurityInsightsProductPackageResource>(new SecurityInsightsProductPackageDataCollectionResultOfT(
                 _productPackagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

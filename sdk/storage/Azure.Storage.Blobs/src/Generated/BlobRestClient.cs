@@ -1408,7 +1408,7 @@ namespace Azure.Storage.Blobs
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartCopyFromUriRequest(copySource, timeout, metadata, tier, rehydratePriority, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, requestConditions, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, context);
+                using HttpMessage message = CreateStartCopyFromUrlRequest(copySource, timeout, metadata, tier, rehydratePriority, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, requestConditions, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1453,7 +1453,7 @@ namespace Azure.Storage.Blobs
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartCopyFromUriRequest(copySource, timeout, metadata, tier, rehydratePriority, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, requestConditions, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, context);
+                using HttpMessage message = CreateStartCopyFromUrlRequest(copySource, timeout, metadata, tier, rehydratePriority, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, requestConditions, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1552,7 +1552,7 @@ namespace Azure.Storage.Blobs
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCopyFromUriRequest(copySource, timeout, metadata, tier, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, requestConditions, ifTags, leaseId, sourceContentMd5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, copySourceAuthorization, encryptionScope, copySourceTags, fileRequestIntent, context);
+                using HttpMessage message = CreateCopyFromUrlRequest(copySource, timeout, metadata, tier, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, requestConditions, ifTags, leaseId, sourceContentMd5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, copySourceAuthorization, encryptionScope, copySourceTags, fileRequestIntent, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1599,7 +1599,7 @@ namespace Azure.Storage.Blobs
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCopyFromUriRequest(copySource, timeout, metadata, tier, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, requestConditions, ifTags, leaseId, sourceContentMd5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, copySourceAuthorization, encryptionScope, copySourceTags, fileRequestIntent, context);
+                using HttpMessage message = CreateCopyFromUrlRequest(copySource, timeout, metadata, tier, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, requestConditions, ifTags, leaseId, sourceContentMd5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, copySourceAuthorization, encryptionScope, copySourceTags, fileRequestIntent, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1685,7 +1685,7 @@ namespace Azure.Storage.Blobs
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAbortCopyFromUriRequest(copyId, timeout, leaseId, context);
+                using HttpMessage message = CreateAbortCopyFromUrlRequest(copyId, timeout, leaseId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1715,7 +1715,7 @@ namespace Azure.Storage.Blobs
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAbortCopyFromUriRequest(copyId, timeout, leaseId, context);
+                using HttpMessage message = CreateAbortCopyFromUrlRequest(copyId, timeout, leaseId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

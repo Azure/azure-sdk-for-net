@@ -74,20 +74,41 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(IndexingParameters)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(BatchSize))
+            if (_batchSizeIsDefined || Optional.IsDefined(BatchSize))
             {
-                writer.WritePropertyName("batchSize"u8);
-                writer.WriteNumberValue(BatchSize.Value);
+                if (BatchSize != null)
+                {
+                    writer.WritePropertyName("batchSize"u8);
+                    writer.WriteNumberValue(BatchSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("batchSize"u8);
+                }
             }
-            if (Optional.IsDefined(MaxFailedItems))
+            if (_maxFailedItemsIsDefined || Optional.IsDefined(MaxFailedItems))
             {
-                writer.WritePropertyName("maxFailedItems"u8);
-                writer.WriteNumberValue(MaxFailedItems.Value);
+                if (MaxFailedItems != null)
+                {
+                    writer.WritePropertyName("maxFailedItems"u8);
+                    writer.WriteNumberValue(MaxFailedItems.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxFailedItems"u8);
+                }
             }
-            if (Optional.IsDefined(MaxFailedItemsPerBatch))
+            if (_maxFailedItemsPerBatchIsDefined || Optional.IsDefined(MaxFailedItemsPerBatch))
             {
-                writer.WritePropertyName("maxFailedItemsPerBatch"u8);
-                writer.WriteNumberValue(MaxFailedItemsPerBatch.Value);
+                if (MaxFailedItemsPerBatch != null)
+                {
+                    writer.WritePropertyName("maxFailedItemsPerBatch"u8);
+                    writer.WriteNumberValue(MaxFailedItemsPerBatch.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxFailedItemsPerBatch"u8);
+                }
             }
             if (Optional.IsDefined(IndexingParametersConfiguration))
             {
@@ -136,8 +157,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
+            bool batchSizeIsDefined = false;
             int? batchSize = default;
+            bool maxFailedItemsIsDefined = false;
             int? maxFailedItems = default;
+            bool maxFailedItemsPerBatchIsDefined = false;
             int? maxFailedItemsPerBatch = default;
             IndexingParametersConfiguration indexingParametersConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -145,6 +169,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (prop.NameEquals("batchSize"u8))
                 {
+                    batchSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         batchSize = null;
@@ -155,6 +180,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("maxFailedItems"u8))
                 {
+                    maxFailedItemsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         maxFailedItems = null;
@@ -165,6 +191,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("maxFailedItemsPerBatch"u8))
                 {
+                    maxFailedItemsPerBatchIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         maxFailedItemsPerBatch = null;
@@ -184,10 +211,15 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IndexingParameters(batchSize, maxFailedItems, maxFailedItemsPerBatch, indexingParametersConfiguration, additionalBinaryDataProperties);
+            return new IndexingParameters(batchSize, maxFailedItems, maxFailedItemsPerBatch, indexingParametersConfiguration, additionalBinaryDataProperties)
+            {
+                _batchSizeIsDefined = batchSizeIsDefined,
+                _maxFailedItemsIsDefined = maxFailedItemsIsDefined,
+                _maxFailedItemsPerBatchIsDefined = maxFailedItemsPerBatchIsDefined
+            };
         }
     }
 }

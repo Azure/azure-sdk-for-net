@@ -233,7 +233,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ApplicationResourceProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<ManagedCluster>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ManagedCluster>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

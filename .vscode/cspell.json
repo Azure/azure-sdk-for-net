@@ -245,12 +245,6 @@
       ]
     },
     {
-      "filename": "**/sdk/astronomer/**/*.cs",
-      "words": [
-        "astro"
-      ]
-    },
-    {
       "filename": "**/sdk/automanage/**/*.cs",
       "words": [
         "hcrp"
@@ -775,13 +769,6 @@
       ]
     },
     {
-      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
-      "words": [
-        "kustomization",
-        "kustomizations"
-      ]
-    },
-    {
       "filename": "**/sdk/logic/**/*.cs",
       "words": [
         "ccyymmdd",
@@ -1151,14 +1138,6 @@
       ]
     },
     {
-      "filename": "**/sdk/providerhub/**/*.cs",
-      "words": [
-        "checkin",
-        "dsts",
-        "regionality"
-      ]
-    },
-    {
       "filename": "**/sdk/qumulo/**/*",
       "words": [
         "qumulo"
@@ -1288,21 +1267,6 @@
       "filename": "**/sdk/sphere/**/*.cs",
       "words": [
         "nwfs"
-      ]
-    },
-    {
-      "filename": "**/sdk/sqlmanagement/**/*.cs",
-      "words": [
-        "cias",
-        "droppeded",
-        "dtcs",
-        "freemium",
-        "nchar",
-        "ntext",
-        "nvarchar",
-        "stdev",
-        "unrestorable",
-        "vcores"
       ]
     },
     {
@@ -1578,6 +1542,14 @@
         "deidentified",
         "deidentify",
         "healthdataaiservices"
+      ]
+    },
+    {
+      "filename": "**/sdk/dataai/**/*",
+      "words": [
+        "apim",
+        "rerank",
+        "reranker"
       ]
     },
     {

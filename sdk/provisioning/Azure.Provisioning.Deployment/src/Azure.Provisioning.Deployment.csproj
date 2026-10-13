@@ -13,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Azure.ResourceManager.Resources" />
+    <PackageReference Include="Azure.ResourceManager.Resources.Deployments" />
     <PackageReference Include="Azure.Provisioning" />
   </ItemGroup>
 

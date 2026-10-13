@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BookshelfPrivateLinkResourceData, BookshelfPrivateLinkResource>(new BookshelfPrivateLinkResourcesGetByBookshelfAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BookshelfPrivateLinkResourceData, BookshelfPrivateLinkResource>(new BookshelfPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _bookshelfPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BookshelfPrivateLinkResourceData, BookshelfPrivateLinkResource>(new BookshelfPrivateLinkResourcesGetByBookshelfCollectionResultOfT(
+            return new PageableWrapper<BookshelfPrivateLinkResourceData, BookshelfPrivateLinkResource>(new BookshelfPrivateLinkResourceDataCollectionResultOfT(
                 _bookshelfPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

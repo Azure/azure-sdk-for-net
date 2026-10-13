@@ -14,11 +14,11 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="UserProfileMemoryItem"/>. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="updatedOn"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="memoryId"/>, <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public UserProfileMemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content) : base(memoryId, updatedAt, scope, content, MemoryItemKind.UserProfile)
+        public UserProfileMemoryItem(string memoryId, DateTimeOffset updatedOn, string scope, string content) : base(memoryId, updatedOn, scope, content, MemoryItemKind.UserProfile)
         {
             Argument.AssertNotNull(memoryId, nameof(memoryId));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -28,12 +28,12 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="UserProfileMemoryItem"/>. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="updatedOn"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <param name="kind"> The kind of the memory item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserProfileMemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content, MemoryItemKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(memoryId, updatedAt, scope, content, kind, additionalBinaryDataProperties)
+        internal UserProfileMemoryItem(string memoryId, DateTimeOffset updatedOn, string scope, string content, MemoryItemKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(memoryId, updatedOn, scope, content, kind, additionalBinaryDataProperties)
         {
         }
     }

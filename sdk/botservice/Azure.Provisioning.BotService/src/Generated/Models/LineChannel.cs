@@ -15,6 +15,7 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new LineChannel. </summary>
         public LineChannel()
         {
+            ChannelName.Assign("LineChannel");
         }
 
         /// <summary> Gets the Properties. </summary>
@@ -31,7 +32,6 @@ namespace Azure.Provisioning.BotService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("channelName", new string[] { "channelName" }, defaultValue: "LineChannel");
             _properties = DefineModelProperty<LineChannelProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

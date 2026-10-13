@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatadogMonitorData, DatadogMonitorResource>(new DatadogMonitorResourcesGetAllAsyncCollectionResultOfT(DatadogMonitorResourcesRestClient, Id.SubscriptionId, context, "MockableDatadogSubscriptionResource.GetDatadogMonitors"), data => new DatadogMonitorResource(Client, data));
+            return new AsyncPageableWrapper<DatadogMonitorData, DatadogMonitorResource>(new DatadogMonitorDataAsyncCollectionResultOfT(DatadogMonitorResourcesRestClient, Id.SubscriptionId, context, "MockableDatadogSubscriptionResource.GetDatadogMonitors"), data => new DatadogMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatadogMonitorData, DatadogMonitorResource>(new DatadogMonitorResourcesGetAllCollectionResultOfT(DatadogMonitorResourcesRestClient, Id.SubscriptionId, context, "MockableDatadogSubscriptionResource.GetDatadogMonitors"), data => new DatadogMonitorResource(Client, data));
+            return new PageableWrapper<DatadogMonitorData, DatadogMonitorResource>(new DatadogMonitorDataCollectionResultOfT(DatadogMonitorResourcesRestClient, Id.SubscriptionId, context, "MockableDatadogSubscriptionResource.GetDatadogMonitors"), data => new DatadogMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MarketplaceAgreementsGetMarketplaceAgreementsAsyncCollectionResultOfT(MarketplaceAgreementsRestClient, Id.SubscriptionId, context, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements");
+            return new DatadogAgreementAsyncCollectionResultOfT(MarketplaceAgreementsRestClient, Id.SubscriptionId, context, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements");
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MarketplaceAgreementsGetMarketplaceAgreementsCollectionResultOfT(MarketplaceAgreementsRestClient, Id.SubscriptionId, context, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements");
+            return new DatadogAgreementCollectionResultOfT(MarketplaceAgreementsRestClient, Id.SubscriptionId, context, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements");
         }
 
         /// <summary>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CreationSupportedGetSubscriptionStatusesAsyncCollectionResultOfT(CreationSupportedRestClient, Id.SubscriptionId, datadogOrganizationId, context, "MockableDatadogSubscriptionResource.GetSubscriptionStatuses");
+            return new DatadogSubscriptionStatusResultAsyncCollectionResultOfT(CreationSupportedRestClient, Id.SubscriptionId, datadogOrganizationId, context, "MockableDatadogSubscriptionResource.GetSubscriptionStatuses");
         }
 
         /// <summary>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CreationSupportedGetSubscriptionStatusesCollectionResultOfT(CreationSupportedRestClient, Id.SubscriptionId, datadogOrganizationId, context, "MockableDatadogSubscriptionResource.GetSubscriptionStatuses");
+            return new DatadogSubscriptionStatusResultCollectionResultOfT(CreationSupportedRestClient, Id.SubscriptionId, datadogOrganizationId, context, "MockableDatadogSubscriptionResource.GetSubscriptionStatuses");
         }
 
         /// <summary>
@@ -523,7 +523,20 @@ namespace Azure.ResourceManager.Datadog.Mocking
 
         /// <summary>
         /// Create Datadog marketplace agreement in the subscription.
-        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/defaultOperation IdMarketplaceAgreements_CreateOrUpdateDefault Api Version2025-06-11
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceAgreementsOperationGroup_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-26-preview. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -535,7 +548,20 @@ namespace Azure.ResourceManager.Datadog.Mocking
 
         /// <summary>
         /// Create Datadog marketplace agreement in the subscription.
-        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/defaultOperation IdMarketplaceAgreements_CreateOrUpdateDefault Api Version2025-06-11
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceAgreementsOperationGroup_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-26-preview. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
