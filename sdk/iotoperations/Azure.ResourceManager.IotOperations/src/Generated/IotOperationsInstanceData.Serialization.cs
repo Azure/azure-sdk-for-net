@@ -113,6 +113,11 @@ namespace Azure.ResourceManager.IotOperations
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -164,6 +169,7 @@ namespace Azure.ResourceManager.IotOperations
             IotOperationsInstanceProperties properties = default;
             IotOperationsExtendedLocation extendedLocation = default;
             ManagedServiceIdentity identity = default;
+            InstanceSku sku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -248,6 +254,15 @@ namespace Azure.ResourceManager.IotOperations
                     identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerIotOperationsContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("sku"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = InstanceSku.DeserializeInstanceSku(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -263,6 +278,7 @@ namespace Azure.ResourceManager.IotOperations
                 properties,
                 extendedLocation,
                 identity,
+                sku,
                 additionalBinaryDataProperties);
         }
     }

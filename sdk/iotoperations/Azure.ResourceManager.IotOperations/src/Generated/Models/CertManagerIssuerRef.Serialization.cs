@@ -79,8 +79,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 throw new FormatException($"The model {nameof(CertManagerIssuerRef)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("group"u8);
-            writer.WriteStringValue(Group);
+            if (Optional.IsDefined(Group))
+            {
+                writer.WritePropertyName("group"u8);
+                writer.WriteStringValue(Group);
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("name"u8);
