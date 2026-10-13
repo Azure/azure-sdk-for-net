@@ -158,6 +158,10 @@ New-TestResources.ps1 keyvault -AdditionalParameters @{enableHsm = $true}
 
 ## In CI
 
+`New-TestResources.ps1` raises a terminating error when ARM reports a failed or canceled deployment. The error stops the calling pipeline task even when it discards script output with `Out-Null`. If the initial deployment command threw an ARM error, the script preserves that error and logs the deployment correlation ID. It publishes test settings only after the deployment succeeds.
+
+Keep the resource cleanup step enabled after deployment failures. A failed deployment can leave partial resources that still need cleanup.
+
 Test pipelines should include deploy-test-resources.yml and
 remove-test-resources.yml like in the following examples:
 

@@ -526,8 +526,12 @@ function HandleTemplateDeploymentError($templateValidationResult) {
     Write-Warning "#####################################################"
 }
 
-function HandleDeploymentFailure($deployment) {
-    Write-Host "Deployment '$($deployment.DeploymentName)' has state '$($deployment.ProvisioningState)' with CorrelationId '$($deployment.CorrelationId)'. Exiting..."
+function HandleDeploymentFailure(
+    [object] $deployment,
+    [System.Management.Automation.ErrorRecord] $DeploymentError
+) {
+    $message = "Deployment '$($deployment.DeploymentName)' has state '$($deployment.ProvisioningState)' with CorrelationId '$($deployment.CorrelationId)'."
+    Write-Host $message
     Write-Host @'
 #####################################################
 # For help debugging live test provisioning issues, #
@@ -537,4 +541,9 @@ function HandleDeploymentFailure($deployment) {
     $queryTime = (Get-Date).AddMinutes(-10).ToString("o")
     Write-Host "To check the activity log with the below command after waiting 2 minutes for propagation:"
     Write-Host "(Get-AzActivityLog -CorrelationId '$($deployment.CorrelationId)' -StartTime '$queryTime').Properties.Content.statusMessage"
+
+    if ($DeploymentError) {
+        throw $DeploymentError
+    }
+    throw $message
 }
