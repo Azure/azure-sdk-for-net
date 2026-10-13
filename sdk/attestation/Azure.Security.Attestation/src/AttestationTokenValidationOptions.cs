@@ -37,16 +37,35 @@ namespace Azure.Security.Attestation
         {
             if (diagnostics != null)
             {
+                SyncAsyncEventHandler<AttestationTokenValidationEventArgs> tokenValidated = TokenValidated;
+                if (tokenValidated == null)
+                {
+                    return true;
+                }
+
+                // Each handler decides independently, so a later handler cannot overrule one that rejected the token.
+                bool rejected = false;
+                SyncAsyncEventHandler<AttestationTokenValidationEventArgs> handlers = null;
+                foreach (SyncAsyncEventHandler<AttestationTokenValidationEventArgs> handler in tokenValidated.GetInvocationList())
+                {
+                    handlers += async args =>
+                    {
+                        args.IsValid = true;
+                        await handler(args).ConfigureAwait(false);
+                        rejected |= !args.IsValid;
+                    };
+                }
+
                 var eventArgs = new AttestationTokenValidationEventArgs(token: token,
                         signer: signer,
                         isRunningSynchronously: isRunningSynchronously,
                         cancellationToken);
 
-                await TokenValidated.RaiseAsync(eventArgs,
+                await handlers.RaiseAsync(eventArgs,
                     nameof(AttestationTokenValidationOptions),
                     nameof(TokenValidated),
                     diagnostics).ConfigureAwait(false);
-                return eventArgs.IsValid;
+                return !rejected;
             }
             else
             {
@@ -62,6 +81,9 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Raised when an attestation token should be validated.
         /// </summary>
+        /// <remarks>
+        /// The token is rejected if any handler sets <see cref="AttestationTokenValidationEventArgs.IsValid"/> to false.
+        /// </remarks>
         public event SyncAsyncEventHandler<AttestationTokenValidationEventArgs> TokenValidated;
 
         /// <summary>

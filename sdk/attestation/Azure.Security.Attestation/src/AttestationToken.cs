@@ -154,21 +154,17 @@ namespace Azure.Security.Attestation
 
         /// <summary>
         /// An array of <see cref="X509Certificate"/> which represent a certificate chain used to sign the token.  <seealso href="https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.6">RFC 7515 section 4.1.6</seealso> for details.
+        /// Empty if the token's header has no certificate chain.
         /// </summary>
+        /// <remarks>
+        /// The certificates are read from the token and are not validated; a token is never trusted because of the certificates it carries.
+        /// </remarks>
         public X509Certificate2[] X509CertificateChain
         {
             get
             {
-                List<X509Certificate2> certificates = new List<X509Certificate2>();
-                foreach (var certificate in Header.X509CertificateChain)
-                {
-#if NET9_0_OR_GREATER
-                    certificates.Add(X509CertificateLoader.LoadCertificate(Convert.FromBase64String(certificate)));
-#else
-                    certificates.Add(new X509Certificate2(certificate));
-#endif
-                }
-                return certificates.ToArray();
+                string[] certificates = Header.X509CertificateChain;
+                return certificates == null ? Array.Empty<X509Certificate2>() : ConvertBase64CertificateArrayToCertificateChain(certificates);
             }
         }
 
@@ -245,19 +241,20 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Validate a JSON Web Token returned by the MAA.
         /// <para/>
-        /// If the caller provides a set of signers, than that set of signers will be used as the complete set of candidates for signing.
-        /// If the caller does not provide a set of signers, then the <see cref="ValidateTokenAsync(AttestationTokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/>
-        /// API will a set of callers derived from the contents of the attestation token.
+        /// The token must have been signed by one of <paramref name="attestationSigningCertificates"/>. Certificates and keys carried in
+        /// the token itself are never trusted to sign it.
         /// </summary>
         /// <param name="options">Options used while validating the attestation token.</param>
-        /// <param name="attestationSigningCertificates">Signing Certificates used to validate the token.</param>
+        /// <param name="attestationSigningCertificates">The signing certificates trusted to have signed the token, such as those returned by
+        /// <see cref="AttestationClient.GetSigningCertificatesAsync(CancellationToken)"/> for the attestation provider the token must come from.</param>
         /// <param name="cancellationToken">Token used to cancel this operation if necessary.</param>
         /// <returns>true if the token was valid, false otherwise.</returns>
         /// <remarks>
         /// An unsecured token (one whose <see cref="Algorithm"/> is "none") carries no signature and never passes
         /// validation, regardless of any handler attached to <see cref="AttestationTokenValidationOptions.TokenValidated"/>.
         /// </remarks>
-        /// <exception cref="ArgumentNullException">Thrown if the signing certificates provided are invalid.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="attestationSigningCertificates"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="attestationSigningCertificates"/> is empty.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
         public virtual async Task<bool> ValidateTokenAsync(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
             => await ValidateTokenInternal(options, attestationSigningCertificates, true, cancellationToken).ConfigureAwait(false);
@@ -265,19 +262,20 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Validate a JSON Web Token returned by the MAA.
         /// <para/>
-        /// If the caller provides a set of signers, than that set of signers will be used as the complete set of candidates for signing.
-        /// If the caller does not provide a set of signers, then the <see cref="ValidateToken(AttestationTokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/>
-        /// API will a set of callers derived from the contents of the attestation token.
+        /// The token must have been signed by one of <paramref name="attestationSigningCertificates"/>. Certificates and keys carried in
+        /// the token itself are never trusted to sign it.
         /// </summary>
         /// <param name="options">Options used while validating the attestation token.</param>
-        /// <param name="attestationSigningCertificates">Signing Certificates used to validate the token.</param>
+        /// <param name="attestationSigningCertificates">The signing certificates trusted to have signed the token, such as those returned by
+        /// <see cref="AttestationClient.GetSigningCertificates(CancellationToken)"/> for the attestation provider the token must come from.</param>
         /// <param name="cancellationToken">Token used to cancel this operation if necessary.</param>
         /// <returns>true if the token was valid, false otherwise.</returns>
         /// <remarks>
         /// An unsecured token (one whose <see cref="Algorithm"/> is "none") carries no signature and never passes
         /// validation, regardless of any handler attached to <see cref="AttestationTokenValidationOptions.TokenValidated"/>.
         /// </remarks>
-        /// <exception cref="ArgumentNullException">Thrown if the signing certificates provided are invalid.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="attestationSigningCertificates"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="attestationSigningCertificates"/> is empty.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
         public virtual bool ValidateToken(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
             => ValidateTokenInternal(options, attestationSigningCertificates, false, cancellationToken).EnsureCompleted();
@@ -285,17 +283,16 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Validate a JSON Web Token returned by the MAA.
         /// <para/>
-        /// If the caller provides a set of signers, than that set of signers will be used as the complete set of candidates for signing.
-        /// If the caller does not provide a set of signers, then the <see cref="ValidateTokenAsync(AttestationTokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/>
-        /// API will a set of callers derived from the contents of the attestation token.
+        /// The token must have been signed by one of <paramref name="attestationSigningCertificates"/>.
         /// </summary>
         /// <param name="options">Options used while validating the attestation token.</param>
-        /// <param name="attestationSigningCertificates">Signing Certificates used to validate the token.</param>
+        /// <param name="attestationSigningCertificates">The signing certificates trusted to have signed the token.</param>
         /// <param name="async">If true, execute the function asynchronously.</param>
         /// <param name="cancellationToken">Token used to cancel this operation if necessary.</param>
         /// <param name="allowUnsecured">True only for the response to a draft-policy attestation, which the service never signs.</param>
         /// <returns>true if the token was valid, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if the signing certificates provided are invalid.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="attestationSigningCertificates"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="attestationSigningCertificates"/> is empty.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
         internal async Task<bool> ValidateTokenInternal(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, bool async, CancellationToken cancellationToken = default, bool allowUnsecured = false)
         {
@@ -318,12 +315,10 @@ namespace Azure.Security.Attestation
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
             }
 
-            // This token is a secured attestation token. If the caller provided signing certificates, then
-            // they need to have provided at least one certificate.
-            if (attestationSigningCertificates != null)
-            {
-                Argument.AssertNotNull(attestationSigningCertificates[0], nameof(attestationSigningCertificates));
-            }
+            // This token is a secured attestation token, so it must have been signed by a signer the caller trusts.
+            // A token can't vouch for itself with signing certificates carried in its own header.
+            Argument.AssertNotNullOrEmpty(attestationSigningCertificates, nameof(attestationSigningCertificates));
+            Argument.AssertNotNull(attestationSigningCertificates[0], nameof(attestationSigningCertificates));
 
             AttestationSigner[] possibleCertificates = await GetCandidateSigningCertificatesInternalAsync(attestationSigningCertificates, async, cancellationToken).ConfigureAwait(false);
             if (possibleCertificates.Length == 0)
@@ -352,9 +347,9 @@ namespace Azure.Security.Attestation
         }
 
         /// <summary>
-        /// Returns a set of candidate signing certificates based on the contents of the token.
+        /// Returns the signers, from the trusted set, which might have signed the token.
         /// </summary>
-        /// <param name="attestationSigners">The desired set of signers for this token - if present, then this is the exclusive set of signers for the token.</param>
+        /// <param name="attestationSigners">The trusted signers; the token's own header is never a source of signers.</param>
         /// <param name="async">true if this operation is asynchronous.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>The set of <see cref="AttestationSigner"/> which might be used to sign the attestation token.</returns>
@@ -376,8 +371,7 @@ namespace Azure.Security.Attestation
             List<AttestationSigner> candidateCertificates = new List<AttestationSigner>();
             if (desiredKeyId != null)
             {
-                // We start looking for candidate signers by looking in the provided attestation signers.
-                // The list of attestation signers trumps
+                // Only the trusted signer with the token's key ID can have signed it.
                 foreach (var signer in attestationSigners)
                 {
                     if (signer.CertificateKeyId == desiredKeyId)
@@ -386,50 +380,15 @@ namespace Azure.Security.Attestation
                         break;
                     }
                 }
-
-                // We didn't find a certificate from the attestation signers. That means we need to look in the
-                // Header to see if we can find one there.
-                if (candidateCertificates.Count == 0)
-                {
-                    if (Header.JsonWebKey != null)
-                    {
-                        // If the key matches the header's JWK, then the signer is going to be the leaf certificate
-                        // of the certificates in the chain.
-                        if (desiredKeyId == Header.JsonWebKey.Kid)
-                        {
-                            candidateCertificates.Add(new AttestationSigner(
-                                ConvertBase64CertificateArrayToCertificateChain(Header.JsonWebKey.X5c),
-                                desiredKeyId));
-                        }
-                    }
-                }
             }
             else
             {
-                // We don't have a desired Key ID, so we need to try all the possible signing certificates :(.
-
-                // Start with the attestationSigners provided by the caller. Remember that attestation signers
-                // trump all signers in the header.
-                if (attestationSigners != null)
+                // Without a key ID, any trusted signer might have signed the token.
+                //
+                // Note: because we don't have a KeyID, we neuter the KeyID in the AttestationSigner.
+                foreach (var signer in attestationSigners)
                 {
-                    // Copy the signers to the candidate certificates.
-                    //
-                    // Note: because we don't have a KeyID, we neuter the KeyID in the AttestationSigner.
-                    foreach (var signer in attestationSigners)
-                    {
-                        candidateCertificates.Add(new AttestationSigner(signer.SigningCertificates.ToArray(), null));
-                    }
-                }
-                else
-                {
-                    if (Header.X509CertificateChain != null)
-                    {
-                        candidateCertificates.Add(new AttestationSigner(ConvertBase64CertificateArrayToCertificateChain(Header.X509CertificateChain), null));
-                    }
-                    if (Header.JsonWebKey != null)
-                    {
-                        candidateCertificates.Add(new AttestationSigner(ConvertBase64CertificateArrayToCertificateChain(Header.JsonWebKey.X5c), null));
-                    }
+                    candidateCertificates.Add(new AttestationSigner(signer.SigningCertificates.ToArray(), null));
                 }
             }
 

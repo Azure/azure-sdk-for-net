@@ -41,8 +41,9 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationClient"/> class.
         /// </summary>
-        /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use.</param>
+        /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use. It must use https.</param>
         /// <param name="credential">Credentials to be used in the Client.</param>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not use https.</exception>
         public AttestationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AttestationClientOptions())
         {
             Endpoint = endpoint;
@@ -51,14 +52,16 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationClient"/> class.
         /// </summary>
-        /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use.</param>
+        /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use. It must use https.</param>
         /// <param name="credential">Credentials to be used in the Client.</param>
         /// <param name="options"><see cref="AttestationClientOptions"/> used to configure the API client.</param>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not use https.</exception>
         public AttestationClient(Uri endpoint, TokenCredential credential, AttestationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             /*Argument.AssertNotNull(credential, nameof(credential));*/
             Argument.AssertNotNull(options, nameof(options));
+            AssertHttps(endpoint);
 
             // Add the authentication policy to our builder.
             _pipeline = HttpPipelineBuilder.Build(options, credential != null ? new BearerTokenAuthenticationPolicy(credential, DefaultScope) : null);
@@ -561,6 +564,16 @@ namespace Azure.Security.Attestation
             {
                 scope.Failed(ex);
                 throw;
+            }
+        }
+
+        // The client fetches the certificates that validate tokens from the same endpoint that issues them, so the
+        // connection must be protected by TLS even when the client has no credential.
+        internal static void AssertHttps(Uri endpoint)
+        {
+            if (!string.Equals(endpoint.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"The attestation endpoint must use https, but '{endpoint}' does not.", nameof(endpoint));
             }
         }
 

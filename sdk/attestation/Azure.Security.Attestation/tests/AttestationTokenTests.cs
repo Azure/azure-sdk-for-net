@@ -241,8 +241,10 @@ namespace Azure.Security.Attestation.Tests
         {
             var parsedToken = AttestationToken.Deserialize(serializedToken);
             await Task.Yield();
-            // These test tokens have no issuer; issuer validation is covered by AttestationTokenIssuerValidationTests.
-            Assert.IsTrue(await parsedToken.ValidateTokenAsync(tokenOptions ?? new AttestationTokenValidationOptions { ValidateExpirationTime = true, ValidateIssuer = false }, null));
+            // These test tokens are signed with the policy management certificate and have no issuer; issuer validation
+            // is covered by AttestationTokenIssuerValidationTests.
+            var signers = new[] { new AttestationSigner(new[] { TestEnvironment.PolicyManagementCertificate }, null) };
+            Assert.IsTrue(await parsedToken.ValidateTokenAsync(tokenOptions ?? new AttestationTokenValidationOptions { ValidateExpirationTime = true, ValidateIssuer = false }, signers));
 
             // The body of the token should match the expected body.
             Assert.AreEqual(JsonSerializer.Serialize(expectedBody), Encoding.UTF8.GetString(parsedToken.TokenBodyBytes.ToArray()));
