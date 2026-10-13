@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Fabric
         {
             TryGetApiVersion(FabricCapacityResource.ResourceType, out string fabricCapacityApiVersion);
             _fabricCapacitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Fabric", FabricCapacityResource.ResourceType.Namespace, Diagnostics);
-            _fabricCapacitiesRestClient = new FabricCapacities(_fabricCapacitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fabricCapacityApiVersion ?? "2026-09-01-preview");
+            _fabricCapacitiesRestClient = new FabricCapacities(
+                _fabricCapacitiesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                fabricCapacityApiVersion ?? "2026-09-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

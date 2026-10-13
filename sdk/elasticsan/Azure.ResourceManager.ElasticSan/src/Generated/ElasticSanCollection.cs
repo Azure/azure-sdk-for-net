@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ElasticSanCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ElasticSanResource.ResourceType, out string elasticSanApiVersion);
             _elasticSansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ElasticSanResource.ResourceType.Namespace, Diagnostics);
-            _elasticSansRestClient = new ElasticSans(_elasticSansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanApiVersion ?? "2026-05-01-preview");
+            _elasticSansRestClient = new ElasticSans(_elasticSansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ElasticSan/elasticSans", out string elasticSansApiVersionOverride) ? elasticSansApiVersionOverride : "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
