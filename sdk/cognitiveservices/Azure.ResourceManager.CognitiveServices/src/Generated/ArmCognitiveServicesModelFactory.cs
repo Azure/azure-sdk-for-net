@@ -245,6 +245,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
         /// <param name="enableDynamicThrottling"> The flag to enable dynamic throttling. </param>
         /// <param name="isStoredCompletionsDisabled"> The flag to disable stored completions. </param>
+        /// <param name="isA365LoggingEnabled"> Specifies whether A365 logging is enabled. Defaults to true. Set to false to opt out. </param>
         /// <param name="quotaLimit"></param>
         /// <param name="restrictOutboundNetworkAccess"></param>
         /// <param name="allowedFqdnList"></param>
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="defaultProject"> Specifies the project, by project name, that is targeted when data plane endpoints are called without a project parameter. </param>
         /// <param name="associatedProjects"> Specifies the projects, by project name, that are associated with this resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IEnumerable<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, bool? isStoredCompletionsDisabled, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections, bool? allowProjectManagement, string defaultProject, IEnumerable<string> associatedProjects)
+        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IEnumerable<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, bool? isStoredCompletionsDisabled, bool? isA365LoggingEnabled, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections, bool? allowProjectManagement, string defaultProject, IEnumerable<string> associatedProjects)
         {
             capabilities ??= new ChangeTrackingList<CognitiveServicesSkuCapability>();
             userOwnedStorage ??= new ChangeTrackingList<ServiceAccountUserOwnedStorage>();
@@ -292,6 +293,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 callRateLimit,
                 enableDynamicThrottling,
                 isStoredCompletionsDisabled,
+                isA365LoggingEnabled,
                 quotaLimit,
                 restrictOutboundNetworkAccess,
                 (allowedFqdnList ?? new ChangeTrackingList<string>()).ToList(),
@@ -848,6 +850,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Properties of Cognitive Services account deployment. </summary>
         /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
         /// <param name="model"> Properties of Cognitive Services account deployment model. </param>
+        /// <param name="contextCacheContainerId"> The resource ID of the context cache container associated with this deployment. </param>
         /// <param name="scaleSettings"> Properties of Cognitive Services account deployment model. (Deprecated, please use Deployment.sku instead.). </param>
         /// <param name="capabilities"> The capabilities. </param>
         /// <param name="raiPolicyName"> The name of RAI policy. </param>
@@ -863,7 +866,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="deploymentState"> The state of the deployment. Controls whether the deployment is accepting inference requests. Use 'Running' for active deployments that process requests, or 'Paused' to temporarily stop inference while preserving the deployment configuration. </param>
         /// <param name="routing"> Routing configuration for the model-router deployment. This property is only applicable when the deployed model is 'model-router' version 2025-11-18 or later. Allows you to select the models subset for routing and the routing mode (balanced, quality, cost) for routing across all supported models or the model subset. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IEnumerable<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName, CognitiveServicesDeploymentServiceTier? serviceTier, CognitiveServicesDeploymentState? deploymentState = default, CognitiveServicesDeploymentRouting routing = default)
+        public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, string contextCacheContainerId, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IEnumerable<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName, CognitiveServicesDeploymentServiceTier? serviceTier, CognitiveServicesDeploymentState? deploymentState, CognitiveServicesDeploymentRouting routing)
         {
             capabilities ??= new ChangeTrackingDictionary<string, string>();
             rateLimits ??= new ChangeTrackingList<ServiceAccountThrottlingRule>();
@@ -871,6 +874,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountDeploymentProperties(
                 provisioningState,
                 model,
+                contextCacheContainerId,
                 scaleSettings,
                 capabilities ?? new ChangeTrackingDictionary<string, string>(),
                 raiPolicyName,
@@ -1123,8 +1127,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="contentFilters"> The list of Content Filters. </param>
         /// <param name="customBlocklists"> The list of custom Blocklist. </param>
         /// <param name="safetyProviders"> The list of Safety Providers. </param>
+        /// <param name="egressPolicy">
+        /// Egress (outbound network) policy controlling which external endpoints sandboxed
+        /// agents can reach. Includes rules with Allow/Deny/Transform/Rewrite actions.
+        /// </param>
         /// <returns> A new <see cref="Models.RaiPolicyProperties"/> instance for mocking. </returns>
-        public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IEnumerable<RaiPolicyContentFilter> contentFilters, IEnumerable<CustomBlocklistConfig> customBlocklists, IEnumerable<RaiSafetyProviderSourceConfig> safetyProviders)
+        public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IEnumerable<RaiPolicyContentFilter> contentFilters, IEnumerable<CustomBlocklistConfig> customBlocklists, IEnumerable<RaiSafetyProviderSourceConfig> safetyProviders, RaiEgressPolicyConfig egressPolicy)
         {
             contentFilters ??= new ChangeTrackingList<RaiPolicyContentFilter>();
             customBlocklists ??= new ChangeTrackingList<CustomBlocklistConfig>();
@@ -1137,6 +1145,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 (contentFilters ?? new ChangeTrackingList<RaiPolicyContentFilter>()).ToList(),
                 (customBlocklists ?? new ChangeTrackingList<CustomBlocklistConfig>()).ToList(),
                 (safetyProviders ?? new ChangeTrackingList<RaiSafetyProviderSourceConfig>()).ToList(),
+                egressPolicy,
                 default);
         }
 
@@ -1196,6 +1205,161 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static RaiSafetyProviderConfig RaiSafetyProviderConfig(string safetyProviderName = default, bool? isBlocking = default)
         {
             return new RaiSafetyProviderConfig(safetyProviderName, isBlocking, default);
+        }
+
+        /// <summary>
+        /// Egress (outbound network) policy configuration nested within an RAI policy.
+        /// Controls which external endpoints sandboxed agents can reach and what
+        /// transformations (header injection, URL rewrite) are applied to matching traffic.
+        /// </summary>
+        /// <param name="mode">
+        /// The enforcement mode for egress rules.
+        /// If omitted on create, the server defaults to Enforced. On subsequent GET
+        /// requests, the server always returns the effective mode.
+        /// </param>
+        /// <param name="defaultAction">
+        /// The default action when no user-defined rules match.
+        /// Deny blocks unmatched traffic; Allow permits it. Transform and Rewrite rules
+        /// are always applied to their matched traffic regardless of this setting —
+        /// defaultAction only governs traffic that does not match any rule.
+        /// If omitted on create, the server defaults to Deny (fail-closed). On subsequent
+        /// GET requests, the server always returns the effective value.
+        /// </param>
+        /// <param name="description"> Description of the egress policy. </param>
+        /// <param name="rules">
+        /// Ordered list of egress rules. First matching rule wins.
+        /// Rules are evaluated in declaration order; the first rule whose match criteria
+        /// are satisfied determines the action taken on the request.
+        /// </param>
+        /// <returns> A new <see cref="Models.RaiEgressPolicyConfig"/> instance for mocking. </returns>
+        public static RaiEgressPolicyConfig RaiEgressPolicyConfig(RaiEgressMode? mode = default, RaiEgressDefaultAction? defaultAction = default, string description = default, IEnumerable<RaiEgressRule> rules = default)
+        {
+            rules ??= new ChangeTrackingList<RaiEgressRule>();
+
+            return new RaiEgressPolicyConfig(mode, defaultAction, description, (rules ?? new ChangeTrackingList<RaiEgressRule>()).ToList(), default);
+        }
+
+        /// <summary> A single egress rule. Rules are evaluated in order; first match wins. </summary>
+        /// <param name="name"> Name of the rule. Must be unique within the policy. </param>
+        /// <param name="description"> Description of the rule. </param>
+        /// <param name="ruleType"> The type of rule (e.g., Fqdn). Determines how match criteria are interpreted. </param>
+        /// <param name="match"> The match criteria for this rule. </param>
+        /// <param name="action">
+        /// The action to take when this rule matches, including the action type and any
+        /// type-specific configuration (headers for Transform, rewrite target for Rewrite).
+        /// </param>
+        /// <returns> A new <see cref="Models.RaiEgressRule"/> instance for mocking. </returns>
+        public static RaiEgressRule RaiEgressRule(string name = default, string description = default, RaiEgressRuleType ruleType = default, RaiEgressRuleMatch match = default, RaiEgressRuleAction action = default)
+        {
+            return new RaiEgressRule(
+                name,
+                description,
+                ruleType,
+                match,
+                action,
+                default);
+        }
+
+        /// <summary>
+        /// The match criteria for an egress rule.
+        /// If both host and path are omitted, the rule matches all traffic.
+        /// Host uses DNS wildcard syntax (e.g., "\*.openai.com" matches "api.openai.com").
+        /// Path uses URI prefix matching with an asterisk as a single-segment wildcard.
+        /// For example, "/v1/\*" matches "/v1/chat".
+        /// </summary>
+        /// <param name="host">
+        /// Host pattern to match using DNS wildcard syntax (e.g., "\*.openai.com").
+        /// A leading "\*." matches any subdomain. Omit to match all hosts.
+        /// </param>
+        /// <param name="path">
+        /// Path pattern to match using URI prefix matching.
+        /// An asterisk serves as a single-segment wildcard.
+        /// For example, "/v1/\*" matches "/v1/chat". Omit to match all paths.
+        /// </param>
+        /// <returns> A new <see cref="Models.RaiEgressRuleMatch"/> instance for mocking. </returns>
+        public static RaiEgressRuleMatch RaiEgressRuleMatch(string host = default, string path = default)
+        {
+            return new RaiEgressRuleMatch(host, path, default);
+        }
+
+        /// <summary>
+        /// The action an egress rule takes when it matches.
+        /// <list type="bullet"><item><description>Allow/Deny: no additional fields needed; headers and rewrite must not be set.</description></item><item><description>Transform: headers is required with at least one entry; rewrite must not be set.</description></item><item><description>Rewrite: rewrite is required with at least one of scheme/host/path;</description></item></list>
+        /// headers is optional for injecting headers alongside the redirect.
+        /// </summary>
+        /// <param name="actionType"> The kind of action. </param>
+        /// <param name="headers">
+        /// Header transforms to apply. Required for Transform; optional for Rewrite;
+        /// not allowed for Allow or Deny.
+        /// </param>
+        /// <param name="rewrite"> Destination override. Required for Rewrite; not allowed otherwise. </param>
+        /// <returns> A new <see cref="Models.RaiEgressRuleAction"/> instance for mocking. </returns>
+        public static RaiEgressRuleAction RaiEgressRuleAction(RaiEgressRuleActionType actionType = default, IEnumerable<RaiEgressHeaderTransform> headers = default, RaiEgressRewriteTarget rewrite = default)
+        {
+            headers ??= new ChangeTrackingList<RaiEgressHeaderTransform>();
+
+            return new RaiEgressRuleAction(actionType, (headers ?? new ChangeTrackingList<RaiEgressHeaderTransform>()).ToList(), rewrite, default);
+        }
+
+        /// <summary>
+        /// A header transformation applied to matched traffic.
+        /// For Set or Insert operations, exactly one of value or valueRef must be provided.
+        /// For Remove operations, neither value nor valueRef should be set.
+        /// </summary>
+        /// <param name="operation"> The operation to perform on this header. </param>
+        /// <param name="name"> The HTTP header name (e.g., "Authorization", "X-Custom-Auth"). </param>
+        /// <param name="value">
+        /// A static header value. Write-only: accepted on create/update, never returned on read.
+        /// If omitted on update, the existing value is preserved. Use this for non-sensitive values;
+        /// for credentials, use valueRef instead.
+        /// </param>
+        /// <param name="valueRef"> A dynamic header value resolved at request time from a secret or managed identity. </param>
+        /// <returns> A new <see cref="Models.RaiEgressHeaderTransform"/> instance for mocking. </returns>
+        public static RaiEgressHeaderTransform RaiEgressHeaderTransform(RaiEgressHeaderOperation operation = default, string name = default, string value = default, RaiEgressHeaderValueRef valueRef = default)
+        {
+            return new RaiEgressHeaderTransform(operation, name, value, valueRef, default);
+        }
+
+        /// <summary> A dynamic source for a header value. Exactly one of secretRef or managedIdentityRef must be set. </summary>
+        /// <param name="secretRef"> Resolve the value from a stored secret. </param>
+        /// <param name="managedIdentityRef"> Resolve the value from a managed-identity token. </param>
+        /// <returns> A new <see cref="Models.RaiEgressHeaderValueRef"/> instance for mocking. </returns>
+        public static RaiEgressHeaderValueRef RaiEgressHeaderValueRef(RaiEgressSecretRef secretRef = default, RaiEgressManagedIdentityRef managedIdentityRef = default)
+        {
+            return new RaiEgressHeaderValueRef(secretRef, managedIdentityRef, default);
+        }
+
+        /// <summary> A reference to a stored secret used as a header value. </summary>
+        /// <param name="secretId"> Identifier of the secret to inject. </param>
+        /// <param name="secretKey"> Optional key within the secret. </param>
+        /// <param name="format"> Optional format for the resolved value; "{value}" is the placeholder, e.g. "Bearer {value}". </param>
+        /// <returns> A new <see cref="Models.RaiEgressSecretRef"/> instance for mocking. </returns>
+        public static RaiEgressSecretRef RaiEgressSecretRef(string secretId = default, string secretKey = default, string format = default)
+        {
+            return new RaiEgressSecretRef(secretId, secretKey, format, default);
+        }
+
+        /// <summary> A reference to a managed-identity token used as a header value. </summary>
+        /// <param name="resource"> The resource/audience the token is requested for. </param>
+        /// <param name="format"> Optional format for the resolved token; "{value}" is the placeholder, e.g. "Bearer {value}". </param>
+        /// <returns> A new <see cref="Models.RaiEgressManagedIdentityRef"/> instance for mocking. </returns>
+        public static RaiEgressManagedIdentityRef RaiEgressManagedIdentityRef(string resource = default, string format = default)
+        {
+            return new RaiEgressManagedIdentityRef(resource, format, default);
+        }
+
+        /// <summary>
+        /// Where a Rewrite action sends matched traffic. At least one field must be set;
+        /// omitted fields retain the original request values. This constraint is enforced
+        /// by the server (400 Bad Request if all fields are omitted).
+        /// </summary>
+        /// <param name="scheme"> Target scheme. Original scheme is kept if omitted. </param>
+        /// <param name="host"> Target host. Original host is kept if omitted. </param>
+        /// <param name="path"> Target path (literal string). Original path (and query) is kept if omitted. </param>
+        /// <returns> A new <see cref="Models.RaiEgressRewriteTarget"/> instance for mocking. </returns>
+        public static RaiEgressRewriteTarget RaiEgressRewriteTarget(RaiEgressScheme? scheme = default, string host = default, string path = default)
+        {
+            return new RaiEgressRewriteTarget(scheme, host, path, default);
         }
 
         /// <summary> Cognitive Services RaiBlocklist Item. </summary>
@@ -2994,6 +3158,148 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="createdOn"> Gets the date of cognitive services account creation. </param>
         /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
         /// <param name="enableDynamicThrottling"> The flag to enable dynamic throttling. </param>
+        /// <param name="isStoredCompletionsDisabled"> The flag to disable stored completions. </param>
+        /// <param name="quotaLimit"></param>
+        /// <param name="restrictOutboundNetworkAccess"></param>
+        /// <param name="allowedFqdnList"></param>
+        /// <param name="disableLocalAuth"></param>
+        /// <param name="endpoints"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="restore"></param>
+        /// <param name="deletedOn"> The deletion date, only available for deleted account. </param>
+        /// <param name="scheduledPurgeDate"> The scheduled purge date, only available for deleted account. </param>
+        /// <param name="locations"> The multiregion settings of Cognitive Services account. </param>
+        /// <param name="commitmentPlanAssociations"> The commitment plan associations of Cognitive Services account. </param>
+        /// <param name="abusePenalty"> The abuse penalty. </param>
+        /// <param name="raiMonitorConfig"> Cognitive Services Rai Monitor Config. </param>
+        /// <param name="aiFoundryNetworkInjections"></param>
+        /// <param name="allowProjectManagement"> Specifies whether this resource support project management as child resources, used as containers for access management, data isolation and cost in AI Foundry. </param>
+        /// <param name="defaultProject"> Specifies the project, by project name, that is targeted when data plane endpoints are called without a project parameter. </param>
+        /// <param name="associatedProjects"> Specifies the projects, by project name, that are associated with this resource. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesAccountProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IEnumerable<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, bool? isStoredCompletionsDisabled, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections, bool? allowProjectManagement, string defaultProject, IEnumerable<string> associatedProjects)
+        {
+            return new CognitiveServicesAccountProperties(
+                provisioningState,
+                endpoint,
+                (capabilities ?? new ChangeTrackingList<CognitiveServicesSkuCapability>()).ToList(),
+                isMigrated,
+                migrationToken,
+                skuChangeInfo,
+                customSubDomainName,
+                networkAcls,
+                encryption,
+                (userOwnedStorage ?? new ChangeTrackingList<ServiceAccountUserOwnedStorage>()).ToList(),
+                amlWorkspace,
+                (privateEndpointConnections ?? new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>()).ToList(),
+                publicNetworkAccess,
+                apiProperties,
+                createdOn,
+                callRateLimit,
+                enableDynamicThrottling,
+                isStoredCompletionsDisabled,
+                default,
+                quotaLimit,
+                restrictOutboundNetworkAccess,
+                (allowedFqdnList ?? new ChangeTrackingList<string>()).ToList(),
+                disableLocalAuth,
+                endpoints ?? new ChangeTrackingDictionary<string, string>(),
+                restore,
+                deletedOn,
+                scheduledPurgeDate,
+                locations,
+                (commitmentPlanAssociations ?? new ChangeTrackingList<CommitmentPlanAssociation>()).ToList(),
+                abusePenalty,
+                raiMonitorConfig,
+                (aiFoundryNetworkInjections ?? new ChangeTrackingList<AIFoundryNetworkInjection>()).ToList(),
+                allowProjectManagement,
+                defaultProject,
+                (associatedProjects ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <summary> Properties of Cognitive Services account deployment. </summary>
+        /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
+        /// <param name="model"> Properties of Cognitive Services account deployment model. </param>
+        /// <param name="scaleSettings"> Properties of Cognitive Services account deployment model. (Deprecated, please use Deployment.sku instead.). </param>
+        /// <param name="capabilities"> The capabilities. </param>
+        /// <param name="raiPolicyName"> The name of RAI policy. </param>
+        /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
+        /// <param name="rateLimits"></param>
+        /// <param name="versionUpgradeOption"> Deployment model version upgrade option. </param>
+        /// <param name="isDynamicThrottlingEnabled"> If the dynamic throttling is enabled. </param>
+        /// <param name="currentCapacity"> The current capacity. </param>
+        /// <param name="capacitySettings"> Internal use only. </param>
+        /// <param name="parentDeploymentName"> The name of parent deployment. </param>
+        /// <param name="spilloverDeploymentName"> Specifies the deployment name that should serve requests when the request would have otherwise been throttled due to reaching current deployment throughput limit. </param>
+        /// <param name="serviceTier"> The service tier for the deployment. Determines the pricing and performance level for request processing. Use 'Default' for standard pricing or 'Priority' for higher-priority processing with premium pricing. Note: Pause operations are only supported on Standard, DataZoneStandard, and GlobalStandard SKUs. </param>
+        /// <param name="deploymentState"> The state of the deployment. Controls whether the deployment is accepting inference requests. Use 'Running' for active deployments that process requests, or 'Paused' to temporarily stop inference while preserving the deployment configuration. </param>
+        /// <param name="routing"> Routing configuration for the model-router deployment. This property is only applicable when the deployed model is 'model-router' version 2025-11-18 or later. Allows you to select the models subset for routing and the routing mode (balanced, quality, cost) for routing across all supported models or the model subset. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IEnumerable<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName, CognitiveServicesDeploymentServiceTier? serviceTier, CognitiveServicesDeploymentState? deploymentState = default, CognitiveServicesDeploymentRouting routing = default)
+        {
+            return new CognitiveServicesAccountDeploymentProperties(
+                provisioningState,
+                model,
+                default,
+                scaleSettings,
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                raiPolicyName,
+                callRateLimit,
+                (rateLimits ?? new ChangeTrackingList<ServiceAccountThrottlingRule>()).ToList(),
+                versionUpgradeOption,
+                isDynamicThrottlingEnabled,
+                currentCapacity,
+                capacitySettings,
+                parentDeploymentName,
+                spilloverDeploymentName,
+                serviceTier,
+                deploymentState,
+                routing,
+                default);
+        }
+
+        /// <summary> Azure OpenAI Content Filters properties. </summary>
+        /// <param name="policyType"> Content Filters policy type. </param>
+        /// <param name="mode"> Rai policy mode. The enum value mapping is as below: Default = 0, Deferred=1, Blocking=2, Asynchronous_filter =3. Please use 'Asynchronous_filter' after 2025-06-01. It is the same as 'Deferred' in previous version. </param>
+        /// <param name="basePolicyName"> Name of Rai policy. </param>
+        /// <param name="contentFilters"> The list of Content Filters. </param>
+        /// <param name="customBlocklists"> The list of custom Blocklist. </param>
+        /// <param name="safetyProviders"> The list of Safety Providers. </param>
+        /// <returns> A new <see cref="Models.RaiPolicyProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IEnumerable<RaiPolicyContentFilter> contentFilters, IEnumerable<CustomBlocklistConfig> customBlocklists, IEnumerable<RaiSafetyProviderSourceConfig> safetyProviders)
+        {
+            return new RaiPolicyProperties(
+                policyType,
+                mode,
+                basePolicyName,
+                (contentFilters ?? new ChangeTrackingList<RaiPolicyContentFilter>()).ToList(),
+                (customBlocklists ?? new ChangeTrackingList<CustomBlocklistConfig>()).ToList(),
+                (safetyProviders ?? new ChangeTrackingList<RaiSafetyProviderSourceConfig>()).ToList(),
+                default,
+                default);
+        }
+
+        /// <summary> Properties of Cognitive Services account. </summary>
+        /// <param name="provisioningState"> Gets the status of the cognitive services account at the time the operation was called. </param>
+        /// <param name="endpoint"> Endpoint of the created account. </param>
+        /// <param name="capabilities"> Gets the capabilities of the cognitive services account. Each item indicates the capability of a specific feature. The values are read-only and for reference only. </param>
+        /// <param name="isMigrated"> If the resource is migrated from an existing key. </param>
+        /// <param name="migrationToken"> Resource migration token. </param>
+        /// <param name="skuChangeInfo"> Sku change info of account. </param>
+        /// <param name="customSubDomainName"> Optional subdomain name used for token-based authentication. </param>
+        /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
+        /// <param name="encryption"> The encryption properties for this resource. </param>
+        /// <param name="userOwnedStorage"> The storage accounts for this resource. </param>
+        /// <param name="amlWorkspace"> The user owned AML account properties. </param>
+        /// <param name="privateEndpointConnections"> The private endpoint connection associated with the Cognitive Services account. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this account. </param>
+        /// <param name="apiProperties"> The api properties for special APIs. </param>
+        /// <param name="createdOn"> Gets the date of cognitive services account creation. </param>
+        /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
+        /// <param name="enableDynamicThrottling"> The flag to enable dynamic throttling. </param>
         /// <param name="quotaLimit"></param>
         /// <param name="restrictOutboundNetworkAccess"></param>
         /// <param name="allowedFqdnList"></param>
@@ -3032,6 +3338,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 createdOn,
                 callRateLimit,
                 enableDynamicThrottling,
+                default,
                 default,
                 quotaLimit,
                 restrictOutboundNetworkAccess,
@@ -3139,6 +3446,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 createdOn,
                 callRateLimit,
                 enableDynamicThrottling,
+                default,
                 default,
                 quotaLimit,
                 restrictOutboundNetworkAccess,
@@ -3299,6 +3607,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountDeploymentProperties(
                 provisioningState,
                 model,
+                default,
                 scaleSettings,
                 capabilities ?? new ChangeTrackingDictionary<string, string>(),
                 raiPolicyName,
@@ -3407,6 +3716,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 basePolicyName,
                 (contentFilters ?? new ChangeTrackingList<RaiPolicyContentFilter>()).ToList(),
                 (customBlocklists ?? new ChangeTrackingList<CustomBlocklistConfig>()).ToList(),
+                default,
                 default,
                 default);
         }
@@ -3611,6 +3921,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 callRateLimit,
                 enableDynamicThrottling,
                 default,
+                default,
                 quotaLimit,
                 restrictOutboundNetworkAccess,
                 (allowedFqdnList ?? new ChangeTrackingList<string>()).ToList(),
@@ -3650,6 +3961,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountDeploymentProperties(
                 provisioningState,
                 model,
+                default,
                 scaleSettings,
                 capabilities ?? new ChangeTrackingDictionary<string, string>(),
                 raiPolicyName,
@@ -3717,6 +4029,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 createdOn,
                 callRateLimit,
                 enableDynamicThrottling,
+                default,
                 default,
                 quotaLimit,
                 restrictOutboundNetworkAccess,
@@ -3846,6 +4159,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountDeploymentProperties(
                 provisioningState,
                 model,
+                default,
                 scaleSettings,
                 capabilities ?? new ChangeTrackingDictionary<string, string>(),
                 raiPolicyName,
