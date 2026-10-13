@@ -1,14 +1,10 @@
 # Release History
 
-## 1.9.0-beta.1 (Unreleased)
+## 1.9.0-beta.1 (2026-10-12)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version to 2026-07-02-preview.
 
 ## 1.8.0 (2026-10-08)
 
