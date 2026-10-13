@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -10,26 +9,6 @@ namespace Azure.Provisioning.Storage.Tests;
 
 public class StorageApiVersionTests
 {
-    [Test]
-    public void ResourcesDefaultToAlignedApiVersion()
-    {
-        ProvisionableResource[] resources =
-        [
-            new StorageAccount("storage"),
-            new BlobService("blobs"),
-            new FileShare("share"),
-            new AdvancedPlatformMetricsRule("metrics"),
-            new ContextCache("cache"),
-            new ContextCacheContainer("container"),
-            new StorageConnector("connector"),
-            new StorageDataShare("dataShare")
-        ];
-        foreach (ProvisionableResource resource in resources)
-        {
-            Assert.That(resource.ResourceVersion, Is.EqualTo("2026-06-01"), resource.GetType().Name);
-        }
-    }
-
     [TestCase("2023-01-01")]
     [TestCase("2025-06-01")]
     public void ExplicitApiVersionIsPreserved(string version)

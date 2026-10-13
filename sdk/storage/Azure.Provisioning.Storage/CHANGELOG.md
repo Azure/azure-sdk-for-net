@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.2 (2026-10-13)
 
 ### Features Added
 
@@ -9,13 +9,9 @@
 - Added support for the `Smart` storage account access tier, `AllowedCopyScope.All`, `TaskExecutionTriggerType.MockRun`, shared-key access settings, cross-tenant delegation SAS, data collaboration policies, blob static websites, and object replication tag settings.
 - Added `StorageBuiltInRole.StorageFileDataSmbMIAdmin` for the Storage File Data SMB MI Admin role (`a235d3ee-5935-4cfb-8cc5-a3303ad5995e`).
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Fixed `StorageActiveDirectoryProperties.DomainGuid` to share its value with `ActiveDirectoryDomainGuid`, preventing conflicting assignments from emitting an outdated domain GUID.
-
-### Other Changes
 
 ## 1.2.0-beta.1 (2026-03-02)
 
