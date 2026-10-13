@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed streaming blob downloads to reject response bodies whose length does not match the declared content length.
+
 ### Other Changes
 
 ## 1.3.0 (2026-01-09)

@@ -11,6 +11,11 @@ namespace Azure.Containers.ContainerRegistry
 {
     internal class ValidatingStream : Stream
     {
+        internal const string ContentEndedEarlyMessage =
+            "The downloaded content ended before the number of bytes specified by the Content-Length header were received.";
+        internal const string ContentExceededLengthMessage =
+            "The downloaded content exceeded the number of bytes specified by the Content-Length header.";
+
         private Stream _stream;
         private SHA256 _sha256;
         private readonly long _contentLength;
@@ -45,7 +50,10 @@ namespace Azure.Containers.ContainerRegistry
         {
             int length = _stream.Read(buffer, offset, count);
 
-            ProcessIncrement(buffer, offset, length);
+            if (count > 0)
+            {
+                ProcessIncrement(buffer, offset, length);
+            }
 
             return length;
         }
@@ -54,25 +62,40 @@ namespace Azure.Containers.ContainerRegistry
         {
             int length = await _stream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
 
-            ProcessIncrement(buffer, offset, length);
+            if (count > 0)
+            {
+                ProcessIncrement(buffer, offset, length);
+            }
 
             return length;
         }
 
         private void ProcessIncrement(byte[] buffer, int offset, int length)
         {
-            if (!_validated)
+            if (length == 0)
             {
-                _received += length;
-                _sha256.TransformBlock(buffer, offset, length, buffer, offset);
-
-                if (_received == _contentLength)
+                if (!_validated)
                 {
-                    _sha256.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
-                    string computedDigest = BlobHelper.FormatDigest(_sha256.Hash);
-                    BlobHelper.ValidateDigest(computedDigest, _digest, BlobHelper.ContentDigestDoesntMatchRequestedMessage);
-                    _validated = true;
+                    throw new RequestFailedException(200, ContentEndedEarlyMessage);
                 }
+
+                return;
+            }
+
+            if (_validated || length > _contentLength - _received)
+            {
+                throw new RequestFailedException(200, ContentExceededLengthMessage);
+            }
+
+            _received += length;
+            _sha256.TransformBlock(buffer, offset, length, buffer, offset);
+
+            if (_received == _contentLength)
+            {
+                _sha256.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
+                string computedDigest = BlobHelper.FormatDigest(_sha256.Hash);
+                BlobHelper.ValidateDigest(computedDigest, _digest, BlobHelper.ContentDigestDoesntMatchRequestedMessage);
+                _validated = true;
             }
         }
 
