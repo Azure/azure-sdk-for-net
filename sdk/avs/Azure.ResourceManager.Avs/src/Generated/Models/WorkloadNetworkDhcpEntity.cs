@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.Avs.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpEntity"/>. </summary>
+        protected WorkloadNetworkDhcpEntity() : this(default)
+        {
+        }
+
         /// <summary> Type of DHCP: SERVER or RELAY. </summary>
         internal DhcpTypeEnum DhcpType { get; set; }
 

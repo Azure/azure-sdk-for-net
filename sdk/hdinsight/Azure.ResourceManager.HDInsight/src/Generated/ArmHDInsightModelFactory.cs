@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightAsyncOperationResult"/> instance for mocking. </returns>
         public static HDInsightAsyncOperationResult HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status = default, ResponseError error = default)
         {
-            return new HDInsightAsyncOperationResult(status, error is null ? default : new ErrorResponse(error, default), default);
+            return new HDInsightAsyncOperationResult(status, error is null ? default : new ErrorResult(error, default), default);
         }
 
         /// <summary> The HDInsight cluster. </summary>

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxEdgeTriggerData, DataBoxEdgeTriggerResource>(new TriggersGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataBoxEdgeTriggerData, DataBoxEdgeTriggerResource>(new DataBoxEdgeTriggerDataAsyncCollectionResultOfT(
                 _triggersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxEdgeTriggerData, DataBoxEdgeTriggerResource>(new TriggersGetByDataBoxEdgeDeviceCollectionResultOfT(
+            return new PageableWrapper<DataBoxEdgeTriggerData, DataBoxEdgeTriggerResource>(new DataBoxEdgeTriggerDataCollectionResultOfT(
                 _triggersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

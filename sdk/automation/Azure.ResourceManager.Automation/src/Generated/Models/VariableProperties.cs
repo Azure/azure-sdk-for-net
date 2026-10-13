@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _isEncrypted;
+        internal bool _isEncryptedIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VariableProperties"/>. </summary>
         public VariableProperties()
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Automation.Models
         internal VariableProperties(string value, bool? isEncrypted, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
-            IsEncrypted = isEncrypted;
+            _isEncrypted = isEncrypted;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
@@ -42,7 +44,18 @@ namespace Azure.ResourceManager.Automation.Models
         public string Value { get; set; }
 
         /// <summary> Gets or sets the encrypted flag of the variable. </summary>
-        public bool? IsEncrypted { get; set; }
+        public bool? IsEncrypted
+        {
+            get
+            {
+                return _isEncrypted;
+            }
+            set
+            {
+                _isEncrypted = value;
+                _isEncryptedIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; set; }

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetAppCacheData, NetAppCacheResource>(new CachesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetAppCacheData, NetAppCacheResource>(new NetAppCacheDataAsyncCollectionResultOfT(
                 _cachesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetAppCacheData, NetAppCacheResource>(new CachesGetAllCollectionResultOfT(
+            return new PageableWrapper<NetAppCacheData, NetAppCacheResource>(new NetAppCacheDataCollectionResultOfT(
                 _cachesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

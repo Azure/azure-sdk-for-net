@@ -327,9 +327,9 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response AnalyzeFromUrl(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, RequestContext context = null)
+        internal virtual Response AnalyzeFromUri(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromUrl");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromUri");
             scope.Start();
             try
             {
@@ -383,9 +383,9 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AnalyzeFromUrlAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, RequestContext context = null)
+        internal virtual async Task<Response> AnalyzeFromUriAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromUrl");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromUri");
             scope.Start();
             try
             {
@@ -431,9 +431,9 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ImageAnalysisResult> AnalyzeFromUrl(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageUrl, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
+        internal virtual Response<ImageAnalysisResult> AnalyzeFromUri(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageUrl, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
         {
-            Response result = AnalyzeFromUrl(visualFeatures, imageUrl, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext());
+            Response result = AnalyzeFromUri(visualFeatures, imageUrl, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext());
             return Response.FromValue((ImageAnalysisResult)result, result);
         }
 
@@ -469,9 +469,9 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromUrlAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageUrl, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromUriAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageUrl, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
         {
-            Response result = await AnalyzeFromUrlAsync(visualFeatures, imageUrl, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await AnalyzeFromUriAsync(visualFeatures, imageUrl, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ImageAnalysisResult)result, result);
         }
     }

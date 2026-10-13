@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 timeoutInSeconds,
                 webTestKind,
                 isRetryEnabled,
-                locations,
+                locations ?? new ChangeTrackingList<WebTestGeolocation>(),
                 configuration,
                 provisioningState,
                 request,

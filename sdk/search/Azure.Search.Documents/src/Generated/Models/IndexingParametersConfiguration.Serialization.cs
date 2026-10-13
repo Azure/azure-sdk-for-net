@@ -118,15 +118,29 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("firstLineContainsHeaders"u8);
                 writer.WriteBooleanValue(FirstLineContainsHeaders.Value);
             }
-            if (Optional.IsDefined(MarkdownParsingSubmode))
+            if (Optional.IsDefined(MarkdownParsingSubmode, _markdownParsingSubmodeIsDefined))
             {
-                writer.WritePropertyName("markdownParsingSubmode"u8);
-                writer.WriteStringValue(MarkdownParsingSubmode.Value.ToString());
+                if (MarkdownParsingSubmode != null)
+                {
+                    writer.WritePropertyName("markdownParsingSubmode"u8);
+                    writer.WriteStringValue(MarkdownParsingSubmode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("markdownParsingSubmode"u8);
+                }
             }
-            if (Optional.IsDefined(MarkdownHeaderDepth))
+            if (Optional.IsDefined(MarkdownHeaderDepth, _markdownHeaderDepthIsDefined))
             {
-                writer.WritePropertyName("markdownHeaderDepth"u8);
-                writer.WriteStringValue(MarkdownHeaderDepth.Value.ToString());
+                if (MarkdownHeaderDepth != null)
+                {
+                    writer.WritePropertyName("markdownHeaderDepth"u8);
+                    writer.WriteStringValue(MarkdownHeaderDepth.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("markdownHeaderDepth"u8);
+                }
             }
             if (Optional.IsDefined(DocumentRoot))
             {

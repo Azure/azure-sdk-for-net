@@ -74,20 +74,41 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(OciRepositoryRef)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Tag))
+            if (_tagIsDefined || Optional.IsDefined(Tag))
             {
-                writer.WritePropertyName("tag"u8);
-                writer.WriteStringValue(Tag);
+                if (Tag != null)
+                {
+                    writer.WritePropertyName("tag"u8);
+                    writer.WriteStringValue(Tag);
+                }
+                else
+                {
+                    writer.WriteNull("tag"u8);
+                }
             }
-            if (Optional.IsDefined(Semver))
+            if (_semverIsDefined || Optional.IsDefined(Semver))
             {
-                writer.WritePropertyName("semver"u8);
-                writer.WriteStringValue(Semver);
+                if (Semver != null)
+                {
+                    writer.WritePropertyName("semver"u8);
+                    writer.WriteStringValue(Semver);
+                }
+                else
+                {
+                    writer.WriteNull("semver"u8);
+                }
             }
-            if (Optional.IsDefined(Digest))
+            if (_digestIsDefined || Optional.IsDefined(Digest))
             {
-                writer.WritePropertyName("digest"u8);
-                writer.WriteStringValue(Digest);
+                if (Digest != null)
+                {
+                    writer.WritePropertyName("digest"u8);
+                    writer.WriteStringValue(Digest);
+                }
+                else
+                {
+                    writer.WriteNull("digest"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,14 +152,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 return null;
             }
+            bool tagIsDefined = false;
             string tag = default;
+            bool semverIsDefined = false;
             string semver = default;
+            bool digestIsDefined = false;
             string digest = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tag"u8))
                 {
+                    tagIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         tag = null;
@@ -149,6 +174,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("semver"u8))
                 {
+                    semverIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         semver = null;
@@ -159,6 +185,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("digest"u8))
                 {
+                    digestIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         digest = null;
@@ -172,7 +199,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OciRepositoryRef(tag, semver, digest, additionalBinaryDataProperties);
+            return new OciRepositoryRef(tag, semver, digest, additionalBinaryDataProperties)
+            {
+                _tagIsDefined = tagIsDefined,
+                _semverIsDefined = semverIsDefined,
+                _digestIsDefined = digestIsDefined
+            };
         }
     }
 }

@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EnableExplicitProxy))
+            if (_enableExplicitProxyIsDefined || Optional.IsDefined(EnableExplicitProxy))
             {
-                writer.WritePropertyName("enableExplicitProxy"u8);
-                writer.WriteBooleanValue(EnableExplicitProxy.Value);
+                if (EnableExplicitProxy != null)
+                {
+                    writer.WritePropertyName("enableExplicitProxy"u8);
+                    writer.WriteBooleanValue(EnableExplicitProxy.Value);
+                }
+                else
+                {
+                    writer.WriteNull("enableExplicitProxy"u8);
+                }
             }
             if (Optional.IsDefined(HttpPort))
             {
@@ -89,10 +96,17 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("httpsPort"u8);
                 writer.WriteNumberValue(HttpsPort.Value);
             }
-            if (Optional.IsDefined(EnablePacFile))
+            if (_enablePacFileIsDefined || Optional.IsDefined(EnablePacFile))
             {
-                writer.WritePropertyName("enablePacFile"u8);
-                writer.WriteBooleanValue(EnablePacFile.Value);
+                if (EnablePacFile != null)
+                {
+                    writer.WritePropertyName("enablePacFile"u8);
+                    writer.WriteBooleanValue(EnablePacFile.Value);
+                }
+                else
+                {
+                    writer.WriteNull("enablePacFile"u8);
+                }
             }
             if (Optional.IsDefined(PacFilePort))
             {
@@ -146,9 +160,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
+            bool enableExplicitProxyIsDefined = false;
             bool? enableExplicitProxy = default;
             int? httpPort = default;
             int? httpsPort = default;
+            bool enablePacFileIsDefined = false;
             bool? enablePacFile = default;
             int? pacFilePort = default;
             string pacFile = default;
@@ -157,6 +173,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("enableExplicitProxy"u8))
                 {
+                    enableExplicitProxyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         enableExplicitProxy = null;
@@ -185,6 +202,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("enablePacFile"u8))
                 {
+                    enablePacFileIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         enablePacFile = null;
@@ -219,7 +237,11 @@ namespace Azure.ResourceManager.Network.Models
                 enablePacFile,
                 pacFilePort,
                 pacFile,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _enableExplicitProxyIsDefined = enableExplicitProxyIsDefined,
+                _enablePacFileIsDefined = enablePacFileIsDefined
+            };
         }
     }
 }

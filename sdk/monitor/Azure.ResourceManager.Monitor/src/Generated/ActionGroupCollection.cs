@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ActionGroupData, ActionGroupResource>(new ActionGroupsGetByResourceGroupAsyncCollectionResultOfT(_actionGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActionGroupCollection.GetAll"), data => new ActionGroupResource(Client, data));
+            return new AsyncPageableWrapper<ActionGroupData, ActionGroupResource>(new ActionGroupDataAsyncCollectionResultOfT(_actionGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActionGroupCollection.GetAll"), data => new ActionGroupResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ActionGroupData, ActionGroupResource>(new ActionGroupsGetByResourceGroupCollectionResultOfT(_actionGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActionGroupCollection.GetAll"), data => new ActionGroupResource(Client, data));
+            return new PageableWrapper<ActionGroupData, ActionGroupResource>(new ActionGroupDataCollectionResultOfT(_actionGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActionGroupCollection.GetAll"), data => new ActionGroupResource(Client, data));
         }
 
         /// <summary>

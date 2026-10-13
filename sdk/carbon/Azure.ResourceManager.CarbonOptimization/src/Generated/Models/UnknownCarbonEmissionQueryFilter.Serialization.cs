@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             return new UnknownCarbonEmissionQueryFilter(
                 reportType,
                 dateRange,
-                subscriptionList,
+                subscriptionList ?? new ChangeTrackingList<string>(),
                 resourceGroupUrlList ?? new ChangeTrackingList<string>(),
                 resourceTypeList ?? new ChangeTrackingList<ResourceType>(),
                 locationList ?? new ChangeTrackingList<AzureLocation>(),
-                carbonScopeList,
+                carbonScopeList ?? new ChangeTrackingList<CarbonEmissionScope>(),
                 additionalBinaryDataProperties);
         }
     }

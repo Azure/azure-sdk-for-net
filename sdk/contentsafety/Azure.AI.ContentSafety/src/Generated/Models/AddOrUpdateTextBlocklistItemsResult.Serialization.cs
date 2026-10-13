@@ -154,7 +154,7 @@ namespace Azure.AI.ContentSafety
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AddOrUpdateTextBlocklistItemsResult(blocklistItems, additionalBinaryDataProperties);
+            return new AddOrUpdateTextBlocklistItemsResult(blocklistItems ?? new ChangeTrackingList<TextBlocklistItem>(), additionalBinaryDataProperties);
         }
     }
 }

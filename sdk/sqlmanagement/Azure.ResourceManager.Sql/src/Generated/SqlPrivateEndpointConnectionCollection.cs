@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlPrivateEndpointConnectionData, SqlPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlPrivateEndpointConnectionData, SqlPrivateEndpointConnectionResource>(new SqlPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlPrivateEndpointConnectionData, SqlPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByServerCollectionResultOfT(
+            return new PageableWrapper<SqlPrivateEndpointConnectionData, SqlPrivateEndpointConnectionResource>(new SqlPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -79,10 +79,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
-            if (Optional.IsDefined(InitialDelay))
+            if (_initialDelayIsDefined || Optional.IsDefined(InitialDelay))
             {
-                writer.WritePropertyName("initialDelay"u8);
-                writer.WriteStringValue(InitialDelay.Value, "P");
+                if (InitialDelay != null)
+                {
+                    writer.WritePropertyName("initialDelay"u8);
+                    writer.WriteStringValue(InitialDelay.Value, "P");
+                }
+                else
+                {
+                    writer.WriteNull("initialDelay"u8);
+                }
             }
             if (Optional.IsDefined(Period))
             {
@@ -142,6 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             int? failureThreshold = default;
+            bool initialDelayIsDefined = false;
             TimeSpan? initialDelay = default;
             TimeSpan? period = default;
             int? successThreshold = default;
@@ -160,6 +168,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("initialDelay"u8))
                 {
+                    initialDelayIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         initialDelay = null;
@@ -206,7 +215,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 period,
                 successThreshold,
                 timeout,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _initialDelayIsDefined = initialDelayIsDefined
+            };
         }
     }
 }

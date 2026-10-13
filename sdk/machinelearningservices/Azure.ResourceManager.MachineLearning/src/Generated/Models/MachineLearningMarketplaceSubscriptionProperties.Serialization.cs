@@ -79,10 +79,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningMarketplaceSubscriptionProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(MarketplacePlan))
+            if (options.Format != "W" && (_marketplacePlanIsDefined || Optional.IsDefined(MarketplacePlan)))
             {
-                writer.WritePropertyName("marketplacePlan"u8);
-                writer.WriteObjectValue(MarketplacePlan, options);
+                if (MarketplacePlan != null)
+                {
+                    writer.WritePropertyName("marketplacePlan"u8);
+                    writer.WriteObjectValue(MarketplacePlan, options);
+                }
+                else
+                {
+                    writer.WriteNull("marketplacePlan"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionStatus))
             {
@@ -138,6 +145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool marketplacePlanIsDefined = false;
             MachineLearningMarketplacePlan marketplacePlan = default;
             MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
             string modelId = default;
@@ -147,6 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("marketplacePlan"u8))
                 {
+                    marketplacePlanIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         marketplacePlan = null;
@@ -183,7 +192,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningMarketplaceSubscriptionProperties(marketplacePlan, marketplaceSubscriptionStatus, modelId, provisioningState, additionalBinaryDataProperties);
+            return new MachineLearningMarketplaceSubscriptionProperties(marketplacePlan, marketplaceSubscriptionStatus, modelId, provisioningState, additionalBinaryDataProperties)
+            {
+                _marketplacePlanIsDefined = marketplacePlanIsDefined
+            };
         }
     }
 }

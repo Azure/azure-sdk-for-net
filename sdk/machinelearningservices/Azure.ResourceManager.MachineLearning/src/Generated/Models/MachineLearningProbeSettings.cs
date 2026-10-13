@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private TimeSpan? _initialDelay;
+        internal bool _initialDelayIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningProbeSettings"/>. </summary>
         public MachineLearningProbeSettings()
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal MachineLearningProbeSettings(int? failureThreshold, TimeSpan? initialDelay, TimeSpan? period, int? successThreshold, TimeSpan? timeout, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FailureThreshold = failureThreshold;
-            InitialDelay = initialDelay;
+            _initialDelay = initialDelay;
             Period = period;
             SuccessThreshold = successThreshold;
             Timeout = timeout;
@@ -45,7 +47,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The delay before the first probe in ISO 8601 format. </summary>
         [WirePath("initialDelay")]
-        public TimeSpan? InitialDelay { get; set; }
+        public TimeSpan? InitialDelay
+        {
+            get
+            {
+                return _initialDelay;
+            }
+            set
+            {
+                _initialDelay = value;
+                _initialDelayIsDefined = true;
+            }
+        }
 
         /// <summary> The length of time between probes in ISO 8601 format. </summary>
         [WirePath("period")]

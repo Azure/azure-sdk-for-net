@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedDatabaseQueriesGetQueryStatisticsAsyncCollectionResultOfT(
+            return new QueryStatisticsAsyncCollectionResultOfT(
                 _managedDatabaseQueriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedDatabaseQueriesGetQueryStatisticsCollectionResultOfT(
+            return new QueryStatisticsCollectionResultOfT(
                 _managedDatabaseQueriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

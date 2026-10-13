@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The SasCredentialDto. </summary>
     public partial class SasCredentialDto : PendingUploadCredentialDto
     {
+        private Uri _sasUri;
+        internal bool _sasUriIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="SasCredentialDto"/>. </summary>
         internal SasCredentialDto() : base(PendingUploadCredentialType.SAS)
         {
@@ -25,11 +28,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="sasUri"> Full SAS Uri, including the storage, container/blob path and SAS token. </param>
         internal SasCredentialDto(PendingUploadCredentialType credentialType, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri sasUri) : base(credentialType, additionalBinaryDataProperties)
         {
-            SasUri = sasUri;
+            _sasUri = sasUri;
         }
 
         /// <summary> Full SAS Uri, including the storage, container/blob path and SAS token. </summary>
         [WirePath("sasUri")]
-        public Uri SasUri { get; }
+        public Uri SasUri
+        {
+            get
+            {
+                return _sasUri;
+            }
+        }
     }
 }

@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataCollectionEndpointData, DataCollectionEndpointResource>(new DataCollectionEndpointsGetBySubscriptionAsyncCollectionResultOfT(DataCollectionEndpointsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetDataCollectionEndpoints"), data => new DataCollectionEndpointResource(Client, data));
+            return new AsyncPageableWrapper<DataCollectionEndpointData, DataCollectionEndpointResource>(new DataCollectionEndpointDataAsync0CollectionResultOfT(DataCollectionEndpointsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetDataCollectionEndpoints"), data => new DataCollectionEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataCollectionEndpointData, DataCollectionEndpointResource>(new DataCollectionEndpointsGetBySubscriptionCollectionResultOfT(DataCollectionEndpointsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetDataCollectionEndpoints"), data => new DataCollectionEndpointResource(Client, data));
+            return new PageableWrapper<DataCollectionEndpointData, DataCollectionEndpointResource>(new DataCollectionEndpointData0CollectionResultOfT(DataCollectionEndpointsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetDataCollectionEndpoints"), data => new DataCollectionEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataCollectionRuleData, DataCollectionRuleResource>(new DataCollectionRulesGetBySubscriptionAsyncCollectionResultOfT(DataCollectionRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetDataCollectionRules"), data => new DataCollectionRuleResource(Client, data));
+            return new AsyncPageableWrapper<DataCollectionRuleData, DataCollectionRuleResource>(new DataCollectionRuleDataAsync0CollectionResultOfT(DataCollectionRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetDataCollectionRules"), data => new DataCollectionRuleResource(Client, data));
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataCollectionRuleData, DataCollectionRuleResource>(new DataCollectionRulesGetBySubscriptionCollectionResultOfT(DataCollectionRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetDataCollectionRules"), data => new DataCollectionRuleResource(Client, data));
+            return new PageableWrapper<DataCollectionRuleData, DataCollectionRuleResource>(new DataCollectionRuleData0CollectionResultOfT(DataCollectionRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetDataCollectionRules"), data => new DataCollectionRuleResource(Client, data));
         }
 
         /// <summary>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MonitorPrivateLinkScopeData, MonitorPrivateLinkScopeResource>(new PrivateLinkScopesGetAllAsyncCollectionResultOfT(PrivateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetMonitorPrivateLinkScopes"), data => new MonitorPrivateLinkScopeResource(Client, data));
+            return new AsyncPageableWrapper<MonitorPrivateLinkScopeData, MonitorPrivateLinkScopeResource>(new MonitorPrivateLinkScopeDataAsync0CollectionResultOfT(PrivateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetMonitorPrivateLinkScopes"), data => new MonitorPrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MonitorPrivateLinkScopeData, MonitorPrivateLinkScopeResource>(new PrivateLinkScopesGetAllCollectionResultOfT(PrivateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetMonitorPrivateLinkScopes"), data => new MonitorPrivateLinkScopeResource(Client, data));
+            return new PageableWrapper<MonitorPrivateLinkScopeData, MonitorPrivateLinkScopeResource>(new MonitorPrivateLinkScopeData0CollectionResultOfT(PrivateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetMonitorPrivateLinkScopes"), data => new MonitorPrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutoscaleSettingData, AutoscaleSettingResource>(new AutoscaleSettingsGetBySubscriptionAsyncCollectionResultOfT(AutoscaleSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetAutoscaleSettings"), data => new AutoscaleSettingResource(Client, data));
+            return new AsyncPageableWrapper<AutoscaleSettingData, AutoscaleSettingResource>(new AutoscaleSettingDataAsync0CollectionResultOfT(AutoscaleSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetAutoscaleSettings"), data => new AutoscaleSettingResource(Client, data));
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutoscaleSettingData, AutoscaleSettingResource>(new AutoscaleSettingsGetBySubscriptionCollectionResultOfT(AutoscaleSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetAutoscaleSettings"), data => new AutoscaleSettingResource(Client, data));
+            return new PageableWrapper<AutoscaleSettingData, AutoscaleSettingResource>(new AutoscaleSettingData0CollectionResultOfT(AutoscaleSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetAutoscaleSettings"), data => new AutoscaleSettingResource(Client, data));
         }
 
         /// <summary>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertsGetBySubscriptionIdAsyncCollectionResultOfT(ActivityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetActivityLogAlerts"), data => new ActivityLogAlertResource(Client, data));
+            return new AsyncPageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertDataAsync0CollectionResultOfT(ActivityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetActivityLogAlerts"), data => new ActivityLogAlertResource(Client, data));
         }
 
         /// <summary>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertsGetBySubscriptionIdCollectionResultOfT(ActivityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetActivityLogAlerts"), data => new ActivityLogAlertResource(Client, data));
+            return new PageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertData0CollectionResultOfT(ActivityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetActivityLogAlerts"), data => new ActivityLogAlertResource(Client, data));
         }
 
         /// <summary>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MetricAlertData, MetricAlertResource>(new MetricAlertsGetBySubscriptionAsyncCollectionResultOfT(MetricAlertsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetMetricAlerts"), data => new MetricAlertResource(Client, data));
+            return new AsyncPageableWrapper<MetricAlertData, MetricAlertResource>(new MetricAlertDataAsync0CollectionResultOfT(MetricAlertsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetMetricAlerts"), data => new MetricAlertResource(Client, data));
         }
 
         /// <summary>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MetricAlertData, MetricAlertResource>(new MetricAlertsGetBySubscriptionCollectionResultOfT(MetricAlertsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetMetricAlerts"), data => new MetricAlertResource(Client, data));
+            return new PageableWrapper<MetricAlertData, MetricAlertResource>(new MetricAlertData0CollectionResultOfT(MetricAlertsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetMetricAlerts"), data => new MetricAlertResource(Client, data));
         }
 
         /// <summary>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRulesGetBySubscriptionAsyncCollectionResultOfT(ScheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetScheduledQueryRules"), data => new ScheduledQueryRuleResource(Client, data));
+            return new AsyncPageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRuleDataAsync0CollectionResultOfT(ScheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetScheduledQueryRules"), data => new ScheduledQueryRuleResource(Client, data));
         }
 
         /// <summary>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRulesGetBySubscriptionCollectionResultOfT(ScheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetScheduledQueryRules"), data => new ScheduledQueryRuleResource(Client, data));
+            return new PageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRuleData0CollectionResultOfT(ScheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetScheduledQueryRules"), data => new ScheduledQueryRuleResource(Client, data));
         }
 
         /// <summary>
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ActionGroupData, ActionGroupResource>(new ActionGroupsGetBySubscriptionIdAsyncCollectionResultOfT(ActionGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetActionGroups"), data => new ActionGroupResource(Client, data));
+            return new AsyncPageableWrapper<ActionGroupData, ActionGroupResource>(new ActionGroupDataAsync0CollectionResultOfT(ActionGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetActionGroups"), data => new ActionGroupResource(Client, data));
         }
 
         /// <summary>
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ActionGroupData, ActionGroupResource>(new ActionGroupsGetBySubscriptionIdCollectionResultOfT(ActionGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetActionGroups"), data => new ActionGroupResource(Client, data));
+            return new PageableWrapper<ActionGroupData, ActionGroupResource>(new ActionGroupData0CollectionResultOfT(ActionGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetActionGroups"), data => new ActionGroupResource(Client, data));
         }
 
         /// <summary>
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ActivityLogsGetActivityLogsAsyncCollectionResultOfT(
+            return new EventDataInfoAsyncCollectionResultOfT(
                 ActivityLogsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ActivityLogsGetActivityLogsCollectionResultOfT(
+            return new EventDataInfoCollectionResultOfT(
                 ActivityLogsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricDefinitionsGetSubscriptionMonitorMetricDefinitionsAsyncCollectionResultOfT(
+            return new MonitorSubscriptionScopeMetricAsyncCollectionResultOfT(
                 MetricDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 region,
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricDefinitionsGetSubscriptionMonitorMetricDefinitionsCollectionResultOfT(
+            return new MonitorSubscriptionScopeMetricCollectionResultOfT(
                 MetricDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 region,

@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new DataMaskingRulesGetDataMaskingRulesAsyncCollectionResultOfT(
+            return new DataMaskingRuleAsyncCollectionResultOfT(
                 _dataMaskingRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new DataMaskingRulesGetDataMaskingRulesCollectionResultOfT(
+            return new DataMaskingRuleCollectionResultOfT(
                 _dataMaskingRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

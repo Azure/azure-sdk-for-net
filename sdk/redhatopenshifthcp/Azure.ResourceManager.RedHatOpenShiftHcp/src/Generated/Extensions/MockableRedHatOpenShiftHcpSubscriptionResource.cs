@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HcpOpenShiftClusterData, HcpOpenShiftClusterResource>(new HcpOpenShiftClustersGetBySubscriptionAsyncCollectionResultOfT(HcpOpenShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRedHatOpenShiftHcpSubscriptionResource.GetHcpOpenShiftClusters"), data => new HcpOpenShiftClusterResource(Client, data));
+            return new AsyncPageableWrapper<HcpOpenShiftClusterData, HcpOpenShiftClusterResource>(new HcpOpenShiftClusterDataAsync0CollectionResultOfT(HcpOpenShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRedHatOpenShiftHcpSubscriptionResource.GetHcpOpenShiftClusters"), data => new HcpOpenShiftClusterResource(Client, data));
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HcpOpenShiftClusterData, HcpOpenShiftClusterResource>(new HcpOpenShiftClustersGetBySubscriptionCollectionResultOfT(HcpOpenShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRedHatOpenShiftHcpSubscriptionResource.GetHcpOpenShiftClusters"), data => new HcpOpenShiftClusterResource(Client, data));
+            return new PageableWrapper<HcpOpenShiftClusterData, HcpOpenShiftClusterResource>(new HcpOpenShiftClusterData0CollectionResultOfT(HcpOpenShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRedHatOpenShiftHcpSubscriptionResource.GetHcpOpenShiftClusters"), data => new HcpOpenShiftClusterResource(Client, data));
         }
     }
 }

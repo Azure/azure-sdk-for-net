@@ -16,6 +16,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _endTime;
+        private bool _endTimeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="IndexerExecutionResult"/>. </summary>
         internal IndexerExecutionResult()
@@ -41,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Status = status;
             ErrorMessage = errorMessage;
             StartTime = startTime;
-            EndTime = endTime;
+            _endTime = endTime;
             Errors = errors;
             Warnings = warnings;
             ItemCount = itemCount;
@@ -61,7 +63,13 @@ namespace Azure.Search.Documents.Indexes.Models
         public DateTimeOffset? StartTime { get; }
 
         /// <summary> The end time of this indexer execution, if the execution has already completed. </summary>
-        public DateTimeOffset? EndTime { get; }
+        public DateTimeOffset? EndTime
+        {
+            get
+            {
+                return _endTime;
+            }
+        }
 
         /// <summary> The item-level indexing errors. </summary>
         public IReadOnlyList<SearchIndexerError> Errors { get; }

@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _modelId;
+        internal bool _modelIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ModelSettings"/>. </summary>
         public ModelSettings()
@@ -27,12 +29,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ModelSettings(string modelId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ModelId = modelId;
+            _modelId = modelId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique model identifier that this ServerlessEndpoint should provision. </summary>
         [WirePath("modelId")]
-        public string ModelId { get; set; }
+        public string ModelId
+        {
+            get
+            {
+                return _modelId;
+            }
+            set
+            {
+                _modelId = value;
+                _modelIdIsDefined = true;
+            }
+        }
     }
 }

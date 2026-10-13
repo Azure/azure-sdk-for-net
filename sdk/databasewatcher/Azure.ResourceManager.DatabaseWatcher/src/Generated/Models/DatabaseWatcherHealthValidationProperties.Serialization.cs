@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 startsOn,
                 endsOn,
                 status,
-                issues,
+                issues ?? new ChangeTrackingList<DatabaseWatcherHealthValidationIssue>(),
                 provisioningState,
                 additionalBinaryDataProperties);
         }

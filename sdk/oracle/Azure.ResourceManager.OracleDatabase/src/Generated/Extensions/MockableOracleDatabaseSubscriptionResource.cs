@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         private AutonomousDatabases _autonomousDatabasesRestClient;
         private ClientDiagnostics _exadbVmClustersClientDiagnostics;
         private ExadbVmClusters _exadbVmClustersRestClient;
-        private ClientDiagnostics _exascaleDbStorageVaultsClientDiagnostics;
-        private ExascaleDbStorageVaults _exascaleDbStorageVaultsRestClient;
+        private ClientDiagnostics _exascaleDBStorageVaultsClientDiagnostics;
+        private ExascaleDBStorageVaults _exascaleDBStorageVaultsRestClient;
         private ClientDiagnostics _networkAnchorsClientDiagnostics;
         private NetworkAnchors _networkAnchorsRestClient;
         private ClientDiagnostics _resourceAnchorsClientDiagnostics;
         private ResourceAnchors _resourceAnchorsRestClient;
         private ClientDiagnostics _dbSystemsClientDiagnostics;
-        private DbSystems _dbSystemsRestClient;
+        private DBSystems _dbSystemsRestClient;
 
         /// <summary> Initializes a new instance of MockableOracleDatabaseSubscriptionResource for mocking. </summary>
         protected MockableOracleDatabaseSubscriptionResource()
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
 
         private ExadbVmClusters ExadbVmClustersRestClient => _exadbVmClustersRestClient ??= new ExadbVmClusters(ExadbVmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
-        private ClientDiagnostics ExascaleDbStorageVaultsClientDiagnostics => _exascaleDbStorageVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ExascaleDBStorageVaultsClientDiagnostics => _exascaleDBStorageVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExascaleDbStorageVaults ExascaleDbStorageVaultsRestClient => _exascaleDbStorageVaultsRestClient ??= new ExascaleDbStorageVaults(ExascaleDbStorageVaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ExascaleDBStorageVaults ExascaleDBStorageVaultsRestClient => _exascaleDBStorageVaultsRestClient ??= new ExascaleDBStorageVaults(ExascaleDBStorageVaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics NetworkAnchorsClientDiagnostics => _networkAnchorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
 
         private ResourceAnchors ResourceAnchorsRestClient => _resourceAnchorsRestClient ??= new ResourceAnchors(ResourceAnchorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
-        private ClientDiagnostics DbSystemsClientDiagnostics => _dbSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DBSystemsClientDiagnostics => _dbSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DbSystems DbSystemsRestClient => _dbSystemsRestClient ??= new DbSystems(DbSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private DBSystems DBSystemsRestClient => _dbSystemsRestClient ??= new DBSystems(DBSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         /// <summary> Gets a collection of OracleSystemVersions in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudExadataInfrastructureData, CloudExadataInfrastructureResource>(new CloudExadataInfrastructuresGetBySubscriptionAsyncCollectionResultOfT(CloudExadataInfrastructuresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetCloudExadataInfrastructures"), data => new CloudExadataInfrastructureResource(Client, data));
+            return new AsyncPageableWrapper<CloudExadataInfrastructureData, CloudExadataInfrastructureResource>(new CloudExadataInfrastructureDataAsyncCollectionResultOfT(CloudExadataInfrastructuresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetCloudExadataInfrastructures"), data => new CloudExadataInfrastructureResource(Client, data));
         }
 
         /// <summary>
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudExadataInfrastructureData, CloudExadataInfrastructureResource>(new CloudExadataInfrastructuresGetBySubscriptionCollectionResultOfT(CloudExadataInfrastructuresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetCloudExadataInfrastructures"), data => new CloudExadataInfrastructureResource(Client, data));
+            return new PageableWrapper<CloudExadataInfrastructureData, CloudExadataInfrastructureResource>(new CloudExadataInfrastructureDataCollectionResultOfT(CloudExadataInfrastructuresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetCloudExadataInfrastructures"), data => new CloudExadataInfrastructureResource(Client, data));
         }
 
         /// <summary>
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudVmClusterData, CloudVmClusterResource>(new CloudVmClustersGetBySubscriptionAsyncCollectionResultOfT(CloudVmClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetCloudVmClusters"), data => new CloudVmClusterResource(Client, data));
+            return new AsyncPageableWrapper<CloudVmClusterData, CloudVmClusterResource>(new CloudVmClusterDataAsyncCollectionResultOfT(CloudVmClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetCloudVmClusters"), data => new CloudVmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudVmClusterData, CloudVmClusterResource>(new CloudVmClustersGetBySubscriptionCollectionResultOfT(CloudVmClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetCloudVmClusters"), data => new CloudVmClusterResource(Client, data));
+            return new PageableWrapper<CloudVmClusterData, CloudVmClusterResource>(new CloudVmClusterDataCollectionResultOfT(CloudVmClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetCloudVmClusters"), data => new CloudVmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutonomousDatabaseData, AutonomousDatabaseResource>(new AutonomousDatabasesGetBySubscriptionAsyncCollectionResultOfT(AutonomousDatabasesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetAutonomousDatabases"), data => new AutonomousDatabaseResource(Client, data));
+            return new AsyncPageableWrapper<AutonomousDatabaseData, AutonomousDatabaseResource>(new AutonomousDatabaseDataAsyncCollectionResultOfT(AutonomousDatabasesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetAutonomousDatabases"), data => new AutonomousDatabaseResource(Client, data));
         }
 
         /// <summary>
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutonomousDatabaseData, AutonomousDatabaseResource>(new AutonomousDatabasesGetBySubscriptionCollectionResultOfT(AutonomousDatabasesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetAutonomousDatabases"), data => new AutonomousDatabaseResource(Client, data));
+            return new PageableWrapper<AutonomousDatabaseData, AutonomousDatabaseResource>(new AutonomousDatabaseDataCollectionResultOfT(AutonomousDatabasesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetAutonomousDatabases"), data => new AutonomousDatabaseResource(Client, data));
         }
 
         /// <summary>
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetBySubscriptionAsyncCollectionResultOfT(ExadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetExadbVmClusters"), data => new ExadbVmClusterResource(Client, data));
+            return new AsyncPageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClusterDataAsyncCollectionResultOfT(ExadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetExadbVmClusters"), data => new ExadbVmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetBySubscriptionCollectionResultOfT(ExadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetExadbVmClusters"), data => new ExadbVmClusterResource(Client, data));
+            return new PageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClusterDataCollectionResultOfT(ExadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetExadbVmClusters"), data => new ExadbVmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDbStorageVaultsGetBySubscriptionAsyncCollectionResultOfT(ExascaleDbStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetExascaleDBStorageVaults"), data => new ExascaleDBStorageVaultResource(Client, data));
+            return new AsyncPageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDBStorageVaultDataAsync0CollectionResultOfT(ExascaleDBStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetExascaleDBStorageVaults"), data => new ExascaleDBStorageVaultResource(Client, data));
         }
 
         /// <summary>
@@ -1065,7 +1065,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDbStorageVaultsGetBySubscriptionCollectionResultOfT(ExascaleDbStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetExascaleDBStorageVaults"), data => new ExascaleDBStorageVaultResource(Client, data));
+            return new PageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDBStorageVaultData0CollectionResultOfT(ExascaleDBStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetExascaleDBStorageVaults"), data => new ExascaleDBStorageVaultResource(Client, data));
         }
 
         /// <summary>
@@ -1093,7 +1093,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleNetworkAnchorData, OracleNetworkAnchorResource>(new NetworkAnchorsGetBySubscriptionAsyncCollectionResultOfT(NetworkAnchorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetOracleNetworkAnchors"), data => new OracleNetworkAnchorResource(Client, data));
+            return new AsyncPageableWrapper<OracleNetworkAnchorData, OracleNetworkAnchorResource>(new OracleNetworkAnchorDataAsyncCollectionResultOfT(NetworkAnchorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetOracleNetworkAnchors"), data => new OracleNetworkAnchorResource(Client, data));
         }
 
         /// <summary>
@@ -1121,7 +1121,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleNetworkAnchorData, OracleNetworkAnchorResource>(new NetworkAnchorsGetBySubscriptionCollectionResultOfT(NetworkAnchorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetOracleNetworkAnchors"), data => new OracleNetworkAnchorResource(Client, data));
+            return new PageableWrapper<OracleNetworkAnchorData, OracleNetworkAnchorResource>(new OracleNetworkAnchorDataCollectionResultOfT(NetworkAnchorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetOracleNetworkAnchors"), data => new OracleNetworkAnchorResource(Client, data));
         }
 
         /// <summary>
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleResourceAnchorData, OracleResourceAnchorResource>(new ResourceAnchorsGetBySubscriptionAsyncCollectionResultOfT(ResourceAnchorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetOracleResourceAnchors"), data => new OracleResourceAnchorResource(Client, data));
+            return new AsyncPageableWrapper<OracleResourceAnchorData, OracleResourceAnchorResource>(new OracleResourceAnchorDataAsyncCollectionResultOfT(ResourceAnchorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetOracleResourceAnchors"), data => new OracleResourceAnchorResource(Client, data));
         }
 
         /// <summary>
@@ -1177,7 +1177,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleResourceAnchorData, OracleResourceAnchorResource>(new ResourceAnchorsGetBySubscriptionCollectionResultOfT(ResourceAnchorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetOracleResourceAnchors"), data => new OracleResourceAnchorResource(Client, data));
+            return new PageableWrapper<OracleResourceAnchorData, OracleResourceAnchorResource>(new OracleResourceAnchorDataCollectionResultOfT(ResourceAnchorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetOracleResourceAnchors"), data => new OracleResourceAnchorResource(Client, data));
         }
 
         /// <summary>
@@ -1205,7 +1205,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new DbSystemsGetBySubscriptionAsyncCollectionResultOfT(DbSystemsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetOracleDBSystems"), data => new OracleDBSystemResource(Client, data));
+            return new AsyncPageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new OracleDBSystemDataAsyncCollectionResultOfT(DBSystemsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetOracleDBSystems"), data => new OracleDBSystemResource(Client, data));
         }
 
         /// <summary>
@@ -1233,7 +1233,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new DbSystemsGetBySubscriptionCollectionResultOfT(DbSystemsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetOracleDBSystems"), data => new OracleDBSystemResource(Client, data));
+            return new PageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new OracleDBSystemDataCollectionResultOfT(DBSystemsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetOracleDBSystems"), data => new OracleDBSystemResource(Client, data));
         }
     }
 }

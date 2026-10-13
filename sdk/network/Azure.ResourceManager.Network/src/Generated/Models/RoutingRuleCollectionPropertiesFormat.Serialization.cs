@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Network.Models
                 description,
                 provisioningState,
                 resourceGuid,
-                appliesTo,
+                appliesTo ?? new ChangeTrackingList<NetworkManagerRoutingGroupItem>(),
                 disableBgpRoutePropagation,
                 additionalBinaryDataProperties);
         }

@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _clientId;
+        internal bool _clientIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ManagedIdentityPatchDefinition"/>. </summary>
         public ManagedIdentityPatchDefinition()
@@ -26,11 +28,22 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ManagedIdentityPatchDefinition(string clientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ClientId = clientId;
+            _clientId = clientId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The client Id for authenticating a Managed Identity. </summary>
-        public string ClientId { get; set; }
+        public string ClientId
+        {
+            get
+            {
+                return _clientId;
+            }
+            set
+            {
+                _clientId = value;
+                _clientIdIsDefined = true;
+            }
+        }
     }
 }

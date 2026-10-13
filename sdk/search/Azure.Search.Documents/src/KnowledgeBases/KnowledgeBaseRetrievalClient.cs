@@ -8,6 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -36,13 +37,6 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </summary>
         public virtual string KnowledgeBaseName => _knowledgeBaseName;
 
-        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient from a <see cref="KnowledgeBaseRetrievalClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for KnowledgeBaseRetrievalClient. </param>
-        [Experimental("SCME0002")]
-        public KnowledgeBaseRetrievalClient(KnowledgeBaseRetrievalClientSettings settings) : this(settings?.Endpoint, settings?.KnowledgeBaseName, settings?.CredentialProvider as TokenCredential, settings?.Options)
-        {
-        }
-
         /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
@@ -68,26 +62,6 @@ namespace Azure.Search.Documents.KnowledgeBases
             _apiVersion = options.Version.ToVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
-
-        /// <summary>
-        /// KnowledgeBase retrieves relevant data from backing stores.
-        /// </summary>
-        /// <param name="content">The content to send as the body of the request.</param>
-        /// <param name="context">The request context.</param>
-        /// <returns>The response returned from the service.</returns>
-        [ForwardsClientCalls]
-        public virtual Response Retrieve(RequestContent content, RequestContext context) =>
-            Retrieve(content, querySourceAuthorization: null, context: context);
-
-        /// <summary>
-        /// KnowledgeBase retrieves relevant data from backing stores.
-        /// </summary>
-        /// <param name="content">The content to send as the body of the request.</param>
-        /// <param name="context">The request context.</param>
-        /// <returns>The response returned from the service.</returns>
-        [ForwardsClientCalls]
-        public virtual Task<Response> RetrieveAsync(RequestContent content, RequestContext context) =>
-            RetrieveAsync(content, querySourceAuthorization: null, context: context);
 
         /// <summary>
         /// KnowledgeBase retrieves relevant data from backing stores, streaming progress and results as
@@ -129,14 +103,14 @@ namespace Azure.Search.Documents.KnowledgeBases
                         yield break;
                     }
 
-                    KnowledgeBaseRetrievalStreamEvent value = KnowledgeBaseRetrievalStreamEvent.Deserialize(item.EventType, item.Data);
+                    KnowledgeBaseRetrievalStreamEvent value = DeserializeStreamEvent(item.EventType, item.Data);
                     yield return new SseItem<KnowledgeBaseRetrievalStreamEvent>(value, item.EventType)
                     {
                         EventId = item.EventId,
                         ReconnectionInterval = item.ReconnectionInterval,
                     };
 
-                    if (value.IsTerminal)
+                    if (item.EventType is "response.completed" or "error")
                     {
                         yield break;
                     }
@@ -148,5 +122,53 @@ namespace Azure.Search.Documents.KnowledgeBases
 #pragma warning restore AZC0015
 #pragma warning restore AZC0004
 
+        private static KnowledgeBaseRetrievalStreamEvent DeserializeStreamEvent(string eventName, BinaryData data)
+        {
+            using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+            JsonElement element = document.RootElement;
+            var options = ModelSerializationExtensions.WireOptions;
+
+            // SSE data contains the payload itself, not the generated envelope's JSON "value" property.
+            return eventName switch
+            {
+                "retrieval.started" => new KnowledgeBaseRetrievalStartedStreamEvent(
+                    additionalBinaryDataProperties: null,
+                    value: KnowledgeBaseRetrievalStartedEvent.DeserializeKnowledgeBaseRetrievalStartedEvent(element, options)),
+                "activity.started" => new KnowledgeBaseActivityStartedStreamEvent(
+                    additionalBinaryDataProperties: null,
+                    value: KnowledgeBaseActivityStartedEvent.DeserializeKnowledgeBaseActivityStartedEvent(element, options)),
+                "activity.completed" => new KnowledgeBaseActivityCompletedStreamEvent(
+                    additionalBinaryDataProperties: null,
+                    value: KnowledgeBaseActivityRecord.DeserializeKnowledgeBaseActivityRecord(element, options)),
+                "answer.completed" => new KnowledgeBaseAnswerCompletedStreamEvent(
+                    additionalBinaryDataProperties: null,
+                    value: KnowledgeBaseAnswerCompletedEvent.DeserializeKnowledgeBaseAnswerCompletedEvent(element, options)),
+                "references.completed" => new KnowledgeBaseReferencesCompletedStreamEvent(
+                    additionalBinaryDataProperties: null,
+                    value: DeserializeStreamReferences(element)),
+                "error" => new KnowledgeBaseErrorStreamEvent(
+                    additionalBinaryDataProperties: null,
+                    value: KnowledgeBaseStreamErrorEvent.DeserializeKnowledgeBaseStreamErrorEvent(element, options)),
+                "response.completed" => new KnowledgeBaseResponseCompletedStreamEvent(
+                    additionalBinaryDataProperties: null,
+                    value: KnowledgeBaseResponseCompletedEvent.DeserializeKnowledgeBaseResponseCompletedEvent(element, options)),
+                _ => new UnknownKnowledgeBaseRetrievalStreamEvent(eventName, data),
+            };
+        }
+
+        private static List<KnowledgeBaseReference> DeserializeStreamReferences(JsonElement element)
+        {
+            if (element.ValueKind != JsonValueKind.Array)
+            {
+                throw new JsonException("The references.completed event payload must be a JSON array.");
+            }
+
+            List<KnowledgeBaseReference> references = new();
+            foreach (JsonElement item in element.EnumerateArray())
+            {
+                references.Add(KnowledgeBaseReference.DeserializeKnowledgeBaseReference(item, ModelSerializationExtensions.WireOptions));
+            }
+            return references;
+        }
     }
 }

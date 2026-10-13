@@ -9,15 +9,7 @@ using System.ClientModel.Primitives;
 
 namespace Azure.Communication.Identity
 {
-    [ModelReaderWriterBuildable(typeof(CommunicationIdentity))]
-    [ModelReaderWriterBuildable(typeof(CommunicationIdentityAccessToken))]
-    [ModelReaderWriterBuildable(typeof(CommunicationIdentityAccessTokenRequest))]
-    [ModelReaderWriterBuildable(typeof(CommunicationIdentityCreateRequest))]
     [ModelReaderWriterBuildable(typeof(CommunicationUserIdentifierAndToken))]
-    [ModelReaderWriterBuildable(typeof(TeamsExtensionAssignmentCreateOrUpdateRequest))]
-    [ModelReaderWriterBuildable(typeof(TeamsExtensionAssignmentResponse))]
-    [ModelReaderWriterBuildable(typeof(TeamsExtensionExchangeTokenRequest))]
-    [ModelReaderWriterBuildable(typeof(TeamsUserExchangeTokenRequest))]
     internal partial class AzureCommunicationIdentityContext : ModelReaderWriterContext
     {
     }

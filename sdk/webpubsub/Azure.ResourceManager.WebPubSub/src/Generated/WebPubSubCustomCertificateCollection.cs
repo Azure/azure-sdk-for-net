@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebPubSubCustomCertificateData, WebPubSubCustomCertificateResource>(new CustomCertificatesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebPubSubCustomCertificateData, WebPubSubCustomCertificateResource>(new WebPubSubCustomCertificateDataAsyncCollectionResultOfT(
                 _customCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebPubSubCustomCertificateData, WebPubSubCustomCertificateResource>(new CustomCertificatesGetAllCollectionResultOfT(
+            return new PageableWrapper<WebPubSubCustomCertificateData, WebPubSubCustomCertificateResource>(new WebPubSubCustomCertificateDataCollectionResultOfT(
                 _customCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

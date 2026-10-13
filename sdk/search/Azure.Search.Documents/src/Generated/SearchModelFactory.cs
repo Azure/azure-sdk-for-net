@@ -4455,6 +4455,14 @@ namespace Azure.Search.Documents.Models
                 citationUrl);
         }
 
+        /// <summary> Emitted after retrieval preflight validation completes. </summary>
+        /// <param name="value"> The retrieval-started payload. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseRetrievalStartedStreamEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseRetrievalStartedStreamEvent KnowledgeBaseRetrievalStartedStreamEvent(KnowledgeBaseRetrievalStartedEvent value = default)
+        {
+            return new KnowledgeBaseRetrievalStartedStreamEvent(additionalBinaryDataProperties: null, value);
+        }
+
         /// <summary> Emitted once retrieval preflight validation completes, before any activity begins. </summary>
         /// <param name="requestId"> A service-generated identifier that correlates all events in this retrieval stream. </param>
         /// <param name="knowledgeBaseName"> The name of the knowledge base being queried. </param>
@@ -4464,6 +4472,21 @@ namespace Azure.Search.Documents.Models
         public static KnowledgeBaseRetrievalStartedEvent KnowledgeBaseRetrievalStartedEvent(string requestId = default, string knowledgeBaseName = default, KnowledgeRetrievalOutputMode outputMode = default, KnowledgeRetrievalReasoningEffort reasoningEffort = default)
         {
             return new KnowledgeBaseRetrievalStartedEvent(requestId, knowledgeBaseName, outputMode, reasoningEffort, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Common base for events emitted by a streaming knowledge base retrieval. </summary>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseRetrievalStreamEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseRetrievalStreamEvent KnowledgeBaseRetrievalStreamEvent()
+        {
+            return new KnowledgeBaseRetrievalStreamEvent(additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Emitted when an individual retrieval activity starts. </summary>
+        /// <param name="value"> The activity-started payload. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseActivityStartedStreamEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseActivityStartedStreamEvent KnowledgeBaseActivityStartedStreamEvent(KnowledgeBaseActivityStartedEvent value = default)
+        {
+            return new KnowledgeBaseActivityStartedStreamEvent(additionalBinaryDataProperties: null, value);
         }
 
         /// <summary> Emitted immediately before an individual retrieval activity begins executing. </summary>
@@ -4477,6 +4500,22 @@ namespace Azure.Search.Documents.Models
             return new KnowledgeBaseActivityStartedEvent(id, @type, startedOn, knowledgeSourceName, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Emitted when an individual retrieval activity completes. </summary>
+        /// <param name="value"> The completed activity record. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseActivityCompletedStreamEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseActivityCompletedStreamEvent KnowledgeBaseActivityCompletedStreamEvent(KnowledgeBaseActivityRecord value = default)
+        {
+            return new KnowledgeBaseActivityCompletedStreamEvent(additionalBinaryDataProperties: null, value);
+        }
+
+        /// <summary> Emitted when an answer message is complete. </summary>
+        /// <param name="value"> The completed answer payload. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAnswerCompletedStreamEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseAnswerCompletedStreamEvent KnowledgeBaseAnswerCompletedStreamEvent(KnowledgeBaseAnswerCompletedEvent value = default)
+        {
+            return new KnowledgeBaseAnswerCompletedStreamEvent(additionalBinaryDataProperties: null, value);
+        }
+
         /// <summary> Emitted when a fully validated and post-processed synthesized answer is available. </summary>
         /// <param name="messageIndex"> The zero-based index of the completed message in the final response array. </param>
         /// <param name="message"> The completed answer message. </param>
@@ -4484,6 +4523,24 @@ namespace Azure.Search.Documents.Models
         public static KnowledgeBaseAnswerCompletedEvent KnowledgeBaseAnswerCompletedEvent(int messageIndex = default, KnowledgeBaseMessage message = default)
         {
             return new KnowledgeBaseAnswerCompletedEvent(messageIndex, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Emitted when the references used by the response are available. </summary>
+        /// <param name="value"> The references used to produce the response. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseReferencesCompletedStreamEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseReferencesCompletedStreamEvent KnowledgeBaseReferencesCompletedStreamEvent(IEnumerable<KnowledgeBaseReference> value = default)
+        {
+            value ??= new ChangeTrackingList<KnowledgeBaseReference>();
+
+            return new KnowledgeBaseReferencesCompletedStreamEvent(additionalBinaryDataProperties: null, value.ToList());
+        }
+
+        /// <summary> Emitted when retrieval fails after the stream starts. </summary>
+        /// <param name="value"> The retrieval error payload. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseErrorStreamEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseErrorStreamEvent KnowledgeBaseErrorStreamEvent(KnowledgeBaseStreamErrorEvent value = default)
+        {
+            return new KnowledgeBaseErrorStreamEvent(additionalBinaryDataProperties: null, value);
         }
 
         /// <summary> Emitted in place of `response.completed` if retrieval fails after the stream starts. </summary>
@@ -4495,6 +4552,14 @@ namespace Azure.Search.Documents.Models
             activity ??= new ChangeTrackingList<KnowledgeBaseActivityRecord>();
 
             return new KnowledgeBaseStreamErrorEvent(error, activity.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Emitted when retrieval completes successfully or with partial results. </summary>
+        /// <param name="value"> The authoritative completed retrieval payload. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseResponseCompletedStreamEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseResponseCompletedStreamEvent KnowledgeBaseResponseCompletedStreamEvent(KnowledgeBaseResponseCompletedEvent value = default)
+        {
+            return new KnowledgeBaseResponseCompletedStreamEvent(additionalBinaryDataProperties: null, value);
         }
 
         /// <summary> Emitted after retrieval completes successfully. </summary>

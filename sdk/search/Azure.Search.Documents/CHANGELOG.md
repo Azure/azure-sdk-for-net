@@ -8,6 +8,7 @@
 - Added `SearchOptions.MoreLikeThis` to search for documents similar to an existing document.
 - Added `KnowledgeSourceFileCapacity` and `KnowledgeSourceStatus.FileCapacity` for file upload capacity information.
 - Added `GetIndexersWithSelectedProperties`, `GetDataSourceConnectionsWithSelectedProperties`, `GetSkillsetsWithSelectedProperties`, and `GetSynonymMapsWithSelectedProperties`, with async counterparts, to expose pageable resource listings with property selection, prefix search, and page-size controls without changing the existing list-returning APIs.
+- Streaming knowledge base retrieval now uses generated event models with a common base type.
 
 ### Bugs Fixed
 
@@ -18,6 +19,8 @@
 > These changes are relative to the previous preview release, `12.1.0-beta.3`.
 
 - Removed support for the `2026-08-01-preview` service version and preview-only features that are not available in the `2026-10-01` GA API.
+- Streaming event models no longer expose `EventName` or `IsTerminal`. Use `SseItem<T>.EventType` to identify known events and terminal `response.completed` or `error` events. The unknown-event fallback retains its event name and raw payload.
+- `KnowledgeBaseReferencesCompletedStreamEvent.Value` now exposes `IList<KnowledgeBaseReference>` to follow the generated model's collection shape.
 
 ## 12.1.0-beta.3 (2026-09-14)
 

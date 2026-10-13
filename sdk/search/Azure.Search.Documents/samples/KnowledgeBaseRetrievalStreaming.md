@@ -18,6 +18,11 @@ Set `SEARCH_ENDPOINT`, `SEARCH_API_KEY`, and `KNOWLEDGE_BASE_NAME` before runnin
 
 The SDK handles SSE framing and comment heartbeats. Enumerate the stream once, correlate activity events by their activity IDs, and continue until the SDK delivers a terminal completion or error event. Pass a cancellation token to stop the request and close the connection.
 
+Known events use generated models whose `Value` property contains the original event payload.
+Use `SseItem<T>.EventType` for the event name and to identify terminal `response.completed` or `error`
+events. Unknown events retain their event name and raw JSON payload in
+`UnknownKnowledgeBaseRetrievalStreamEvent`.
+
 ```C# Snippet:Azure_Search_Tests_Samples_KnowledgeBaseRetrievalStreaming_Retrieve
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
 AzureKeyCredential credential = new AzureKeyCredential(
@@ -98,7 +103,7 @@ try
                 break;
         }
 
-        terminalEventReceived = item.Data.IsTerminal;
+        terminalEventReceived = item.EventType is "response.completed" or "error";
 
         // EventId and ReconnectionInterval contain optional SSE protocol metadata.
         if (!string.IsNullOrEmpty(item.EventId))

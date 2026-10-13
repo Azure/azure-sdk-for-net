@@ -287,7 +287,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyAssignmentData, PolicyVmAssignmentResource>(new PolicyVmAssignmentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PolicyAssignmentData, PolicyVmAssignmentResource>(new PolicyAssignmentDataAsyncCollectionResultOfT(
                 _policyVmAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyAssignmentData, PolicyVmAssignmentResource>(new PolicyVmAssignmentsGetAllCollectionResultOfT(
+            return new PageableWrapper<PolicyAssignmentData, PolicyVmAssignmentResource>(new PolicyAssignmentDataCollectionResultOfT(
                 _policyVmAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

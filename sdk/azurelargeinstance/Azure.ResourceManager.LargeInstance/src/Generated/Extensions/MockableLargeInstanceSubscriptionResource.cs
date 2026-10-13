@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LargeInstanceData, LargeInstanceResource>(new AzureLargeInstanceGetBySubscriptionAsyncCollectionResultOfT(AzureLargeInstanceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableLargeInstanceSubscriptionResource.GetLargeInstances"), data => new LargeInstanceResource(Client, data));
+            return new AsyncPageableWrapper<LargeInstanceData, LargeInstanceResource>(new LargeInstanceDataAsync0CollectionResultOfT(AzureLargeInstanceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableLargeInstanceSubscriptionResource.GetLargeInstances"), data => new LargeInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LargeInstanceData, LargeInstanceResource>(new AzureLargeInstanceGetBySubscriptionCollectionResultOfT(AzureLargeInstanceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableLargeInstanceSubscriptionResource.GetLargeInstances"), data => new LargeInstanceResource(Client, data));
+            return new PageableWrapper<LargeInstanceData, LargeInstanceResource>(new LargeInstanceData0CollectionResultOfT(AzureLargeInstanceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableLargeInstanceSubscriptionResource.GetLargeInstances"), data => new LargeInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LargeStorageInstanceData, LargeStorageInstanceResource>(new AzureLargeStorageInstanceGetBySubscriptionAsyncCollectionResultOfT(AzureLargeStorageInstanceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableLargeInstanceSubscriptionResource.GetLargeStorageInstances"), data => new LargeStorageInstanceResource(Client, data));
+            return new AsyncPageableWrapper<LargeStorageInstanceData, LargeStorageInstanceResource>(new LargeStorageInstanceDataAsync0CollectionResultOfT(AzureLargeStorageInstanceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableLargeInstanceSubscriptionResource.GetLargeStorageInstances"), data => new LargeStorageInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LargeStorageInstanceData, LargeStorageInstanceResource>(new AzureLargeStorageInstanceGetBySubscriptionCollectionResultOfT(AzureLargeStorageInstanceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableLargeInstanceSubscriptionResource.GetLargeStorageInstances"), data => new LargeStorageInstanceResource(Client, data));
+            return new PageableWrapper<LargeStorageInstanceData, LargeStorageInstanceResource>(new LargeStorageInstanceData0CollectionResultOfT(AzureLargeStorageInstanceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableLargeInstanceSubscriptionResource.GetLargeStorageInstances"), data => new LargeStorageInstanceResource(Client, data));
         }
     }
 }

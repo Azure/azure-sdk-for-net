@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Search
     [ModelReaderWriterBuildable(typeof(ListQueryKeysResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationListResult))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionPropertiesPrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesResult))]
     [ModelReaderWriterBuildable(typeof(QuotaUsageResult))]
     [ModelReaderWriterBuildable(typeof(QuotaUsageResultName))]
@@ -63,7 +62,6 @@ namespace Azure.ResourceManager.Search
     [ModelReaderWriterBuildable(typeof(SearchServicePatch))]
     [ModelReaderWriterBuildable(typeof(SearchServicePrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(SearchServicePrivateLinkServiceConnectionState))]
-    [ModelReaderWriterBuildable(typeof(SearchServiceProperties))]
     [ModelReaderWriterBuildable(typeof(SearchServiceQueryKey))]
     [ModelReaderWriterBuildable(typeof(SearchServiceResource))]
     [ModelReaderWriterBuildable(typeof(SearchSku))]
@@ -76,7 +74,6 @@ namespace Azure.ResourceManager.Search
     [ModelReaderWriterBuildable(typeof(SharedSearchServicePrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(SharedSearchServicePrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnknownSearchDataIdentity))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerSearchContext : ModelReaderWriterContext

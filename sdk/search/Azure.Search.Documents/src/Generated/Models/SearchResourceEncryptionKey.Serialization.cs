@@ -86,10 +86,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("accessCredentials"u8);
                 writer.WriteObjectValue(AccessCredentialsInternal, options);
             }
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity, _identityIsDefined))
             {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity, options);
+                }
+                else
+                {
+                    writer.WriteNull("identity"u8);
+                }
             }
             writer.WritePropertyName("keyVaultUri"u8);
             writer.WriteStringValue(_vaultUri);
@@ -138,6 +145,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string keyName = default;
             string keyVersion = default;
             AzureActiveDirectoryApplicationCredentials accessCredentialsInternal = default;
+            bool identityIsDefined = false;
             SearchIndexerDataIdentity identity = default;
             string vaultUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -164,6 +172,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("identity"u8))
                 {
+                    identityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         identity = null;
@@ -188,7 +197,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 accessCredentialsInternal,
                 identity,
                 vaultUri,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _identityIsDefined = identityIsDefined
+            };
         }
     }
 }

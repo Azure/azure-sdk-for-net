@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(NetworkCloudCloudServicesNetworkResource.ResourceType, out string networkCloudCloudServicesNetworkApiVersion);
             _cloudServicesNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudCloudServicesNetworkResource.ResourceType.Namespace, Diagnostics);
-            _cloudServicesNetworksRestClient = new CloudServicesNetworks(_cloudServicesNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudCloudServicesNetworkApiVersion ?? "2026-05-01-preview");
+            _cloudServicesNetworksRestClient = new CloudServicesNetworks(_cloudServicesNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudCloudServicesNetworkApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudCloudServicesNetworkData, NetworkCloudCloudServicesNetworkResource>(new CloudServicesNetworksGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudCloudServicesNetworkData, NetworkCloudCloudServicesNetworkResource>(new NetworkCloudCloudServicesNetworkDataAsyncCollectionResultOfT(
                 _cloudServicesNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudCloudServicesNetworkData, NetworkCloudCloudServicesNetworkResource>(new CloudServicesNetworksGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudCloudServicesNetworkData, NetworkCloudCloudServicesNetworkResource>(new NetworkCloudCloudServicesNetworkDataCollectionResultOfT(
                 _cloudServicesNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

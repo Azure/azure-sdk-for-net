@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network
     public partial class IPGroupCollection : ArmCollection, IEnumerable<IPGroupResource>, IAsyncEnumerable<IPGroupResource>
     {
         private readonly ClientDiagnostics _ipGroupsClientDiagnostics;
-        private readonly IpGroups _ipGroupsRestClient;
+        private readonly IPGroups _ipGroupsRestClient;
 
         /// <summary> Initializes a new instance of IPGroupCollection for mocking. </summary>
         protected IPGroupCollection()
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(IPGroupResource.ResourceType, out string ipGroupApiVersion);
             _ipGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", IPGroupResource.ResourceType.Namespace, Diagnostics);
-            _ipGroupsRestClient = new IpGroups(_ipGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ipGroupApiVersion ?? "2026-01-01");
+            _ipGroupsRestClient = new IPGroups(_ipGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ipGroupApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IPGroupData, IPGroupResource>(new IpGroupsGetByResourceGroupAsyncCollectionResultOfT(_ipGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IPGroupCollection.GetAll"), data => new IPGroupResource(Client, data));
+            return new AsyncPageableWrapper<IPGroupData, IPGroupResource>(new IPGroupDataAsyncCollectionResultOfT(_ipGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IPGroupCollection.GetAll"), data => new IPGroupResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IPGroupData, IPGroupResource>(new IpGroupsGetByResourceGroupCollectionResultOfT(_ipGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IPGroupCollection.GetAll"), data => new IPGroupResource(Client, data));
+            return new PageableWrapper<IPGroupData, IPGroupResource>(new IPGroupDataCollectionResultOfT(_ipGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IPGroupCollection.GetAll"), data => new IPGroupResource(Client, data));
         }
 
         /// <summary>

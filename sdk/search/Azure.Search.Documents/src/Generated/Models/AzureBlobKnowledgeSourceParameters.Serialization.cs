@@ -84,20 +84,34 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(ConnectionString);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (Optional.IsDefined(FolderPath))
+            if (Optional.IsDefined(FolderPath, _folderPathIsDefined))
             {
-                writer.WritePropertyName("folderPath"u8);
-                writer.WriteStringValue(FolderPath);
+                if (FolderPath != null)
+                {
+                    writer.WritePropertyName("folderPath"u8);
+                    writer.WriteStringValue(FolderPath);
+                }
+                else
+                {
+                    writer.WriteNull("folderPath"u8);
+                }
             }
             if (Optional.IsDefined(IsADLSGen2))
             {
                 writer.WritePropertyName("isADLSGen2"u8);
                 writer.WriteBooleanValue(IsADLSGen2.Value);
             }
-            if (Optional.IsDefined(IngestionParameters))
+            if (Optional.IsDefined(IngestionParameters, _ingestionParametersIsDefined))
             {
-                writer.WritePropertyName("ingestionParameters"u8);
-                writer.WriteObjectValue(IngestionParameters, options);
+                if (IngestionParameters != null)
+                {
+                    writer.WritePropertyName("ingestionParameters"u8);
+                    writer.WriteObjectValue(IngestionParameters, options);
+                }
+                else
+                {
+                    writer.WriteNull("ingestionParameters"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedResources))
             {
@@ -148,8 +162,10 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string connectionString = default;
             string containerName = default;
+            bool folderPathIsDefined = false;
             string folderPath = default;
             bool? isADLSGen2 = default;
+            bool ingestionParametersIsDefined = false;
             KnowledgeSourceIngestionParameters ingestionParameters = default;
             CreatedResources createdResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -167,6 +183,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("folderPath"u8))
                 {
+                    folderPathIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         folderPath = null;
@@ -186,6 +203,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("ingestionParameters"u8))
                 {
+                    ingestionParametersIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         ingestionParameters = null;
@@ -215,7 +233,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 isADLSGen2,
                 ingestionParameters,
                 createdResources,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _folderPathIsDefined = folderPathIsDefined,
+                _ingestionParametersIsDefined = ingestionParametersIsDefined
+            };
         }
     }
 }

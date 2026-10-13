@@ -149,7 +149,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SmartCropsResult(values, additionalBinaryDataProperties);
+            return new SmartCropsResult(values ?? new ChangeTrackingList<CropRegion>(), additionalBinaryDataProperties);
         }
     }
 }

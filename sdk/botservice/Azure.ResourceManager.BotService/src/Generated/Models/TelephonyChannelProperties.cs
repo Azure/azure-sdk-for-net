@@ -16,6 +16,14 @@ namespace Azure.ResourceManager.BotService.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _cognitiveServiceSubscriptionKey;
+        internal bool _cognitiveServiceSubscriptionKeyIsDefined;
+        private string _cognitiveServiceRegion;
+        internal bool _cognitiveServiceRegionIsDefined;
+        private string _defaultLocale;
+        internal bool _defaultLocaleIsDefined;
+        private string _premiumSku;
+        internal bool _premiumSkuIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="TelephonyChannelProperties"/>. </summary>
         public TelephonyChannelProperties()
@@ -37,10 +45,10 @@ namespace Azure.ResourceManager.BotService.Models
         {
             PhoneNumbers = phoneNumbers;
             ApiConfigurations = apiConfigurations;
-            CognitiveServiceSubscriptionKey = cognitiveServiceSubscriptionKey;
-            CognitiveServiceRegion = cognitiveServiceRegion;
-            DefaultLocale = defaultLocale;
-            PremiumSku = premiumSku;
+            _cognitiveServiceSubscriptionKey = cognitiveServiceSubscriptionKey;
+            _cognitiveServiceRegion = cognitiveServiceRegion;
+            _defaultLocale = defaultLocale;
+            _premiumSku = premiumSku;
             IsEnabled = isEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,16 +60,60 @@ namespace Azure.ResourceManager.BotService.Models
         public IList<TelephonyChannelResourceApiConfiguration> ApiConfigurations { get; }
 
         /// <summary> The extensionKey1. </summary>
-        public string CognitiveServiceSubscriptionKey { get; set; }
+        public string CognitiveServiceSubscriptionKey
+        {
+            get
+            {
+                return _cognitiveServiceSubscriptionKey;
+            }
+            set
+            {
+                _cognitiveServiceSubscriptionKey = value;
+                _cognitiveServiceSubscriptionKeyIsDefined = true;
+            }
+        }
 
         /// <summary> The extensionKey2. </summary>
-        public string CognitiveServiceRegion { get; set; }
+        public string CognitiveServiceRegion
+        {
+            get
+            {
+                return _cognitiveServiceRegion;
+            }
+            set
+            {
+                _cognitiveServiceRegion = value;
+                _cognitiveServiceRegionIsDefined = true;
+            }
+        }
 
         /// <summary> The default locale of the channel. </summary>
-        public string DefaultLocale { get; set; }
+        public string DefaultLocale
+        {
+            get
+            {
+                return _defaultLocale;
+            }
+            set
+            {
+                _defaultLocale = value;
+                _defaultLocaleIsDefined = true;
+            }
+        }
 
         /// <summary> The premium SKU applied to the channel. </summary>
-        public string PremiumSku { get; set; }
+        public string PremiumSku
+        {
+            get
+            {
+                return _premiumSku;
+            }
+            set
+            {
+                _premiumSku = value;
+                _premiumSkuIsDefined = true;
+            }
+        }
 
         /// <summary> Whether the channel is enabled. </summary>
         public bool? IsEnabled { get; set; }

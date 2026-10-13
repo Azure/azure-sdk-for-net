@@ -221,7 +221,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 status,
                 runtime,
                 lastResult,
-                executionHistory,
+                executionHistory ?? new ChangeTrackingList<IndexerExecutionResult>(),
                 limits,
                 additionalBinaryDataProperties);
         }

@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private SystemCreatedAcrAccount _systemCreatedAcrAccount;
+        internal bool _systemCreatedAcrAccountIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RegistryAcrDetails"/>. </summary>
         public RegistryAcrDetails()
@@ -27,12 +29,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RegistryAcrDetails(SystemCreatedAcrAccount systemCreatedAcrAccount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SystemCreatedAcrAccount = systemCreatedAcrAccount;
+            _systemCreatedAcrAccount = systemCreatedAcrAccount;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Details of system created ACR account to be used for the Registry. </summary>
         [WirePath("systemCreatedAcrAccount")]
-        public SystemCreatedAcrAccount SystemCreatedAcrAccount { get; set; }
+        public SystemCreatedAcrAccount SystemCreatedAcrAccount
+        {
+            get
+            {
+                return _systemCreatedAcrAccount;
+            }
+            set
+            {
+                _systemCreatedAcrAccount = value;
+                _systemCreatedAcrAccountIsDefined = true;
+            }
+        }
     }
 }
