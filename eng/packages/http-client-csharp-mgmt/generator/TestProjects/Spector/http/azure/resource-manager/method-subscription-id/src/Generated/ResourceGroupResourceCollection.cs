@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.MethodSubscriptionId
     /// </summary>
     public partial class ResourceGroupResourceCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _mixedSubscriptionPlacementResourceGroupResourceOperationsClientDiagnostics;
-        private readonly MixedSubscriptionPlacementResourceGroupResourceOperations _mixedSubscriptionPlacementResourceGroupResourceOperationsRestClient;
+        private readonly ClientDiagnostics _mixedResourceGroupOperationsClientDiagnostics;
+        private readonly MixedResourceGroupOperations _mixedResourceGroupOperationsRestClient;
 
         /// <summary> Initializes a new instance of ResourceGroupResourceCollection for mocking. </summary>
         protected ResourceGroupResourceCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.MethodSubscriptionId
         internal ResourceGroupResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceGroupResource.ResourceType, out string resourceGroupResourceApiVersion);
-            _mixedSubscriptionPlacementResourceGroupResourceOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MethodSubscriptionId", ResourceGroupResource.ResourceType.Namespace, Diagnostics);
-            _mixedSubscriptionPlacementResourceGroupResourceOperationsRestClient = new MixedSubscriptionPlacementResourceGroupResourceOperations(_mixedSubscriptionPlacementResourceGroupResourceOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupResourceApiVersion ?? "2023-12-01-preview");
+            _mixedResourceGroupOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MethodSubscriptionId", ResourceGroupResource.ResourceType.Namespace, Diagnostics);
+            _mixedResourceGroupOperationsRestClient = new MixedResourceGroupOperations(_mixedResourceGroupOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupResourceApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
             Argument.AssertNotNullOrEmpty(resourceGroupResourceName, nameof(resourceGroupResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _mixedSubscriptionPlacementResourceGroupResourceOperationsClientDiagnostics.CreateScope("ResourceGroupResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _mixedResourceGroupOperationsClientDiagnostics.CreateScope("ResourceGroupResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionPlacementResourceGroupResourceOperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGroupResourceName, ResourceGroupResourceData.ToRequestContent(data), context);
+                HttpMessage message = _mixedResourceGroupOperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGroupResourceName, ResourceGroupResourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGroupResourceData> response = Response.FromValue(ResourceGroupResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
             Argument.AssertNotNullOrEmpty(resourceGroupResourceName, nameof(resourceGroupResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _mixedSubscriptionPlacementResourceGroupResourceOperationsClientDiagnostics.CreateScope("ResourceGroupResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _mixedResourceGroupOperationsClientDiagnostics.CreateScope("ResourceGroupResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionPlacementResourceGroupResourceOperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGroupResourceName, ResourceGroupResourceData.ToRequestContent(data), context);
+                HttpMessage message = _mixedResourceGroupOperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGroupResourceName, ResourceGroupResourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGroupResourceData> response = Response.FromValue(ResourceGroupResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
         {
             Argument.AssertNotNullOrEmpty(resourceGroupResourceName, nameof(resourceGroupResourceName));
 
-            using DiagnosticScope scope = _mixedSubscriptionPlacementResourceGroupResourceOperationsClientDiagnostics.CreateScope("ResourceGroupResourceCollection.Get");
+            using DiagnosticScope scope = _mixedResourceGroupOperationsClientDiagnostics.CreateScope("ResourceGroupResourceCollection.Get");
             scope.Start();
             try
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionPlacementResourceGroupResourceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGroupResourceName, context);
+                HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGroupResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGroupResourceData> response = Response.FromValue(ResourceGroupResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
         {
             Argument.AssertNotNullOrEmpty(resourceGroupResourceName, nameof(resourceGroupResourceName));
 
-            using DiagnosticScope scope = _mixedSubscriptionPlacementResourceGroupResourceOperationsClientDiagnostics.CreateScope("ResourceGroupResourceCollection.Get");
+            using DiagnosticScope scope = _mixedResourceGroupOperationsClientDiagnostics.CreateScope("ResourceGroupResourceCollection.Get");
             scope.Start();
             try
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionPlacementResourceGroupResourceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGroupResourceName, context);
+                HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGroupResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGroupResourceData> response = Response.FromValue(ResourceGroupResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
         {
             Argument.AssertNotNullOrEmpty(resourceGroupResourceName, nameof(resourceGroupResourceName));
 
-            using DiagnosticScope scope = _mixedSubscriptionPlacementResourceGroupResourceOperationsClientDiagnostics.CreateScope("ResourceGroupResourceCollection.Exists");
+            using DiagnosticScope scope = _mixedResourceGroupOperationsClientDiagnostics.CreateScope("ResourceGroupResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionPlacementResourceGroupResourceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGroupResourceName, context);
+                HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGroupResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceGroupResourceData> response = default;
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
         {
             Argument.AssertNotNullOrEmpty(resourceGroupResourceName, nameof(resourceGroupResourceName));
 
-            using DiagnosticScope scope = _mixedSubscriptionPlacementResourceGroupResourceOperationsClientDiagnostics.CreateScope("ResourceGroupResourceCollection.Exists");
+            using DiagnosticScope scope = _mixedResourceGroupOperationsClientDiagnostics.CreateScope("ResourceGroupResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionPlacementResourceGroupResourceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGroupResourceName, context);
+                HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGroupResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceGroupResourceData> response = default;
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
         {
             Argument.AssertNotNullOrEmpty(resourceGroupResourceName, nameof(resourceGroupResourceName));
 
-            using DiagnosticScope scope = _mixedSubscriptionPlacementResourceGroupResourceOperationsClientDiagnostics.CreateScope("ResourceGroupResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _mixedResourceGroupOperationsClientDiagnostics.CreateScope("ResourceGroupResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionPlacementResourceGroupResourceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGroupResourceName, context);
+                HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGroupResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceGroupResourceData> response = default;
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
         {
             Argument.AssertNotNullOrEmpty(resourceGroupResourceName, nameof(resourceGroupResourceName));
 
-            using DiagnosticScope scope = _mixedSubscriptionPlacementResourceGroupResourceOperationsClientDiagnostics.CreateScope("ResourceGroupResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _mixedResourceGroupOperationsClientDiagnostics.CreateScope("ResourceGroupResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionPlacementResourceGroupResourceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGroupResourceName, context);
+                HttpMessage message = _mixedResourceGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceGroupResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceGroupResourceData> response = default;

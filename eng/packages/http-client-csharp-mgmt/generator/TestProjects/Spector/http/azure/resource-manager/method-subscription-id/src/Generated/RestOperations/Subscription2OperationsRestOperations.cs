@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.MethodSubscriptionId._TwoSubscriptionResourcesMethodLevel
 {
-    internal partial class TwoSubscriptionResourcesMethodLevelSubscriptionResource2Operations
+    internal partial class Subscription2Operations
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of TwoSubscriptionResourcesMethodLevelSubscriptionResource2Operations for mocking. </summary>
-        protected TwoSubscriptionResourcesMethodLevelSubscriptionResource2Operations()
+        /// <summary> Initializes a new instance of Subscription2Operations for mocking. </summary>
+        protected Subscription2Operations()
         {
         }
 
-        /// <summary> Initializes a new instance of TwoSubscriptionResourcesMethodLevelSubscriptionResource2Operations. </summary>
+        /// <summary> Initializes a new instance of Subscription2Operations. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal TwoSubscriptionResourcesMethodLevelSubscriptionResource2Operations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        internal Subscription2Operations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _userAgent = new TelemetryDetails(typeof(TwoSubscriptionResourcesMethodLevelSubscriptionResource2Operations).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(Subscription2Operations).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>

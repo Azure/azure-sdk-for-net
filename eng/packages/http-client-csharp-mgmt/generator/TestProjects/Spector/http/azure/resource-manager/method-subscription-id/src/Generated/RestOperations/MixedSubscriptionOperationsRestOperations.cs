@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.MethodSubscriptionId._MixedSubscriptionPlacement
 {
-    internal partial class MixedSubscriptionPlacementResourceGroupResourceOperations
+    internal partial class MixedSubscriptionOperations
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of MixedSubscriptionPlacementResourceGroupResourceOperations for mocking. </summary>
-        protected MixedSubscriptionPlacementResourceGroupResourceOperations()
+        /// <summary> Initializes a new instance of MixedSubscriptionOperations for mocking. </summary>
+        protected MixedSubscriptionOperations()
         {
         }
 
-        /// <summary> Initializes a new instance of MixedSubscriptionPlacementResourceGroupResourceOperations. </summary>
+        /// <summary> Initializes a new instance of MixedSubscriptionOperations. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal MixedSubscriptionPlacementResourceGroupResourceOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        internal MixedSubscriptionOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _userAgent = new TelemetryDetails(typeof(MixedSubscriptionPlacementResourceGroupResourceOperations).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(MixedSubscriptionOperations).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -44,16 +44,14 @@ namespace Azure.ResourceManager.MethodSubscriptionId._MixedSubscriptionPlacement
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string resourceGroupResourceName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string subscriptionResourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Azure.ResourceManager.MethodSubscriptionId/resourceGroupResources/", false);
-            uri.AppendPath(resourceGroupResourceName, true);
+            uri.AppendPath("/providers/Azure.ResourceManager.MethodSubscriptionId/subscriptionResources/", false);
+            uri.AppendPath(subscriptionResourceName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -67,16 +65,14 @@ namespace Azure.ResourceManager.MethodSubscriptionId._MixedSubscriptionPlacement
             return message;
         }
 
-        internal HttpMessage CreatePutRequest(Guid subscriptionId, string resourceGroupName, string resourceGroupResourceName, RequestContent content, RequestContext context)
+        internal HttpMessage CreatePutRequest(Guid subscriptionId, string subscriptionResourceName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Azure.ResourceManager.MethodSubscriptionId/resourceGroupResources/", false);
-            uri.AppendPath(resourceGroupResourceName, true);
+            uri.AppendPath("/providers/Azure.ResourceManager.MethodSubscriptionId/subscriptionResources/", false);
+            uri.AppendPath(subscriptionResourceName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -92,16 +88,14 @@ namespace Azure.ResourceManager.MethodSubscriptionId._MixedSubscriptionPlacement
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string resourceGroupResourceName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string subscriptionResourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Azure.ResourceManager.MethodSubscriptionId/resourceGroupResources/", false);
-            uri.AppendPath(resourceGroupResourceName, true);
+            uri.AppendPath("/providers/Azure.ResourceManager.MethodSubscriptionId/subscriptionResources/", false);
+            uri.AppendPath(subscriptionResourceName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

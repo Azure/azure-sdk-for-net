@@ -7690,6 +7690,7 @@
                   "value"
                 ],
                 "nextLink": {
+                  "verb": "GET",
                   "responseSegments": [
                     "nextLink"
                   ],

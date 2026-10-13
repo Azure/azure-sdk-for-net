@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.MethodSubscriptionId
     /// </summary>
     public partial class SubscriptionResourceCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _mixedSubscriptionPlacementSubscriptionResourceOperationsClientDiagnostics;
-        private readonly MixedSubscriptionPlacementSubscriptionResourceOperations _mixedSubscriptionPlacementSubscriptionResourceOperationsRestClient;
+        private readonly ClientDiagnostics _mixedSubscriptionOperationsClientDiagnostics;
+        private readonly MixedSubscriptionOperations _mixedSubscriptionOperationsRestClient;
 
         /// <summary> Initializes a new instance of SubscriptionResourceCollection for mocking. </summary>
         protected SubscriptionResourceCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.MethodSubscriptionId
         internal SubscriptionResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(SubscriptionResource.ResourceType, out string subscriptionResourceApiVersion);
-            _mixedSubscriptionPlacementSubscriptionResourceOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MethodSubscriptionId", SubscriptionResource.ResourceType.Namespace, Diagnostics);
-            _mixedSubscriptionPlacementSubscriptionResourceOperationsRestClient = new MixedSubscriptionPlacementSubscriptionResourceOperations(_mixedSubscriptionPlacementSubscriptionResourceOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionResourceApiVersion ?? "2023-12-01-preview");
+            _mixedSubscriptionOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MethodSubscriptionId", SubscriptionResource.ResourceType.Namespace, Diagnostics);
+            _mixedSubscriptionOperationsRestClient = new MixedSubscriptionOperations(_mixedSubscriptionOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionResourceApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
             Argument.AssertNotNullOrEmpty(subscriptionResourceName, nameof(subscriptionResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _mixedSubscriptionPlacementSubscriptionResourceOperationsClientDiagnostics.CreateScope("SubscriptionResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _mixedSubscriptionOperationsClientDiagnostics.CreateScope("SubscriptionResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionPlacementSubscriptionResourceOperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, SubscriptionResourceData.ToRequestContent(data), context);
+                HttpMessage message = _mixedSubscriptionOperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, SubscriptionResourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionResourceData> response = Response.FromValue(SubscriptionResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
             Argument.AssertNotNullOrEmpty(subscriptionResourceName, nameof(subscriptionResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _mixedSubscriptionPlacementSubscriptionResourceOperationsClientDiagnostics.CreateScope("SubscriptionResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _mixedSubscriptionOperationsClientDiagnostics.CreateScope("SubscriptionResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionPlacementSubscriptionResourceOperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, SubscriptionResourceData.ToRequestContent(data), context);
+                HttpMessage message = _mixedSubscriptionOperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, SubscriptionResourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionResourceData> response = Response.FromValue(SubscriptionResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
         {
             Argument.AssertNotNullOrEmpty(subscriptionResourceName, nameof(subscriptionResourceName));
 
-            using DiagnosticScope scope = _mixedSubscriptionPlacementSubscriptionResourceOperationsClientDiagnostics.CreateScope("SubscriptionResourceCollection.Get");
+            using DiagnosticScope scope = _mixedSubscriptionOperationsClientDiagnostics.CreateScope("SubscriptionResourceCollection.Get");
             scope.Start();
             try
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionPlacementSubscriptionResourceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
+                HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionResourceData> response = Response.FromValue(SubscriptionResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
         {
             Argument.AssertNotNullOrEmpty(subscriptionResourceName, nameof(subscriptionResourceName));
 
-            using DiagnosticScope scope = _mixedSubscriptionPlacementSubscriptionResourceOperationsClientDiagnostics.CreateScope("SubscriptionResourceCollection.Get");
+            using DiagnosticScope scope = _mixedSubscriptionOperationsClientDiagnostics.CreateScope("SubscriptionResourceCollection.Get");
             scope.Start();
             try
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionPlacementSubscriptionResourceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
+                HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionResourceData> response = Response.FromValue(SubscriptionResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
         {
             Argument.AssertNotNullOrEmpty(subscriptionResourceName, nameof(subscriptionResourceName));
 
-            using DiagnosticScope scope = _mixedSubscriptionPlacementSubscriptionResourceOperationsClientDiagnostics.CreateScope("SubscriptionResourceCollection.Exists");
+            using DiagnosticScope scope = _mixedSubscriptionOperationsClientDiagnostics.CreateScope("SubscriptionResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionPlacementSubscriptionResourceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
+                HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionResourceData> response = default;
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
         {
             Argument.AssertNotNullOrEmpty(subscriptionResourceName, nameof(subscriptionResourceName));
 
-            using DiagnosticScope scope = _mixedSubscriptionPlacementSubscriptionResourceOperationsClientDiagnostics.CreateScope("SubscriptionResourceCollection.Exists");
+            using DiagnosticScope scope = _mixedSubscriptionOperationsClientDiagnostics.CreateScope("SubscriptionResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionPlacementSubscriptionResourceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
+                HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionResourceData> response = default;
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
         {
             Argument.AssertNotNullOrEmpty(subscriptionResourceName, nameof(subscriptionResourceName));
 
-            using DiagnosticScope scope = _mixedSubscriptionPlacementSubscriptionResourceOperationsClientDiagnostics.CreateScope("SubscriptionResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _mixedSubscriptionOperationsClientDiagnostics.CreateScope("SubscriptionResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionPlacementSubscriptionResourceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
+                HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionResourceData> response = default;
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
         {
             Argument.AssertNotNullOrEmpty(subscriptionResourceName, nameof(subscriptionResourceName));
 
-            using DiagnosticScope scope = _mixedSubscriptionPlacementSubscriptionResourceOperationsClientDiagnostics.CreateScope("SubscriptionResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _mixedSubscriptionOperationsClientDiagnostics.CreateScope("SubscriptionResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionPlacementSubscriptionResourceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
+                HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionResourceData> response = default;
