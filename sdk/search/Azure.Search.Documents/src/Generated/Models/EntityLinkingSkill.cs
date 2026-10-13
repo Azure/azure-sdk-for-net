@@ -15,9 +15,9 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class EntityLinkingSkill : SearchIndexerSkill
     {
         private string _defaultLanguageCode;
-        internal bool _defaultLanguageCodeIsDefined;
+        private bool _defaultLanguageCodeIsDefined;
         private string _modelVersion;
-        internal bool _modelVersionIsDefined;
+        private bool _modelVersionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="EntityLinkingSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

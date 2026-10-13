@@ -17,11 +17,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private bool? _caseSensitive;
-        internal bool _caseSensitiveIsDefined;
+        private bool _caseSensitiveIsDefined;
         private bool? _accentSensitive;
-        internal bool _accentSensitiveIsDefined;
+        private bool _accentSensitiveIsDefined;
         private int? _fuzzyEditDistance;
-        internal bool _fuzzyEditDistanceIsDefined;
+        private bool _fuzzyEditDistanceIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CustomEntityAlias"/>. </summary>
         /// <param name="text"> The text of the alias. </param>

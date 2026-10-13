@@ -18,9 +18,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _folderPath;
-        internal bool _folderPathIsDefined;
+        private bool _folderPathIsDefined;
         private KnowledgeSourceIngestionParameters _ingestionParameters;
-        internal bool _ingestionParametersIsDefined;
+        private bool _ingestionParametersIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobKnowledgeSourceParameters"/>. </summary>
         /// <param name="connectionString"> Key-based connection string or the ResourceId format if using a managed identity. </param>
