@@ -736,7 +736,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(84, Message = "This exporter's Credential is {1}, but the transmitter shared for its connection string was built {0} one, so the transmitter's setting is used. Configure the same Credential on every exporter that shares a connection string (with multi-endpoint routing, every exporter).", Level = EventLevel.Warning)]
+        [Event(84, Message = "Ignoring this exporter's Credential setting. Exporters that share a connection string send through one shared connection, created by an earlier exporter configured {0} a Credential; this exporter is configured {1} one. Set the same AzureMonitorExporterOptions.Credential on every exporter (with multi-endpoint routing, all exporters share one connection).", Level = EventLevel.Warning)]
         public void CachedTransmitterCredentialMismatch(string transmitterCredential, string exporterCredential)
         {
             if (IsEnabled(EventLevel.Warning))
@@ -750,7 +750,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         {
             if (IsEnabled(EventLevel.Warning))
             {
-                CachedTransmitterCredentialMismatch(transmitterHasCredential ? "with" : "without", exporterHasCredential ? "set" : "not set");
+                CachedTransmitterCredentialMismatch(transmitterHasCredential ? "with" : "without", exporterHasCredential ? "with" : "without");
             }
         }
     }

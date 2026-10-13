@@ -52,8 +52,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
-        [InlineData(false, true, "without", "set")]
-        [InlineData(true, false, "with", "not set")]
+        [InlineData(false, true, "without", "with")]
+        [InlineData(true, false, "with", "without")]
         public void ACachedTransmitterWithADifferentCredentialSettingIsReported(bool firstHasCredential, bool secondHasCredential, string transmitterCredential, string exporterCredential)
         {
             var factory = new TransmitterFactory();
