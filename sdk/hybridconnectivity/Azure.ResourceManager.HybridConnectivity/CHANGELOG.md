@@ -10,7 +10,7 @@
   - Added `GcpCloudProfile`, `GcpProjectProperties`, and `GcpOrganizationProperties` models, exposed via `PublicCloudConnectorProperties.GcpCloudProfile`.
   - Added `SubscriptionResource.PostGenerateGcpTemplate` and `PostGenerateGcpTemplateAsync` for retrieving a GCP access control template, along with the `GenerateGcpTemplateContent`, `GenerateGcpTemplateResult`, and `GcpTemplateFormat` models.
 - Added `PublicCloudConnectorData.Kind` identifying which public cloud a connector targets.
-- Added `SupportedHostTypes` to `PublicCloudConnectorSolutionTypeProperties` and `PublicCloudConnectorSolutionTypeSettingsProperties`.
+- Added `HostTypes` to `PublicCloudConnectorSolutionTypeProperties` and `PublicCloudConnectorSolutionTypeSettingsProperties`.
 
 ### Breaking Changes
 
