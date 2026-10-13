@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DiskRestorePointList(value, nextLink, additionalBinaryDataProperties);
+            return new DiskRestorePointList(value ?? new ChangeTrackingList<DiskRestorePointData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

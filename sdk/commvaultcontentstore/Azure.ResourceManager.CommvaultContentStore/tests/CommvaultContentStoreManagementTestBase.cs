@@ -95,6 +95,19 @@ namespace Azure.ResourceManager.CommvaultContentStore.Tests
             }
 
             [Test]
+            public void RoleAssignmentEntitiesRemainUsableWhenOmitted()
+            {
+                BinaryData data = BinaryData.FromString("{\"roleName\":\"BackupAdmin\"}");
+                CommvaultRoleAssignment assignment = ModelReaderWriter.Read<CommvaultRoleAssignment>(data);
+                Assert.That(assignment.RoleName, Is.EqualTo(CommvaultRoleName.BackupAdmin));
+                Assert.That(assignment.Entities, Is.Not.Null.And.Empty);
+
+                assignment.Entities.Add(new CommvaultEntityInfo());
+                using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(assignment, new ModelReaderWriterOptions("W")).ToString());
+                Assert.That(document.RootElement.GetProperty("entities").GetArrayLength(), Is.EqualTo(1));
+            }
+
+            [Test]
             public void ProtectionGroupBackupTimeRetainsIntegerWireValue()
             {
                 const long backupTime = 1728000000123;
@@ -197,6 +210,50 @@ namespace Azure.ResourceManager.CommvaultContentStore.Tests
                 Assert.That(transport.SingleRequest.Uri.ToUri().AbsolutePath, Is.EqualTo(CloudAccountPath));
                 Assert.That(transport.SingleRequest.Uri.ToUri().Query, Is.EqualTo("?api-version=2026-09-30"));
                 Assert.That(requestBody, Is.EqualTo(expectedBody));
+            }
+        }
+
+        public class CloudAccountCollectionTests
+        {
+            [TestCase(false)]
+            [TestCase(true)]
+            public async Task GetAllSupportsRelativeContinuationTokens(bool isAsync)
+            {
+                const string resourceGroupPath = "/subscriptions/123e4567-e89b-12d3-a456-426614174000/resourceGroups/test";
+                const string collectionPath = resourceGroupPath + "/providers/Commvault.ContentStore/cloudAccounts";
+                const string resourcePath = collectionPath + "/test-account";
+                const string query = "?api-version=2026-09-30&skiptoken=next";
+                var transport = new MockTransport(new MockResponse(200).SetContent(
+                    $"{{\"value\":[{{\"id\":\"{resourcePath}\",\"name\":\"test-account\",\"type\":\"Commvault.ContentStore/cloudAccounts\",\"location\":\"eastus\"}}]}}"));
+                var resourceGroupId = new ResourceIdentifier(resourceGroupPath);
+                var client = new ArmClient(new MockCredential(), resourceGroupId.SubscriptionId, new ArmClientOptions { Transport = transport });
+                CloudAccountCollection collection = client.GetResourceGroupResource(resourceGroupId).GetCloudAccounts();
+                int pageCount = 0;
+
+                if (isAsync)
+                {
+                    await foreach (Page<CloudAccountResource> page in collection.GetAllAsync().AsPages(collectionPath + query))
+                    {
+                        pageCount++;
+                        Assert.That(page.Values, Has.Count.EqualTo(1));
+                        Assert.That(page.Values[0].Id.ToString(), Is.EqualTo(resourcePath));
+                    }
+                }
+                else
+                {
+                    foreach (Page<CloudAccountResource> page in collection.GetAll().AsPages(collectionPath + query))
+                    {
+                        pageCount++;
+                        Assert.That(page.Values, Has.Count.EqualTo(1));
+                        Assert.That(page.Values[0].Id.ToString(), Is.EqualTo(resourcePath));
+                    }
+                }
+
+                Assert.That(pageCount, Is.EqualTo(1));
+                Assert.That(transport.Requests, Has.Count.EqualTo(1));
+                Assert.That(transport.SingleRequest.Method, Is.EqualTo(RequestMethod.Get));
+                Assert.That(transport.SingleRequest.Uri.ToUri().AbsolutePath, Is.EqualTo(collectionPath));
+                Assert.That(transport.SingleRequest.Uri.ToUri().Query, Is.EqualTo(query));
             }
         }
 

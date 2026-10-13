@@ -170,7 +170,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkloadNetworkSegmentListResult(value, nextLink, additionalBinaryDataProperties);
+            return new WorkloadNetworkSegmentListResult(value ?? new ChangeTrackingList<WorkloadNetworkSegmentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

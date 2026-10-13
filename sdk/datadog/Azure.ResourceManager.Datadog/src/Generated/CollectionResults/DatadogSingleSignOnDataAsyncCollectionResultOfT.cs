@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> The pages of DatadogSingleSignOnDataAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<DatadogSingleSignOnData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     yield break;
                 }
-                DatadogSingleSignOnResourceListResponse result = DatadogSingleSignOnResourceListResponse.FromResponse(response);
+                DatadogSingleSignOnResourceListResult result = DatadogSingleSignOnResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<DatadogSingleSignOnData>.FromValues((IReadOnlyList<DatadogSingleSignOnData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

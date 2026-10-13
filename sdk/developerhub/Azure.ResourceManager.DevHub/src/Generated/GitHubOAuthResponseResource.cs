@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DevHub
     {
         private readonly ClientDiagnostics _devHubClientClientDiagnostics;
         private readonly DevHubClient _devHubClientRestClient;
-        private readonly GitHubOAuthResponseData _data;
+        private readonly GitHubOAuthResultData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevHub/locations/githuboauth";
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DevHub
         /// <summary> Initializes a new instance of <see cref="GitHubOAuthResponseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GitHubOAuthResponseResource(ArmClient client, GitHubOAuthResponseData data) : this(client, data.Id)
+        internal GitHubOAuthResponseResource(ArmClient client, GitHubOAuthResultData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevHub
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual GitHubOAuthResponseData Data
+        public virtual GitHubOAuthResultData Data
         {
             get
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevHub
                 };
                 HttpMessage message = _devHubClientRestClient.CreateGitHubOAuthCallbackRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, code, state, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GitHubOAuthResponseData> response = Response.FromValue(GitHubOAuthResponseData.FromResponse(result), result);
+                Response<GitHubOAuthResultData> response = Response.FromValue(GitHubOAuthResultData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DevHub
                 };
                 HttpMessage message = _devHubClientRestClient.CreateGitHubOAuthCallbackRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, code, state, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<GitHubOAuthResponseData> response = Response.FromValue(GitHubOAuthResponseData.FromResponse(result), result);
+                Response<GitHubOAuthResultData> response = Response.FromValue(GitHubOAuthResultData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

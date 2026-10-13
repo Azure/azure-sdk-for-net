@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VmFamilyListResult(value, nextLink, additionalBinaryDataProperties);
+            return new VmFamilyListResult(value ?? new ChangeTrackingList<ComputeLimitVmFamilyData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

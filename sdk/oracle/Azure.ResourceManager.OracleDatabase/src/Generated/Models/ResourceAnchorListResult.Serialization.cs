@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResourceAnchorListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ResourceAnchorListResult(value ?? new ChangeTrackingList<OracleResourceAnchorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

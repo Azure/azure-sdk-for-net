@@ -74,20 +74,41 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 throw new FormatException($"The model {nameof(DaprProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Version))
+            if (_versionIsDefined || Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
+                if (Version != null)
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+                else
+                {
+                    writer.WriteNull("version"u8);
+                }
             }
-            if (Optional.IsDefined(ComponentType))
+            if (_componentTypeIsDefined || Optional.IsDefined(ComponentType))
             {
-                writer.WritePropertyName("componentType"u8);
-                writer.WriteStringValue(ComponentType);
+                if (ComponentType != null)
+                {
+                    writer.WritePropertyName("componentType"u8);
+                    writer.WriteStringValue(ComponentType);
+                }
+                else
+                {
+                    writer.WriteNull("componentType"u8);
+                }
             }
-            if (Optional.IsDefined(SecretStoreComponent))
+            if (_secretStoreComponentIsDefined || Optional.IsDefined(SecretStoreComponent))
             {
-                writer.WritePropertyName("secretStoreComponent"u8);
-                writer.WriteStringValue(SecretStoreComponent);
+                if (SecretStoreComponent != null)
+                {
+                    writer.WritePropertyName("secretStoreComponent"u8);
+                    writer.WriteStringValue(SecretStoreComponent);
+                }
+                else
+                {
+                    writer.WriteNull("secretStoreComponent"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
@@ -114,15 +135,29 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(RuntimeVersion))
+            if (options.Format != "W" && (_runtimeVersionIsDefined || Optional.IsDefined(RuntimeVersion)))
             {
-                writer.WritePropertyName("runtimeVersion"u8);
-                writer.WriteStringValue(RuntimeVersion);
+                if (RuntimeVersion != null)
+                {
+                    writer.WritePropertyName("runtimeVersion"u8);
+                    writer.WriteStringValue(RuntimeVersion);
+                }
+                else
+                {
+                    writer.WriteNull("runtimeVersion"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(BindingComponentDirection))
+            if (options.Format != "W" && (_bindingComponentDirectionIsDefined || Optional.IsDefined(BindingComponentDirection)))
             {
-                writer.WritePropertyName("bindingComponentDirection"u8);
-                writer.WriteStringValue(BindingComponentDirection.Value.ToString());
+                if (BindingComponentDirection != null)
+                {
+                    writer.WritePropertyName("bindingComponentDirection"u8);
+                    writer.WriteStringValue(BindingComponentDirection.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("bindingComponentDirection"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -166,18 +201,24 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
+            bool versionIsDefined = false;
             string version = default;
+            bool componentTypeIsDefined = false;
             string componentType = default;
+            bool secretStoreComponentIsDefined = false;
             string secretStoreComponent = default;
             IList<DaprMetadata> metadata = default;
             IList<string> scopes = default;
+            bool runtimeVersionIsDefined = false;
             string runtimeVersion = default;
+            bool bindingComponentDirectionIsDefined = false;
             DaprBindingComponentDirection? bindingComponentDirection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("version"u8))
                 {
+                    versionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         version = null;
@@ -188,6 +229,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("componentType"u8))
                 {
+                    componentTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         componentType = null;
@@ -198,6 +240,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("secretStoreComponent"u8))
                 {
+                    secretStoreComponentIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         secretStoreComponent = null;
@@ -243,6 +286,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("runtimeVersion"u8))
                 {
+                    runtimeVersionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         runtimeVersion = null;
@@ -253,6 +297,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("bindingComponentDirection"u8))
                 {
+                    bindingComponentDirectionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         bindingComponentDirection = null;
@@ -274,7 +319,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 scopes ?? new ChangeTrackingList<string>(),
                 runtimeVersion,
                 bindingComponentDirection,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _versionIsDefined = versionIsDefined,
+                _componentTypeIsDefined = componentTypeIsDefined,
+                _secretStoreComponentIsDefined = secretStoreComponentIsDefined,
+                _runtimeVersionIsDefined = runtimeVersionIsDefined,
+                _bindingComponentDirectionIsDefined = bindingComponentDirectionIsDefined
+            };
         }
     }
 }

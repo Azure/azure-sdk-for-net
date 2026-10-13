@@ -92,10 +92,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (_nextLinkIsDefined || Optional.IsDefined(NextLink))
             {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink.AbsoluteUri);
+                if (NextLink != null)
+                {
+                    writer.WritePropertyName("nextLink"u8);
+                    writer.WriteStringValue(NextLink.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("nextLink"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,6 +147,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 return null;
             }
             IList<LinkerDryrunData> value = default;
+            bool nextLinkIsDefined = false;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -160,6 +168,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("nextLink"u8))
                 {
+                    nextLinkIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nextLink = null;
@@ -173,7 +182,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DryrunList(value ?? new ChangeTrackingList<LinkerDryrunData>(), nextLink, additionalBinaryDataProperties);
+            return new DryrunList(value ?? new ChangeTrackingList<LinkerDryrunData>(), nextLink, additionalBinaryDataProperties)
+            {
+                _nextLinkIsDefined = nextLinkIsDefined
+            };
         }
     }
 }

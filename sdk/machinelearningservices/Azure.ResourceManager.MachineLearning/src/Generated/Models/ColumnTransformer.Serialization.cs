@@ -76,30 +76,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Fields))
             {
-                writer.WritePropertyName("fields"u8);
-                writer.WriteStartArray();
-                foreach (string item in Fields)
+                if (Fields != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("fields"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in Fields)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(Parameters);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Parameters))
+                else
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    writer.WriteNull("fields"u8);
                 }
+            }
+            if (_parametersIsDefined || Optional.IsDefined(Parameters))
+            {
+                if (Parameters != null)
+                {
+                    writer.WritePropertyName("parameters"u8);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(Parameters);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(Parameters))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                else
+                {
+                    writer.WriteNull("parameters"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -143,7 +157,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<string> fields = default;
+            IList<string> fields = new ChangeTrackingList<string>();
+            bool parametersIsDefined = false;
             BinaryData parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,6 +167,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        fields = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -171,6 +187,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
+                    parametersIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         parameters = null;
@@ -184,7 +201,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ColumnTransformer(fields ?? new ChangeTrackingList<string>(), parameters, additionalBinaryDataProperties);
+            return new ColumnTransformer(fields, parameters, additionalBinaryDataProperties)
+            {
+                _parametersIsDefined = parametersIsDefined
+            };
         }
     }
 }

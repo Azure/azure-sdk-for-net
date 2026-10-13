@@ -16,6 +16,16 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _version;
+        internal bool _versionIsDefined;
+        private string _componentType;
+        internal bool _componentTypeIsDefined;
+        private string _secretStoreComponent;
+        internal bool _secretStoreComponentIsDefined;
+        private string _runtimeVersion;
+        internal bool _runtimeVersionIsDefined;
+        private DaprBindingComponentDirection? _bindingComponentDirection;
+        internal bool _bindingComponentDirectionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DaprProperties"/>. </summary>
         public DaprProperties()
@@ -35,24 +45,57 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DaprProperties(string version, string componentType, string secretStoreComponent, IList<DaprMetadata> metadata, IList<string> scopes, string runtimeVersion, DaprBindingComponentDirection? bindingComponentDirection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Version = version;
-            ComponentType = componentType;
-            SecretStoreComponent = secretStoreComponent;
+            _version = version;
+            _componentType = componentType;
+            _secretStoreComponent = secretStoreComponent;
             Metadata = metadata;
             Scopes = scopes;
-            RuntimeVersion = runtimeVersion;
-            BindingComponentDirection = bindingComponentDirection;
+            _runtimeVersion = runtimeVersion;
+            _bindingComponentDirection = bindingComponentDirection;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The dapr component version. </summary>
-        public string Version { get; set; }
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+                _versionIsDefined = true;
+            }
+        }
 
         /// <summary> The dapr component type. </summary>
-        public string ComponentType { get; set; }
+        public string ComponentType
+        {
+            get
+            {
+                return _componentType;
+            }
+            set
+            {
+                _componentType = value;
+                _componentTypeIsDefined = true;
+            }
+        }
 
         /// <summary> The name of a secret store dapr to retrieve secret. </summary>
-        public string SecretStoreComponent { get; set; }
+        public string SecretStoreComponent
+        {
+            get
+            {
+                return _secretStoreComponent;
+            }
+            set
+            {
+                _secretStoreComponent = value;
+                _secretStoreComponentIsDefined = true;
+            }
+        }
 
         /// <summary> Additional dapr metadata. </summary>
         public IList<DaprMetadata> Metadata { get; }
@@ -61,9 +104,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public IList<string> Scopes { get; }
 
         /// <summary> The runtime version supported by the properties. </summary>
-        public string RuntimeVersion { get; }
+        public string RuntimeVersion
+        {
+            get
+            {
+                return _runtimeVersion;
+            }
+        }
 
         /// <summary> The direction supported by the dapr binding component. </summary>
-        public DaprBindingComponentDirection? BindingComponentDirection { get; }
+        public DaprBindingComponentDirection? BindingComponentDirection
+        {
+            get
+            {
+                return _bindingComponentDirection;
+            }
+        }
     }
 }

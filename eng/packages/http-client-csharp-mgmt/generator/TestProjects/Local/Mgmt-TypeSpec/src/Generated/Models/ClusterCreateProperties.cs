@@ -19,6 +19,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
     /// </summary>
     internal partial class ClusterCreateProperties : ClusterProperties
     {
+        private PublicNetworkAccess? _publicNetworkAccess;
+        internal bool _publicNetworkAccessIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ClusterCreateProperties"/>. </summary>
         public ClusterCreateProperties()
         {
@@ -45,11 +48,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="publicNetworkAccess"> Whether or not public network traffic can access the Redis cluster. </param>
         internal ClusterCreateProperties(HighAvailability? highAvailability, TlsVersion? minimumTlsVersion, ClusterPropertiesEncryption encryption, MaintenanceConfiguration maintenanceConfiguration, string hostName, ProvisioningState? provisioningState, RedundancyMode? redundancyMode, ResourceState? resourceState, string redisVersion, IReadOnlyList<RedisPrivateEndpointConnection> privateEndpointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties, PublicNetworkAccess? publicNetworkAccess) : base(highAvailability, minimumTlsVersion, encryption, maintenanceConfiguration, hostName, provisioningState, redundancyMode, resourceState, redisVersion, privateEndpointConnections, additionalBinaryDataProperties)
         {
-            PublicNetworkAccess = publicNetworkAccess;
+            _publicNetworkAccess = publicNetworkAccess;
         }
 
         /// <summary> Whether or not public network traffic can access the Redis cluster. </summary>
         [WirePath("publicNetworkAccess")]
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public PublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return _publicNetworkAccess;
+            }
+            set
+            {
+                _publicNetworkAccess = value;
+                _publicNetworkAccessIsDefined = true;
+            }
+        }
     }
 }

@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             return new DeploymentSettingsProperties(
                 provisioningState,
-                arcNodeResourceIds,
+                arcNodeResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 deploymentMode,
                 operationType,
                 deploymentConfiguration,

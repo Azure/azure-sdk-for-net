@@ -17,6 +17,14 @@ namespace Azure.AI.Agents.Persistent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private RequiredAction _requiredAction;
+        internal bool _requiredActionIsDefined;
+        private float? _temperature;
+        internal bool _temperatureIsDefined;
+        private float? _topP;
+        internal bool _topPIsDefined;
+        private ToolResources _toolResources;
+        internal bool _toolResourcesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ThreadRun"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
@@ -106,7 +114,7 @@ namespace Azure.AI.Agents.Persistent
             ThreadId = threadId;
             AssistantId = assistantId;
             Status = status;
-            RequiredAction = requiredAction;
+            _requiredAction = requiredAction;
             LastError = lastError;
             Model = model;
             Instructions = instructions;
@@ -119,15 +127,15 @@ namespace Azure.AI.Agents.Persistent
             FailedAt = failedAt;
             IncompleteDetails = incompleteDetails;
             Usage = usage;
-            Temperature = temperature;
-            TopP = topP;
+            _temperature = temperature;
+            _topP = topP;
             MaxPromptTokens = maxPromptTokens;
             MaxCompletionTokens = maxCompletionTokens;
             TruncationStrategy = truncationStrategy;
             ToolChoice = toolChoice;
             ResponseFormat = responseFormat;
             Metadata = metadata;
-            ToolResources = toolResources;
+            _toolResources = toolResources;
             ParallelToolCalls = parallelToolCalls;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -145,7 +153,13 @@ namespace Azure.AI.Agents.Persistent
         public RunStatus Status { get; }
 
         /// <summary> The details of the action required for the agent thread run to continue. </summary>
-        public RequiredAction RequiredAction { get; }
+        public RequiredAction RequiredAction
+        {
+            get
+            {
+                return _requiredAction;
+            }
+        }
 
         /// <summary> The last error, if any, encountered by this agent thread run. </summary>
         public RunError LastError { get; }
@@ -184,10 +198,22 @@ namespace Azure.AI.Agents.Persistent
         public RunCompletionUsage Usage { get; }
 
         /// <summary> The sampling temperature used for this run. If not set, defaults to 1. </summary>
-        public float? Temperature { get; }
+        public float? Temperature
+        {
+            get
+            {
+                return _temperature;
+            }
+        }
 
         /// <summary> The nucleus sampling value used for this run. If not set, defaults to 1. </summary>
-        public float? TopP { get; }
+        public float? TopP
+        {
+            get
+            {
+                return _topP;
+            }
+        }
 
         /// <summary> The maximum number of prompt tokens specified to have been used over the course of the run. </summary>
         public int? MaxPromptTokens { get; }
@@ -293,7 +319,13 @@ namespace Azure.AI.Agents.Persistent
         public IReadOnlyDictionary<string, string> Metadata { get; }
 
         /// <summary> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </summary>
-        public ToolResources ToolResources { get; }
+        public ToolResources ToolResources
+        {
+            get
+            {
+                return _toolResources;
+            }
+        }
 
         /// <summary> Determines if tools can be executed in parallel within the run. </summary>
         public bool ParallelToolCalls { get; }

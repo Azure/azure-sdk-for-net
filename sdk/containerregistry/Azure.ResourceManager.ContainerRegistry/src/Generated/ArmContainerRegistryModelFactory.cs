@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <returns> A new <see cref="Models.ContainerRegistryCacheAuthentication"/> instance for mocking. </returns>
         public static ContainerRegistryCacheAuthentication ContainerRegistryCacheAuthentication(string authenticationType = default)
         {
-            return new UnknownContainerRegistryCacheAuthentication(default, default);
+            return new UnknownContainerRegistryCacheAuthentication(authenticationType is null ? default : new AdditionalAuthenticationType(authenticationType), default);
         }
 
         /// <summary> Google Artifact Registry (GAR) authentication configuration. </summary>
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <returns> A new <see cref="Models.GoogleArtifactRegistryCacheAuthentication"/> instance for mocking. </returns>
         public static GoogleArtifactRegistryCacheAuthentication GoogleArtifactRegistryCacheAuthentication(string projectNumber = default, string workloadIdentityPool = default, string workloadIdentityProvider = default)
         {
-            return new GoogleArtifactRegistryCacheAuthentication(default, default, projectNumber, workloadIdentityPool, workloadIdentityProvider);
+            return new GoogleArtifactRegistryCacheAuthentication(AdditionalAuthenticationType.GoogleArtifactRegistry, default, projectNumber, workloadIdentityPool, workloadIdentityProvider);
         }
 
         /// <param name="credentialSetResourceId"> The ARM resource ID of the credential store which is associated with the Cache rule. </param>

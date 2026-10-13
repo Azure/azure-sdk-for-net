@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private int? _tail;
+        internal bool _tailIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningDeploymentLogsContent"/>. </summary>
         public MachineLearningDeploymentLogsContent()
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal MachineLearningDeploymentLogsContent(MachineLearningContainerType? containerType, int? tail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContainerType = containerType;
-            Tail = tail;
+            _tail = tail;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +41,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The maximum number of lines to tail. </summary>
         [WirePath("tail")]
-        public int? Tail { get; set; }
+        public int? Tail
+        {
+            get
+            {
+                return _tail;
+            }
+            set
+            {
+                _tail = value;
+                _tailIsDefined = true;
+            }
+        }
     }
 }

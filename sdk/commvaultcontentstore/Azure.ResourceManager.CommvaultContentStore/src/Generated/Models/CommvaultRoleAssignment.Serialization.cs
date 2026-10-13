@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CommvaultRoleAssignment(roleName, entities, additionalBinaryDataProperties);
+            return new CommvaultRoleAssignment(roleName, entities ?? new ChangeTrackingList<CommvaultEntityInfo>(), additionalBinaryDataProperties);
         }
     }
 }

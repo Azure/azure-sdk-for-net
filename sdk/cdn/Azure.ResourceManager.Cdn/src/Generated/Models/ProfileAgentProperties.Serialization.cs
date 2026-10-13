@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProfileAgentProperties(webAgent, customDomains, provisioningState, additionalBinaryDataProperties);
+            return new ProfileAgentProperties(webAgent, customDomains ?? new ChangeTrackingList<CdnResourceReference>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

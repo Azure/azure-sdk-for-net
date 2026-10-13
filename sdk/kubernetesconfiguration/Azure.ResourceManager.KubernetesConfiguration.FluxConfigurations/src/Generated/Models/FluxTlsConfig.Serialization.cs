@@ -74,20 +74,41 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(FluxTlsConfig)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ClientCertificate))
+            if (_clientCertificateIsDefined || Optional.IsDefined(ClientCertificate))
             {
-                writer.WritePropertyName("clientCertificate"u8);
-                writer.WriteStringValue(ClientCertificate);
+                if (ClientCertificate != null)
+                {
+                    writer.WritePropertyName("clientCertificate"u8);
+                    writer.WriteStringValue(ClientCertificate);
+                }
+                else
+                {
+                    writer.WriteNull("clientCertificate"u8);
+                }
             }
-            if (Optional.IsDefined(PrivateKey))
+            if (_privateKeyIsDefined || Optional.IsDefined(PrivateKey))
             {
-                writer.WritePropertyName("privateKey"u8);
-                writer.WriteStringValue(PrivateKey);
+                if (PrivateKey != null)
+                {
+                    writer.WritePropertyName("privateKey"u8);
+                    writer.WriteStringValue(PrivateKey);
+                }
+                else
+                {
+                    writer.WriteNull("privateKey"u8);
+                }
             }
-            if (Optional.IsDefined(CaCertificate))
+            if (_caCertificateIsDefined || Optional.IsDefined(CaCertificate))
             {
-                writer.WritePropertyName("caCertificate"u8);
-                writer.WriteStringValue(CaCertificate);
+                if (CaCertificate != null)
+                {
+                    writer.WritePropertyName("caCertificate"u8);
+                    writer.WriteStringValue(CaCertificate);
+                }
+                else
+                {
+                    writer.WriteNull("caCertificate"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,14 +152,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 return null;
             }
+            bool clientCertificateIsDefined = false;
             string clientCertificate = default;
+            bool privateKeyIsDefined = false;
             string privateKey = default;
+            bool caCertificateIsDefined = false;
             string caCertificate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("clientCertificate"u8))
                 {
+                    clientCertificateIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         clientCertificate = null;
@@ -149,6 +174,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("privateKey"u8))
                 {
+                    privateKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         privateKey = null;
@@ -159,6 +185,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("caCertificate"u8))
                 {
+                    caCertificateIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         caCertificate = null;
@@ -172,7 +199,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FluxTlsConfig(clientCertificate, privateKey, caCertificate, additionalBinaryDataProperties);
+            return new FluxTlsConfig(clientCertificate, privateKey, caCertificate, additionalBinaryDataProperties)
+            {
+                _clientCertificateIsDefined = clientCertificateIsDefined,
+                _privateKeyIsDefined = privateKeyIsDefined,
+                _caCertificateIsDefined = caCertificateIsDefined
+            };
         }
     }
 }

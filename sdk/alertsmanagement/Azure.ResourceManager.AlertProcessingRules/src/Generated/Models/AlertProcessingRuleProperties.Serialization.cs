@@ -244,10 +244,10 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                 }
             }
             return new AlertProcessingRuleProperties(
-                scopes,
+                scopes ?? new ChangeTrackingList<string>(),
                 conditions ?? new ChangeTrackingList<AlertProcessingRuleCondition>(),
                 schedule,
-                actions,
+                actions ?? new ChangeTrackingList<AlertProcessingRuleAction>(),
                 description,
                 isEnabled,
                 additionalBinaryDataProperties);
