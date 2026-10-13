@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SignalRResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string signalRApiVersion);
             _signalRResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", ResourceType.Namespace, Diagnostics);
-            _signalRResourcesRestClient = new SignalRResources(_signalRResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, signalRApiVersion ?? "2025-01-01-preview");
+            _signalRResourcesRestClient = new SignalRResources(_signalRResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.SignalRService/signalR", out string signalRResourcesApiVersionOverride) ? signalRResourcesApiVersionOverride : "2025-01-01-preview");
             ValidateResourceId(id);
         }
 
