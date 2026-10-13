@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerEndpointPatch"/>. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateTrafficManagerEndpointPatch(EndpointUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateTrafficManagerEndpointPatch(PrivateTrafficManagerEndpointPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public EndpointUpdateProperties Properties { get; set; }
+        public PrivateTrafficManagerEndpointPatchProperties Properties { get; set; }
     }
 }

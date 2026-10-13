@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.PrivateTrafficManager
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(EndpointUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ExpectedStatusCodeRange))]
     [ModelReaderWriterBuildable(typeof(HealthPolicyData))]
     [ModelReaderWriterBuildable(typeof(HealthPolicyProperties))]
@@ -23,13 +22,14 @@ namespace Azure.ResourceManager.PrivateTrafficManager
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerDnsConfig))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerEndpointData))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerEndpointPatch))]
+    [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerEndpointPatchProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerEndpointResource))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerProfileData))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerProfilePatch))]
+    [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerProfilePatchProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerProfileProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerProfileResource))]
-    [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerProfileUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ProbeConfig))]
     [ModelReaderWriterBuildable(typeof(ProbeCustomHeader))]
     [ModelReaderWriterBuildable(typeof(ProbeHealthPolicy))]
@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.PrivateTrafficManager
     [ModelReaderWriterBuildable(typeof(ProfileProbingGatewayPatch))]
     [ModelReaderWriterBuildable(typeof(ProfileProbingGatewayProperties))]
     [ModelReaderWriterBuildable(typeof(ProfileProbingGatewayResource))]
-    [ModelReaderWriterBuildable(typeof(SiteUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TopologyMapData))]
     [ModelReaderWriterBuildable(typeof(TopologyMapInlineSite))]
@@ -47,6 +46,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
     [ModelReaderWriterBuildable(typeof(TopologyMapResource))]
     [ModelReaderWriterBuildable(typeof(TopologyMapSiteData))]
     [ModelReaderWriterBuildable(typeof(TopologyMapSitePatch))]
+    [ModelReaderWriterBuildable(typeof(TopologyMapSitePatchProperties))]
     [ModelReaderWriterBuildable(typeof(TopologyMapSiteProperties))]
     [ModelReaderWriterBuildable(typeof(TopologyMapSiteResource))]
     public partial class AzureResourceManagerPrivateTrafficManagerContext : ModelReaderWriterContext

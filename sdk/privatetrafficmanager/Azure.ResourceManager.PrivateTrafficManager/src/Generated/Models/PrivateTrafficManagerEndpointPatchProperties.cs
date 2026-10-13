@@ -13,18 +13,18 @@ using Azure.ResourceManager.PrivateTrafficManager;
 namespace Azure.ResourceManager.PrivateTrafficManager.Models
 {
     /// <summary> The updatable properties of the Endpoint. </summary>
-    public partial class EndpointUpdateProperties
+    public partial class PrivateTrafficManagerEndpointPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EndpointUpdateProperties"/>. </summary>
-        public EndpointUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerEndpointPatchProperties"/>. </summary>
+        public PrivateTrafficManagerEndpointPatchProperties()
         {
             VirtualNetworkIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EndpointUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerEndpointPatchProperties"/>. </summary>
         /// <param name="target"> The fully-qualified DNS name or IP address of the endpoint. Traffic Manager returns this value in DNS responses to direct traffic to this endpoint. </param>
         /// <param name="monitoringTarget"> Monitoring target is where Private Traffic Manager will gather health information.It can differ from the endpoint target, for example when the target is an IPv6 address. If not configured, the endpoint target is used. It is required when the target is IPv6 and cannot itself be an IPv6 address. </param>
         /// <param name="endpointStatus"> The status of the endpoint. If the endpoint is Enabled, it is probed for endpoint health and is included in the traffic routing method. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="healthPolicyId"> The health policy associated with this endpoint. </param>
         /// <param name="virtualNetworkIds"> The virtual network ARM resource IDs assigned to this endpoint when using the 'VNet' traffic routing method. A virtual network must not be assigned to more than one endpoint in the profile. A profile can have at most one fallback endpoint; an endpoint with no virtual networks is that fallback. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointUpdateProperties(string target, string monitoringTarget, EndpointAdministrativeStatus? endpointStatus, long? weight, long? priority, EndpointAlwaysServe? alwaysServe, ResourceIdentifier healthPolicyId, IList<ResourceIdentifier> virtualNetworkIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateTrafficManagerEndpointPatchProperties(string target, string monitoringTarget, EndpointAdministrativeStatus? endpointStatus, long? weight, long? priority, EndpointAlwaysServe? alwaysServe, ResourceIdentifier healthPolicyId, IList<ResourceIdentifier> virtualNetworkIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Target = target;
             MonitoringTarget = monitoringTarget;

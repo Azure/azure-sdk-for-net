@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             {
                 return null;
             }
-            EndpointUpdateProperties properties = default;
+            PrivateTrafficManagerEndpointPatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    properties = EndpointUpdateProperties.DeserializeEndpointUpdateProperties(prop.Value, options);
+                    properties = PrivateTrafficManagerEndpointPatchProperties.DeserializePrivateTrafficManagerEndpointPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

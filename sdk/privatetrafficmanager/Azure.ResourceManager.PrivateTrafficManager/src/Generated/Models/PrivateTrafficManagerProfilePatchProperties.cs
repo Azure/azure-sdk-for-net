@@ -13,18 +13,18 @@ using Azure.ResourceManager.PrivateTrafficManager;
 namespace Azure.ResourceManager.PrivateTrafficManager.Models
 {
     /// <summary> The updatable properties of the PrivateTrafficManagerProfile. </summary>
-    public partial class PrivateTrafficManagerProfileUpdateProperties
+    public partial class PrivateTrafficManagerProfilePatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerProfileUpdateProperties"/>. </summary>
-        public PrivateTrafficManagerProfileUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerProfilePatchProperties"/>. </summary>
+        public PrivateTrafficManagerProfilePatchProperties()
         {
             Endpoints = new ChangeTrackingList<ProfileEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerProfileUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerProfilePatchProperties"/>. </summary>
         /// <param name="customTopologyMapMode"> The mode for custom topology map of the Private Traffic Manager profile. </param>
         /// <param name="dnsConfig"> The DNS related configuration properties of the Private Traffic Manager. </param>
         /// <param name="topologyMapId"> The ARM resource ID of the topology map associated with this Private Traffic Manager profile. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="trafficRoutingMethod"> The traffic routing method of the Private Traffic Manager profile. </param>
         /// <param name="endpoints"> The list of endpoints in the Private Traffic Manager profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateTrafficManagerProfileUpdateProperties(CustomTopologyMapMode? customTopologyMapMode, PrivateTrafficManagerDnsConfig dnsConfig, ResourceIdentifier topologyMapId, PrivateTrafficManagerProfileStatus? profileStatus, TrafficRoutingMethod? trafficRoutingMethod, IList<ProfileEndpoint> endpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateTrafficManagerProfilePatchProperties(CustomTopologyMapMode? customTopologyMapMode, PrivateTrafficManagerDnsConfig dnsConfig, ResourceIdentifier topologyMapId, PrivateTrafficManagerProfileStatus? profileStatus, TrafficRoutingMethod? trafficRoutingMethod, IList<ProfileEndpoint> endpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CustomTopologyMapMode = customTopologyMapMode;
             DnsConfig = dnsConfig;

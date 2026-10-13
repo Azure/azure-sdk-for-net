@@ -15,51 +15,51 @@ using Azure.ResourceManager.PrivateTrafficManager;
 namespace Azure.ResourceManager.PrivateTrafficManager.Models
 {
     /// <summary> The updatable properties of the PrivateTrafficManagerProfile. </summary>
-    public partial class PrivateTrafficManagerProfileUpdateProperties : IJsonModel<PrivateTrafficManagerProfileUpdateProperties>
+    public partial class PrivateTrafficManagerProfilePatchProperties : IJsonModel<PrivateTrafficManagerProfilePatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrivateTrafficManagerProfileUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PrivateTrafficManagerProfilePatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerProfileUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerProfilePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePrivateTrafficManagerProfileUpdateProperties(document.RootElement, options);
+                        return DeserializePrivateTrafficManagerProfilePatchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateTrafficManagerProfileUpdateProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateTrafficManagerProfilePatchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerProfileUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerProfilePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPrivateTrafficManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateTrafficManagerProfileUpdateProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateTrafficManagerProfilePatchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrivateTrafficManagerProfileUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PrivateTrafficManagerProfilePatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateTrafficManagerProfileUpdateProperties IPersistableModel<PrivateTrafficManagerProfileUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PrivateTrafficManagerProfilePatchProperties IPersistableModel<PrivateTrafficManagerProfilePatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrivateTrafficManagerProfileUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PrivateTrafficManagerProfilePatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PrivateTrafficManagerProfileUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PrivateTrafficManagerProfilePatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerProfileUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerProfilePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateTrafficManagerProfileUpdateProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateTrafficManagerProfilePatchProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(CustomTopologyMapMode))
             {
@@ -129,24 +129,24 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateTrafficManagerProfileUpdateProperties IJsonModel<PrivateTrafficManagerProfileUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PrivateTrafficManagerProfilePatchProperties IJsonModel<PrivateTrafficManagerProfilePatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrivateTrafficManagerProfileUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PrivateTrafficManagerProfilePatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerProfileUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerProfilePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateTrafficManagerProfileUpdateProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateTrafficManagerProfilePatchProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrivateTrafficManagerProfileUpdateProperties(document.RootElement, options);
+            return DeserializePrivateTrafficManagerProfilePatchProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PrivateTrafficManagerProfileUpdateProperties DeserializePrivateTrafficManagerProfileUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static PrivateTrafficManagerProfilePatchProperties DeserializePrivateTrafficManagerProfilePatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PrivateTrafficManagerProfileUpdateProperties(
+            return new PrivateTrafficManagerProfilePatchProperties(
                 customTopologyMapMode,
                 dnsConfig,
                 topologyMapId,

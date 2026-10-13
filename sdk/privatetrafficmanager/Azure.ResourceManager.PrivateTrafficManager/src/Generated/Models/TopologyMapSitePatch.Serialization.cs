@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             {
                 return null;
             }
-            SiteUpdateProperties properties = default;
+            TopologyMapSitePatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    properties = SiteUpdateProperties.DeserializeSiteUpdateProperties(prop.Value, options);
+                    properties = TopologyMapSitePatchProperties.DeserializeTopologyMapSitePatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

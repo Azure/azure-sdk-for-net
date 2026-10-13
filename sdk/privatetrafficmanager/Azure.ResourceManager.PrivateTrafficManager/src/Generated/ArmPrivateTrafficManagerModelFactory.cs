@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <summary> The type used for update operations of the Endpoint. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.PrivateTrafficManagerEndpointPatch"/> instance for mocking. </returns>
-        public static PrivateTrafficManagerEndpointPatch PrivateTrafficManagerEndpointPatch(EndpointUpdateProperties properties = default)
+        public static PrivateTrafficManagerEndpointPatch PrivateTrafficManagerEndpointPatch(PrivateTrafficManagerEndpointPatchProperties properties = default)
         {
             return new PrivateTrafficManagerEndpointPatch(properties, default);
         }
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="alwaysServe"> Indicates whether endpoint is Always Serve or not. Always Serve endpoints are always considered to be healthy. </param>
         /// <param name="healthPolicyId"> The health policy associated with this endpoint. </param>
         /// <param name="virtualNetworkIds"> The virtual network ARM resource IDs assigned to this endpoint when using the 'VNet' traffic routing method. A virtual network must not be assigned to more than one endpoint in the profile. A profile can have at most one fallback endpoint; an endpoint with no virtual networks is that fallback. </param>
-        /// <returns> A new <see cref="Models.EndpointUpdateProperties"/> instance for mocking. </returns>
-        public static EndpointUpdateProperties EndpointUpdateProperties(string target = default, string monitoringTarget = default, EndpointAdministrativeStatus? endpointStatus = default, long? weight = default, long? priority = default, EndpointAlwaysServe? alwaysServe = default, ResourceIdentifier healthPolicyId = default, IEnumerable<ResourceIdentifier> virtualNetworkIds = default)
+        /// <returns> A new <see cref="Models.PrivateTrafficManagerEndpointPatchProperties"/> instance for mocking. </returns>
+        public static PrivateTrafficManagerEndpointPatchProperties PrivateTrafficManagerEndpointPatchProperties(string target = default, string monitoringTarget = default, EndpointAdministrativeStatus? endpointStatus = default, long? weight = default, long? priority = default, EndpointAlwaysServe? alwaysServe = default, ResourceIdentifier healthPolicyId = default, IEnumerable<ResourceIdentifier> virtualNetworkIds = default)
         {
             virtualNetworkIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new EndpointUpdateProperties(
+            return new PrivateTrafficManagerEndpointPatchProperties(
                 target,
                 monitoringTarget,
                 endpointStatus,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.PrivateTrafficManagerProfilePatch"/> instance for mocking. </returns>
-        public static PrivateTrafficManagerProfilePatch PrivateTrafficManagerProfilePatch(IDictionary<string, string> tags = default, PrivateTrafficManagerProfileUpdateProperties properties = default)
+        public static PrivateTrafficManagerProfilePatch PrivateTrafficManagerProfilePatch(IDictionary<string, string> tags = default, PrivateTrafficManagerProfilePatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -303,12 +303,12 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="profileStatus"> The status of the Private Traffic Manager profile. </param>
         /// <param name="trafficRoutingMethod"> The traffic routing method of the Private Traffic Manager profile. </param>
         /// <param name="endpoints"> The list of endpoints in the Private Traffic Manager profile. </param>
-        /// <returns> A new <see cref="Models.PrivateTrafficManagerProfileUpdateProperties"/> instance for mocking. </returns>
-        public static PrivateTrafficManagerProfileUpdateProperties PrivateTrafficManagerProfileUpdateProperties(CustomTopologyMapMode? customTopologyMapMode = default, PrivateTrafficManagerDnsConfig dnsConfig = default, ResourceIdentifier topologyMapId = default, PrivateTrafficManagerProfileStatus? profileStatus = default, TrafficRoutingMethod? trafficRoutingMethod = default, IEnumerable<ProfileEndpoint> endpoints = default)
+        /// <returns> A new <see cref="Models.PrivateTrafficManagerProfilePatchProperties"/> instance for mocking. </returns>
+        public static PrivateTrafficManagerProfilePatchProperties PrivateTrafficManagerProfilePatchProperties(CustomTopologyMapMode? customTopologyMapMode = default, PrivateTrafficManagerDnsConfig dnsConfig = default, ResourceIdentifier topologyMapId = default, PrivateTrafficManagerProfileStatus? profileStatus = default, TrafficRoutingMethod? trafficRoutingMethod = default, IEnumerable<ProfileEndpoint> endpoints = default)
         {
             endpoints ??= new ChangeTrackingList<ProfileEndpoint>();
 
-            return new PrivateTrafficManagerProfileUpdateProperties(
+            return new PrivateTrafficManagerProfilePatchProperties(
                 customTopologyMapMode,
                 dnsConfig,
                 topologyMapId,
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <summary> The type used for update operations of the Site. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.TopologyMapSitePatch"/> instance for mocking. </returns>
-        public static TopologyMapSitePatch TopologyMapSitePatch(SiteUpdateProperties properties = default)
+        public static TopologyMapSitePatch TopologyMapSitePatch(TopologyMapSitePatchProperties properties = default)
         {
             return new TopologyMapSitePatch(properties, default);
         }
@@ -394,13 +394,13 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <summary> The updatable properties of the Site. </summary>
         /// <param name="probingGatewayIds"> The ARM resource ID of the probing gateway that can be used to monitor health as surrogate to the networks in the Site. </param>
         /// <param name="virtualNetworkIds"> The list of Network IDs that forms the Site. </param>
-        /// <returns> A new <see cref="Models.SiteUpdateProperties"/> instance for mocking. </returns>
-        public static SiteUpdateProperties SiteUpdateProperties(IEnumerable<ResourceIdentifier> probingGatewayIds = default, IEnumerable<ResourceIdentifier> virtualNetworkIds = default)
+        /// <returns> A new <see cref="Models.TopologyMapSitePatchProperties"/> instance for mocking. </returns>
+        public static TopologyMapSitePatchProperties TopologyMapSitePatchProperties(IEnumerable<ResourceIdentifier> probingGatewayIds = default, IEnumerable<ResourceIdentifier> virtualNetworkIds = default)
         {
             probingGatewayIds ??= new ChangeTrackingList<ResourceIdentifier>();
             virtualNetworkIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new SiteUpdateProperties((probingGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), (virtualNetworkIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+            return new TopologyMapSitePatchProperties((probingGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), (virtualNetworkIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
         /// <summary> Class representing a Topology Map. </summary>

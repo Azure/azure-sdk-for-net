@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <summary> Initializes a new instance of <see cref="TopologyMapSitePatch"/>. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TopologyMapSitePatch(SiteUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TopologyMapSitePatch(TopologyMapSitePatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public SiteUpdateProperties Properties { get; set; }
+        public TopologyMapSitePatchProperties Properties { get; set; }
     }
 }
