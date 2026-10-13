@@ -15,7 +15,10 @@ namespace Azure.Provisioning.ApiCenter
         /// <summary> The API source link is initializing. </summary>
         [DataMember(Name = "initializing")]
         Initializing = 0,
-        /// <summary> The API source is syncing. </summary>
+        /// <summary>
+        /// *
+        /// The API source is syncing.
+        /// </summary>
         [DataMember(Name = "syncing")]
         Syncing = 1,
         /// <summary> The API source sync is blocked due to an error. </summary>
