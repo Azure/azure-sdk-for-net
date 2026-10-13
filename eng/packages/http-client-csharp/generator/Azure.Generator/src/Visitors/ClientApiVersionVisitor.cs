@@ -26,12 +26,15 @@ namespace Azure.Generator.Visitors
                 client.Parameters.FirstOrDefault(p => p.IsApiVersion && p.DefaultValue?.Value != null)
                     ?.DefaultValue is { } defaultValue)
             {
-                _apiVersionOverrides[clientProvider.Type] = defaultValue;
+                _apiVersionOverrides.TryAdd(clientProvider.Type, defaultValue);
             }
 
             return clientProvider;
         }
 
+        // Rewrites subclient factory returns from new SubClient(..., _apiVersion) to
+        // new SubClient(..., "<override>") using the subclient's API-version default.
+        // The surrounding Volatile.Read/Interlocked.CompareExchange caching expression is preserved.
         protected override ValueExpression? VisitKeywordExpression(KeywordExpression expression, MethodProvider method)
         {
             if (expression is not { Keyword: "return", Expression: { } value } ||

@@ -35,19 +35,8 @@ namespace Azure.Generator.Tests.Visitors
 
             var provider = library.TypeProviders.OfType<ClientProvider>().Single(c => c.Name == "TestClient");
             var factory = provider.Methods.Single(m => m.Signature.Name == "GetLegacyClient");
-            var body = factory.BodyStatements!.ToDisplayString();
-            StringAssert.Contains("Pipeline, _endpoint, \"2022-10-01\"", body);
-            StringAssert.DoesNotContain("_apiVersion", body);
+            Assert.AreEqual(Helpers.GetExpectedFromFile(cached.ToString()), factory.BodyStatements!.ToDisplayString());
             Assert.AreEqual(cached ? 0 : 1, factory.Signature.Parameters.Count);
-            if (cached)
-            {
-                StringAssert.Contains("CompareExchange", body);
-            }
-            else
-            {
-                StringAssert.Contains("tenant", body);
-                StringAssert.DoesNotContain("CompareExchange", body);
-            }
         }
 
         [TestCase(true, null)]
