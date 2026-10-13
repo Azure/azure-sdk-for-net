@@ -99,6 +99,11 @@ namespace Azure.ResourceManager.FileShares.Models
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
+            if (Optional.IsDefined(ScaleMode))
+            {
+                writer.WritePropertyName("scaleMode"u8);
+                writer.WriteStringValue(ScaleMode.Value.ToString());
+            }
             if (Optional.IsDefined(ProvisionedStorageInGiB))
             {
                 writer.WritePropertyName("provisionedStorageGiB"u8);
@@ -169,6 +174,16 @@ namespace Azure.ResourceManager.FileShares.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(MigrationState))
+            {
+                writer.WritePropertyName("migrationState"u8);
+                writer.WriteObjectValue(MigrationState, options);
+            }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -216,6 +231,7 @@ namespace Azure.ResourceManager.FileShares.Models
             FileShareMediaTier? mediaTier = default;
             FileShareRedundancyLevel? redundancy = default;
             FileShareProtocol? protocol = default;
+            ScaleMode? scaleMode = default;
             int? provisionedStorageInGiB = default;
             DateTimeOffset? provisionedStorageNextAllowedDowngradeOn = default;
             int? provisionedIOPerSec = default;
@@ -229,6 +245,8 @@ namespace Azure.ResourceManager.FileShares.Models
             FileShareProvisioningState? provisioningState = default;
             FileSharePublicNetworkAccess? publicNetworkAccess = default;
             IReadOnlyList<FileSharePrivateEndpointConnectionData> privateEndpointConnections = default;
+            MigrationState migrationState = default;
+            FileShareEncryption encryption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -267,6 +285,15 @@ namespace Azure.ResourceManager.FileShares.Models
                         continue;
                     }
                     protocol = new FileShareProtocol(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("scaleMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scaleMode = new ScaleMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisionedStorageGiB"u8))
@@ -391,6 +418,24 @@ namespace Azure.ResourceManager.FileShares.Models
                     privateEndpointConnections = array;
                     continue;
                 }
+                if (prop.NameEquals("migrationState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    migrationState = MigrationState.DeserializeMigrationState(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("encryption"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryption = FileShareEncryption.DeserializeFileShareEncryption(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -402,6 +447,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 mediaTier,
                 redundancy,
                 protocol,
+                scaleMode,
                 provisionedStorageInGiB,
                 provisionedStorageNextAllowedDowngradeOn,
                 provisionedIOPerSec,
@@ -415,6 +461,8 @@ namespace Azure.ResourceManager.FileShares.Models
                 provisioningState,
                 publicNetworkAccess,
                 privateEndpointConnections ?? new ChangeTrackingList<FileSharePrivateEndpointConnectionData>(),
+                migrationState,
+                encryption,
                 additionalBinaryDataProperties);
         }
     }
