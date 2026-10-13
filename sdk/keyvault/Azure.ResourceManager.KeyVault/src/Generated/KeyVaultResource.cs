@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal KeyVaultResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string keyVaultApiVersion);
             _vaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
-            _vaultsRestClient = new Vaults(_vaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, keyVaultApiVersion ?? "2026-02-01");
+            _vaultsRestClient = new Vaults(_vaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.KeyVault/vaults", out string vaultsApiVersionOverride) ? vaultsApiVersionOverride : "2026-02-01");
             ValidateResourceId(id);
         }
 
