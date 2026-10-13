@@ -28,17 +28,21 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="metrics"> Properties related to the metrics container in the Azure Monitor Workspace. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure Monitor Workspace. Set to Succeeded if everything is healthy. </param>
         /// <param name="defaultIngestionSettings"> The Data Collection Rule and Endpoint used for ingestion by default. </param>
+        /// <param name="endpoints"> Query endpoints for the Azure Monitor Workspace. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to Azure Monitor Workspace. </param>
+        /// <param name="actions"> Action configuration for the Azure Monitor Workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorWorkspaceProperties(string accountId, MonitorWorkspaceMetrics metrics, MonitorWorkspaceProvisioningState? provisioningState, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorWorkspaceProperties(string accountId, MonitorWorkspaceMetrics metrics, MonitorWorkspaceProvisioningState? provisioningState, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, AzureMonitorWorkspaceEndpoints endpoints, IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess, AzureMonitorWorkspaceActions actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountId = accountId;
             Metrics = metrics;
             ProvisioningState = provisioningState;
             DefaultIngestionSettings = defaultIngestionSettings;
+            Endpoints = endpoints;
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
+            Actions = actions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -54,10 +58,38 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <summary> The Data Collection Rule and Endpoint used for ingestion by default. </summary>
         public MonitorWorkspaceDefaultIngestionSettings DefaultIngestionSettings { get; }
 
+        /// <summary> Query endpoints for the Azure Monitor Workspace. </summary>
+        internal AzureMonitorWorkspaceEndpoints Endpoints { get; }
+
         /// <summary> List of private endpoint connections. </summary>
         public IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> PrivateEndpointConnections { get; }
 
         /// <summary> Gets or sets allow or disallow public network access to Azure Monitor Workspace. </summary>
         public MonitorWorkspacePublicNetworkAccess? PublicNetworkAccess { get; set; }
+
+        /// <summary> Action configuration for the Azure Monitor Workspace. </summary>
+        internal AzureMonitorWorkspaceActions Actions { get; set; }
+
+        /// <summary> The query endpoint for the Azure Monitor Workspace. </summary>
+        public Uri EndpointsQuery
+        {
+            get
+            {
+                return Endpoints is null ? default : Endpoints.Query;
+            }
+        }
+
+        /// <summary> The default action groups associated with the Azure Monitor Workspace. </summary>
+        public IList<DefaultActionGroupResource> ActionsDefaultActionGroups
+        {
+            get
+            {
+                if (Actions is null)
+                {
+                    Actions = new AzureMonitorWorkspaceActions();
+                }
+                return Actions.DefaultActionGroups;
+            }
+        }
     }
 }

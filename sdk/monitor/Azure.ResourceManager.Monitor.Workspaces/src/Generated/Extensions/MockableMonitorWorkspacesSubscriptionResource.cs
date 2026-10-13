@@ -36,7 +36,34 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
 
         private ClientDiagnostics AzureMonitorWorkspacesClientDiagnostics => _azureMonitorWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AzureMonitorWorkspaces AzureMonitorWorkspacesRestClient => _azureMonitorWorkspacesRestClient ??= new AzureMonitorWorkspaces(AzureMonitorWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-03");
+        private AzureMonitorWorkspaces AzureMonitorWorkspacesRestClient => _azureMonitorWorkspacesRestClient ??= new AzureMonitorWorkspaces(AzureMonitorWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-03-preview");
+
+        /// <summary>
+        /// Gets the trace association at the scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Monitor/traceAssociations/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TraceAssociationsAtSubscription_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-03-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TraceAssociationsAtSubscriptionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="TraceAssociationsAtSubscriptionResource"/> object. </returns>
+        public virtual TraceAssociationsAtSubscriptionResource GetTraceAssociationsAtSubscription()
+        {
+            return new TraceAssociationsAtSubscriptionResource(Client, Id.AppendProviderResource("Microsoft.Monitor", "traceAssociations", "default"));
+        }
 
         /// <summary>
         /// Lists all Azure Monitor Workspaces in the specified subscription
@@ -51,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,7 +106,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

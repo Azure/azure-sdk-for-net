@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Monitor.Workspaces
     {
         private readonly ClientDiagnostics _metricsContainersClientDiagnostics;
         private readonly MetricsContainers _metricsContainersRestClient;
+        private readonly ClientDiagnostics _metricConfigurationsClientDiagnostics;
+        private readonly MetricConfigurations _metricConfigurationsRestClient;
         private readonly MonitorMetricsContainerData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Monitor/accounts/metricsContainers";
@@ -50,7 +52,9 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         {
             TryGetApiVersion(ResourceType, out string monitorMetricsContainerApiVersion);
             _metricsContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces", ResourceType.Namespace, Diagnostics);
-            _metricsContainersRestClient = new MetricsContainers(_metricsContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, monitorMetricsContainerApiVersion ?? "2025-10-03");
+            _metricsContainersRestClient = new MetricsContainers(_metricsContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, monitorMetricsContainerApiVersion ?? "2026-09-03-preview");
+            _metricConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces", ResourceType.Namespace, Diagnostics);
+            _metricConfigurationsRestClient = new MetricConfigurations(_metricConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, monitorMetricsContainerApiVersion ?? "2026-09-03-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +156,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -188,6 +192,90 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         }
 
         /// <summary>
+        /// Lists metrics across all namespaces in a metrics container. Resource
+        /// properties may be omitted in collection responses.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/accounts/{azureMonitorWorkspaceName}/metricsContainers/{metricsContainerName}/metrics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricConfigurations_ListByMetricsContainer. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-03-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MonitorMetricsContainerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> An OData filter for source metric resource IDs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MetricConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MetricConfigurationResource> GetByMetricsContainerAsync(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MetricConfigurationResourceData, MetricConfigurationResource>(new MetricConfigurationResourceDataAsync0CollectionResultOfT(
+                _metricConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                context,
+                "MonitorMetricsContainerResource.GetByMetricsContainer"), data => new MetricConfigurationResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists metrics across all namespaces in a metrics container. Resource
+        /// properties may be omitted in collection responses.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/accounts/{azureMonitorWorkspaceName}/metricsContainers/{metricsContainerName}/metrics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricConfigurations_ListByMetricsContainer. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-03-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MonitorMetricsContainerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> An OData filter for source metric resource IDs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MetricConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MetricConfigurationResource> GetByMetricsContainer(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MetricConfigurationResourceData, MetricConfigurationResource>(new MetricConfigurationResourceData0CollectionResultOfT(
+                _metricConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                context,
+                "MonitorMetricsContainerResource.GetByMetricsContainer"), data => new MetricConfigurationResource(Client, data));
+        }
+
+        /// <summary>
         /// Update a MonitorMetricsContainer.
         /// <list type="bullet">
         /// <item>
@@ -200,7 +288,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -256,7 +344,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -297,6 +385,39 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of MetricNamespaceResources in the <see cref="MonitorMetricsContainerResource"/>. </summary>
+        /// <returns> An object representing collection of MetricNamespaceResources and their operations over a MetricNamespaceResource. </returns>
+        public virtual MetricNamespaceResourceCollection GetMetricNamespaceResources()
+        {
+            return GetCachedClient(client => new MetricNamespaceResourceCollection(client, Id));
+        }
+
+        /// <summary> Gets a metric namespace. </summary>
+        /// <param name="encodedMetricNamespace"> Tilde encoding is used for the metric namespace in the URL path. It is similar to percent encoding but uses `~` instead of `%`. For example, `/` is encoded as `~2F`. Metric configurations provide the original namespace in `properties.namespace`. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="encodedMetricNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="encodedMetricNamespace"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MetricNamespaceResource>> GetMetricNamespaceResourceAsync(string encodedMetricNamespace, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(encodedMetricNamespace, nameof(encodedMetricNamespace));
+
+            return await GetMetricNamespaceResources().GetAsync(encodedMetricNamespace, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a metric namespace. </summary>
+        /// <param name="encodedMetricNamespace"> Tilde encoding is used for the metric namespace in the URL path. It is similar to percent encoding but uses `~` instead of `%`. For example, `/` is encoded as `~2F`. Metric configurations provide the original namespace in `properties.namespace`. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="encodedMetricNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="encodedMetricNamespace"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MetricNamespaceResource> GetMetricNamespaceResource(string encodedMetricNamespace, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(encodedMetricNamespace, nameof(encodedMetricNamespace));
+
+            return GetMetricNamespaceResources().Get(encodedMetricNamespace, cancellationToken);
         }
     }
 }
