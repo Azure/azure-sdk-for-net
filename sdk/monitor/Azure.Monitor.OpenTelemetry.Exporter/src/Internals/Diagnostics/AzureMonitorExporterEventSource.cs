@@ -727,7 +727,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(83, Message = "Export {0}: dropped {1} telemetry items for route '{2}'. The telemetry is marked for Microsoft Entra ID, but AzureMonitorExporterOptions.Credential is not configured, so it is neither sent without a token nor persisted.", Level = EventLevel.Warning)]
+        [Event(83, Message = "Export {0}: dropped {1} telemetry items for route '{2}'. The telemetry is marked for Microsoft Entra ID, but this transmitter was built without a credential (see event 84 if this exporter's Credential is set), so it is neither sent without a token nor persisted.", Level = EventLevel.Warning)]
         public void RoutedAadTelemetryDroppedWithoutCredential(long exportSequence, int itemCount, string route)
         {
             if (IsEnabled(EventLevel.Warning))
