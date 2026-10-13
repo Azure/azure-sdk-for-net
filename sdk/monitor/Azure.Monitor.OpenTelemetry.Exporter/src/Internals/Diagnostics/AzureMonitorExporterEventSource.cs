@@ -736,7 +736,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(84, Message = "Ignoring this exporter's Credential setting. Exporters that share a connection string send through one shared connection, created by an earlier exporter configured {0} a Credential; this exporter is configured {1} one. Set the same AzureMonitorExporterOptions.Credential on every exporter (with multi-endpoint routing, all exporters share one connection).", Level = EventLevel.Warning)]
+        [Event(84, Message = "This exporter's Credential setting is ignored because it reuses a shared connection created by an earlier exporter. The shared connection was created {0} a Credential; this exporter is configured {1} a Credential. Set the same AzureMonitorExporterOptions.Credential on all exporters sharing a connection string. With multi-endpoint routing, all exporters share one connection and must use the same Credential setting.", Level = EventLevel.Warning)]
         public void CachedTransmitterCredentialMismatch(string transmitterCredential, string exporterCredential)
         {
             if (IsEnabled(EventLevel.Warning))
