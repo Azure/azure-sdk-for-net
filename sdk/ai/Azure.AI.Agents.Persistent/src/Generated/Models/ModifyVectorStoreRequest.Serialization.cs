@@ -84,7 +84,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 throw new FormatException($"The model {nameof(ModifyVectorStoreRequest)} does not support writing '{format}' format.");
             }
-            if (_nameIsDefined || Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name, _nameIsDefined))
             {
                 if (Name != null)
                 {
@@ -96,7 +96,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteNull("name"u8);
                 }
             }
-            if (_expiresAfterIsDefined || Optional.IsDefined(ExpiresAfter))
+            if (Optional.IsDefined(ExpiresAfter, _expiresAfterIsDefined))
             {
                 if (ExpiresAfter != null)
                 {

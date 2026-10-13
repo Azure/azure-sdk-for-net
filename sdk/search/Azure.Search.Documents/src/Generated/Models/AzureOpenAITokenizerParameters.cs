@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private SplitSkillEncoderModelName? _encoderModelName;
-        internal bool _encoderModelNameIsDefined;
+        private bool _encoderModelNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AzureOpenAITokenizerParameters"/>. </summary>
         public AzureOpenAITokenizerParameters()

@@ -39,15 +39,8 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WireVersionTestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(WireVersionTestResource.ResourceType, out string wireVersionTestApiVersion);
             _wireVersionOperationsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtApiVersionOverride.Tests", WireVersionTestResource.ResourceType.Namespace, Diagnostics);
-            _wireVersionOperationsRestClient = new WireVersionOperations(
-                _wireVersionOperationsClientDiagnostics,
-                Pipeline,
-                Diagnostics.ApplicationId,
-                Endpoint,
-                wireVersionTestApiVersion ?? "2024-05-01",
-                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _wireVersionOperationsRestClient = new WireVersionOperations(_wireVersionOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

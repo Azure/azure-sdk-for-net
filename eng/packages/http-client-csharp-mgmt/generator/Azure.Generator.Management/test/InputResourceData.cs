@@ -1106,7 +1106,7 @@ namespace Azure.Generator.Management.Tests.Common
             return (parentClient, childClient, [parentModel, childModel, childPageModel]);
         }
 
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithExtensionScopedResourceList(string listMethodName = "getEventsBySingleResource", bool hasClientNameOverride = false)
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithExtensionScopedResourceList(string listMethodName = "getEventsBySingleResource", bool hasClientNameOverride = false, string resourceType = "Microsoft.Tests/events")
         {
             const string TestClientName = "TestClient";
             var eventModel = InputFactory.Model("EventData",
@@ -1132,14 +1132,19 @@ namespace Azure.Generator.Management.Tests.Common
             var resourceUriOpParam = InputFactory.PathParameter("resourceUri", InputPrimitiveType.String, isRequired: true);
             var filterOpParam = InputFactory.QueryParameter("filter", InputPrimitiveType.String, serializedName: "$filter");
 
-            var eventResourceId = "/subscriptions/{subscriptionId}/providers/Microsoft.Tests/events/{eventName}";
-            var getEventOp = InputFactory.Operation("getEvent", parameters: [subscriptionIdOpParam, eventNameOpParam], responses: [InputFactory.OperationResponse([200], eventModel)], path: eventResourceId);
-            var listBySingleResourcePath = "/{resourceUri}/providers/Microsoft.Tests/events";
+            var resourceTypeSegments = resourceType.Split('/');
+            var parentNames = Enumerable.Range(1, resourceTypeSegments.Length - 2).Select(i => $"parent{i}Name").ToArray();
+            var parentOpParams = parentNames.Select(name => InputFactory.PathParameter(name, InputPrimitiveType.String, isRequired: true)).ToArray();
+            var providerPath = string.Join("/", resourceTypeSegments.Select((segment, i) =>
+                i > 0 && i < resourceTypeSegments.Length - 1 ? $"{segment}/{{{parentNames[i - 1]}}}" : segment));
+            var eventResourceId = $"/subscriptions/{{subscriptionId}}/providers/{providerPath}/{{eventName}}";
+            var getEventOp = InputFactory.Operation("getEvent", parameters: [subscriptionIdOpParam, eventNameOpParam, .. parentOpParams], responses: [InputFactory.OperationResponse([200], eventModel)], path: eventResourceId);
+            var listBySingleResourcePath = $"/{{resourceUri}}/providers/{providerPath}";
             IReadOnlyList<InputDecoratorInfo>? listDecorators = hasClientNameOverride
                 ? [new InputDecoratorInfo("Azure.ResourceManager.@hasClientNameOverride", new Dictionary<string, BinaryData>())]
                 : null;
             var operationName = hasClientNameOverride ? listMethodName : "listBySingleResource";
-            var listBySingleResourceOp = InputFactory.Operation(operationName, parameters: [resourceUriOpParam, filterOpParam], responses: [InputFactory.OperationResponse([200], pageModel)], path: listBySingleResourcePath, decorators: listDecorators);
+            var listBySingleResourceOp = InputFactory.Operation(operationName, parameters: [resourceUriOpParam, filterOpParam, .. parentOpParams], responses: [InputFactory.OperationResponse([200], pageModel)], path: listBySingleResourcePath, decorators: listDecorators);
             if (hasClientNameOverride)
             {
                 listBySingleResourceOp.GetType().GetProperty("OriginalName")!.GetSetMethod(true)!.Invoke(listBySingleResourceOp, [listMethodName]);
@@ -1150,11 +1155,12 @@ namespace Azure.Generator.Management.Tests.Common
             var resourceUriParam = InputFactory.MethodParameter("resourceUri", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
             var filterParam = InputFactory.MethodParameter("filter", InputPrimitiveType.String, location: InputRequestLocation.Query, serializedName: "$filter");
 
-            var getEventMethod = InputFactory.BasicServiceMethod("getEvent", getEventOp, parameters: [eventNameParam, subscriptionIdParam], crossLanguageDefinitionId: "Microsoft.Tests.Events.get");
+            var parentParams = parentNames.Select(name => InputFactory.MethodParameter(name, InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true)).ToArray();
+            var getEventMethod = InputFactory.BasicServiceMethod("getEvent", getEventOp, parameters: [eventNameParam, subscriptionIdParam, .. parentParams], crossLanguageDefinitionId: "Microsoft.Tests.Events.get");
             var listBySingleResourceMethod = InputFactory.PagingServiceMethod(
                 listMethodName,
                 listBySingleResourceOp,
-                parameters: [resourceUriParam, filterParam],
+                parameters: [resourceUriParam, filterParam, .. parentParams],
                 pagingMetadata: InputFactory.NextLinkPagingMetadata("value", "nextLink", InputResponseLocation.Body));
 
             var armProviderDecorator = BuildArmProviderSchema(
@@ -1164,7 +1170,7 @@ namespace Azure.Generator.Management.Tests.Common
                     new ResourceMethod(ResourceOperationKind.List, listBySingleResourceMethod, new RequestPathPattern(listBySingleResourcePath), new ArmScopeInfo(ResourceScope.Extension, new RequestPathPattern("/{resourceUri}"), null), null!),
                 ],
                 new RequestPathPattern(eventResourceId),
-                "Microsoft.Tests/events",
+                resourceType,
                 null,
                 ResourceScope.Subscription,
                 "Event");
@@ -1385,6 +1391,89 @@ namespace Azure.Generator.Management.Tests.Common
             ], $"{scopePrefix}/providers/Microsoft.Tests/{resourceKind}/{{name}}", $"Microsoft.Tests/{resourceKind}", null, ResourceScope.Tenant, resourceKind, null, "/")).ToArray();
             var client = InputFactory.Client("DynamicPaging", methods: [read, list], decorators: [BuildArmProviderSchemaMultiResource(resources)]);
             return (client, [.. models, page]);
+        }
+
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithSharedMockableOperations(bool includeSecondResource = false, bool includeNonResource = false, bool includeAction = false)
+        {
+            const string scopePath = "/subscriptions/{subscriptionId}";
+            var scope = new ArmScopeInfo(ResourceScope.Subscription, new RequestPathPattern(scopePath), "Microsoft.Resources/subscriptions");
+            var methods = new List<InputServiceMethod>();
+            var models = new List<InputModelType>();
+            var resources = new List<ResourceSchemaInput>();
+            foreach (var resourceName in includeSecondResource ? new[] { "First", "Second" } : ["First"])
+            {
+                var resourceType = $"Microsoft.Tests/{resourceName.ToLowerInvariant()}";
+                var resourcePath = $"{scopePath}/providers/{resourceType}/{{resourceName}}";
+                var model = InputFactory.Model($"{resourceName}Data", usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                    properties:
+                    [
+                        InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                        InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                        InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true)
+                    ]);
+                var page = InputFactory.Model($"{resourceName}ListResult", usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                    properties: [InputFactory.Property("value", InputFactory.Array(model)), InputFactory.Property("nextLink", InputPrimitiveType.Url)]);
+                models.AddRange([model, page]);
+                var readOperation = CreateOperation($"Read{resourceName}", resourcePath, model, hasName: true);
+                var read = InputFactory.BasicServiceMethod($"Read{resourceName}", readOperation,
+                    parameters: CreateParameters(hasName: true), crossLanguageDefinitionId: $"Test.{resourceName}.Read");
+                var listPath = $"/{{resourceUri}}/providers/{resourceType}";
+                var listOperation = CreateOperation($"List{resourceName}", listPath, page, hasName: false, extensionScope: true);
+                var list = InputFactory.PagingServiceMethod($"List{resourceName}", listOperation,
+                    parameters: CreateParameters(hasName: false, extensionScope: true),
+                    pagingMetadata: InputFactory.NextLinkPagingMetadata("value", "nextLink", InputResponseLocation.Body));
+                methods.AddRange([read, list]);
+                var resourceMethods = new List<ResourceMethod>
+                {
+                    new(ResourceOperationKind.Read, read, new RequestPathPattern(resourcePath), scope, null!),
+                    new(ResourceOperationKind.List, list, new RequestPathPattern(listPath), new ArmScopeInfo(ResourceScope.Extension, new RequestPathPattern("/{resourceUri}"), null), null!)
+                };
+                if (includeAction)
+                {
+                    var actionPath = resourcePath + "/restart";
+                    var actionOperation = CreateOperation($"Restart{resourceName}", actionPath, model, hasName: true, httpMethod: "POST");
+                    var action = InputFactory.BasicServiceMethod($"Restart{resourceName}", actionOperation,
+                        parameters: CreateParameters(hasName: true), crossLanguageDefinitionId: $"Test.{resourceName}.Restart");
+                    methods.Add(action);
+                    resourceMethods.Add(new(ResourceOperationKind.Action, action, new RequestPathPattern(actionPath), scope, null!));
+                }
+                resources.Add(new ResourceSchemaInput(model, resourceMethods, resourcePath, resourceType, null,
+                    ResourceScope.Subscription, resourceName, null, scopePath, scope.ScopeResourceType));
+            }
+
+            var decorator = BuildArmProviderSchemaMultiResource(resources);
+            if (includeNonResource)
+            {
+                var operation = CreateOperation("CheckNameAvailability", "/{resourceUri}/checkNameAvailability", InputPrimitiveType.String, hasName: false, httpMethod: "POST", extensionScope: true);
+                var method = InputFactory.BasicServiceMethod("CheckNameAvailability", operation,
+                    parameters: CreateParameters(hasName: false, extensionScope: true), crossLanguageDefinitionId: "Test.CheckNameAvailability");
+                methods.Add(method);
+                var arguments = new Dictionary<string, BinaryData>(decorator.Arguments!)
+                {
+                    ["nonResourceMethods"] = BinaryData.FromObjectAsJson(new[]
+                    {
+                        new { methodId = method.CrossLanguageDefinitionId, scope = new { kind = "Extension", scopeIdPattern = "/{resourceUri}", scopeResourceType = (string?)null } }
+                    })
+                };
+                decorator = new InputDecoratorInfo("Azure.ClientGenerator.Core.@armProviderSchema", arguments);
+            }
+            var client = InputFactory.Client("SharedClient", methods: methods, decorators: [decorator]);
+            return (client, models);
+
+            static InputOperation CreateOperation(string name, string path, InputType response, bool hasName, string httpMethod = "GET", bool extensionScope = false)
+                => InputFactory.Operation(name, path: path, httpMethod: httpMethod, responses: [InputFactory.OperationResponse([200], response)],
+                    parameters:
+                    [
+                        InputFactory.PathParameter(extensionScope ? "resourceUri" : "subscriptionId", InputPrimitiveType.String, isRequired: true),
+                        .. hasName ? new[] { InputFactory.PathParameter("resourceName", InputPrimitiveType.String, isRequired: true) } : [],
+                        InputFactory.QueryParameter("apiVersion", InputPrimitiveType.String, isRequired: true, isApiVersion: true,
+                            defaultValue: new InputConstant("2023-01-01", InputPrimitiveType.String),
+                            serializedName: "api-version", scope: InputParameterScope.Client)
+                    ]);
+
+            static InputMethodParameter[] CreateParameters(bool hasName, bool extensionScope = false)
+                => [InputFactory.MethodParameter(extensionScope ? "resourceUri" : "subscriptionId", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true),
+                    .. hasName ? new[] { InputFactory.MethodParameter("resourceName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true) } : []];
         }
 
         private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, RequestPathPattern resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName)

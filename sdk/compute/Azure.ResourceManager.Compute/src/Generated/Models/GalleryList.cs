@@ -45,15 +45,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Uri NextLink { get; }
 
         /// <summary> The security profile of a gallery image version. </summary>
-        internal ImageVersionSecurityProfile SecurityProfile { get; }
-
-        /// <summary> Contains UEFI settings for the image version. </summary>
-        public GalleryImageVersionUefiSettings SecurityUefiSettings
-        {
-            get
-            {
-                return SecurityProfile is null ? default : SecurityProfile.UefiSettings;
-            }
-        }
+        public ImageVersionSecurityProfile SecurityProfile { get; }
     }
 }
