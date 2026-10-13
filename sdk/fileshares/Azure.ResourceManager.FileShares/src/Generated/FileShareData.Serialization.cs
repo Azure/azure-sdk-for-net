@@ -106,6 +106,11 @@ namespace Azure.ResourceManager.FileShares
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -155,6 +160,7 @@ namespace Azure.ResourceManager.FileShares
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             FileShareProperties properties = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -225,6 +231,15 @@ namespace Azure.ResourceManager.FileShares
                     properties = FileShareProperties.DeserializeFileShareProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerFileSharesContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -238,6 +253,7 @@ namespace Azure.ResourceManager.FileShares
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                identity,
                 additionalBinaryDataProperties);
         }
     }

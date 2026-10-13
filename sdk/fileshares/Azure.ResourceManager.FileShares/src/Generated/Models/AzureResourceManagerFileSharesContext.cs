@@ -16,13 +16,17 @@ namespace Azure.ResourceManager.FileShares
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CustomerManagedKeyEncryption))]
     [ModelReaderWriterBuildable(typeof(FileShareData))]
+    [ModelReaderWriterBuildable(typeof(FileShareEncryption))]
     [ModelReaderWriterBuildable(typeof(FileShareLimits))]
+    [ModelReaderWriterBuildable(typeof(FileShareLimitsContent))]
     [ModelReaderWriterBuildable(typeof(FileShareLimitsOutput))]
     [ModelReaderWriterBuildable(typeof(FileShareLimitsResult))]
     [ModelReaderWriterBuildable(typeof(FileShareListResult))]
     [ModelReaderWriterBuildable(typeof(FileShareNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(FileShareNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(FileShareOfferInput))]
     [ModelReaderWriterBuildable(typeof(FileSharePatch))]
     [ModelReaderWriterBuildable(typeof(FileSharePatchProperties))]
     [ModelReaderWriterBuildable(typeof(FileSharePrivateEndpointConnectionData))]
@@ -49,12 +53,18 @@ namespace Azure.ResourceManager.FileShares
     [ModelReaderWriterBuildable(typeof(FileSharesPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(FileShareUsageDataProperties))]
     [ModelReaderWriterBuildable(typeof(FileShareUsageDataResult))]
+    [ModelReaderWriterBuildable(typeof(KeyEncryptionKeyIdentity))]
     [ModelReaderWriterBuildable(typeof(LiveSharesUsageData))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NfsProtocolProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PublicAccessProperties))]
+    [ModelReaderWriterBuildable(typeof(RedundancyConversionStatusOutputProperties))]
+    [ModelReaderWriterBuildable(typeof(RedundancyConversionStatusResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(StartRedundancyConversionContent))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerFileSharesContext : ModelReaderWriterContext
     {
     }
