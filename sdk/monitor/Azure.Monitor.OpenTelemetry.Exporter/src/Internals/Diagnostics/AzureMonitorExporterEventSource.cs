@@ -565,13 +565,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(62, Message = "Live Metrics was disabled because multi-endpoint routing is enabled. Live Metrics streams to the endpoint from the exporter's own connection string and cannot serve routed destinations.", Level = EventLevel.Warning)]
         public void LiveMetricsDisabledForMultiEndpointRouting() => WriteEvent(62);
 
-        [Event(63, Message = "Failed to persist routed telemetry for ingestion endpoint '{0}'. This telemetry item will be lost. The endpoint's storage partition is full or unwritable.", Level = EventLevel.Error)]
+        [Event(63, Message = "Failed to persist routed telemetry for route '{0}'. This telemetry item will be lost. The route's storage partition is full or unwritable.", Level = EventLevel.Error)]
         public void FailedToPersistRoutedTelemetry(string ingestionEndpoint) => WriteEvent(63, ingestionEndpoint);
 
         [Event(64, Message = "Rate-limited sampling of {0} traces per second was ignored because multi-endpoint routing is enabled. The limit is per process, so it would be shared across every destination the process carries. Fixed-rate sampling of {1} is used instead; set SamplingRatio to change it.", Level = EventLevel.Warning)]
         public void RateLimitedSamplingIgnoredForMultiEndpointRouting(double tracesPerSecond, float samplingRatio) => WriteEvent(64, tracesPerSecond, samplingRatio);
 
-        [Event(65, Message = "Storage partition for ingestion endpoint '{0}' is directory '{1}'. The directory name is a hash of the endpoint and cannot be reversed.", Level = EventLevel.Informational)]
+        // Parameter names are the payload contract and are kept; AAD routes carry an " (aad)" suffix.
+        [Event(65, Message = "Storage partition for route '{0}' is directory '{1}'. The directory name is a hash of the route's partition key - the ingestion endpoint, prefixed with 'aad|' for a Microsoft Entra ID route - and cannot be reversed.", Level = EventLevel.Informational)]
         public void MultiEndpointPartitionCreated(string ingestionEndpoint, string directory) => WriteEvent(65, ingestionEndpoint, directory);
 
         [NonEvent]
@@ -583,7 +584,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(66, Message = "Failed to persist routed telemetry for ingestion endpoint '{0}'. This telemetry item will be lost. {1}", Level = EventLevel.Error)]
+        [Event(66, Message = "Failed to persist routed telemetry for route '{0}'. This telemetry item will be lost. {1}", Level = EventLevel.Error)]
         public void RoutedTelemetryPersistenceThrew(string ingestionEndpoint, string exceptionMessage) => WriteEvent(66, ingestionEndpoint, exceptionMessage);
 
         [NonEvent]
@@ -610,7 +611,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(68, Message = "Export {0}: dropped telemetry that could not be routed. Reason: {1}. Trace Id: {2}. Span Id: {3}. The Activity must carry a valid microsoft.instrumentation_key and microsoft.ingestion_endpoint.", Level = EventLevel.Verbose)]
         public void RoutedTelemetryRejected(long exportSequence, string reason, string traceId, string spanId) => WriteEvent(68, exportSequence, reason, traceId, spanId);
 
-        [Event(69, Message = "No storage partition for ingestion endpoint '{0}': the limit of {1} partitions is already in use. Telemetry for this endpoint is transmitted without an offline storage fallback.", Level = EventLevel.Warning)]
+        [Event(69, Message = "No storage partition for route '{0}': the limit of {1} partitions is already in use. Telemetry for this route is transmitted without an offline storage fallback.", Level = EventLevel.Warning)]
         public void MultiEndpointPartitionCapReached(string ingestionEndpoint, int partitionCount) => WriteEvent(69, ingestionEndpoint, partitionCount);
 
         [NonEvent]
@@ -622,12 +623,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(70, Message = "Evicted stored telemetry owned by '{0}' ({1} bytes) to make room for a write from ingestion endpoint '{2}'. The owner is an ingestion endpoint, or a storage directory name when the partition was left by an earlier run. The evicted telemetry was never transmitted and is lost.", Level = EventLevel.Warning)]
+        [Event(70, Message = "Evicted stored telemetry owned by '{0}' ({1} bytes) to make room for a write from route '{2}'. The owner is a route, or a storage directory name when the partition was left by an earlier run. The evicted telemetry was never transmitted and is lost.", Level = EventLevel.Warning)]
         public void RoutedTelemetryEvicted(string evictedOwner, string evictedBytes, string requestingEndpoint) => WriteEvent(70, evictedOwner, evictedBytes, requestingEndpoint);
 
         // Guarded in the body: neither parameter list matches a typed WriteEvent overload, so the
         // call allocates an argument array whether or not anything is listening.
-        [Event(71, Message = "Export {0}: routed {1} Activities or metric points to {2} ingestion endpoints and dropped {3} that could not be routed. These count routing inputs, not envelopes - one Activity can produce several - so event 72 reports the item count actually sent to each endpoint.", Level = EventLevel.Informational)]
+        [Event(71, Message = "Export {0}: routed {1} Activities or metric points to {2} routes and dropped {3} that could not be routed. A route is an ingestion endpoint and authentication mode, so one endpoint reached both with and without Microsoft Entra ID counts as two. These count routing inputs, not envelopes - one Activity can produce several - so event 72 reports the item count actually sent on each route.", Level = EventLevel.Informational)]
         public void RoutedExportSummary(long exportSequence, int collected, int endpointCount, int rejected)
         {
             if (IsEnabled(EventLevel.Informational))
@@ -636,7 +637,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(72, Message = "Export {0}: {1} telemetry items for ingestion endpoint '{2}' were {3}. Accepted by ingestion: {4}, where -1 means ingestion reported no usable count. Status code: {5}", Level = EventLevel.Informational)]
+        [Event(72, Message = "Export {0}: {1} telemetry items for route '{2}' were {3}. Accepted by ingestion: {4}, where -1 means ingestion reported no usable count. Status code: {5}", Level = EventLevel.Informational)]
         public void RoutedGroupOutcome(long exportSequence, int itemCount, string ingestionEndpoint, string outcome, int itemsAccepted, int statusCode)
         {
             if (IsEnabled(EventLevel.Informational))

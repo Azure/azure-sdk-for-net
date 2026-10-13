@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OperatorApiConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new OperatorApiConnectionListResult(value ?? new ChangeTrackingList<OperatorApiConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

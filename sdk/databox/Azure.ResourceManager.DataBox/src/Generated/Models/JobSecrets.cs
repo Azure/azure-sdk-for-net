@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataBox.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="JobSecrets"/>. </summary>
+        protected JobSecrets() : this(default)
+        {
+        }
+
         /// <summary> Used to indicate what type of job secrets object. </summary>
         internal DataBoxOrderType JobSecretsType { get; set; }
 

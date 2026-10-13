@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanResource>(new CommitmentPlanOperationGroupGetPlansByResourceGroupAsyncCollectionResultOfT(_commitmentPlanOperationGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CognitiveServicesCommitmentPlanCollection.GetAll"), data => new CognitiveServicesCommitmentPlanResource(Client, data));
+            return new AsyncPageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanResource>(new CommitmentPlanDataAsync0CollectionResultOfT(_commitmentPlanOperationGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CognitiveServicesCommitmentPlanCollection.GetAll"), data => new CognitiveServicesCommitmentPlanResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanResource>(new CommitmentPlanOperationGroupGetPlansByResourceGroupCollectionResultOfT(_commitmentPlanOperationGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CognitiveServicesCommitmentPlanCollection.GetAll"), data => new CognitiveServicesCommitmentPlanResource(Client, data));
+            return new PageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanResource>(new CommitmentPlanData0CollectionResultOfT(_commitmentPlanOperationGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CognitiveServicesCommitmentPlanCollection.GetAll"), data => new CognitiveServicesCommitmentPlanResource(Client, data));
         }
 
         /// <summary>

@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 azureGroupId,
                 expiresOn,
                 privilegeLevel,
-                userList,
+                userList ?? new ChangeTrackingList<KeySetUser>(),
                 detailedStatus,
                 detailedStatusMessage,
                 lastValidatedOn,

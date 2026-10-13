@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Monitor.Agents
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ObservabilityAgentData, ObservabilityAgentResource>(new ObservabilityAgentsGetByResourceGroupAsyncCollectionResultOfT(_observabilityAgentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ObservabilityAgentCollection.GetAll"), data => new ObservabilityAgentResource(Client, data));
+            return new AsyncPageableWrapper<ObservabilityAgentData, ObservabilityAgentResource>(new ObservabilityAgentDataAsyncCollectionResultOfT(_observabilityAgentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ObservabilityAgentCollection.GetAll"), data => new ObservabilityAgentResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Monitor.Agents
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ObservabilityAgentData, ObservabilityAgentResource>(new ObservabilityAgentsGetByResourceGroupCollectionResultOfT(_observabilityAgentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ObservabilityAgentCollection.GetAll"), data => new ObservabilityAgentResource(Client, data));
+            return new PageableWrapper<ObservabilityAgentData, ObservabilityAgentResource>(new ObservabilityAgentDataCollectionResultOfT(_observabilityAgentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ObservabilityAgentCollection.GetAll"), data => new ObservabilityAgentResource(Client, data));
         }
 
         /// <summary>

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabServiceFabricScheduleResource>(new DevTestLabServiceFabricSchedulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabServiceFabricScheduleResource>(new DevTestLabScheduleDataAsync2CollectionResultOfT(
                 _devTestLabServiceFabricSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabScheduleData, DevTestLabServiceFabricScheduleResource>(new DevTestLabServiceFabricSchedulesGetAllCollectionResultOfT(
+            return new PageableWrapper<DevTestLabScheduleData, DevTestLabServiceFabricScheduleResource>(new DevTestLabScheduleData2CollectionResultOfT(
                 _devTestLabServiceFabricSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 sourceAmwAccountResourceId,
                 metricNamespace,
                 metricName,
-                filters,
+                filters ?? new ChangeTrackingList<SliCondition>(),
                 spatialAggregation,
                 temporalAggregation,
                 additionalBinaryDataProperties);

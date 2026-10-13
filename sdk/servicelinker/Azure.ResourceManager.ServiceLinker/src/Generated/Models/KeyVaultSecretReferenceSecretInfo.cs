@@ -13,6 +13,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The secret info when type is keyVaultSecretReference. It's for scenario that user provides a secret stored in user's keyvault and source is Azure Kubernetes. The key Vault's resource id is linked to secretStore.keyVaultId. </summary>
     public partial class KeyVaultSecretReferenceSecretInfo : SecretBaseInfo
     {
+        private string _version;
+        internal bool _versionIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="KeyVaultSecretReferenceSecretInfo"/>. </summary>
         public KeyVaultSecretReferenceSecretInfo() : base(LinkerSecretType.KeyVaultSecretReference)
         {
@@ -26,13 +29,24 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         internal KeyVaultSecretReferenceSecretInfo(LinkerSecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string version) : base(secretType, additionalBinaryDataProperties)
         {
             Name = name;
-            Version = version;
+            _version = version;
         }
 
         /// <summary> Name of the Key Vault secret. </summary>
         public string Name { get; set; }
 
         /// <summary> Version of the Key Vault secret. </summary>
-        public string Version { get; set; }
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+                _versionIsDefined = true;
+            }
+        }
     }
 }

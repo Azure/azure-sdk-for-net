@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ThreatIntelligenceMetricsList(value, additionalBinaryDataProperties);
+            return new ThreatIntelligenceMetricsList(value ?? new ChangeTrackingList<ThreatIntelligenceMetrics>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new QuotaItemList(value, nextLink, additionalBinaryDataProperties);
+            return new QuotaItemList(value ?? new ChangeTrackingList<NetAppSubscriptionQuotaItemData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

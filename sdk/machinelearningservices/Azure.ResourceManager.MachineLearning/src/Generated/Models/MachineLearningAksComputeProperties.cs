@@ -16,6 +16,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _clusterFqdn;
+        internal bool _clusterFqdnIsDefined;
+        private int? _agentCount;
+        internal bool _agentCountIsDefined;
+        private string _agentVmSize;
+        internal bool _agentVmSizeIsDefined;
+        private MachineLearningSslConfiguration _sslConfiguration;
+        internal bool _sslConfigurationIsDefined;
+        private MachineLearningAksNetworkingConfiguration _aksNetworkingConfiguration;
+        internal bool _aksNetworkingConfigurationIsDefined;
+        private string _loadBalancerSubnet;
+        internal bool _loadBalancerSubnetIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningAksComputeProperties"/>. </summary>
         public MachineLearningAksComputeProperties()
@@ -36,21 +48,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningAksComputeProperties(string clusterFqdn, IReadOnlyList<MachineLearningComputeSystemService> systemServices, int? agentCount, string agentVmSize, MachineLearningClusterPurpose? clusterPurpose, MachineLearningSslConfiguration sslConfiguration, MachineLearningAksNetworkingConfiguration aksNetworkingConfiguration, MachineLearningLoadBalancerType? loadBalancerType, string loadBalancerSubnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ClusterFqdn = clusterFqdn;
+            _clusterFqdn = clusterFqdn;
             SystemServices = systemServices;
-            AgentCount = agentCount;
-            AgentVmSize = agentVmSize;
+            _agentCount = agentCount;
+            _agentVmSize = agentVmSize;
             ClusterPurpose = clusterPurpose;
-            SslConfiguration = sslConfiguration;
-            AksNetworkingConfiguration = aksNetworkingConfiguration;
+            _sslConfiguration = sslConfiguration;
+            _aksNetworkingConfiguration = aksNetworkingConfiguration;
             LoadBalancerType = loadBalancerType;
-            LoadBalancerSubnet = loadBalancerSubnet;
+            _loadBalancerSubnet = loadBalancerSubnet;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Cluster full qualified domain name. </summary>
         [WirePath("clusterFqdn")]
-        public string ClusterFqdn { get; set; }
+        public string ClusterFqdn
+        {
+            get
+            {
+                return _clusterFqdn;
+            }
+            set
+            {
+                _clusterFqdn = value;
+                _clusterFqdnIsDefined = true;
+            }
+        }
 
         /// <summary> System services. </summary>
         [WirePath("systemServices")]
@@ -58,11 +81,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Number of agents. </summary>
         [WirePath("agentCount")]
-        public int? AgentCount { get; set; }
+        public int? AgentCount
+        {
+            get
+            {
+                return _agentCount;
+            }
+            set
+            {
+                _agentCount = value;
+                _agentCountIsDefined = true;
+            }
+        }
 
         /// <summary> Agent virtual machine size. </summary>
         [WirePath("agentVmSize")]
-        public string AgentVmSize { get; set; }
+        public string AgentVmSize
+        {
+            get
+            {
+                return _agentVmSize;
+            }
+            set
+            {
+                _agentVmSize = value;
+                _agentVmSizeIsDefined = true;
+            }
+        }
 
         /// <summary> Intended usage of the cluster. </summary>
         [WirePath("clusterPurpose")]
@@ -70,11 +115,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> SSL configuration. </summary>
         [WirePath("sslConfiguration")]
-        public MachineLearningSslConfiguration SslConfiguration { get; set; }
+        public MachineLearningSslConfiguration SslConfiguration
+        {
+            get
+            {
+                return _sslConfiguration;
+            }
+            set
+            {
+                _sslConfiguration = value;
+                _sslConfigurationIsDefined = true;
+            }
+        }
 
         /// <summary> AKS networking configuration for vnet. </summary>
         [WirePath("aksNetworkingConfiguration")]
-        public MachineLearningAksNetworkingConfiguration AksNetworkingConfiguration { get; set; }
+        public MachineLearningAksNetworkingConfiguration AksNetworkingConfiguration
+        {
+            get
+            {
+                return _aksNetworkingConfiguration;
+            }
+            set
+            {
+                _aksNetworkingConfiguration = value;
+                _aksNetworkingConfigurationIsDefined = true;
+            }
+        }
 
         /// <summary> Load Balancer Type. </summary>
         [WirePath("loadBalancerType")]
@@ -82,6 +149,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Load Balancer Subnet. </summary>
         [WirePath("loadBalancerSubnet")]
-        public string LoadBalancerSubnet { get; set; }
+        public string LoadBalancerSubnet
+        {
+            get
+            {
+                return _loadBalancerSubnet;
+            }
+            set
+            {
+                _loadBalancerSubnet = value;
+                _loadBalancerSubnetIsDefined = true;
+            }
+        }
     }
 }

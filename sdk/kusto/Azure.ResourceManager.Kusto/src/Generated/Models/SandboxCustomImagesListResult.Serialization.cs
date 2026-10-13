@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SandboxCustomImagesListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SandboxCustomImagesListResult(value ?? new ChangeTrackingList<SandboxCustomImageData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

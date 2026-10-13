@@ -19,8 +19,6 @@ namespace Azure.ResourceManager.AlertsManagement
     [ModelReaderWriterBuildable(typeof(AlertEnrichmentData))]
     [ModelReaderWriterBuildable(typeof(AlertEnrichmentItem))]
     [ModelReaderWriterBuildable(typeof(AlertEnrichmentProperties))]
-    [ModelReaderWriterBuildable(typeof(AlertEnrichmentsList))]
-    [ModelReaderWriterBuildable(typeof(AlertsList))]
     [ModelReaderWriterBuildable(typeof(AlertsManagementBaseDetails))]
     [ModelReaderWriterBuildable(typeof(AlertsManagementNotificationResult))]
     [ModelReaderWriterBuildable(typeof(AlertsManagementTriggeredRule))]
@@ -51,10 +49,7 @@ namespace Azure.ResourceManager.AlertsManagement
     [ModelReaderWriterBuildable(typeof(ServiceAlertTenantResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetServiceAlertSummaryOptions))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnknownAlertEnrichmentItem))]
-    [ModelReaderWriterBuildable(typeof(UnknownAlertsManagementBaseDetails))]
     [ModelReaderWriterBuildable(typeof(UnknownAlertsMetaDataProperties))]
-    [ModelReaderWriterBuildable(typeof(UnknownPrometheusEnrichmentItem))]
     public partial class AzureResourceManagerAlertsManagementContext : ModelReaderWriterContext
     {
     }

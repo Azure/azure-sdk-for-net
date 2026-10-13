@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(UsagePlanResource.ResourceType, out string usagePlanApiVersion);
             _usagePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", UsagePlanResource.ResourceType.Namespace, Diagnostics);
-            _usagePlansRestClient = new UsagePlans(_usagePlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, usagePlanApiVersion ?? "2026-04-01-preview");
+            _usagePlansRestClient = new UsagePlans(_usagePlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, usagePlanApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<UsagePlanData, UsagePlanResource>(new UsagePlansGetByResourceGroupAsyncCollectionResultOfT(_usagePlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "UsagePlanCollection.GetAll"), data => new UsagePlanResource(Client, data));
+            return new AsyncPageableWrapper<UsagePlanData, UsagePlanResource>(new UsagePlanDataAsyncCollectionResultOfT(_usagePlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "UsagePlanCollection.GetAll"), data => new UsagePlanResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<UsagePlanData, UsagePlanResource>(new UsagePlansGetByResourceGroupCollectionResultOfT(_usagePlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "UsagePlanCollection.GetAll"), data => new UsagePlanResource(Client, data));
+            return new PageableWrapper<UsagePlanData, UsagePlanResource>(new UsagePlanDataCollectionResultOfT(_usagePlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "UsagePlanCollection.GetAll"), data => new UsagePlanResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         public static HanaDBProviderInstanceProperties HanaDBProviderInstanceProperties(string hostname = default, string dbName = default, string sqlPort = default, string instanceNumber = default, string dbUsername = default, string dbPassword = default, Uri dbPasswordUri = default, Uri sslCertificateUri = default, string sslHostNameInCertificate = default, SapSslPreference? sslPreference = default, string sapSid = default)
         {
             return new HanaDBProviderInstanceProperties(
-                default,
+                "SapHana",
                 default,
                 hostname,
                 dbName,
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
             sapHostFileEntries ??= new ChangeTrackingList<string>();
 
             return new SapNetWeaverProviderInstanceProperties(
-                default,
+                "SapNetWeaver",
                 default,
                 sapSid,
                 sapHostname,
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         public static PrometheusOSProviderInstanceProperties PrometheusOSProviderInstanceProperties(Uri prometheusUri = default, SapSslPreference? sslPreference = default, Uri sslCertificateUri = default, string sapSid = default)
         {
             return new PrometheusOSProviderInstanceProperties(
-                default,
+                "PrometheusOS",
                 default,
                 prometheusUri,
                 sslPreference,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         public static DB2ProviderInstanceProperties DB2ProviderInstanceProperties(string hostname = default, string dbName = default, string dbPort = default, string dbUsername = default, string dbPassword = default, Uri dbPasswordUri = default, string sapSid = default, SapSslPreference? sslPreference = default, Uri sslCertificateUri = default)
         {
             return new DB2ProviderInstanceProperties(
-                default,
+                "Db2",
                 default,
                 hostname,
                 dbName,
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         public static PrometheusHAClusterProviderInstanceProperties PrometheusHAClusterProviderInstanceProperties(Uri prometheusUri = default, string hostname = default, string sid = default, string clusterName = default, SapSslPreference? sslPreference = default, Uri sslCertificateUri = default)
         {
             return new PrometheusHAClusterProviderInstanceProperties(
-                default,
+                "PrometheusHaCluster",
                 default,
                 prometheusUri,
                 hostname,
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         public static MsSqlServerProviderInstanceProperties MsSqlServerProviderInstanceProperties(string hostname = default, string dbPort = default, string dbUsername = default, string dbPassword = default, Uri dbPasswordUri = default, string sapSid = default, SapSslPreference? sslPreference = default, Uri sslCertificateUri = default)
         {
             return new MsSqlServerProviderInstanceProperties(
-                default,
+                "MsSqlServer",
                 default,
                 hostname,
                 dbPort,
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         public static OracleProviderInstanceProperties OracleProviderInstanceProperties(string hostname = default, string dbPort = default, string dbName = default, string dbUsername = default, string dbPassword = default, Uri dbPasswordUri = default, string sapSid = default, SapSslPreference? sslPreference = default, Uri sslCertificateUri = default)
         {
             return new OracleProviderInstanceProperties(
-                default,
+                "Oracle",
                 default,
                 hostname,
                 dbPort,

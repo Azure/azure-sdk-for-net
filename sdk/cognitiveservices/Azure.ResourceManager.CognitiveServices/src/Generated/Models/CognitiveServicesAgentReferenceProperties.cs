@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _agentId;
+        internal bool _agentIdIsDefined;
+        private string _agentName;
+        internal bool _agentNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAgentReferenceProperties"/>. </summary>
         public CognitiveServicesAgentReferenceProperties()
@@ -28,17 +32,39 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal CognitiveServicesAgentReferenceProperties(string agentId, string agentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AgentId = agentId;
-            AgentName = agentName;
+            _agentId = agentId;
+            _agentName = agentName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the agent's unique identifier within the organization (subscription). </summary>
         [WirePath("agentId")]
-        public string AgentId { get; set; }
+        public string AgentId
+        {
+            get
+            {
+                return _agentId;
+            }
+            set
+            {
+                _agentId = value;
+                _agentIdIsDefined = true;
+            }
+        }
 
         /// <summary> Gets the agent's name (unique within the project/app). </summary>
         [WirePath("agentName")]
-        public string AgentName { get; set; }
+        public string AgentName
+        {
+            get
+            {
+                return _agentName;
+            }
+            set
+            {
+                _agentName = value;
+                _agentNameIsDefined = true;
+            }
+        }
     }
 }

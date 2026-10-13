@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CommvaultStorageData, CommvaultStorageResource>(new StoragesGetByCloudAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CommvaultStorageData, CommvaultStorageResource>(new CommvaultStorageDataAsyncCollectionResultOfT(
                 _storagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CommvaultStorageData, CommvaultStorageResource>(new StoragesGetByCloudAccountCollectionResultOfT(
+            return new PageableWrapper<CommvaultStorageData, CommvaultStorageResource>(new CommvaultStorageDataCollectionResultOfT(
                 _storagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

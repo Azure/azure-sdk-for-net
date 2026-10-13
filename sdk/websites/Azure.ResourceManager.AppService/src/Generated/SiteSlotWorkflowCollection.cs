@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkflowEnvelopeData, SiteSlotWorkflowResource>(new WorkflowEnvelopesGetInstanceWorkflowsSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkflowEnvelopeData, SiteSlotWorkflowResource>(new WorkflowEnvelopeDataAsyncCollectionResultOfT(
                 _workflowEnvelopesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkflowEnvelopeData, SiteSlotWorkflowResource>(new WorkflowEnvelopesGetInstanceWorkflowsSlotCollectionResultOfT(
+            return new PageableWrapper<WorkflowEnvelopeData, SiteSlotWorkflowResource>(new WorkflowEnvelopeDataCollectionResultOfT(
                 _workflowEnvelopesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

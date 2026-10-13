@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrometheusRuleGroupData, PrometheusRuleGroupResource>(new PrometheusRuleGroupResourcesGetBySubscriptionAsyncCollectionResultOfT(PrometheusRuleGroupResourcesRestClient, Id.SubscriptionId, context, "MockablePrometheusRuleGroupsSubscriptionResource.GetPrometheusRuleGroups"), data => new PrometheusRuleGroupResource(Client, data));
+            return new AsyncPageableWrapper<PrometheusRuleGroupData, PrometheusRuleGroupResource>(new PrometheusRuleGroupDataAsync0CollectionResultOfT(PrometheusRuleGroupResourcesRestClient, Id.SubscriptionId, context, "MockablePrometheusRuleGroupsSubscriptionResource.GetPrometheusRuleGroups"), data => new PrometheusRuleGroupResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrometheusRuleGroupData, PrometheusRuleGroupResource>(new PrometheusRuleGroupResourcesGetBySubscriptionCollectionResultOfT(PrometheusRuleGroupResourcesRestClient, Id.SubscriptionId, context, "MockablePrometheusRuleGroupsSubscriptionResource.GetPrometheusRuleGroups"), data => new PrometheusRuleGroupResource(Client, data));
+            return new PageableWrapper<PrometheusRuleGroupData, PrometheusRuleGroupResource>(new PrometheusRuleGroupData0CollectionResultOfT(PrometheusRuleGroupResourcesRestClient, Id.SubscriptionId, context, "MockablePrometheusRuleGroupsSubscriptionResource.GetPrometheusRuleGroups"), data => new PrometheusRuleGroupResource(Client, data));
         }
     }
 }

@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NatGatewayData, NatGatewayResource>(new NatGatewaysListAsyncCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NatGatewayCollection.GetAll"), data => new NatGatewayResource(Client, data));
+            return new AsyncPageableWrapper<NatGatewayData, NatGatewayResource>(new NatGatewayDataAsyncCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NatGatewayCollection.GetAll"), data => new NatGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NatGatewayData, NatGatewayResource>(new NatGatewaysListCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NatGatewayCollection.GetAll"), data => new NatGatewayResource(Client, data));
+            return new PageableWrapper<NatGatewayData, NatGatewayResource>(new NatGatewayDataCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NatGatewayCollection.GetAll"), data => new NatGatewayResource(Client, data));
         }
 
         /// <summary>

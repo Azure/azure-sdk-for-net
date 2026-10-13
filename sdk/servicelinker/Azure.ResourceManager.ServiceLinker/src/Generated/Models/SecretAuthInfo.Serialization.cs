@@ -75,15 +75,29 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Name))
+            if (_nameIsDefined || Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                if (Name != null)
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+                else
+                {
+                    writer.WriteNull("name"u8);
+                }
             }
-            if (Optional.IsDefined(SecretInfo))
+            if (_secretInfoIsDefined || Optional.IsDefined(SecretInfo))
             {
-                writer.WritePropertyName("secretInfo"u8);
-                writer.WriteObjectValue(SecretInfo, options);
+                if (SecretInfo != null)
+                {
+                    writer.WritePropertyName("secretInfo"u8);
+                    writer.WriteObjectValue(SecretInfo, options);
+                }
+                else
+                {
+                    writer.WriteNull("secretInfo"u8);
+                }
             }
         }
 
@@ -115,7 +129,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             LinkerAuthType authType = default;
             LinkerAuthMode? authMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool nameIsDefined = false;
             string name = default;
+            bool secretInfoIsDefined = false;
             SecretBaseInfo secretInfo = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -135,6 +151,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("name"u8))
                 {
+                    nameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         name = null;
@@ -145,6 +162,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("secretInfo"u8))
                 {
+                    secretInfoIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         secretInfo = null;
@@ -158,7 +176,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SecretAuthInfo(authType, authMode, additionalBinaryDataProperties, name, secretInfo);
+            return new SecretAuthInfo(authType, authMode, additionalBinaryDataProperties, name, secretInfo)
+            {
+                _nameIsDefined = nameIsDefined,
+                _secretInfoIsDefined = secretInfoIsDefined
+            };
         }
     }
 }

@@ -80,43 +80,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 throw new FormatException($"The model {nameof(ResilienceManagementGoalsInfo)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("templateId"u8);
-            writer.WriteStringValue(TemplateId);
             writer.WritePropertyName("assignmentId"u8);
             writer.WriteStringValue(AssignmentId);
-            if (Optional.IsDefined(RegionalRecoveryPointObjectiveInMinutes))
+            if (Optional.IsDefined(ZonalResiliency))
             {
-                writer.WritePropertyName("regionalRecoveryPointObjectiveInMinutes"u8);
-                writer.WriteStringValue(RegionalRecoveryPointObjectiveInMinutes.Value.ToString());
-            }
-            if (Optional.IsDefined(RegionalRecoveryPointEstimatedInMinutes))
-            {
-                writer.WritePropertyName("regionalRecoveryPointEstimatedInMinutes"u8);
-                writer.WriteStringValue(RegionalRecoveryPointEstimatedInMinutes.Value.ToString());
-            }
-            writer.WritePropertyName("regionalRecoveryPointObjectiveStatus"u8);
-            writer.WriteStringValue(RegionalRecoveryPointObjectiveStatus.ToString());
-            if (Optional.IsDefined(RegionalRecoveryTimeObjectiveInMinutes))
-            {
-                writer.WritePropertyName("regionalRecoveryTimeObjectiveInMinutes"u8);
-                writer.WriteStringValue(RegionalRecoveryTimeObjectiveInMinutes.Value.ToString());
-            }
-            if (Optional.IsDefined(RegionalRecoveryTimeActualInMinutes))
-            {
-                writer.WritePropertyName("regionalRecoveryTimeActualInMinutes"u8);
-                writer.WriteStringValue(RegionalRecoveryTimeActualInMinutes.Value.ToString());
-            }
-            writer.WritePropertyName("regionalRecoveryTimeObjectiveStatus"u8);
-            writer.WriteStringValue(RegionalRecoveryTimeObjectiveStatus.ToString());
-            if (Optional.IsDefined(RequireHighAvailability))
-            {
-                writer.WritePropertyName("requireHighAvailability"u8);
-                writer.WriteStringValue(RequireHighAvailability.Value.ToString());
-            }
-            if (Optional.IsDefined(RequireDisasterRecovery))
-            {
-                writer.WritePropertyName("requireDisasterRecovery"u8);
-                writer.WriteStringValue(RequireDisasterRecovery.Value.ToString());
+                writer.WritePropertyName("zonalResiliency"u8);
+                writer.WriteObjectValue(ZonalResiliency, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -160,91 +129,23 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            ResourceIdentifier templateId = default;
             ResourceIdentifier assignmentId = default;
-            IsoDuration? regionalRecoveryPointObjectiveInMinutes = default;
-            IsoDuration? regionalRecoveryPointEstimatedInMinutes = default;
-            ResilienceHealthStatus regionalRecoveryPointObjectiveStatus = default;
-            IsoDuration? regionalRecoveryTimeObjectiveInMinutes = default;
-            IsoDuration? regionalRecoveryTimeActualInMinutes = default;
-            ResilienceHealthStatus regionalRecoveryTimeObjectiveStatus = default;
-            UnifiedResilienceItemRequirementSelected? requireHighAvailability = default;
-            UnifiedResilienceItemRequirementSelected? requireDisasterRecovery = default;
+            UnifiedResilienceItemGoalRequirement zonalResiliency = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("templateId"u8))
-                {
-                    templateId = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("assignmentId"u8))
                 {
                     assignmentId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("regionalRecoveryPointObjectiveInMinutes"u8))
+                if (prop.NameEquals("zonalResiliency"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    regionalRecoveryPointObjectiveInMinutes = new IsoDuration(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("regionalRecoveryPointEstimatedInMinutes"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    regionalRecoveryPointEstimatedInMinutes = new IsoDuration(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("regionalRecoveryPointObjectiveStatus"u8))
-                {
-                    regionalRecoveryPointObjectiveStatus = new ResilienceHealthStatus(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("regionalRecoveryTimeObjectiveInMinutes"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    regionalRecoveryTimeObjectiveInMinutes = new IsoDuration(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("regionalRecoveryTimeActualInMinutes"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    regionalRecoveryTimeActualInMinutes = new IsoDuration(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("regionalRecoveryTimeObjectiveStatus"u8))
-                {
-                    regionalRecoveryTimeObjectiveStatus = new ResilienceHealthStatus(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("requireHighAvailability"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    requireHighAvailability = new UnifiedResilienceItemRequirementSelected(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("requireDisasterRecovery"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    requireDisasterRecovery = new UnifiedResilienceItemRequirementSelected(prop.Value.GetString());
+                    zonalResiliency = UnifiedResilienceItemGoalRequirement.DeserializeUnifiedResilienceItemGoalRequirement(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -252,18 +153,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResilienceManagementGoalsInfo(
-                templateId,
-                assignmentId,
-                regionalRecoveryPointObjectiveInMinutes,
-                regionalRecoveryPointEstimatedInMinutes,
-                regionalRecoveryPointObjectiveStatus,
-                regionalRecoveryTimeObjectiveInMinutes,
-                regionalRecoveryTimeActualInMinutes,
-                regionalRecoveryTimeObjectiveStatus,
-                requireHighAvailability,
-                requireDisasterRecovery,
-                additionalBinaryDataProperties);
+            return new ResilienceManagementGoalsInfo(assignmentId, zonalResiliency, additionalBinaryDataProperties);
         }
     }
 }

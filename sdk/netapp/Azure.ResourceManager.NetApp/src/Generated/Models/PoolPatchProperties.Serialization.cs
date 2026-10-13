@@ -89,10 +89,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("coolAccess"u8);
                 writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
-            if (Optional.IsDefined(CustomThroughputMibpsInt))
+            if (_customThroughputMibpsIntIsDefined || Optional.IsDefined(CustomThroughputMibpsInt))
             {
-                writer.WritePropertyName("customThroughputMibps"u8);
-                writer.WriteNumberValue(CustomThroughputMibpsInt.Value);
+                if (CustomThroughputMibpsInt != null)
+                {
+                    writer.WritePropertyName("customThroughputMibps"u8);
+                    writer.WriteNumberValue(CustomThroughputMibpsInt.Value);
+                }
+                else
+                {
+                    writer.WriteNull("customThroughputMibps"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,6 +146,7 @@ namespace Azure.ResourceManager.NetApp.Models
             long? size = default;
             CapacityPoolQosType? qosType = default;
             bool? isCoolAccessEnabled = default;
+            bool customThroughputMibpsIntIsDefined = false;
             int? customThroughputMibpsInt = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -172,6 +180,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("customThroughputMibps"u8))
                 {
+                    customThroughputMibpsIntIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         customThroughputMibpsInt = null;
@@ -185,7 +194,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PoolPatchProperties(size, qosType, isCoolAccessEnabled, customThroughputMibpsInt, additionalBinaryDataProperties);
+            return new PoolPatchProperties(size, qosType, isCoolAccessEnabled, customThroughputMibpsInt, additionalBinaryDataProperties)
+            {
+                _customThroughputMibpsIntIsDefined = customThroughputMibpsIntIsDefined
+            };
         }
     }
 }

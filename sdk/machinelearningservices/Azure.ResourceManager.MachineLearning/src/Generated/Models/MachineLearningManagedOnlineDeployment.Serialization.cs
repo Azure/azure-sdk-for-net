@@ -102,29 +102,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool codeConfigurationIsDefined = false;
             MachineLearningCodeConfiguration codeConfiguration = default;
+            bool descriptionIsDefined = false;
             string description = default;
+            bool environmentIdIsDefined = false;
             string environmentId = default;
-            IDictionary<string, string> environmentVariables = default;
-            IDictionary<string, string> properties = default;
+            IDictionary<string, string> environmentVariables = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? appInsightsEnabled = default;
+            bool dataCollectorIsDefined = false;
             DataCollector dataCollector = default;
             MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = default;
             MachineLearningEndpointComputeType endpointComputeType = default;
+            bool instanceTypeIsDefined = false;
             string instanceType = default;
+            bool livenessProbeIsDefined = false;
             MachineLearningProbeSettings livenessProbe = default;
+            bool modelIsDefined = false;
             string model = default;
+            bool modelMountPathIsDefined = false;
             string modelMountPath = default;
             MachineLearningDeploymentProvisioningState? provisioningState = default;
+            bool readinessProbeIsDefined = false;
             MachineLearningProbeSettings readinessProbe = default;
+            bool requestSettingsIsDefined = false;
             MachineLearningOnlineRequestSettings requestSettings = default;
+            bool scaleSettingsIsDefined = false;
             MachineLearningOnlineScaleSettings scaleSettings = default;
+            bool startupProbeIsDefined = false;
             MachineLearningProbeSettings startupProbe = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("codeConfiguration"u8))
                 {
+                    codeConfigurationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         codeConfiguration = null;
@@ -135,6 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -145,6 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("environmentId"u8))
                 {
+                    environmentIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         environmentId = null;
@@ -157,6 +172,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        environmentVariables = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -178,6 +194,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -206,6 +223,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("dataCollector"u8))
                 {
+                    dataCollectorIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         dataCollector = null;
@@ -230,6 +248,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("instanceType"u8))
                 {
+                    instanceTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         instanceType = null;
@@ -240,6 +259,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("livenessProbe"u8))
                 {
+                    livenessProbeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         livenessProbe = null;
@@ -250,6 +270,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("model"u8))
                 {
+                    modelIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         model = null;
@@ -260,6 +281,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("modelMountPath"u8))
                 {
+                    modelMountPathIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         modelMountPath = null;
@@ -279,6 +301,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("readinessProbe"u8))
                 {
+                    readinessProbeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         readinessProbe = null;
@@ -289,6 +312,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("requestSettings"u8))
                 {
+                    requestSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         requestSettings = null;
@@ -299,6 +323,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("scaleSettings"u8))
                 {
+                    scaleSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         scaleSettings = null;
@@ -309,6 +334,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("startupProbe"u8))
                 {
+                    startupProbeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         startupProbe = null;
@@ -326,8 +352,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 codeConfiguration,
                 description,
                 environmentId,
-                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                properties ?? new ChangeTrackingDictionary<string, string>(),
+                environmentVariables,
+                properties,
                 additionalBinaryDataProperties,
                 appInsightsEnabled,
                 dataCollector,
@@ -341,7 +367,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 readinessProbe,
                 requestSettings,
                 scaleSettings,
-                startupProbe);
+                startupProbe)
+            {
+                _codeConfigurationIsDefined = codeConfigurationIsDefined,
+                _descriptionIsDefined = descriptionIsDefined,
+                _environmentIdIsDefined = environmentIdIsDefined,
+                _dataCollectorIsDefined = dataCollectorIsDefined,
+                _instanceTypeIsDefined = instanceTypeIsDefined,
+                _livenessProbeIsDefined = livenessProbeIsDefined,
+                _modelIsDefined = modelIsDefined,
+                _modelMountPathIsDefined = modelMountPathIsDefined,
+                _readinessProbeIsDefined = readinessProbeIsDefined,
+                _requestSettingsIsDefined = requestSettingsIsDefined,
+                _scaleSettingsIsDefined = scaleSettingsIsDefined,
+                _startupProbeIsDefined = startupProbeIsDefined
+            };
         }
     }
 }

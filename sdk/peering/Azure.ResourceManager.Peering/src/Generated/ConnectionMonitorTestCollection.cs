@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectionMonitorTestData, ConnectionMonitorTestResource>(new ConnectionMonitorTestsGetByPeeringServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConnectionMonitorTestData, ConnectionMonitorTestResource>(new ConnectionMonitorTestDataAsyncCollectionResultOfT(
                 _connectionMonitorTestsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectionMonitorTestData, ConnectionMonitorTestResource>(new ConnectionMonitorTestsGetByPeeringServiceCollectionResultOfT(
+            return new PageableWrapper<ConnectionMonitorTestData, ConnectionMonitorTestResource>(new ConnectionMonitorTestDataCollectionResultOfT(
                 _connectionMonitorTestsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GetOperationStatusContent(operationIds, correlationId, additionalBinaryDataProperties);
+            return new GetOperationStatusContent(operationIds ?? new ChangeTrackingList<string>(), correlationId, additionalBinaryDataProperties);
         }
     }
 }

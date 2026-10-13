@@ -992,7 +992,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new SettingsKind(kind),
                 default);
         }
 
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SettingsKind.Taginheritance,
                 default,
                 preferContainerTags is null ? default : new TagInheritanceProperties(preferContainerTags.GetValueOrDefault(), default));
         }
@@ -1183,10 +1183,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="nameAvailable"> Whether this rule name is available. </param>
         /// <param name="reason"> The reason this name is not available. </param>
         /// <param name="message"> Error message if the name is not available. </param>
-        /// <returns> A new <see cref="Models.CostAllocationRuleCheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CostAllocationRuleCheckNameAvailabilityResponse CostAllocationRuleCheckNameAvailabilityResponse(bool? nameAvailable = default, CostAllocationRuleCheckNameAvailabilityReason? reason = default, string message = default)
+        /// <returns> A new <see cref="Models.CostAllocationRuleCheckNameAvailabilityResult"/> instance for mocking. </returns>
+        public static CostAllocationRuleCheckNameAvailabilityResult CostAllocationRuleCheckNameAvailabilityResult(bool? nameAvailable = default, CostAllocationRuleCheckNameAvailabilityReason? reason = default, string message = default)
         {
-            return new CostAllocationRuleCheckNameAvailabilityResponse(nameAvailable, reason, message, default);
+            return new CostAllocationRuleCheckNameAvailabilityResult(nameAvailable, reason, message, default);
         }
 
         /// <summary> benefit plan recommendation details. </summary>
@@ -1242,7 +1242,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 costWithoutBenefit,
                 recommendationDetails,
                 allRecommendationDetails,
-                default,
+                scope is null ? default : new BenefitRecommendationScope(scope),
                 default);
         }
 
@@ -1325,7 +1325,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 costWithoutBenefit,
                 recommendationDetails,
                 allRecommendationDetails,
-                default,
+                BenefitRecommendationScope.Single,
                 default,
                 subscriptionId,
                 resourceGroup);
@@ -1360,7 +1360,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 costWithoutBenefit,
                 recommendationDetails,
                 allRecommendationDetails,
-                default,
+                BenefitRecommendationScope.Shared,
                 default);
         }
 
@@ -1399,7 +1399,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new BillingAccountBenefitKind(kind),
                 default);
         }
 
@@ -1421,7 +1421,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                BillingAccountBenefitKind.IncludedQuantity,
                 default,
                 armSkuName is null && benefitId is null && benefitOrderId is null && benefitType is null && usageOn is null && utilizationPercentage is null ? default : new IncludedQuantityUtilizationSummaryProperties(
                     armSkuName,
@@ -1453,7 +1453,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                BillingAccountBenefitKind.SavingsPlan,
                 default,
                 armSkuName is null && benefitId is null && benefitOrderId is null && benefitType is null && usageOn is null && avgUtilizationPercentage is null && minUtilizationPercentage is null && maxUtilizationPercentage is null ? default : new SavingsPlanUtilizationSummaryProperties(
                     armSkuName,

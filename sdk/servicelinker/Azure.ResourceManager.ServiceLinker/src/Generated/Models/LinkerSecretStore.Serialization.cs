@@ -80,10 +80,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(SecretStoreKeyVaultId);
             }
-            if (Optional.IsDefined(KeyVaultSecretName))
+            if (_keyVaultSecretNameIsDefined || Optional.IsDefined(KeyVaultSecretName))
             {
-                writer.WritePropertyName("keyVaultSecretName"u8);
-                writer.WriteStringValue(KeyVaultSecretName);
+                if (KeyVaultSecretName != null)
+                {
+                    writer.WritePropertyName("keyVaultSecretName"u8);
+                    writer.WriteStringValue(KeyVaultSecretName);
+                }
+                else
+                {
+                    writer.WriteNull("keyVaultSecretName"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -128,6 +135,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 return null;
             }
             ResourceIdentifier secretStoreKeyVaultId = default;
+            bool keyVaultSecretNameIsDefined = false;
             string keyVaultSecretName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -143,6 +151,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("keyVaultSecretName"u8))
                 {
+                    keyVaultSecretNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         keyVaultSecretName = null;
@@ -156,7 +165,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LinkerSecretStore(secretStoreKeyVaultId, keyVaultSecretName, additionalBinaryDataProperties);
+            return new LinkerSecretStore(secretStoreKeyVaultId, keyVaultSecretName, additionalBinaryDataProperties)
+            {
+                _keyVaultSecretNameIsDefined = keyVaultSecretNameIsDefined
+            };
         }
     }
 }

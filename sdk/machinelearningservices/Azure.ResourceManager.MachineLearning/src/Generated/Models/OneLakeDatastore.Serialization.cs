@@ -82,10 +82,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("artifact"u8);
             writer.WriteObjectValue(Artifact, options);
-            if (Optional.IsDefined(Endpoint))
+            if (_endpointIsDefined || Optional.IsDefined(Endpoint))
             {
-                writer.WritePropertyName("endpoint"u8);
-                writer.WriteStringValue(Endpoint);
+                if (Endpoint != null)
+                {
+                    writer.WritePropertyName("endpoint"u8);
+                    writer.WriteStringValue(Endpoint);
+                }
+                else
+                {
+                    writer.WriteNull("endpoint"u8);
+                }
             }
             writer.WritePropertyName("oneLakeWorkspaceName"u8);
             writer.WriteStringValue(OneLakeWorkspaceName);
@@ -121,14 +128,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
             bool? isDefault = default;
             OneLakeArtifact artifact = default;
+            bool endpointIsDefined = false;
             string endpoint = default;
             string oneLakeWorkspaceName = default;
             MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default;
@@ -136,6 +145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -148,6 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -169,6 +180,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -212,6 +224,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("endpoint"u8))
                 {
+                    endpointIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         endpoint = null;
@@ -241,8 +254,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new OneLakeDatastore(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                tags,
                 additionalBinaryDataProperties,
                 credentials,
                 datastoreType,
@@ -250,7 +263,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 artifact,
                 endpoint,
                 oneLakeWorkspaceName,
-                serviceDataAccessAuthIdentity);
+                serviceDataAccessAuthIdentity)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _endpointIsDefined = endpointIsDefined
+            };
         }
     }
 }

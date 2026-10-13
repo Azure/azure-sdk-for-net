@@ -80,10 +80,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("parameterServerCount"u8);
                 writer.WriteNumberValue(ParameterServerCount.Value);
             }
-            if (Optional.IsDefined(WorkerCount))
+            if (_workerCountIsDefined || Optional.IsDefined(WorkerCount))
             {
-                writer.WritePropertyName("workerCount"u8);
-                writer.WriteNumberValue(WorkerCount.Value);
+                if (WorkerCount != null)
+                {
+                    writer.WritePropertyName("workerCount"u8);
+                    writer.WriteNumberValue(WorkerCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("workerCount"u8);
+                }
             }
         }
 
@@ -115,6 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DistributionType distributionType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? parameterServerCount = default;
+            bool workerCountIsDefined = false;
             int? workerCount = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,6 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("workerCount"u8))
                 {
+                    workerCountIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         workerCount = null;
@@ -147,7 +156,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TensorFlowDistributionConfiguration(distributionType, additionalBinaryDataProperties, parameterServerCount, workerCount);
+            return new TensorFlowDistributionConfiguration(distributionType, additionalBinaryDataProperties, parameterServerCount, workerCount)
+            {
+                _workerCountIsDefined = workerCountIsDefined
+            };
         }
     }
 }

@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosPrivateAccessData, ChaosPrivateAccessResource>(new PrivateAccessesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ChaosPrivateAccessData, ChaosPrivateAccessResource>(new ChaosPrivateAccessDataAsyncCollectionResultOfT(
                 _privateAccessesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosPrivateAccessData, ChaosPrivateAccessResource>(new PrivateAccessesGetAllCollectionResultOfT(
+            return new PageableWrapper<ChaosPrivateAccessData, ChaosPrivateAccessResource>(new ChaosPrivateAccessDataCollectionResultOfT(
                 _privateAccessesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

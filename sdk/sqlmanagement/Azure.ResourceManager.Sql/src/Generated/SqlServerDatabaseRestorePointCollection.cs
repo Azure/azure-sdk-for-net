@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlServerDatabaseRestorePointData, SqlServerDatabaseRestorePointResource>(new RestorePointsGetByDatabaseAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlServerDatabaseRestorePointData, SqlServerDatabaseRestorePointResource>(new SqlServerDatabaseRestorePointDataAsyncCollectionResultOfT(
                 _restorePointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlServerDatabaseRestorePointData, SqlServerDatabaseRestorePointResource>(new RestorePointsGetByDatabaseCollectionResultOfT(
+            return new PageableWrapper<SqlServerDatabaseRestorePointData, SqlServerDatabaseRestorePointResource>(new SqlServerDatabaseRestorePointDataCollectionResultOfT(
                 _restorePointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OrganizationResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new OrganizationResourceListResult(value ?? new ChangeTrackingList<MongoDBAtlasOrganizationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

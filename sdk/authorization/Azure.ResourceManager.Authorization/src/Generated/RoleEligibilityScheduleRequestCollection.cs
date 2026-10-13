@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RoleEligibilityScheduleRequestData, RoleEligibilityScheduleRequestResource>(new RoleEligibilityScheduleRequestsGetForScopeAsyncCollectionResultOfT(_roleEligibilityScheduleRequestsRestClient, Id.ToString(), filter, context, "RoleEligibilityScheduleRequestCollection.GetAll"), data => new RoleEligibilityScheduleRequestResource(Client, data));
+            return new AsyncPageableWrapper<RoleEligibilityScheduleRequestData, RoleEligibilityScheduleRequestResource>(new RoleEligibilityScheduleRequestDataAsyncCollectionResultOfT(_roleEligibilityScheduleRequestsRestClient, Id.ToString(), filter, context, "RoleEligibilityScheduleRequestCollection.GetAll"), data => new RoleEligibilityScheduleRequestResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RoleEligibilityScheduleRequestData, RoleEligibilityScheduleRequestResource>(new RoleEligibilityScheduleRequestsGetForScopeCollectionResultOfT(_roleEligibilityScheduleRequestsRestClient, Id.ToString(), filter, context, "RoleEligibilityScheduleRequestCollection.GetAll"), data => new RoleEligibilityScheduleRequestResource(Client, data));
+            return new PageableWrapper<RoleEligibilityScheduleRequestData, RoleEligibilityScheduleRequestResource>(new RoleEligibilityScheduleRequestDataCollectionResultOfT(_roleEligibilityScheduleRequestsRestClient, Id.ToString(), filter, context, "RoleEligibilityScheduleRequestCollection.GetAll"), data => new RoleEligibilityScheduleRequestResource(Client, data));
         }
 
         /// <summary>

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OrganizationResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new OrganizationResourceListResult(value ?? new ChangeTrackingList<NapsterOrganizationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

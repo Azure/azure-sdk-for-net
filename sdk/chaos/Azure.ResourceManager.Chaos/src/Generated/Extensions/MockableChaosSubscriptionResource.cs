@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosPrivateAccessData, ChaosPrivateAccessResource>(new PrivateAccessesGetPrivateAccessesAsyncCollectionResultOfT(PrivateAccessesRestClient, Guid.Parse(Id.SubscriptionId), continuationToken, context, "MockableChaosSubscriptionResource.GetPrivateAccesses"), data => new ChaosPrivateAccessResource(Client, data));
+            return new AsyncPageableWrapper<ChaosPrivateAccessData, ChaosPrivateAccessResource>(new ChaosPrivateAccessDataAsync0CollectionResultOfT(PrivateAccessesRestClient, Guid.Parse(Id.SubscriptionId), continuationToken, context, "MockableChaosSubscriptionResource.GetPrivateAccesses"), data => new ChaosPrivateAccessResource(Client, data));
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosPrivateAccessData, ChaosPrivateAccessResource>(new PrivateAccessesGetPrivateAccessesCollectionResultOfT(PrivateAccessesRestClient, Guid.Parse(Id.SubscriptionId), continuationToken, context, "MockableChaosSubscriptionResource.GetPrivateAccesses"), data => new ChaosPrivateAccessResource(Client, data));
+            return new PageableWrapper<ChaosPrivateAccessData, ChaosPrivateAccessResource>(new ChaosPrivateAccessData0CollectionResultOfT(PrivateAccessesRestClient, Guid.Parse(Id.SubscriptionId), continuationToken, context, "MockableChaosSubscriptionResource.GetPrivateAccesses"), data => new ChaosPrivateAccessResource(Client, data));
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosWorkspaceData, ChaosWorkspaceResource>(new WorkspacesGetWorkspacesAsyncCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), continuationToken, context, "MockableChaosSubscriptionResource.GetWorkspaces"), data => new ChaosWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<ChaosWorkspaceData, ChaosWorkspaceResource>(new ChaosWorkspaceDataAsync0CollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), continuationToken, context, "MockableChaosSubscriptionResource.GetWorkspaces"), data => new ChaosWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosWorkspaceData, ChaosWorkspaceResource>(new WorkspacesGetWorkspacesCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), continuationToken, context, "MockableChaosSubscriptionResource.GetWorkspaces"), data => new ChaosWorkspaceResource(Client, data));
+            return new PageableWrapper<ChaosWorkspaceData, ChaosWorkspaceResource>(new ChaosWorkspaceData0CollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), continuationToken, context, "MockableChaosSubscriptionResource.GetWorkspaces"), data => new ChaosWorkspaceResource(Client, data));
         }
 
         /// <summary>

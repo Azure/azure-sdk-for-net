@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityTaskData, SubscriptionSecurityTaskResource>(new TasksGetByHomeRegionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityTaskData, SubscriptionSecurityTaskResource>(new SecurityTaskDataAsync0CollectionResultOfT(
                 _tasksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityTaskData, SubscriptionSecurityTaskResource>(new TasksGetByHomeRegionCollectionResultOfT(
+            return new PageableWrapper<SecurityTaskData, SubscriptionSecurityTaskResource>(new SecurityTaskData0CollectionResultOfT(
                 _tasksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,

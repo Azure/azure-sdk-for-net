@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricNeighborGroupData, NetworkFabricNeighborGroupResource>(new NeighborGroupsGetByResourceGroupAsyncCollectionResultOfT(_neighborGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricNeighborGroupCollection.GetAll"), data => new NetworkFabricNeighborGroupResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricNeighborGroupData, NetworkFabricNeighborGroupResource>(new NetworkFabricNeighborGroupDataAsyncCollectionResultOfT(_neighborGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricNeighborGroupCollection.GetAll"), data => new NetworkFabricNeighborGroupResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricNeighborGroupData, NetworkFabricNeighborGroupResource>(new NeighborGroupsGetByResourceGroupCollectionResultOfT(_neighborGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricNeighborGroupCollection.GetAll"), data => new NetworkFabricNeighborGroupResource(Client, data));
+            return new PageableWrapper<NetworkFabricNeighborGroupData, NetworkFabricNeighborGroupResource>(new NetworkFabricNeighborGroupDataCollectionResultOfT(_neighborGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricNeighborGroupCollection.GetAll"), data => new NetworkFabricNeighborGroupResource(Client, data));
         }
 
         /// <summary>
