@@ -8,7 +8,8 @@
 
 ### Bugs Fixed
 
-- Fixed streaming blob downloads to reject response bodies whose length does not match the declared content length.
+- Fixed streaming blob downloads to enforce the declared content length and disallow seeking, ensuring SHA-256 validation
+  covers the complete sequential content stream.
 
 ### Other Changes
 

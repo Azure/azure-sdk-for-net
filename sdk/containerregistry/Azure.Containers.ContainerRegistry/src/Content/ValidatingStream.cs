@@ -36,13 +36,13 @@ namespace Azure.Containers.ContainerRegistry
 
         public override bool CanRead => _stream.CanRead;
 
-        public override bool CanSeek => _stream.CanSeek;
+        public override bool CanSeek => false;
 
         public override bool CanWrite => _stream.CanWrite;
 
         public override long Length => _stream.Length;
 
-        public override long Position { get => _stream.Position; set => _stream.Position = value; }
+        public override long Position { get => _stream.Position; set => throw new NotSupportedException(); }
 
         public override void Flush() => _stream.Flush();
 
@@ -98,7 +98,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        public override long Seek(long offset, SeekOrigin origin) => _stream.Seek(offset, origin);
+        public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
 
         public override void SetLength(long value) => _stream.SetLength(value);
 

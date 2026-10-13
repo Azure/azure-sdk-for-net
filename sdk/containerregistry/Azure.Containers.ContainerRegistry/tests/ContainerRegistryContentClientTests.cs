@@ -277,6 +277,18 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [Test]
+        public void ValidatingStreamDisallowsSeeking()
+        {
+            byte[] content = { 0, 1, 2, 3 };
+            string digest = BlobHelper.ComputeDigest(new MemoryStream(content));
+            using var stream = new ValidatingStream(new MemoryStream(content), content.Length, digest);
+
+            Assert.IsFalse(stream.CanSeek);
+            Assert.Throws<NotSupportedException>(() => stream.Seek(0, SeekOrigin.Begin));
+            Assert.Throws<NotSupportedException>(() => stream.Position = 0);
+        }
+
+        [Test]
         public void DownloadBlobToValidatesContentRange()
         {
             // Arrange
