@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.Provisioning.ApiCenter.csproj" />
+  <Project Path="tests/Azure.Provisioning.ApiCenter.Tests.csproj" />
+</Solution>

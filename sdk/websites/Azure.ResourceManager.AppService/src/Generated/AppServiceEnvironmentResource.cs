@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentRecommendationsGetHistoryForHostingEnvironmentRecommendationsAsyncCollectionResultOfT(
+            return new AppServiceRecommendationAsyncCollectionResultOfT(
                 _appServiceEnvironmentRecommendationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentRecommendationsGetHistoryForHostingEnvironmentRecommendationsCollectionResultOfT(
+            return new AppServiceRecommendationCollectionResultOfT(
                 _appServiceEnvironmentRecommendationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentRecommendationsGetRecommendedRulesForHostingEnvironmentRecommendationsAsyncCollectionResultOfT(
+            return new AppServiceRecommendationAsync0CollectionResultOfT(
                 _appServiceEnvironmentRecommendationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentRecommendationsGetRecommendedRulesForHostingEnvironmentRecommendationsCollectionResultOfT(
+            return new AppServiceRecommendation0CollectionResultOfT(
                 _appServiceEnvironmentRecommendationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentResourcesGetInboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+            return new InboundEnvironmentEndpointAsyncCollectionResultOfT(
                 _appServiceEnvironmentResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1041,7 +1041,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentResourcesGetInboundNetworkDependenciesEndpointsCollectionResultOfT(
+            return new InboundEnvironmentEndpointCollectionResultOfT(
                 _appServiceEnvironmentResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1079,7 +1079,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentResourcesGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+            return new OutboundEnvironmentEndpointAsyncCollectionResultOfT(
                 _appServiceEnvironmentResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1117,7 +1117,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentResourcesGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+            return new OutboundEnvironmentEndpointCollectionResultOfT(
                 _appServiceEnvironmentResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1155,7 +1155,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServicePlanData, AppServicePlanResource>(new AppServiceEnvironmentResourcesGetAppServicePlansAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppServicePlanData, AppServicePlanResource>(new AppServicePlanDataAsyncCollectionResultOfT(
                 _appServiceEnvironmentResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1193,7 +1193,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServicePlanData, AppServicePlanResource>(new AppServiceEnvironmentResourcesGetAppServicePlansCollectionResultOfT(
+            return new PageableWrapper<AppServicePlanData, AppServicePlanResource>(new AppServicePlanDataCollectionResultOfT(
                 _appServiceEnvironmentResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1231,7 +1231,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentResourcesGetCapacitiesAsyncCollectionResultOfT(
+            return new StampCapacityAsyncCollectionResultOfT(
                 _appServiceEnvironmentResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1269,7 +1269,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentResourcesGetCapacitiesCollectionResultOfT(
+            return new StampCapacityCollectionResultOfT(
                 _appServiceEnvironmentResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1460,7 +1460,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentResourcesGetUsagesAsyncCollectionResultOfT(
+            return new CsmUsageQuotaAsyncCollectionResultOfT(
                 _appServiceEnvironmentResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1500,7 +1500,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceEnvironmentResourcesGetUsagesCollectionResultOfT(
+            return new CsmUsageQuotaCollectionResultOfT(
                 _appServiceEnvironmentResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

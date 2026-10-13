@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ReachabilityAnalysisRunListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ReachabilityAnalysisRunListResult(value ?? new ChangeTrackingList<ReachabilityAnalysisRunData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

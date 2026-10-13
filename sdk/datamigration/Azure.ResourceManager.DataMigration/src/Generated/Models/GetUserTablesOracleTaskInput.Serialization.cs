@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GetUserTablesOracleTaskInput(connectionInfo, selectedSchemas, additionalBinaryDataProperties);
+            return new GetUserTablesOracleTaskInput(connectionInfo, selectedSchemas ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

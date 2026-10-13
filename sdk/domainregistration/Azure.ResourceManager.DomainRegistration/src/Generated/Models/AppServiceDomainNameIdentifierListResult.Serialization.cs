@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AppServiceDomainNameIdentifierListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AppServiceDomainNameIdentifierListResult(value ?? new ChangeTrackingList<AppServiceDomainNameIdentifier>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

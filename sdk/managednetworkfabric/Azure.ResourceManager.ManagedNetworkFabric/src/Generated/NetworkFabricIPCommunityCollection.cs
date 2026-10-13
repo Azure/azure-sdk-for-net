@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkFabricIPCommunityCollection : ArmCollection, IEnumerable<NetworkFabricIPCommunityResource>, IAsyncEnumerable<NetworkFabricIPCommunityResource>
     {
         private readonly ClientDiagnostics _ipCommunitiesClientDiagnostics;
-        private readonly IpCommunities _ipCommunitiesRestClient;
+        private readonly IPCommunities _ipCommunitiesRestClient;
 
         /// <summary> Initializes a new instance of NetworkFabricIPCommunityCollection for mocking. </summary>
         protected NetworkFabricIPCommunityCollection()
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(NetworkFabricIPCommunityResource.ResourceType, out string networkFabricIPCommunityApiVersion);
             _ipCommunitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricIPCommunityResource.ResourceType.Namespace, Diagnostics);
-            _ipCommunitiesRestClient = new IpCommunities(_ipCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricIPCommunityApiVersion ?? "2025-07-15");
+            _ipCommunitiesRestClient = new IPCommunities(_ipCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricIPCommunityApiVersion ?? "2025-07-15");
             ValidateResourceId(id);
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricIPCommunityData, NetworkFabricIPCommunityResource>(new IpCommunitiesGetByResourceGroupAsyncCollectionResultOfT(_ipCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricIPCommunityCollection.GetAll"), data => new NetworkFabricIPCommunityResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricIPCommunityData, NetworkFabricIPCommunityResource>(new NetworkFabricIPCommunityDataAsyncCollectionResultOfT(_ipCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricIPCommunityCollection.GetAll"), data => new NetworkFabricIPCommunityResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricIPCommunityData, NetworkFabricIPCommunityResource>(new IpCommunitiesGetByResourceGroupCollectionResultOfT(_ipCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricIPCommunityCollection.GetAll"), data => new NetworkFabricIPCommunityResource(Client, data));
+            return new PageableWrapper<NetworkFabricIPCommunityData, NetworkFabricIPCommunityResource>(new NetworkFabricIPCommunityDataCollectionResultOfT(_ipCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricIPCommunityCollection.GetAll"), data => new NetworkFabricIPCommunityResource(Client, data));
         }
 
         /// <summary>

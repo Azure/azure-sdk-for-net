@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppDiagnosticData, ContainerAppJobDetectorResource>(new ContainerAppJobsGetDetectorsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerAppDiagnosticData, ContainerAppJobDetectorResource>(new ContainerAppDiagnosticDataAsync1CollectionResultOfT(
                 _containerAppJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppDiagnosticData, ContainerAppJobDetectorResource>(new ContainerAppJobsGetDetectorsCollectionResultOfT(
+            return new PageableWrapper<ContainerAppDiagnosticData, ContainerAppJobDetectorResource>(new ContainerAppDiagnosticData1CollectionResultOfT(
                 _containerAppJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

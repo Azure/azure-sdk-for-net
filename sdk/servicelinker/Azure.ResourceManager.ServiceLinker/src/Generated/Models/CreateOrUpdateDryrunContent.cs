@@ -14,6 +14,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The dryrun parameters for creation or update a linker. </summary>
     public partial class CreateOrUpdateDryrunContent : DryrunContent
     {
+        private VnetSolution _vNetSolution;
+        internal bool _vNetSolutionIsDefined;
+        private LinkerSecretStore _secretStore;
+        internal bool _secretStoreIsDefined;
+        private string _scope;
+        internal bool _scopeIsDefined;
+        private LinkerPublicNetworkSolution _publicNetworkSolution;
+        internal bool _publicNetworkSolutionIsDefined;
+        private LinkerConfigurationInfo _configurationInfo;
+        internal bool _configurationInfoIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="CreateOrUpdateDryrunContent"/>. </summary>
         public CreateOrUpdateDryrunContent() : base(DryrunActionName.CreateOrUpdate)
         {
@@ -37,11 +48,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             AuthInfo = authInfo;
             ClientType = clientType;
             ProvisioningState = provisioningState;
-            VNetSolution = vNetSolution;
-            SecretStore = secretStore;
-            Scope = scope;
-            PublicNetworkSolution = publicNetworkSolution;
-            ConfigurationInfo = configurationInfo;
+            _vNetSolution = vNetSolution;
+            _secretStore = secretStore;
+            _scope = scope;
+            _publicNetworkSolution = publicNetworkSolution;
+            _configurationInfo = configurationInfo;
         }
 
         /// <summary> The target service properties. </summary>
@@ -57,19 +68,74 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public string ProvisioningState { get; }
 
         /// <summary> The VNet solution. </summary>
-        internal VnetSolution VNetSolution { get; set; }
+        internal VnetSolution VNetSolution
+        {
+            get
+            {
+                return _vNetSolution;
+            }
+            set
+            {
+                _vNetSolution = value;
+                _vNetSolutionIsDefined = true;
+            }
+        }
 
         /// <summary> An option to store secret value in secure place. </summary>
-        internal LinkerSecretStore SecretStore { get; set; }
+        internal LinkerSecretStore SecretStore
+        {
+            get
+            {
+                return _secretStore;
+            }
+            set
+            {
+                _secretStore = value;
+                _secretStoreIsDefined = true;
+            }
+        }
 
         /// <summary> connection scope in source service. </summary>
-        public string Scope { get; set; }
+        public string Scope
+        {
+            get
+            {
+                return _scope;
+            }
+            set
+            {
+                _scope = value;
+                _scopeIsDefined = true;
+            }
+        }
 
         /// <summary> The network solution. </summary>
-        public LinkerPublicNetworkSolution PublicNetworkSolution { get; set; }
+        public LinkerPublicNetworkSolution PublicNetworkSolution
+        {
+            get
+            {
+                return _publicNetworkSolution;
+            }
+            set
+            {
+                _publicNetworkSolution = value;
+                _publicNetworkSolutionIsDefined = true;
+            }
+        }
 
         /// <summary> The connection information consumed by applications, including secrets, connection strings. </summary>
-        public LinkerConfigurationInfo ConfigurationInfo { get; set; }
+        public LinkerConfigurationInfo ConfigurationInfo
+        {
+            get
+            {
+                return _configurationInfo;
+            }
+            set
+            {
+                _configurationInfo = value;
+                _configurationInfoIsDefined = true;
+            }
+        }
 
         /// <summary> Type of VNet solution. </summary>
         public VnetSolutionType? SolutionType

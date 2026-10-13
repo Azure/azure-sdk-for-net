@@ -140,15 +140,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(IsCredentialsInHeaders))
+            if (_isCredentialsInHeadersIsDefined || Optional.IsDefined(IsCredentialsInHeaders))
             {
-                writer.WritePropertyName("isCredentialsInHeaders"u8);
-                writer.WriteBooleanValue(IsCredentialsInHeaders.Value);
+                if (IsCredentialsInHeaders != null)
+                {
+                    writer.WritePropertyName("isCredentialsInHeaders"u8);
+                    writer.WriteBooleanValue(IsCredentialsInHeaders.Value);
+                }
+                else
+                {
+                    writer.WriteNull("isCredentialsInHeaders"u8);
+                }
             }
-            if (Optional.IsDefined(IsJsonRequest))
+            if (_isJsonRequestIsDefined || Optional.IsDefined(IsJsonRequest))
             {
-                writer.WritePropertyName("isJsonRequest"u8);
-                writer.WriteBooleanValue(IsJsonRequest.Value);
+                if (IsJsonRequest != null)
+                {
+                    writer.WritePropertyName("isJsonRequest"u8);
+                    writer.WriteBooleanValue(IsJsonRequest.Value);
+                }
+                else
+                {
+                    writer.WriteNull("isJsonRequest"u8);
+                }
             }
             if (Optional.IsDefined(RequestTimeoutInSeconds))
             {
@@ -189,7 +203,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IDictionary<string, string> password = default;
             IDictionary<string, string> queryParameters = default;
             IDictionary<string, string> headers = default;
+            bool isCredentialsInHeadersIsDefined = false;
             bool? isCredentialsInHeaders = default;
+            bool isJsonRequestIsDefined = false;
             bool? isJsonRequest = default;
             int? requestTimeoutInSeconds = default;
             foreach (var prop in element.EnumerateObject())
@@ -282,6 +298,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("isCredentialsInHeaders"u8))
                 {
+                    isCredentialsInHeadersIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isCredentialsInHeaders = null;
@@ -292,6 +309,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("isJsonRequest"u8))
                 {
+                    isJsonRequestIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isJsonRequest = null;
@@ -318,13 +336,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 @type,
                 additionalBinaryDataProperties,
                 tokenEndpoint,
-                userName,
-                password,
+                userName ?? new ChangeTrackingDictionary<string, string>(),
+                password ?? new ChangeTrackingDictionary<string, string>(),
                 queryParameters ?? new ChangeTrackingDictionary<string, string>(),
                 headers ?? new ChangeTrackingDictionary<string, string>(),
                 isCredentialsInHeaders,
                 isJsonRequest,
-                requestTimeoutInSeconds);
+                requestTimeoutInSeconds)
+            {
+                _isCredentialsInHeadersIsDefined = isCredentialsInHeadersIsDefined,
+                _isJsonRequestIsDefined = isJsonRequestIsDefined
+            };
         }
     }
 }

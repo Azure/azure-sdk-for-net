@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetAppVolumeData, NetAppVolumeResource>(new VolumesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetAppVolumeData, NetAppVolumeResource>(new NetAppVolumeDataAsyncCollectionResultOfT(
                 _volumesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetAppVolumeData, NetAppVolumeResource>(new VolumesGetAllCollectionResultOfT(
+            return new PageableWrapper<NetAppVolumeData, NetAppVolumeResource>(new NetAppVolumeDataCollectionResultOfT(
                 _volumesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

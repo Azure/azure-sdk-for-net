@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InterconnectBlockData, InterconnectBlockResource>(new InterconnectBlocksGetByResourceGroupAsyncCollectionResultOfT(_interconnectBlocksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "InterconnectBlockCollection.GetAll"), data => new InterconnectBlockResource(Client, data));
+            return new AsyncPageableWrapper<InterconnectBlockData, InterconnectBlockResource>(new InterconnectBlockDataAsyncCollectionResultOfT(_interconnectBlocksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "InterconnectBlockCollection.GetAll"), data => new InterconnectBlockResource(Client, data));
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InterconnectBlockData, InterconnectBlockResource>(new InterconnectBlocksGetByResourceGroupCollectionResultOfT(_interconnectBlocksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "InterconnectBlockCollection.GetAll"), data => new InterconnectBlockResource(Client, data));
+            return new PageableWrapper<InterconnectBlockData, InterconnectBlockResource>(new InterconnectBlockDataCollectionResultOfT(_interconnectBlocksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "InterconnectBlockCollection.GetAll"), data => new InterconnectBlockResource(Client, data));
         }
 
         /// <summary>

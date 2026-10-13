@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkSecurityPerimeterProfileData, NetworkSecurityPerimeterProfileResource>(new NetworkSecurityPerimeterProfilesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkSecurityPerimeterProfileData, NetworkSecurityPerimeterProfileResource>(new NetworkSecurityPerimeterProfileDataAsyncCollectionResultOfT(
                 _networkSecurityPerimeterProfilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkSecurityPerimeterProfileData, NetworkSecurityPerimeterProfileResource>(new NetworkSecurityPerimeterProfilesGetAllCollectionResultOfT(
+            return new PageableWrapper<NetworkSecurityPerimeterProfileData, NetworkSecurityPerimeterProfileResource>(new NetworkSecurityPerimeterProfileDataCollectionResultOfT(
                 _networkSecurityPerimeterProfilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

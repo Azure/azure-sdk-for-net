@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FabricAgentModelListResult(value, nextLink, additionalBinaryDataProperties);
+            return new FabricAgentModelListResult(value ?? new ChangeTrackingList<DataReplicationFabricAgentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

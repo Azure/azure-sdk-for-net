@@ -53,7 +53,8 @@ public class ResponsesServerSettings : ClientSettings
 
     /// <summary>
     /// Gets or sets whether in-flight conversations accept steering (mid-turn additional input).
-    /// Mirrors <see cref="ResponsesServerOptions.SteerableConversations"/>.
+    /// Mirrors <see cref="ResponsesServerOptions.SteerableConversations"/>. Steering requires
+    /// resilient tasks to be enabled explicitly or through <see cref="ResilientBackground"/>.
     /// </summary>
     public bool SteerableConversations { get; set; }
 

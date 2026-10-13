@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Model for API authentication with OAuth2. </summary>
     public partial class OAuthModel : CcpAuthConfig
     {
+        private bool? _isCredentialsInHeaders;
+        internal bool _isCredentialsInHeadersIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="OAuthModel"/>. </summary>
         /// <param name="clientSecret"> The Application (client) secret that the OAuth provider assigned to your app. </param>
         /// <param name="clientId"> The Application (client) ID that the OAuth provider assigned to your app. </param>
@@ -60,7 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             AuthorizationCode = authorizationCode;
             ClientSecret = clientSecret;
             ClientId = clientId;
-            IsCredentialsInHeaders = isCredentialsInHeaders;
+            _isCredentialsInHeaders = isCredentialsInHeaders;
             Scope = scope;
             RedirectUri = redirectUri;
             GrantType = grantType;
@@ -88,7 +91,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Indicating whether we want to send the clientId and clientSecret to token endpoint in the headers. </summary>
         [WirePath("isCredentialsInHeaders")]
-        public bool? IsCredentialsInHeaders { get; set; }
+        public bool? IsCredentialsInHeaders
+        {
+            get
+            {
+                return _isCredentialsInHeaders;
+            }
+            set
+            {
+                _isCredentialsInHeaders = value;
+                _isCredentialsInHeadersIsDefined = true;
+            }
+        }
 
         /// <summary> The Application (client) Scope that the OAuth provider assigned to your app. </summary>
         [WirePath("scope")]

@@ -80,10 +80,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 throw new FormatException($"The model {nameof(TiDataConnectorProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(TipLookbackOn))
+            if (_tipLookbackOnIsDefined || Optional.IsDefined(TipLookbackOn))
             {
-                writer.WritePropertyName("tipLookbackPeriod"u8);
-                writer.WriteStringValue(TipLookbackOn.Value, "O");
+                if (TipLookbackOn != null)
+                {
+                    writer.WritePropertyName("tipLookbackPeriod"u8);
+                    writer.WriteStringValue(TipLookbackOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("tipLookbackPeriod"u8);
+                }
             }
             writer.WritePropertyName("dataTypes"u8);
             writer.WriteObjectValue(DataTypes, options);
@@ -116,6 +123,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             Guid tenantId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool tipLookbackOnIsDefined = false;
             DateTimeOffset? tipLookbackOn = default;
             TiDataConnectorDataTypes dataTypes = default;
             foreach (var prop in element.EnumerateObject())
@@ -127,6 +135,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("tipLookbackPeriod"u8))
                 {
+                    tipLookbackOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         tipLookbackOn = null;
@@ -145,7 +154,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TiDataConnectorProperties(tenantId, additionalBinaryDataProperties, tipLookbackOn, dataTypes);
+            return new TiDataConnectorProperties(tenantId, additionalBinaryDataProperties, tipLookbackOn, dataTypes)
+            {
+                _tipLookbackOnIsDefined = tipLookbackOnIsDefined
+            };
         }
     }
 }

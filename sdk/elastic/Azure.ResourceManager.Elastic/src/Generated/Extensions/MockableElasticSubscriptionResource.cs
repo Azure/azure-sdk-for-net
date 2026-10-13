@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorResourcesGetAllAsyncCollectionResultOfT(ElasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableElasticSubscriptionResource.GetElasticMonitors"), data => new ElasticMonitorResource(Client, data));
+            return new AsyncPageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorDataAsync0CollectionResultOfT(ElasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableElasticSubscriptionResource.GetElasticMonitors"), data => new ElasticMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorResourcesGetAllCollectionResultOfT(ElasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableElasticSubscriptionResource.GetElasticMonitors"), data => new ElasticMonitorResource(Client, data));
+            return new PageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorData0CollectionResultOfT(ElasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableElasticSubscriptionResource.GetElasticMonitors"), data => new ElasticMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticVersionsOperationGroupGetElasticVersionsAsyncCollectionResultOfT(ElasticVersionsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), region, context, "MockableElasticSubscriptionResource.GetElasticVersions");
+            return new ElasticVersionAsyncCollectionResultOfT(ElasticVersionsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), region, context, "MockableElasticSubscriptionResource.GetElasticVersions");
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticVersionsOperationGroupGetElasticVersionsCollectionResultOfT(ElasticVersionsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), region, context, "MockableElasticSubscriptionResource.GetElasticVersions");
+            return new ElasticVersionCollectionResultOfT(ElasticVersionsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), region, context, "MockableElasticSubscriptionResource.GetElasticVersions");
         }
 
         /// <summary>

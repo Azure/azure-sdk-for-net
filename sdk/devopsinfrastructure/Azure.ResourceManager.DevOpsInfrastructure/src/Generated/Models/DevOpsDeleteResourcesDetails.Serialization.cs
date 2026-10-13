@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DevOpsDeleteResourcesDetails(resourceIds, additionalBinaryDataProperties);
+            return new DevOpsDeleteResourcesDetails(resourceIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

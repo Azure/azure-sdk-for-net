@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoClusterUserData, MongoClusterUserResource>(new UsersGetByMongoClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MongoClusterUserData, MongoClusterUserResource>(new MongoClusterUserDataAsyncCollectionResultOfT(
                 _usersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoClusterUserData, MongoClusterUserResource>(new UsersGetByMongoClusterCollectionResultOfT(
+            return new PageableWrapper<MongoClusterUserData, MongoClusterUserResource>(new MongoClusterUserDataCollectionResultOfT(
                 _usersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudVolumeData, NetworkCloudVolumeResource>(new VolumesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudVolumeData, NetworkCloudVolumeResource>(new NetworkCloudVolumeDataAsyncCollectionResultOfT(
                 _volumesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudVolumeData, NetworkCloudVolumeResource>(new VolumesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudVolumeData, NetworkCloudVolumeResource>(new NetworkCloudVolumeDataCollectionResultOfT(
                 _volumesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

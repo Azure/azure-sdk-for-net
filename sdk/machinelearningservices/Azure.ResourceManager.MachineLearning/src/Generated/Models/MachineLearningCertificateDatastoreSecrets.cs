@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Datastore certificate secrets. </summary>
     public partial class MachineLearningCertificateDatastoreSecrets : MachineLearningDatastoreSecrets
     {
+        private string _certificate;
+        internal bool _certificateIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningCertificateDatastoreSecrets"/>. </summary>
         public MachineLearningCertificateDatastoreSecrets() : base(SecretsType.Certificate)
         {
@@ -25,11 +28,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="certificate"> Service principal certificate. </param>
         internal MachineLearningCertificateDatastoreSecrets(SecretsType secretsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string certificate) : base(secretsType, additionalBinaryDataProperties)
         {
-            Certificate = certificate;
+            _certificate = certificate;
         }
 
         /// <summary> Service principal certificate. </summary>
         [WirePath("certificate")]
-        public string Certificate { get; set; }
+        public string Certificate
+        {
+            get
+            {
+                return _certificate;
+            }
+            set
+            {
+                _certificate = value;
+                _certificateIsDefined = true;
+            }
+        }
     }
 }

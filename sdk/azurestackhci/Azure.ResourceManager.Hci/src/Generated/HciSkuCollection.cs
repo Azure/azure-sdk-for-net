@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciSkuData, HciSkuResource>(new SkusGetByOfferAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HciSkuData, HciSkuResource>(new HciSkuDataAsyncCollectionResultOfT(
                 _skusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciSkuData, HciSkuResource>(new SkusGetByOfferCollectionResultOfT(
+            return new PageableWrapper<HciSkuData, HciSkuResource>(new HciSkuDataCollectionResultOfT(
                 _skusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

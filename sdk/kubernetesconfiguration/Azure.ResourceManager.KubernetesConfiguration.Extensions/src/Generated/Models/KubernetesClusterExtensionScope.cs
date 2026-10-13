@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private KubernetesClusterExtensionScopeCluster _cluster;
+        internal bool _clusterIsDefined;
+        private KubernetesClusterExtensionScopeNamespace _namespace;
+        internal bool _namespaceIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionScope"/>. </summary>
         public KubernetesClusterExtensionScope()
@@ -27,16 +31,38 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal KubernetesClusterExtensionScope(KubernetesClusterExtensionScopeCluster cluster, KubernetesClusterExtensionScopeNamespace @namespace, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Cluster = cluster;
-            Namespace = @namespace;
+            _cluster = cluster;
+            _namespace = @namespace;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies that the scope of the extension is Cluster. </summary>
-        internal KubernetesClusterExtensionScopeCluster Cluster { get; set; }
+        internal KubernetesClusterExtensionScopeCluster Cluster
+        {
+            get
+            {
+                return _cluster;
+            }
+            set
+            {
+                _cluster = value;
+                _clusterIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies that the scope of the extension is Namespace. </summary>
-        internal KubernetesClusterExtensionScopeNamespace Namespace { get; set; }
+        internal KubernetesClusterExtensionScopeNamespace Namespace
+        {
+            get
+            {
+                return _namespace;
+            }
+            set
+            {
+                _namespace = value;
+                _namespaceIsDefined = true;
+            }
+        }
 
         /// <summary> Namespace where the extension Release must be placed, for a Cluster scoped extension.  If this namespace does not exist, it will be created. </summary>
         public string ClusterReleaseNamespace

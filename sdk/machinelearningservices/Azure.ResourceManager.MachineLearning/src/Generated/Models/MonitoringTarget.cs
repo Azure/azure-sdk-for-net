@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _deploymentId;
+        internal bool _deploymentIdIsDefined;
+        private string _modelId;
+        internal bool _modelIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MonitoringTarget"/>. </summary>
         /// <param name="taskType"> [Required] The machine learning task type of the monitored model. </param>
@@ -31,19 +35,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MonitoringTarget(string deploymentId, string modelId, ModelTaskType taskType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DeploymentId = deploymentId;
-            ModelId = modelId;
+            _deploymentId = deploymentId;
+            _modelId = modelId;
             TaskType = taskType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Reference to the deployment asset targeted by this monitor. </summary>
         [WirePath("deploymentId")]
-        public string DeploymentId { get; set; }
+        public string DeploymentId
+        {
+            get
+            {
+                return _deploymentId;
+            }
+            set
+            {
+                _deploymentId = value;
+                _deploymentIdIsDefined = true;
+            }
+        }
 
         /// <summary> Reference to the model asset targeted by this monitor. </summary>
         [WirePath("modelId")]
-        public string ModelId { get; set; }
+        public string ModelId
+        {
+            get
+            {
+                return _modelId;
+            }
+            set
+            {
+                _modelId = value;
+                _modelIdIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] The machine learning task type of the monitored model. </summary>
         [WirePath("taskType")]

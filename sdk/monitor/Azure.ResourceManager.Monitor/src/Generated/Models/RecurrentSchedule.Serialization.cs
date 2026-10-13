@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RecurrentSchedule(timeZone, days, hours, minutes, additionalBinaryDataProperties);
+            return new RecurrentSchedule(timeZone, days ?? new ChangeTrackingList<MonitorDayOfWeek>(), hours ?? new ChangeTrackingList<int>(), minutes ?? new ChangeTrackingList<int>(), additionalBinaryDataProperties);
         }
     }
 }

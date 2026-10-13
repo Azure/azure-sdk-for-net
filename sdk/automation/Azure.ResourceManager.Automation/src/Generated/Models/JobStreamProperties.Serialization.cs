@@ -94,10 +94,17 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("streamText"u8);
                 writer.WriteStringValue(StreamText);
             }
-            if (Optional.IsDefined(Summary))
+            if (_summaryIsDefined || Optional.IsDefined(Summary))
             {
-                writer.WritePropertyName("summary"u8);
-                writer.WriteStringValue(Summary);
+                if (Summary != null)
+                {
+                    writer.WritePropertyName("summary"u8);
+                    writer.WriteStringValue(Summary);
+                }
+                else
+                {
+                    writer.WriteNull("summary"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Value))
             {
@@ -168,6 +175,7 @@ namespace Azure.ResourceManager.Automation.Models
             DateTimeOffset? time = default;
             AutomationJobStreamType? streamType = default;
             string streamText = default;
+            bool summaryIsDefined = false;
             string summary = default;
             IDictionary<string, BinaryData> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -203,6 +211,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("summary"u8))
                 {
+                    summaryIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         summary = null;
@@ -244,7 +253,10 @@ namespace Azure.ResourceManager.Automation.Models
                 streamText,
                 summary,
                 value ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _summaryIsDefined = summaryIsDefined
+            };
         }
     }
 }

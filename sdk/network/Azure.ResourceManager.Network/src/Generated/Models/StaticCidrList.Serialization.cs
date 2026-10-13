@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StaticCidrList(value, nextLink, additionalBinaryDataProperties);
+            return new StaticCidrList(value ?? new ChangeTrackingList<StaticCidrData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

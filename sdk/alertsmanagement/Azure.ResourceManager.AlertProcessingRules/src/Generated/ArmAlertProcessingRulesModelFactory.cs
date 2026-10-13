@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <returns> A new <see cref="Models.AlertProcessingRuleRecurrence"/> instance for mocking. </returns>
         public static AlertProcessingRuleRecurrence AlertProcessingRuleRecurrence(string recurrenceType = default, TimeSpan? startOn = default, TimeSpan? endOn = default)
         {
-            return new UnknownAlertProcessingRuleRecurrence(default, startOn, endOn, default);
+            return new UnknownAlertProcessingRuleRecurrence(recurrenceType is null ? default : new RecurrenceType(recurrenceType), startOn, endOn, default);
         }
 
         /// <summary> Daily recurrence object. </summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <returns> A new <see cref="Models.DailyRecurrence"/> instance for mocking. </returns>
         public static DailyRecurrence DailyRecurrence(TimeSpan? startOn = default, TimeSpan? endOn = default)
         {
-            return new DailyRecurrence(default, startOn, endOn, default);
+            return new DailyRecurrence(RecurrenceType.Daily, startOn, endOn, default);
         }
 
         /// <summary> Weekly recurrence object. </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         {
             daysOfWeek ??= new ChangeTrackingList<AlertsManagementDayOfWeek>();
 
-            return new AlertProcessingRuleWeeklyRecurrence(default, startOn, endOn, default, (daysOfWeek ?? new ChangeTrackingList<AlertsManagementDayOfWeek>()).ToList());
+            return new AlertProcessingRuleWeeklyRecurrence(RecurrenceType.Weekly, startOn, endOn, default, (daysOfWeek ?? new ChangeTrackingList<AlertsManagementDayOfWeek>()).ToList());
         }
 
         /// <summary> Monthly recurrence object. </summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         {
             daysOfMonth ??= new ChangeTrackingList<int>();
 
-            return new AlertProcessingRuleMonthlyRecurrence(default, startOn, endOn, default, (daysOfMonth ?? new ChangeTrackingList<int>()).ToList());
+            return new AlertProcessingRuleMonthlyRecurrence(RecurrenceType.Monthly, startOn, endOn, default, (daysOfMonth ?? new ChangeTrackingList<int>()).ToList());
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <returns> A new <see cref="Models.AlertProcessingRuleAction"/> instance for mocking. </returns>
         public static AlertProcessingRuleAction AlertProcessingRuleAction(string actionType = default)
         {
-            return new UnknownAlertProcessingRuleAction(default, default);
+            return new UnknownAlertProcessingRuleAction(actionType is null ? default : new ActionType(actionType), default);
         }
 
         /// <summary> Add action groups to alert processing rule. </summary>
@@ -154,14 +154,14 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         {
             actionGroupIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new AlertProcessingRuleAddGroupsAction(default, default, (actionGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList());
+            return new AlertProcessingRuleAddGroupsAction(ActionType.AddActionGroups, default, (actionGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList());
         }
 
         /// <summary> Indicates if all action groups should be removed. </summary>
         /// <returns> A new <see cref="Models.AlertProcessingRuleRemoveAllGroupsAction"/> instance for mocking. </returns>
         public static AlertProcessingRuleRemoveAllGroupsAction AlertProcessingRuleRemoveAllGroupsAction()
         {
-            return new AlertProcessingRuleRemoveAllGroupsAction(default, default);
+            return new AlertProcessingRuleRemoveAllGroupsAction(ActionType.RemoveAllActionGroups, default);
         }
 
         /// <param name="isEnabled"> Indicates if the given alert processing rule is enabled or disabled. </param>

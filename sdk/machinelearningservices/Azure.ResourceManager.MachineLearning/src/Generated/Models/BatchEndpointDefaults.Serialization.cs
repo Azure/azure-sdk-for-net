@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(BatchEndpointDefaults)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DeploymentName))
+            if (_deploymentNameIsDefined || Optional.IsDefined(DeploymentName))
             {
-                writer.WritePropertyName("deploymentName"u8);
-                writer.WriteStringValue(DeploymentName);
+                if (DeploymentName != null)
+                {
+                    writer.WritePropertyName("deploymentName"u8);
+                    writer.WriteStringValue(DeploymentName);
+                }
+                else
+                {
+                    writer.WriteNull("deploymentName"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,12 +128,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool deploymentNameIsDefined = false;
             string deploymentName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("deploymentName"u8))
                 {
+                    deploymentNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         deploymentName = null;
@@ -140,7 +149,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BatchEndpointDefaults(deploymentName, additionalBinaryDataProperties);
+            return new BatchEndpointDefaults(deploymentName, additionalBinaryDataProperties)
+            {
+                _deploymentNameIsDefined = deploymentNameIsDefined
+            };
         }
     }
 }
