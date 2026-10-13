@@ -4,7 +4,15 @@
 
 ### Features Added
 
+- Updated the default resource API version to `2026-07-01` to align with `Azure.ResourceManager.ContainerService`.
+- Added `ManagedClusterIdentityBinding` resources and support for the associated monitoring, ingress, security, and agent pool features.
+
 ### Breaking Changes
+
+- Replaced `ContainerServiceManagedCluster.IngressWebAppRouting` and `AzureMonitorMetrics` with `IngressProfile.WebAppRouting` and `AzureMonitorProfile.Metrics`.
+- Replaced `VirtualMachinesScaleManual` on `ContainerServiceAgentPool` and `ManagedClusterAgentPoolProfileProperties` with `VirtualMachinesScale.Manual`, and `VirtualMachinesProfile.ScaleManual` with `Scale.Manual`.
+- Replaced `ManagedClusterNatGatewayProfile.ManagedOutboundIPCount` with `ManagedOutboundIPProfile.Count`.
+- Changed the numeric value of `ContainerServiceOSSku.Ubuntu2404` from `7` to `8` as `Windows2025` was added.
 
 ### Bugs Fixed
 
