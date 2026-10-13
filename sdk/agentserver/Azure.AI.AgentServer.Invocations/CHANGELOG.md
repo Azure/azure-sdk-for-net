@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `VoiceInputDataPart`, ordered `VoiceUserMessageEvent.ContentParts`, and `VoiceResponseOutputDataDoneMessage` for application data in Bridge protocol `1.0`. The existing text-only `Content` projection and explicit silent completion remain available.
+
 ### Breaking Changes
 
 ### Bugs Fixed

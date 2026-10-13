@@ -20,6 +20,52 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Voice;
 
 public class VoiceRelayEndToEndTests
 {
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task DataAndSilentCompletionAreRelayed(bool silent)
+    {
+        await using var app = BuildApp(new DataHandler(silent));
+        await app.StartAsync();
+        using var webSocket = await ConnectAsync(app);
+        await SendTextAsync(webSocket, """
+            {"type":"session.start","id":"m_start","ts":"2026-09-20T00:00:00Z","protocol_version":"1.0","reconnect":false,"response_timeouts":{"first_output_ms":1000,"idle_ms":1000,"max_duration_ms":5000}}
+            """);
+        using var ready = await ReceiveJsonAsync(webSocket).WaitAsync(TestTimeout);
+        Assert.That(ready.RootElement.GetProperty("type").GetString(), Is.EqualTo("session.ready"));
+        await SendTextAsync(webSocket, """
+            {"type":"user.message","id":"m_data","ts":"2026-09-20T00:00:01Z","item_id":"in_data","content":[{"type":"input_data","data":{"nested":[true,null]}}]}
+            """);
+        using var first = await ReceiveJsonAsync(webSocket).WaitAsync(TestTimeout);
+        Assert.That(first.RootElement.GetProperty("type").GetString(), Is.EqualTo(silent ? "response.none" : "response.created"));
+        if (!silent)
+        {
+            using var data = await ReceiveJsonAsync(webSocket).WaitAsync(TestTimeout);
+            Assert.That(data.RootElement.GetProperty("data").GetProperty("nested").GetArrayLength(), Is.EqualTo(2));
+            using var done = await ReceiveJsonAsync(webSocket).WaitAsync(TestTimeout);
+            Assert.That(done.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.done"));
+        }
+        await webSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "done", CancellationToken.None);
+    }
+
+    private sealed class DataHandler(bool silent) : VoiceHandler
+    {
+        protected override Task OnSessionStartAsync(VoiceSession session, VoiceSessionStartEvent start, CancellationToken cancellationToken) =>
+            session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken);
+
+        protected override async Task OnUserMessageAsync(VoiceSession session, VoiceUserMessageEvent message, CancellationToken cancellationToken)
+        {
+            if (silent)
+            {
+                await session.SendAsync(new VoiceResponseNoneMessage(new[] { message.ItemId }, reason: "acknowledged"), cancellationToken);
+                return;
+            }
+            var part = (VoiceInputDataPart)message.ContentParts[0];
+            await session.SendAsync(new VoiceResponseCreatedMessage("r_data", new[] { message.ItemId }), cancellationToken);
+            await session.SendAsync(new VoiceResponseOutputDataDoneMessage("r_data", "it_data", part.Data), cancellationToken);
+            await session.SendAsync(new VoiceResponseDoneMessage("r_data"), cancellationToken);
+        }
+    }
+
     private static readonly TimeSpan TestTimeout = TimeSpan.FromSeconds(5);
 
     [Test]

@@ -53,6 +53,7 @@ internal static partial class VoiceProtocolCodec
         "response.created",
         "response.done",
         "response.none",
+        "response.output_data.done",
         "response.output_text.delta",
         "response.output_text.done",
         "session.ready",
@@ -249,7 +250,7 @@ internal static partial class VoiceProtocolCodec
             throw new VoiceProtocolException("user.message content must be a non-empty array.");
         }
 
-        var content = new List<VoiceInputTextPart>();
+        var content = new List<VoiceInputPart>();
         foreach (var part in contentElement.EnumerateArray())
         {
             if (part.ValueKind != JsonValueKind.Object)
@@ -261,6 +262,14 @@ internal static partial class VoiceProtocolCodec
             if (partType == "input_text")
             {
                 content.Add(new VoiceInputTextPart(RequiredString(part, "text")));
+            }
+            else if (partType == "input_data")
+            {
+                if (!part.TryGetProperty("data", out var data) || data.ValueKind != JsonValueKind.Object)
+                {
+                    throw new VoiceProtocolException("input_data.data must be a JSON object.");
+                }
+                content.Add(new VoiceInputDataPart(BinaryData.FromString(data.GetRawText())));
             }
             else if (partType == "input_image")
             {
@@ -371,6 +380,10 @@ internal static partial class VoiceProtocolCodec
                 writer.WriteString("text", ValidateString(done.Text, nameof(done.Text)));
                 WriteVoice(writer, done.Voice);
                 return;
+            case VoiceResponseOutputDataDoneMessage dataDone:
+                WriteResponseItem(writer, dataDone.ResponseId, dataDone.ItemId);
+                WriteData(writer, dataDone.Data);
+                return;
             case VoiceResponseDoneMessage responseDone:
                 writer.WriteString(
                     "response_id",
@@ -414,6 +427,18 @@ internal static partial class VoiceProtocolCodec
             default:
                 throw new ArgumentException("message must be a selected outbound Voice message.", nameof(message));
         }
+    }
+
+    private static void WriteData(Utf8JsonWriter writer, BinaryData data)
+    {
+        using var document = JsonDocument.Parse(data, new JsonDocumentOptions { MaxDepth = MaxJsonDepth });
+        if (document.RootElement.ValueKind != JsonValueKind.Object)
+        {
+            throw new ArgumentException("Output data must be a JSON object.", nameof(data));
+        }
+        ValidateJsonTree(document.RootElement, outbound: true);
+        writer.WritePropertyName("data");
+        document.RootElement.WriteTo(writer);
     }
 
     private static void WriteInputPrefix(Utf8JsonWriter writer, IReadOnlyList<string> inputIds)

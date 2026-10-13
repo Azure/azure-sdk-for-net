@@ -10,6 +10,41 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Voice;
 
 public class VoiceCodecTests
 {
+    [Test]
+    public void DecodePreservesOrderedDataPartsAndLegacyTextProjection()
+    {
+        var frame = Frame("user.message", """
+            "item_id":"in_data","content":[{"type":"input_text","text":"hello"},{"type":"input_data","data":{"nested":[1,true,null]}}]
+            """);
+        var message = (VoiceUserMessageEvent)VoiceProtocolCodec.Decode(Encoding.UTF8.GetBytes(frame))!;
+        Assert.That(message.Content, Has.Count.EqualTo(1));
+        Assert.That(message.Content[0].Text, Is.EqualTo("hello"));
+        Assert.That(message.ContentParts, Has.Count.EqualTo(2));
+        var data = (VoiceInputDataPart)message.ContentParts[1];
+        using var payload = JsonDocument.Parse(data.Data);
+        Assert.That(payload.RootElement.GetProperty("nested").GetArrayLength(), Is.EqualTo(3));
+    }
+
+    [TestCase("null")]
+    [TestCase("[]")]
+    [TestCase("1")]
+    public void DecodeRejectsNonObjectData(string data)
+    {
+        var frame = Frame("user.message", $$"""
+            "item_id":"in_data","content":[{"type":"input_data","data":{{data}}}]
+            """);
+        Assert.Throws<VoiceProtocolException>(() => VoiceProtocolCodec.Decode(Encoding.UTF8.GetBytes(frame)));
+    }
+
+    [Test]
+    public void EncodeDataItemPreservesPayload()
+    {
+        var message = new VoiceResponseOutputDataDoneMessage("r_data", "it_data", BinaryData.FromString("""{"type":"hubagent.metadata","data":{}}"""));
+        using var payload = JsonDocument.Parse(VoiceProtocolCodec.Encode(message));
+        Assert.That(payload.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.output_data.done"));
+        Assert.That(payload.RootElement.GetProperty("data").GetProperty("type").GetString(), Is.EqualTo("hubagent.metadata"));
+    }
+
     private static readonly DateTimeOffset Timestamp =
         DateTimeOffset.Parse("2026-08-13T00:00:00.000Z", System.Globalization.CultureInfo.InvariantCulture);
 

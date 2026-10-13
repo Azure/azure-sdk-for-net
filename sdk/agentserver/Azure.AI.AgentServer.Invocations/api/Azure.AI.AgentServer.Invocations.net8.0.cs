@@ -121,7 +121,19 @@ namespace Azure.AI.AgentServer.Invocations.Voice
         public override string ToString() { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS001")]
-    public sealed partial class VoiceInputTextPart
+    public sealed partial class VoiceInputDataPart : Azure.AI.AgentServer.Invocations.Voice.VoiceInputPart
+    {
+        public VoiceInputDataPart(System.BinaryData data) { }
+        public System.BinaryData Data { get { throw null; } }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS001")]
+    public abstract partial class VoiceInputPart
+    {
+        internal VoiceInputPart() { }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS001")]
+    public sealed partial class VoiceInputTextPart : Azure.AI.AgentServer.Invocations.Voice.VoiceInputPart
     {
         public VoiceInputTextPart(string text) { }
         public string Text { get { throw null; } }
@@ -185,6 +197,14 @@ namespace Azure.AI.AgentServer.Invocations.Voice
         public VoiceResponseNoneMessage(System.Collections.Generic.IEnumerable<string> inReplyTo, string? reason = null, string? id = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?)) { }
         public System.Collections.Generic.IReadOnlyList<string> InReplyTo { get { throw null; } }
         public string? Reason { get { throw null; } }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS001")]
+    public sealed partial class VoiceResponseOutputDataDoneMessage : Azure.AI.AgentServer.Invocations.Voice.VoiceOutboundMessage
+    {
+        public VoiceResponseOutputDataDoneMessage(string responseId, string itemId, System.BinaryData data, string? id = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?)) { }
+        public System.BinaryData Data { get { throw null; } }
+        public string ItemId { get { throw null; } }
+        public string ResponseId { get { throw null; } }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS001")]
     public sealed partial class VoiceResponseOutputTextDeltaMessage : Azure.AI.AgentServer.Invocations.Voice.VoiceOutboundMessage
@@ -303,8 +323,10 @@ namespace Azure.AI.AgentServer.Invocations.Voice
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS001")]
     public sealed partial class VoiceUserMessageEvent : Azure.AI.AgentServer.Invocations.Voice.VoiceInboundMessage
     {
+        public VoiceUserMessageEvent(string id, System.DateTimeOffset timestamp, string itemId, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Invocations.Voice.VoiceInputPart> content) { }
         public VoiceUserMessageEvent(string id, System.DateTimeOffset timestamp, string itemId, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Invocations.Voice.VoiceInputTextPart> content) { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.AgentServer.Invocations.Voice.VoiceInputTextPart> Content { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.AgentServer.Invocations.Voice.VoiceInputPart> ContentParts { get { throw null; } }
         public string ItemId { get { throw null; } }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS001")]
