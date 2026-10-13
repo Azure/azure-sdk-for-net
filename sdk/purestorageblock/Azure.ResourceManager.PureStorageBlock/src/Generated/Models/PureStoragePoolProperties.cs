@@ -46,8 +46,9 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="avs"> AVS connection state summary. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="reservationResourceId"> Azure resource ID of the Pure Storage Cloud service (reservation resource) this storage pool belongs to. </param>
+        /// <param name="platformConsoleSettings"> Platform console access settings for the storage pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PureStoragePoolProperties(string storagePoolInternalId, string availabilityZone, PureStoragePoolVnetInjection vnetInjection, long? dataRetentionPeriod, long provisionedBandwidthMbPerSec, long? provisionedIops, PureStorageAvs avs, PureStorageProvisioningState? provisioningState, ResourceIdentifier reservationResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PureStoragePoolProperties(string storagePoolInternalId, string availabilityZone, PureStoragePoolVnetInjection vnetInjection, long? dataRetentionPeriod, long provisionedBandwidthMbPerSec, long? provisionedIops, PureStorageAvs avs, PureStorageProvisioningState? provisioningState, ResourceIdentifier reservationResourceId, PlatformConsoleSettings platformConsoleSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StoragePoolInternalId = storagePoolInternalId;
             AvailabilityZone = availabilityZone;
@@ -58,6 +59,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             Avs = avs;
             ProvisioningState = provisioningState;
             ReservationResourceId = reservationResourceId;
+            PlatformConsoleSettings = platformConsoleSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -87,5 +89,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <summary> Azure resource ID of the Pure Storage Cloud service (reservation resource) this storage pool belongs to. </summary>
         public ResourceIdentifier ReservationResourceId { get; set; }
+
+        /// <summary> Platform console access settings for the storage pool. </summary>
+        public PlatformConsoleSettings PlatformConsoleSettings { get; set; }
     }
 }
