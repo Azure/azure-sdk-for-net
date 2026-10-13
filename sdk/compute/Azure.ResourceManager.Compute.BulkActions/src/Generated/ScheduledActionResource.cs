@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Gets the specified scheduled action.
+        /// Gets the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Gets the specified scheduled action.
+        /// Gets the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Updates the specified scheduled action.
+        /// Updates the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The scheduled action properties to update. Omitted properties keep their current values. </param>
+        /// <param name="patch"> The recurring bulk action properties to update. Omitted properties keep their current values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, ScheduledActionPatch patch, CancellationToken cancellationToken = default)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Updates the specified scheduled action.
+        /// Updates the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The scheduled action properties to update. Omitted properties keep their current values. </param>
+        /// <param name="patch"> The recurring bulk action properties to update. Omitted properties keep their current values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation Update(WaitUntil waitUntil, ScheduledActionPatch patch, CancellationToken cancellationToken = default)
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Deletes the specified scheduled action.
+        /// Deletes the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Deletes the specified scheduled action.
+        /// Deletes the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Adds resources to the specified scheduled action.
+        /// Adds resources to the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The resources to add to the scheduled action. </param>
+        /// <param name="content"> The resources to add to the recurring bulk action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ResourceOperationResponseResult>> AttachResourcesAsync(WaitUntil waitUntil, ResourceAttachRequestContent content, CancellationToken cancellationToken = default)
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Adds resources to the specified scheduled action.
+        /// Adds resources to the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The resources to add to the scheduled action. </param>
+        /// <param name="content"> The resources to add to the recurring bulk action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ResourceOperationResponseResult> AttachResources(WaitUntil waitUntil, ResourceAttachRequestContent content, CancellationToken cancellationToken = default)
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Cancels the next occurrence of the specified scheduled action.
+        /// Cancels the next occurrence of the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Cancels the next occurrence of the specified scheduled action.
+        /// Cancels the next occurrence of the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Removes resources from the specified scheduled action.
+        /// Removes resources from the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The resources to remove from the scheduled action. </param>
+        /// <param name="content"> The resources to remove from the recurring bulk action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ResourceOperationResponseResult>> DetachResourcesAsync(WaitUntil waitUntil, ResourceDetachRequestContent content, CancellationToken cancellationToken = default)
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Removes resources from the specified scheduled action.
+        /// Removes resources from the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The resources to remove from the scheduled action. </param>
+        /// <param name="content"> The resources to remove from the recurring bulk action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ResourceOperationResponseResult> DetachResources(WaitUntil waitUntil, ResourceDetachRequestContent content, CancellationToken cancellationToken = default)
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Disables the specified scheduled action so future occurrences do not run.
+        /// Disables the specified recurring bulk action so future occurrences do not run.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Disables the specified scheduled action so future occurrences do not run.
+        /// Disables the specified recurring bulk action so future occurrences do not run.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Enables the specified scheduled action so new occurrences run.
+        /// Enables the specified recurring bulk action so new occurrences run.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Enables the specified scheduled action so new occurrences run.
+        /// Enables the specified recurring bulk action so new occurrences run.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -943,7 +943,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Lists resources associated with the specified scheduled action.
+        /// Lists resources associated with the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Lists resources associated with the specified scheduled action.
+        /// Lists resources associated with the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Updates resource-specific settings for the specified scheduled action.
+        /// Updates resource-specific settings for the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -1071,7 +1071,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Updates resource-specific settings for the specified scheduled action.
+        /// Updates resource-specific settings for the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -1123,7 +1123,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Runs the specified scheduled action immediately.
+        /// Runs the specified recurring bulk action immediately.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Runs the specified scheduled action immediately.
+        /// Runs the specified recurring bulk action immediately.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
