@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.PlatformValidation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ValidationTestData, ValidationTestResource>(new ValidationTestDataAsyncCollectionResultOfT(_validationTestsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "ValidationTestCollection.GetAll"), data => new ValidationTestResource(Client, data));
+            return new AsyncPageableWrapper<ValidationTestData, ValidationTestResource>(new ValidationTestsGetBySubscriptionAsyncCollectionResultOfT(_validationTestsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "ValidationTestCollection.GetAll"), data => new ValidationTestResource(Client, data));
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.PlatformValidation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ValidationTestData, ValidationTestResource>(new ValidationTestDataCollectionResultOfT(_validationTestsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "ValidationTestCollection.GetAll"), data => new ValidationTestResource(Client, data));
+            return new PageableWrapper<ValidationTestData, ValidationTestResource>(new ValidationTestsGetBySubscriptionCollectionResultOfT(_validationTestsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "ValidationTestCollection.GetAll"), data => new ValidationTestResource(Client, data));
         }
 
         /// <summary>

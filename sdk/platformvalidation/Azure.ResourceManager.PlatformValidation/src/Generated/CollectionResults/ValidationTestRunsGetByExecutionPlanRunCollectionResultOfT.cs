@@ -14,42 +14,45 @@ using Azure.ResourceManager.PlatformValidation.Models;
 
 namespace Azure.ResourceManager.PlatformValidation
 {
-    internal partial class ValidationExecutionPlanDataCollectionResultOfT : Pageable<ValidationExecutionPlanData>
+    internal partial class ValidationTestRunsGetByExecutionPlanRunCollectionResultOfT : Pageable<ValidationTestRunData>
     {
-        private readonly ValidationExecutionPlans _client;
+        private readonly ValidationTestRuns _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _cloudValidationName;
-        private readonly string _filter;
+        private readonly string _validationExecutionPlanName;
+        private readonly string _executionPlanRunName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ValidationExecutionPlanDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ValidationExecutionPlans client used to send requests. </param>
+        /// <summary> Initializes a new instance of ValidationTestRunsGetByExecutionPlanRunCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ValidationTestRuns client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudValidationName"> The name of the CloudValidation. </param>
-        /// <param name="filter"> The OData filter expression to apply to the list operation. </param>
+        /// <param name="validationExecutionPlanName"> The name of the ValidationExecutionPlan. </param>
+        /// <param name="executionPlanRunName"> The name of the ExecutionPlanRun. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ValidationExecutionPlanDataCollectionResultOfT(ValidationExecutionPlans client, Guid subscriptionId, string resourceGroupName, string cloudValidationName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ValidationTestRunsGetByExecutionPlanRunCollectionResultOfT(ValidationTestRuns client, Guid subscriptionId, string resourceGroupName, string cloudValidationName, string validationExecutionPlanName, string executionPlanRunName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _cloudValidationName = cloudValidationName;
-            _filter = filter;
+            _validationExecutionPlanName = validationExecutionPlanName;
+            _executionPlanRunName = executionPlanRunName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ValidationExecutionPlanDataCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ValidationTestRunsGetByExecutionPlanRunCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ValidationExecutionPlanDataCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ValidationExecutionPlanData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ValidationTestRunsGetByExecutionPlanRunCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ValidationTestRunData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -57,9 +60,9 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     yield break;
                 }
-                ValidationExecutionPlanListResult result = ValidationExecutionPlanListResult.FromResponse(response);
+                ValidationTestRunListResult result = ValidationTestRunListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<ValidationExecutionPlanData>.FromValues((IReadOnlyList<ValidationExecutionPlanData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ValidationTestRunData>.FromValues((IReadOnlyList<ValidationTestRunData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.PlatformValidation
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _cloudValidationName, _filter, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _cloudValidationName, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByExecutionPlanRunRequest(nextLink, _subscriptionId, _resourceGroupName, _cloudValidationName, _validationExecutionPlanName, _executionPlanRunName, _context) : _client.CreateGetByExecutionPlanRunRequest(_subscriptionId, _resourceGroupName, _cloudValidationName, _validationExecutionPlanName, _executionPlanRunName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

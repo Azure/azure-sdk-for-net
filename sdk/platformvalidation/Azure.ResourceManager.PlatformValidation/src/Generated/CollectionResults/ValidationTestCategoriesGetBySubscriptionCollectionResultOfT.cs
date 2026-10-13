@@ -14,39 +14,36 @@ using Azure.ResourceManager.PlatformValidation.Models;
 
 namespace Azure.ResourceManager.PlatformValidation
 {
-    internal partial class ValidationTestVersionDataCollectionResultOfT : Pageable<ValidationTestVersionData>
+    internal partial class ValidationTestCategoriesGetBySubscriptionCollectionResultOfT : Pageable<ValidationTestCategoryData>
     {
-        private readonly ValidationTestVersions _client;
+        private readonly ValidationTestCategories _client;
         private readonly Guid _subscriptionId;
-        private readonly string _validationTestName;
         private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ValidationTestVersionDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ValidationTestVersions client used to send requests. </param>
+        /// <summary> Initializes a new instance of ValidationTestCategoriesGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ValidationTestCategories client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="validationTestName"> The name of the ValidationTest. </param>
         /// <param name="filter"> Filter expression used to constrain the returned items. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ValidationTestVersionDataCollectionResultOfT(ValidationTestVersions client, Guid subscriptionId, string validationTestName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ValidationTestCategoriesGetBySubscriptionCollectionResultOfT(ValidationTestCategories client, Guid subscriptionId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _validationTestName = validationTestName;
             _filter = filter;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ValidationTestVersionDataCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ValidationTestCategoriesGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ValidationTestVersionDataCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ValidationTestVersionData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ValidationTestCategoriesGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ValidationTestCategoryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -54,9 +51,9 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     yield break;
                 }
-                ValidationTestVersionListResult result = ValidationTestVersionListResult.FromResponse(response);
+                ValidationTestCategoryListResult result = ValidationTestCategoryListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<ValidationTestVersionData>.FromValues((IReadOnlyList<ValidationTestVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ValidationTestCategoryData>.FromValues((IReadOnlyList<ValidationTestCategoryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -69,7 +66,7 @@ namespace Azure.ResourceManager.PlatformValidation
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _validationTestName, _filter, _context) : _client.CreateGetAllRequest(_subscriptionId, _validationTestName, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _filter, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

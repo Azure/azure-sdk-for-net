@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.PlatformValidation.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudValidationData, CloudValidationResource>(new CloudValidationDataAsync0CollectionResultOfT(CloudValidationsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockablePlatformValidationSubscriptionResource.GetCloudValidations"), data => new CloudValidationResource(Client, data));
+            return new AsyncPageableWrapper<CloudValidationData, CloudValidationResource>(new CloudValidationsGetBySubscriptionAsyncCollectionResultOfT(CloudValidationsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockablePlatformValidationSubscriptionResource.GetCloudValidations"), data => new CloudValidationResource(Client, data));
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.PlatformValidation.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudValidationData, CloudValidationResource>(new CloudValidationData0CollectionResultOfT(CloudValidationsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockablePlatformValidationSubscriptionResource.GetCloudValidations"), data => new CloudValidationResource(Client, data));
+            return new PageableWrapper<CloudValidationData, CloudValidationResource>(new CloudValidationsGetBySubscriptionCollectionResultOfT(CloudValidationsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockablePlatformValidationSubscriptionResource.GetCloudValidations"), data => new CloudValidationResource(Client, data));
         }
 
         /// <summary>

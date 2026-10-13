@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.PlatformValidation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ValidationTestVersionData, ValidationTestVersionResource>(new ValidationTestVersionDataAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ValidationTestVersionData, ValidationTestVersionResource>(new ValidationTestVersionsGetAllAsyncCollectionResultOfT(
                 _validationTestVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.PlatformValidation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ValidationTestVersionData, ValidationTestVersionResource>(new ValidationTestVersionDataCollectionResultOfT(
+            return new PageableWrapper<ValidationTestVersionData, ValidationTestVersionResource>(new ValidationTestVersionsGetAllCollectionResultOfT(
                 _validationTestVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,
