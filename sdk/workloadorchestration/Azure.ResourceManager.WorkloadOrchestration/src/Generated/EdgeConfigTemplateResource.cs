@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeConfigTemplateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string edgeConfigTemplateApiVersion);
             _configTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ResourceType.Namespace, Diagnostics);
-            _configTemplatesRestClient = new ConfigTemplates(_configTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeConfigTemplateApiVersion ?? "2025-06-01");
+            _configTemplatesRestClient = new ConfigTemplates(_configTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Edge/configTemplates", out string configTemplatesApiVersionOverride) ? configTemplatesApiVersionOverride : "2025-06-01");
             ValidateResourceId(id);
         }
 
