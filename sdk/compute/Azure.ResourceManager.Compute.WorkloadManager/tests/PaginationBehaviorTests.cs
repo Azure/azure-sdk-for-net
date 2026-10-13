@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Tests
             Task operation = PaginationTests.EnumerateList(client, list, false, methodSource.Token, enumerationSource.Token);
             try
             {
-                await transport.Started.Task.WaitAsync(TimeSpan.FromSeconds(5));
+                await transport.Started.Task.TimeoutAfter(TimeSpan.FromSeconds(5));
                 (cancelMethod ? methodSource : enumerationSource).Cancel();
-                Assert.CatchAsync<OperationCanceledException>(async () => await operation.WaitAsync(TimeSpan.FromSeconds(5)));
+                Assert.CatchAsync<OperationCanceledException>(async () => await operation.TimeoutAfter(TimeSpan.FromSeconds(5)));
                 Assert.That(transport.ObservedToken.IsCancellationRequested, Is.True);
             }
             finally
