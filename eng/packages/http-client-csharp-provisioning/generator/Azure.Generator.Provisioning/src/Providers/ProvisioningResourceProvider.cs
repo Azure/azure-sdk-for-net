@@ -166,10 +166,20 @@ namespace Azure.Generator.Provisioning.Providers
 
         protected override string BuildName()
         {
+            var modelName = base.BuildName();
+            if (_resourceProjection is not null
+                && ProvisioningGenerator.Instance.SourceInputModel.FindForTypeInCurrentCompilation(BuildNamespace(), _resourceProjection.ResourceName) is null
+                && ProvisioningGenerator.Instance.SourceInputModel.FindForTypeInCurrentCompilation(BuildNamespace(), modelName) is not null
+                && ProvisioningGenerator.Instance.OutputLibrary.TryGetResourcesByModel(_inputModel, out var resources)
+                && ReferenceEquals(ProvisioningTypeFactory.GetCanonicalResource(_inputModel, resources), this))
+            {
+                // Apply original-model customizations only to the canonical shared-model projection.
+                return modelName;
+            }
             // When the same input model is shared by multiple resources (e.g. parent +
             // child views like ContainerGroupProfile + ContainerGroupProfileRevision),
             // fall back to the projection's ResourceName to avoid file/type collisions.
-            return _resourceProjection?.ResourceName ?? base.BuildName();
+            return _resourceProjection?.ResourceName ?? modelName;
         }
 
         protected override string BuildRelativeFilePath()

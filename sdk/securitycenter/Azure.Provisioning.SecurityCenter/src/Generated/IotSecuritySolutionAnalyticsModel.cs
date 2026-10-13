@@ -13,18 +13,18 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Security analytics of your IoT Security solution. </summary>
-    public partial class IotSecuritySolutionAnalyticsModel : ProvisionableResource
+    public partial class IoTSecuritySolutionAnalyticsModel : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
         private IoTSecuritySolutionAnalyticsModelProperties _properties;
-        private ResourceReference<IotSecuritySolution> _parent;
+        private ResourceReference<IoTSecuritySolutionModel> _parent;
 
-        /// <summary> Creates a new IotSecuritySolutionAnalyticsModel. </summary>
+        /// <summary> Creates a new IoTSecuritySolutionAnalyticsModel. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal IotSecuritySolutionAnalyticsModel(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Security/iotSecuritySolutions/analyticsModels", resourceVersion ?? "2019-08-01")
+        internal IoTSecuritySolutionAnalyticsModel(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Security/iotSecuritySolutions/analyticsModels", resourceVersion ?? "2019-08-01")
         {
         }
 
@@ -69,7 +69,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public IotSecuritySolution Parent
+        public IoTSecuritySolutionModel Parent
         {
             get
             {
@@ -137,7 +137,7 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for IotSecuritySolutionAnalyticsModel. </summary>
+        /// <summary> Define all the provisionable properties for IoTSecuritySolutionAnalyticsModel. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -145,21 +145,21 @@ namespace Azure.Provisioning.SecurityCenter
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<IoTSecuritySolutionAnalyticsModelProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<IotSecuritySolution>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<IoTSecuritySolutionModel>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing IotSecuritySolutionAnalyticsModel. </summary>
+        /// <summary> Creates a reference to an existing IoTSecuritySolutionAnalyticsModel. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static IotSecuritySolutionAnalyticsModel FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static IoTSecuritySolutionAnalyticsModel FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            IotSecuritySolutionAnalyticsModel result = new IotSecuritySolutionAnalyticsModel(bicepIdentifier, resourceVersion);
+            IoTSecuritySolutionAnalyticsModel result = new IoTSecuritySolutionAnalyticsModel(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for IotSecuritySolutionAnalyticsModel that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for IoTSecuritySolutionAnalyticsModel that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

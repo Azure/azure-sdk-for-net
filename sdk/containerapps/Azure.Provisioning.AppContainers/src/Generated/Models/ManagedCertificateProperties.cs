@@ -34,18 +34,13 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
-        /// <summary> Gets or sets the SubjectName. </summary>
+        /// <summary> Gets the SubjectName. </summary>
         public BicepValue<string> SubjectName
         {
             get
             {
                 Initialize();
                 return _subjectName;
-            }
-            set
-            {
-                Initialize();
-                _subjectName.Assign(value);
             }
         }
 
@@ -59,18 +54,13 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
-        /// <summary> Gets or sets the DomainControlValidation. </summary>
+        /// <summary> Gets the DomainControlValidation. </summary>
         public BicepValue<ManagedCertificateDomainControlValidation> DomainControlValidation
         {
             get
             {
                 Initialize();
                 return _domainControlValidation;
-            }
-            set
-            {
-                Initialize();
-                _domainControlValidation.Assign(value);
             }
         }
 

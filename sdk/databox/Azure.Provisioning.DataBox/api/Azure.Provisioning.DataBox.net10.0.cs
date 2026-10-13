@@ -234,41 +234,6 @@ namespace Azure.Provisioning.DataBox
         public Azure.Provisioning.BicepValue<string> DevicePassword { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class DataBoxJob : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public DataBoxJob(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<bool> AreAllDevicesLost { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> CancellationReason { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.DataBox.DataBoxStageName> DelayedStage { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> DeliveryInfoScheduledOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.DataBox.JobDeliveryType> DeliveryType { get { throw null; } set { } }
-        public Azure.Provisioning.DataBox.DataBoxBasicJobDetails Details { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.ResponseError> Error { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsCancellable { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsCancellableWithoutFee { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsDeletable { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsPrepareToShipEnabled { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsShippingAddressEditable { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.DataBox.ReverseShippingDetailsEditStatus> ReverseShippingDetailsUpdate { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.DataBox.ReverseTransportPreferenceEditStatus> ReverseTransportPreferenceUpdate { get { throw null; } }
-        public Azure.Provisioning.DataBox.DataBoxSku Sku { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.DataBox.DataBoxStageName> Status { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.DataBox.DataBoxJobTransferType> TransferType { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.DataBox.DataBoxJob FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_07_01;
-        }
-    }
     public partial class DataBoxJobDetails : Azure.Provisioning.DataBox.DataBoxBasicJobDetails
     {
         public DataBoxJobDetails() { }
@@ -629,6 +594,41 @@ namespace Azure.Provisioning.DataBox
     {
         NonScheduled = 0,
         Scheduled = 1,
+    }
+    public partial class JobResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public JobResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<bool> AreAllDevicesLost { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> CancellationReason { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.DataBox.DataBoxStageName> DelayedStage { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> DeliveryInfoScheduledOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.DataBox.JobDeliveryType> DeliveryType { get { throw null; } set { } }
+        public Azure.Provisioning.DataBox.DataBoxBasicJobDetails Details { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ResponseError> Error { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsCancellable { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsCancellableWithoutFee { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsDeletable { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsPrepareToShipEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsShippingAddressEditable { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.DataBox.ReverseShippingDetailsEditStatus> ReverseShippingDetailsUpdate { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.DataBox.ReverseTransportPreferenceEditStatus> ReverseTransportPreferenceUpdate { get { throw null; } }
+        public Azure.Provisioning.DataBox.DataBoxSku Sku { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.DataBox.DataBoxStageName> Status { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.DataBox.DataBoxJobTransferType> TransferType { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.DataBox.JobResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_07_01;
+        }
     }
     public partial class LastMitigationActionOnJob : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

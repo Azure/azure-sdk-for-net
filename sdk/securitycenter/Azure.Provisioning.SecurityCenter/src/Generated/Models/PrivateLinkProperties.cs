@@ -14,8 +14,8 @@ namespace Azure.Provisioning.SecurityCenter
     internal partial class PrivateLinkProperties : ProvisionableConstruct
     {
         private BicepValue<SecurityCenterProvisioningState> _provisioningState;
-        private BicepList<SecurityCenterPrivateEndpointConnection> _privateEndpointConnections;
-        private BicepList<PrivateLinkGroup> _privateLinkResources;
+        private BicepList<SecurityCenterPrivateLinkResourcePrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<PrivateLinkGroupResource> _privateLinkResources;
         private BicepValue<SecurityCenterPublicNetworkAccess> _publicNetworkAccess;
 
         /// <summary> Creates a new PrivateLinkProperties. </summary>
@@ -34,7 +34,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<SecurityCenterPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<SecurityCenterPrivateLinkResourcePrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -44,7 +44,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the PrivateLinkResources. </summary>
-        public BicepList<PrivateLinkGroup> PrivateLinkResources
+        public BicepList<PrivateLinkGroupResource> PrivateLinkResources
         {
             get
             {
@@ -73,8 +73,8 @@ namespace Azure.Provisioning.SecurityCenter
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<SecurityCenterProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _privateEndpointConnections = DefineListProperty<SecurityCenterPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
-            _privateLinkResources = DefineListProperty<PrivateLinkGroup>(nameof(PrivateLinkResources), new string[] { "privateLinkResources" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<SecurityCenterPrivateLinkResourcePrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateLinkResources = DefineListProperty<PrivateLinkGroupResource>(nameof(PrivateLinkResources), new string[] { "privateLinkResources" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<SecurityCenterPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             DefineAdditionalProperties();
         }

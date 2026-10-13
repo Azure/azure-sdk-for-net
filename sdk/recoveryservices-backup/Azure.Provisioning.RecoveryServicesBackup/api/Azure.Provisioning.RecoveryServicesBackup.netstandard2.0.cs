@@ -69,9 +69,9 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         MicrosoftManaged = 1,
         CustomerManaged = 2,
     }
-    public partial class BackupEngine : Azure.Provisioning.Primitives.ProvisionableResource
+    public partial class BackupEngineBaseResource : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        internal BackupEngine() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal BackupEngineBaseResource() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
@@ -80,7 +80,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.RecoveryServicesBackup.BackupEngine FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.RecoveryServicesBackup.BackupEngineBaseResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_02_01;
@@ -228,9 +228,9 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         [System.Runtime.Serialization.DataMemberAttribute(Name="SAPHanaDBInstance")]
         SapHanaDBInstance = 15,
     }
-    public partial class BackupJob : Azure.Provisioning.Primitives.ProvisionableResource
+    public partial class BackupJobsFromCrossTenantVault : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        internal BackupJob() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal BackupJobsFromCrossTenantVault() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
@@ -239,13 +239,21 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.RecoveryServicesBackup.BackupJob FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_02_01;
-            public static readonly string V2025_08_01;
-            public static readonly string V2026_01_01;
-        }
+        public static Azure.Provisioning.RecoveryServicesBackup.BackupJobsFromCrossTenantVault FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+    }
+    public partial class BackupJobsOperationResults : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal BackupJobsOperationResults() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.JobResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericJob Properties { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.BackupJobsOperationResults FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
     }
     public enum BackupManagementType
     {
@@ -278,24 +286,19 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         November = 11,
         December = 12,
     }
-    public partial class BackupPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
+    public partial class BackupPoliciesOperationResults : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public BackupPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public BackupPoliciesOperationResults(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.RecoveryServicesBackup.BackupPrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.ProtectionPolicyResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericProtectionPolicy Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.RecoveryServicesBackup.BackupPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_02_01;
-            public static readonly string V2025_08_01;
-            public static readonly string V2026_01_01;
-        }
+        public static Azure.Provisioning.RecoveryServicesBackup.BackupPoliciesOperationResults FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
     }
     public partial class BackupPrivateEndpointConnectionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -312,83 +315,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         Deleting = 1,
         Failed = 2,
         Pending = 3,
-    }
-    public partial class BackupProtectedItem : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public BackupProtectedItem(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.RecoveryServicesBackup.BackupProtectionContainer Parent { get { throw null; } set { } }
-        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericProtectedItem Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.RecoveryServicesBackup.BackupProtectedItem FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_02_01;
-            public static readonly string V2025_08_01;
-            public static readonly string V2026_01_01;
-        }
-    }
-    public partial class BackupProtectionContainer : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public BackupProtectionContainer(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericProtectionContainer Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.RecoveryServicesBackup.BackupProtectionContainer FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_02_01;
-            public static readonly string V2025_08_01;
-            public static readonly string V2026_01_01;
-        }
-    }
-    public partial class BackupProtectionIntent : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public BackupProtectionIntent(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericProtectionIntent Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.RecoveryServicesBackup.BackupProtectionIntent FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_02_01;
-            public static readonly string V2025_08_01;
-            public static readonly string V2026_01_01;
-        }
-    }
-    public partial class BackupProtectionPolicy : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public BackupProtectionPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericProtectionPolicy Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.RecoveryServicesBackup.BackupProtectionPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_02_01;
-            public static readonly string V2025_08_01;
-            public static readonly string V2026_01_01;
-        }
     }
     public enum BackupProtectionState
     {
@@ -408,45 +334,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         Protected = 3,
         ProtectionFailed = 4,
     }
-    public partial class BackupRecoveryPoint : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        internal BackupRecoveryPoint() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.RecoveryServicesBackup.BackupProtectedItem Parent { get { throw null; } set { } }
-        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericRecoveryPoint Properties { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.RecoveryServicesBackup.BackupRecoveryPoint FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_02_01;
-            public static readonly string V2025_08_01;
-            public static readonly string V2026_01_01;
-        }
-    }
-    public partial class BackupResourceConfig : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public BackupResourceConfig(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.RecoveryServicesBackup.BackupResourceConfigProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.RecoveryServicesBackup.BackupResourceConfig FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_02_01;
-            public static readonly string V2025_08_01;
-            public static readonly string V2026_01_01;
-        }
-    }
     public partial class BackupResourceConfigProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BackupResourceConfigProperties() { }
@@ -458,6 +345,25 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServicesBackup.VaultXcoolState> XcoolState { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class BackupResourceConfigResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public BackupResourceConfigResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupResourceConfigProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.BackupResourceConfigResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_02_01;
+            public static readonly string V2025_08_01;
+            public static readonly string V2026_01_01;
+        }
+    }
     public partial class BackupResourceEncryptionConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BackupResourceEncryptionConfig() { }
@@ -468,9 +374,16 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public Azure.Provisioning.BicepValue<string> SubscriptionId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class BackupResourceEncryptionConfigExtended : Azure.Provisioning.Primitives.ProvisionableResource
+    public partial class BackupResourceEncryptionConfigExtendedProperties : Azure.Provisioning.RecoveryServicesBackup.BackupResourceEncryptionConfig
     {
-        public BackupResourceEncryptionConfigExtended(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public BackupResourceEncryptionConfigExtendedProperties() { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> UserAssignedIdentity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> UseSystemAssignedIdentity { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class BackupResourceEncryptionConfigExtendedResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public BackupResourceEncryptionConfigExtendedResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
@@ -479,33 +392,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.RecoveryServicesBackup.BackupResourceEncryptionConfigExtended FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_02_01;
-            public static readonly string V2025_08_01;
-            public static readonly string V2026_01_01;
-        }
-    }
-    public partial class BackupResourceEncryptionConfigExtendedProperties : Azure.Provisioning.RecoveryServicesBackup.BackupResourceEncryptionConfig
-    {
-        public BackupResourceEncryptionConfigExtendedProperties() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> UserAssignedIdentity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> UseSystemAssignedIdentity { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class BackupResourceVaultConfig : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public BackupResourceVaultConfig(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.RecoveryServicesBackup.BackupResourceVaultConfigProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.RecoveryServicesBackup.BackupResourceVaultConfig FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.RecoveryServicesBackup.BackupResourceEncryptionConfigExtendedResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_02_01;
@@ -526,6 +413,25 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServicesBackup.BackupStorageTypeState> StorageTypeState { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class BackupResourceVaultConfigResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public BackupResourceVaultConfigResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupResourceVaultConfigProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.BackupResourceVaultConfigResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_02_01;
+            public static readonly string V2025_08_01;
+            public static readonly string V2026_01_01;
+        }
+    }
     public partial class BackupRetentionPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BackupRetentionPolicy() { }
@@ -545,6 +451,34 @@ namespace Azure.Provisioning.RecoveryServicesBackup
     {
         public BackupServerEngine() { }
         protected override void DefineProvisionableProperties() { }
+    }
+    public partial class BackupstorageconfigOperationResults : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public BackupstorageconfigOperationResults(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupResourceConfigResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupResourceConfigProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.BackupstorageconfigOperationResults FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+    }
+    public partial class BackupstorageconfigOperationStatus : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public BackupstorageconfigOperationStatus(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupResourceConfigResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupResourceConfigProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.BackupstorageconfigOperationStatus FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
     }
     public enum BackupStorageType
     {
@@ -627,6 +561,20 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public Azure.Provisioning.BicepValue<string> ServicePrincipalClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> UniqueName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public partial class CrossTenantVaultRecoveryPoints : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal CrossTenantVaultRecoveryPoints() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.ProtectedItemFromCrossTenantVault Parent { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericRecoveryPoint Properties { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.CrossTenantVaultRecoveryPoints FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
     }
     public partial class DailyRetentionSchedule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -1036,6 +984,25 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public Azure.Provisioning.BicepValue<string> AzureBackupRGNameSuffix { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class JobResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal JobResource() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericJob Properties { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.JobResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_02_01;
+            public static readonly string V2025_08_01;
+            public static readonly string V2026_01_01;
+        }
+    }
     public enum JobSupportedAction
     {
         Invalid = 0,
@@ -1239,12 +1206,120 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class PrivateEndpointConnectionResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public PrivateEndpointConnectionResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupPrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.PrivateEndpointConnectionResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_02_01;
+            public static readonly string V2025_08_01;
+            public static readonly string V2026_01_01;
+        }
+    }
+    public partial class PrivateEndpointConnectionsOperationsStatus : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public PrivateEndpointConnectionsOperationsStatus(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.PrivateEndpointConnectionResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupPrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.PrivateEndpointConnectionsOperationsStatus FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+    }
     public enum PrivateEndpointConnectionStatus
     {
         Pending = 0,
         Approved = 1,
         Rejected = 2,
         Disconnected = 3,
+    }
+    public partial class ProtectedItemFromCrossTenantVault : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ProtectedItemFromCrossTenantVault(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericProtectedItem Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.ProtectedItemFromCrossTenantVault FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+    }
+    public partial class ProtectedItemOperationResultsFromCrossTenantVault : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ProtectedItemOperationResultsFromCrossTenantVault(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.ProtectedItemFromCrossTenantVault Parent { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericProtectedItem Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.ProtectedItemOperationResultsFromCrossTenantVault FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+    }
+    public partial class ProtectedItemResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ProtectedItemResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.ProtectionContainerResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericProtectedItem Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.ProtectedItemResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_02_01;
+            public static readonly string V2025_08_01;
+            public static readonly string V2026_01_01;
+        }
+    }
+    public partial class ProtectedItemsOperationResults : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ProtectedItemsOperationResults(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.ProtectedItemResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericProtectedItem Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.ProtectedItemsOperationResults FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+    }
+    public partial class ProtectedItemsOperationsStatus : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ProtectedItemsOperationsStatus(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.ProtectedItemResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericProtectedItem Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.ProtectedItemsOperationsStatus FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
     }
     public enum ProtectedItemState
     {
@@ -1255,6 +1330,77 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         ProtectionStopped = 4,
         ProtectionPaused = 5,
         BackupsSuspended = 6,
+    }
+    public partial class ProtectionContainerResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ProtectionContainerResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericProtectionContainer Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.ProtectionContainerResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_02_01;
+            public static readonly string V2025_08_01;
+            public static readonly string V2026_01_01;
+        }
+    }
+    public partial class ProtectionContainersOperationResults : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ProtectionContainersOperationResults(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.ProtectionContainerResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericProtectionContainer Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.ProtectionContainersOperationResults FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+    }
+    public partial class ProtectionIntentResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ProtectionIntentResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericProtectionIntent Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.ProtectionIntentResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_02_01;
+            public static readonly string V2025_08_01;
+            public static readonly string V2026_01_01;
+        }
+    }
+    public partial class ProtectionPolicyResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ProtectionPolicyResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericProtectionPolicy Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.ProtectionPolicyResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_02_01;
+            public static readonly string V2025_08_01;
+            public static readonly string V2026_01_01;
+        }
     }
     public partial class RecoveryPointDiskConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -1279,6 +1425,26 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public Azure.Provisioning.BicepValue<bool> IsSoftDeleted { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> RuleName { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public partial class RecoveryPointResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal RecoveryPointResource() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.ProtectedItemResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.RecoveryServicesBackup.BackupGenericRecoveryPoint Properties { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.RecoveryServicesBackup.RecoveryPointResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_02_01;
+            public static readonly string V2025_08_01;
+            public static readonly string V2026_01_01;
+        }
     }
     public partial class RecoveryPointTierInformation : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -1330,9 +1496,9 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public Azure.Provisioning.BicepValue<string> VaultCriticalOperation { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ResourceGuardProxy : Azure.Provisioning.Primitives.ProvisionableResource
+    public partial class ResourceGuardProxyBaseResource : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ResourceGuardProxy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ResourceGuardProxyBaseResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
@@ -1341,7 +1507,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.RecoveryServicesBackup.ResourceGuardProxy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.RecoveryServicesBackup.ResourceGuardProxyBaseResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_02_01;

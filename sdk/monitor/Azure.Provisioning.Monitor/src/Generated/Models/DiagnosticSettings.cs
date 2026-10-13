@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> The diagnostic settings. </summary>
-    public partial class DiagnosticSettings : ProvisionableConstruct
+    internal partial class DiagnosticSettings : ProvisionableConstruct
     {
         private BicepValue<string> _storageAccountId;
         private BicepValue<string> _serviceBusRuleId;

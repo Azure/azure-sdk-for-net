@@ -2,6 +2,7 @@
   "package-name": "Azure.Provisioning.ProvisioningTypeSpec.Preview",
   "namespace": "Azure.Provisioning.ProvisioningTypeSpec.Preview",
   "model-namespace": false,
+  "use-legacy-resource-detection": false,
   "license": {
     "name": "MIT License",
     "company": "Microsoft Corporation",

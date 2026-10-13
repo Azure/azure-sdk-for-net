@@ -9,6 +9,31 @@ namespace Azure.Provisioning.Enclave
         public Azure.Provisioning.BicepValue<string> ResourceAction { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class ApprovalResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ApprovalResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Enclave.VirtualEnclaveApprovalProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Enclave.ApprovalResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2024_06_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2024_12_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2025_05_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2025_11_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2026_03_01_PREVIEW;
+        }
+    }
     public partial class ApprovalSettingConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ApprovalSettingConfiguration() { }
@@ -22,10 +47,85 @@ namespace Azure.Provisioning.Enclave
         Approved = 0,
         Rejected = 1,
     }
+    public partial class CommunityEndpointResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public CommunityEndpointResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Enclave.CommunityResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Enclave.VirtualEnclaveCommunityEndpointProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Enclave.CommunityEndpointResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2024_06_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2024_12_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2025_05_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2025_11_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2026_03_01_PREVIEW;
+        }
+    }
     public enum CommunityPropertiesPolicyOverride
     {
         Enclave = 0,
         None = 1,
+    }
+    public partial class CommunityResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public CommunityResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Enclave.VirtualEnclaveCommunityProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Enclave.CommunityResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2024_06_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2024_12_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2025_05_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2025_11_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2026_03_01_PREVIEW;
+        }
+    }
+    public partial class DedicatedHubResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DedicatedHubResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Enclave.CommunityResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Enclave.VirtualEnclaveDedicatedHubProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Enclave.DedicatedHubResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2025_11_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2026_03_01_PREVIEW;
+        }
     }
     public partial class EnclaveAddressSpaces : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -33,6 +133,32 @@ namespace Azure.Provisioning.Enclave
         public Azure.Provisioning.BicepValue<string> EnclaveAddressSpace { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ManagedAddressSpace { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public partial class EnclaveConnectionResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public EnclaveConnectionResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Enclave.VirtualEnclaveConnectionProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Enclave.EnclaveConnectionResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2024_06_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2024_12_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2025_05_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2025_11_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2026_03_01_PREVIEW;
+        }
     }
     public enum EnclaveConnectionState
     {
@@ -76,28 +202,18 @@ namespace Azure.Provisioning.Enclave
         Esp = 4,
         AH = 5,
     }
-    public partial class EnclaveVirtualNetwork : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class EnclaveEndpointResource : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public EnclaveVirtualNetwork() { }
-        public Azure.Provisioning.BicepValue<bool> AllowSubnetCommunication { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CustomCidrRange { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> NetworkName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> NetworkSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.VirtualEnclaveSubnetConfiguration> SubnetConfigurations { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class VirtualEnclave : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public VirtualEnclave(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public EnclaveEndpointResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Enclave.VirtualEnclaveProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Enclave.EnclaveResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Enclave.VirtualEnclaveEndpointProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Enclave.VirtualEnclave FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Enclave.EnclaveEndpointResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -113,16 +229,55 @@ namespace Azure.Provisioning.Enclave
             public static readonly string V2026_03_01_PREVIEW;
         }
     }
-    public partial class VirtualEnclaveApproval : Azure.Provisioning.Primitives.ProvisionableResource
+    public partial class EnclaveResource : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public VirtualEnclaveApproval(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public EnclaveResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Enclave.VirtualEnclaveApprovalProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
+        public Azure.Provisioning.Enclave.VirtualEnclaveProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Enclave.VirtualEnclaveApproval FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Enclave.EnclaveResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2024_06_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2024_12_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2025_05_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2025_11_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2026_03_01_PREVIEW;
+        }
+    }
+    public partial class EnclaveVirtualNetwork : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public EnclaveVirtualNetwork() { }
+        public Azure.Provisioning.BicepValue<bool> AllowSubnetCommunication { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> CustomCidrRange { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> NetworkName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> NetworkSize { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.VirtualEnclaveSubnetConfiguration> SubnetConfigurations { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class TransitHubResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public TransitHubResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Enclave.CommunityResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Enclave.VirtualEnclaveTransitHubProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Enclave.TransitHubResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -199,60 +354,6 @@ namespace Azure.Provisioning.Enclave
         public Azure.Provisioning.Enclave.ApprovalSettingConfiguration EnclaveMaintenanceMode { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class VirtualEnclaveCommunity : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public VirtualEnclaveCommunity(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Enclave.VirtualEnclaveCommunityProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Enclave.VirtualEnclaveCommunity FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_06_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_05_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_11_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2026_03_01_PREVIEW;
-        }
-    }
-    public partial class VirtualEnclaveCommunityEndpoint : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public VirtualEnclaveCommunityEndpoint(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Enclave.VirtualEnclaveCommunity Parent { get { throw null; } set { } }
-        public Azure.Provisioning.Enclave.VirtualEnclaveCommunityEndpointProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Enclave.VirtualEnclaveCommunityEndpoint FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_06_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_05_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_11_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2026_03_01_PREVIEW;
-        }
-    }
     public partial class VirtualEnclaveCommunityEndpointDestinationRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VirtualEnclaveCommunityEndpointDestinationRule() { }
@@ -307,7 +408,7 @@ namespace Azure.Provisioning.Enclave
         public Azure.Provisioning.BicepValue<string> AddressSpace { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> AddressSpaces { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.VirtualEnclaveRoleAssignmentItem> CommunityRoleAssignments { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.VirtualEnclaveDedicatedHub> DedicatedHubList { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.DedicatedHubResource> DedicatedHubList { get { throw null; } }
         public Azure.Provisioning.BicepList<string> DnsServers { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.VirtualEnclaveFirewallSku> FirewallSku { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.VirtualEnclaveGovernedService> GovernedServiceList { get { throw null; } set { } }
@@ -321,32 +422,6 @@ namespace Azure.Provisioning.Enclave
         public Azure.Provisioning.BicepList<Azure.Core.ResourceIdentifier> ResourceCollection { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class VirtualEnclaveConnection : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public VirtualEnclaveConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Enclave.VirtualEnclaveConnectionProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Enclave.VirtualEnclaveConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_06_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_05_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_11_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2026_03_01_PREVIEW;
-        }
-    }
     public partial class VirtualEnclaveConnectionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VirtualEnclaveConnectionProperties() { }
@@ -359,27 +434,6 @@ namespace Azure.Provisioning.Enclave
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.EnclaveConnectionState> State { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.VirtualEnclaveUpdateMode> UpdateMode { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public partial class VirtualEnclaveDedicatedHub : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public VirtualEnclaveDedicatedHub(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Enclave.VirtualEnclaveCommunity Parent { get { throw null; } set { } }
-        public Azure.Provisioning.Enclave.VirtualEnclaveDedicatedHubProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Enclave.VirtualEnclaveDedicatedHub FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_11_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2026_03_01_PREVIEW;
-        }
     }
     public partial class VirtualEnclaveDedicatedHubProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -401,33 +455,6 @@ namespace Azure.Provisioning.Enclave
         CommunityOnly = 0,
         EnclaveOnly = 1,
         Both = 2,
-    }
-    public partial class VirtualEnclaveEndpoint : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public VirtualEnclaveEndpoint(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Enclave.VirtualEnclave Parent { get { throw null; } set { } }
-        public Azure.Provisioning.Enclave.VirtualEnclaveEndpointProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Enclave.VirtualEnclaveEndpoint FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_06_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_05_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_11_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2026_03_01_PREVIEW;
-        }
     }
     public partial class VirtualEnclaveEndpointProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -633,33 +660,6 @@ namespace Azure.Provisioning.Enclave
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SubnetResourceId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class VirtualEnclaveTransitHub : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public VirtualEnclaveTransitHub(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Enclave.VirtualEnclaveCommunity Parent { get { throw null; } set { } }
-        public Azure.Provisioning.Enclave.VirtualEnclaveTransitHubProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Enclave.VirtualEnclaveTransitHub FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_06_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_05_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_11_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2026_03_01_PREVIEW;
-        }
-    }
     public partial class VirtualEnclaveTransitHubProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VirtualEnclaveTransitHubProperties() { }
@@ -703,18 +703,26 @@ namespace Azure.Provisioning.Enclave
         Automatic = 0,
         Manual = 1,
     }
-    public partial class VirtualEnclaveWorkload : Azure.Provisioning.Primitives.ProvisionableResource
+    public partial class VirtualEnclaveWorkloadProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public VirtualEnclaveWorkload(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public VirtualEnclaveWorkloadProperties() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.VirtualEnclaveManagedOnBehalfOfBroker> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.VirtualEnclaveProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> ResourceGroupCollection { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class WorkloadResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public WorkloadResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Enclave.VirtualEnclave Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Enclave.EnclaveResource Parent { get { throw null; } set { } }
         public Azure.Provisioning.Enclave.VirtualEnclaveWorkloadProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Enclave.VirtualEnclaveWorkload FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Enclave.WorkloadResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -729,13 +737,5 @@ namespace Azure.Provisioning.Enclave
             [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
             public static readonly string V2026_03_01_PREVIEW;
         }
-    }
-    public partial class VirtualEnclaveWorkloadProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public VirtualEnclaveWorkloadProperties() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Enclave.VirtualEnclaveManagedOnBehalfOfBroker> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Enclave.VirtualEnclaveProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepList<string> ResourceGroupCollection { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
     }
 }

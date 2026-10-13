@@ -5,21 +5,14 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Redis
 {
     /// <summary> Properties of a linked server to be returned in get/put response. </summary>
-    internal partial class RedisLinkedServerProperties : ProvisionableConstruct
+    internal partial class RedisLinkedServerProperties : RedisLinkedServerCreateProperties
     {
         private BicepValue<string> _provisioningState;
-        private BicepValue<ResourceIdentifier> _linkedRedisCacheId;
-        private BicepValue<AzureLocation> _linkedRedisCacheLocation;
-        private BicepValue<RedisLinkedServerRole> _serverRole;
-        private BicepValue<string> _geoReplicatedPrimaryHostName;
-        private BicepValue<string> _primaryHostName;
 
         /// <summary> Creates a new RedisLinkedServerProperties. </summary>
         public RedisLinkedServerProperties()
@@ -36,81 +29,11 @@ namespace Azure.Provisioning.Redis
             }
         }
 
-        /// <summary> Gets or sets the LinkedRedisCacheId. </summary>
-        public BicepValue<ResourceIdentifier> LinkedRedisCacheId
-        {
-            get
-            {
-                Initialize();
-                return _linkedRedisCacheId;
-            }
-            set
-            {
-                Initialize();
-                _linkedRedisCacheId.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the LinkedRedisCacheLocation. </summary>
-        public BicepValue<AzureLocation> LinkedRedisCacheLocation
-        {
-            get
-            {
-                Initialize();
-                return _linkedRedisCacheLocation;
-            }
-            set
-            {
-                Initialize();
-                _linkedRedisCacheLocation.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ServerRole. </summary>
-        public BicepValue<RedisLinkedServerRole> ServerRole
-        {
-            get
-            {
-                Initialize();
-                return _serverRole;
-            }
-            set
-            {
-                Initialize();
-                _serverRole.Assign(value);
-            }
-        }
-
-        /// <summary> Gets the GeoReplicatedPrimaryHostName. </summary>
-        public BicepValue<string> GeoReplicatedPrimaryHostName
-        {
-            get
-            {
-                Initialize();
-                return _geoReplicatedPrimaryHostName;
-            }
-        }
-
-        /// <summary> Gets the PrimaryHostName. </summary>
-        public BicepValue<string> PrimaryHostName
-        {
-            get
-            {
-                Initialize();
-                return _primaryHostName;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for RedisLinkedServerProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _linkedRedisCacheId = DefineProperty<ResourceIdentifier>(nameof(LinkedRedisCacheId), new string[] { "linkedRedisCacheId" }, isRequired: true);
-            _linkedRedisCacheLocation = DefineProperty<AzureLocation>(nameof(LinkedRedisCacheLocation), new string[] { "linkedRedisCacheLocation" }, isRequired: true);
-            _serverRole = DefineProperty<RedisLinkedServerRole>(nameof(ServerRole), new string[] { "serverRole" }, isRequired: true);
-            _geoReplicatedPrimaryHostName = DefineProperty<string>(nameof(GeoReplicatedPrimaryHostName), new string[] { "geoReplicatedPrimaryHostName" }, isOutput: true);
-            _primaryHostName = DefineProperty<string>(nameof(PrimaryHostName), new string[] { "primaryHostName" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

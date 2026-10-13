@@ -16,7 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Schema for MSIX Package properties. </summary>
-    public partial class MsixPackage : ProvisionableResource
+    public partial class MSIXPackage : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -24,10 +24,10 @@ namespace Azure.Provisioning.DesktopVirtualization
         private MSIXPackageProperties _properties;
         private ResourceReference<HostPool> _parent;
 
-        /// <summary> Creates a new MsixPackage. </summary>
+        /// <summary> Creates a new MSIXPackage. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public MsixPackage(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DesktopVirtualization/hostPools/msixPackages", resourceVersion ?? "2026-04-01-preview")
+        public MSIXPackage(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DesktopVirtualization/hostPools/msixPackages", resourceVersion ?? "2026-04-01-preview")
         {
         }
 
@@ -283,7 +283,7 @@ namespace Azure.Provisioning.DesktopVirtualization
             }
         }
 
-        /// <summary> Define all the provisionable properties for MsixPackage. </summary>
+        /// <summary> Define all the provisionable properties for MSIXPackage. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -295,17 +295,17 @@ namespace Azure.Provisioning.DesktopVirtualization
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing MsixPackage. </summary>
+        /// <summary> Creates a reference to an existing MSIXPackage. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static MsixPackage FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static MSIXPackage FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            MsixPackage result = new MsixPackage(bicepIdentifier, resourceVersion);
+            MSIXPackage result = new MSIXPackage(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for MsixPackage that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for MSIXPackage that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>

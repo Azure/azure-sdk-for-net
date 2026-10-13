@@ -28,11 +28,12 @@ namespace Azure.Provisioning.AppContainers
         private ManagedEnvironmentProperties _properties;
         private BicepValue<string> _kind;
         private ManagedServiceIdentity _identity;
+        private ResourceReference<ManagedEnvironment> _parent;
 
         /// <summary> Creates a new ContainerAppManagedEnvironment. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerAppManagedEnvironment(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/managedEnvironments", resourceVersion ?? "2026-07-01")
+        public ContainerAppManagedEnvironment(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/managedEnvironments/detectorProperties", resourceVersion ?? "2026-07-01")
         {
         }
 
@@ -46,18 +47,13 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
             }
         }
 
@@ -143,6 +139,21 @@ namespace Azure.Provisioning.AppContainers
             {
                 Initialize();
                 AssignOrReplace(ref _identity, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Parent. </summary>
+        public ManagedEnvironment Parent
+        {
+            get
+            {
+                Initialize();
+                return _parent.Value;
+            }
+            set
+            {
+                Initialize();
+                _parent.Value = value;
             }
         }
 
@@ -510,13 +521,14 @@ namespace Azure.Provisioning.AppContainers
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "rootApi");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ManagedEnvironmentProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
+            _parent = DefineResource<ManagedEnvironment>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

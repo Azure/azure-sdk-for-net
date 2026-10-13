@@ -10,7 +10,7 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Represents an alert sync setting. </summary>
-    public partial class AlertSyncSettings : SecuritySetting
+    public partial class AlertSyncSettings : Setting
     {
         private AlertSyncSettingProperties _properties;
 

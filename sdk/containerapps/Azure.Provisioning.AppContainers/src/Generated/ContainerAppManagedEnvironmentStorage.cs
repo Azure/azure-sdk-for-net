@@ -19,7 +19,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ManagedEnvironmentStorageProperties _properties;
-        private ResourceReference<ContainerAppManagedEnvironment> _parent;
+        private ResourceReference<ManagedEnvironment> _parent;
 
         /// <summary> Creates a new ContainerAppManagedEnvironmentStorage. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -79,7 +79,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public ContainerAppManagedEnvironment Parent
+        public ManagedEnvironment Parent
         {
             get
             {
@@ -101,7 +101,7 @@ namespace Azure.Provisioning.AppContainers
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ManagedEnvironmentStorageProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ContainerAppManagedEnvironment>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ManagedEnvironment>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

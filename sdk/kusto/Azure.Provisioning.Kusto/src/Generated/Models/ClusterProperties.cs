@@ -38,7 +38,7 @@ namespace Azure.Provisioning.Kusto
         private BicepList<KustoCalloutPolicy> _calloutPolicies;
         private BicepValue<KustoClusterPublicIPType> _publicIPType;
         private BicepValue<string> _virtualClusterGraduationProperties;
-        private BicepList<KustoPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<PrivateEndpointConnection> _privateEndpointConnections;
         private MigrationClusterProperties _migrationCluster;
         private BicepValue<KustoClusterZoneStatus> _zoneStatus;
 
@@ -383,7 +383,7 @@ namespace Azure.Provisioning.Kusto
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<KustoPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<PrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -474,7 +474,7 @@ namespace Azure.Provisioning.Kusto
             _calloutPolicies = DefineListProperty<KustoCalloutPolicy>(nameof(CalloutPolicies), new string[] { "calloutPolicies" });
             _publicIPType = DefineProperty<KustoClusterPublicIPType>(nameof(PublicIPType), new string[] { "publicIPType" });
             _virtualClusterGraduationProperties = DefineProperty<string>(nameof(VirtualClusterGraduationProperties), new string[] { "virtualClusterGraduationProperties" });
-            _privateEndpointConnections = DefineListProperty<KustoPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<PrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _migrationCluster = DefineModelProperty<MigrationClusterProperties>(nameof(MigrationCluster), new string[] { "migrationCluster" }, isOutput: true);
             _zoneStatus = DefineProperty<KustoClusterZoneStatus>(nameof(ZoneStatus), new string[] { "zoneStatus" }, isOutput: true);
             DefineAdditionalProperties();

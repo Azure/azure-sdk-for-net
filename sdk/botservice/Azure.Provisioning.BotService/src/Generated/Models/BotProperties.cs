@@ -45,8 +45,8 @@ namespace Azure.Provisioning.BotService
         private BicepValue<bool> _isLocalAuthDisabled;
         private BicepValue<string> _schemaTransformationVersion;
         private BicepValue<ResourceIdentifier> _storageResourceId;
-        private BicepList<BotServicePrivateEndpointConnection> _privateEndpointConnections;
-        private BicepList<BotServiceNetworkSecurityPerimeterConfiguration> _networkSecurityPerimeterConfigurations;
+        private BicepList<PrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<NetworkSecurityPerimeterConfiguration> _networkSecurityPerimeterConfigurations;
         private BicepValue<string> _openWithHint;
         private BicepValue<string> _appPasswordHint;
         private BicepValue<string> _provisioningState;
@@ -478,7 +478,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<BotServicePrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<PrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -488,7 +488,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the NetworkSecurityPerimeterConfigurations. </summary>
-        public BicepList<BotServiceNetworkSecurityPerimeterConfiguration> NetworkSecurityPerimeterConfigurations
+        public BicepList<NetworkSecurityPerimeterConfiguration> NetworkSecurityPerimeterConfigurations
         {
             get
             {
@@ -586,8 +586,8 @@ namespace Azure.Provisioning.BotService
             _isLocalAuthDisabled = DefineProperty<bool>(nameof(IsLocalAuthDisabled), new string[] { "disableLocalAuth" });
             _schemaTransformationVersion = DefineProperty<string>(nameof(SchemaTransformationVersion), new string[] { "schemaTransformationVersion" });
             _storageResourceId = DefineProperty<ResourceIdentifier>(nameof(StorageResourceId), new string[] { "storageResourceId" });
-            _privateEndpointConnections = DefineListProperty<BotServicePrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
-            _networkSecurityPerimeterConfigurations = DefineListProperty<BotServiceNetworkSecurityPerimeterConfiguration>(nameof(NetworkSecurityPerimeterConfigurations), new string[] { "networkSecurityPerimeterConfigurations" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<PrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _networkSecurityPerimeterConfigurations = DefineListProperty<NetworkSecurityPerimeterConfiguration>(nameof(NetworkSecurityPerimeterConfigurations), new string[] { "networkSecurityPerimeterConfigurations" }, isOutput: true);
             _openWithHint = DefineProperty<string>(nameof(OpenWithHint), new string[] { "openWithHint" });
             _appPasswordHint = DefineProperty<string>(nameof(AppPasswordHint), new string[] { "appPasswordHint" });
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);

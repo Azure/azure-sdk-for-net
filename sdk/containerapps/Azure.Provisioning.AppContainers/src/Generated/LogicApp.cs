@@ -19,12 +19,11 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private ResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new LogicApp. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public LogicApp(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/logicApps", resourceVersion ?? "2026-07-01")
+        internal LogicApp(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/logicApps", resourceVersion ?? "2026-07-01")
         {
         }
 
@@ -63,21 +62,6 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
-        /// <summary> Gets or sets the Scope. </summary>
-        public ProvisionableResource Scope
-        {
-            get
-            {
-                Initialize();
-                return _scope.Value;
-            }
-            set
-            {
-                Initialize();
-                _scope.Value = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for LogicApp. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -85,7 +69,6 @@ namespace Azure.Provisioning.AppContainers
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
             DefineAdditionalProperties();
         }
 

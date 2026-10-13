@@ -127,7 +127,7 @@ namespace Azure.Provisioning.Compute
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<ComputePrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<PrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {

@@ -19,7 +19,7 @@ namespace Azure.Provisioning.CognitiveServices
         private BicepValue<string> _name;
         private SystemData _systemData;
         private CognitiveServicesAgentDeploymentProperties _properties;
-        private ResourceReference<CognitiveServicesAgentApplication> _parent;
+        private ResourceReference<AgentApplication> _parent;
 
         /// <summary> Creates a new CognitiveServicesAgentDeployment. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -79,7 +79,7 @@ namespace Azure.Provisioning.CognitiveServices
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public CognitiveServicesAgentApplication Parent
+        public AgentApplication Parent
         {
             get
             {
@@ -101,7 +101,7 @@ namespace Azure.Provisioning.CognitiveServices
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<CognitiveServicesAgentDeploymentProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<CognitiveServicesAgentApplication>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<AgentApplication>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

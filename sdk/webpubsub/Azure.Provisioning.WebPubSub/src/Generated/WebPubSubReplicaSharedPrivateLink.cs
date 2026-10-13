@@ -21,7 +21,7 @@ namespace Azure.Provisioning.WebPubSub
         private BicepValue<string> _name;
         private SystemData _systemData;
         private SharedPrivateLinkResourceProperties _properties;
-        private ResourceReference<WebPubSubReplica> _parent;
+        private ResourceReference<Replica> _parent;
 
         /// <summary> Creates a new WebPubSubReplicaSharedPrivateLink. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -81,7 +81,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public WebPubSubReplica Parent
+        public Replica Parent
         {
             get
             {
@@ -197,7 +197,7 @@ namespace Azure.Provisioning.WebPubSub
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SharedPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<WebPubSubReplica>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<Replica>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

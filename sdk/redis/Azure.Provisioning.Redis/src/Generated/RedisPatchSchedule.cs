@@ -130,7 +130,7 @@ namespace Azure.Provisioning.Redis
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<RedisPatchScheduleSettings>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _parent = DefineResource<RedisResource>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<RedisResource>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

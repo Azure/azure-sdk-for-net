@@ -58,13 +58,18 @@ namespace Azure.Provisioning.Sql
             }
         }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Gets or sets the Properties. </summary>
         internal SensitivityLabelProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -98,7 +103,11 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.SchemaName;
+                if (Properties is null)
+                {
+                    Properties = new SensitivityLabelProperties();
+                }
+                return Properties.SchemaName;
             }
         }
 
@@ -107,7 +116,11 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.TableName;
+                if (Properties is null)
+                {
+                    Properties = new SensitivityLabelProperties();
+                }
+                return Properties.TableName;
             }
         }
 
@@ -116,7 +129,11 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.ColumnName;
+                if (Properties is null)
+                {
+                    Properties = new SensitivityLabelProperties();
+                }
+                return Properties.ColumnName;
             }
         }
 
@@ -125,7 +142,11 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.IsDisabled;
+                if (Properties is null)
+                {
+                    Properties = new SensitivityLabelProperties();
+                }
+                return Properties.IsDisabled;
             }
         }
 

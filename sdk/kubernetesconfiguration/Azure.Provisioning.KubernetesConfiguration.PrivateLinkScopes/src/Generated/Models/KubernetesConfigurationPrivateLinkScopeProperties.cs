@@ -19,7 +19,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         private BicepValue<KubernetesConfigurationPrivateLinkScopeProvisioningState> _provisioningState;
         private BicepValue<ResourceIdentifier> _clusterResourceId;
         private BicepValue<Guid> _privateLinkScopeId;
-        private BicepList<KubernetesConfigurationPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<KubernetesConfigurationPrivateLinkScopePrivateEndpointConnection> _privateEndpointConnections;
 
         /// <summary> Creates a new KubernetesConfigurationPrivateLinkScopeProperties. </summary>
         public KubernetesConfigurationPrivateLinkScopeProperties()
@@ -77,7 +77,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<KubernetesConfigurationPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<KubernetesConfigurationPrivateLinkScopePrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -94,7 +94,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
             _provisioningState = DefineProperty<KubernetesConfigurationPrivateLinkScopeProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _clusterResourceId = DefineProperty<ResourceIdentifier>(nameof(ClusterResourceId), new string[] { "clusterResourceId" }, isRequired: true);
             _privateLinkScopeId = DefineProperty<Guid>(nameof(PrivateLinkScopeId), new string[] { "privateLinkScopeId" }, isOutput: true);
-            _privateEndpointConnections = DefineListProperty<KubernetesConfigurationPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<KubernetesConfigurationPrivateLinkScopePrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

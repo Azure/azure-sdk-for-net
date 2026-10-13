@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Enclave
         private BicepValue<VirtualEnclaveFirewallSku> _firewallSku;
         private VirtualEnclaveBaseApprovalSettings _granularApprovalSettings;
         private VirtualEnclaveMaintenanceModeConfiguration _maintenanceModeConfiguration;
-        private BicepList<VirtualEnclaveDedicatedHub> _dedicatedHubList;
+        private BicepList<DedicatedHubResource> _dedicatedHubList;
         private VirtualEnclaveMonitoringSettings _monitoringSettings;
         private BicepList<string> _addressSpaces;
 
@@ -196,7 +196,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the DedicatedHubList. </summary>
-        public BicepList<VirtualEnclaveDedicatedHub> DedicatedHubList
+        public BicepList<DedicatedHubResource> DedicatedHubList
         {
             get
             {
@@ -260,7 +260,7 @@ namespace Azure.Provisioning.Enclave
             _firewallSku = DefineProperty<VirtualEnclaveFirewallSku>(nameof(FirewallSku), new string[] { "firewallSku" });
             _granularApprovalSettings = DefineModelProperty<VirtualEnclaveBaseApprovalSettings>(nameof(GranularApprovalSettings), new string[] { "approvalSettings" });
             _maintenanceModeConfiguration = DefineModelProperty<VirtualEnclaveMaintenanceModeConfiguration>(nameof(MaintenanceModeConfiguration), new string[] { "maintenanceModeConfiguration" });
-            _dedicatedHubList = DefineListProperty<VirtualEnclaveDedicatedHub>(nameof(DedicatedHubList), new string[] { "dedicatedHubList" }, isOutput: true);
+            _dedicatedHubList = DefineListProperty<DedicatedHubResource>(nameof(DedicatedHubList), new string[] { "dedicatedHubList" }, isOutput: true);
             _monitoringSettings = DefineModelProperty<VirtualEnclaveMonitoringSettings>(nameof(MonitoringSettings), new string[] { "monitoringSettings" });
             _addressSpaces = DefineListProperty<string>(nameof(AddressSpaces), new string[] { "addressSpaces" });
             DefineAdditionalProperties();

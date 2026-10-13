@@ -31,7 +31,7 @@ namespace Azure.Provisioning.Databricks
         private BicepValue<ResourceIdentifier> _diskEncryptionSetId;
         private WorkspacePropertiesEncryption _encryption;
         private DatabricksEnhancedSecurityCompliance _enhancedSecurityCompliance;
-        private BicepList<DatabricksPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<PrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<DatabricksPublicNetworkAccess> _publicNetworkAccess;
         private BicepValue<DatabricksRequiredNsgRules> _requiredNsgRules;
         private DatabricksDefaultCatalogProperties _defaultCatalog;
@@ -260,7 +260,7 @@ namespace Azure.Provisioning.Databricks
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<DatabricksPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<PrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -391,7 +391,7 @@ namespace Azure.Provisioning.Databricks
             _diskEncryptionSetId = DefineProperty<ResourceIdentifier>(nameof(DiskEncryptionSetId), new string[] { "diskEncryptionSetId" }, isOutput: true);
             _encryption = DefineModelProperty<WorkspacePropertiesEncryption>(nameof(Encryption), new string[] { "encryption" });
             _enhancedSecurityCompliance = DefineModelProperty<DatabricksEnhancedSecurityCompliance>(nameof(EnhancedSecurityCompliance), new string[] { "enhancedSecurityCompliance" });
-            _privateEndpointConnections = DefineListProperty<DatabricksPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<PrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<DatabricksPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             _requiredNsgRules = DefineProperty<DatabricksRequiredNsgRules>(nameof(RequiredNsgRules), new string[] { "requiredNsgRules" });
             _defaultCatalog = DefineModelProperty<DatabricksDefaultCatalogProperties>(nameof(DefaultCatalog), new string[] { "defaultCatalog" });

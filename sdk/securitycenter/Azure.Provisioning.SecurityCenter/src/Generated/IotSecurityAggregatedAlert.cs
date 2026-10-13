@@ -14,19 +14,19 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Security Solution Aggregated Alert information. </summary>
-    public partial class IotSecurityAggregatedAlert : ProvisionableResource
+    public partial class IoTSecurityAggregatedAlert : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
         private IoTSecurityAggregatedAlertProperties _properties;
         private BicepDictionary<string> _tags;
-        private ResourceReference<IotSecuritySolutionAnalyticsModel> _parent;
+        private ResourceReference<IoTSecuritySolutionAnalyticsModel> _parent;
 
-        /// <summary> Creates a new IotSecurityAggregatedAlert. </summary>
+        /// <summary> Creates a new IoTSecurityAggregatedAlert. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal IotSecurityAggregatedAlert(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Security/iotSecuritySolutions/analyticsModels/aggregatedAlerts", resourceVersion ?? "2019-08-01")
+        internal IoTSecurityAggregatedAlert(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Security/iotSecuritySolutions/analyticsModels/aggregatedAlerts", resourceVersion ?? "2019-08-01")
         {
         }
 
@@ -86,7 +86,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public IotSecuritySolutionAnalyticsModel Parent
+        public IoTSecuritySolutionAnalyticsModel Parent
         {
             get
             {
@@ -217,7 +217,7 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for IotSecurityAggregatedAlert. </summary>
+        /// <summary> Define all the provisionable properties for IoTSecurityAggregatedAlert. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -226,21 +226,21 @@ namespace Azure.Provisioning.SecurityCenter
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<IoTSecurityAggregatedAlertProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<IotSecuritySolutionAnalyticsModel>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<IoTSecuritySolutionAnalyticsModel>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing IotSecurityAggregatedAlert. </summary>
+        /// <summary> Creates a reference to an existing IoTSecurityAggregatedAlert. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static IotSecurityAggregatedAlert FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static IoTSecurityAggregatedAlert FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            IotSecurityAggregatedAlert result = new IotSecurityAggregatedAlert(bicepIdentifier, resourceVersion);
+            IoTSecurityAggregatedAlert result = new IoTSecurityAggregatedAlert(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for IotSecurityAggregatedAlert that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for IoTSecurityAggregatedAlert that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

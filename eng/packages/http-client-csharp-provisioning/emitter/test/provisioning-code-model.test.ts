@@ -17,11 +17,193 @@ import {
   buildResourceProjections,
   buildResourceProjectionMetadata,
   determineResourceProjectionName,
+  filterArmProviderSchemaToCodeModel,
   type ResourceProjection,
   validateResourceProjectionNames
 } from "../src/provisioning-code-model.js";
 
 describe("resource projection metadata", () => {
+  it("filters ARM resources and methods to the selected code model without mutating the schema", () => {
+    const resource = createResource({
+      path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+      methodKinds: [
+        ResourceOperationKind.Read,
+        ResourceOperationKind.Create,
+        ResourceOperationKind.Delete
+      ]
+    });
+    const [read, create, remove] = resource.metadata.methods;
+    const schema = {
+      resources: [
+        resource,
+        {
+          ...resource,
+          resourceModelId: "Microsoft.Test.PreviewOnlyWidget"
+        }
+      ],
+      nonResourceMethods: [read, create, remove].map((method) => ({
+        methodId: method.methodId,
+        operationPath: method.operationPath,
+        scope: method.scope
+      }))
+    };
+    const serializedSchema = {
+      resources: schema.resources.map((entry) => ({
+        resourceModelId: entry.resourceModelId,
+        resourceType: entry.metadata.resourceType,
+        methods: entry.metadata.methods.map((method) => ({
+          methodId: method.methodId,
+          kind: method.kind
+        }))
+      })),
+      nonResourceMethods: schema.nonResourceMethods
+    };
+    const codeModel = {
+      models: [{ crossLanguageDefinitionId: resource.resourceModelId }],
+      clients: [
+        {
+          decorators: [
+            {
+              name: "Azure.ClientGenerator.Core.@armProviderSchema",
+              arguments: serializedSchema
+            }
+          ],
+          methods: [{ crossLanguageDefinitionId: read.methodId }],
+          children: [
+            {
+              methods: [],
+              children: [
+                {
+                  methods: [{ crossLanguageDefinitionId: create.methodId }]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    } as CodeModel;
+
+    const filtered = filterArmProviderSchemaToCodeModel(codeModel, schema);
+
+    deepStrictEqual(filtered.resources, [
+      {
+        ...resource,
+        metadata: { ...resource.metadata, methods: [read, create] }
+      }
+    ]);
+    deepStrictEqual(
+      filtered.nonResourceMethods.map((method) => method.methodId),
+      [read.methodId, create.methodId]
+    );
+    strictEqual(schema.resources.length, 2);
+    deepStrictEqual(resource.metadata.methods, [read, create, remove]);
+    strictEqual(schema.nonResourceMethods.length, 3);
+    deepStrictEqual(serializedSchema.resources, [
+      {
+        resourceModelId: resource.resourceModelId,
+        resourceType: resource.metadata.resourceType,
+        methods: [read, create].map((method) => ({
+          methodId: method.methodId,
+          kind: method.kind
+        }))
+      }
+    ]);
+    deepStrictEqual(
+      serializedSchema.nonResourceMethods.map((method) => method.methodId),
+      [read.methodId, create.methodId]
+    );
+  });
+
+  it("keeps selected models with no selected methods read-only", () => {
+    const resource = createResource({
+      path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+      methodKinds: [ResourceOperationKind.Create]
+    });
+    const codeModel = {
+      models: [{ crossLanguageDefinitionId: resource.resourceModelId }],
+      clients: []
+    } as CodeModel;
+
+    const filtered = filterArmProviderSchemaToCodeModel(codeModel, {
+      resources: [resource],
+      nonResourceMethods: []
+    });
+
+    strictEqual(filtered.resources.length, 1);
+    deepStrictEqual(filtered.resources[0].metadata.methods, []);
+    deepStrictEqual(
+      buildResourceProjectionMetadata(filtered.resources).writableScopes,
+      []
+    );
+  });
+
+  it("removes serialized parent edges outside the selected graph but preserves provisioning parent paths", () => {
+    const resources = [
+      createResource({ path: "/roots/{root}", resourceModelId: "Root" }),
+      createResource({
+        path: "/roots/{root}/children/{child}",
+        resourceModelId: "Child",
+        parentResourceId: "/roots/{root}"
+      }),
+      createResource({
+        path: "/roots/{root}/excluded/{excluded}",
+        resourceModelId: "Excluded",
+        parentResourceId: "/roots/{root}"
+      }),
+      createResource({
+        path: "/roots/{root}/excluded/{excluded}/children/{child}",
+        resourceModelId: "Grandchild",
+        parentResourceId: "/roots/{root}/excluded/{excluded}"
+      })
+    ];
+    const serializedResources = resources.map((resource) => ({
+      resourceModelId: resource.resourceModelId,
+      resourceIdPattern: resource.metadata.resourceIdPattern.path,
+      parentResourceId: resource.metadata.parentResourceId?.path,
+      methods: []
+    }));
+    const serializedSchema = {
+      resources: serializedResources,
+      nonResourceMethods: []
+    };
+    const codeModel = {
+      models: ["Root", "Child", "Grandchild"].map((id) => ({
+        crossLanguageDefinitionId: id
+      })),
+      clients: [
+        {
+          methods: [],
+          decorators: [
+            {
+              name: "Azure.ClientGenerator.Core.@armProviderSchema",
+              arguments: serializedSchema
+            }
+          ]
+        }
+      ]
+    } as CodeModel;
+
+    const filtered = filterArmProviderSchemaToCodeModel(codeModel, {
+      resources,
+      nonResourceMethods: []
+    });
+
+    strictEqual(serializedSchema.resources.length, 3);
+    strictEqual(
+      serializedSchema.resources[1].parentResourceId,
+      "/roots/{root}"
+    );
+    strictEqual(serializedSchema.resources[2].parentResourceId, undefined);
+    strictEqual(
+      serializedResources[3].parentResourceId,
+      "/roots/{root}/excluded/{excluded}"
+    );
+    strictEqual(
+      filtered.resources[2].metadata.parentResourceId?.path,
+      "/roots/{root}/excluded/{excluded}"
+    );
+  });
+
   it("collapses resources and preserves distinct aggregate values", () => {
     const first = createResource({
       path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
@@ -192,6 +374,72 @@ describe("resource projection metadata", () => {
             "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies"
         }
       ]
+    );
+  });
+
+  it("disambiguates shared-model name collisions using the full resource type", () => {
+    const modelId = "Compute.VirtualMachineRunCommand";
+    const resources = [
+      createResource({
+        resourceModelId: modelId,
+        resourceType: "Microsoft.Compute/virtualMachines/runCommands",
+        resourceName: "VirtualMachinesRunCommands",
+        path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{commandName}"
+      }),
+      createResource({
+        resourceModelId: modelId,
+        resourceType:
+          "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommands",
+        resourceName: "virtualMachinesRunCommands",
+        path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{scaleSetName}/virtualMachines/{vmName}/runCommands/{commandName}"
+      })
+    ];
+    const codeModel = {
+      models: [
+        { crossLanguageDefinitionId: modelId, name: "VirtualMachineRunCommand" }
+      ]
+    } as CodeModel;
+
+    const projections = buildResourceProjections(codeModel, {
+      resources,
+      nonResourceMethods: []
+    });
+
+    deepStrictEqual(
+      projections.map((projection) => projection.resourceName),
+      [
+        "VirtualMachineRunCommand",
+        "VirtualMachineScaleSetVirtualMachineRunCommand"
+      ]
+    );
+  });
+
+  it("rejects name collisions between different resource models", () => {
+    const resources = [
+      createResource({
+        resourceModelId: "Microsoft.Test.FirstWidget",
+        path: "/providers/Microsoft.Test/firstWidgets/{name}"
+      }),
+      createResource({
+        resourceModelId: "Microsoft.Test.SecondWidget",
+        resourceType: "Microsoft.Test/secondWidgets",
+        path: "/providers/Microsoft.Test/secondWidgets/{name}"
+      })
+    ];
+    const codeModel = {
+      models: resources.map((resource) => ({
+        crossLanguageDefinitionId: resource.resourceModelId,
+        name: "Widget"
+      }))
+    } as CodeModel;
+
+    throws(
+      () =>
+        buildResourceProjections(codeModel, {
+          resources,
+          nonResourceMethods: []
+        }),
+      /resolve to the same class name 'Widget'/
     );
   });
 

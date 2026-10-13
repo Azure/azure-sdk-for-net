@@ -12,6 +12,7 @@ using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Generator.Provisioning
 {
@@ -115,20 +116,7 @@ namespace Azure.Generator.Provisioning
                 // parent resource (the writable surface customers consume) and not on a
                 // child view. If none matches, fall back to the candidate with the
                 // alphabetically-smallest ResourceName for deterministic selection.
-                ProvisioningResourceProvider? canonical = null;
-                foreach (var candidate in resources)
-                {
-                    if (string.Equals(candidate.ResourceProjection?.ResourceName, model.Name, StringComparison.Ordinal))
-                    {
-                        return candidate;
-                    }
-                    if (canonical == null
-                        || string.CompareOrdinal(candidate.ResourceProjection?.ResourceName, canonical.ResourceProjection?.ResourceName) < 0)
-                    {
-                        canonical = candidate;
-                    }
-                }
-                return canonical!;
+                return GetCanonicalResource(model, resources);
             }
 
             // The base generator can rediscover models through references such as derived-model
@@ -147,6 +135,24 @@ namespace Azure.Generator.Provisioning
 
             // Regular models (including discriminated models) → ProvisioningModelProvider
             return new ProvisioningModelProvider(model);
+        }
+
+        internal static ProvisioningResourceProvider GetCanonicalResource(InputModelType model, IReadOnlyList<ProvisioningResourceProvider> resources)
+        {
+            ProvisioningResourceProvider? canonical = null;
+            foreach (var candidate in resources)
+            {
+                if (string.Equals(candidate.ResourceProjection?.ResourceName, model.Name, StringComparison.Ordinal))
+                {
+                    return candidate;
+                }
+                if (canonical == null
+                    || string.CompareOrdinal(candidate.ResourceProjection?.ResourceName, canonical.ResourceProjection?.ResourceName) < 0)
+                {
+                    canonical = candidate;
+                }
+            }
+            return canonical ?? throw new InvalidOperationException($"No provisioning resource projections exist for model '{model.Name}'.");
         }
 
         /// <summary>

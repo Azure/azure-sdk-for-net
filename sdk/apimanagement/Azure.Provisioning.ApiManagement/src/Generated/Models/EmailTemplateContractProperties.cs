@@ -25,7 +25,7 @@ namespace Azure.Provisioning.ApiManagement
         {
         }
 
-        /// <summary> Gets or sets the Subject. </summary>
+        /// <summary> Gets the Subject. </summary>
         public BicepValue<string> Subject
         {
             get
@@ -33,14 +33,9 @@ namespace Azure.Provisioning.ApiManagement
                 Initialize();
                 return _subject;
             }
-            set
-            {
-                Initialize();
-                _subject.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Body. </summary>
+        /// <summary> Gets the Body. </summary>
         public BicepValue<string> Body
         {
             get
@@ -48,14 +43,9 @@ namespace Azure.Provisioning.ApiManagement
                 Initialize();
                 return _body;
             }
-            set
-            {
-                Initialize();
-                _body.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Title. </summary>
+        /// <summary> Gets the Title. </summary>
         public BicepValue<string> Title
         {
             get
@@ -63,25 +53,15 @@ namespace Azure.Provisioning.ApiManagement
                 Initialize();
                 return _title;
             }
-            set
-            {
-                Initialize();
-                _title.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Description. </summary>
+        /// <summary> Gets the Description. </summary>
         public BicepValue<string> Description
         {
             get
             {
                 Initialize();
                 return _description;
-            }
-            set
-            {
-                Initialize();
-                _description.Assign(value);
             }
         }
 
@@ -95,7 +75,7 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
-        /// <summary> Gets or sets the Parameters. </summary>
+        /// <summary> Gets the Parameters. </summary>
         public BicepList<EmailTemplateParametersContractProperties> Parameters
         {
             get
@@ -103,19 +83,14 @@ namespace Azure.Provisioning.ApiManagement
                 Initialize();
                 return _parameters;
             }
-            set
-            {
-                Initialize();
-                _parameters.Assign(value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for EmailTemplateContractProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _subject = DefineProperty<string>(nameof(Subject), new string[] { "subject" }, isRequired: true);
-            _body = DefineProperty<string>(nameof(Body), new string[] { "body" }, isRequired: true);
+            _subject = DefineProperty<string>(nameof(Subject), new string[] { "subject" });
+            _body = DefineProperty<string>(nameof(Body), new string[] { "body" });
             _title = DefineProperty<string>(nameof(Title), new string[] { "title" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _isDefault = DefineProperty<bool>(nameof(IsDefault), new string[] { "isDefault" }, isOutput: true);

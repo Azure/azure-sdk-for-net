@@ -63,7 +63,9 @@ namespace Azure.Generator.Provisioning
             // Provisioning models don't use C# model inheritance (all extend ProvisionableConstruct),
             // so the mgmt visitor that strips inherited properties is not applicable.
             RemoveVisitor("InheritableSystemObjectModelVisitor");
-            // Remove the "Data" suffix that the mgmt ResourceVisitor appends to resource models
+            // Provisioning projections can be write-only and do not need ARM REST clients.
+            RemoveVisitor("ResourceVisitor");
+            // Remove the "Data" suffix that management naming adds to resource models.
             AddVisitor(new ResourceDataSuffixVisitor());
         }
     }

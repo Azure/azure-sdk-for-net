@@ -180,7 +180,7 @@ namespace Azure.Provisioning.Attestation
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<AttestationPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<AttestationProviderPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {

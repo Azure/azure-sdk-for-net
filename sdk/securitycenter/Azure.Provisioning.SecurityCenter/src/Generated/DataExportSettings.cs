@@ -10,7 +10,7 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Represents a data export setting. </summary>
-    public partial class DataExportSettings : SecuritySetting
+    public partial class DataExportSettings : Setting
     {
         private DataExportSettingProperties _properties;
 

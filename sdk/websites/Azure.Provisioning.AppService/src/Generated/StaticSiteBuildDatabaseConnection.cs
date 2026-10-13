@@ -21,7 +21,7 @@ namespace Azure.Provisioning.AppService
         private SystemData _systemData;
         private DatabaseConnectionProperties _properties;
         private BicepValue<string> _kind;
-        private ResourceReference<StaticSiteBuild> _parent;
+        private ResourceReference<StaticSiteBuildARMResource> _parent;
 
         /// <summary> Creates a new StaticSiteBuildDatabaseConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public StaticSiteBuild Parent
+        public StaticSiteBuildARMResource Parent
         {
             get
             {
@@ -200,7 +200,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DatabaseConnectionProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<StaticSiteBuild>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<StaticSiteBuildARMResource>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

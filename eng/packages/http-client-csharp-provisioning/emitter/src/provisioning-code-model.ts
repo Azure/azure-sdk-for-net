@@ -19,6 +19,18 @@ type ProjectionScopeOperation = "Create" | "Read";
 
 const provisioningProviderSchema =
   "Azure.ClientGenerator.Core.@provisioningProviderSchema";
+const armProviderSchemaDecorator =
+  "Azure.ClientGenerator.Core.@armProviderSchema";
+
+interface SerializedArmProviderSchema {
+  resources: {
+    resourceModelId: string;
+    resourceIdPattern: string;
+    parentResourceId?: string;
+    methods: { methodId: string }[];
+  }[];
+  nonResourceMethods: { methodId: string }[];
+}
 
 export interface ResourceProjection {
   resourceModel: InputModelType;
@@ -43,6 +55,75 @@ interface PendingResourceProjection extends Omit<
   "resourceName"
 > {
   consistentResourceName?: string;
+}
+
+export function filterArmProviderSchemaToCodeModel(
+  codeModel: CodeModel,
+  armProviderSchema: ArmProviderSchema
+): ArmProviderSchema {
+  const modelIds = new Set(
+    codeModel.models.map((model) => model.crossLanguageDefinitionId)
+  );
+  const methodIds = new Set<string>();
+  const clients = [...codeModel.clients];
+  for (const client of clients) {
+    clients.push(...(client.children ?? []));
+    for (const method of client.methods) {
+      methodIds.add(method.crossLanguageDefinitionId);
+    }
+  }
+
+  // The C# input library also reads the serialized management schema.
+  for (const decorator of codeModel.clients[0]?.decorators ?? []) {
+    if (decorator.name !== armProviderSchemaDecorator) {
+      continue;
+    }
+    const argumentsSchema = decorator.arguments as SerializedArmProviderSchema;
+    const resources = argumentsSchema.resources.filter((resource) =>
+      modelIds.has(resource.resourceModelId)
+    );
+    const resourceIdPatterns = new Set(
+      resources.map((resource) => resource.resourceIdPattern)
+    );
+    argumentsSchema.resources = resources.map((resource) => {
+      const filteredResource = {
+        ...resource,
+        methods: resource.methods.filter((method) =>
+          methodIds.has(method.methodId)
+        )
+      };
+      // The management deserializer requires parent edges to stay inside its selected resource graph.
+      if (
+        filteredResource.parentResourceId &&
+        !resourceIdPatterns.has(filteredResource.parentResourceId)
+      ) {
+        delete filteredResource.parentResourceId;
+      }
+      return filteredResource;
+    });
+    argumentsSchema.nonResourceMethods =
+      argumentsSchema.nonResourceMethods.filter((method) =>
+        methodIds.has(method.methodId)
+      );
+  }
+
+  // ARM resolution includes models and operations outside the selected TCGC projection.
+  return {
+    resources: armProviderSchema.resources
+      .filter((resource) => modelIds.has(resource.resourceModelId))
+      .map((resource) => ({
+        ...resource,
+        metadata: {
+          ...resource.metadata,
+          methods: resource.metadata.methods.filter((method) =>
+            methodIds.has(method.methodId)
+          )
+        }
+      })),
+    nonResourceMethods: armProviderSchema.nonResourceMethods.filter((method) =>
+      methodIds.has(method.methodId)
+    )
+  };
 }
 
 export function updateProvisioningCodeModel(
@@ -150,6 +231,30 @@ export function buildResourceProjections(
       projectionCountByModel.get(projection.resourceModelId) === 1
     )
   );
+  const projectionsByName = new Map<string, ResourceProjection[]>();
+  for (const projection of resolvedProjections) {
+    const key = projection.resourceName.toLowerCase();
+    const group = projectionsByName.get(key);
+    if (group) {
+      group.push(projection);
+    } else {
+      projectionsByName.set(key, [projection]);
+    }
+  }
+  for (const group of projectionsByName.values()) {
+    if (
+      group.length > 1 &&
+      group.every(
+        (projection) => projection.resourceModelId === group[0].resourceModelId
+      )
+    ) {
+      for (const projection of group) {
+        projection.resourceName = buildResourceNameFromResourceType(
+          projection.resourceType
+        );
+      }
+    }
+  }
   validateResourceProjectionNames(resolvedProjections);
   return resolvedProjections;
 }

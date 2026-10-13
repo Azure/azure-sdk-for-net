@@ -50,6 +50,30 @@ namespace Azure.Provisioning.ServiceBus
         [System.Runtime.Serialization.DataMemberAttribute(Name="$default")]
         Default = 0,
     }
+    public partial class NetworkSecurityPerimeterConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal NetworkSecurityPerimeterConfiguration() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<string> ApplicableFeatures { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsBackingResource { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ServiceBus.ServiceBusNetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } }
+        public Azure.Provisioning.ServiceBus.ServiceBusNamespace Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ParentAssociationName { get { throw null; } }
+        public Azure.Provisioning.ServiceBus.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile Profile { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceBus.ServiceBusNspConfigurationProvisioningIssue> ProvisioningIssues { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceBus.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.ServiceBus.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceResourceId { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ServiceBus.NetworkSecurityPerimeterConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2026_01_01;
+        }
+    }
     public partial class NspAccessRulePropertiesSubscriptionsItem : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public NspAccessRulePropertiesSubscriptionsItem() { }
@@ -378,30 +402,6 @@ namespace Azure.Provisioning.ServiceBus
         public Azure.Provisioning.BicepValue<string> Location { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> PerimeterGuid { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public partial class ServiceBusNetworkSecurityPerimeterConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        internal ServiceBusNetworkSecurityPerimeterConfiguration() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<string> ApplicableFeatures { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsBackingResource { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ServiceBus.ServiceBusNetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } }
-        public Azure.Provisioning.ServiceBus.ServiceBusNamespace Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ParentAssociationName { get { throw null; } }
-        public Azure.Provisioning.ServiceBus.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile Profile { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceBus.ServiceBusNspConfigurationProvisioningIssue> ProvisioningIssues { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceBus.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.ServiceBus.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceResourceId { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ServiceBus.ServiceBusNetworkSecurityPerimeterConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2026_01_01;
-        }
     }
     public partial class ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

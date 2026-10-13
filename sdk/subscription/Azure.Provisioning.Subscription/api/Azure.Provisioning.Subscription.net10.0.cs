@@ -6,21 +6,6 @@ namespace Azure.Provisioning.Subscription
         Completed = 1,
         Expired = 2,
     }
-    public partial class BillingAccountPolicy : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        internal BillingAccountPolicy() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.Subscription.BillingAccountPolicyProperties Properties { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Subscription.BillingAccountPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_11_01_PREVIEW;
-        }
-    }
     public partial class BillingAccountPolicyProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BillingAccountPolicyProperties() { }
@@ -34,27 +19,42 @@ namespace Azure.Provisioning.Subscription
         InProgress = 1,
         Completed = 2,
     }
+    public partial class ExternalResourceBillingAccountPoliciesResponse : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal ExternalResourceBillingAccountPoliciesResponse() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.Subscription.BillingAccountPolicyProperties Properties { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Subscription.ExternalResourceBillingAccountPoliciesResponse FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2025_11_01_PREVIEW;
+        }
+    }
+    public partial class GetTenantPolicyResponse : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public GetTenantPolicyResponse(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.Subscription.TenantPolicyProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Subscription.GetTenantPolicyResponse FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2025_11_01_PREVIEW;
+        }
+    }
     public partial class ServiceTenant : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceTenant() { }
         public Azure.Provisioning.BicepValue<string> TenantId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TenantName { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public partial class SubscriptionAlias : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public SubscriptionAlias(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Subscription.SubscriptionAliasProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Subscription.SubscriptionAlias FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_11_01_PREVIEW;
-        }
     }
     public partial class SubscriptionAliasProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -72,6 +72,21 @@ namespace Azure.Provisioning.Subscription
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Subscription.SubscriptionWorkload> Workload { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public partial class SubscriptionAliasResponse : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public SubscriptionAliasResponse(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Subscription.SubscriptionAliasProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Subscription.SubscriptionAliasResponse FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2025_11_01_PREVIEW;
+        }
     }
     public enum SubscriptionProvisioningState
     {
@@ -113,21 +128,6 @@ namespace Azure.Provisioning.Subscription
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Subscription.ChangeDirectoryOperationStatus> Status { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SubscriptionId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public partial class TenantPolicy : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public TenantPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.Subscription.TenantPolicyProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Subscription.TenantPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_11_01_PREVIEW;
-        }
     }
     public partial class TenantPolicyProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

@@ -23,7 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         {
         }
 
-        /// <summary> Gets or sets the Description. </summary>
+        /// <summary> Gets the Description. </summary>
         public BicepValue<string> Description
         {
             get
@@ -31,14 +31,9 @@ namespace Azure.Provisioning.ApiManagement
                 Initialize();
                 return _description;
             }
-            set
-            {
-                Initialize();
-                _description.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ExternalDocsUri. </summary>
+        /// <summary> Gets the ExternalDocsUri. </summary>
         public BicepValue<Uri> ExternalDocsUri
         {
             get
@@ -46,25 +41,15 @@ namespace Azure.Provisioning.ApiManagement
                 Initialize();
                 return _externalDocsUri;
             }
-            set
-            {
-                Initialize();
-                _externalDocsUri.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ExternalDocsDescription. </summary>
+        /// <summary> Gets the ExternalDocsDescription. </summary>
         public BicepValue<string> ExternalDocsDescription
         {
             get
             {
                 Initialize();
                 return _externalDocsDescription;
-            }
-            set
-            {
-                Initialize();
-                _externalDocsDescription.Assign(value);
             }
         }
 

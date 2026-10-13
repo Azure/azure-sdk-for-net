@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ApiManagement
         private BicepValue<string> _name;
         private SystemData _systemData;
         private WorkspaceContractProperties _properties;
-        private ResourceReference<ApiManagementService> _parent;
+        private ResourceReference<ApiManagementServiceResource> _parent;
 
         /// <summary> Creates a new WorkspaceContract. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -81,7 +81,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public ApiManagementService Parent
+        public ApiManagementServiceResource Parent
         {
             get
             {
@@ -137,7 +137,7 @@ namespace Azure.Provisioning.ApiManagement
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<WorkspaceContractProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ApiManagementService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ApiManagementServiceResource>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

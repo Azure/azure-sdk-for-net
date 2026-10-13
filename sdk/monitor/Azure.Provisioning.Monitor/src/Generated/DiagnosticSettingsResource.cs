@@ -65,7 +65,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        public DiagnosticSettings Properties
+        internal DiagnosticSettings Properties
         {
             get
             {
@@ -91,6 +91,159 @@ namespace Azure.Provisioning.Monitor
             {
                 Initialize();
                 _scope.Value = value;
+            }
+        }
+
+        /// <summary> Gets or sets the StorageAccountId. </summary>
+        public BicepValue<string> StorageAccountId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageAccountId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticSettings();
+                }
+                Properties.StorageAccountId = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ServiceBusRuleId. </summary>
+        public BicepValue<string> ServiceBusRuleId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceBusRuleId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticSettings();
+                }
+                Properties.ServiceBusRuleId = value;
+            }
+        }
+
+        /// <summary> Gets or sets the EventHubAuthorizationRuleId. </summary>
+        public BicepValue<string> EventHubAuthorizationRuleId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventHubAuthorizationRuleId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticSettings();
+                }
+                Properties.EventHubAuthorizationRuleId = value;
+            }
+        }
+
+        /// <summary> Gets or sets the EventHubName. </summary>
+        public BicepValue<string> EventHubName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventHubName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticSettings();
+                }
+                Properties.EventHubName = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Metrics. </summary>
+        public BicepList<DiagnosticsMetricSettings> Metrics
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Metrics;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticSettings();
+                }
+                Properties.Metrics = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Logs. </summary>
+        public BicepList<DiagnosticsLogSettings> Logs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Logs;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticSettings();
+                }
+                Properties.Logs = value;
+            }
+        }
+
+        /// <summary> Gets or sets the WorkspaceId. </summary>
+        public BicepValue<string> WorkspaceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkspaceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticSettings();
+                }
+                Properties.WorkspaceId = value;
+            }
+        }
+
+        /// <summary> Gets or sets the MarketplacePartnerId. </summary>
+        public BicepValue<string> MarketplacePartnerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MarketplacePartnerId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticSettings();
+                }
+                Properties.MarketplacePartnerId = value;
+            }
+        }
+
+        /// <summary> Gets or sets the LogAnalyticsDestinationType. </summary>
+        public BicepValue<string> LogAnalyticsDestinationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LogAnalyticsDestinationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticSettings();
+                }
+                Properties.LogAnalyticsDestinationType = value;
             }
         }
 

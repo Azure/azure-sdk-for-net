@@ -13,19 +13,19 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> IoT Security solution recommendation information. </summary>
-    public partial class IotSecurityAggregatedRecommendation : ProvisionableResource
+    public partial class IoTSecurityAggregatedRecommendation : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
         private IoTSecurityAggregatedRecommendationProperties _properties;
         private BicepDictionary<string> _tags;
-        private ResourceReference<IotSecuritySolutionAnalyticsModel> _parent;
+        private ResourceReference<IoTSecuritySolutionAnalyticsModel> _parent;
 
-        /// <summary> Creates a new IotSecurityAggregatedRecommendation. </summary>
+        /// <summary> Creates a new IoTSecurityAggregatedRecommendation. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal IotSecurityAggregatedRecommendation(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Security/iotSecuritySolutions/analyticsModels/aggregatedRecommendations", resourceVersion ?? "2019-08-01")
+        internal IoTSecurityAggregatedRecommendation(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Security/iotSecuritySolutions/analyticsModels/aggregatedRecommendations", resourceVersion ?? "2019-08-01")
         {
         }
 
@@ -85,7 +85,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public IotSecuritySolutionAnalyticsModel Parent
+        public IoTSecuritySolutionAnalyticsModel Parent
         {
             get
             {
@@ -189,7 +189,7 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for IotSecurityAggregatedRecommendation. </summary>
+        /// <summary> Define all the provisionable properties for IoTSecurityAggregatedRecommendation. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -198,21 +198,21 @@ namespace Azure.Provisioning.SecurityCenter
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<IoTSecurityAggregatedRecommendationProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<IotSecuritySolutionAnalyticsModel>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<IoTSecuritySolutionAnalyticsModel>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing IotSecurityAggregatedRecommendation. </summary>
+        /// <summary> Creates a reference to an existing IoTSecurityAggregatedRecommendation. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static IotSecurityAggregatedRecommendation FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static IoTSecurityAggregatedRecommendation FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            IotSecurityAggregatedRecommendation result = new IotSecurityAggregatedRecommendation(bicepIdentifier, resourceVersion);
+            IoTSecurityAggregatedRecommendation result = new IoTSecurityAggregatedRecommendation(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for IotSecurityAggregatedRecommendation that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for IoTSecurityAggregatedRecommendation that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

@@ -64,12 +64,30 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the Properties. </summary>
-        public DiagnosticSettingsCategory Properties
+        internal DiagnosticSettingsCategory Properties
         {
             get
             {
                 Initialize();
                 return _properties;
+            }
+        }
+
+        /// <summary> Gets the CategoryType. </summary>
+        public BicepValue<CategoryType> CategoryType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CategoryType;
+            }
+        }
+
+        /// <summary> Gets the CategoryGroups. </summary>
+        public BicepList<string> CategoryGroups
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CategoryGroups;
             }
         }
 

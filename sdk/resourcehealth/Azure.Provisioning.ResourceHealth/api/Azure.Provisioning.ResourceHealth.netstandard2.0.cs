@@ -39,6 +39,22 @@ namespace Azure.Provisioning.ResourceHealth
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class EmergingIssuesGetResult : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal EmergingIssuesGetResult() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RefreshedOn { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ResourceHealth.EmergingIssueActiveEventType> StatusActiveEvents { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ResourceHealth.EmergingIssueBannerType> StatusBanners { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ResourceHealth.EmergingIssuesGetResult FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_05_01;
+        }
+    }
     public enum EventSubTypeValue
     {
         Retirement = 0,
@@ -277,22 +293,6 @@ namespace Azure.Provisioning.ResourceHealth
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.ResourceHealth.ResourceHealthMetadataEntity FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_05_01;
-        }
-    }
-    public partial class ServiceEmergingIssue : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        internal ServiceEmergingIssue() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RefreshedOn { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ResourceHealth.EmergingIssueActiveEventType> StatusActiveEvents { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ResourceHealth.EmergingIssueBannerType> StatusBanners { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ResourceHealth.ServiceEmergingIssue FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_05_01;

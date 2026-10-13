@@ -27,7 +27,7 @@ namespace Azure.Provisioning.HealthcareApis
         private DicomServiceProperties _properties;
         private BicepValue<ETag> _eTag;
         private ManagedServiceIdentity _identity;
-        private ResourceReference<HealthcareApisWorkspace> _parent;
+        private ResourceReference<Workspace> _parent;
 
         /// <summary> Creates a new DicomService. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -147,7 +147,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public HealthcareApisWorkspace Parent
+        public Workspace Parent
         {
             get
             {
@@ -222,7 +222,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<HealthcareApisServicePrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<ServicesPrivateEndpointConnections> PrivateEndpointConnections
         {
             get
             {
@@ -327,7 +327,7 @@ namespace Azure.Provisioning.HealthcareApis
             _properties = DefineModelProperty<DicomServiceProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<HealthcareApisWorkspace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<Workspace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

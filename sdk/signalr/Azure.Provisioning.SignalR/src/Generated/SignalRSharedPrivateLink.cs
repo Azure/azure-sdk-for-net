@@ -21,12 +21,12 @@ namespace Azure.Provisioning.SignalR
         private BicepValue<string> _name;
         private SystemData _systemData;
         private SharedPrivateLinkResourceProperties _properties;
-        private ResourceReference<SignalRService> _parent;
+        private ResourceReference<Replica> _parent;
 
         /// <summary> Creates a new SignalRSharedPrivateLink. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SignalRSharedPrivateLink(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.SignalRService/signalR/sharedPrivateLinkResources", resourceVersion ?? "2025-01-01-preview")
+        public SignalRSharedPrivateLink(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.SignalRService/signalR/replicas/sharedPrivateLinkResources", resourceVersion ?? "2025-01-01-preview")
         {
         }
 
@@ -81,7 +81,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public SignalRService Parent
+        public Replica Parent
         {
             get
             {
@@ -197,7 +197,7 @@ namespace Azure.Provisioning.SignalR
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SharedPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SignalRService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<Replica>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

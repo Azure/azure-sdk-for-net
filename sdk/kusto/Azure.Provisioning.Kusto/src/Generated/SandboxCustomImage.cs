@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Kusto
         private BicepValue<string> _name;
         private SystemData _systemData;
         private SandboxCustomImageProperties _properties;
-        private ResourceReference<KustoCluster> _parent;
+        private ResourceReference<Cluster> _parent;
 
         /// <summary> Creates a new SandboxCustomImage. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -80,7 +80,7 @@ namespace Azure.Provisioning.Kusto
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public KustoCluster Parent
+        public Cluster Parent
         {
             get
             {
@@ -183,7 +183,7 @@ namespace Azure.Provisioning.Kusto
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SandboxCustomImageProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<KustoCluster>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<Cluster>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

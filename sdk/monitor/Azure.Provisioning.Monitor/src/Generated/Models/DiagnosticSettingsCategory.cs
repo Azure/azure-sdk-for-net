@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> The diagnostic settings Category. </summary>
-    public partial class DiagnosticSettingsCategory : ProvisionableConstruct
+    internal partial class DiagnosticSettingsCategory : ProvisionableConstruct
     {
         private BicepValue<CategoryType> _categoryType;
         private BicepList<string> _categoryGroups;

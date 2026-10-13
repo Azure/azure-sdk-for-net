@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Compute
     /// <summary> The DiskAccessProperties. </summary>
     internal partial class DiskAccessProperties : ProvisionableConstruct
     {
-        private BicepList<ComputePrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<PrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<string> _provisioningState;
         private BicepValue<DateTimeOffset> _timeCreated;
 
@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Compute
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<ComputePrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<PrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -57,7 +57,7 @@ namespace Azure.Provisioning.Compute
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _privateEndpointConnections = DefineListProperty<ComputePrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<PrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true, format: "O");
             DefineAdditionalProperties();

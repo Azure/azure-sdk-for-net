@@ -18,6 +18,63 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.ServiceFabricManagedClusters.ServiceTypeHealthPolicy> ServiceTypeHealthPolicyMap { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class ApplicationResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ApplicationResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ApplicationUserAssignedIdentityInfo> ManagedIdentities { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Parameters { get { throw null; } set { } }
+        public Azure.Provisioning.ServiceFabricManagedClusters.ManagedCluster Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.ServiceFabricManagedClusters.ApplicationUpgradePolicy UpgradePolicy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Version { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ServiceFabricManagedClusters.ApplicationResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2026_02_01;
+        }
+    }
+    public partial class ApplicationTypeResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ApplicationTypeResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ServiceFabricManagedClusters.ManagedCluster Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ServiceFabricManagedClusters.ApplicationTypeResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2026_02_01;
+        }
+    }
+    public partial class ApplicationTypeVersionResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ApplicationTypeVersionResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<System.Uri> AppPackageUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ServiceFabricManagedClusters.ApplicationTypeResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ServiceFabricManagedClusters.ApplicationTypeVersionResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2026_02_01;
+        }
+    }
     public partial class ApplicationUpgradePolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ApplicationUpgradePolicy() { }
@@ -83,6 +140,67 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         public Azure.Provisioning.BicepValue<int> EndPort { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> StartPort { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ManagedCluster : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ManagedCluster(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterAddOnFeature> AddOnFeatures { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AdminPassword { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AdminUserName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> AllocatedOutboundPorts { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.AutoGeneratedDomainNameLabelScope> AutoGeneratedDomainNameLabelScope { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterSubnet> AuxiliarySubnets { get { throw null; } set { } }
+        public Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterAzureActiveDirectory AzureActiveDirectory { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> ClientConnectionPort { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterClientCertificate> Clients { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<System.BinaryData> ClusterCertificateThumbprints { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ClusterCodeVersion { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> ClusterId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedClusterState> ClusterState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterUpgradeCadence> ClusterUpgradeCadence { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterUpgradeMode> ClusterUpgradeMode { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DdosProtectionPlanId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DnsName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> EnableOutboundOnlyNodeTypes { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ClusterFabricSettingsSection> FabricSettings { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> HasZoneResiliency { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> HttpGatewayConnectionPort { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> HttpGatewayTokenAuthConnectionPort { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterIPTag> IPTags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Net.IPAddress> IPv4Address { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Net.IPAddress> IPv6Address { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAutoOSUpgradeEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsHttpGatewayExclusiveAuthModeEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsIPv6Enabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsRdpAccessAllowed { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsServicePublicIPEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterLoadBalancingRule> LoadBalancingRules { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> MaxUnusedVersionsToKeep { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedNetworkSecurityRule> NetworkSecurityRules { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedResourceProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PublicIPPrefixId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PublicIPv6PrefixId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterServiceEndpoint> ServiceEndpoints { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> SkipManagedNsgAssignment { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedClustersSkuName> SkuName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SubnetId { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterUpgradePolicy UpgradeDescription { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> UseCustomVnet { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> VmImage { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ZonalUpdateMode> ZonalUpdateMode { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ServiceFabricManagedClusters.ManagedCluster FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2026_02_01;
+        }
     }
     public enum ManagedClusterAddOnFeature
     {
@@ -316,6 +434,76 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         public Azure.Provisioning.BicepList<string> Names { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class NodeType : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public NodeType(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.NodeTypeVmssDataDisk> AdditionalDataDisks { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.AdditionalNetworkInterfaceConfiguration> AdditionalNetworkInterfaceConfigurations { get { throw null; } set { } }
+        public Azure.Provisioning.ServiceFabricManagedClusters.EndpointRangeDescription ApplicationPorts { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Capacities { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ComputerNamePrefix { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DataDiskLetter { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> DataDiskSizeInGB { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedDataDiskType> DataDiskType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DscpConfigurationId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> EnableResilientEphemeralOSDisk { get { throw null; } set { } }
+        public Azure.Provisioning.ServiceFabricManagedClusters.EndpointRangeDescription EphemeralPorts { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.SpotNodeVmEvictionPolicyType> EvictionPolicy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.NodeTypeFrontendConfiguration> FrontendConfigurations { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> HasMultiplePlacementGroups { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> HostGroupId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAcceleratedNetworkingEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsEncryptionAtHostEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsNodePublicIPEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsNodePublicIPv6Enabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsOutboundOnly { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsOverProvisioningEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsPrimary { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsSecureBootEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsSpotVm { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsStateless { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsZoneBalanceEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.NodeTypeNatConfig> NatConfigurations { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> NatGatewayId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedNetworkSecurityRule> NetworkSecurityRules { get { throw null; } set { } }
+        public Azure.Provisioning.ServiceFabricManagedClusters.ManagedCluster Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> PlacementProperties { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedResourceProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.NodeTypeSecurityEncryptionType> SecurityEncryptionType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedClusterSecurityType> SecurityType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ServiceArtifactReferenceId { get { throw null; } set { } }
+        public Azure.Provisioning.ServiceFabricManagedClusters.NodeTypeSku Sku { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SpotRestoreTimeout { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SubnetId { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> UseDefaultPublicLoadBalancer { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> UseEphemeralOSDisk { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> UseTempDataDisk { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedVmApplication> VmApplications { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.NodeTypeVmssExtension> VmExtensions { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> VmImageOffer { get { throw null; } set { } }
+        public Azure.Provisioning.ServiceFabricManagedClusters.VmImagePlan VmImagePlan { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> VmImagePublisher { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VmImageResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> VmImageSku { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> VmImageVersion { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> VmInstanceCount { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Core.ResourceIdentifier> VmManagedIdentityUserAssignedIdentities { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.NodeTypeVaultSecretGroup> VmSecrets { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.VmSetupAction> VmSetupActions { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VmSharedGalleryImageId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> VmSize { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> Zones { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ServiceFabricManagedClusters.NodeType FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2026_02_01;
+        }
+    }
     public partial class NodeTypeFrontendConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public NodeTypeFrontendConfiguration() { }
@@ -422,124 +610,6 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         public Azure.Provisioning.BicepValue<System.TimeSpan> UpgradeTimeout { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ServiceFabricManagedApplication : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public ServiceFabricManagedApplication(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ApplicationUserAssignedIdentityInfo> ManagedIdentities { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Parameters { get { throw null; } set { } }
-        public Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedCluster Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public Azure.Provisioning.ServiceFabricManagedClusters.ApplicationUpgradePolicy UpgradePolicy { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Version { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedApplication FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2026_02_01;
-        }
-    }
-    public partial class ServiceFabricManagedApplicationType : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public ServiceFabricManagedApplicationType(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedCluster Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedApplicationType FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2026_02_01;
-        }
-    }
-    public partial class ServiceFabricManagedApplicationTypeVersion : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public ServiceFabricManagedApplicationTypeVersion(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<System.Uri> AppPackageUri { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedApplicationType Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersion FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2026_02_01;
-        }
-    }
-    public partial class ServiceFabricManagedCluster : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public ServiceFabricManagedCluster(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterAddOnFeature> AddOnFeatures { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> AdminPassword { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> AdminUserName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> AllocatedOutboundPorts { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.AutoGeneratedDomainNameLabelScope> AutoGeneratedDomainNameLabelScope { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterSubnet> AuxiliarySubnets { get { throw null; } set { } }
-        public Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterAzureActiveDirectory AzureActiveDirectory { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> ClientConnectionPort { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterClientCertificate> Clients { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<System.BinaryData> ClusterCertificateThumbprints { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> ClusterCodeVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Guid> ClusterId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedClusterState> ClusterState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterUpgradeCadence> ClusterUpgradeCadence { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterUpgradeMode> ClusterUpgradeMode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DdosProtectionPlanId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> DnsName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableOutboundOnlyNodeTypes { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ClusterFabricSettingsSection> FabricSettings { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> HasZoneResiliency { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> HttpGatewayConnectionPort { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> HttpGatewayTokenAuthConnectionPort { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterIPTag> IPTags { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Net.IPAddress> IPv4Address { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.Net.IPAddress> IPv6Address { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsAutoOSUpgradeEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsHttpGatewayExclusiveAuthModeEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsIPv6Enabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsRdpAccessAllowed { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsServicePublicIPEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterLoadBalancingRule> LoadBalancingRules { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> MaxUnusedVersionsToKeep { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedNetworkSecurityRule> NetworkSecurityRules { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedResourceProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PublicIPPrefixId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PublicIPv6PrefixId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterServiceEndpoint> ServiceEndpoints { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> SkipManagedNsgAssignment { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedClustersSkuName> SkuName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SubnetId { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public Azure.Provisioning.ServiceFabricManagedClusters.ManagedClusterUpgradePolicy UpgradeDescription { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> UseCustomVnet { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> VmImage { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ZonalUpdateMode> ZonalUpdateMode { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedCluster FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2026_02_01;
-        }
-    }
     public partial class ServiceFabricManagedClusterIPConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceFabricManagedClusterIPConfiguration() { }
@@ -639,76 +709,6 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         [System.Runtime.Serialization.DataMemberAttribute(Name="deny")]
         Deny = 1,
     }
-    public partial class ServiceFabricManagedNodeType : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public ServiceFabricManagedNodeType(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.NodeTypeVmssDataDisk> AdditionalDataDisks { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.AdditionalNetworkInterfaceConfiguration> AdditionalNetworkInterfaceConfigurations { get { throw null; } set { } }
-        public Azure.Provisioning.ServiceFabricManagedClusters.EndpointRangeDescription ApplicationPorts { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Capacities { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ComputerNamePrefix { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> DataDiskLetter { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> DataDiskSizeInGB { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedDataDiskType> DataDiskType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DscpConfigurationId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableResilientEphemeralOSDisk { get { throw null; } set { } }
-        public Azure.Provisioning.ServiceFabricManagedClusters.EndpointRangeDescription EphemeralPorts { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.SpotNodeVmEvictionPolicyType> EvictionPolicy { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.NodeTypeFrontendConfiguration> FrontendConfigurations { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> HasMultiplePlacementGroups { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> HostGroupId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsAcceleratedNetworkingEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEncryptionAtHostEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsNodePublicIPEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsNodePublicIPv6Enabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsOutboundOnly { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsOverProvisioningEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsPrimary { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsSecureBootEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsSpotVm { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsStateless { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsZoneBalanceEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.NodeTypeNatConfig> NatConfigurations { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> NatGatewayId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedNetworkSecurityRule> NetworkSecurityRules { get { throw null; } set { } }
-        public Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedCluster Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> PlacementProperties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedResourceProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.NodeTypeSecurityEncryptionType> SecurityEncryptionType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedClusterSecurityType> SecurityType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ServiceArtifactReferenceId { get { throw null; } set { } }
-        public Azure.Provisioning.ServiceFabricManagedClusters.NodeTypeSku Sku { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SpotRestoreTimeout { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SubnetId { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> UseDefaultPublicLoadBalancer { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> UseEphemeralOSDisk { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> UseTempDataDisk { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedVmApplication> VmApplications { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.NodeTypeVmssExtension> VmExtensions { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> VmImageOffer { get { throw null; } set { } }
-        public Azure.Provisioning.ServiceFabricManagedClusters.VmImagePlan VmImagePlan { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> VmImagePublisher { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VmImageResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> VmImageSku { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> VmImageVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> VmInstanceCount { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Core.ResourceIdentifier> VmManagedIdentityUserAssignedIdentities { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.NodeTypeVaultSecretGroup> VmSecrets { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.VmSetupAction> VmSetupActions { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VmSharedGalleryImageId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> VmSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> Zones { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedNodeType FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2026_02_01;
-        }
-    }
     public enum ServiceFabricManagedNsgProtocol
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="http")]
@@ -738,23 +738,6 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         Deleting = 7,
         Deleted = 8,
         Other = 9,
-    }
-    public partial class ServiceFabricManagedService : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public ServiceFabricManagedService(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedApplication Parent { get { throw null; } set { } }
-        public Azure.Provisioning.ServiceFabricManagedClusters.ManagedServiceProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedService FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2026_02_01;
-        }
     }
     public enum ServiceFabricManagedServiceMoveCost
     {
@@ -802,6 +785,23 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         public ServicePlacementRequireDomainDistributionPolicy() { }
         public Azure.Provisioning.BicepValue<string> DomainName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ServiceResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ServiceResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ServiceFabricManagedClusters.ApplicationResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ServiceFabricManagedClusters.ManagedServiceProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ServiceFabricManagedClusters.ServiceResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2026_02_01;
+        }
     }
     public partial class ServiceTypeHealthPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

@@ -18,18 +18,13 @@ namespace Azure.Provisioning.BotService
             ChannelName.Assign("DirectLineSpeechChannel");
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         public DirectLineSpeechChannelProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 

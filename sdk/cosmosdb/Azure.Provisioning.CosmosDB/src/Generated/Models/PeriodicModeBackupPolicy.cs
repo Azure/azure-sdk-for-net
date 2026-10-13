@@ -18,18 +18,13 @@ namespace Azure.Provisioning.CosmosDB
             BackupPolicyType.Assign(CosmosDB.BackupPolicyType.Periodic);
         }
 
-        /// <summary> Gets or sets the PeriodicModeProperties. </summary>
+        /// <summary> Gets the PeriodicModeProperties. </summary>
         public PeriodicModeProperties PeriodicModeProperties
         {
             get
             {
                 Initialize();
                 return _periodicModeProperties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _periodicModeProperties, value);
             }
         }
 

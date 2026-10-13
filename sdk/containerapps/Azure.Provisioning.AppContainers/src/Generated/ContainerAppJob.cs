@@ -23,11 +23,12 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<AzureLocation> _location;
         private JobProperties _properties;
         private ManagedServiceIdentity _identity;
+        private ResourceReference<Job> _parent;
 
         /// <summary> Creates a new ContainerAppJob. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerAppJob(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/jobs", resourceVersion ?? "2026-07-01")
+        public ContainerAppJob(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/jobs/detectorProperties", resourceVersion ?? "2026-07-01")
         {
         }
 
@@ -123,6 +124,21 @@ namespace Azure.Provisioning.AppContainers
             {
                 Initialize();
                 AssignOrReplace(ref _identity, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Parent. </summary>
+        public Job Parent
+        {
+            get
+            {
+                Initialize();
+                return _parent.Value;
+            }
+            set
+            {
+                Initialize();
+                _parent.Value = value;
             }
         }
 
@@ -257,6 +273,7 @@ namespace Azure.Provisioning.AppContainers
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<JobProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
+            _parent = DefineResource<Job>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

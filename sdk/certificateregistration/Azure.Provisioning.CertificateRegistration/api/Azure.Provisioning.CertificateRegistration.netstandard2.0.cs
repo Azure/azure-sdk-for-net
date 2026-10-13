@@ -1,25 +1,5 @@
 namespace Azure.Provisioning.CertificateRegistration
 {
-    public partial class AppServiceCertificate : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public AppServiceCertificate(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> KeyVaultId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> KeyVaultSecretName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.CertificateRegistration.AppServiceCertificateOrder Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CertificateRegistration.AppServiceVaultSecretStatus> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.CertificateRegistration.AppServiceCertificate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2024_11_01;
-        }
-    }
     public partial class AppServiceCertificateDetails : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AppServiceCertificateDetails() { }
@@ -84,21 +64,21 @@ namespace Azure.Provisioning.CertificateRegistration
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CertificateRegistration.AppServiceVaultSecretStatus> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class AppServiceDetector : Azure.Provisioning.Primitives.ProvisionableResource
+    public partial class AppServiceCertificateResource : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        internal AppServiceDetector() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.CertificateRegistration.DataProviderMetadata> DataProvidersMetadata { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.CertificateRegistration.DiagnosticDataset> Dataset { get { throw null; } }
+        public AppServiceCertificateResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
-        public Azure.Provisioning.CertificateRegistration.AppServiceDetectorInfo Metadata { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> KeyVaultId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> KeyVaultSecretName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.CertificateRegistration.AppServiceCertificateOrder Parent { get { throw null; } set { } }
-        public Azure.Provisioning.CertificateRegistration.DetectorStatusInfo Status { get { throw null; } }
-        public Azure.Provisioning.CertificateRegistration.QueryUtterancesResults SuggestedUtterances { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CertificateRegistration.AppServiceVaultSecretStatus> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.CertificateRegistration.AppServiceDetector FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.CertificateRegistration.AppServiceCertificateResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_11_01;
@@ -196,6 +176,26 @@ namespace Azure.Provisioning.CertificateRegistration
         Info = 2,
         Success = 3,
         None = 4,
+    }
+    public partial class DetectorResponse : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal DetectorResponse() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.CertificateRegistration.DataProviderMetadata> DataProvidersMetadata { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.CertificateRegistration.DiagnosticDataset> Dataset { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
+        public Azure.Provisioning.CertificateRegistration.AppServiceDetectorInfo Metadata { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.CertificateRegistration.AppServiceCertificateOrder Parent { get { throw null; } set { } }
+        public Azure.Provisioning.CertificateRegistration.DetectorStatusInfo Status { get { throw null; } }
+        public Azure.Provisioning.CertificateRegistration.QueryUtterancesResults SuggestedUtterances { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.CertificateRegistration.DetectorResponse FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2024_11_01;
+        }
     }
     public partial class DetectorStatusInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

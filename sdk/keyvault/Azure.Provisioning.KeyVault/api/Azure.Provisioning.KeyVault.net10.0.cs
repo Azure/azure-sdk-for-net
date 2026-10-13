@@ -1,19 +1,5 @@
 namespace Azure.Provisioning.KeyVault
 {
-    public partial class DeletedKeyVault : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        internal DeletedKeyVault() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.KeyVault.DeletedKeyVaultProperties Properties { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.KeyVault.DeletedKeyVault FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_05_01;
-        }
-    }
     public partial class DeletedKeyVaultProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DeletedKeyVaultProperties() { }
@@ -49,6 +35,20 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ScheduledPurgeOn { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DeletedVault : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal DeletedVault() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.KeyVault.DeletedKeyVaultProperties Properties { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.KeyVault.DeletedVault FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_05_01;
+        }
     }
     public enum IdentityAccessCertificatePermission
     {

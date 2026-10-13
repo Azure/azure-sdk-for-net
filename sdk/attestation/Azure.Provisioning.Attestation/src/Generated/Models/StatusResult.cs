@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Attestation
         private BicepValue<AttestationServiceStatus> _status;
         private BicepValue<Uri> _attestUri;
         private BicepValue<AttestationPublicNetworkAccessType> _publicNetworkAccess;
-        private BicepList<AttestationPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<AttestationProviderPrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<TpmAttestationAuthenticationType> _tpmAttestationAuthentication;
 
         /// <summary> Creates a new StatusResult. </summary>
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.Attestation
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<AttestationPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<AttestationProviderPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -119,7 +119,7 @@ namespace Azure.Provisioning.Attestation
             _status = DefineProperty<AttestationServiceStatus>(nameof(Status), new string[] { "status" });
             _attestUri = DefineProperty<Uri>(nameof(AttestUri), new string[] { "attestUri" });
             _publicNetworkAccess = DefineProperty<AttestationPublicNetworkAccessType>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
-            _privateEndpointConnections = DefineListProperty<AttestationPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<AttestationProviderPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _tpmAttestationAuthentication = DefineProperty<TpmAttestationAuthenticationType>(nameof(TpmAttestationAuthentication), new string[] { "tpmAttestationAuthentication" });
             DefineAdditionalProperties();
         }

@@ -222,7 +222,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<BatchPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<PrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -353,7 +353,7 @@ namespace Azure.Provisioning.Batch
             _properties = DefineModelProperty<BatchAccountProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
@@ -373,7 +373,7 @@ namespace Azure.Provisioning.Batch
         /// <summary> Get the requirements for naming this resource. </summary>
         /// <returns> Naming requirements. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 24, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers);
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(3, 24, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers);
 
         /// <summary></summary>
         public static partial class ResourceVersions

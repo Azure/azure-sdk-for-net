@@ -101,6 +101,93 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void ResolvedResourceNamePreservesOriginalModelCustomization()
+        {
+            var model = CreateModel("Api");
+            var resource = CreateMetadata(
+                model, "/providers/Microsoft.Test/apis/{apiName}", "Microsoft.Test/apis",
+                ResourceScope.Tenant, [], resourceName: "ServiceApis");
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                customizationSources:
+                [
+                    """
+                    namespace Azure.Provisioning.Tests;
+                    public class CodeGenTypeAttribute : System.Attribute
+                    {
+                        public CodeGenTypeAttribute(string name) { }
+                    }
+                    [CodeGenType("Api")]
+                    public partial class ApiManagementApi { }
+                    """
+                ]);
+            var provider = CreateResourceProvider(resource);
+            RegisterResourceProviders(provider);
+
+            Assert.That(provider.Name, Is.EqualTo("ApiManagementApi"));
+            Assert.That(provider.CustomCodeView, Is.Not.Null);
+            Assert.That(provider.RelativeFilePath, Does.EndWith("ApiManagementApi.cs"));
+        }
+
+        [Test]
+        public void ResolvedResourceCustomizationTakesPrecedenceOverModelCustomization()
+        {
+            var model = CreateModel("Api");
+            var resource = CreateMetadata(
+                model, "/providers/Microsoft.Test/apis/{apiName}", "Microsoft.Test/apis",
+                ResourceScope.Tenant, [], resourceName: "ServiceApis");
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                customizationSources:
+                [
+                    """
+                    namespace Azure.Provisioning.Tests;
+                    public class CodeGenTypeAttribute : System.Attribute
+                    {
+                        public CodeGenTypeAttribute(string name) { }
+                    }
+                    [CodeGenType("Api")]
+                    public partial class ApiManagementApi { }
+                    [CodeGenType("ServiceApis")]
+                    public partial class CustomServiceApi { }
+                    """
+                ]);
+            var provider = CreateResourceProvider(resource);
+            RegisterResourceProviders(provider);
+
+            Assert.That(provider.Name, Is.EqualTo("CustomServiceApi"));
+        }
+
+        [Test]
+        public void SharedModelCustomizationDoesNotCollapseResolvedResourceNames()
+        {
+            var model = CreateModel("Api");
+            var first = CreateMetadata(
+                model, "/providers/Microsoft.Test/apis/{apiName}", "Microsoft.Test/apis",
+                ResourceScope.Tenant, [], resourceName: "ServiceApis");
+            var second = CreateMetadata(
+                model, "/providers/Microsoft.Test/workspaces/{workspaceName}/apis/{apiName}", "Microsoft.Test/workspaces/apis",
+                ResourceScope.Tenant, [], resourceName: "WorkspaceApis");
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                customizationSources:
+                [
+                    """
+                    namespace Azure.Provisioning.Tests;
+                    public class CodeGenTypeAttribute : System.Attribute
+                    {
+                        public CodeGenTypeAttribute(string name) { }
+                    }
+                    [CodeGenType("Api")]
+                    public partial class ApiManagementApi { }
+                    """
+                ]);
+            var providers = CreateAndRegisterResourceProviders(first, second);
+
+            Assert.That(providers.Select(provider => provider.Name), Is.EqualTo(new[] { "ApiManagementApi", "WorkspaceApis" }));
+        }
+
+        [Test]
         public void ResourceVersionsAreRetainedAsNonRootType()
         {
             var model = CreateModel("TestResourceData");

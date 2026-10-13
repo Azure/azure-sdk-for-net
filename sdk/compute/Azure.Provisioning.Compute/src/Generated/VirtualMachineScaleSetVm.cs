@@ -13,7 +13,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Compute
 {
     /// <summary> Describes a virtual machine scale set virtual machine. </summary>
-    public partial class VirtualMachineScaleSetVm : ProvisionableResource
+    public partial class VirtualMachineScaleSetVM : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -30,10 +30,10 @@ namespace Azure.Provisioning.Compute
         private BicepValue<string> _eTag;
         private ResourceReference<VirtualMachineScaleSet> _parent;
 
-        /// <summary> Creates a new VirtualMachineScaleSetVm. </summary>
+        /// <summary> Creates a new VirtualMachineScaleSetVM. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public VirtualMachineScaleSetVm(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/virtualMachineScaleSets/virtualMachines", resourceVersion ?? "2026-03-01")
+        public VirtualMachineScaleSetVM(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/virtualMachineScaleSets/virtualMachines", resourceVersion ?? "2026-03-01")
         {
         }
 
@@ -212,7 +212,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Define all the provisionable properties for VirtualMachineScaleSetVm. </summary>
+        /// <summary> Define all the provisionable properties for VirtualMachineScaleSetVM. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -233,17 +233,17 @@ namespace Azure.Provisioning.Compute
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing VirtualMachineScaleSetVm. </summary>
+        /// <summary> Creates a reference to an existing VirtualMachineScaleSetVM. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static VirtualMachineScaleSetVm FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static VirtualMachineScaleSetVM FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            VirtualMachineScaleSetVm result = new VirtualMachineScaleSetVm(bicepIdentifier, resourceVersion);
+            VirtualMachineScaleSetVM result = new VirtualMachineScaleSetVM(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetVm that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetVM that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

@@ -31,7 +31,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets or sets the ClientId. </summary>
+        /// <summary> Gets the ClientId. </summary>
         public BicepValue<string> ClientId
         {
             get
@@ -39,14 +39,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _clientId;
             }
-            set
-            {
-                Initialize();
-                _clientId.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ClientSecret. </summary>
+        /// <summary> Gets the ClientSecret. </summary>
         public BicepValue<string> ClientSecret
         {
             get
@@ -54,14 +49,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _clientSecret;
             }
-            set
-            {
-                Initialize();
-                _clientSecret.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the VerificationToken. </summary>
+        /// <summary> Gets the VerificationToken. </summary>
         public BicepValue<string> VerificationToken
         {
             get
@@ -69,14 +59,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _verificationToken;
             }
-            set
-            {
-                Initialize();
-                _verificationToken.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Scopes. </summary>
+        /// <summary> Gets the Scopes. </summary>
         public BicepValue<string> Scopes
         {
             get
@@ -84,25 +69,15 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _scopes;
             }
-            set
-            {
-                Initialize();
-                _scopes.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the LandingPageUri. </summary>
+        /// <summary> Gets the LandingPageUri. </summary>
         public BicepValue<Uri> LandingPageUri
         {
             get
             {
                 Initialize();
                 return _landingPageUri;
-            }
-            set
-            {
-                Initialize();
-                _landingPageUri.Assign(value);
             }
         }
 
@@ -126,18 +101,13 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets or sets the RegisterBeforeOAuthFlow. </summary>
+        /// <summary> Gets the RegisterBeforeOAuthFlow. </summary>
         public BicepValue<bool> RegisterBeforeOAuthFlow
         {
             get
             {
                 Initialize();
                 return _registerBeforeOAuthFlow;
-            }
-            set
-            {
-                Initialize();
-                _registerBeforeOAuthFlow.Assign(value);
             }
         }
 
@@ -151,7 +121,7 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets or sets the SigningSecret. </summary>
+        /// <summary> Gets the SigningSecret. </summary>
         public BicepValue<string> SigningSecret
         {
             get
@@ -159,25 +129,15 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _signingSecret;
             }
-            set
-            {
-                Initialize();
-                _signingSecret.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsEnabled. </summary>
+        /// <summary> Gets the IsEnabled. </summary>
         public BicepValue<bool> IsEnabled
         {
             get
             {
                 Initialize();
                 return _isEnabled;
-            }
-            set
-            {
-                Initialize();
-                _isEnabled.Assign(value);
             }
         }
 
@@ -195,7 +155,7 @@ namespace Azure.Provisioning.BotService
             _registerBeforeOAuthFlow = DefineProperty<bool>(nameof(RegisterBeforeOAuthFlow), new string[] { "registerBeforeOAuthFlow" });
             _isValidated = DefineProperty<bool>(nameof(IsValidated), new string[] { "IsValidated" }, isOutput: true);
             _signingSecret = DefineProperty<string>(nameof(SigningSecret), new string[] { "signingSecret" });
-            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" }, isRequired: true);
+            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" });
             DefineAdditionalProperties();
         }
 
