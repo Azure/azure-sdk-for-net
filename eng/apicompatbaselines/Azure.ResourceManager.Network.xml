@@ -25,4 +25,28 @@
     <DiagnosticId>CP0015</DiagnosticId>
     <Target>P:Azure.ResourceManager.Network.Models.DdosSettings.ProtectedIP:[T:System.ObsoleteAttribute]</Target>
   </Suppression>
+  <!-- These APIs were already disconnected compatibility stubs in 1.15.
+       Standardize their obsolete messages without recommending unrelated wire fields. -->
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Network.DdosCustomPolicyData.ProtocolCustomSettings:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Network.Models.DdosSettings.ProtectionCoverage:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>T:Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>T:Azure.ResourceManager.Network.Models.ProtocolCustomSettings:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <!-- Standardize the historical unpopulated TagMap getter's obsolete message.
+       The native TagToIPAddresses dictionary retains the tagMap wire binding. -->
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityGroup.TagMap:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
 </Suppressions>

@@ -18,8 +18,11 @@ namespace Azure.ResourceManager.Network.Models
             get => ProtectionMode != DdosSettingsProtectionMode.Disabled;
             set => ProtectionMode = value == true ? DdosSettingsProtectionMode.Enabled : DdosSettingsProtectionMode.Disabled;
         }
+
+        // Retain the obsolete 1.15 compatibility API as local storage; it had no wire mapping then.
+        // There is no current coverage field or verified replacement to connect it to.
         /// <summary> Compatibility member. </summary>
-        [Obsolete("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
+        [Obsolete("This property is obsolete and might be removed in a future version", false)]
         public DdosSettingsProtectionCoverage? ProtectionCoverage { get; set; }
     }
 }

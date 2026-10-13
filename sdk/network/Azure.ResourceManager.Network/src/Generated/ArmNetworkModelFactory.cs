@@ -3438,6 +3438,19 @@ namespace Azure.ResourceManager.Network.Models
             return new EffectiveNetworkSecurityGroupListResult((value ?? new ChangeTrackingList<EffectiveNetworkSecurityGroup>()).ToList(), nextLink, default);
         }
 
+        /// <param name="networkSecurityGroupId"> Resource ID. </param>
+        /// <param name="association"> Associated resources. </param>
+        /// <param name="effectiveSecurityRules"> A collection of effective security rules. </param>
+        /// <param name="tagToIPAddresses"> Mapping of tags to list of IP Addresses included within the tag. </param>
+        /// <returns> A new <see cref="Models.EffectiveNetworkSecurityGroup"/> instance for mocking. </returns>
+        public static EffectiveNetworkSecurityGroup EffectiveNetworkSecurityGroup(ResourceIdentifier networkSecurityGroupId = default, EffectiveNetworkSecurityGroupAssociation association = default, IEnumerable<EffectiveNetworkSecurityRule> effectiveSecurityRules = default, IReadOnlyDictionary<string, IList<string>> tagToIPAddresses = default)
+        {
+            effectiveSecurityRules ??= new ChangeTrackingList<EffectiveNetworkSecurityRule>();
+            tagToIPAddresses ??= new ChangeTrackingDictionary<string, IList<string>>();
+
+            return new EffectiveNetworkSecurityGroup(networkSecurityGroupId is null ? default : new NetworkSubResource(networkSecurityGroupId, default), association, (effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>()).ToList(), tagToIPAddresses ?? new ChangeTrackingDictionary<string, IList<string>>(), default);
+        }
+
         /// <param name="networkManagerId"> Resource ID. </param>
         /// <param name="subnetId"> Resource ID. </param>
         /// <param name="networkInterfaceId"> Resource ID. </param>
@@ -23663,18 +23676,6 @@ namespace Azure.ResourceManager.Network.Models
                     default,
                     default),
                 default), state, reason, default);
-        }
-
-        /// <summary> Effective network security group. </summary>
-        /// <param name="networkSecurityGroupId"> Resource ID. </param>
-        /// <param name="association"> Associated resources. </param>
-        /// <param name="effectiveSecurityRules"> A collection of effective security rules. </param>
-        /// <param name="tagToIPAddresses"></param>
-        /// <returns> A new <see cref="Models.EffectiveNetworkSecurityGroup"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EffectiveNetworkSecurityGroup EffectiveNetworkSecurityGroup(ResourceIdentifier networkSecurityGroupId = default, EffectiveNetworkSecurityGroupAssociation association = default, IEnumerable<EffectiveNetworkSecurityRule> effectiveSecurityRules = default, IReadOnlyDictionary<string, IList<string>> tagToIPAddresses = default)
-        {
-            return new EffectiveNetworkSecurityGroup(networkSecurityGroupId is null ? default : new NetworkSubResource(networkSecurityGroupId, default), association, (effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>()).ToList(), default, default);
         }
 
         /// <summary> The Managed Network resource. </summary>

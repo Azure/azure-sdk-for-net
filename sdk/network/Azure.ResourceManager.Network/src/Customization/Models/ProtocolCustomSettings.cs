@@ -4,17 +4,13 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text.Json;
-using Azure;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A compatibility type for the former DDoS custom policy protocol settings model. </summary>
-    [ObsoleteAttribute("This class is obsolete and will be removed in a future release", false)]
+    // Retain the released type used by DdosCustomPolicyData.ProtocolCustomSettings.
+    // It was already a compatibility stub in 1.15 and has no current TypeSpec serialization model.
+    [Obsolete("This type is obsolete and might be removed in a future version", false)]
     public partial class ProtocolCustomSettings
     {
         /// <summary> Initializes a new instance of <see cref="ProtocolCustomSettings"/>. </summary>

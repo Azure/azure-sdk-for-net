@@ -1247,7 +1247,7 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.DdosDetectionRule> DetectionRules { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> FrontEndIPConfiguration { get { throw null; } }
-        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version", false)]
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ProtocolCustomSettings> ProtocolCustomSettings { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
@@ -16121,7 +16121,7 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.Core.ResourceIdentifier DdosProtectionPlanId { get { throw null; } set { } }
         [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, use ProtectionMode instead", false)]
         public bool? ProtectedIP { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version", false)]
         public Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage? ProtectionCoverage { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.DdosSettingsProtectionMode? ProtectionMode { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Network.Models.DdosSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -16134,7 +16134,7 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.DdosSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.DdosSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This struct is obsolete and will be removed in a future release", false)]
+    [System.ObsoleteAttribute("This type is obsolete and might be removed in a future version", false)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DdosSettingsProtectionCoverage : System.IEquatable<Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage>
     {
@@ -16434,7 +16434,7 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityGroupAssociation Association { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityRule> EffectiveSecurityRules { get { throw null; } }
         public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } }
-        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, use TagToIPAddresses instead", false)]
         public string TagMap { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IList<string>> TagToIPAddresses { get { throw null; } }
         protected virtual Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityGroup JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -23103,7 +23103,7 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.PropagatedRouteTableNfv>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.PropagatedRouteTableNfv>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release", false)]
+    [System.ObsoleteAttribute("This type is obsolete and might be removed in a future version", false)]
     public partial class ProtocolCustomSettings
     {
         public ProtocolCustomSettings() { }

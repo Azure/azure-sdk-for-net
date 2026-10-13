@@ -421,11 +421,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.EffectiveNetworkSecurityGroup"/> instance for mocking. </returns>
         public static EffectiveNetworkSecurityGroup EffectiveNetworkSecurityGroup(ResourceIdentifier networkSecurityGroupId = default, EffectiveNetworkSecurityGroupAssociation association = default, IEnumerable<EffectiveNetworkSecurityRule> effectiveSecurityRules = default, string tagMap = default)
         {
+            // The 1.15 legacy string getter was unpopulated; initialize native dictionary storage without converting it.
             return new EffectiveNetworkSecurityGroup(
                 networkSecurityGroupId is null ? default : new NetworkSubResource(networkSecurityGroupId, default),
                 association,
                 (effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>()).ToList(),
-                tagMap,
+                new ChangeTrackingDictionary<string, IList<string>>(),
                 default);
         }
     }

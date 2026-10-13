@@ -4,17 +4,13 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text.Json;
-using Azure;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> DDoS settings protection coverage. </summary>
-    [ObsoleteAttribute("This struct is obsolete and will be removed in a future release", false)]
+    // Retain the released value type required by the local-only DdosSettings.ProtectionCoverage API.
+    // The current service model has no coverage field; these values do not map to ProtectionMode.
+    [Obsolete("This type is obsolete and might be removed in a future version", false)]
     public readonly partial struct DdosSettingsProtectionCoverage : IEquatable<DdosSettingsProtectionCoverage>
     {
         private readonly string _value;
