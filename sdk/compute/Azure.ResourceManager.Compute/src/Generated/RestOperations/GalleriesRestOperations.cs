@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
             uri.AppendPath(galleryName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2025-12-03", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2026-03-03", true);
             if (@select != null)
             {
                 uri.AppendQuery("$select", @select, true);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
             uri.AppendPath(galleryName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2025-12-03", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2026-03-03", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
             uri.AppendPath(galleryName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2025-12-03", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2026-03-03", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
             uri.AppendPath(galleryName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2025-12-03", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2026-03-03", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/galleries", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2025-12-03", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2026-03-03", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2025-12-03");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2026-03-03");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/galleries", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2025-12-03", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2026-03-03", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2025-12-03");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2026-03-03");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/artifacts/", false);
             uri.AppendPath(artifactName, true);
             uri.AppendPath("/versions", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2025-12-03", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2026-03-03", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2025-12-03");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2026-03-03");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
             uri.AppendPath(galleryName, true);
             uri.AppendPath("/share", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2025-12-03", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Compute/galleries") ?? "2026-03-03", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

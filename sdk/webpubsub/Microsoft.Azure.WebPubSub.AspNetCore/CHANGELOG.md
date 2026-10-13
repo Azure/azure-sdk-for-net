@@ -1,6 +1,16 @@
 # Release History
 
-# 1.6.0 (2026-10-13)
+## 1.7.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.6.0 (2026-10-13)
 
 ### Features Added
 - Support handling group presence events.
