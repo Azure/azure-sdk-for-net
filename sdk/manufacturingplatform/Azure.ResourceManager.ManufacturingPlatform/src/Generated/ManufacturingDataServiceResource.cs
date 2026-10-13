@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ManufacturingPlatform
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManufacturingDataServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string manufacturingDataServiceApiVersion);
             _manufacturingDataServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManufacturingPlatform", ResourceType.Namespace, Diagnostics);
-            _manufacturingDataServicesRestClient = new ManufacturingDataServices(_manufacturingDataServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, manufacturingDataServiceApiVersion ?? "2025-03-01");
+            _manufacturingDataServicesRestClient = new ManufacturingDataServices(_manufacturingDataServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManufacturingPlatform/manufacturingDataServices", out string manufacturingDataServicesApiVersionOverride) ? manufacturingDataServicesApiVersionOverride : "2025-03-01");
             ValidateResourceId(id);
         }
 

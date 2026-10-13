@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApplicationDefinitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(ResourceType, out string applicationDefinitionApiVersion);
             _applicationDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedApplications", ResourceType.Namespace, Diagnostics);
-            _applicationDefinitionsRestClient = new ApplicationDefinitions(_applicationDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationDefinitionApiVersion ?? "2023-12-01-preview");
+            _applicationDefinitionsRestClient = new ApplicationDefinitions(_applicationDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Solutions/applicationDefinitions", out string applicationDefinitionsApiVersionOverride) ? applicationDefinitionsApiVersionOverride : "2023-12-01-preview");
             ApplicationDefinitionResource.ValidateResourceId(id);
         }
 
