@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EntityDataAnnotation(annotationId, createdOn, annotationDetails, description, additionalBinaryDataProperties);
+            return new EntityDataAnnotation(annotationId, createdOn, annotationDetails ?? new ChangeTrackingDictionary<string, string>(), description, additionalBinaryDataProperties);
         }
     }
 }

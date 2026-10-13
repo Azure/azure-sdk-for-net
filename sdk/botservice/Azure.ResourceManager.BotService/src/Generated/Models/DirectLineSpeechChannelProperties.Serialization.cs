@@ -80,15 +80,29 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("cognitiveServiceResourceId"u8);
                 writer.WriteStringValue(CognitiveServiceResourceId);
             }
-            if (Optional.IsDefined(CognitiveServiceRegion))
+            if (_cognitiveServiceRegionIsDefined || Optional.IsDefined(CognitiveServiceRegion))
             {
-                writer.WritePropertyName("cognitiveServiceRegion"u8);
-                writer.WriteStringValue(CognitiveServiceRegion);
+                if (CognitiveServiceRegion != null)
+                {
+                    writer.WritePropertyName("cognitiveServiceRegion"u8);
+                    writer.WriteStringValue(CognitiveServiceRegion);
+                }
+                else
+                {
+                    writer.WriteNull("cognitiveServiceRegion"u8);
+                }
             }
-            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
+            if (_cognitiveServiceSubscriptionKeyIsDefined || Optional.IsDefined(CognitiveServiceSubscriptionKey))
             {
-                writer.WritePropertyName("cognitiveServiceSubscriptionKey"u8);
-                writer.WriteStringValue(CognitiveServiceSubscriptionKey);
+                if (CognitiveServiceSubscriptionKey != null)
+                {
+                    writer.WritePropertyName("cognitiveServiceSubscriptionKey"u8);
+                    writer.WriteStringValue(CognitiveServiceSubscriptionKey);
+                }
+                else
+                {
+                    writer.WriteNull("cognitiveServiceSubscriptionKey"u8);
+                }
             }
             if (Optional.IsDefined(IsEnabled))
             {
@@ -153,7 +167,9 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             ResourceIdentifier cognitiveServiceResourceId = default;
+            bool cognitiveServiceRegionIsDefined = false;
             string cognitiveServiceRegion = default;
+            bool cognitiveServiceSubscriptionKeyIsDefined = false;
             string cognitiveServiceSubscriptionKey = default;
             bool? isEnabled = default;
             string customVoiceDeploymentId = default;
@@ -173,6 +189,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("cognitiveServiceRegion"u8))
                 {
+                    cognitiveServiceRegionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cognitiveServiceRegion = null;
@@ -183,6 +200,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("cognitiveServiceSubscriptionKey"u8))
                 {
+                    cognitiveServiceSubscriptionKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cognitiveServiceSubscriptionKey = null;
@@ -232,7 +250,11 @@ namespace Azure.ResourceManager.BotService.Models
                 customVoiceDeploymentId,
                 customSpeechModelId,
                 isDefaultBotForCogSvcAccount,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _cognitiveServiceRegionIsDefined = cognitiveServiceRegionIsDefined,
+                _cognitiveServiceSubscriptionKeyIsDefined = cognitiveServiceSubscriptionKeyIsDefined
+            };
         }
     }
 }

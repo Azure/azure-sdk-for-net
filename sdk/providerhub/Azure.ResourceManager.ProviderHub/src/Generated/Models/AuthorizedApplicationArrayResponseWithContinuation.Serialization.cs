@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AuthorizedApplicationArrayResponseWithContinuation(value, nextLink, additionalBinaryDataProperties);
+            return new AuthorizedApplicationArrayResponseWithContinuation(value ?? new ChangeTrackingList<ProviderAuthorizedApplicationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

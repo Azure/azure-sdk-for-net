@@ -82,73 +82,150 @@ namespace Azure.ResourceManager.MachineLearning.Models
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(CvSplitColumnNames))
             {
-                writer.WritePropertyName("cvSplitColumnNames"u8);
-                writer.WriteStartArray();
-                foreach (string item in CvSplitColumnNames)
+                if (CvSplitColumnNames != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("cvSplitColumnNames"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in CvSplitColumnNames)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("cvSplitColumnNames"u8);
+                }
             }
-            if (Optional.IsDefined(FeaturizationSettings))
+            if (_featurizationSettingsIsDefined || Optional.IsDefined(FeaturizationSettings))
             {
-                writer.WritePropertyName("featurizationSettings"u8);
-                writer.WriteObjectValue(FeaturizationSettings, options);
+                if (FeaturizationSettings != null)
+                {
+                    writer.WritePropertyName("featurizationSettings"u8);
+                    writer.WriteObjectValue(FeaturizationSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("featurizationSettings"u8);
+                }
             }
-            if (Optional.IsDefined(LimitSettings))
+            if (_limitSettingsIsDefined || Optional.IsDefined(LimitSettings))
             {
-                writer.WritePropertyName("limitSettings"u8);
-                writer.WriteObjectValue(LimitSettings, options);
+                if (LimitSettings != null)
+                {
+                    writer.WritePropertyName("limitSettings"u8);
+                    writer.WriteObjectValue(LimitSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("limitSettings"u8);
+                }
             }
-            if (Optional.IsDefined(NCrossValidations))
+            if (_nCrossValidationsIsDefined || Optional.IsDefined(NCrossValidations))
             {
-                writer.WritePropertyName("nCrossValidations"u8);
-                writer.WriteObjectValue(NCrossValidations, options);
+                if (NCrossValidations != null)
+                {
+                    writer.WritePropertyName("nCrossValidations"u8);
+                    writer.WriteObjectValue(NCrossValidations, options);
+                }
+                else
+                {
+                    writer.WriteNull("nCrossValidations"u8);
+                }
             }
-            if (Optional.IsDefined(TestData))
+            if (_testDataIsDefined || Optional.IsDefined(TestData))
             {
-                writer.WritePropertyName("testData"u8);
-                writer.WriteObjectValue(TestData, options);
+                if (TestData != null)
+                {
+                    writer.WritePropertyName("testData"u8);
+                    writer.WriteObjectValue(TestData, options);
+                }
+                else
+                {
+                    writer.WriteNull("testData"u8);
+                }
             }
-            if (Optional.IsDefined(TestDataSize))
+            if (_testDataSizeIsDefined || Optional.IsDefined(TestDataSize))
             {
-                writer.WritePropertyName("testDataSize"u8);
-                writer.WriteNumberValue(TestDataSize.Value);
+                if (TestDataSize != null)
+                {
+                    writer.WritePropertyName("testDataSize"u8);
+                    writer.WriteNumberValue(TestDataSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("testDataSize"u8);
+                }
             }
-            if (Optional.IsDefined(ValidationData))
+            if (_validationDataIsDefined || Optional.IsDefined(ValidationData))
             {
-                writer.WritePropertyName("validationData"u8);
-                writer.WriteObjectValue(ValidationData, options);
+                if (ValidationData != null)
+                {
+                    writer.WritePropertyName("validationData"u8);
+                    writer.WriteObjectValue(ValidationData, options);
+                }
+                else
+                {
+                    writer.WriteNull("validationData"u8);
+                }
             }
-            if (Optional.IsDefined(ValidationDataSize))
+            if (_validationDataSizeIsDefined || Optional.IsDefined(ValidationDataSize))
             {
-                writer.WritePropertyName("validationDataSize"u8);
-                writer.WriteNumberValue(ValidationDataSize.Value);
+                if (ValidationDataSize != null)
+                {
+                    writer.WritePropertyName("validationDataSize"u8);
+                    writer.WriteNumberValue(ValidationDataSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("validationDataSize"u8);
+                }
             }
-            if (Optional.IsDefined(WeightColumnName))
+            if (_weightColumnNameIsDefined || Optional.IsDefined(WeightColumnName))
             {
-                writer.WritePropertyName("weightColumnName"u8);
-                writer.WriteStringValue(WeightColumnName);
+                if (WeightColumnName != null)
+                {
+                    writer.WritePropertyName("weightColumnName"u8);
+                    writer.WriteStringValue(WeightColumnName);
+                }
+                else
+                {
+                    writer.WriteNull("weightColumnName"u8);
+                }
             }
-            if (Optional.IsDefined(PositiveLabel))
+            if (_positiveLabelIsDefined || Optional.IsDefined(PositiveLabel))
             {
-                writer.WritePropertyName("positiveLabel"u8);
-                writer.WriteStringValue(PositiveLabel);
+                if (PositiveLabel != null)
+                {
+                    writer.WritePropertyName("positiveLabel"u8);
+                    writer.WriteStringValue(PositiveLabel);
+                }
+                else
+                {
+                    writer.WriteNull("positiveLabel"u8);
+                }
             }
             if (Optional.IsDefined(PrimaryMetric))
             {
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (Optional.IsDefined(TrainingSettings))
+            if (_trainingSettingsIsDefined || Optional.IsDefined(TrainingSettings))
             {
-                writer.WritePropertyName("trainingSettings"u8);
-                writer.WriteObjectValue(TrainingSettings, options);
+                if (TrainingSettings != null)
+                {
+                    writer.WritePropertyName("trainingSettings"u8);
+                    writer.WriteObjectValue(TrainingSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("trainingSettings"u8);
+                }
             }
         }
 
@@ -178,21 +255,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningLogVerbosity? logVerbosity = default;
+            bool targetColumnNameIsDefined = false;
             string targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<string> cvSplitColumnNames = default;
+            IList<string> cvSplitColumnNames = new ChangeTrackingList<string>();
+            bool featurizationSettingsIsDefined = false;
             TableVerticalFeaturizationSettings featurizationSettings = default;
+            bool limitSettingsIsDefined = false;
             TableVerticalLimitSettings limitSettings = default;
+            bool nCrossValidationsIsDefined = false;
             NCrossValidations nCrossValidations = default;
+            bool testDataIsDefined = false;
             MachineLearningTableJobInput testData = default;
+            bool testDataSizeIsDefined = false;
             double? testDataSize = default;
+            bool validationDataIsDefined = false;
             MachineLearningTableJobInput validationData = default;
+            bool validationDataSizeIsDefined = false;
             double? validationDataSize = default;
+            bool weightColumnNameIsDefined = false;
             string weightColumnName = default;
+            bool positiveLabelIsDefined = false;
             string positiveLabel = default;
             ClassificationPrimaryMetric? primaryMetric = default;
+            bool trainingSettingsIsDefined = false;
             ClassificationTrainingSettings trainingSettings = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -207,6 +295,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("targetColumnName"u8))
                 {
+                    targetColumnNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         targetColumnName = null;
@@ -229,6 +318,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        cvSplitColumnNames = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -248,6 +338,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("featurizationSettings"u8))
                 {
+                    featurizationSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         featurizationSettings = null;
@@ -258,6 +349,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("limitSettings"u8))
                 {
+                    limitSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         limitSettings = null;
@@ -268,6 +360,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("nCrossValidations"u8))
                 {
+                    nCrossValidationsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nCrossValidations = null;
@@ -278,6 +371,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("testData"u8))
                 {
+                    testDataIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         testData = null;
@@ -288,6 +382,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("testDataSize"u8))
                 {
+                    testDataSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         testDataSize = null;
@@ -298,6 +393,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("validationData"u8))
                 {
+                    validationDataIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         validationData = null;
@@ -308,6 +404,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("validationDataSize"u8))
                 {
+                    validationDataSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         validationDataSize = null;
@@ -318,6 +415,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("weightColumnName"u8))
                 {
+                    weightColumnNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         weightColumnName = null;
@@ -328,6 +426,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("positiveLabel"u8))
                 {
+                    positiveLabelIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         positiveLabel = null;
@@ -347,6 +446,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("trainingSettings"u8))
                 {
+                    trainingSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         trainingSettings = null;
@@ -366,7 +466,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 taskType,
                 trainingData,
                 additionalBinaryDataProperties,
-                cvSplitColumnNames ?? new ChangeTrackingList<string>(),
+                cvSplitColumnNames,
                 featurizationSettings,
                 limitSettings,
                 nCrossValidations,
@@ -377,7 +477,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 weightColumnName,
                 positiveLabel,
                 primaryMetric,
-                trainingSettings);
+                trainingSettings)
+            {
+                _targetColumnNameIsDefined = targetColumnNameIsDefined,
+                _featurizationSettingsIsDefined = featurizationSettingsIsDefined,
+                _limitSettingsIsDefined = limitSettingsIsDefined,
+                _nCrossValidationsIsDefined = nCrossValidationsIsDefined,
+                _testDataIsDefined = testDataIsDefined,
+                _testDataSizeIsDefined = testDataSizeIsDefined,
+                _validationDataIsDefined = validationDataIsDefined,
+                _validationDataSizeIsDefined = validationDataSizeIsDefined,
+                _weightColumnNameIsDefined = weightColumnNameIsDefined,
+                _positiveLabelIsDefined = positiveLabelIsDefined,
+                _trainingSettingsIsDefined = trainingSettingsIsDefined
+            };
         }
     }
 }

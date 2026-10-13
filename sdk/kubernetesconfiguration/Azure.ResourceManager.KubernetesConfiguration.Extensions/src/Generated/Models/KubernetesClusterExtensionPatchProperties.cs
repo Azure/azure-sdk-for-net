@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _version;
+        internal bool _versionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionPatchProperties"/>. </summary>
         public KubernetesClusterExtensionPatchProperties()
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
             IsAutoUpgradeMinorVersionEnabled = isAutoUpgradeMinorVersionEnabled;
             AutoUpgradeMode = autoUpgradeMode;
             ReleaseTrain = releaseTrain;
-            Version = version;
+            _version = version;
             ConfigurationSettings = configurationSettings;
             ConfigurationProtectedSettings = configurationProtectedSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -59,7 +61,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
         public string ReleaseTrain { get; set; }
 
         /// <summary> Version of the extension for this extension, if it is 'pinned' to a specific version. autoUpgradeMinorVersion must be 'false'. </summary>
-        public string Version { get; set; }
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+                _versionIsDefined = true;
+            }
+        }
 
         /// <summary> Configuration settings, as name-value pairs for configuring this extension. </summary>
         public IDictionary<string, string> ConfigurationSettings { get; } = new ChangeTrackingDictionary<string, string>();

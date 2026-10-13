@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _requireProxyForNetworkRules;
+        internal bool _requireProxyForNetworkRulesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DnsSettings"/>. </summary>
         public DnsSettings()
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Servers = servers;
             EnableProxy = enableProxy;
-            RequireProxyForNetworkRules = requireProxyForNetworkRules;
+            _requireProxyForNetworkRules = requireProxyForNetworkRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +48,17 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> FQDNs in Network Rules are supported when set to true. </summary>
         [WirePath("requireProxyForNetworkRules")]
-        public bool? RequireProxyForNetworkRules { get; set; }
+        public bool? RequireProxyForNetworkRules
+        {
+            get
+            {
+                return _requireProxyForNetworkRules;
+            }
+            set
+            {
+                _requireProxyForNetworkRules = value;
+                _requireProxyForNetworkRulesIsDefined = true;
+            }
+        }
     }
 }

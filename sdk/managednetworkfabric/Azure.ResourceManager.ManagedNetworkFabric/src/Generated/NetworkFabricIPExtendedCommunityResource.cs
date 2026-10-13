@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkFabricIPExtendedCommunityResource : ArmResource
     {
         private readonly ClientDiagnostics _ipExtendedCommunitiesClientDiagnostics;
-        private readonly IpExtendedCommunities _ipExtendedCommunitiesRestClient;
+        private readonly IPExtendedCommunities _ipExtendedCommunitiesRestClient;
         private readonly NetworkFabricIPExtendedCommunityData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/ipExtendedCommunities";
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(ResourceType, out string networkFabricIPExtendedCommunityApiVersion);
             _ipExtendedCommunitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            _ipExtendedCommunitiesRestClient = new IpExtendedCommunities(_ipExtendedCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricIPExtendedCommunityApiVersion ?? "2025-07-15");
+            _ipExtendedCommunitiesRestClient = new IPExtendedCommunities(_ipExtendedCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricIPExtendedCommunityApiVersion ?? "2025-07-15");
             ValidateResourceId(id);
         }
 

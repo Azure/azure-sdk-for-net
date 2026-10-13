@@ -147,7 +147,10 @@ internal class RestClientVisitor : ScmLibraryVisitor
         {
             // Management output discovery uses the convenience methods before visitors run.
             // Replace them with request methods only after that discovery is complete.
+            // Subclient accessors are removed too, so their cache fields are no longer used.
+            var subClientTypes = client.SubClients.Select(subClient => subClient.Type).ToHashSet();
             type.Update(
+                fields: [.. client.Fields.Where(field => !subClientTypes.Contains(field.Type.WithNullable(false)))],
                 methods: [.. client.RestClient.Methods],
                 modifiers: TransformPublicModifiersToInternal(type));
 

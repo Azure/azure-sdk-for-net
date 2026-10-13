@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Multi-endpoint routing reads a new `microsoft.ingestion_auth` attribute. Telemetry marked `"aad"` is sent and stored separately from instrumentation-key telemetry for the same endpoint, in preparation for Microsoft Entra ID support.
+
 ### Breaking Changes
 
 ### Bugs Fixed

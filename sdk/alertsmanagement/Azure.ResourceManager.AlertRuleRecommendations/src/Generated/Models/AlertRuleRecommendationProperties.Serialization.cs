@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AlertRuleRecommendationProperties(alertRuleType, category, displayInformation, ruleArmTemplate, additionalBinaryDataProperties);
+            return new AlertRuleRecommendationProperties(alertRuleType, category, displayInformation ?? new ChangeTrackingDictionary<string, string>(), ruleArmTemplate, additionalBinaryDataProperties);
         }
     }
 }

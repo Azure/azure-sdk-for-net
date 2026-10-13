@@ -79,10 +79,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("dataType"u8);
             writer.WriteStringValue(DataType.ToString());
-            if (Optional.IsDefined(Threshold))
+            if (_thresholdIsDefined || Optional.IsDefined(Threshold))
             {
-                writer.WritePropertyName("threshold"u8);
-                writer.WriteObjectValue(Threshold, options);
+                if (Threshold != null)
+                {
+                    writer.WritePropertyName("threshold"u8);
+                    writer.WriteObjectValue(Threshold, options);
+                }
+                else
+                {
+                    writer.WriteNull("threshold"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _version;
+        internal bool _versionIsDefined;
+        private string _currentVersion;
+        internal bool _currentVersionIsDefined;
+        private ResponseError _errorInfo;
+        internal bool _errorInfoIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionProperties"/>. </summary>
         public KubernetesClusterExtensionProperties()
@@ -57,14 +63,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
             ExtensionType = extensionType;
             IsAutoUpgradeMinorVersionEnabled = isAutoUpgradeMinorVersionEnabled;
             ReleaseTrain = releaseTrain;
-            Version = version;
+            _version = version;
             Scope = scope;
             ConfigurationSettings = configurationSettings;
             ConfigurationProtectedSettings = configurationProtectedSettings;
-            CurrentVersion = currentVersion;
+            _currentVersion = currentVersion;
             ProvisioningState = provisioningState;
             Statuses = statuses;
-            ErrorInfo = errorInfo;
+            _errorInfo = errorInfo;
             CustomLocationSettings = customLocationSettings;
             PackageUri = packageUri;
             AksAssignedIdentity = aksAssignedIdentity;
@@ -86,7 +92,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
         public string ReleaseTrain { get; set; }
 
         /// <summary> User-specified version of the extension for this extension to 'pin'. To use 'version', autoUpgradeMinorVersion must be 'false'. </summary>
-        public string Version { get; set; }
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+                _versionIsDefined = true;
+            }
+        }
 
         /// <summary> Scope at which the extension is installed. </summary>
         public KubernetesClusterExtensionScope Scope { get; set; }
@@ -98,7 +115,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
         public IDictionary<string, string> ConfigurationProtectedSettings { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> Currently installed version of the extension. </summary>
-        public string CurrentVersion { get; }
+        public string CurrentVersion
+        {
+            get
+            {
+                return _currentVersion;
+            }
+        }
 
         /// <summary> Status of installation of this extension. </summary>
         public KubernetesConfigurationProvisioningState? ProvisioningState { get; }
@@ -107,7 +130,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
         public IList<KubernetesClusterExtensionStatus> Statuses { get; } = new ChangeTrackingList<KubernetesClusterExtensionStatus>();
 
         /// <summary> Error information from the Agent - e.g. errors during installation. </summary>
-        public ResponseError ErrorInfo { get; }
+        public ResponseError ErrorInfo
+        {
+            get
+            {
+                return _errorInfo;
+            }
+        }
 
         /// <summary> Custom Location settings properties. </summary>
         public IReadOnlyDictionary<string, string> CustomLocationSettings { get; } = new ChangeTrackingDictionary<string, string>();

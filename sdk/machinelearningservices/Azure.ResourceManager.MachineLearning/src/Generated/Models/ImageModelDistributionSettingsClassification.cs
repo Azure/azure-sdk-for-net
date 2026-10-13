@@ -27,6 +27,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageModelDistributionSettingsClassification : ImageModelDistributionSettings
     {
+        private string _trainingCropSize;
+        internal bool _trainingCropSizeIsDefined;
+        private string _validationCropSize;
+        internal bool _validationCropSizeIsDefined;
+        private string _validationResizeSize;
+        internal bool _validationResizeSizeIsDefined;
+        private string _weightedLoss;
+        internal bool _weightedLossIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettingsClassification"/>. </summary>
         public ImageModelDistributionSettingsClassification()
         {
@@ -90,29 +99,73 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         internal ImageModelDistributionSettingsClassification(string amsGradient, string augmentations, string beta1, string beta2, string distributed, string earlyStopping, string earlyStoppingDelay, string earlyStoppingPatience, string enableOnnxNormalization, string evaluationFrequency, string gradientAccumulationStep, string layersToFreeze, string learningRate, string learningRateScheduler, string modelName, string momentum, string nesterov, string numberOfEpochs, string numberOfWorkers, string optimizer, string randomSeed, string stepLRGamma, string stepLRStepSize, string trainingBatchSize, string validationBatchSize, string warmupCosineLRCycles, string warmupCosineLRWarmupEpochs, string weightDecay, IDictionary<string, BinaryData> additionalBinaryDataProperties, string trainingCropSize, string validationCropSize, string validationResizeSize, string weightedLoss) : base(amsGradient, augmentations, beta1, beta2, distributed, earlyStopping, earlyStoppingDelay, earlyStoppingPatience, enableOnnxNormalization, evaluationFrequency, gradientAccumulationStep, layersToFreeze, learningRate, learningRateScheduler, modelName, momentum, nesterov, numberOfEpochs, numberOfWorkers, optimizer, randomSeed, stepLRGamma, stepLRStepSize, trainingBatchSize, validationBatchSize, warmupCosineLRCycles, warmupCosineLRWarmupEpochs, weightDecay, additionalBinaryDataProperties)
         {
-            TrainingCropSize = trainingCropSize;
-            ValidationCropSize = validationCropSize;
-            ValidationResizeSize = validationResizeSize;
-            WeightedLoss = weightedLoss;
+            _trainingCropSize = trainingCropSize;
+            _validationCropSize = validationCropSize;
+            _validationResizeSize = validationResizeSize;
+            _weightedLoss = weightedLoss;
         }
 
         /// <summary> Image crop size that is input to the neural network for the training dataset. Must be a positive integer. </summary>
         [WirePath("trainingCropSize")]
-        public string TrainingCropSize { get; set; }
+        public string TrainingCropSize
+        {
+            get
+            {
+                return _trainingCropSize;
+            }
+            set
+            {
+                _trainingCropSize = value;
+                _trainingCropSizeIsDefined = true;
+            }
+        }
 
         /// <summary> Image crop size that is input to the neural network for the validation dataset. Must be a positive integer. </summary>
         [WirePath("validationCropSize")]
-        public string ValidationCropSize { get; set; }
+        public string ValidationCropSize
+        {
+            get
+            {
+                return _validationCropSize;
+            }
+            set
+            {
+                _validationCropSize = value;
+                _validationCropSizeIsDefined = true;
+            }
+        }
 
         /// <summary> Image size to which to resize before cropping for validation dataset. Must be a positive integer. </summary>
         [WirePath("validationResizeSize")]
-        public string ValidationResizeSize { get; set; }
+        public string ValidationResizeSize
+        {
+            get
+            {
+                return _validationResizeSize;
+            }
+            set
+            {
+                _validationResizeSize = value;
+                _validationResizeSizeIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Weighted loss. The accepted values are 0 for no weighted loss.
         /// 1 for weighted loss with sqrt.(class_weights). 2 for weighted loss with class_weights. Must be 0 or 1 or 2.
         /// </summary>
         [WirePath("weightedLoss")]
-        public string WeightedLoss { get; set; }
+        public string WeightedLoss
+        {
+            get
+            {
+                return _weightedLoss;
+            }
+            set
+            {
+                _weightedLoss = value;
+                _weightedLossIsDefined = true;
+            }
+        }
     }
 }

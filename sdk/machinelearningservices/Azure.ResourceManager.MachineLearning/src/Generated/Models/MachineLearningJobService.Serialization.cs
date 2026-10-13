@@ -74,51 +74,100 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningJobService)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Endpoint))
+            if (_endpointIsDefined || Optional.IsDefined(Endpoint))
             {
-                writer.WritePropertyName("endpoint"u8);
-                writer.WriteStringValue(Endpoint);
+                if (Endpoint != null)
+                {
+                    writer.WritePropertyName("endpoint"u8);
+                    writer.WriteStringValue(Endpoint);
+                }
+                else
+                {
+                    writer.WriteNull("endpoint"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && (_errorMessageIsDefined || Optional.IsDefined(ErrorMessage)))
             {
-                writer.WritePropertyName("errorMessage"u8);
-                writer.WriteStringValue(ErrorMessage);
+                if (ErrorMessage != null)
+                {
+                    writer.WritePropertyName("errorMessage"u8);
+                    writer.WriteStringValue(ErrorMessage);
+                }
+                else
+                {
+                    writer.WriteNull("errorMessage"u8);
+                }
             }
-            if (Optional.IsDefined(JobServiceType))
+            if (_jobServiceTypeIsDefined || Optional.IsDefined(JobServiceType))
             {
-                writer.WritePropertyName("jobServiceType"u8);
-                writer.WriteStringValue(JobServiceType);
+                if (JobServiceType != null)
+                {
+                    writer.WritePropertyName("jobServiceType"u8);
+                    writer.WriteStringValue(JobServiceType);
+                }
+                else
+                {
+                    writer.WriteNull("jobServiceType"u8);
+                }
             }
-            if (Optional.IsDefined(Nodes))
+            if (_nodesIsDefined || Optional.IsDefined(Nodes))
             {
-                writer.WritePropertyName("nodes"u8);
-                writer.WriteObjectValue(Nodes, options);
+                if (Nodes != null)
+                {
+                    writer.WritePropertyName("nodes"u8);
+                    writer.WriteObjectValue(Nodes, options);
+                }
+                else
+                {
+                    writer.WriteNull("nodes"u8);
+                }
             }
-            if (Optional.IsDefined(Port))
+            if (_portIsDefined || Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port"u8);
-                writer.WriteNumberValue(Port.Value);
+                if (Port != null)
+                {
+                    writer.WritePropertyName("port"u8);
+                    writer.WriteNumberValue(Port.Value);
+                }
+                else
+                {
+                    writer.WriteNull("port"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteStartObject();
-                foreach (var item in Properties)
+                if (Properties != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("properties"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Properties)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("properties"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && (_statusIsDefined || Optional.IsDefined(Status)))
             {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
+                if (Status != null)
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status);
+                }
+                else
+                {
+                    writer.WriteNull("status"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -162,18 +211,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool endpointIsDefined = false;
             string endpoint = default;
+            bool errorMessageIsDefined = false;
             string errorMessage = default;
+            bool jobServiceTypeIsDefined = false;
             string jobServiceType = default;
+            bool nodesIsDefined = false;
             JobNodes nodes = default;
+            bool portIsDefined = false;
             int? port = default;
-            IDictionary<string, string> properties = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            bool statusIsDefined = false;
             string status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("endpoint"u8))
                 {
+                    endpointIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         endpoint = null;
@@ -184,6 +240,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("errorMessage"u8))
                 {
+                    errorMessageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         errorMessage = null;
@@ -194,6 +251,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("jobServiceType"u8))
                 {
+                    jobServiceTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         jobServiceType = null;
@@ -204,6 +262,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("nodes"u8))
                 {
+                    nodesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nodes = null;
@@ -214,6 +273,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("port"u8))
                 {
+                    portIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         port = null;
@@ -226,6 +286,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -245,6 +306,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
+                    statusIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         status = null;
@@ -264,9 +326,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 jobServiceType,
                 nodes,
                 port,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
                 status,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _endpointIsDefined = endpointIsDefined,
+                _errorMessageIsDefined = errorMessageIsDefined,
+                _jobServiceTypeIsDefined = jobServiceTypeIsDefined,
+                _nodesIsDefined = nodesIsDefined,
+                _portIsDefined = portIsDefined,
+                _statusIsDefined = statusIsDefined
+            };
         }
     }
 }

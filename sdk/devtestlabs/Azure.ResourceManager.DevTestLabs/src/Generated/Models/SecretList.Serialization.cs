@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SecretList(value, nextLink, additionalBinaryDataProperties);
+            return new SecretList(value ?? new ChangeTrackingList<DevTestLabSecretData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

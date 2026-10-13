@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AttestationPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AttestationPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<AttestationPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

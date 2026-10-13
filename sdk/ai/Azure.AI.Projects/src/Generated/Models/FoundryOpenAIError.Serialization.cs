@@ -102,6 +102,11 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type);
             }
+            if (Optional.IsDefined(Misalignment))
+            {
+                writer.WritePropertyName("misalignment"u8);
+                writer.WriteObjectValue(Misalignment, options);
+            }
             if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
@@ -205,6 +210,7 @@ namespace Azure.AI.Projects
             bool paramIsDefined = false;
             string @param = default;
             string @type = default;
+            MisalignmentErrorDetailsResource misalignment = default;
             IList<FoundryOpenAIError> details = default;
             IDictionary<string, BinaryData> additionalInfo = default;
             IDictionary<string, BinaryData> debugInfo = default;
@@ -240,6 +246,15 @@ namespace Azure.AI.Projects
                 if (prop.NameEquals("type"u8))
                 {
                     @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("misalignment"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    misalignment = MisalignmentErrorDetailsResource.DeserializeMisalignmentErrorDetailsResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("details"u8))
@@ -308,6 +323,7 @@ namespace Azure.AI.Projects
                 message,
                 @param,
                 @type,
+                misalignment,
                 details ?? new ChangeTrackingList<FoundryOpenAIError>(),
                 additionalInfo ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 debugInfo ?? new ChangeTrackingDictionary<string, BinaryData>(),

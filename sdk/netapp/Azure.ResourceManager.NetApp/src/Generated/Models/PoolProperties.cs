@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private int? _customThroughputMibpsInt;
+        internal bool _customThroughputMibpsIntIsDefined;
+        private CapacityPoolEncryptionType? _encryptionType;
+        internal bool _encryptionTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="PoolProperties"/>. </summary>
         /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </param>
@@ -45,10 +49,10 @@ namespace Azure.ResourceManager.NetApp.Models
             ProvisioningState = provisioningState;
             TotalThroughputMibps = totalThroughputMibps;
             UtilizedThroughputMibps = utilizedThroughputMibps;
-            CustomThroughputMibpsInt = customThroughputMibpsInt;
+            _customThroughputMibpsInt = customThroughputMibpsInt;
             QosType = qosType;
             IsCoolAccessEnabled = isCoolAccessEnabled;
-            EncryptionType = encryptionType;
+            _encryptionType = encryptionType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -71,7 +75,18 @@ namespace Azure.ResourceManager.NetApp.Models
         public float? UtilizedThroughputMibps { get; }
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </summary>
-        public int? CustomThroughputMibpsInt { get; set; }
+        public int? CustomThroughputMibpsInt
+        {
+            get
+            {
+                return _customThroughputMibpsInt;
+            }
+            set
+            {
+                _customThroughputMibpsInt = value;
+                _customThroughputMibpsIntIsDefined = true;
+            }
+        }
 
         /// <summary> The qos type of the pool. </summary>
         public CapacityPoolQosType? QosType { get; set; }
@@ -80,6 +95,17 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? IsCoolAccessEnabled { get; set; }
 
         /// <summary> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </summary>
-        public CapacityPoolEncryptionType? EncryptionType { get; set; }
+        public CapacityPoolEncryptionType? EncryptionType
+        {
+            get
+            {
+                return _encryptionType;
+            }
+            set
+            {
+                _encryptionType = value;
+                _encryptionTypeIsDefined = true;
+            }
+        }
     }
 }
