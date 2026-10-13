@@ -18,11 +18,13 @@ namespace Azure.Generator.Visitors
     /// </summary>
     internal class ClientApiVersionVisitor : ScmLibraryVisitor
     {
+        private const string OverrideApiVersionDecoratorName = "Azure.Core.Legacy.@overrideApiVersion";
         private Dictionary<CSharpType, InputConstant>? _apiVersionOverrides;
 
         protected override ClientProvider? Visit(InputClient client, ClientProvider? clientProvider)
         {
             if (clientProvider != null && client.Parent != null &&
+                client.Decorators.Any(d => d.Name == OverrideApiVersionDecoratorName) &&
                 client.Parameters.FirstOrDefault(p => p.IsApiVersion && p.DefaultValue?.Value != null)
                     ?.DefaultValue is { } defaultValue)
             {

@@ -31,7 +31,8 @@ namespace Azure.Generator.Tests.Visitors
             var tenant = InputFactory.PathParameter("tenant", InputPrimitiveType.String,
                 isRequired: true, scope: InputParameterScope.Client);
             var child = InputFactory.Client("LegacyClient", parent: parent,
-                parameters: cached ? [endpoint, childVersion] : [endpoint, childVersion, tenant]);
+                parameters: cached ? [endpoint, childVersion] : [endpoint, childVersion, tenant],
+                decorators: [new InputDecoratorInfo("Azure.Core.Legacy.@overrideApiVersion", null)]);
             MockHelpers.LoadMockGenerator(clients: () => [parent, child], visitors: () => [visitor]);
             var library = AzureClientGenerator.Instance.OutputLibrary;
 
@@ -54,13 +55,35 @@ namespace Azure.Generator.Tests.Visitors
                 endpoint, apiVersion,
                 InputFactory.MethodParameter("other", InputPrimitiveType.String, isApiVersion: isApiVersion,
                     defaultValue: defaultValue == null ? null : InputFactory.Constant.String(defaultValue))
-            ]);
+            ], decorators: [new InputDecoratorInfo("Azure.Core.Legacy.@overrideApiVersion", null)]);
             MockHelpers.LoadMockGenerator(clients: () => [parent, child], visitors: () => [visitor]);
             var library = AzureClientGenerator.Instance.OutputLibrary;
             var provider = library.TypeProviders.OfType<ClientProvider>().Single(c => c.Name == "TestClient");
             visitor.InvokeVisitLibrary(library);
 
             Assert.AreEqual(Helpers.GetExpectedFromFile(isApiVersion.ToString()), GetFactoryMethod(provider, "GetChildClient"));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void SubClientWithoutOverridePreservesParentVersion(bool cached)
+        {
+            var visitor = new TestClientApiVersionVisitor();
+            var endpoint = InputFactory.EndpointParameter("endpoint", InputPrimitiveType.String, isRequired: true, isEndpoint: true);
+            var apiVersion = InputFactory.MethodParameter("apiVersion", InputPrimitiveType.String,
+                isApiVersion: true, defaultValue: InputFactory.Constant.String("v2preview"));
+            var parent = InputFactory.Client("TestClient", parameters: [endpoint, apiVersion]);
+            var tenant = InputFactory.PathParameter("tenant", InputPrimitiveType.String,
+                isRequired: true, scope: InputParameterScope.Client);
+            var child = InputFactory.Client("ChildClient", parent: parent,
+                parameters: cached ? [endpoint, apiVersion] : [endpoint, apiVersion, tenant]);
+            MockHelpers.LoadMockGenerator(clients: () => [parent, child], visitors: () => [visitor]);
+            var library = AzureClientGenerator.Instance.OutputLibrary;
+
+            visitor.InvokeVisitLibrary(library);
+
+            var provider = library.TypeProviders.OfType<ClientProvider>().Single(c => c.Name == "TestClient");
+            Assert.AreEqual(Helpers.GetExpectedFromFile(cached.ToString()), GetFactoryMethod(provider, "GetChildClient"));
         }
 
         private static string GetFactoryMethod(ClientProvider provider, string name)
