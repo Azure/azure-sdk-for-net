@@ -80,6 +80,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         private readonly long _maxSizeBytes;
         private readonly object _createLock = new();
         private readonly object _evictLock = new();
+        // In-flight writes can outlive partition disposal, so the gate is reclaimed with the store.
+        private readonly ReaderWriterLockSlim _budgetLock = new();
         private readonly Stopwatch _clock = Stopwatch.StartNew();
         private long _currentSizeBytes;
         private long _lastRecountMilliseconds;
@@ -121,7 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// eviction cannot help with - a removed directory, a full disk, a denied ACL - and deleting
         /// the backlog for those destroys other endpoints' telemetry without saving this batch.
         /// </remarks>
-        internal bool TryCreateBlobWithinBudget(FileBlobProvider inner, byte[] buffer, int leasePeriodMilliseconds, string requestingEndpoint, out PersistentBlob? blob)
+        internal bool TryCreateBlobWithinBudget(PersistentBlobProvider inner, byte[] buffer, int leasePeriodMilliseconds, string requestingEndpoint, out PersistentBlob? blob)
         {
             blob = null;
 
@@ -133,61 +135,79 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 
             RecountIfStale(RecountIntervalMilliseconds);
 
-            if (TryReserve(buffer.Length))
+            // Writes share the gate through completion, so a recount cannot discard bytes reserved
+            // for a file that has not reached disk yet. Different partitions still write concurrently.
+            _budgetLock.EnterReadLock();
+            try
             {
-                return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+                if (TryReserve(buffer.Length))
+                {
+                    return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+                }
+            }
+            finally
+            {
+                _budgetLock.ExitReadLock();
             }
 
             // Being over budget is the one moment the total has to be trusted, so re-derive it on a
             // much shorter leash before anything is refused or deleted on the strength of it.
             RecountIfStale(EvictionRecountIntervalMilliseconds);
 
-            if (TryReserve(buffer.Length))
+            _budgetLock.EnterReadLock();
+            try
             {
-                return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
-            }
-
-            var reserved = false;
-
-            // Serialized: two writers selecting the same blob would both measure it, both see their
-            // delete succeed - File.Delete does not fail on a file that is already gone - and both
-            // credit its bytes back, leaving the total below what is actually on disk.
-            lock (_evictLock)
-            {
-                // Inside the lock: computed outside, another writer could take the room this
-                // measured, leaving the eviction below paid for and the write still refused.
-                var shortfall = Interlocked.Read(ref _currentSizeBytes) + buffer.Length - _maxSizeBytes;
-                var candidates = SelectOldest(MaxBlobsToEvict);
-
-                long evictable = 0;
-                for (int i = 0; i < candidates.Count; i++)
+                if (TryReserve(buffer.Length))
                 {
-                    evictable += FileLength(candidates[i].Path);
+                    return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
                 }
 
-                // Deleting everything on offer would still leave the write refused, so delete nothing.
-                if (evictable < shortfall)
-                {
-                    return false;
-                }
+                var reserved = false;
 
-                for (int i = 0; i < candidates.Count && !reserved; i++)
+                // Serialized: two writers selecting the same blob would both measure it, both see their
+                // delete succeed - File.Delete does not fail on a file that is already gone - and both
+                // credit its bytes back, leaving the total below what is actually on disk.
+                lock (_evictLock)
                 {
-                    // Checked before each delete, not after: room may have appeared while this writer
-                    // waited for the lock, and evicting first would spend a blob to discover that.
-                    reserved = TryReserve(buffer.Length);
+                    // Inside the lock: computed outside, another writer could take the room this
+                    // measured, leaving the eviction below paid for and the write still refused.
+                    var shortfall = Interlocked.Read(ref _currentSizeBytes) + buffer.Length - _maxSizeBytes;
+                    var candidates = SelectOldest(MaxBlobsToEvict);
 
-                    if (!reserved)
+                    long evictable = 0;
+                    for (int i = 0; i < candidates.Count; i++)
                     {
-                        TryEvict(candidates[i], requestingEndpoint);
+                        evictable += FileLength(candidates[i].Path);
+                    }
+
+                    // Deleting everything on offer would still leave the write refused, so delete nothing.
+                    if (evictable < shortfall)
+                    {
+                        return false;
+                    }
+
+                    for (int i = 0; i < candidates.Count && !reserved; i++)
+                    {
+                        // Checked before each delete, not after: room may have appeared while this writer
+                        // waited for the lock, and evicting first would spend a blob to discover that.
                         reserved = TryReserve(buffer.Length);
+
+                        if (!reserved)
+                        {
+                            TryEvict(candidates[i], requestingEndpoint);
+                            reserved = TryReserve(buffer.Length);
+                        }
                     }
                 }
-            }
 
-            // Outside the lock: the write is the slow part, and holding it here would serialize
-            // every partition's failure path behind one disk write.
-            return reserved && TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+                // Outside the eviction lock: the write is the slow part, and holding it here would
+                // serialize every partition's failure path behind one disk write.
+                return reserved && TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+            }
+            finally
+            {
+                _budgetLock.ExitReadLock();
+            }
         }
 
         /// <summary>
@@ -213,19 +233,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
             }
         }
 
-        private bool TryCreateBlob(FileBlobProvider inner, byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob? blob)
+        private bool TryCreateBlob(PersistentBlobProvider inner, byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob? blob)
         {
-            var created = leasePeriodMilliseconds > 0
-                ? inner.TryCreateBlob(new ReadOnlySpan<byte>(buffer), leasePeriodMilliseconds, out blob)
-                : inner.TryCreateBlob(new ReadOnlySpan<byte>(buffer), out blob);
-
-            if (!created)
+            var created = false;
+            try
             {
-                // Give the reservation back; nothing was written.
-                Interlocked.Add(ref _currentSizeBytes, -buffer.Length);
-            }
+                created = leasePeriodMilliseconds > 0
+                    ? inner.TryCreateBlob(new ReadOnlySpan<byte>(buffer), leasePeriodMilliseconds, out blob)
+                    : inner.TryCreateBlob(new ReadOnlySpan<byte>(buffer), out blob);
 
-            return created;
+                return created;
+            }
+            finally
+            {
+                if (!created)
+                {
+                    // Give the reservation back; nothing was written.
+                    Interlocked.Add(ref _currentSizeBytes, -buffer.Length);
+                }
+            }
         }
 
         /// <summary>
@@ -253,15 +279,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                 return;
             }
 
-            if (TryCalculateRootSize(out var size))
+            _budgetLock.EnterWriteLock();
+            try
             {
-                // Sampled after the walk, not before: a write that landed while the walk was running
-                // has already added itself to the total, and the walk may have counted it as well.
-                // Correcting against the later sample errs towards a brief overshoot rather than
-                // towards evicting telemetry that is still wanted.
-                var current = Interlocked.Read(ref _currentSizeBytes);
-
-                Interlocked.Add(ref _currentSizeBytes, size - current);
+                if (TryCalculateRootSize(out var size))
+                {
+                    Interlocked.Exchange(ref _currentSizeBytes, size);
+                }
+            }
+            finally
+            {
+                _budgetLock.ExitWriteLock();
             }
         }
 
