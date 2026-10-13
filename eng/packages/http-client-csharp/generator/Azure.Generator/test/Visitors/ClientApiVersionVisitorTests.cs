@@ -57,12 +57,10 @@ namespace Azure.Generator.Tests.Visitors
             var library = AzureClientGenerator.Instance.OutputLibrary;
             var provider = library.TypeProviders.OfType<ClientProvider>().Single(c => c.Name == "TestClient");
             var factory = provider.Methods.Single(m => m.Signature.Name == "GetChildClient");
-            var originalBody = factory.BodyStatements!.ToDisplayString();
 
             visitor.InvokeVisitLibrary(library);
 
-            Assert.AreEqual(originalBody, factory.BodyStatements!.ToDisplayString());
-            StringAssert.Contains("_apiVersion", originalBody);
+            Assert.AreEqual(Helpers.GetExpectedFromFile(isApiVersion.ToString()), factory.BodyStatements!.ToDisplayString());
         }
 
         private class TestClientApiVersionVisitor : ClientApiVersionVisitor
