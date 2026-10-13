@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Quota.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResourceUsageList(value, nextLink, additionalBinaryDataProperties);
+            return new ResourceUsageList(value ?? new ChangeTrackingList<GroupQuotaResourceUsages>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

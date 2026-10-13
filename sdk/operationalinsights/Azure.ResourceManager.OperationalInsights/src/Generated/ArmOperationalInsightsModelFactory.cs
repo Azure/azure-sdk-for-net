@@ -1201,7 +1201,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 startTime,
                 endTime,
                 status,
-                error is null ? default : new ErrorResponse(error, default),
+                error is null ? default : new ErrorResult(error, default),
                 default);
         }
 

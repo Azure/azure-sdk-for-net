@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AkriConnectorResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AkriConnectorResourceListResult(value ?? new ChangeTrackingList<IotOperationsAkriConnectorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

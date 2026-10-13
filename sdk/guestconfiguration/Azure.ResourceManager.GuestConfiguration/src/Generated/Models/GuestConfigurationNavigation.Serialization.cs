@@ -109,15 +109,29 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("assignmentType"u8);
                 writer.WriteStringValue(AssignmentType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AssignmentSource))
+            if (options.Format != "W" && (_assignmentSourceIsDefined || Optional.IsDefined(AssignmentSource)))
             {
-                writer.WritePropertyName("assignmentSource"u8);
-                writer.WriteStringValue(AssignmentSource);
+                if (AssignmentSource != null)
+                {
+                    writer.WritePropertyName("assignmentSource"u8);
+                    writer.WriteStringValue(AssignmentSource);
+                }
+                else
+                {
+                    writer.WriteNull("assignmentSource"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(ContentType))
+            if (options.Format != "W" && (_contentTypeIsDefined || Optional.IsDefined(ContentType)))
             {
-                writer.WritePropertyName("contentType"u8);
-                writer.WriteStringValue(ContentType);
+                if (ContentType != null)
+                {
+                    writer.WritePropertyName("contentType"u8);
+                    writer.WriteStringValue(ContentType);
+                }
+                else
+                {
+                    writer.WriteNull("contentType"u8);
+                }
             }
             if (Optional.IsCollectionDefined(ConfigurationParameters))
             {
@@ -193,7 +207,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             string contentHash = default;
             string contentManagedIdentity = default;
             GuestConfigurationAssignmentType? assignmentType = default;
+            bool assignmentSourceIsDefined = false;
             string assignmentSource = default;
+            bool contentTypeIsDefined = false;
             string contentType = default;
             IList<GuestConfigurationParameter> configurationParameters = default;
             IList<GuestConfigurationParameter> configurationProtectedParameters = default;
@@ -250,6 +266,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (prop.NameEquals("assignmentSource"u8))
                 {
+                    assignmentSourceIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         assignmentSource = null;
@@ -260,6 +277,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (prop.NameEquals("contentType"u8))
                 {
+                    contentTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         contentType = null;
@@ -323,7 +341,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 configurationParameters ?? new ChangeTrackingList<GuestConfigurationParameter>(),
                 configurationProtectedParameters ?? new ChangeTrackingList<GuestConfigurationParameter>(),
                 configurationSetting,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _assignmentSourceIsDefined = assignmentSourceIsDefined,
+                _contentTypeIsDefined = contentTypeIsDefined
+            };
         }
     }
 }

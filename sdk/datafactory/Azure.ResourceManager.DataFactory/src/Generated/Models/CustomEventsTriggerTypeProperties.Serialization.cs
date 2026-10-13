@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CustomEventsTriggerTypeProperties(subjectBeginsWith, subjectEndsWith, events, scope, additionalBinaryDataProperties);
+            return new CustomEventsTriggerTypeProperties(subjectBeginsWith, subjectEndsWith, events ?? new ChangeTrackingList<BinaryData>(), scope, additionalBinaryDataProperties);
         }
     }
 }

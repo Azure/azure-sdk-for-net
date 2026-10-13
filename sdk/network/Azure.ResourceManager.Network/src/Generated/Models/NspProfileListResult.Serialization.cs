@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NspProfileListResult(value, nextLink, additionalBinaryDataProperties);
+            return new NspProfileListResult(value ?? new ChangeTrackingList<NetworkSecurityPerimeterProfileData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

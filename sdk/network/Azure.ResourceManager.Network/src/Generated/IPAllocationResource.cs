@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
     public partial class IPAllocationResource : ArmResource
     {
         private readonly ClientDiagnostics _ipAllocationsClientDiagnostics;
-        private readonly IpAllocations _ipAllocationsRestClient;
+        private readonly IPAllocations _ipAllocationsRestClient;
         private readonly IPAllocationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/IpAllocations";
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string ipAllocationApiVersion);
             _ipAllocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _ipAllocationsRestClient = new IpAllocations(_ipAllocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ipAllocationApiVersion ?? "2026-01-01");
+            _ipAllocationsRestClient = new IPAllocations(_ipAllocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ipAllocationApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

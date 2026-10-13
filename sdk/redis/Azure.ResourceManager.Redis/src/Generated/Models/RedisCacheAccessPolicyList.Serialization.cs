@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Redis.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RedisCacheAccessPolicyList(value, nextLink, additionalBinaryDataProperties);
+            return new RedisCacheAccessPolicyList(value ?? new ChangeTrackingList<RedisCacheAccessPolicyData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

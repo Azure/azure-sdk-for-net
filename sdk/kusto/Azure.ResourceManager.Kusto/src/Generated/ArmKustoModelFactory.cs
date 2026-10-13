@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                DataConnectionKind.CosmosDb,
+                DataConnectionKind.CosmosDB,
                 default,
                 tableName is null && mappingRuleName is null && managedIdentityResourceId is null && managedIdentityObjectId is null && cosmosDBAccountResourceId is null && cosmosDBDatabase is null && cosmosDBContainer is null && retrievalStartOn is null && provisioningState is null ? default : new CosmosDBDataConnectionProperties(
                     tableName,

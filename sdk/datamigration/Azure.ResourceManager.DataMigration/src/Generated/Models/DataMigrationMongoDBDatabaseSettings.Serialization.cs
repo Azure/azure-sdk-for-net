@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataMigrationMongoDBDatabaseSettings(collections, targetRUs, additionalBinaryDataProperties);
+            return new DataMigrationMongoDBDatabaseSettings(collections ?? new ChangeTrackingDictionary<string, DataMigrationMongoDBCollectionSettings>(), targetRUs, additionalBinaryDataProperties);
         }
     }
 }

@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 ruleType,
                 sourceResourceType,
                 excludedScopes ?? new ChangeTrackingList<string>(),
-                conditionSets,
+                conditionSets ?? new ChangeTrackingList<BinaryData>(),
                 isIncludeMemberScopes,
                 ownerSource,
                 governanceEmailNotification,

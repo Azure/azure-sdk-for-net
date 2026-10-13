@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LoadBalancerBackendAddressPoolListResult(value, nextLink, additionalBinaryDataProperties);
+            return new LoadBalancerBackendAddressPoolListResult(value ?? new ChangeTrackingList<BackendAddressPoolData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> The pages of BillingRoleAssignmentData0CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<BillingRoleAssignmentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
