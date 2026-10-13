@@ -375,18 +375,18 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <summary> Declared contract for a validation test input parameter. </summary>
         /// <param name="description"> Description of the declared input parameter. </param>
         /// <param name="type"> The data type expected for this input parameter. </param>
-        /// <param name="required"> Whether this input parameter is required. </param>
+        /// <param name="isRequired"> Whether this input parameter is required. </param>
         /// <param name="defaultValue"> Optional default value to use when input is not provided. </param>
         /// <param name="allowedValues"> Allowed values for this input parameter. </param>
         /// <returns> A new <see cref="Models.ValidationTestInputDefinition"/> instance for mocking. </returns>
-        public static ValidationTestInputDefinition ValidationTestInputDefinition(string description = default, ValidationTestInputDataType? @type = default, bool? @required = default, string defaultValue = default, IEnumerable<string> allowedValues = default)
+        public static ValidationTestInputDefinition ValidationTestInputDefinition(string description = default, ValidationTestInputDataType? @type = default, bool? isRequired = default, string defaultValue = default, IEnumerable<string> allowedValues = default)
         {
             allowedValues ??= new ChangeTrackingList<string>();
 
             return new ValidationTestInputDefinition(
                 description,
                 @type,
-                @required,
+                isRequired,
                 defaultValue,
                 (allowedValues ?? new ChangeTrackingList<string>()).ToList(),
                 default);

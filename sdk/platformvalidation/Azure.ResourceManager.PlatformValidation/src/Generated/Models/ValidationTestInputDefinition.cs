@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <summary> Initializes a new instance of <see cref="ValidationTestInputDefinition"/>. </summary>
         /// <param name="description"> Description of the declared input parameter. </param>
         /// <param name="type"> The data type expected for this input parameter. </param>
-        /// <param name="required"> Whether this input parameter is required. </param>
+        /// <param name="isRequired"> Whether this input parameter is required. </param>
         /// <param name="defaultValue"> Optional default value to use when input is not provided. </param>
         /// <param name="allowedValues"> Allowed values for this input parameter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidationTestInputDefinition(string description, ValidationTestInputDataType? @type, bool? @required, string defaultValue, IList<string> allowedValues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidationTestInputDefinition(string description, ValidationTestInputDataType? @type, bool? isRequired, string defaultValue, IList<string> allowedValues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Type = @type;
-            Required = @required;
+            IsRequired = isRequired;
             DefaultValue = defaultValue;
             AllowedValues = allowedValues;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         public ValidationTestInputDataType? Type { get; }
 
         /// <summary> Whether this input parameter is required. </summary>
-        public bool? Required { get; }
+        public bool? IsRequired { get; }
 
         /// <summary> Optional default value to use when input is not provided. </summary>
         public string DefaultValue { get; }

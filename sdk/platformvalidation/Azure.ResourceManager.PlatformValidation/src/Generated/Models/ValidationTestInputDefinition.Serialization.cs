@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsDefined(Required))
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required"u8);
-                writer.WriteBooleanValue(Required.Value);
+                writer.WriteBooleanValue(IsRequired.Value);
             }
             if (Optional.IsDefined(DefaultValue))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             }
             string description = default;
             ValidationTestInputDataType? @type = default;
-            bool? @required = default;
+            bool? isRequired = default;
             string defaultValue = default;
             IList<string> allowedValues = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                     {
                         continue;
                     }
-                    @required = prop.Value.GetBoolean();
+                    isRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("defaultValue"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             return new ValidationTestInputDefinition(
                 description,
                 @type,
-                @required,
+                isRequired,
                 defaultValue,
                 allowedValues ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
