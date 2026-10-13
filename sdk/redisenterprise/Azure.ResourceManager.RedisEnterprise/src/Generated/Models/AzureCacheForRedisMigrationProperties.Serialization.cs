@@ -125,6 +125,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             string statusDetails = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
+            DateTimeOffset? rollbackEligibleUntil = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier sourceResourceId = default;
             bool isSwitchDns = default;
@@ -157,6 +158,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (prop.NameEquals("statusDetails"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        statusDetails = null;
+                        continue;
+                    }
                     statusDetails = prop.Value.GetString();
                     continue;
                 }
@@ -176,6 +182,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         continue;
                     }
                     lastModifiedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("rollbackEligibleUntil"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rollbackEligibleUntil = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sourceResourceId"u8))
@@ -214,6 +229,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 statusDetails,
                 createdOn,
                 lastModifiedOn,
+                rollbackEligibleUntil,
                 additionalBinaryDataProperties,
                 sourceResourceId,
                 isSwitchDns,
