@@ -1,5 +1,5 @@
 directory: specification/apimanagement/resource-manager/Microsoft.ApiManagement/AIGateway
-commit: 2335fe5db98171e7a78d08e712920b1869c536ce
+commit: ac7c51b32205afe231bdb539db0c3550172ea639
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
