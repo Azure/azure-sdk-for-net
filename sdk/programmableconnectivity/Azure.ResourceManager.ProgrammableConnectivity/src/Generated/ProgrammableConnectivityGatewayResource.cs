@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ProgrammableConnectivityGatewayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string programmableConnectivityGatewayApiVersion);
             _gatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProgrammableConnectivity", ResourceType.Namespace, Diagnostics);
-            _gatewaysRestClient = new Gateways(_gatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, programmableConnectivityGatewayApiVersion ?? "2025-03-30-preview");
+            _gatewaysRestClient = new Gateways(_gatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ProgrammableConnectivity/gateways", out string gatewaysApiVersionOverride) ? gatewaysApiVersionOverride : "2025-03-30-preview");
             ValidateResourceId(id);
         }
 
