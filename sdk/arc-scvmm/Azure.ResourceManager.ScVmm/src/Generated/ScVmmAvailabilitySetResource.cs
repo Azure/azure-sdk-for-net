@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScVmmAvailabilitySetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string scVmmAvailabilitySetApiVersion);
             _availabilitySetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ScVmm", ResourceType.Namespace, Diagnostics);
-            _availabilitySetsRestClient = new AvailabilitySets(_availabilitySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scVmmAvailabilitySetApiVersion ?? "2025-03-13");
+            _availabilitySetsRestClient = new AvailabilitySets(_availabilitySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ScVmm/availabilitySets", out string availabilitySetsApiVersionOverride) ? availabilitySetsApiVersionOverride : "2025-03-13");
             ValidateResourceId(id);
         }
 

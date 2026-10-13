@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BatchAccountDetectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string batchAccountDetectorApiVersion);
             _batchAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", ResourceType.Namespace, Diagnostics);
-            _batchAccountRestClient = new BatchAccount(_batchAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchAccountDetectorApiVersion ?? "2025-06-01");
+            _batchAccountRestClient = new BatchAccount(_batchAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
