@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Granular approval setting configuration with policy, minimum approvers, and mandatory approvers. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApprovalSettingConfiguration : ProvisionableConstruct
     {
         private BicepValue<VirtualEnclaveApprovalPolicy> _approvalPolicy;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ApprovalPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveApprovalPolicy> ApprovalPolicy
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the MinimumApproversRequired. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MinimumApproversRequired
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the MandatoryApprovers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<VirtualEnclaveMandatoryApprover> MandatoryApprovers
         {
             get

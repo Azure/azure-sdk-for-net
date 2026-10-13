@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> SocketIO settings for the resource. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class WebPubSubSocketIOSettings : ProvisionableConstruct
     {
         private BicepValue<string> _serviceMode;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the ServiceMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ServiceMode
         {
             get

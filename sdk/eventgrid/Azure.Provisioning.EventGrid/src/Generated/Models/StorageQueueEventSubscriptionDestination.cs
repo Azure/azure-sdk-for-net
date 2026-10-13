@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Information about the storage queue destination for an event subscription. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class StorageQueueEventSubscriptionDestination : EventSubscriptionDestination
     {
         private StorageQueueEventSubscriptionDestinationProperties _properties;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         internal StorageQueueEventSubscriptionDestinationProperties Properties
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ResourceId
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the QueueName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> QueueName
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the QueueMessageTimeToLiveInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> QueueMessageTimeToLiveInSeconds
         {
             get

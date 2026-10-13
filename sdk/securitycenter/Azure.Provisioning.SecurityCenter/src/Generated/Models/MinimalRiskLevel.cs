@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Defines the minimal attack path risk level which will be sent as email notifications. </summary>
+    [Experimental("AZPROVISION001")]
     public enum MinimalRiskLevel
     {
         /// <summary> Get notifications on new attack paths with Critical risk level. </summary>

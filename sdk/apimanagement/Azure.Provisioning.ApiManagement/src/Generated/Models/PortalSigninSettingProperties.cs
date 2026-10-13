@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Sign-in settings contract properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PortalSigninSettingProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isRedirectEnabled;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsRedirectEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsRedirectEnabled
         {
             get

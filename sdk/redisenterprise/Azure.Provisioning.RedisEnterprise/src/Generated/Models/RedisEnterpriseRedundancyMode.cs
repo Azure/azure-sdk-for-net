@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Explains the current redundancy strategy of the cluster, which affects the expected SLA. </summary>
+    [Experimental("AZPROVISION001")]
     public enum RedisEnterpriseRedundancyMode
     {
         /// <summary> No redundancy. Availability loss will occur. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Filters configuration for the Event Subscription. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class FiltersConfiguration : ProvisionableConstruct
     {
         private BicepList<string> _includedEventTypes;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the IncludedEventTypes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> IncludedEventTypes
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Filters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EventGridFilter> Filters
         {
             get

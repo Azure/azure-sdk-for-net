@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Specifies the destination of where to store diagnostic logs. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualEnclaveDiagnosticDestination
     {
         /// <summary> DiagnosticDestination Type CommunityOnly. </summary>

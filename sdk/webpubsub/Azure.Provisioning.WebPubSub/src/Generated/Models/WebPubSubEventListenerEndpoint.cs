@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.WebPubSub
     /// An endpoint specifying where Web PubSub should send events to.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="WebPubSubEventHubEndpoint"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubEventListenerEndpoint : ProvisionableConstruct
     {
         private BicepValue<EventListenerEndpointDiscriminator> _type;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<EventListenerEndpointDiscriminator> Type
         {
             get

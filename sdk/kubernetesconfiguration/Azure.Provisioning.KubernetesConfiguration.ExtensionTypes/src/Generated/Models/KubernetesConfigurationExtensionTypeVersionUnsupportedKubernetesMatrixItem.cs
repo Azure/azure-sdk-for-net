@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary> The list of Kubernetes Distribution and Versions that are not supported by this version of this Extension Type. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem : ProvisionableConstruct
     {
         private BicepList<string> _distributions;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the Distributions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Distributions
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the UnsupportedVersions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> UnsupportedVersions
         {
             get

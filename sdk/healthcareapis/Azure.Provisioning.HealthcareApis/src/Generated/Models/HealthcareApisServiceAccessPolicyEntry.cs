@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> An access policy entry. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HealthcareApisServiceAccessPolicyEntry : ProvisionableConstruct
     {
         private BicepValue<string> _objectId;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ObjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ObjectId
         {
             get

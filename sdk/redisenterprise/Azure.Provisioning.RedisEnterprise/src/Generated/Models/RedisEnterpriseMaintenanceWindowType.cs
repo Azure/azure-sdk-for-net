@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Maintenance window type. </summary>
+    [Experimental("AZPROVISION001")]
     public enum RedisEnterpriseMaintenanceWindowType
     {
         /// <summary> Weekly maintenance window. </summary>

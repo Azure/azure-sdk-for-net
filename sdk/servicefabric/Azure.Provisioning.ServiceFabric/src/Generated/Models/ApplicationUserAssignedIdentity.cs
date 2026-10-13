@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes a user assigned identity for the application. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApplicationUserAssignedIdentity : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the PrincipalId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> PrincipalId
         {
             get

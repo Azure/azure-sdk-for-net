@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -205,6 +206,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets the CurrentSku. </summary>
+        [Experimental("AZPROVISION001")]
         public SqlSku CurrentSku
         {
             get

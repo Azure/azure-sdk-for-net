@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Portal Revision's contract details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementPortalRevision : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -97,6 +98,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -114,6 +116,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the StatusDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> StatusDetails
         {
             get
@@ -127,6 +130,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PortalRevisionStatus> Status
         {
             get
@@ -140,6 +144,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsCurrent. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsCurrent
         {
             get
@@ -157,6 +162,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -170,6 +176,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the UpdatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> UpdatedOn
         {
             get
@@ -183,6 +190,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get

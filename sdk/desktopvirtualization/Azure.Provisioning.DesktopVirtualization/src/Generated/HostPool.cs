@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Represents a HostPool definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HostPool : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -134,6 +135,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -204,6 +206,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ObjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ObjectId
         {
             get
@@ -217,6 +220,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the FriendlyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FriendlyName
         {
             get
@@ -234,6 +238,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -251,6 +256,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the HostPoolType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HostPoolType> HostPoolType
         {
             get
@@ -268,6 +274,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PersonalDesktopAssignmentType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PersonalDesktopAssignmentType> PersonalDesktopAssignmentType
         {
             get
@@ -285,6 +292,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the CustomRdpProperty. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CustomRdpProperty
         {
             get
@@ -302,6 +310,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the MaxSessionLimit. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxSessionLimit
         {
             get
@@ -319,6 +328,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the LoadBalancerType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HostPoolLoadBalancerType> LoadBalancerType
         {
             get
@@ -336,6 +346,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Ring. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Ring
         {
             get
@@ -353,6 +364,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the IsValidationEnvironment. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsValidationEnvironment
         {
             get
@@ -370,6 +382,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RegistrationInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public HostPoolRegistrationInfo RegistrationInfo
         {
             get
@@ -387,6 +400,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the VmTemplate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> VmTemplate
         {
             get
@@ -404,6 +418,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ApplicationGroupReferences. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ApplicationGroupReferences
         {
             get
@@ -417,6 +432,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the AppAttachPackageReferences. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AppAttachPackageReferences
         {
             get
@@ -430,6 +446,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the SsoAdfsAuthority. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SsoAdfsAuthority
         {
             get
@@ -447,6 +464,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the SsoClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SsoClientId
         {
             get
@@ -464,6 +482,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the SsoClientSecretKeyVaultPath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SsoClientSecretKeyVaultPath
         {
             get
@@ -481,6 +500,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the SsoSecretType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HostPoolSsoSecretType> SsoSecretType
         {
             get
@@ -498,6 +518,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PreferredAppGroupType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PreferredAppGroupType> PreferredAppGroupType
         {
             get
@@ -515,6 +536,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the StartVmOnConnect. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> StartVmOnConnect
         {
             get
@@ -532,6 +554,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the IsCloudPCResource. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsCloudPCResource
         {
             get
@@ -545,6 +568,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HostPoolPublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -562,6 +586,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the AgentUpdate. </summary>
+        [Experimental("AZPROVISION001")]
         public SessionHostAgentUpdateProperties AgentUpdate
         {
             get
@@ -579,6 +604,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DesktopVirtualizationPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
@@ -592,6 +618,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ManagedPrivateUdp. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationManagedPrivateUdp> ManagedPrivateUdp
         {
             get
@@ -609,6 +636,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the DirectUdp. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationDirectUdp> DirectUdp
         {
             get
@@ -626,6 +654,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PublicUdp. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationPublicUdp> PublicUdp
         {
             get
@@ -643,6 +672,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RelayUdp. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationRelayUdp> RelayUdp
         {
             get
@@ -660,6 +690,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ManagementType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationManagementType> ManagementType
         {
             get
@@ -677,6 +708,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the DeploymentScope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationDeploymentScope> DeploymentScope
         {
             get
@@ -694,6 +726,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the OboTenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OboTenantId
         {
             get
@@ -711,6 +744,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the AllowRdpShortPathWithPrivateLink. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationAllowRdpShortPathWithPrivateLink> AllowRdpShortPathWithPrivateLink
         {
             get
@@ -728,6 +762,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ConditionalRdpProperty. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ConditionalRdpProperty
         {
             get

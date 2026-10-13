@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Backend pool information. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class BackendPool : ProvisionableConstruct
     {
         private BicepList<BackendPoolItem> _poolServices;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the PoolServices. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<BackendPoolItem> PoolServices
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the FailureResponse. </summary>
+        [Experimental("AZPROVISION001")]
         internal BackendFailureResponse FailureResponse
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SessionAffinity. </summary>
+        [Experimental("AZPROVISION001")]
         internal BackendSessionAffinity SessionAffinity
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the StatusCode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> FailureResponseStatusCode
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SessionId. </summary>
+        [Experimental("AZPROVISION001")]
         public BackendSessionId SessionId
         {
             get

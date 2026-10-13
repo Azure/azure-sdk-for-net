@@ -17,6 +17,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> IoT Connector definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HealthcareApisIotConnector : ProvisionableResource
     {
         private BicepValue<string> _id;
@@ -117,6 +118,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -132,6 +134,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public ManagedServiceIdentity Identity
         {
             get
@@ -162,6 +165,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HealthcareApisProvisioningState> ProvisioningState
         {
             get
@@ -175,6 +179,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the IngestionEndpointConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public HealthcareApisIotConnectorEventHubIngestionConfiguration IngestionEndpointConfiguration
         {
             get
@@ -192,6 +197,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Content. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> DeviceMappingContent
         {
             get

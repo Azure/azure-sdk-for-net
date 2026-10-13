@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> A resource set describing existing GCP logging resources. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GcpLoggingResourceSet : ProvisionableConstruct
     {
         private BicepValue<string> _pubSubSubscriptionName;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the PubSubSubscriptionName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PubSubSubscriptionName
         {
             get

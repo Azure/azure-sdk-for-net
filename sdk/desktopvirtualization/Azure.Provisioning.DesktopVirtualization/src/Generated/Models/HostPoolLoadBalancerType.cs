@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The type of the load balancer. </summary>
+    [Experimental("AZPROVISION001")]
     public enum HostPoolLoadBalancerType
     {
         /// <summary> Uses BreadthFirst algorithm for load balancing. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Body logging settings. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class BodyDiagnosticSettings : ProvisionableConstruct
     {
         private BicepValue<int> _bytes;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Bytes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Bytes
         {
             get

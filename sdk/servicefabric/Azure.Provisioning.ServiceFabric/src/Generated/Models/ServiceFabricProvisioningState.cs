@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The provisioning state of the cluster resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ServiceFabricProvisioningState
     {
         /// <summary> Cluster is updating. </summary>

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The allowed permission. </summary>
+    [Experimental("AZPROVISION001")]
     public enum PermissionType
     {
         /// <summary> Publisher. </summary>

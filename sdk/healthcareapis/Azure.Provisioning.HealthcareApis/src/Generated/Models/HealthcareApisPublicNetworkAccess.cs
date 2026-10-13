@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+    [Experimental("AZPROVISION001")]
     public enum HealthcareApisPublicNetworkAccess
     {
         /// <summary> Enabled. </summary>

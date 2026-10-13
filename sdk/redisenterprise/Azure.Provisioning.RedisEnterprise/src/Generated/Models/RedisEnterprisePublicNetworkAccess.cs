@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </summary>
+    [Experimental("AZPROVISION001")]
     public enum RedisEnterprisePublicNetworkAccess
     {
         /// <summary> Enabled. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> An API Version Set contains the common configuration for a set of API Versions relating. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiVersionSetContractDetails : ProvisionableConstruct
     {
         private BicepValue<string> _id;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the VersioningScheme. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VersioningScheme> VersioningScheme
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the VersionQueryName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> VersionQueryName
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the VersionHeaderName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> VersionHeaderName
         {
             get

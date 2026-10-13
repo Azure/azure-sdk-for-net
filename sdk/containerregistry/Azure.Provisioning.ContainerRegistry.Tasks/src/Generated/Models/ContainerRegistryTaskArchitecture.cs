@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The OS architecture. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ContainerRegistryTaskArchitecture
     {
         /// <summary> Amd64. </summary>

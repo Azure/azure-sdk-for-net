@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Properties of Network Security Perimeter configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class NetworkSecurityPerimeterConfigurationProperties : ProvisionableConstruct
     {
         private BicepValue<BotServiceProvisioningState> _provisioningState;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BotServiceProvisioningState> ProvisioningState
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the ProvisioningIssues. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ProvisioningIssue> ProvisioningIssues
         {
             get
@@ -45,6 +49,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the NetworkSecurityPerimeter. </summary>
+        [Experimental("AZPROVISION001")]
         public NetworkSecurityPerimeter NetworkSecurityPerimeter
         {
             get
@@ -55,6 +60,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the ResourceAssociation. </summary>
+        [Experimental("AZPROVISION001")]
         public BotServiceResourceAssociation ResourceAssociation
         {
             get
@@ -65,6 +71,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the Profile. </summary>
+        [Experimental("AZPROVISION001")]
         public BotServiceNetworkSecurityPerimeterProfile Profile
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> TransitOption Properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveTransitOptionProperties : ProvisionableConstruct
     {
         private BicepValue<VirtualEnclaveTransitOptionType> _type;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveTransitOptionType> Type
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Params. </summary>
+        [Experimental("AZPROVISION001")]
         public VirtualEnclaveTransitOptionContent Params
         {
             get

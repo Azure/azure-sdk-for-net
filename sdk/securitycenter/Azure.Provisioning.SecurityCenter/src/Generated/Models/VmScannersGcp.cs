@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> A VM scanning configuration for a security offering of a GCP environment. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VmScannersGcp : VmScannersBase
     {
         /// <summary> Creates a new VmScannersGcp. </summary>

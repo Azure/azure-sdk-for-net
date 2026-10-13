@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Throttle the client traffic by a custom JWT claim. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRTrafficThrottleByJwtCustomClaimRule : SignalRClientTrafficControlRule
     {
         private BicepValue<string> _claimName;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the ClaimName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClaimName
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the MaxInboundMessageBytes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MaxInboundMessageBytes
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the AggregationWindowInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> AggregationWindowInSeconds
         {
             get

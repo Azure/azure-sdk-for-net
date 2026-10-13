@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Azure DevOps Repository properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AzureDevOpsRepositoryProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningStatusMessage;
@@ -31,6 +33,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ProvisioningStatusMessage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningStatusMessage
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ProvisioningStatusUpdatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ProvisioningStatusUpdatedOn
         {
             get
@@ -51,6 +55,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DevOpsProvisioningState> ProvisioningState
         {
             get
@@ -61,6 +66,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ParentOrgName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ParentOrgName
         {
             get
@@ -76,6 +82,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ParentProjectName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ParentProjectName
         {
             get
@@ -91,6 +98,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the RepoId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RepoId
         {
             get
@@ -101,6 +109,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the RepoUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RepoUri
         {
             get
@@ -111,6 +120,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Visibility. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Visibility
         {
             get
@@ -121,6 +131,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the OnboardingState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<OnboardingState> OnboardingState
         {
             get
@@ -136,6 +147,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ActionableRemediation. </summary>
+        [Experimental("AZPROVISION001")]
         public ActionableRemediation ActionableRemediation
         {
             get

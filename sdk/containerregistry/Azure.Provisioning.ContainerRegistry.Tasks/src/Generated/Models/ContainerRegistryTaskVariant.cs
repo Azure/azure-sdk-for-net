@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> Variant of the CPU. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ContainerRegistryTaskVariant
     {
         /// <summary> V6. </summary>

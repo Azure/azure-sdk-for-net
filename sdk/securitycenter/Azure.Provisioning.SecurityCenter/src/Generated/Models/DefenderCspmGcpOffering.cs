@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The CSPM P1 for GCP offering. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderCspmGcpOffering : SecurityCenterCloudOffering
     {
         private DefenderCspmGcpOfferingCiemDiscovery _ciemDiscovery;
@@ -24,6 +27,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CiemDiscovery. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderCspmGcpOfferingCiemDiscovery CiemDiscovery
         {
             get
@@ -39,6 +43,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Ciem. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderCspmGcpOfferingCiem Ciem
         {
             get
@@ -54,6 +59,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the VmScanners. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderCspmGcpOfferingVmScanners VmScanners
         {
             get
@@ -69,6 +75,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DataSensitivityDiscovery. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderCspmGcpOfferingDataSensitivityDiscovery DataSensitivityDiscovery
         {
             get
@@ -84,6 +91,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the MdcContainersImageAssessment. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderCspmGcpOfferingMdcContainersImageAssessment MdcContainersImageAssessment
         {
             get
@@ -99,6 +107,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the MdcContainersAgentlessDiscoveryK8S. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S MdcContainersAgentlessDiscoveryK8S
         {
             get

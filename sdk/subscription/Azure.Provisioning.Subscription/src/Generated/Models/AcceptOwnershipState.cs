@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Subscription
 {
     /// <summary> The accept ownership state of the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AcceptOwnershipState
     {
         /// <summary> Pending. </summary>

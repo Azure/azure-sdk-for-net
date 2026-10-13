@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> A resource set describing existing AWS CloudTrail audit log resources. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AwsCloudTrailResourceSet : ProvisionableConstruct
     {
         private BicepValue<string> _resourceRegion;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ResourceRegion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceRegion
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the S3BucketArn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> S3BucketArn
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SqsQueueArn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SqsQueueArn
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the KmsKeyArn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> KmsKeyArn
         {
             get

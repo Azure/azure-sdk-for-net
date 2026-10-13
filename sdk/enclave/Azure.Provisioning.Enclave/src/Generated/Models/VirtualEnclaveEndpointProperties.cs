@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Enclave Endpoint Resource properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveEndpointProperties : ProvisionableConstruct
     {
         private BicepList<EnclaveEndpointDestinationRule> _ruleCollection;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the RuleCollection. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EnclaveEndpointDestinationRule> RuleCollection
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ResourceCollection. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ResourceIdentifier> ResourceCollection
         {
             get
@@ -50,6 +54,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveProvisioningState> ProvisioningState
         {
             get
@@ -60,6 +65,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the UpdateMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveUpdateMode> UpdateMode
         {
             get

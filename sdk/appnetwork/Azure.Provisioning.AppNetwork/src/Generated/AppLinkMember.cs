@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppNetwork
 {
     /// <summary> A member of an Azure Kubernetes Application Network resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppLinkMember : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Specifies the ephemeral disk settings for the operating system disk used by the virtual machine. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DesktopVirtualizationDiffDiskProperties : ProvisionableConstruct
     {
         private BicepValue<DesktopVirtualizationDiffDiskOption> _option;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Option. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationDiffDiskOption> Option
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Placement. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationDiffDiskPlacement> Placement
         {
             get

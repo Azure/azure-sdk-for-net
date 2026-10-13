@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Defines the minimal alert severity which will be sent as email notifications. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SecurityAlertMinimalSeverity
     {
         /// <summary> Get notifications on new alerts with High severity. </summary>

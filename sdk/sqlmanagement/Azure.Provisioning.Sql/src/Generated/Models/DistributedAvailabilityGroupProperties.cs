@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -168,6 +169,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the LinkMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<LinkModeType> LinkMode
         {
             get

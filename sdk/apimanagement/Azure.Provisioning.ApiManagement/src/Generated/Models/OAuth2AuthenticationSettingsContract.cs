@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> API OAuth2 Authentication settings details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class OAuth2AuthenticationSettingsContract : ProvisionableConstruct
     {
         private BicepValue<string> _authorizationServerId;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AuthorizationServerId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AuthorizationServerId
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Scope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Scope
         {
             get

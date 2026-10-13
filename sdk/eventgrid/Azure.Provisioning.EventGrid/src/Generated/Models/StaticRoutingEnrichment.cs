@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.EventGrid
     /// Static routing enrichment details.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="StaticStringRoutingEnrichment"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class StaticRoutingEnrichment : ProvisionableConstruct
     {
         private BicepValue<string> _key;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Key. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Key
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Static routing enrichment value type. For e.g. this property value can be 'String'. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<StaticRoutingEnrichmentType> ValueType
         {
             get

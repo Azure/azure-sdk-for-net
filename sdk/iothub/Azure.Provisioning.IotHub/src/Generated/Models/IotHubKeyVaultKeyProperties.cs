@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The properties of the KeyVault key. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubKeyVaultKeyProperties : ProvisionableConstruct
     {
         private BicepValue<string> _keyIdentifier;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the KeyIdentifier. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> KeyIdentifier
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         internal ManagedIdentity Identity
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the UserAssignedIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> UserAssignedIdentity
         {
             get

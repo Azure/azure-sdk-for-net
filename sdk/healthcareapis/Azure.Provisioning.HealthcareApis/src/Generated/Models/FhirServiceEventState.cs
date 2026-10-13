@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> Indicates the current status of event support for the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum FhirServiceEventState
     {
         /// <summary> Disabled. </summary>

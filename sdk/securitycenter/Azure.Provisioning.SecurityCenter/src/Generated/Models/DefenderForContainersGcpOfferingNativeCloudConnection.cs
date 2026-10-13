@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The native cloud connection configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderForContainersGcpOfferingNativeCloudConnection : ProvisionableConstruct
     {
         private BicepValue<string> _serviceAccountEmailAddress;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ServiceAccountEmailAddress. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ServiceAccountEmailAddress
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the WorkloadIdentityProviderId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> WorkloadIdentityProviderId
         {
             get

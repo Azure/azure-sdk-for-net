@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The type of placement policy for a service fabric service. Following are the possible values. </summary>
+    [Experimental("AZPROVISION001")]
     internal enum ServicePlacementPolicyType
     {
         /// <summary> Indicates the type of the placement policy is invalid. All Service Fabric enumerations have the invalid type. The value is zero. </summary>

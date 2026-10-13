@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The rule type of the governance rule, defines the source of the rule e.g. Integrated. </summary>
+    [Experimental("AZPROVISION001")]
     public enum GovernanceRuleType
     {
         /// <summary> The source of the rule type definition is integrated. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> Event Hub ingestion endpoint configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HealthcareApisIotConnectorEventHubIngestionConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _eventHubName;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the EventHubName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EventHubName
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ConsumerGroup. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ConsumerGroup
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the FullyQualifiedEventHubNamespace. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FullyQualifiedEventHubNamespace
         {
             get

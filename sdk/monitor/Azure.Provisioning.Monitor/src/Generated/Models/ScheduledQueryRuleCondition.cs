@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> A condition of the scheduled query rule. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ScheduledQueryRuleCondition : ProvisionableConstruct
     {
         private BicepValue<ScheduledQueryRuleCriterionType> _criterionType;
@@ -34,6 +36,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the CriterionType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ScheduledQueryRuleCriterionType> CriterionType
         {
             get
@@ -49,6 +52,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Query. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Query
         {
             get
@@ -64,6 +68,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the TimeAggregation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ScheduledQueryRuleTimeAggregationType> TimeAggregation
         {
             get
@@ -79,6 +84,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the MetricMeasureColumn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MetricMeasureColumn
         {
             get
@@ -94,6 +100,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ResourceIdColumn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceIdColumn
         {
             get
@@ -109,6 +116,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Dimensions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorDimension> Dimensions
         {
             get
@@ -124,6 +132,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Operator. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<MonitorConditionOperator> Operator
         {
             get
@@ -139,6 +148,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Threshold. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<double> Threshold
         {
             get
@@ -154,6 +164,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the AlertSensitivity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AlertSensitivity
         {
             get
@@ -169,6 +180,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the IgnoreDataBefore. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> IgnoreDataBefore
         {
             get
@@ -184,6 +196,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the FailingPeriods. </summary>
+        [Experimental("AZPROVISION001")]
         public ConditionFailingPeriods FailingPeriods
         {
             get
@@ -199,6 +212,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the MetricName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MetricName
         {
             get
@@ -214,6 +228,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the MinRecurrenceCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MinRecurrenceCount
         {
             get

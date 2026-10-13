@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> An Azure action group. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ActionGroupProperties : ProvisionableConstruct
     {
         private BicepValue<string> _groupShortName;
@@ -34,6 +36,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the GroupShortName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> GroupShortName
         {
             get
@@ -49,6 +52,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -64,6 +68,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the EmailReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorEmailReceiver> EmailReceivers
         {
             get
@@ -79,6 +84,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the SmsReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorSmsReceiver> SmsReceivers
         {
             get
@@ -94,6 +100,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the WebhookReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorWebhookReceiver> WebhookReceivers
         {
             get
@@ -109,6 +116,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ItsmReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorItsmReceiver> ItsmReceivers
         {
             get
@@ -124,6 +132,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the AzureAppPushReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorAzureAppPushReceiver> AzureAppPushReceivers
         {
             get
@@ -139,6 +148,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the AutomationRunbookReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorAutomationRunbookReceiver> AutomationRunbookReceivers
         {
             get
@@ -154,6 +164,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the VoiceReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorVoiceReceiver> VoiceReceivers
         {
             get
@@ -169,6 +180,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the LogicAppReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorLogicAppReceiver> LogicAppReceivers
         {
             get
@@ -184,6 +196,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the AzureFunctionReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorAzureFunctionReceiver> AzureFunctionReceivers
         {
             get
@@ -199,6 +212,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ArmRoleReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorArmRoleReceiver> ArmRoleReceivers
         {
             get
@@ -214,6 +228,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the EventHubReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorEventHubReceiver> EventHubReceivers
         {
             get
@@ -229,6 +244,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the IncidentReceivers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MonitorIncidentReceiver> IncidentReceivers
         {
             get

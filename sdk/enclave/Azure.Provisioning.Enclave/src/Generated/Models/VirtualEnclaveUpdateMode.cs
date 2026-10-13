@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Update Mode. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualEnclaveUpdateMode
     {
         /// <summary> UpdateMode Type Automatic. </summary>

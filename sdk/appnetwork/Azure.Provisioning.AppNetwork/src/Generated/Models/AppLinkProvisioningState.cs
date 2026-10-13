@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.AppNetwork
 {
     /// <summary> Provisioning state of the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AppLinkProvisioningState
     {
         /// <summary> Resource has been created. </summary>

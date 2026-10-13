@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Properties of the Certificate contract. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class CertificateContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _subject;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Subject. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Subject
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Thumbprint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Thumbprint
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ExpiresOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the KeyVaultDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public KeyVaultContractProperties KeyVaultDetails
         {
             get

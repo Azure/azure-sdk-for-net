@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The AWS connector environment data. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AwsEnvironment : SecurityConnectorEnvironment
     {
         private AwsOrganizationalInfo _organizationalData;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the OrganizationalData. </summary>
+        [Experimental("AZPROVISION001")]
         public AwsOrganizationalInfo OrganizationalData
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Regions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Regions
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the AccountName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AccountName
         {
             get
@@ -64,6 +69,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ScanInterval. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> ScanInterval
         {
             get

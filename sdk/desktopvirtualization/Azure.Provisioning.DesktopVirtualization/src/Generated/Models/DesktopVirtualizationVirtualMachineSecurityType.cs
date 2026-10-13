@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The security type used by virtual machine in hostpool session host. Default is Standard. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DesktopVirtualizationVirtualMachineSecurityType
     {
         /// <summary> Standard security protocol. No additional parameters. </summary>

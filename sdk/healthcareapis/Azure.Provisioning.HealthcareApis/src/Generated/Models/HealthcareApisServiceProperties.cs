@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> The properties of a service instance. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HealthcareApisServiceProperties : ProvisionableConstruct
     {
         private BicepValue<HealthcareApisProvisioningState> _provisioningState;
@@ -30,6 +32,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HealthcareApisProvisioningState> ProvisioningState
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the AccessPolicies. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<HealthcareApisServiceAccessPolicyEntry> AccessPolicies
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the CosmosDBConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public HealthcareApisServiceCosmosDBConfiguration CosmosDBConfiguration
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the AuthenticationConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public HealthcareApisServiceAuthenticationConfiguration AuthenticationConfiguration
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the CorsConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public HealthcareApisServiceCorsConfiguration CorsConfiguration
         {
             get
@@ -100,6 +107,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ExportConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         internal ServiceExportConfigurationInfo ExportConfiguration
         {
             get
@@ -115,6 +123,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<HealthcareApisServicePrivateEndpointConnection> PrivateEndpointConnections
         {
             get
@@ -130,6 +139,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HealthcareApisPublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -145,6 +155,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the AcrConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public HealthcareApisServiceAcrConfiguration AcrConfiguration
         {
             get
@@ -160,6 +171,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ImportConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public HealthcareApisServiceImportConfiguration ImportConfiguration
         {
             get
@@ -175,6 +187,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the StorageAccountName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExportStorageAccountName
         {
             get

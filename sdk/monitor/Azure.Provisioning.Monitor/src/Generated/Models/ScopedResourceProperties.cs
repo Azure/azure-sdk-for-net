@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> Properties of a private link scoped resource. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ScopedResourceProperties : ProvisionableConstruct
     {
         private BicepValue<MonitorScopedResourceKind> _kind;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Kind. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<MonitorScopedResourceKind> Kind
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the LinkedResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> LinkedResourceId
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the SubscriptionLocation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> SubscriptionLocation
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the ScopedResourceProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<MonitorScopedResourceProvisioningState> ScopedResourceProvisioningState
         {
             get

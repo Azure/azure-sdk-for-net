@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Backend details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceWorkspaceBackend : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -97,6 +98,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Title. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Title
         {
             get
@@ -114,6 +116,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -131,6 +134,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ResourceUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> ResourceUri
         {
             get
@@ -148,6 +152,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Credentials. </summary>
+        [Experimental("AZPROVISION001")]
         public BackendCredentialsContract Credentials
         {
             get
@@ -165,6 +170,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Proxy. </summary>
+        [Experimental("AZPROVISION001")]
         public BackendProxyContract Proxy
         {
             get
@@ -182,6 +188,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Tls. </summary>
+        [Experimental("AZPROVISION001")]
         public BackendTlsProperties Tls
         {
             get
@@ -199,6 +206,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AzureRegion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AzureRegion
         {
             get
@@ -216,6 +224,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TypePropertiesType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BackendType> TypePropertiesType
         {
             get
@@ -233,6 +242,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ServiceFabricCluster. </summary>
+        [Experimental("AZPROVISION001")]
         public BackendServiceFabricClusterProperties BackendServiceFabricCluster
         {
             get
@@ -250,6 +260,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Rules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<CircuitBreakerRule> CircuitBreakerRules
         {
             get
@@ -267,6 +278,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the PoolServices. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<BackendPoolItem> PoolServices
         {
             get
@@ -284,6 +296,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the StatusCode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> FailureResponseStatusCode
         {
             get
@@ -301,6 +314,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SessionId. </summary>
+        [Experimental("AZPROVISION001")]
         public BackendSessionId SessionId
         {
             get
@@ -318,6 +332,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Uri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> Uri
         {
             get
@@ -335,6 +350,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Protocol. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BackendProtocol> Protocol
         {
             get

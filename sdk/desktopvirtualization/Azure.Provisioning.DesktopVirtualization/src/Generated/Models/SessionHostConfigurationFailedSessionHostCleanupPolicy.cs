@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The policy that should be applied when the Session Host provisioning operation fails. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SessionHostConfigurationFailedSessionHostCleanupPolicy
     {
         /// <summary> Keep All. </summary>

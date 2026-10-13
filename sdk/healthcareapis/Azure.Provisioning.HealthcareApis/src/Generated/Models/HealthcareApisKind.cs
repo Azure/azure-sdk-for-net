@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> The kind of the service. </summary>
+    [Experimental("AZPROVISION001")]
     public enum HealthcareApisKind
     {
         /// <summary> fhir. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The configuration for AWS CloudTrail audit log ingestion. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AwsCloudTrailConfiguration : ProvisionableConstruct
     {
         private BicepValue<AwsCloudTrailProvisioningType> _provisioningType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ProvisioningType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AwsCloudTrailProvisioningType> ProvisioningType
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CloudTrailResourceSets. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<AwsCloudTrailResourceSet> CloudTrailResourceSets
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ResourceNamePrefix. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceNamePrefix
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DeploymentRegion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DeploymentRegion
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The properties of a source based trigger. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskSourceTrigger : ProvisionableConstruct
     {
         private ContainerRegistryTaskSourceProperties _sourceRepository;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the SourceRepository. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskSourceProperties SourceRepository
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the SourceTriggerEvents. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerRegistryTaskSourceTriggerEvent> SourceTriggerEvents
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskTriggerStatus> Status
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get

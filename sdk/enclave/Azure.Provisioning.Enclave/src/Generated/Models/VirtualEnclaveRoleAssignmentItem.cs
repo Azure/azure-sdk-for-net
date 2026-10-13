@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Role assignment item that indicates which principals should be assigned this role definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveRoleAssignmentItem : ProvisionableConstruct
     {
         private BicepValue<string> _roleDefinitionId;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the RoleDefinitionId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RoleDefinitionId
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Principals. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<VirtualEnclavePrincipal> Principals
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Condition. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Condition
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Available cluster add-on features. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ClusterAddOnFeature
     {
         /// <summary> Add on RepairManager. </summary>

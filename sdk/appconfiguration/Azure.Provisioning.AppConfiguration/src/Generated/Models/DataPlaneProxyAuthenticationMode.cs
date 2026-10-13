@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> The data plane proxy authentication mode. This property manages the authentication mode of request to the data plane resources. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DataPlaneProxyAuthenticationMode
     {
         /// <summary> The local authentication mode. Users are not required to have data plane permissions if local authentication is not disabled. </summary>

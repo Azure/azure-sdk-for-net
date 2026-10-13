@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.SecurityCenter
     /// The gcpOrganization data
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="GcpMemberOrganizationalInfo"/> and <see cref="GcpParentOrganizationalInfo"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GcpOrganizationalInfo : ProvisionableConstruct
     {
         private BicepValue<OrganizationMembershipType> _organizationMembershipType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> The multi cloud account's membership type in the organization. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<OrganizationMembershipType> OrganizationMembershipType
         {
             get

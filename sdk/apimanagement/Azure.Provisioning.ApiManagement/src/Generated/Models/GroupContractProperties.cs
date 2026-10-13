@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Group contract Properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GroupContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _displayName;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the IsBuiltIn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsBuiltIn
         {
             get
@@ -65,6 +70,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ApiManagementGroupType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApiManagementGroupType> ApiManagementGroupType
         {
             get
@@ -80,6 +86,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ExternalId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExternalId
         {
             get

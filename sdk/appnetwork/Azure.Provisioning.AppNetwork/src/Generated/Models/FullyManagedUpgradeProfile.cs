@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppNetwork
 {
     /// <summary> AppLinkMember fully managed upgrade profile. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class FullyManagedUpgradeProfile : ProvisionableConstruct
     {
         private BicepValue<AppLinkUpgradeReleaseChannel> _releaseChannel;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the ReleaseChannel. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppLinkUpgradeReleaseChannel> ReleaseChannel
         {
             get

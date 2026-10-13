@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Throttle the client connection by the user ID. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubThrottleByUserIdRule : WebPubSubClientConnectionCountRule
     {
         private BicepValue<int> _maxCount;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the MaxCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxCount
         {
             get

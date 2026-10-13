@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The authentication type. </summary>
+    [Experimental("AZPROVISION001")]
     internal enum AuthenticationType
     {
         /// <summary> AccessToken. </summary>

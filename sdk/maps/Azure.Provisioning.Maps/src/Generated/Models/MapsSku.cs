@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Maps
 {
     /// <summary> The SKU of the Maps Account. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MapsSku : ProvisionableConstruct
     {
         private BicepValue<MapsSkuName> _name;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<MapsSkuName> Name
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets the Tier. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Tier
         {
             get

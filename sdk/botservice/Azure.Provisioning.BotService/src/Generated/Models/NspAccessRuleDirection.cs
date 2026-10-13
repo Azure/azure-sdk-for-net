@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Direction of Access Rule. </summary>
+    [Experimental("AZPROVISION001")]
     public enum NspAccessRuleDirection
     {
         /// <summary> Inbound. </summary>

@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> A custom certificate. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubCustomCertificate : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<WebPubSubProvisioningState> ProvisioningState
         {
             get
@@ -109,6 +111,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the KeyVaultBaseUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> KeyVaultBaseUri
         {
             get
@@ -126,6 +129,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the KeyVaultSecretName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> KeyVaultSecretName
         {
             get
@@ -143,6 +147,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the KeyVaultSecretVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> KeyVaultSecretVersion
         {
             get

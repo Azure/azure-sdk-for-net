@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The available sub plans. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AvailableSubPlanType
     {
         /// <summary> P1. </summary>

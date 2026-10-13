@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The local certificate store location. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ClusterCertificateStoreName
     {
         /// <summary> Static value for AddressBook. </summary>

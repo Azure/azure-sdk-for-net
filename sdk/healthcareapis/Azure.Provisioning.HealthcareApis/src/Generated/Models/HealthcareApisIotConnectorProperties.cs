@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> IoT Connector properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class HealthcareApisIotConnectorProperties : ProvisionableConstruct
     {
         private BicepValue<HealthcareApisProvisioningState> _provisioningState;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HealthcareApisProvisioningState> ProvisioningState
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the IngestionEndpointConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public HealthcareApisIotConnectorEventHubIngestionConfiguration IngestionEndpointConfiguration
         {
             get
@@ -49,6 +53,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the DeviceMapping. </summary>
+        [Experimental("AZPROVISION001")]
         internal HealthcareApisIotMappingProperties DeviceMapping
         {
             get
@@ -64,6 +69,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Content. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> DeviceMappingContent
         {
             get

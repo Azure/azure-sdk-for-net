@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Connection state of the private endpoint connection. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRPrivateLinkServiceConnectionState : ProvisionableConstruct
     {
         private BicepValue<PrivateLinkServiceConnectionStatus> _status;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PrivateLinkServiceConnectionStatus> Status
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the ActionsRequired. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ActionsRequired
         {
             get

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the System Topic. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SystemTopicProperties : ProvisionableConstruct
     {
         private BicepValue<EventGridResourceProvisioningState> _provisioningState;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridResourceProvisioningState> ProvisioningState
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Source. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> Source
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the TopicType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TopicType
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the MetricResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> MetricResourceId
         {
             get
@@ -78,6 +84,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Encryption. </summary>
+        [Experimental("AZPROVISION001")]
         internal KeyEncryption Encryption
         {
             get
@@ -93,6 +100,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PlatformCapabilities. </summary>
+        [Experimental("AZPROVISION001")]
         internal PlatformCapabilities PlatformCapabilities
         {
             get
@@ -108,6 +116,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the CustomerManagedKeyEncryption. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EventGridCustomerManagedKeyEncryption> CustomerManagedKeyEncryption
         {
             get
@@ -125,6 +134,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Mode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridConfidentialComputeMode> PlatformCapabilitiesConfidentialComputeMode
         {
             get

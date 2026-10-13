@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
 {
     /// <summary> A TXT record. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnsTxtRecordInfo : ProvisionableConstruct
     {
         private BicepList<string> _values;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Values. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Values
         {
             get

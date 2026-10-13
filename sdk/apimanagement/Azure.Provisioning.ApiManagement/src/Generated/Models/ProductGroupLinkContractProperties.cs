@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Product-group link entity properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ProductGroupLinkContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _groupId;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the GroupId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> GroupId
         {
             get

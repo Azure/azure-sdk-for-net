@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Event Subscription. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DomainEventSubscription : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the Topic. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Topic
         {
             get
@@ -109,6 +111,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventSubscriptionProvisioningState> ProvisioningState
         {
             get
@@ -122,6 +125,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Destination. </summary>
+        [Experimental("AZPROVISION001")]
         public EventSubscriptionDestination Destination
         {
             get
@@ -139,6 +143,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DeliveryWithResourceIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public DeliveryWithResourceIdentity DeliveryWithResourceIdentity
         {
             get
@@ -156,6 +161,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Filter. </summary>
+        [Experimental("AZPROVISION001")]
         public EventSubscriptionFilter Filter
         {
             get
@@ -173,6 +179,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Labels. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Labels
         {
             get
@@ -190,6 +197,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ExpiresOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
@@ -207,6 +215,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EventDeliverySchema. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventDeliverySchema> EventDeliverySchema
         {
             get
@@ -224,6 +233,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the RetryPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public EventSubscriptionRetryPolicy RetryPolicy
         {
             get
@@ -241,6 +251,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DeadLetterDestination. </summary>
+        [Experimental("AZPROVISION001")]
         public DeadLetterDestination DeadLetterDestination
         {
             get
@@ -258,6 +269,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DeadLetterWithResourceIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public DeadLetterWithResourceIdentity DeadLetterWithResourceIdentity
         {
             get

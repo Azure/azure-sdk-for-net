@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The CSPM monitoring for GCP offering. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CspmMonitorGcpOffering : SecurityCenterCloudOffering
     {
         private CspmMonitorGcpOfferingNativeCloudConnection _nativeCloudConnection;
@@ -19,6 +22,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the NativeCloudConnection. </summary>
+        [Experimental("AZPROVISION001")]
         public CspmMonitorGcpOfferingNativeCloudConnection NativeCloudConnection
         {
             get

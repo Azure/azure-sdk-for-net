@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The event type information for Channels. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PartnerTopicEventTypeInfo : ProvisionableConstruct
     {
         private BicepValue<EventDefinitionKind> _kind;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Kind. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventDefinitionKind> Kind
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the InlineEventTypes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<InlineEventProperties> InlineEventTypes
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> Operator for dimension values. </summary>
+    [Experimental("AZPROVISION001")]
     public enum MonitorDimensionOperator
     {
         /// <summary> Include. </summary>

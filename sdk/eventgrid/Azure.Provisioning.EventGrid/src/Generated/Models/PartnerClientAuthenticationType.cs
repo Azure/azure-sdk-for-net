@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Type of client authentication. </summary>
+    [Experimental("AZPROVISION001")]
     internal enum PartnerClientAuthenticationType
     {
         /// <summary> AzureAD. </summary>

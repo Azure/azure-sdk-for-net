@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Form of an authorization grant, which the client uses to request the access token. </summary>
+    [Experimental("AZPROVISION001")]
     public enum BearerTokenSendingMethods
     {
         /// <summary> Access token will be transmitted in the Authorization header using Bearer schema. </summary>

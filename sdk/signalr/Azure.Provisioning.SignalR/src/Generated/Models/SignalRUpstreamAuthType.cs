@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Upstream auth type enum. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SignalRUpstreamAuthType
     {
         /// <summary> None. </summary>

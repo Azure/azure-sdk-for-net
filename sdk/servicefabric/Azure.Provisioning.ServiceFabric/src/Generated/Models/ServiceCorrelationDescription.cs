@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Creates a particular correlation between services. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceCorrelationDescription : ProvisionableConstruct
     {
         private BicepValue<ServiceCorrelationScheme> _scheme;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Scheme. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ServiceCorrelationScheme> Scheme
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ServiceName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ServiceName
         {
             get

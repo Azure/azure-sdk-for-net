@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Issue Attachment contract Properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class IssueAttachmentContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _title;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Title. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Title
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ContentFormat. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContentFormat
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Content. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Content
         {
             get

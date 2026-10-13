@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The ContainerRegistryTaskOverrideStepProperties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskOverrideStepProperties : ProvisionableConstruct
     {
         private BicepValue<string> _contextPath;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the ContextPath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContextPath
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the File. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> File
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Arguments. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerRegistryTaskArgument> Arguments
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Target. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Target
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Values. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerRegistryTaskSetValue> Values
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the UpdateTriggerToken. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UpdateTriggerToken
         {
             get

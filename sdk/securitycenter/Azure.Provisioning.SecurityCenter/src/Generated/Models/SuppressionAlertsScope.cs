@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The SuppressionAlertsScope. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SuppressionAlertsScope : ProvisionableConstruct
     {
         private BicepList<SuppressionAlertsScopeElement> _suppressionAlertsScopeAllOf;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SuppressionAlertsScopeAllOf. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SuppressionAlertsScopeElement> SuppressionAlertsScopeAllOf
         {
             get

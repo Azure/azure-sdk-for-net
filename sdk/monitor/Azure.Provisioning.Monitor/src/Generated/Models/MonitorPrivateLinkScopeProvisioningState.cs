@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. </summary>
+    [Experimental("AZPROVISION001")]
     public enum MonitorPrivateLinkScopeProvisioningState
     {
         /// <summary> Succeeded. </summary>

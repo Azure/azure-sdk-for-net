@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> NSP access rule direction. </summary>
+    [Experimental("AZPROVISION001")]
     public enum NetworkSecurityPerimeterProfileAccessRuleDirection
     {
         /// <summary> Inbound. </summary>

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
+    [Experimental("AZPROVISION001")]
     internal partial class PartnerNamespaceProperties : ProvisionableConstruct
     {
         private BicepList<EventGridDomainPrivateEndpointConnection> _privateEndpointConnections;
@@ -30,6 +32,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EventGridDomainPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PartnerNamespaceProvisioningState> ProvisioningState
         {
             get
@@ -50,6 +54,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PartnerRegistrationFullyQualifiedId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PartnerRegistrationFullyQualifiedId
         {
             get
@@ -65,6 +70,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MinimumTlsVersionAllowed. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TlsVersion> MinimumTlsVersionAllowed
         {
             get
@@ -80,6 +86,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the Endpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> Endpoint
         {
             get
@@ -90,6 +97,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridPublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -105,6 +113,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the InboundIPRules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EventGridInboundIPRule> InboundIPRules
         {
             get
@@ -120,6 +129,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the IsLocalAuthDisabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsLocalAuthDisabled
         {
             get
@@ -135,6 +145,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PartnerTopicRoutingMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PartnerTopicRoutingMode> PartnerTopicRoutingMode
         {
             get

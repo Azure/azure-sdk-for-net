@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> An Activity Log Alert rule condition that is met when all its member conditions are met. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AlertRuleAllOfCondition : ProvisionableConstruct
     {
         private BicepList<ActivityLogAlertAnyOfOrLeafCondition> _allOf;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the AllOf. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ActivityLogAlertAnyOfOrLeafCondition> AllOf
         {
             get

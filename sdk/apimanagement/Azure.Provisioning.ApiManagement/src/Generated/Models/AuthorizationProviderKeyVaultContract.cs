@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Authorization Provider KeyVault contract properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AuthorizationProviderKeyVaultContract : AuthorizationProviderKeyVaultCreateProperties
     {
         private BicepValue<DateTimeOffset> _updated;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Updated. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> Updated
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the LastStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public KeyVaultLastAccessStatusContractProperties LastStatus
         {
             get

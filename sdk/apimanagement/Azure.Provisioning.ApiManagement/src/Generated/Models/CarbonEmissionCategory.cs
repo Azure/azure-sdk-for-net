@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Scope 2 carbon emission preference for the backend. When specified, the load balancer will optimize traffic flow by routing to regions that have carbon emission less than or equal to the specified category. However, when all other backends are not available it will route traffic to these regions anyway. This requires the backend to be attributed with 'azureRegion' information. </summary>
+    [Experimental("AZPROVISION001")]
     public enum CarbonEmissionCategory
     {
         /// <summary> Carbon intensity of less than or equal to 150 grams CO₂e per KWh. </summary>

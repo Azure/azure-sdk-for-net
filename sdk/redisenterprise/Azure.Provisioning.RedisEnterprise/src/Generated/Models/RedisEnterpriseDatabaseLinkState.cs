@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> State of the link between the database resources. </summary>
+    [Experimental("AZPROVISION001")]
     public enum RedisEnterpriseDatabaseLinkState
     {
         /// <summary> Linked. </summary>

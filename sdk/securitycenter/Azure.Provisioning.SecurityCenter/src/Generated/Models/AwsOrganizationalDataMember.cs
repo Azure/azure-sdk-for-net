@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The AWS organization data for the member account. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AwsOrganizationalDataMember : AwsOrganizationalInfo
     {
         private BicepValue<string> _parentHierarchyId;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ParentHierarchyId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ParentHierarchyId
         {
             get

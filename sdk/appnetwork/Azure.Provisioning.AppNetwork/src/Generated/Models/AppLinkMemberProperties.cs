@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppNetwork
 {
     /// <summary> AppLink Member properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppLinkMemberProperties : ProvisionableConstruct
     {
         private BicepValue<AppLinkClusterType> _clusterType;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the ClusterType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppLinkClusterType> ClusterType
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the Metadata. </summary>
+        [Experimental("AZPROVISION001")]
         internal Metadata Metadata
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the UpgradeProfile. </summary>
+        [Experimental("AZPROVISION001")]
         public AppLinkUpgradeProfile UpgradeProfile
         {
             get
@@ -72,6 +77,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the ObservabilityProfile. </summary>
+        [Experimental("AZPROVISION001")]
         internal ObservabilityProfile ObservabilityProfile
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the ConnectivityProfile. </summary>
+        [Experimental("AZPROVISION001")]
         public AppLinkConnectivityProfile ConnectivityProfile
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppLinkProvisioningState> ProvisioningState
         {
             get
@@ -112,6 +120,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> MetadataResourceId
         {
             get
@@ -129,6 +138,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets the MetricsEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ObservabilityMetricsEndpoint
         {
             get

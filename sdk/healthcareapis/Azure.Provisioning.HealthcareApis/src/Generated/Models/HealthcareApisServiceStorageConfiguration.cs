@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> The configuration of connected storage. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HealthcareApisServiceStorageConfiguration : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _storageResourceId;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the StorageResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> StorageResourceId
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the FileSystemName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FileSystemName
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the StorageIndexingConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         internal StorageIndexingConfiguration StorageIndexingConfiguration
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the StorageEventQueueName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> StorageEventQueueName
         {
             get

@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
 {
     /// <summary> A private link resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class KubernetesConfigurationPrivateLinkResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

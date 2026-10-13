@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The properties of the Managed identity. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ManagedIdentity : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _userAssignedIdentity;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the UserAssignedIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> UserAssignedIdentity
         {
             get

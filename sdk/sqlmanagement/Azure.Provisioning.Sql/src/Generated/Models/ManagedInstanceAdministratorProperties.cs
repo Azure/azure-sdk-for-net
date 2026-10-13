@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -86,6 +87,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the PrincipalType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ManagedInstanceAdministratorPrincipalType> PrincipalType
         {
             get

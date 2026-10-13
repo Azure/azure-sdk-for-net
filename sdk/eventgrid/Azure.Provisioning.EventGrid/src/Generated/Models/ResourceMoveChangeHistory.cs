@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The change history of the resource move. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ResourceMoveChangeHistory : ProvisionableConstruct
     {
         private BicepValue<string> _azureSubscriptionId;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the AzureSubscriptionId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AzureSubscriptionId
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ResourceGroupName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceGroupName
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ChangedTimeUtc. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ChangedTimeUtc
         {
             get

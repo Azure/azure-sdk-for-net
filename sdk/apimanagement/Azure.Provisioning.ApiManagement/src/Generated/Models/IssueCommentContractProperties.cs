@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Issue Comment contract Properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class IssueCommentContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _text;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Text. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Text
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the UserId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> UserId
         {
             get

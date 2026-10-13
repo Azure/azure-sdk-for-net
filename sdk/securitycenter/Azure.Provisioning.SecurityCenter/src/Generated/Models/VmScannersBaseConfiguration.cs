@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Configuration for VM scanning. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VmScannersBaseConfiguration : ProvisionableConstruct
     {
         private BicepValue<DefenderForServersScanningMode> _scanningMode;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ScanningMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DefenderForServersScanningMode> ScanningMode
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ExclusionTags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> ExclusionTags
         {
             get

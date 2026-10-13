@@ -254,6 +254,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the LinkMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<LinkModeType> LinkMode
         {
             get

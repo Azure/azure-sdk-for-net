@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> A private link scoped resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MonitorPrivateLinkScopedResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -95,6 +96,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Kind. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<MonitorScopedResourceKind> Kind
         {
             get
@@ -112,6 +114,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the LinkedResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> LinkedResourceId
         {
             get
@@ -129,6 +132,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the SubscriptionLocation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> SubscriptionLocation
         {
             get
@@ -146,6 +150,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the ScopedResourceProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<MonitorScopedResourceProvisioningState> ScopedResourceProvisioningState
         {
             get

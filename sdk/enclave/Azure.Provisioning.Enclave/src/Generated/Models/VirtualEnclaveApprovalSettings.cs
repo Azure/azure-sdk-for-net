@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Virtual Enclave ApprovalSettings Properties for 2025-11-01-preview and later versions. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveApprovalSettings : ProvisionableConstruct
     {
         private ApprovalSettingConfiguration _enclaveEndpointUpdate;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the EnclaveEndpointUpdate. </summary>
+        [Experimental("AZPROVISION001")]
         public ApprovalSettingConfiguration EnclaveEndpointUpdate
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ConnectionCreation. </summary>
+        [Experimental("AZPROVISION001")]
         public ApprovalSettingConfiguration ConnectionCreation
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ConnectionUpdate. </summary>
+        [Experimental("AZPROVISION001")]
         public ApprovalSettingConfiguration ConnectionUpdate
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the EnclaveMaintenanceMode. </summary>
+        [Experimental("AZPROVISION001")]
         public ApprovalSettingConfiguration EnclaveMaintenanceMode
         {
             get

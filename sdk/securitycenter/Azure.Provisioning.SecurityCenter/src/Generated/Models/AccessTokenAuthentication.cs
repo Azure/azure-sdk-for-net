@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The environment authentication details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AccessTokenAuthentication : SecurityConnectorAuthentication
     {
         private BicepValue<string> _username;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Username. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Username
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AccessToken. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AccessToken
         {
             get

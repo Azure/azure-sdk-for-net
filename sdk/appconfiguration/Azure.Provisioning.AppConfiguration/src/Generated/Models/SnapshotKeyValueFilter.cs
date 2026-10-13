@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> Enables filtering of key-values. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SnapshotKeyValueFilter : ProvisionableConstruct
     {
         private BicepValue<string> _key;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Key. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Key
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Label. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Label
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Specifies the ephemeral disk settings for operating system disk. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DesktopVirtualizationDiffDiskOption
     {
         /// <summary> Operating system disk local setting. </summary>

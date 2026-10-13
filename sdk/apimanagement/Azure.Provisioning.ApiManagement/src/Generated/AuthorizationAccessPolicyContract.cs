@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Authorization access policy contract. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AuthorizationAccessPolicyContract : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -97,6 +98,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AppIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AppIds
         {
             get
@@ -114,6 +116,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> TenantId
         {
             get
@@ -131,6 +134,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ObjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ObjectId
         {
             get

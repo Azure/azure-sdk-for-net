@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes the policy to be used for placement of a Service Fabric service. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServicePlacementPolicyDescription : ProvisionableConstruct
     {
         private BicepValue<ServicePlacementPolicyType> _type;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> The type of placement policy for a service fabric service. Following are the possible values. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<ServicePlacementPolicyType> Type
         {
             get

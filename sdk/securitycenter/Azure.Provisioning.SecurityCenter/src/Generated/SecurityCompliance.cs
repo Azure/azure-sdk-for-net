@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Compliance of a scope. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityCompliance : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -75,6 +76,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the AssessmentTimestampUtcOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> AssessmentTimestampUtcOn
         {
             get
@@ -84,6 +86,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ResourceCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ResourceCount
         {
             get
@@ -93,6 +96,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the AssessmentResult. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ComplianceSegment> AssessmentResult
         {
             get

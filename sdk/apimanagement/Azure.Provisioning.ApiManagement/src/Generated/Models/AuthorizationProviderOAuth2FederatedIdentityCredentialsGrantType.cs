@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> OAuth2 authorization code with federated identity credentials grant type parameters. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AuthorizationProviderOAuth2FederatedIdentityCredentialsGrantType : ProvisionableConstruct
     {
         private BicepValue<string> _clientId;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientId
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ClientAssertionType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientAssertionType
         {
             get
@@ -50,6 +54,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ResourceUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> ResourceUri
         {
             get
@@ -65,6 +70,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> TenantId
         {
             get

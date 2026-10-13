@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Properties specific to the Backend Type. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class BackendProperties : ProvisionableConstruct
     {
         private BackendServiceFabricClusterProperties _serviceFabricCluster;
@@ -20,6 +22,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ServiceFabricCluster. </summary>
+        [Experimental("AZPROVISION001")]
         public BackendServiceFabricClusterProperties ServiceFabricCluster
         {
             get

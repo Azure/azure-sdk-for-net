@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> The incoming request type to the service. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SignalRRequestType
     {
         /// <summary> ClientConnection. </summary>

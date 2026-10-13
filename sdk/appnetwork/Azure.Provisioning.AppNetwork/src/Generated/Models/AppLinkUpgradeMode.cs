@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.AppNetwork
 {
     /// <summary> AppLinkMember upgrade mode. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AppLinkUpgradeMode
     {
         /// <summary> Fully managed upgrade mode. </summary>

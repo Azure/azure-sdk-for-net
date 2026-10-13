@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> TLS settings for the resource. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class WebPubSubTlsSettings : ProvisionableConstruct
     {
         private BicepValue<bool> _isClientCertEnabled;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the IsClientCertEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsClientCertEnabled
         {
             get

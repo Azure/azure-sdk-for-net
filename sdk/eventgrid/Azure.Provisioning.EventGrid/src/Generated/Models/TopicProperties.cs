@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
+    [Experimental("AZPROVISION001")]
     internal partial class TopicProperties : ProvisionableConstruct
     {
         private BicepList<EventGridDomainPrivateEndpointConnection> _privateEndpointConnections;
@@ -34,6 +36,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EventGridDomainPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
@@ -44,6 +47,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridTopicProvisioningState> ProvisioningState
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the Endpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> Endpoint
         {
             get
@@ -64,6 +69,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EventTypeInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public PartnerTopicEventTypeInfo EventTypeInfo
         {
             get
@@ -79,6 +85,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MinimumTlsVersionAllowed. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TlsVersion> MinimumTlsVersionAllowed
         {
             get
@@ -94,6 +101,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the InputSchema. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridInputSchema> InputSchema
         {
             get
@@ -109,6 +117,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the InputSchemaMapping. </summary>
+        [Experimental("AZPROVISION001")]
         public EventGridInputSchemaMapping InputSchemaMapping
         {
             get
@@ -124,6 +133,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the MetricResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MetricResourceId
         {
             get
@@ -134,6 +144,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridPublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -149,6 +160,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the InboundIPRules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EventGridInboundIPRule> InboundIPRules
         {
             get
@@ -164,6 +176,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the IsLocalAuthDisabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsLocalAuthDisabled
         {
             get
@@ -179,6 +192,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DataResidencyBoundary. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DataResidencyBoundary> DataResidencyBoundary
         {
             get
@@ -194,6 +208,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Encryption. </summary>
+        [Experimental("AZPROVISION001")]
         internal KeyEncryption Encryption
         {
             get
@@ -209,6 +224,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PlatformCapabilities. </summary>
+        [Experimental("AZPROVISION001")]
         internal PlatformCapabilities PlatformCapabilities
         {
             get
@@ -224,6 +240,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the CustomerManagedKeyEncryption. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EventGridCustomerManagedKeyEncryption> CustomerManagedKeyEncryption
         {
             get
@@ -241,6 +258,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Mode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridConfidentialComputeMode> PlatformCapabilitiesConfidentialComputeMode
         {
             get

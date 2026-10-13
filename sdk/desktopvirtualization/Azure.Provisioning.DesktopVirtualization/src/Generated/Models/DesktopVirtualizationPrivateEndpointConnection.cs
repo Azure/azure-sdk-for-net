@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The private endpoint connection resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DesktopVirtualizationPrivateEndpointConnection : ProvisionableConstruct
     {
         private PrivateEndpointConnectionProperties _properties;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         internal PrivateEndpointConnectionProperties Properties
         {
             get
@@ -77,6 +80,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the GroupIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> GroupIds
         {
             get
@@ -86,6 +90,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ConnectionState. </summary>
+        [Experimental("AZPROVISION001")]
         public DesktopVirtualizationPrivateLinkServiceConnectionState ConnectionState
         {
             get
@@ -95,6 +100,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationPrivateEndpointConnectionProvisioningState> ProvisioningState
         {
             get
@@ -104,6 +110,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get

@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> A private endpoint connection resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementPrivateEndpointConnection : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

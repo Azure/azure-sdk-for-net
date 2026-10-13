@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Only userAssignedIdentity is supported in this API version; other types may be supported in the future. </summary>
+    [Experimental("AZPROVISION001")]
     public enum RedisEnterpriseCustomerManagedKeyIdentityType
     {
         /// <summary> systemAssignedIdentity. </summary>

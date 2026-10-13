@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary>
     /// Optional tier of this particular SKU. 'Standard' or 'Free'.
     /// `Basic` is deprecated, use `Standard` instead.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public enum WebPubSubSkuTier
     {
         /// <summary> Free tier for WebPubSub service. </summary>

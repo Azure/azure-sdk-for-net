@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the Queue info for event subscription. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class QueueInfo : ProvisionableConstruct
     {
         private BicepValue<int> _receiveLockDurationInSeconds;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ReceiveLockDurationInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ReceiveLockDurationInSeconds
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MaxDeliveryCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxDeliveryCount
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DeadLetterDestinationWithResourceIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public DeadLetterWithResourceIdentity DeadLetterDestinationWithResourceIdentity
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EventTimeToLive. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> EventTimeToLive
         {
             get

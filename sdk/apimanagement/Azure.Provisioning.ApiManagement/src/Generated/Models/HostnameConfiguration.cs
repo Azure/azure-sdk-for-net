@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Custom hostname configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HostnameConfiguration : ProvisionableConstruct
     {
         private BicepValue<HostnameType> _hostnameType;
@@ -32,6 +34,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the HostnameType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HostnameType> HostnameType
         {
             get
@@ -47,6 +50,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the HostName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> HostName
         {
             get
@@ -62,6 +66,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the KeyVaultSecretUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> KeyVaultSecretUri
         {
             get
@@ -77,6 +82,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IdentityClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IdentityClientId
         {
             get
@@ -92,6 +98,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the EncodedCertificate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EncodedCertificate
         {
             get
@@ -107,6 +114,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the CertificatePassword. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CertificatePassword
         {
             get
@@ -122,6 +130,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsDefaultSslBindingEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsDefaultSslBindingEnabled
         {
             get
@@ -137,6 +146,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsClientCertificateNegotiationEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsClientCertificateNegotiationEnabled
         {
             get
@@ -152,6 +162,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Certificate. </summary>
+        [Experimental("AZPROVISION001")]
         public CertificateInformation Certificate
         {
             get
@@ -167,6 +178,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the CertificateSource. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<CertificateSource> CertificateSource
         {
             get
@@ -182,6 +194,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the CertificateStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<CertificateStatus> CertificateStatus
         {
             get

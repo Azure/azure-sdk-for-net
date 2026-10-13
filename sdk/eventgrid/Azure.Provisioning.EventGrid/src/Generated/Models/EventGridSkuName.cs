@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The name of the SKU. </summary>
+    [Experimental("AZPROVISION001")]
     public enum EventGridSkuName
     {
         /// <summary> Standard. </summary>

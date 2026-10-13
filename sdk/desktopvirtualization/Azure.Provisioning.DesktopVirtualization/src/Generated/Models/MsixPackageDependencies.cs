@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Schema for MSIX Package Dependencies properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MsixPackageDependencies : ProvisionableConstruct
     {
         private BicepValue<string> _dependencyName;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the DependencyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DependencyName
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Publisher. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Publisher
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the MinVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MinVersion
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Sql
 {
     /// <summary> Specifies whether the link operates in single-database or multi-database mode. </summary>
+    [Experimental("AZPROVISION001")]
     public enum LinkModeType
     {
         /// <summary> The link operates in single-database mode. </summary>

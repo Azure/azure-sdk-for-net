@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> An Open Container Initiative (OCI) artifact. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HealthcareApisServiceOciArtifactEntry : ProvisionableConstruct
     {
         private BicepValue<string> _loginServer;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the LoginServer. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LoginServer
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ImageName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ImageName
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Digest. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Digest
         {
             get

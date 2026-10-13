@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.AppNetwork
 {
     /// <summary> AppLinkMember upgrade release channel. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AppLinkUpgradeReleaseChannel
     {
         /// <summary> Rapid release channel. </summary>

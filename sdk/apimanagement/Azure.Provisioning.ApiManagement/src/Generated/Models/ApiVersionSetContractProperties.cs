@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Properties of an API Version Set. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ApiVersionSetContractProperties : ApiVersionSetEntityBase
     {
         private BicepValue<string> _displayName;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the VersioningScheme. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VersioningScheme> VersioningScheme
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Describes properties of an application. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ApplicationProperties : ProvisionableConstruct
     {
         private BicepValue<string> _displayName;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SourceResourceType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApplicationSourceResourceType> SourceResourceType
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ConditionSets. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<BinaryData> ConditionSets
         {
             get

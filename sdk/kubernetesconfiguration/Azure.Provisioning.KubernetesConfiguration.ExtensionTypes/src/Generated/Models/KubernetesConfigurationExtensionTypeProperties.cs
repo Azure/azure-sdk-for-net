@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary> The KubernetesConfigurationExtensionTypeProperties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class KubernetesConfigurationExtensionTypeProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isSystemExtension;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the IsSystemExtension. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSystemExtension
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the IsManagedIdentityRequired. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsManagedIdentityRequired
         {
             get
@@ -47,6 +51,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -57,6 +62,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the Publisher. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Publisher
         {
             get
@@ -67,6 +73,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the PlanInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public KubernetesConfigurationExtensionTypePlanInfo PlanInfo
         {
             get
@@ -77,6 +84,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the SupportedClusterTypes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> SupportedClusterTypes
         {
             get
@@ -87,6 +95,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the SupportedScopes. </summary>
+        [Experimental("AZPROVISION001")]
         public KubernetesConfigurationExtensionTypeSupportedScopes SupportedScopes
         {
             get

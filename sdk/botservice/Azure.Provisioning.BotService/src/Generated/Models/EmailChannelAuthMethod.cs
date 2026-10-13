@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Email channel auth method. 0 Password (Default); 1 Graph. </summary>
+    [Experimental("AZPROVISION001")]
     public enum EmailChannelAuthMethod
     {
         /// <summary> Basic authentication. </summary>

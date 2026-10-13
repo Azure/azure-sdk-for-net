@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.SecurityCenter
     /// The security connector environment data.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="DockerHubEnvironmentInfo"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GitLabScopeEnvironmentInfo"/>, <see cref="GithubScopeEnvironment"/>, and <see cref="JFrogEnvironmentInfo"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityConnectorEnvironment : ProvisionableConstruct
     {
         private BicepValue<EnvironmentType> _environmentType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> The type of the environment data. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<EnvironmentType> EnvironmentType
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Authentication settings for a webhook endpoint within a Namespace resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebhookAuthenticationSettings : ProvisionableConstruct
     {
         private CustomWebhookAuthenticationManagedIdentity _identity;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public CustomWebhookAuthenticationManagedIdentity Identity
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EndpointUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> EndpointUri
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EndpointBaseUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> EndpointBaseUri
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the AzureActiveDirectoryApplicationIdOrUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> AzureActiveDirectoryApplicationIdOrUri
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the AzureActiveDirectoryTenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AzureActiveDirectoryTenantId
         {
             get

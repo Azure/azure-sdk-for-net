@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Client Application Entity Properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ClientApplicationContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _displayName;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the OwnerId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OwnerId
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the EntraApplicationId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EntraApplicationId
         {
             get
@@ -81,6 +87,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the EntraTenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EntraTenantId
         {
             get
@@ -91,6 +98,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ClientApplicationState> State
         {
             get

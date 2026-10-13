@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> A single API Management WorkspaceLinks in List or Get response. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementWorkspaceLinks : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -78,6 +79,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -103,6 +105,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the WorkspaceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> WorkspaceId
         {
             get
@@ -112,6 +115,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Gateways. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<WritableSubResource> Gateways
         {
             get

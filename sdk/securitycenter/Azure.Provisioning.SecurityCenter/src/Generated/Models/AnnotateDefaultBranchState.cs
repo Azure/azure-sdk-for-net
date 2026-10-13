@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary>
@@ -12,6 +14,7 @@ namespace Azure.Provisioning.SecurityCenter
     /// Enabled - PR Annotations are enabled on the resource's default branch.
     /// Disabled - PR Annotations are disabled on the resource's default branch.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public enum AnnotateDefaultBranchState
     {
         /// <summary> Disabled. </summary>

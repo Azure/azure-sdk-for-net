@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Port range details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClusterEndpointRangeDescription : ProvisionableConstruct
     {
         private BicepValue<int> _startPort;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the StartPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> StartPort
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the EndPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> EndPort
         {
             get

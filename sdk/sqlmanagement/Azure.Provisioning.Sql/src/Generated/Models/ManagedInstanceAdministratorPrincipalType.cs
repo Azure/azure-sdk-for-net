@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Sql
 {
     /// <summary> Principal type of the managed instance administrator. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ManagedInstanceAdministratorPrincipalType
     {
         /// <summary> Indicates that the principal is a user. </summary>

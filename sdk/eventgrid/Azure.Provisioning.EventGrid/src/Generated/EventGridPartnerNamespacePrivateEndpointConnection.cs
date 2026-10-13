@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventGridPartnerNamespacePrivateEndpointConnection : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -95,6 +96,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the GroupIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> GroupIds
         {
             get
@@ -112,6 +114,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ConnectionState. </summary>
+        [Experimental("AZPROVISION001")]
         public EventGridPrivateEndpointConnectionState ConnectionState
         {
             get
@@ -129,6 +132,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridResourceProvisioningState> ProvisioningState
         {
             get
@@ -146,6 +150,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PrivateEndpointId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get

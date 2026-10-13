@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
 {
     /// <summary> The delegation signer information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DelegationSignerInfo : ProvisionableConstruct
     {
         private BicepValue<int> _digestAlgorithmType;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the DigestAlgorithmType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> DigestAlgorithmType
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the DigestValue. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DigestValue
         {
             get
@@ -43,6 +47,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the Record. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Record
         {
             get

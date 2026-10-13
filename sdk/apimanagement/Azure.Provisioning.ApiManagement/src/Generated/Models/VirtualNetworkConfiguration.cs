@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Configuration of a virtual network to which API Management service is deployed. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualNetworkConfiguration : ProvisionableConstruct
     {
         private BicepValue<Guid> _vnetId;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the VnetId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> VnetId
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Subnetname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Subnetname
         {
             get
@@ -45,6 +49,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SubnetResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> SubnetResourceId
         {
             get

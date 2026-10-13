@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Control Plane Apis version constraint for the API Management service. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ApiVersionConstraint : ProvisionableConstruct
     {
         private BicepValue<string> _minApiVersion;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the MinApiVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MinApiVersion
         {
             get

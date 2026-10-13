@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> An Application configured in the Identity Provider used to access FHIR resources. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SmartIdentityProviderApplication : ProvisionableConstruct
     {
         private BicepValue<string> _clientId;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientId
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Audience. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Audience
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the AllowedDataActions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SmartDataAction> AllowedDataActions
         {
             get

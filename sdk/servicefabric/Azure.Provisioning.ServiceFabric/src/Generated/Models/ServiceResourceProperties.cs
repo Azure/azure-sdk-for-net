@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ServiceFabric
@@ -13,6 +14,7 @@ namespace Azure.Provisioning.ServiceFabric
     /// The service resource properties.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="StatefulServiceProperties"/> and <see cref="StatelessServiceProperties"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceResourceProperties : ServiceResourcePropertiesBase
     {
         private BicepValue<string> _provisioningState;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> The kind of service (Stateless or Stateful). </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<ApplicationServiceKind> ServiceKind
         {
             get
@@ -48,6 +52,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ServiceTypeName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ServiceTypeName
         {
             get
@@ -63,6 +68,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the PartitionDescription. </summary>
+        [Experimental("AZPROVISION001")]
         public PartitionSchemeDescription PartitionDescription
         {
             get
@@ -78,6 +84,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ServicePackageActivationMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ArmServicePackageActivationMode> ServicePackageActivationMode
         {
             get
@@ -93,6 +100,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ServiceDnsName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ServiceDnsName
         {
             get

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.Monitor
     /// An Activity Log Alert rule condition that is met by comparing the field and value of an Activity Log event.
     /// This condition must contain 'field' and either 'equals' or 'containsAny'.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AlertRuleLeafCondition : ProvisionableConstruct
     {
         private BicepValue<string> _field;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Field. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Field
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the EqualsValue. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EqualsValue
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ContainsAny. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ContainsAny
         {
             get

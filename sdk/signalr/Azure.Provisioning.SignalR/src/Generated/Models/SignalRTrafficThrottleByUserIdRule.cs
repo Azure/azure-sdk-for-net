@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Throttle the client traffic by the user ID. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRTrafficThrottleByUserIdRule : SignalRClientTrafficControlRule
     {
         private BicepValue<long> _maxInboundMessageBytes;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the MaxInboundMessageBytes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MaxInboundMessageBytes
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the AggregationWindowInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> AggregationWindowInSeconds
         {
             get

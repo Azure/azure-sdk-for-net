@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> This determines the format that Event Grid should expect for incoming events published to the Event Grid Domain Resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum EventGridInputSchema
     {
         /// <summary> EventGridSchema. </summary>

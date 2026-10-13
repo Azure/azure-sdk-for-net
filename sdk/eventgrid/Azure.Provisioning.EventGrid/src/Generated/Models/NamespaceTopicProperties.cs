@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the namespace topic. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class NamespaceTopicProperties : ProvisionableConstruct
     {
         private BicepValue<NamespaceTopicProvisioningState> _provisioningState;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<NamespaceTopicProvisioningState> ProvisioningState
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PublisherType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PublisherType> PublisherType
         {
             get
@@ -49,6 +53,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the InputSchema. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventInputSchema> InputSchema
         {
             get
@@ -64,6 +69,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EventRetentionInDays. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> EventRetentionInDays
         {
             get

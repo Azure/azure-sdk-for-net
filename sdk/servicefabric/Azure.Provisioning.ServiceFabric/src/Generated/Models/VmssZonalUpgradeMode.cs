@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> This property defines the upgrade mode for the virtual machine scale set, it is mandatory if a node type with multiple Availability Zones is added. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VmssZonalUpgradeMode
     {
         /// <summary> Updates will happen in all Availability Zones at once for the virtual machine scale sets. </summary>

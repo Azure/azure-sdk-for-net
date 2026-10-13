@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The properties of CA certificate. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class CaCertificateProperties : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EncodedCertificate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EncodedCertificate
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the IssueTimeInUtc. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> IssueTimeInUtc
         {
             get
@@ -66,6 +71,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ExpiryTimeInUtc. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpiryTimeInUtc
         {
             get
@@ -76,6 +82,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<CaCertificateProvisioningState> ProvisioningState
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppNetwork
 {
     /// <summary> AppLinkMember metrics profile. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class MetricsProfile : ProvisionableConstruct
     {
         private BicepValue<string> _metricsEndpoint;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppNetwork
         }
 
         /// <summary> Gets the MetricsEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MetricsEndpoint
         {
             get

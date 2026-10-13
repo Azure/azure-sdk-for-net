@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Defenders CSPM Permissions Management offering configurations. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderCspmAwsOfferingCiem : ProvisionableConstruct
     {
         private DefenderCspmAwsOfferingCiemCiemOidc _ciemOidc;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CiemOidc. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderCspmAwsOfferingCiemCiemOidc CiemOidc
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the LogCollectionOidc. </summary>
+        [Experimental("AZPROVISION001")]
         internal DefenderCspmAwsOfferingCiemLogCollectionOidc LogCollectionOidc
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CloudTrailAuditLogIngestion. </summary>
+        [Experimental("AZPROVISION001")]
         public AwsCloudTrailConfiguration CloudTrailAuditLogIngestion
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CloudRoleArn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LogCollectionOidcCloudRoleArn
         {
             get

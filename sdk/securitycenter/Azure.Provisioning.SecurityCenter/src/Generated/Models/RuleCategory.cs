@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary>
@@ -16,6 +18,7 @@ namespace Azure.Provisioning.SecurityCenter
     /// Secrets scanning results.
     /// Container scanning results.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public enum RuleCategory
     {
         /// <summary> Code. </summary>

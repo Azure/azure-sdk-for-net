@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> Dicom Service properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DicomServiceProperties : ProvisionableConstruct
     {
         private BicepValue<HealthcareApisProvisioningState> _provisioningState;
@@ -31,6 +33,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HealthcareApisProvisioningState> ProvisioningState
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the AuthenticationConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public DicomServiceAuthenticationConfiguration AuthenticationConfiguration
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the CorsConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public DicomServiceCorsConfiguration CorsConfiguration
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the ServiceUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> ServiceUri
         {
             get
@@ -81,6 +87,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<HealthcareApisServicePrivateEndpointConnection> PrivateEndpointConnections
         {
             get
@@ -91,6 +98,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HealthcareApisPublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -106,6 +114,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the EventState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<FhirServiceEventState> EventState
         {
             get
@@ -116,6 +125,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Encryption. </summary>
+        [Experimental("AZPROVISION001")]
         internal Encryption Encryption
         {
             get
@@ -131,6 +141,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the StorageConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public HealthcareApisServiceStorageConfiguration StorageConfiguration
         {
             get
@@ -146,6 +157,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the IsDataPartitionsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsDataPartitionsEnabled
         {
             get
@@ -161,6 +173,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the KeyEncryptionKeyUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> KeyEncryptionKeyUri
         {
             get

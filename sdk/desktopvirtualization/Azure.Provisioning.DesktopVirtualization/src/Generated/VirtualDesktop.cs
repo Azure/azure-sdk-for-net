@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Schema for Desktop properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualDesktop : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -92,6 +93,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ObjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ObjectId
         {
             get
@@ -101,6 +103,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -110,6 +113,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the FriendlyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FriendlyName
         {
             get
@@ -119,6 +123,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the IconHash. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IconHash
         {
             get
@@ -128,6 +133,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the IconContent. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> IconContent
         {
             get

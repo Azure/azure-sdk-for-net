@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Information about the storage blob based dead letter destination. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class StorageBlobDeadLetterDestination : DeadLetterDestination
     {
         private StorageBlobDeadLetterDestinationProperties _properties;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         internal StorageBlobDeadLetterDestinationProperties Properties
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ResourceId
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the BlobContainerName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> BlobContainerName
         {
             get

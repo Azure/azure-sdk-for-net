@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Status of legacy portal in the API Management service. </summary>
+    [Experimental("AZPROVISION001")]
     public enum LegacyPortalStatus
     {
         /// <summary> Legacy Portal is enabled for the service. </summary>

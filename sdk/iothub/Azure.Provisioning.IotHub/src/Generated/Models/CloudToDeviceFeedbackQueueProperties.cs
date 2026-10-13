@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The properties of the feedback queue for cloud-to-device messages. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CloudToDeviceFeedbackQueueProperties : ProvisionableConstruct
     {
         private BicepValue<TimeSpan> _lockDurationAsIso8601;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the LockDurationAsIso8601. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> LockDurationAsIso8601
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the TtlAsIso8601. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> TtlAsIso8601
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the MaxDeliveryCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxDeliveryCount
         {
             get

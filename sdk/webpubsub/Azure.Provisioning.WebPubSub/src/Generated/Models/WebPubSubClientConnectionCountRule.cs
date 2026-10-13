@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.WebPubSub
     /// A base class for client connection count rules
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="WebPubSubThrottleByJwtCustomClaimRule"/>, <see cref="WebPubSubThrottleByJwtSignatureRule"/>, and <see cref="WebPubSubThrottleByUserIdRule"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubClientConnectionCountRule : ProvisionableConstruct
     {
         private BicepValue<ClientConnectionCountRuleDiscriminator> _type;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<ClientConnectionCountRuleDiscriminator> Type
         {
             get

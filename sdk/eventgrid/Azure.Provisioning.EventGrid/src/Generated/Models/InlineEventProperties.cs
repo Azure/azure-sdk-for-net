@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Additional information about every inline event. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class InlineEventProperties : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DocumentationUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> DocumentationUri
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DataSchemaUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> DataSchemaUri
         {
             get

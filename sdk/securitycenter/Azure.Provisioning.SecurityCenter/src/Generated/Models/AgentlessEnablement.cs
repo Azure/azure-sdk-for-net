@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Agentless Enablement states. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AgentlessEnablement
     {
         /// <summary> Disabled. </summary>

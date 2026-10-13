@@ -98,6 +98,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public DataSyncParticipantIdentity Identity
         {
             get

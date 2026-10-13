@@ -17,6 +17,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> The scheduled query rule resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ScheduledQueryRule : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -87,6 +88,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public ManagedServiceIdentity Identity
         {
             get
@@ -102,6 +104,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Tags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Tags
         {
             get
@@ -117,6 +120,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Location. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> Location
         {
             get
@@ -132,6 +136,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Kind. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ScheduledQueryRuleKind> Kind
         {
             get
@@ -157,6 +162,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the CreatedWithApiVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CreatedWithApiVersion
         {
             get
@@ -170,6 +176,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the IsLegacyLogAnalyticsRule. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsLegacyLogAnalyticsRule
         {
             get
@@ -183,6 +190,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -200,6 +208,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -217,6 +226,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Severity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AlertSeverity> Severity
         {
             get
@@ -234,6 +244,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -251,6 +262,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Scopes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Scopes
         {
             get
@@ -268,6 +280,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the EvaluationFrequency. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> EvaluationFrequency
         {
             get
@@ -285,6 +298,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the WindowSize. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> WindowSize
         {
             get
@@ -302,6 +316,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the OverrideQueryTimeRange. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> OverrideQueryTimeRange
         {
             get
@@ -319,6 +334,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the TargetResourceTypes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> TargetResourceTypes
         {
             get
@@ -336,6 +352,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the MuteActionsDuration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> MuteActionsDuration
         {
             get
@@ -353,6 +370,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Actions. </summary>
+        [Experimental("AZPROVISION001")]
         public ScheduledQueryRuleActions Actions
         {
             get
@@ -370,6 +388,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the IsWorkspaceAlertsStorageConfigured. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsWorkspaceAlertsStorageConfigured
         {
             get
@@ -383,6 +402,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the CheckWorkspaceAlertsStorageConfigured. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> CheckWorkspaceAlertsStorageConfigured
         {
             get
@@ -400,6 +420,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the SkipQueryValidation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> SkipQueryValidation
         {
             get
@@ -417,6 +438,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the AutoMitigate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> AutoMitigate
         {
             get
@@ -434,6 +456,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ResolveConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public RuleResolveConfiguration ResolveConfiguration
         {
             get
@@ -451,6 +474,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the AllOf. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ScheduledQueryRuleCondition> CriteriaAllOf
         {
             get

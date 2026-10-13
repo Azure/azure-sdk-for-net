@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Network security perimeter info. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class NetworkSecurityPerimeterInfo : ProvisionableConstruct
     {
         private BicepValue<string> _id;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the PerimeterGuid. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PerimeterGuid
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the Location. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> Location
         {
             get

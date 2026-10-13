@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> Indicates whether the configuration store need to be recovered. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AppConfigurationCreateMode
     {
         /// <summary> Recover. </summary>

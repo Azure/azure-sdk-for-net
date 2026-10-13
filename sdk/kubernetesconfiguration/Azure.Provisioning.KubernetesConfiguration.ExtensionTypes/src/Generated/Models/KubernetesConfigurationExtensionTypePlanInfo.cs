@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary> Plan information only for the Marketplace Extension Type. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class KubernetesConfigurationExtensionTypePlanInfo : ProvisionableConstruct
     {
         private BicepValue<string> _publisherId;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the PublisherId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PublisherId
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the PlanId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PlanId
         {
             get
@@ -43,6 +47,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the OfferId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OfferId
         {
             get

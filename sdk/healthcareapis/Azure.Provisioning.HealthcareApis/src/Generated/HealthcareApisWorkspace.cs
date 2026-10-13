@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> Workspace resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HealthcareApisWorkspace : ProvisionableResource
     {
         private BicepValue<string> _id;
@@ -114,6 +115,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get

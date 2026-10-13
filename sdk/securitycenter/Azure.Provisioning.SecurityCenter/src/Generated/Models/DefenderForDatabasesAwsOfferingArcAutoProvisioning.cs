@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The ARC autoprovisioning configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderForDatabasesAwsOfferingArcAutoProvisioning : ArcAutoProvisioningAws
     {
         /// <summary> Creates a new DefenderForDatabasesAwsOfferingArcAutoProvisioning. </summary>

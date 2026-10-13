@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Diagnostic settings for Large Language Models Messages. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class LLMMessageDiagnosticSettings : ProvisionableConstruct
     {
         private BicepValue<LlmMessageLogTypes> _messages;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Messages. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<LlmMessageLogTypes> Messages
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the MaxSizeInBytes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxSizeInBytes
         {
             get

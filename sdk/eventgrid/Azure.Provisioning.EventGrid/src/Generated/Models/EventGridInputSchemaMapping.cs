@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.EventGrid
     /// By default, Event Grid expects events to be in the Event Grid event schema. Specifying an input schema mapping enables publishing to Event Grid using a custom input schema. Currently, the only supported type of InputSchemaMapping is 'JsonInputSchemaMapping'.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="EventGridJsonInputSchemaMapping"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventGridInputSchemaMapping : ProvisionableConstruct
     {
         private BicepValue<InputSchemaMappingType> _inputSchemaMappingType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Type of the custom mapping. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<InputSchemaMappingType> InputSchemaMappingType
         {
             get

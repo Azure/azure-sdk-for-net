@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> A more specific scope used to identify the alerts to suppress. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SuppressionAlertsScopeElement : ProvisionableConstruct
     {
         private BicepValue<string> _field;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Field. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Field
         {
             get

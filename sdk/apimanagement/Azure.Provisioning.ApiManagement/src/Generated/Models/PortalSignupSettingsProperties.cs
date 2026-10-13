@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Sign-up settings contract properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PortalSignupSettingsProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isSignUpDeveloperPortalEnabled;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsSignUpDeveloperPortalEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSignUpDeveloperPortalEnabled
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TermsOfService. </summary>
+        [Experimental("AZPROVISION001")]
         public TermsOfServiceProperties TermsOfService
         {
             get

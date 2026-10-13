@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Properties of the Cache contract. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class CacheContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ConnectionString. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ConnectionString
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the UseFromLocation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UseFromLocation
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ResourceUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> ResourceUri
         {
             get

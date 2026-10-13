@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The Defender for Databases GCP offering configurations. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderForDatabasesGcpOffering : SecurityCenterCloudOffering
     {
         private DefenderForDatabasesGcpOfferingArcAutoProvisioning _arcAutoProvisioning;
@@ -20,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ArcAutoProvisioning. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderForDatabasesGcpOfferingArcAutoProvisioning ArcAutoProvisioning
         {
             get
@@ -35,6 +39,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DefenderForDatabasesArcAutoProvisioning. </summary>
+        [Experimental("AZPROVISION001")]
         public GcpDefenderForDatabasesArcAutoProvisioning DefenderForDatabasesArcAutoProvisioning
         {
             get

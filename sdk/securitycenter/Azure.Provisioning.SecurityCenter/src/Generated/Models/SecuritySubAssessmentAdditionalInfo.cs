@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.SecurityCenter
     /// Details of the sub-assessment
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/>, and <see cref="SqlServerVulnerabilityProperties"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecuritySubAssessmentAdditionalInfo : ProvisionableConstruct
     {
         private BicepValue<AssessedResourceType> _assessedResourceType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Sub-assessment resource type. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<AssessedResourceType> AssessedResourceType
         {
             get

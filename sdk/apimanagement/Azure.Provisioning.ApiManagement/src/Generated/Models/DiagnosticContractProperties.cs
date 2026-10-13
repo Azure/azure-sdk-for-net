@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Diagnostic Entity Properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DiagnosticContractProperties : ProvisionableConstruct
     {
         private BicepValue<AlwaysLog> _alwaysLog;
@@ -31,6 +33,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AlwaysLog. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AlwaysLog> AlwaysLog
         {
             get
@@ -46,6 +49,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the LoggerId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LoggerId
         {
             get
@@ -61,6 +65,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Sampling. </summary>
+        [Experimental("AZPROVISION001")]
         public SamplingSettings Sampling
         {
             get
@@ -76,6 +81,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Frontend. </summary>
+        [Experimental("AZPROVISION001")]
         public PipelineDiagnosticSettings Frontend
         {
             get
@@ -91,6 +97,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Backend. </summary>
+        [Experimental("AZPROVISION001")]
         public PipelineDiagnosticSettings Backend
         {
             get
@@ -106,6 +113,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the LargeLanguageModel. </summary>
+        [Experimental("AZPROVISION001")]
         public LLMDiagnosticSettings LargeLanguageModel
         {
             get
@@ -121,6 +129,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsLogClientIPEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsLogClientIPEnabled
         {
             get
@@ -136,6 +145,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the HttpCorrelationProtocol. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HttpCorrelationProtocol> HttpCorrelationProtocol
         {
             get
@@ -151,6 +161,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Verbosity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TraceVerbosityLevel> Verbosity
         {
             get
@@ -166,6 +177,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the OperationNameFormat. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<OperationNameFormat> OperationNameFormat
         {
             get
@@ -181,6 +193,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Metrics. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> Metrics
         {
             get

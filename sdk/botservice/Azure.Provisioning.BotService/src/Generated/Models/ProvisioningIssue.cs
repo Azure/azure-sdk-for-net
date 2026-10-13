@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Describes Provisioning issue for given Network Security Perimeter configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ProvisioningIssue : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         public ProvisioningIssueProperties Properties
         {
             get

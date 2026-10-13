@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> The mapping content. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HealthcareApisIotMappingProperties : ProvisionableConstruct
     {
         private BicepValue<BinaryData> _content;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the Content. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> Content
         {
             get

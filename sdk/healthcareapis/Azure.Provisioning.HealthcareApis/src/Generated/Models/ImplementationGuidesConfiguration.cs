@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> The settings for Implementation Guides - defining capabilities for national standards, vendor consortiums, clinical societies, etc. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ImplementationGuidesConfiguration : ProvisionableConstruct
     {
         private BicepValue<bool> _isUsCoreMissingDataEnabled;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the IsUsCoreMissingDataEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsUsCoreMissingDataEnabled
         {
             get

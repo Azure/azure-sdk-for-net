@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The permissions assigned to the shared access policy. </summary>
+    [Experimental("AZPROVISION001")]
     public enum IotHubSharedAccessRight
     {
         /// <summary> RegistryRead. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -26,6 +27,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the StartsOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> StartsOn
         {
             get
@@ -41,6 +43,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the EndsOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> EndsOn
         {
             get

@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The health report resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HealthReport : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -75,6 +76,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ResourceDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public SecurityCloudResourceDetails ResourceDetails
         {
             get
@@ -84,6 +86,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the EnvironmentDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public SecurityConnectorEnvironmentDetails EnvironmentDetails
         {
             get
@@ -93,6 +96,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the HealthDataClassification. </summary>
+        [Experimental("AZPROVISION001")]
         public HealthDataClassification HealthDataClassification
         {
             get
@@ -102,6 +106,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public HealthReportStatus Status
         {
             get
@@ -111,6 +116,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the AffectedDefendersPlans. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AffectedDefendersPlans
         {
             get
@@ -120,6 +126,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the AffectedDefendersSubPlans. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AffectedDefendersSubPlans
         {
             get
@@ -129,6 +136,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ReportAdditionalData. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> ReportAdditionalData
         {
             get
@@ -138,6 +146,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Issues. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SecurityHealthIssue> Issues
         {
             get

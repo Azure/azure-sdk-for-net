@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Name of the Sku. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ApiManagementServiceSkuType
     {
         /// <summary> Developer SKU of Api Management. </summary>

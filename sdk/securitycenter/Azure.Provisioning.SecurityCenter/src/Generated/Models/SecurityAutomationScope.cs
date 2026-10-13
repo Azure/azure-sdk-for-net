@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> A single automation scope. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityAutomationScope : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ScopePath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ScopePath
         {
             get

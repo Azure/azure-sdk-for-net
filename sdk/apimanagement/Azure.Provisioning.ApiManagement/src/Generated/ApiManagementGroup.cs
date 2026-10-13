@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Contract details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementGroup : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -130,6 +133,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the IsBuiltIn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsBuiltIn
         {
             get
@@ -143,6 +147,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ApiManagementGroupType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApiManagementGroupType> ApiManagementGroupType
         {
             get
@@ -160,6 +165,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ExternalId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExternalId
         {
             get

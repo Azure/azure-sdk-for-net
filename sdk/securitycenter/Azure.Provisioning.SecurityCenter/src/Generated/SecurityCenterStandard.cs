@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Security Standard on a resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityCenterStandard : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -84,6 +85,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Tags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Tags
         {
             get
@@ -99,6 +101,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Location. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> Location
         {
             get
@@ -114,6 +117,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Kind. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Kind
         {
             get
@@ -129,6 +133,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -144,6 +149,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -161,6 +167,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the StandardType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> StandardType
         {
             get
@@ -174,6 +181,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -191,6 +199,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Category. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Category
         {
             get
@@ -208,6 +217,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Components. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<StandardComponentProperties> Components
         {
             get
@@ -225,6 +235,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SupportedClouds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<StandardSupportedClouds> SupportedClouds
         {
             get

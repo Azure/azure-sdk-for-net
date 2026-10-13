@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> An IP rule. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubIPRule : ProvisionableConstruct
     {
         private BicepValue<string> _value;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Value
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Action. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AclAction> Action
         {
             get

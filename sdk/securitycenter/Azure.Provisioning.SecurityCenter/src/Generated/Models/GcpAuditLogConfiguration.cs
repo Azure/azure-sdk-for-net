@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The configuration for GCP audit log ingestion. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GcpAuditLogConfiguration : ProvisionableConstruct
     {
         private BicepValue<GcpLoggingProvisioningType> _provisioningType;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ProvisioningType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<GcpLoggingProvisioningType> ProvisioningType
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ResourceSets. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<GcpLoggingResourceSet> ResourceSets
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ResourceNamePrefix. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceNamePrefix
         {
             get

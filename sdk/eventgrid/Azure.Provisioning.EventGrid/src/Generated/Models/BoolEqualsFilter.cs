@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> BoolEquals Filter. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BoolEqualsFilter : EventGridFilter
     {
         private BicepValue<bool> _value;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> Value
         {
             get

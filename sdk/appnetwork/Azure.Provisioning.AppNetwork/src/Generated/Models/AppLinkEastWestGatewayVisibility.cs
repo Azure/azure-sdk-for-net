@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.AppNetwork
 {
     /// <summary> East-West gateway visibility. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AppLinkEastWestGatewayVisibility
     {
         /// <summary> Use an internal load balancer for the east-west gateway. </summary>
