@@ -604,6 +604,7 @@ try {
         # Reset so a stale value from a previous iteration can't leak through if the try block
         # below throws without reassigning it.
         $deployment = $null
+        $deploymentError = $null
 
         # Deployment fails if we pass in more parameters than are defined.
         Write-Verbose "Removing unnecessary parameters from template '$($templateFile.jsonFilePath)'"
@@ -643,6 +644,7 @@ try {
                             -TemplateParameterObject $templateFileParameters `
                             -Force:$Force
         } catch {
+            $deploymentError = $_
             # Throw if we hit a template validation error, otherwise proceed
             if ($_.Exception.Message -like '*InvalidTemplateDeployment*') {
                 $validation = Test-AzResourceGroupDeployment `
@@ -666,8 +668,7 @@ try {
         }
 
         if ($deployment.ProvisioningState -ne 'Succeeded') {
-            HandleDeploymentFailure $deployment
-            exit 1
+            HandleDeploymentFailure $deployment -DeploymentError $deploymentError
         }
 
         Write-Host "Deployment '$($deployment.DeploymentName)' has CorrelationId '$($deployment.CorrelationId)'"
