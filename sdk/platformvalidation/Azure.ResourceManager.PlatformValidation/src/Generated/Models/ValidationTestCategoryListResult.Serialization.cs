@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ValidationTestCategoryListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ValidationTestCategoryListResult(value ?? new ChangeTrackingList<ValidationTestCategoryData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

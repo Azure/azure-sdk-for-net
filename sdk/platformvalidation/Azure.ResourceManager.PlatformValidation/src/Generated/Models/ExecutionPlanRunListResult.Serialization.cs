@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExecutionPlanRunListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ExecutionPlanRunListResult(value ?? new ChangeTrackingList<ExecutionPlanRunData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
