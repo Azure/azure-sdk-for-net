@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <returns> A new <see cref="Models.SignalRecommendationConfiguration"/> instance for mocking. </returns>
         public static SignalRecommendationConfiguration SignalRecommendationConfiguration(string signalKind = default)
         {
-            return new UnknownSignalRecommendationConfiguration(default, default);
+            return new UnknownSignalRecommendationConfiguration(signalKind is null ? default : new SignalRecommendationKind(signalKind), default);
         }
 
         /// <summary> Azure Resource Metric recommendation configuration. </summary>
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static AzureResourceMetricRecommendationConfiguration AzureResourceMetricRecommendationConfiguration(string metricNamespace = default, string metricName = default, MetricAggregationType aggregationType = default, string timeGrain = default, string dimensionFilter = default)
         {
             return new AzureResourceMetricRecommendationConfiguration(
-                default,
+                SignalRecommendationKind.AzureResourceMetric,
                 default,
                 metricNamespace,
                 metricName,
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             requiredDiagnosticSettingCategories ??= new ChangeTrackingList<string>();
 
             return new LogAnalyticsQueryRecommendationConfiguration(
-                default,
+                SignalRecommendationKind.LogAnalyticsQuery,
                 default,
                 queryText,
                 timeGrain,
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             requiredScrapeTargets ??= new ChangeTrackingList<string>();
 
             return new PrometheusMetricsRecommendationConfiguration(
-                default,
+                SignalRecommendationKind.PrometheusMetricsQuery,
                 default,
                 queryText,
                 timeGrain,

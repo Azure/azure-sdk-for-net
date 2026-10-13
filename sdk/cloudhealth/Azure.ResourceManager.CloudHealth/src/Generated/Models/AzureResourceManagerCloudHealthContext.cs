@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.CloudHealth
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ApplicationInsightsTopologySpecification))]
-    [ModelReaderWriterBuildable(typeof(AuthenticationSettingListResult))]
     [ModelReaderWriterBuildable(typeof(AzureResourceMetricRecommendationConfiguration))]
     [ModelReaderWriterBuildable(typeof(DependenciesSignalGroupV2))]
     [ModelReaderWriterBuildable(typeof(DiscoveryError))]
@@ -82,11 +81,6 @@ namespace Azure.ResourceManager.CloudHealth
     [ModelReaderWriterBuildable(typeof(SignalRecommendationConfiguration))]
     [ModelReaderWriterBuildable(typeof(SignalStatus))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnknownDiscoveryRuleSpecification))]
-    [ModelReaderWriterBuildable(typeof(UnknownHealthModelAuthenticationSettingProperties))]
-    [ModelReaderWriterBuildable(typeof(UnknownHealthModelSignalDefinitionProperties))]
-    [ModelReaderWriterBuildable(typeof(UnknownSignalInstanceProperties))]
-    [ModelReaderWriterBuildable(typeof(UnknownSignalRecommendationConfiguration))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerCloudHealthContext : ModelReaderWriterContext
     {
