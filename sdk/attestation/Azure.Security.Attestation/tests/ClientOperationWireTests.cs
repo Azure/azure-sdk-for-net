@@ -276,6 +276,19 @@ namespace Azure.Security.Attestation.Tests
             Assert.ThrowsAsync<AttestationTokenValidationFailedException>(() => Attest(client, "SgxEnclave", request, async));
         }
 
+        [Test]
+        public async System.Threading.Tasks.Task AsyncOperationsFetchSigningCertificatesAsynchronously()
+        {
+            var transport = new AsyncOnlyTransport(request => new MockResponse(200).SetContent(
+                request.Uri.Path == "/certs" ? "{\"keys\":[]}" : TokenResponse("{\"nonce\":\"d1\"}")));
+            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), new AttestationClientOptions { Transport = transport });
+            var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
+
+            CollectionAssert.IsEmpty((await client.GetSigningCertificatesAsync()).Value);
+            Assert.AreEqual("d1", (await client.AttestSgxEnclaveAsync(request)).Value.Nonce);
+            Assert.AreEqual(2, transport.Requests.Count(r => r.Uri.Path == "/certs"));
+        }
+
         [TestCase(false)]
         [TestCase(true)]
         public async System.Threading.Tasks.Task AttestAzureGuest(bool async)
@@ -638,6 +651,17 @@ namespace Azure.Security.Attestation.Tests
             public string Uri { get; }
             public string ContentType { get; }
             public string Body { get; }
+        }
+
+        // MockTransport.ExpectSyncPipeline also wraps the response stream, which breaks buffered Content reads.
+        private sealed class AsyncOnlyTransport : MockTransport
+        {
+            public AsyncOnlyTransport(Func<MockRequest, MockResponse> responseFactory) : base(responseFactory)
+            {
+            }
+
+            public override void Process(HttpMessage message)
+                => throw new InvalidOperationException("Sync pipeline invocation not expected");
         }
     }
 }

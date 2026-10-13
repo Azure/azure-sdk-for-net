@@ -506,14 +506,14 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>An <see cref="AttestationResponse{T}"/> whose specialization contains a list of signers which can be used to sign attestation tokens.</returns>
-        public virtual Task<Response<IReadOnlyList<AttestationSigner>>> GetSigningCertificatesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<AttestationSigner>>> GetSigningCertificatesAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(GetSigningCertificates)}");
             scope.Start();
             try
             {
-                var keys = _metadataClient.Get(cancellationToken);
-                return Task.FromResult(Response.FromValue(AttestationSigner.FromJsonWebKeySet(keys), keys.GetRawResponse()));
+                var keys = await _metadataClient.GetAsync(cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(AttestationSigner.FromJsonWebKeySet(keys), keys.GetRawResponse());
             }
             catch (Exception ex)
             {
