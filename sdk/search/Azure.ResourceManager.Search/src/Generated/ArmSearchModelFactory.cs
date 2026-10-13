@@ -55,68 +55,6 @@ namespace Azure.ResourceManager.Search.Models
             return new QuotaUsageResultName(value, localizedValue, default);
         }
 
-        /// <summary> Response containing the available Azure AI Search offerings, organized by region, along with the recommended default region for creating new services. </summary>
-        /// <param name="defaultRegion"> The recommended default region for creating new Azure AI Search services. </param>
-        /// <param name="regions"> The list of Azure AI Search offerings by region. </param>
-        /// <returns> A new <see cref="Models.SearchOfferingsResult"/> instance for mocking. </returns>
-        public static SearchOfferingsResult SearchOfferingsResult(string defaultRegion = default, IEnumerable<SearchOfferingsByRegion> regions = default)
-        {
-            regions ??= new ChangeTrackingList<SearchOfferingsByRegion>();
-
-            return new SearchOfferingsResult(defaultRegion, (regions ?? new ChangeTrackingList<SearchOfferingsByRegion>()).ToList(), default);
-        }
-
-        /// <summary> Describes the Azure AI Search features and SKUs available in a specific Azure region. </summary>
-        /// <param name="regionName"> The name of the region. </param>
-        /// <param name="features"> The list of features offered in this region. </param>
-        /// <param name="skus"> The list of SKUs offered in this region. </param>
-        /// <returns> A new <see cref="Models.SearchOfferingsByRegion"/> instance for mocking. </returns>
-        public static SearchOfferingsByRegion SearchOfferingsByRegion(string regionName = default, IEnumerable<SearchFeatureOffering> features = default, IEnumerable<SearchSkuOffering> skus = default)
-        {
-            features ??= new ChangeTrackingList<SearchFeatureOffering>();
-            skus ??= new ChangeTrackingList<SearchSkuOffering>();
-
-            return new SearchOfferingsByRegion(regionName, (features ?? new ChangeTrackingList<SearchFeatureOffering>()).ToList(), (skus ?? new ChangeTrackingList<SearchSkuOffering>()).ToList(), default);
-        }
-
-        /// <summary> Describes the availability of a specific feature in a region. </summary>
-        /// <param name="name"> The name of the feature offered in this region. </param>
-        /// <returns> A new <see cref="Models.SearchFeatureOffering"/> instance for mocking. </returns>
-        public static SearchFeatureOffering SearchFeatureOffering(string name = default)
-        {
-            return new SearchFeatureOffering(name, default);
-        }
-
-        /// <param name="searchSkuName"> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions. 'serverless': Serverless tier with auto-scaling capabilities. </param>
-        /// <param name="limits"> The limits associated with this SKU offered in this region. </param>
-        /// <returns> A new <see cref="Models.SearchSkuOffering"/> instance for mocking. </returns>
-        public static SearchSkuOffering SearchSkuOffering(SearchServiceSkuName? searchSkuName = default, SearchSkuLimits limits = default)
-        {
-            return new SearchSkuOffering(searchSkuName is null ? default : new SearchSku(searchSkuName, default), limits, default);
-        }
-
-        /// <summary> Describes the limits associated with a SKU offering. </summary>
-        /// <param name="indexes"> The maximum number of indexes available for this SKU. </param>
-        /// <param name="indexers"> The maximum number of indexers available for this SKU. </param>
-        /// <param name="partitionStorageInGigabytes"> The maximum storage size in Gigabytes available for this SKU per partition. </param>
-        /// <param name="partitionVectorStorageInGigabytes"> The maximum vector storage size in Gigabytes available for this SKU per partition. </param>
-        /// <param name="searchUnits"> The maximum number of search units available for this SKU. </param>
-        /// <param name="replicas"> The maximum number of replicas available for this SKU. </param>
-        /// <param name="partitions"> The maximum number of partitions available for this SKU. </param>
-        /// <returns> A new <see cref="Models.SearchSkuLimits"/> instance for mocking. </returns>
-        public static SearchSkuLimits SearchSkuLimits(int? indexes = default, int? indexers = default, float? partitionStorageInGigabytes = default, float? partitionVectorStorageInGigabytes = default, int? searchUnits = default, int? replicas = default, int? partitions = default)
-        {
-            return new SearchSkuLimits(
-                indexes,
-                indexers,
-                partitionStorageInGigabytes,
-                partitionVectorStorageInGigabytes,
-                searchUnits,
-                replicas,
-                partitions,
-                default);
-        }
-
         /// <summary> Describes an existing private endpoint connection to the Azure AI Search service. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -380,7 +318,6 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="semanticSearch"> Specifies the availability and billing plan for semantic search on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </param>
         /// <param name="knowledgeRetrieval"> Specifies the billing plan for agentic retrieval on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure AI Search service. </param>
-        /// <param name="autoGeneratedDomainNameLabelScope"> Defines the level of reuse for the auto-generated domain name label for the search service (e.g. myservice-&lt;uniqueId&gt;.search.windows.net). If not specified, no auto-generated domain name label is created for the search service. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
         /// <param name="eTag"> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </param>
         /// <param name="isUpgradeAvailable"> Indicates if the search service has an upgrade available. </param>
@@ -388,7 +325,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="searchSkuName"> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions. 'serverless': Serverless tier with auto-scaling capabilities. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <returns> A new <see cref="Search.SearchServiceData"/> instance for mocking. </returns>
-        public static SearchServiceData SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, SearchServiceComputeType? computeType, SearchServicePublicInternetAccess? publicInternetAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, SearchServiceNetworkRuleSet networkRuleSet, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, SearchKnowledgeRetrieval? knowledgeRetrieval, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, SearchDomainNameLabelScope? autoGeneratedDomainNameLabelScope, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, ETag? eTag, SearchServiceUpgradeAvailable? isUpgradeAvailable, DateTimeOffset? serviceUpgradedOn, SearchServiceSkuName? searchSkuName, ManagedServiceIdentity identity = default)
+        public static SearchServiceData SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, SearchServiceComputeType? computeType, SearchServicePublicInternetAccess? publicInternetAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, SearchServiceNetworkRuleSet networkRuleSet, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, SearchKnowledgeRetrieval? knowledgeRetrieval, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, ETag? eTag, SearchServiceUpgradeAvailable? isUpgradeAvailable, DateTimeOffset? serviceUpgradedOn, SearchServiceSkuName? searchSkuName, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -399,7 +336,7 @@ namespace Azure.ResourceManager.Search.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                replicaCount is null && partitionCount is null && endpoint is null && hostingMode is null && computeType is null && publicInternetAccess is null && status is null && statusDetails is null && provisioningState is null && networkRuleSet is null && dataExfiltrationProtections is null && encryptionWithCmk is null && isLocalAuthDisabled is null && authOptions is null && semanticSearch is null && knowledgeRetrieval is null && privateEndpointConnections is null && autoGeneratedDomainNameLabelScope is null && sharedPrivateLinkResources is null && eTag is null && isUpgradeAvailable is null && serviceUpgradedOn is null ? default : new SearchServiceProperties(
+                replicaCount is null && partitionCount is null && endpoint is null && hostingMode is null && computeType is null && publicInternetAccess is null && status is null && statusDetails is null && provisioningState is null && networkRuleSet is null && dataExfiltrationProtections is null && encryptionWithCmk is null && isLocalAuthDisabled is null && authOptions is null && semanticSearch is null && knowledgeRetrieval is null && privateEndpointConnections is null && sharedPrivateLinkResources is null && eTag is null && isUpgradeAvailable is null && serviceUpgradedOn is null ? default : new SearchServiceProperties(
                     replicaCount,
                     partitionCount,
                     endpoint,
@@ -417,7 +354,6 @@ namespace Azure.ResourceManager.Search.Models
                     semanticSearch,
                     knowledgeRetrieval,
                     (privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>()).ToList(),
-                    autoGeneratedDomainNameLabelScope,
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>()).ToList(),
                     eTag,
                     isUpgradeAvailable,
@@ -450,65 +386,10 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Describes a policy that determines how resources within the search service are to be encrypted with customer managed keys. </summary>
         /// <param name="enforcement"> Describes how a search service should enforce compliance if it finds objects that aren't encrypted with the customer-managed key. </param>
         /// <param name="encryptionComplianceStatus"> Returns the status of search service compliance with respect to non-CMK-encrypted objects. If a service has more than one unencrypted object, and enforcement is enabled, the service is marked as noncompliant. </param>
-        /// <param name="serviceLevelEncryptionKey"> Describes the customer-managed key configuration for encrypting the search service. </param>
         /// <returns> A new <see cref="Models.SearchEncryptionWithCmk"/> instance for mocking. </returns>
-        public static SearchEncryptionWithCmk SearchEncryptionWithCmk(SearchEncryptionWithCmkEnforcement? enforcement, SearchEncryptionComplianceStatus? encryptionComplianceStatus, SearchResourceEncryptionKey serviceLevelEncryptionKey)
+        public static SearchEncryptionWithCmk SearchEncryptionWithCmk(SearchEncryptionWithCmkEnforcement? enforcement = default, SearchEncryptionComplianceStatus? encryptionComplianceStatus = default)
         {
-            return new SearchEncryptionWithCmk(enforcement, encryptionComplianceStatus, serviceLevelEncryptionKey, default);
-        }
-
-        /// <summary> A customer-managed encryption key in Azure Key Vault. Keys that you create and manage can be used to encrypt or decrypt data-at-rest, such as indexes and synonym maps. </summary>
-        /// <param name="keyName"> The name of your Azure Key Vault key to be used to encrypt your data at rest. </param>
-        /// <param name="keyVersion"> The version of your Azure Key Vault key to be used to encrypt your data at rest. </param>
-        /// <param name="vaultUri"> The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be `https://my-keyvault-name.vault.azure.net`. </param>
-        /// <param name="identity"> An explicit managed identity to use for this encryption key. If not specified and the access credentials property is null, the system-assigned managed identity is used. On update to the resource, if the explicit identity is unspecified, it remains unchanged. If "none" is specified, the value of this property is cleared. </param>
-        /// <param name="accessCredentials"> Optional Azure Active Directory credentials used for accessing your Azure Key Vault. Not required if using managed identity instead. </param>
-        /// <returns> A new <see cref="Models.SearchResourceEncryptionKey"/> instance for mocking. </returns>
-        public static SearchResourceEncryptionKey SearchResourceEncryptionKey(string keyName = default, string keyVersion = default, Uri vaultUri = default, SearchDataIdentity identity = default, SearchAadApplicationCredentials accessCredentials = default)
-        {
-            return new SearchResourceEncryptionKey(
-                keyName,
-                keyVersion,
-                vaultUri,
-                identity,
-                accessCredentials,
-                default);
-        }
-
-        /// <summary>
-        /// Abstract base type for data identities.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SearchDataNoneIdentity"/> and <see cref="Models.SearchDataUserAssignedIdentity"/>.
-        /// </summary>
-        /// <param name="odataType"> A URI fragment specifying the type of identity. </param>
-        /// <returns> A new <see cref="Models.SearchDataIdentity"/> instance for mocking. </returns>
-        public static SearchDataIdentity SearchDataIdentity(string odataType = default)
-        {
-            return new UnknownSearchDataIdentity(odataType, default);
-        }
-
-        /// <summary> Clears the identity property. </summary>
-        /// <returns> A new <see cref="Models.SearchDataNoneIdentity"/> instance for mocking. </returns>
-        public static SearchDataNoneIdentity SearchDataNoneIdentity()
-        {
-            return new SearchDataNoneIdentity("#Microsoft.Azure.Search.DataNoneIdentity", default);
-        }
-
-        /// <summary> Specifies the user assigned identity to use. </summary>
-        /// <param name="userAssignedIdentity"> The fully qualified Azure resource Id of a user assigned managed identity typically in the form "/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId" that should have been assigned to the search service. </param>
-        /// <param name="federatedIdentityClientId"> Optional for Multi-tenant User-Assigned Managed Identity CMK Support: The client id (as a UUID) of the multi-tenant App Registration that has been configured to federate with the userAssignedIdentity. </param>
-        /// <returns> A new <see cref="Models.SearchDataUserAssignedIdentity"/> instance for mocking. </returns>
-        public static SearchDataUserAssignedIdentity SearchDataUserAssignedIdentity(ResourceIdentifier userAssignedIdentity = default, string federatedIdentityClientId = default)
-        {
-            return new SearchDataUserAssignedIdentity("#Microsoft.Azure.Search.DataUserAssignedIdentity", default, userAssignedIdentity, federatedIdentityClientId);
-        }
-
-        /// <summary> Describes the Azure Active Directory application credentials required to access an Azure Key Vault. </summary>
-        /// <param name="applicationId"> The application (client) ID of an App Registration in the tenant. </param>
-        /// <param name="applicationSecret"> An AAD client secret that was generated for the App Registration used to authenticate with Azure Key Vault. </param>
-        /// <returns> A new <see cref="Models.SearchAadApplicationCredentials"/> instance for mocking. </returns>
-        public static SearchAadApplicationCredentials SearchAadApplicationCredentials(string applicationId = default, string applicationSecret = default)
-        {
-            return new SearchAadApplicationCredentials(applicationId, applicationSecret, default);
+            return new SearchEncryptionWithCmk(enforcement, encryptionComplianceStatus, default);
         }
 
         /// <param name="apiKeyOnly"> Indicates that only the API key can be used for authentication. </param>
@@ -542,7 +423,6 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="semanticSearch"> Specifies the availability and billing plan for semantic search on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </param>
         /// <param name="knowledgeRetrieval"> Specifies the billing plan for agentic retrieval on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure AI Search service. </param>
-        /// <param name="autoGeneratedDomainNameLabelScope"> Defines the level of reuse for the auto-generated domain name label for the search service (e.g. myservice-&lt;uniqueId&gt;.search.windows.net). If not specified, no auto-generated domain name label is created for the search service. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
         /// <param name="eTag"> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </param>
         /// <param name="isUpgradeAvailable"> Indicates if the search service has an upgrade available. </param>
@@ -550,7 +430,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="searchSkuName"> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions. 'serverless': Serverless tier with auto-scaling capabilities. </param>
         /// <param name="identity"> Details about the search service identity. A null value indicates that the search service has no identity assigned. </param>
         /// <returns> A new <see cref="Models.SearchServicePatch"/> instance for mocking. </returns>
-        public static SearchServicePatch SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, SearchServiceComputeType? computeType, SearchServicePublicInternetAccess? publicInternetAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, SearchServiceNetworkRuleSet networkRuleSet, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, SearchKnowledgeRetrieval? knowledgeRetrieval, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, SearchDomainNameLabelScope? autoGeneratedDomainNameLabelScope, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, ETag? eTag, SearchServiceUpgradeAvailable? isUpgradeAvailable, DateTimeOffset? serviceUpgradedOn, SearchServiceSkuName? searchSkuName, ManagedServiceIdentity identity = default)
+        public static SearchServicePatch SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, SearchServiceComputeType? computeType, SearchServicePublicInternetAccess? publicInternetAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, SearchServiceNetworkRuleSet networkRuleSet, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, SearchKnowledgeRetrieval? knowledgeRetrieval, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, ETag? eTag, SearchServiceUpgradeAvailable? isUpgradeAvailable, DateTimeOffset? serviceUpgradedOn, SearchServiceSkuName? searchSkuName, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -561,7 +441,7 @@ namespace Azure.ResourceManager.Search.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                replicaCount is null && partitionCount is null && endpoint is null && hostingMode is null && computeType is null && publicInternetAccess is null && status is null && statusDetails is null && provisioningState is null && networkRuleSet is null && dataExfiltrationProtections is null && encryptionWithCmk is null && isLocalAuthDisabled is null && authOptions is null && semanticSearch is null && knowledgeRetrieval is null && privateEndpointConnections is null && autoGeneratedDomainNameLabelScope is null && sharedPrivateLinkResources is null && eTag is null && isUpgradeAvailable is null && serviceUpgradedOn is null ? default : new SearchServiceProperties(
+                replicaCount is null && partitionCount is null && endpoint is null && hostingMode is null && computeType is null && publicInternetAccess is null && status is null && statusDetails is null && provisioningState is null && networkRuleSet is null && dataExfiltrationProtections is null && encryptionWithCmk is null && isLocalAuthDisabled is null && authOptions is null && semanticSearch is null && knowledgeRetrieval is null && privateEndpointConnections is null && sharedPrivateLinkResources is null && eTag is null && isUpgradeAvailable is null && serviceUpgradedOn is null ? default : new SearchServiceProperties(
                     replicaCount,
                     partitionCount,
                     endpoint,
@@ -579,7 +459,6 @@ namespace Azure.ResourceManager.Search.Models
                     semanticSearch,
                     knowledgeRetrieval,
                     (privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>()).ToList(),
-                    autoGeneratedDomainNameLabelScope,
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>()).ToList(),
                     eTag,
                     isUpgradeAvailable,
@@ -717,7 +596,6 @@ namespace Azure.ResourceManager.Search.Models
                     semanticSearch,
                     default,
                     (privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>()).ToList(),
-                    default,
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>()).ToList(),
                     default,
                     default,
@@ -780,7 +658,6 @@ namespace Azure.ResourceManager.Search.Models
                     semanticSearch,
                     default,
                     (privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>()).ToList(),
-                    default,
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>()).ToList(),
                     default,
                     default,
@@ -848,7 +725,6 @@ namespace Azure.ResourceManager.Search.Models
                     semanticSearch,
                     default,
                     (privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>()).ToList(),
-                    default,
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>()).ToList(),
                     default,
                     default,
@@ -911,7 +787,6 @@ namespace Azure.ResourceManager.Search.Models
                     semanticSearch,
                     default,
                     (privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>()).ToList(),
-                    default,
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>()).ToList(),
                     default,
                     default,
@@ -980,7 +855,6 @@ namespace Azure.ResourceManager.Search.Models
                     semanticSearch,
                     default,
                     (privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>()).ToList(),
-                    default,
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>()).ToList(),
                     eTag,
                     isUpgradeAvailable,
@@ -989,16 +863,6 @@ namespace Azure.ResourceManager.Search.Models
                 searchSkuName is null ? default : new SearchSku(searchSkuName, default),
                 identity,
                 default);
-        }
-
-        /// <summary> Describes a policy that determines how resources within the search service are to be encrypted with customer managed keys. </summary>
-        /// <param name="enforcement"> Describes how a search service should enforce compliance if it finds objects that aren't encrypted with the customer-managed key. </param>
-        /// <param name="encryptionComplianceStatus"> Returns the status of search service compliance with respect to non-CMK-encrypted objects. If a service has more than one unencrypted object, and enforcement is enabled, the service is marked as noncompliant. </param>
-        /// <returns> A new <see cref="Models.SearchEncryptionWithCmk"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchEncryptionWithCmk SearchEncryptionWithCmk(SearchEncryptionWithCmkEnforcement? enforcement = default, SearchEncryptionComplianceStatus? encryptionComplianceStatus = default)
-        {
-            return new SearchEncryptionWithCmk(enforcement, encryptionComplianceStatus, default, default);
         }
 
         /// <summary> The parameters used to update an Azure AI Search service. </summary>
@@ -1059,7 +923,6 @@ namespace Azure.ResourceManager.Search.Models
                     semanticSearch,
                     default,
                     (privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>()).ToList(),
-                    default,
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>()).ToList(),
                     eTag,
                     isUpgradeAvailable,
