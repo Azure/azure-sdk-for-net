@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default));
+                            array.Add(ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(item.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default));
                         }
                     }
                     storageLinkedServices = array;
@@ -314,22 +314,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("mapper"u8))
                 {
-                    mapper = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    mapper = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("reducer"u8))
                 {
-                    reducer = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    reducer = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("input"u8))
                 {
-                    input = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    input = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("output"u8))
                 {
-                    output = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    output = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("filePaths"u8))
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fileLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    fileLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("combiner"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    combiner = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    combiner = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("commandEnvironment"u8))
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 reducer,
                 input,
                 output,
-                filePaths,
+                filePaths ?? new ChangeTrackingList<BinaryData>(),
                 fileLinkedService,
                 combiner,
                 commandEnvironment ?? new ChangeTrackingList<BinaryData>(),

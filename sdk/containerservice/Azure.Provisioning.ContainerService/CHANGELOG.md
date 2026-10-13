@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Corrected `ManagedClusterDelegatedIdentity.ResourceId` and `ReferralResource` to be optional.
+
 ### Other Changes
 
 ## 1.0.0-beta.6 (2026-04-02)

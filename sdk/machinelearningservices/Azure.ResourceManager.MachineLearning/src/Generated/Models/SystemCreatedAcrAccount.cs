@@ -17,6 +17,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _acrAccountName;
+        internal bool _acrAccountNameIsDefined;
+        private string _acrAccountSku;
+        internal bool _acrAccountSkuIsDefined;
+        private ArmResourceId _armResourceIdentifier;
+        internal bool _armResourceIdentifierIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SystemCreatedAcrAccount"/>. </summary>
         public SystemCreatedAcrAccount()
@@ -30,23 +36,56 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SystemCreatedAcrAccount(string acrAccountName, string acrAccountSku, ArmResourceId armResourceIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AcrAccountName = acrAccountName;
-            AcrAccountSku = acrAccountSku;
-            ArmResourceIdentifier = armResourceIdentifier;
+            _acrAccountName = acrAccountName;
+            _acrAccountSku = acrAccountSku;
+            _armResourceIdentifier = armResourceIdentifier;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the ACR account. </summary>
         [WirePath("acrAccountName")]
-        public string AcrAccountName { get; set; }
+        public string AcrAccountName
+        {
+            get
+            {
+                return _acrAccountName;
+            }
+            set
+            {
+                _acrAccountName = value;
+                _acrAccountNameIsDefined = true;
+            }
+        }
 
         /// <summary> SKU of the ACR account. </summary>
         [WirePath("acrAccountSku")]
-        public string AcrAccountSku { get; set; }
+        public string AcrAccountSku
+        {
+            get
+            {
+                return _acrAccountSku;
+            }
+            set
+            {
+                _acrAccountSku = value;
+                _acrAccountSkuIsDefined = true;
+            }
+        }
 
         /// <summary> This is populated once the ACR account is created. </summary>
         [WirePath("armResourceId")]
-        internal ArmResourceId ArmResourceIdentifier { get; set; }
+        internal ArmResourceId ArmResourceIdentifier
+        {
+            get
+            {
+                return _armResourceIdentifier;
+            }
+            set
+            {
+                _armResourceIdentifier = value;
+                _armResourceIdentifierIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Arm ResourceId is in the format "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}"

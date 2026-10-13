@@ -75,10 +75,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningAccountKeyDatastoreSecrets)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Key))
+            if (_keyIsDefined || Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("key"u8);
-                writer.WriteStringValue(Key);
+                if (Key != null)
+                {
+                    writer.WritePropertyName("key"u8);
+                    writer.WriteStringValue(Key);
+                }
+                else
+                {
+                    writer.WriteNull("key"u8);
+                }
             }
         }
 
@@ -109,6 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             SecretsType secretsType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool keyIsDefined = false;
             string key = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -119,6 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("key"u8))
                 {
+                    keyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         key = null;
@@ -132,7 +141,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningAccountKeyDatastoreSecrets(secretsType, additionalBinaryDataProperties, key);
+            return new MachineLearningAccountKeyDatastoreSecrets(secretsType, additionalBinaryDataProperties, key)
+            {
+                _keyIsDefined = keyIsDefined
+            };
         }
     }
 }

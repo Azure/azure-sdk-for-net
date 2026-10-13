@@ -16,19 +16,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     internal partial class NetworkFabricIPCommunityDataCollectionResultOfT : Pageable<NetworkFabricIPCommunityData>
     {
-        private readonly IpCommunities _client;
+        private readonly IPCommunities _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of NetworkFabricIPCommunityDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The IpCommunities client used to send requests. </param>
+        /// <param name="client"> The IPCommunities client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public NetworkFabricIPCommunityDataCollectionResultOfT(IpCommunities client, Guid subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public NetworkFabricIPCommunityDataCollectionResultOfT(IPCommunities client, Guid subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> The pages of NetworkFabricIPCommunityDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<NetworkFabricIPCommunityData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

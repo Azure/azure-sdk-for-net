@@ -75,17 +75,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningComponentVersionProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ComponentSpec))
+            if (_componentSpecIsDefined || Optional.IsDefined(ComponentSpec))
             {
-                writer.WritePropertyName("componentSpec"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(ComponentSpec);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ComponentSpec))
+                if (ComponentSpec != null)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName("componentSpec"u8);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(ComponentSpec);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(ComponentSpec))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                else
+                {
+                    writer.WriteNull("componentSpec"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -119,18 +126,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? isAnonymous = default;
             bool? isArchived = default;
+            bool componentSpecIsDefined = false;
             BinaryData componentSpec = default;
             RegistryAssetProvisioningState? provisioningState = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -143,6 +153,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -164,6 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -201,6 +213,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("componentSpec"u8))
                 {
+                    componentSpecIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         componentSpec = null;
@@ -225,13 +238,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new MachineLearningComponentVersionProperties(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                tags,
                 additionalBinaryDataProperties,
                 isAnonymous,
                 isArchived,
                 componentSpec,
-                provisioningState);
+                provisioningState)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _componentSpecIsDefined = componentSpecIsDefined
+            };
         }
     }
 }

@@ -18,17 +18,17 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private SearchIndexerDataIdentity _identity;
-        internal bool _identityIsDefined;
+        private bool _identityIsDefined;
         private KnowledgeSourceVectorizer _embeddingModel;
-        internal bool _embeddingModelIsDefined;
+        private bool _embeddingModelIsDefined;
         private KnowledgeBaseModel _chatCompletionModel;
-        internal bool _chatCompletionModelIsDefined;
+        private bool _chatCompletionModelIsDefined;
         private IndexingSchedule _ingestionSchedule;
-        internal bool _ingestionScheduleIsDefined;
+        private bool _ingestionScheduleIsDefined;
         private KnowledgeSourceContentExtractionMode? _contentExtractionMode;
-        internal bool _contentExtractionModeIsDefined;
+        private bool _contentExtractionModeIsDefined;
         private AIServices _aiServices;
-        internal bool _aiServicesIsDefined;
+        private bool _aiServicesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceIngestionParameters"/>. </summary>
         public KnowledgeSourceIngestionParameters()

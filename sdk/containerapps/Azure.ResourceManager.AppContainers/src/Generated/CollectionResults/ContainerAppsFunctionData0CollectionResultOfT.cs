@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> The pages of ContainerAppsFunctionData0CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ContainerAppsFunctionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

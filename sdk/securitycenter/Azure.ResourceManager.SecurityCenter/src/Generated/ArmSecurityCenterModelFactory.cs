@@ -4065,7 +4065,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                risk is null && resourceDetails is null && displayName is null && additionalData is null && linksAzurePortalUri is null && metadata is null && partnersData is null && status is null ? default : new SecurityAssessmentPropertiesResponse(
+                risk is null && resourceDetails is null && displayName is null && additionalData is null && linksAzurePortalUri is null && metadata is null && partnersData is null && status is null ? default : new SecurityAssessmentPropertiesResult(
                     risk,
                     resourceDetails,
                     displayName,

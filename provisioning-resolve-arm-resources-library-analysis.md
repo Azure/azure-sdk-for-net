@@ -1,12 +1,10 @@
 # Provisioning resolveArmResources library change analysis
 
-Baseline: upstream main `b1535bd1114`. Refreshed on 2026-10-13.
+Baseline: upstream main `3cee15ac4fa`. Refreshed on 2026-10-13.
 
-This report compares generated resource identities and class names after regeneration with main's npm dependencies: TypeSpec compiler 1.17.0, typespec-azure-resource-manager 0.73.0, and management emitter 1.0.0-alpha.20260929.3. Provisioning uses resolveArmResources, filtered to the selected TCGC models and methods before resource projection.
+This report compares generated resource identities and class names after regeneration with main's npm dependencies: TypeSpec compiler 1.17.0, typespec-azure-resource-manager 0.73.0, and management emitter 1.0.0-alpha.20261012.2. Provisioning uses resolveArmResources, filtered to the selected TCGC models and methods before resource projection.
 
-The .NET management generator is built from the same main source snapshot. Main's published management generator binary is incompatible with the updated shared generator (its InputOperation.Update method signature no longer exists). No local management npm links or ARM prerelease pins are used.
-
-This source-reference setup is validated locally. Run `npm ci --prefix eng\packages\http-client-csharp-mgmt` before building provisioning on a clean checkout. Provisioning CI initialization is intentionally unchanged; it does not currently install these local management build prerequisites.
+Both npm and .NET dependencies are aligned with this main snapshot, including published Azure.Generator.Management 1.0.0-alpha.20261012.2. There are no local management project references, npm links, or ARM prerelease pins. The earlier InputOperation.Update binary incompatibility was resolved by main's dependency alignment.
 
 Existing custom-code resource names are preserved for the canonical projection of each input model. Additional projections of a shared model retain their distinct resolved names; customizations targeting those resolved names take precedence.
 
@@ -20,7 +18,7 @@ This refreshed report does not analyze model base types, setters, or API compati
 
 Libraries inventoried: **69**.
 
-Regeneration completed for all inventoried libraries: the final full run passed 68 of 69, and Redis passed on retry after a transient metadata file-write failure. Missing or incorrect discovered resources are intentionally preserved for validation rather than repaired. Provisioning parent paths are retained separately from the serialized management graph.
+Regeneration completed for all inventoried libraries: the final full run passed 69 of 69. Missing or incorrect discovered resources are intentionally preserved for validation rather than repaired. Provisioning parent paths are retained separately from the serialized management graph.
 
 | Library | ARM resource types | Adds | Deletes | Changed class-name sets |
 | --- | --- | --- | --- | --- |

@@ -15,7 +15,6 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
     internal partial class WireVersionOperations
     {
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
         private readonly Func<ResourceType, string> _getApiVersion;
 
@@ -29,14 +28,12 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
         /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
-        internal WireVersionOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
+        internal WireVersionOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
-            _apiVersion = apiVersion;
             _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(WireVersionOperations).Assembly, applicationId);
         }
@@ -57,7 +54,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/wireVersionTests/", false);
             uri.AppendPath(wireVersionTestName, true);
-            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/wireVersionTests") ?? "opaque-read", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/wireVersionTests") ?? "opaque-read", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +71,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/MgmtTypeSpec/wireVersionTests", false);
-            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/wireVersionTests") ?? "opaque-read", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/wireVersionTests") ?? "opaque-read", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -95,7 +92,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/wireVersionTests") ?? "opaque-read");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/wireVersionTests") ?? "opaque-read");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -114,7 +111,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/wireVersionTests", false);
-            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/wireVersionTests") ?? "opaque-read", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/wireVersionTests") ?? "opaque-read", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -135,7 +132,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/wireVersionTests") ?? "opaque-read");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/wireVersionTests") ?? "opaque-read");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -155,7 +152,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/wireVersionTests/", false);
             uri.AppendPath(wireVersionTestName, true);
-            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/wireVersionTests") ?? "opaque-write", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/wireVersionTests") ?? "opaque-write", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -177,7 +174,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/wireVersionTests/", false);
             uri.AppendPath(wireVersionTestName, true);
-            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/wireVersionTests") ?? "opaque-write", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/wireVersionTests") ?? "opaque-write", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -200,7 +197,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             uri.AppendPath("/providers/MgmtTypeSpec/wireVersionTests/", false);
             uri.AppendPath(wireVersionTestName, true);
             uri.AppendPath("/ping", false);
-            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/wireVersionTests") ?? "2024-05-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("MgmtTypeSpec/wireVersionTests") ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

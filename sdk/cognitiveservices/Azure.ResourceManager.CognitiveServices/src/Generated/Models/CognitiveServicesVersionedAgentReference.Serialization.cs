@@ -75,10 +75,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 throw new FormatException($"The model {nameof(CognitiveServicesVersionedAgentReference)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(AgentVersion))
+            if (_agentVersionIsDefined || Optional.IsDefined(AgentVersion))
             {
-                writer.WritePropertyName("agentVersion"u8);
-                writer.WriteStringValue(AgentVersion);
+                if (AgentVersion != null)
+                {
+                    writer.WritePropertyName("agentVersion"u8);
+                    writer.WriteStringValue(AgentVersion);
+                }
+                else
+                {
+                    writer.WriteNull("agentVersion"u8);
+                }
             }
         }
 
@@ -107,14 +114,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
+            bool agentIdIsDefined = false;
             string agentId = default;
+            bool agentNameIsDefined = false;
             string agentName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool agentVersionIsDefined = false;
             string agentVersion = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("agentId"u8))
                 {
+                    agentIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         agentId = null;
@@ -125,6 +136,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("agentName"u8))
                 {
+                    agentNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         agentName = null;
@@ -135,6 +147,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("agentVersion"u8))
                 {
+                    agentVersionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         agentVersion = null;
@@ -148,7 +161,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CognitiveServicesVersionedAgentReference(agentId, agentName, additionalBinaryDataProperties, agentVersion);
+            return new CognitiveServicesVersionedAgentReference(agentId, agentName, additionalBinaryDataProperties, agentVersion)
+            {
+                _agentIdIsDefined = agentIdIsDefined,
+                _agentNameIsDefined = agentNameIsDefined,
+                _agentVersionIsDefined = agentVersionIsDefined
+            };
         }
     }
 }

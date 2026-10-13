@@ -104,7 +104,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 writer.WriteEndArray();
             }
-            if (_streamIsDefined || Optional.IsDefined(Stream))
+            if (Optional.IsDefined(Stream, _streamIsDefined))
             {
                 if (Stream != null)
                 {

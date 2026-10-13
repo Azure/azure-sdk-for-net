@@ -97,7 +97,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("extractionOptions"u8);
                 }
             }
-            if (_chunkingPropertiesIsDefined || Optional.IsDefined(ChunkingProperties))
+            if (Optional.IsDefined(ChunkingProperties, _chunkingPropertiesIsDefined))
             {
                 if (ChunkingProperties != null)
                 {

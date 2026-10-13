@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DiskSnapshotListContent(diskSnapshotIds, additionalBinaryDataProperties);
+            return new DiskSnapshotListContent(diskSnapshotIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

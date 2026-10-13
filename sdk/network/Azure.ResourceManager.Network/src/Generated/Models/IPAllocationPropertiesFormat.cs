@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private int? _prefixLength;
+        internal bool _prefixLengthIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="IPAllocationPropertiesFormat"/>. </summary>
         public IPAllocationPropertiesFormat()
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
             VirtualNetwork = virtualNetwork;
             IPAllocationType = ipAllocationType;
             Prefix = prefix;
-            PrefixLength = prefixLength;
+            _prefixLength = prefixLength;
             PrefixType = prefixType;
             IpamAllocationId = ipamAllocationId;
             AllocationTags = allocationTags;
@@ -65,7 +67,18 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The address prefix length for the IpAllocation. </summary>
         [WirePath("prefixLength")]
-        public int? PrefixLength { get; set; }
+        public int? PrefixLength
+        {
+            get
+            {
+                return _prefixLength;
+            }
+            set
+            {
+                _prefixLength = value;
+                _prefixLengthIsDefined = true;
+            }
+        }
 
         /// <summary> The address prefix Type for the IpAllocation. </summary>
         [WirePath("prefixType")]

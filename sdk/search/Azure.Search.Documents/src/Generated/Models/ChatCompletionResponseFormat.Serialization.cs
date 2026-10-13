@@ -79,7 +79,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (_jsonSchemaPropertiesIsDefined || Optional.IsDefined(JsonSchemaProperties))
+            if (Optional.IsDefined(JsonSchemaProperties, _jsonSchemaPropertiesIsDefined))
             {
                 if (JsonSchemaProperties != null)
                 {

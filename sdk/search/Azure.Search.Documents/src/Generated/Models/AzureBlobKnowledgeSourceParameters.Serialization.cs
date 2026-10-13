@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(ConnectionString);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (_folderPathIsDefined || Optional.IsDefined(FolderPath))
+            if (Optional.IsDefined(FolderPath, _folderPathIsDefined))
             {
                 if (FolderPath != null)
                 {
@@ -101,7 +101,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("isADLSGen2"u8);
                 writer.WriteBooleanValue(IsADLSGen2.Value);
             }
-            if (_ingestionParametersIsDefined || Optional.IsDefined(IngestionParameters))
+            if (Optional.IsDefined(IngestionParameters, _ingestionParametersIsDefined))
             {
                 if (IngestionParameters != null)
                 {
