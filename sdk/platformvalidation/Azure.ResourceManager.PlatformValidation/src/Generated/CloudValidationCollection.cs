@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.PlatformValidation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudValidationData, CloudValidationResource>(new CloudValidationsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CloudValidationData, CloudValidationResource>(new CloudValidationDataAsyncCollectionResultOfT(
                 _cloudValidationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.PlatformValidation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudValidationData, CloudValidationResource>(new CloudValidationsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<CloudValidationData, CloudValidationResource>(new CloudValidationDataCollectionResultOfT(
                 _cloudValidationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

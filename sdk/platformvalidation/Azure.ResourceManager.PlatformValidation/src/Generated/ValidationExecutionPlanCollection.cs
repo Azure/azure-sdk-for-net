@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PlatformValidation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ValidationExecutionPlanData, ValidationExecutionPlanResource>(new ValidationExecutionPlansGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ValidationExecutionPlanData, ValidationExecutionPlanResource>(new ValidationExecutionPlanDataAsyncCollectionResultOfT(
                 _validationExecutionPlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.PlatformValidation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ValidationExecutionPlanData, ValidationExecutionPlanResource>(new ValidationExecutionPlansGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<ValidationExecutionPlanData, ValidationExecutionPlanResource>(new ValidationExecutionPlanDataCollectionResultOfT(
                 _validationExecutionPlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

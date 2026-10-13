@@ -14,7 +14,7 @@ using Azure.ResourceManager.PlatformValidation.Models;
 
 namespace Azure.ResourceManager.PlatformValidation
 {
-    internal partial class CloudValidationsGetByResourceGroupCollectionResultOfT : Pageable<CloudValidationData>
+    internal partial class CloudValidationDataCollectionResultOfT : Pageable<CloudValidationData>
     {
         private readonly CloudValidations _client;
         private readonly Guid _subscriptionId;
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.PlatformValidation
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of CloudValidationsGetByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of CloudValidationDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CloudValidations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="filter"> The OData filter expression to apply to the list operation. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public CloudValidationsGetByResourceGroupCollectionResultOfT(CloudValidations client, Guid subscriptionId, string resourceGroupName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public CloudValidationDataCollectionResultOfT(CloudValidations client, Guid subscriptionId, string resourceGroupName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.PlatformValidation
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of CloudValidationsGetByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of CloudValidationDataCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of CloudValidationsGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of CloudValidationDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<CloudValidationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

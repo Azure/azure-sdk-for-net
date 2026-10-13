@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ValidationExecutionPlanListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ValidationExecutionPlanListResult(value ?? new ChangeTrackingList<ValidationExecutionPlanData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

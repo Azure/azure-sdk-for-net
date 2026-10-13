@@ -15,7 +15,7 @@ using Azure.ResourceManager.PlatformValidation.Models;
 
 namespace Azure.ResourceManager.PlatformValidation
 {
-    internal partial class ValidationTestVersionsGetAllAsyncCollectionResultOfT : AsyncPageable<ValidationTestVersionData>
+    internal partial class ValidationTestVersionDataAsyncCollectionResultOfT : AsyncPageable<ValidationTestVersionData>
     {
         private readonly ValidationTestVersions _client;
         private readonly Guid _subscriptionId;
@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.PlatformValidation
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ValidationTestVersionsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ValidationTestVersionDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ValidationTestVersions client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="validationTestName"> The name of the ValidationTest. </param>
         /// <param name="filter"> Filter expression used to constrain the returned items. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ValidationTestVersionsGetAllAsyncCollectionResultOfT(ValidationTestVersions client, Guid subscriptionId, string validationTestName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ValidationTestVersionDataAsyncCollectionResultOfT(ValidationTestVersions client, Guid subscriptionId, string validationTestName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.PlatformValidation
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ValidationTestVersionsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ValidationTestVersionDataAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ValidationTestVersionsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ValidationTestVersionDataAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ValidationTestVersionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
