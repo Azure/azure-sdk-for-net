@@ -50,10 +50,7 @@ namespace Azure.Containers.ContainerRegistry
         {
             int length = _stream.Read(buffer, offset, count);
 
-            if (count > 0)
-            {
-                ProcessIncrement(buffer, offset, length);
-            }
+            ProcessIncrement(buffer, offset, count, length);
 
             return length;
         }
@@ -62,16 +59,18 @@ namespace Azure.Containers.ContainerRegistry
         {
             int length = await _stream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
 
-            if (count > 0)
-            {
-                ProcessIncrement(buffer, offset, length);
-            }
+            ProcessIncrement(buffer, offset, count, length);
 
             return length;
         }
 
-        private void ProcessIncrement(byte[] buffer, int offset, int length)
+        private void ProcessIncrement(byte[] buffer, int offset, int count, int length)
         {
+            if (count == 0)
+            {
+                return;
+            }
+
             if (length == 0)
             {
                 if (!_validated)
