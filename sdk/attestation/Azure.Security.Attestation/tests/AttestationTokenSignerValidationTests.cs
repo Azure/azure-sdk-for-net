@@ -194,11 +194,143 @@ namespace Azure.Security.Attestation.Tests
             CollectionAssert.AreEqual(new[] { true, true }, observedDefaults);
         }
 
+        [Test]
+        public void TokenWithoutKeyIdIsCheckedAgainstEverySigner()
+        {
+            AttestationToken token = SignedToken(_trustedKey, "{\"alg\":\"RS256\"}");
+            var signers = new[]
+            {
+                new AttestationSigner(new[] { _untrustedCertificate }, null),
+                new AttestationSigner(new[] { _trustedCertificate }, null),
+            };
+
+            Assert.IsTrue(token.ValidateToken(Options(), signers));
+            Assert.AreEqual(_trustedCertificate.Thumbprint, token.CertificateThumbprint);
+        }
+
+        [TestCase(null)]
+        [TestCase("ecdsa")]
+        public void EcdsaSignedTokenIsAccepted(string kid)
+        {
+            using ECDsa key = ECDsa.Create(ECCurve.NamedCurves.nistP256);
+            using X509Certificate2 certificate = new CertificateRequest("CN=ECDsa", key, HashAlgorithmName.SHA256)
+                .CreateSelfSigned(DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddDays(1));
+            string header = kid == null ? "{\"alg\":\"ES256\"}" : $"{{\"alg\":\"ES256\",\"kid\":\"{kid}\"}}";
+            string signedData = Base64Url.Encode(Encoding.UTF8.GetBytes(header)) + "." + Base64Url.Encode(Encoding.UTF8.GetBytes($"{{\"iss\":\"{Provider}\"}}"));
+            AttestationToken token = AttestationToken.Deserialize(signedData + "." + Base64Url.Encode(key.SignData(Encoding.UTF8.GetBytes(signedData), HashAlgorithmName.SHA256)));
+
+            Assert.IsTrue(token.ValidateToken(Options(), Signers(certificate, "ecdsa")));
+            Assert.AreEqual(certificate.Thumbprint, token.CertificateThumbprint);
+        }
+
+        [Test]
+        public void CertificateOnlySigningKeySignsTokens()
+        {
+            AttestationToken token = AttestationToken.Deserialize(
+                new AttestationToken(BinaryData.FromString($"{{\"iss\":\"{Provider}\"}}"), new AttestationTokenSigningKey(_trustedCertificate)).Serialize());
+
+            Assert.IsTrue(token.ValidateToken(Options(), Signers(_trustedCertificate, null)));
+        }
+
+        [Test]
+        public void EcdsaSigningKeysSignTokens()
+        {
+            using ECDsa key = ECDsa.Create(ECCurve.NamedCurves.nistP256);
+            using X509Certificate2 certificate = new CertificateRequest("CN=ECDsa", key, HashAlgorithmName.SHA256)
+                .CreateSelfSigned(DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddDays(1));
+
+            foreach (AttestationTokenSigningKey signingKey in new[] { new AttestationTokenSigningKey(key, certificate), new AttestationTokenSigningKey(certificate) })
+            {
+                AttestationToken token = AttestationToken.Deserialize(
+                    new AttestationToken(BinaryData.FromString($"{{\"iss\":\"{Provider}\"}}"), signingKey).Serialize());
+
+                Assert.IsTrue(token.ValidateToken(Options(), Signers(certificate, null)));
+            }
+        }
+
+        [Test]
+        public void SigningKeyMustMatchCertificate()
+        {
+            using ECDsa key = ECDsa.Create(ECCurve.NamedCurves.nistP256);
+
+            Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(key, _trustedCertificate));
+            Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(_untrustedKey, _trustedCertificate));
+        }
+
+        [Test]
+        public void InvalidArgumentsAreRejected()
+        {
+            AttestationToken token = SignedToken(_trustedKey, "{\"alg\":\"RS256\"}");
+
+            Assert.Throws<ArgumentNullException>(() => token.ValidateToken(null, Signers(_trustedCertificate, null)));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await token.ValidateTokenAsync(null, Signers(_trustedCertificate, null)));
+            Assert.Throws<ArgumentNullException>(() => token.ValidateToken(Options(), new[] { new AttestationSigner(new[] { _trustedCertificate }, null), null }));
+            Assert.Throws<ArgumentException>(() => token.ValidateToken(Options(), new[] { new AttestationSigner(Array.Empty<X509Certificate2>(), null) }));
+        }
+
+        [Test]
+        public void TokenWithoutAlgorithmIsNotValid()
+        {
+            AttestationToken token = SignedToken(_trustedKey, "{\"typ\":\"JWT\"}");
+
+            Assert.IsFalse(token.ValidateToken(Options(), Signers(_trustedCertificate, null)));
+        }
+
+        [TestCase("1e20", true)]
+        [TestCase("-1e20", false)]
+        public void OutOfRangeExpirationTimeIsClamped(string exp, bool valid)
+        {
+            AttestationToken token = SignedToken(_trustedKey, "{\"alg\":\"RS256\"}", $"{{\"iss\":\"{Provider}\",\"exp\":{exp}}}");
+
+            Assert.AreEqual(valid ? DateTimeOffset.MaxValue : DateTimeOffset.MinValue, token.ExpirationTime);
+            if (valid)
+            {
+                Assert.IsTrue(token.ValidateToken(Options(), Signers(_trustedCertificate, null)));
+            }
+            else
+            {
+                Exception ex = Assert.Throws<Exception>(() => token.ValidateToken(Options(), Signers(_trustedCertificate, null)));
+                StringAssert.Contains("expired", ex.Message);
+            }
+        }
+
+        [Test]
+        public void OutOfRangeNotBeforeTimeIsClamped()
+        {
+            AttestationToken token = SignedToken(_trustedKey, "{\"alg\":\"RS256\"}", $"{{\"iss\":\"{Provider}\",\"nbf\":1e20}}");
+
+            Assert.AreEqual(DateTimeOffset.MaxValue, token.NotBeforeTime);
+            Exception ex = Assert.Throws<Exception>(() => token.ValidateToken(Options(), Signers(_trustedCertificate, null)));
+            StringAssert.Contains("not yet valid", ex.Message);
+        }
+
+        [Test]
+        public async Task AdministrationOperationsRunTokenValidatedHandlers()
+        {
+            int invocations = 0;
+            var tokenOptions = new AttestationTokenValidationOptions();
+            tokenOptions.TokenValidated += args =>
+            {
+                invocations++;
+                return Task.CompletedTask;
+            };
+            var client = new AttestationAdministrationClient(new Uri(Provider), new MockCredential(), ClientOptions(tokenOptions));
+
+            client.SetPolicy(AttestationType.SgxEnclave, "policy");
+            await client.SetPolicyAsync(AttestationType.SgxEnclave, "policy");
+            Assert.AreEqual(1, client.GetPolicyManagementCertificates().Value.Count);
+            Assert.AreEqual(1, (await client.GetPolicyManagementCertificatesAsync()).Value.Count);
+
+            Assert.AreEqual(4, invocations);
+        }
+
         private AttestationClientOptions ClientOptions(AttestationTokenValidationOptions tokenOptions)
         {
             string storedPolicy = new AttestationToken(BinaryData.FromString("{\"AttestationPolicy\":\"cG9saWN5\"}")).Serialize();
             string token = new AttestationToken(
-                BinaryData.FromString($"{{\"iss\":\"{Provider}\",\"x-ms-attestation-type\":\"sgx\",\"x-ms-policy\":\"{storedPolicy}\"}}"),
+                BinaryData.FromString(
+                    $"{{\"iss\":\"{Provider}\",\"x-ms-attestation-type\":\"sgx\",\"x-ms-policy\":\"{storedPolicy}\",\"x-ms-policy-result\":\"Updated\"," +
+                    $"\"x-ms-policy-certificates\":{{\"keys\":[{{\"kty\":\"RSA\",\"x5c\":[\"{Encode(_trustedCertificate)}\"]}}]}}}}"),
                 new AttestationTokenSigningKey(_trustedKey, _trustedCertificate)).Serialize();
             string jwks = $"{{\"keys\":[{{\"kty\":\"RSA\",\"kid\":\"trusted\",\"x5c\":[\"{Encode(_trustedCertificate)}\"]}}]}}";
 
@@ -225,9 +357,9 @@ namespace Azure.Security.Attestation.Tests
         private static IReadOnlyList<AttestationSigner> Signers(X509Certificate2 certificate, string kid)
             => new[] { new AttestationSigner(new[] { certificate }, kid) };
 
-        private static AttestationToken SignedToken(RSA key, string headerJson)
+        private static AttestationToken SignedToken(RSA key, string headerJson, string bodyJson = null)
         {
-            string signedData = Base64Url.Encode(Encoding.UTF8.GetBytes(headerJson)) + "." + Base64Url.Encode(Encoding.UTF8.GetBytes($"{{\"iss\":\"{Provider}\"}}"));
+            string signedData = Base64Url.Encode(Encoding.UTF8.GetBytes(headerJson)) + "." + Base64Url.Encode(Encoding.UTF8.GetBytes(bodyJson ?? $"{{\"iss\":\"{Provider}\"}}"));
             byte[] signature = key.SignData(Encoding.UTF8.GetBytes(signedData), HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
             return AttestationToken.Deserialize(signedData + "." + Base64Url.Encode(signature));
         }

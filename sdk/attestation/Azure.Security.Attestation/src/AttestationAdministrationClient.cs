@@ -246,7 +246,7 @@ namespace Azure.Security.Attestation
                     BinaryData.FromObjectAsJson(new StoredAttestationPolicy { AttestationPolicy = policyToSet, }),
                     signingKey);
                 var result = _policyClient.Set(attestationType, tokenToSet.Serialize(), cancellationToken);
-                var token = AttestationToken.Deserialize(result.Value.Token);
+                var token = AttestationToken.Deserialize(result.Value.Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = GetSignersAsync(false, cancellationToken).EnsureCompleted();
@@ -482,7 +482,7 @@ namespace Azure.Security.Attestation
                 {
                     result = _policyManagementClient.Get(cancellationToken);
                 }
-                var token = AttestationToken.Deserialize(result.Value.Token);
+                var token = AttestationToken.Deserialize(result.Value.Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);

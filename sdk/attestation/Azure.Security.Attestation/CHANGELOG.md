@@ -27,6 +27,12 @@
 - `AttestationToken.X509CertificateChain` now decodes the base64-encoded certificates in the token's `x5c` header on all target frameworks, and returns an empty array when the header has none. On .NET 9 and earlier, and on .NET Framework, it treated each entry as a file name, so it could not read the certificates in tokens returned by the service.
 - `AttestationClient` and `AttestationAdministrationClient` now throw `ArgumentException` when the endpoint does not use `https`. An `AttestationClient` created without a credential previously sent its requests, including the request for the certificates that validate tokens, without TLS.
 - When several handlers are attached to `AttestationTokenValidationOptions.TokenValidated`, the token is now rejected if any of them sets `IsValid` to `false`. Previously only the value set by the last handler was used.
+- `AttestationAdministrationClient.SetPolicy`, `GetPolicyManagementCertificates`, and `GetPolicyManagementCertificatesAsync` no longer throw when a `TokenValidated` handler is attached; they now invoke it like the other operations.
+- A token without a `kid` header is now checked against every signing certificate passed to `ValidateToken` and `ValidateTokenAsync`. Previously only the first was tried, so a token signed by another of them was rejected.
+- Tokens signed with ECDSA keys can now be validated, and `AttestationTokenSigningKey` now accepts ECDSA keys and certificates.
+- Tokens signed with an `AttestationTokenSigningKey` created from a certificate alone now use the certificate's private key. Previously, on .NET 8 and later, signing failed with a `CryptographicException`.
+- `ValidateToken` and `ValidateTokenAsync` now throw `ArgumentNullException` when `options` is `null` or `attestationSigningCertificates` contains `null`, throw `ArgumentException` when one of the signers has no certificate, and return `false` for a token without an `alg` header, instead of throwing `NullReferenceException` or `ArgumentOutOfRangeException`.
+- `AttestationToken.ExpirationTime`, `NotBeforeTime`, and `IssuedAtTime` now return `DateTimeOffset.MaxValue` or `DateTimeOffset.MinValue` for claims outside the range of `DateTimeOffset`, instead of throwing `ArgumentOutOfRangeException`, so such tokens are validated against those values.
 
 ### Other Changes
 

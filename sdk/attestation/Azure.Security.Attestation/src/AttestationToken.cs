@@ -196,13 +196,14 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Expiration time for the token.
         /// </summary>
+        /// <remarks>A claim beyond the range of <see cref="DateTimeOffset"/> is returned as <see cref="DateTimeOffset.MinValue"/> or <see cref="DateTimeOffset.MaxValue"/>.</remarks>
         public DateTimeOffset? ExpirationTime
         {
             get
             {
                 if (Payload.ExpirationTime.HasValue)
                 {
-                    return DateTimeOffset.FromUnixTimeSeconds(0).AddSeconds(Payload.ExpirationTime.Value);
+                    return FromNumericDate(Payload.ExpirationTime.Value);
                 }
                 return null;
             }
@@ -211,13 +212,14 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Time before which this token is not valid.
         /// </summary>
+        /// <remarks>A claim beyond the range of <see cref="DateTimeOffset"/> is returned as <see cref="DateTimeOffset.MinValue"/> or <see cref="DateTimeOffset.MaxValue"/>.</remarks>
         public DateTimeOffset? NotBeforeTime
         {
             get
             {
                 if (Payload.NotBeforeTime.HasValue)
                 {
-                    return DateTimeOffset.FromUnixTimeSeconds(0).AddSeconds(Payload.NotBeforeTime.Value);
+                    return FromNumericDate(Payload.NotBeforeTime.Value);
                 }
                 return null;
             }
@@ -226,15 +228,28 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Time at which this token was issued.
         /// </summary>
+        /// <remarks>A claim beyond the range of <see cref="DateTimeOffset"/> is returned as <see cref="DateTimeOffset.MinValue"/> or <see cref="DateTimeOffset.MaxValue"/>.</remarks>
         public DateTimeOffset? IssuedAtTime
         {
             get
             {
                 if (Payload.IssuedAtTime.HasValue)
                 {
-                    return DateTimeOffset.FromUnixTimeSeconds(0).AddSeconds(Payload.IssuedAtTime.Value);
+                    return FromNumericDate(Payload.IssuedAtTime.Value);
                 }
                 return null;
+            }
+        }
+
+        private static DateTimeOffset FromNumericDate(double secondsSinceEpoch)
+        {
+            try
+            {
+                return DateTimeOffset.FromUnixTimeSeconds(0).AddSeconds(secondsSinceEpoch);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                return secondsSinceEpoch > 0 ? DateTimeOffset.MaxValue : DateTimeOffset.MinValue;
             }
         }
 
@@ -251,10 +266,10 @@ namespace Azure.Security.Attestation
         /// <returns>true if the token was valid, false otherwise.</returns>
         /// <remarks>
         /// An unsecured token (one whose <see cref="Algorithm"/> is "none") carries no signature and never passes
-        /// validation, regardless of any handler attached to <see cref="AttestationTokenValidationOptions.TokenValidated"/>.
+        /// validation, regardless of any handler attached to <see cref="AttestationTokenValidationOptions.TokenValidated"/>. Neither does a token without an algorithm.
         /// </remarks>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="attestationSigningCertificates"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="attestationSigningCertificates"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="options"/> or <paramref name="attestationSigningCertificates"/> is null, or <paramref name="attestationSigningCertificates"/> contains null.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="attestationSigningCertificates"/> is empty, or one of its signers has no signing certificate.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
         public virtual async Task<bool> ValidateTokenAsync(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
             => await ValidateTokenInternal(options, attestationSigningCertificates, true, cancellationToken).ConfigureAwait(false);
@@ -272,10 +287,10 @@ namespace Azure.Security.Attestation
         /// <returns>true if the token was valid, false otherwise.</returns>
         /// <remarks>
         /// An unsecured token (one whose <see cref="Algorithm"/> is "none") carries no signature and never passes
-        /// validation, regardless of any handler attached to <see cref="AttestationTokenValidationOptions.TokenValidated"/>.
+        /// validation, regardless of any handler attached to <see cref="AttestationTokenValidationOptions.TokenValidated"/>. Neither does a token without an algorithm.
         /// </remarks>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="attestationSigningCertificates"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="attestationSigningCertificates"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="options"/> or <paramref name="attestationSigningCertificates"/> is null, or <paramref name="attestationSigningCertificates"/> contains null.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="attestationSigningCertificates"/> is empty, or one of its signers has no signing certificate.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
         public virtual bool ValidateToken(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
             => ValidateTokenInternal(options, attestationSigningCertificates, false, cancellationToken).EnsureCompleted();
@@ -291,20 +306,29 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Token used to cancel this operation if necessary.</param>
         /// <param name="allowUnsecured">True only for the response to a draft-policy attestation, which the service never signs.</param>
         /// <returns>true if the token was valid, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="attestationSigningCertificates"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="attestationSigningCertificates"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="options"/> or <paramref name="attestationSigningCertificates"/> is null, or <paramref name="attestationSigningCertificates"/> contains null.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="attestationSigningCertificates"/> is empty, or one of its signers has no signing certificate.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
         internal async Task<bool> ValidateTokenInternal(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, bool async, CancellationToken cancellationToken = default, bool allowUnsecured = false)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             // Early out if the caller doesn't want us to validate the token.
             if (!options.ValidateToken)
             {
                 return true;
             }
 
+            // Without an algorithm there is no way to verify the token's signature.
+            string algorithm = Header.Algorithm;
+            if (algorithm == null)
+            {
+                return false;
+            }
+
             // An unsecured token carries no signature, so it cannot be trusted (RFC 8725 section 3.1). The one exception
             // is the response to a draft-policy attestation the caller asked for, which the service never signs.
-            if (Header.Algorithm.Equals("none", StringComparison.OrdinalIgnoreCase))
+            if (algorithm.Equals("none", StringComparison.OrdinalIgnoreCase))
             {
                 if (!allowUnsecured || !ValidateCommonProperties(options))
                 {
@@ -318,7 +342,14 @@ namespace Azure.Security.Attestation
             // This token is a secured attestation token, so it must have been signed by a signer the caller trusts.
             // A token can't vouch for itself with signing certificates carried in its own header.
             Argument.AssertNotNullOrEmpty(attestationSigningCertificates, nameof(attestationSigningCertificates));
-            Argument.AssertNotNull(attestationSigningCertificates[0], nameof(attestationSigningCertificates));
+            foreach (AttestationSigner signer in attestationSigningCertificates)
+            {
+                Argument.AssertNotNull(signer, nameof(attestationSigningCertificates));
+                if (signer.SigningCertificates == null || signer.SigningCertificates.Count == 0 || signer.SigningCertificates[0] == null)
+                {
+                    throw new ArgumentException("Each signer must have a signing certificate.", nameof(attestationSigningCertificates));
+                }
+            }
 
             AttestationSigner[] possibleCertificates = await GetCandidateSigningCertificatesInternalAsync(attestationSigningCertificates, async, cancellationToken).ConfigureAwait(false);
             if (possibleCertificates.Length == 0)
@@ -418,40 +449,24 @@ namespace Azure.Security.Attestation
         /// <returns>true if one of the possibleSigners signed the token, false otherwise</returns>
         private bool ValidateTokenSignature(AttestationSigner[] possibleSigners)
         {
-            bool signatureValidated = false;
+            byte[] signedData = Encoding.UTF8.GetBytes(Base64Url.Encode(this.TokenHeaderBytes.ToArray()) + "." + Base64Url.Encode(this.TokenBodyBytes.ToArray()));
+            byte[] signature = this.TokenSignatureBytes.ToArray();
             AttestationSigner actualSigner = null;
 
             foreach (var signer in possibleSigners)
             {
                 // The leaf certificate is defined as the certificate which signed the token, so we just need to look
                 // at the first certificate in the chain.
-#if NET6_0_OR_GREATER
-                AsymmetricAlgorithm asymmetricAlgorithm = signer.SigningCertificates[0].GetRSAPublicKey();
-#else
-                AsymmetricAlgorithm asymmetricAlgorithm = signer.SigningCertificates[0].PublicKey.Key;
-#endif
-                if (asymmetricAlgorithm is RSA rsaKey)
+                AsymmetricAlgorithm asymmetricAlgorithm = GetPublicKey(signer.SigningCertificates[0]);
+                bool signatureValidated = asymmetricAlgorithm switch
                 {
-                    signatureValidated = rsaKey.VerifyData(
-                        Encoding.UTF8.GetBytes(Base64Url.Encode(this.TokenHeaderBytes.ToArray()) + "." + Base64Url.Encode(this.TokenBodyBytes.ToArray())),
-                        this.TokenSignatureBytes.ToArray(),
-                        HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
-                    if (signatureValidated)
-                    {
-                        actualSigner = signer;
-                    }
-                    break;
-                }
-                else if (asymmetricAlgorithm is ECDsa ecdsa)
+                    RSA rsaKey => rsaKey.VerifyData(signedData, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1),
+                    ECDsa ecdsa => ecdsa.VerifyData(signedData, signature, HashAlgorithmName.SHA256),
+                    _ => false,
+                };
+                if (signatureValidated)
                 {
-                    signatureValidated = ecdsa.VerifyData(
-                        Encoding.UTF8.GetBytes(Base64Url.Encode(this.TokenHeaderBytes.ToArray()) + "." + Base64Url.Encode(this.TokenBodyBytes.ToArray())),
-                        this.TokenSignatureBytes.ToArray(),
-                        HashAlgorithmName.SHA256);
-                    if (signatureValidated)
-                    {
-                        actualSigner = signer;
-                    }
+                    actualSigner = signer;
                     break;
                 }
             }
@@ -463,6 +478,10 @@ namespace Azure.Security.Attestation
             }
             return actualSigner != null;
         }
+
+        // Returns the certificate's RSA or ECDsa public key, or null if it has neither.
+        internal static AsymmetricAlgorithm GetPublicKey(X509Certificate2 certificate)
+            => (AsymmetricAlgorithm)certificate.GetRSAPublicKey() ?? certificate.GetECDsaPublicKey();
 
         /// <summary>
         /// Validate the common properties of the attestation token - ensure that the expiration time for the token is "reasonable", if present.
@@ -636,20 +655,6 @@ namespace Azure.Security.Attestation
             }
 
             Argument.AssertNotNull(signingKey, nameof(signingKey));
-
-            AsymmetricAlgorithm signer;
-            if (signingKey.Certificate.HasPrivateKey)
-            {
-#if NET6_0_OR_GREATER
-                signer = signingKey.Certificate.GetRSAPrivateKey();
-#else
-                signer = signingKey.Certificate.PrivateKey;
-#endif
-            }
-            else
-            {
-                signer = signingKey.Signer;
-            }
 
             JsonWebTokenHeader header = new JsonWebTokenHeader
             {
