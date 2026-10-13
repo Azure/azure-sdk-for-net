@@ -7,4 +7,10 @@
     <DiagnosticId>CP0014</DiagnosticId>
     <Target>P:Azure.ResourceManager.Network.Models.DdosSettings.DdosCustomPolicyId:[T:System.ObsoleteAttribute]</Target>
   </Suppression>
+  <!-- The supported client-auth field remains available through its historical flattened facade.
+       Hide the facade with EditorBrowsable(Never), but do not mark the live field obsolete. -->
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Network.Models.ApplicationGatewaySslProfile.VerifyClientCertIssuerDN:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
 </Suppressions>

@@ -15,6 +15,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility declaration for the ArmNetworkModelFactory type. </summary>
+    // The retained NAT pool factory must initialize extension storage, not pass null to its writer.
+    [CodeGenSuppress("LoadBalancerInboundNatPoolProperties", typeof(ResourceIdentifier), typeof(LoadBalancingTransportProtocol), typeof(int), typeof(int), typeof(int), typeof(int?), typeof(bool?), typeof(bool?), typeof(NetworkProvisioningState?))]
     // The renamed numeric wire property must not consume or discard the legacy string input.
     // Preserve this overload and store its values only in the independent Rules collection.
     [CodeGenSuppress("ManagedRuleSetRuleGroup", typeof(string), typeof(IEnumerable<string>))]
@@ -51,6 +53,33 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(WebApplicationFirewallPolicyTier?), typeof(ETag?))]
     public static partial class ArmNetworkModelFactory
     {
+        /// <summary> Creates inbound NAT pool properties for mocking. </summary>
+        /// <param name="frontendIPConfigurationId"> The frontend IP configuration resource ID. </param>
+        /// <param name="protocol"> The transport protocol. </param>
+        /// <param name="frontendPortRangeStart"> The first frontend port in the range. </param>
+        /// <param name="frontendPortRangeEnd"> The last frontend port in the range. </param>
+        /// <param name="backendPort"> The backend port. </param>
+        /// <param name="idleTimeoutInMinutes"> The idle timeout in minutes. </param>
+        /// <param name="enableFloatingIP"> Whether floating IP is enabled. </param>
+        /// <param name="enableTcpReset"> Whether TCP reset is enabled. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <returns> A new <see cref="Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static LoadBalancerInboundNatPoolProperties LoadBalancerInboundNatPoolProperties(ResourceIdentifier frontendIPConfigurationId = default, LoadBalancingTransportProtocol protocol = default, int frontendPortRangeStart = 0, int frontendPortRangeEnd = 0, int backendPort = 0, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, NetworkProvisioningState? provisioningState = default)
+        {
+            return new LoadBalancerInboundNatPoolProperties(
+                frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
+                protocol,
+                frontendPortRangeStart,
+                frontendPortRangeEnd,
+                backendPort,
+                idleTimeoutInMinutes,
+                enableFloatingIP,
+                enableTcpReset,
+                provisioningState,
+                new ChangeTrackingDictionary<string, BinaryData>());
+        }
+
         /// <summary> Defines a managed rule set rule group with legacy string rules. </summary>
         /// <param name="ruleGroupName"> Name of the rule group. </param>
         /// <param name="rules"> Legacy string rules retained for compatibility; these values are not serialized. </param>

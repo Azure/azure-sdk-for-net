@@ -3152,7 +3152,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.AzureFirewallPacketCaptureFlags"/> instance for mocking. </returns>
         public static AzureFirewallPacketCaptureFlags AzureFirewallPacketCaptureFlags(AzureFirewallPacketCaptureFlagsType? @type = default)
         {
-            return new AzureFirewallPacketCaptureFlags(@type, default);
+            return new AzureFirewallPacketCaptureFlags(default, default);
         }
 
         /// <summary> Group of src/dest ips and ports to be captured. </summary>
@@ -3530,7 +3530,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicIPAddresses"> The list of public IP addresses associated with the custom policy. This list is read-only. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.DdosCustomPolicyData"/> instance for mocking. </returns>
-        public static DdosCustomPolicyData DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IEnumerable<DdosDetectionRule> detectionRules, IEnumerable<NetworkSubResource> frontEndIPConfiguration, IEnumerable<WritableSubResource> publicIPAddresses, ETag? eTag)
+        public static DdosCustomPolicyData DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IEnumerable<DdosDetectionRule> detectionRules, IEnumerable<WritableSubResource> frontEndIPConfiguration, IEnumerable<WritableSubResource> publicIPAddresses, ETag? eTag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3545,7 +3545,7 @@ namespace Azure.ResourceManager.Network.Models
                     resourceGuid,
                     provisioningState,
                     (detectionRules ?? new ChangeTrackingList<DdosDetectionRule>()).ToList(),
-                    (frontEndIPConfiguration ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
+                    (frontEndIPConfiguration ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     default),
                 eTag);
@@ -5487,7 +5487,7 @@ namespace Azure.ResourceManager.Network.Models
                     default),
                 (configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>()).ToList(),
                 default,
-                commitOn,
+                default,
                 region);
         }
 
@@ -6406,8 +6406,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="appliesToGroups"> Groups for configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.AdminRuleGroupData"/> instance for mocking. </returns>
-        public static AdminRuleGroupData AdminRuleGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IEnumerable<NetworkManagerSecurityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, Guid? resourceGuid)
+        public static AdminRuleGroupData AdminRuleGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<NetworkManagerSecurityGroupItem> appliesToGroups = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? etag = default)
         {
             return new AdminRuleGroupData(
                 id,
@@ -6415,6 +6416,7 @@ namespace Azure.ResourceManager.Network.Models
                 resourceType,
                 systemData,
                 description is null && appliesToGroups is null && provisioningState is null && resourceGuid is null ? default : new AdminRuleCollectionPropertiesFormat(description, (appliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>()).ToList(), provisioningState, resourceGuid, default),
+                etag,
                 default);
         }
 
@@ -7470,6 +7472,7 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
+        /// <summary> Information about a hop between the source and the destination. </summary>
         /// <param name="connectivityHopType"> The type of the hop. </param>
         /// <param name="id"> The ID of the hop. </param>
         /// <param name="address"> The IP address of the hop. </param>
@@ -7489,7 +7492,7 @@ namespace Azure.ResourceManager.Network.Models
             issues ??= new ChangeTrackingList<ConnectivityIssueInfo>();
 
             return new ConnectivityHopInfo(
-                default,
+                connectivityHopType,
                 id,
                 address,
                 resourceId,
@@ -7525,6 +7528,7 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
+        /// <summary> Information about an issue encountered in the process of checking for connectivity. </summary>
         /// <param name="origin"> The origin of the issue. </param>
         /// <param name="severity"> The severity of the issue. </param>
         /// <param name="connectivityIssueType"> The type of issue. </param>
@@ -7534,7 +7538,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             contexts ??= new ChangeTrackingList<IDictionary<string, string>>();
 
-            return new ConnectivityIssueInfo(origin, severity, default, default, default);
+            return new ConnectivityIssueInfo(origin, severity, connectivityIssueType, (contexts ?? new ChangeTrackingList<IDictionary<string, string>>()).ToList(), default);
         }
 
         /// <summary> Geographic and time constraints for Azure reachability report. </summary>
@@ -14967,7 +14971,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
         /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
         /// <param name="detectionRules"> The list of DDoS detection rules associated with the custom policy. </param>
-        /// <param name="frontEndIpConfiguration"> The list of frontend IP configurations associated with the custom policy. </param>
+        /// <param name="frontEndIpConfiguration"></param>
         /// <param name="publicIPAddresses"> The list of public IP addresses associated with the custom policy. This list is read-only. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.DdosCustomPolicyData"/> instance for mocking. </returns>
@@ -14981,11 +14985,11 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                resourceGuid is null && provisioningState is null && detectionRules is null && frontEndIpConfiguration is null && publicIPAddresses is null ? default : new DdosCustomPolicyPropertiesFormat(
+                resourceGuid is null && provisioningState is null && detectionRules is null && publicIPAddresses is null ? default : new DdosCustomPolicyPropertiesFormat(
                     resourceGuid,
                     provisioningState,
                     (detectionRules ?? new ChangeTrackingList<DdosDetectionRule>()).ToList(),
-                    (frontEndIpConfiguration ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
+                    default,
                     (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     default),
                 eTag);
@@ -16356,6 +16360,7 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 systemData,
                 description is null && appliesToGroups is null && provisioningState is null && resourceGuid is null ? default : new AdminRuleCollectionPropertiesFormat(description, (appliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>()).ToList(), provisioningState, resourceGuid, default),
+                default,
                 default);
         }
 
@@ -22706,7 +22711,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
         /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
         /// <param name="detectionRules"> The list of DDoS detection rules associated with the custom policy. </param>
-        /// <param name="frontEndIPConfiguration"></param>
+        /// <param name="frontEndIPConfiguration"> The list of frontend IP configurations associated with the custom policy. </param>
         /// <returns> A new <see cref="Network.DdosCustomPolicyData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DdosCustomPolicyData DdosCustomPolicyData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ETag? etag = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, IEnumerable<DdosDetectionRule> detectionRules = default, IEnumerable<WritableSubResource> frontEndIPConfiguration = default)
@@ -22718,11 +22723,11 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                resourceGuid is null && provisioningState is null && detectionRules is null ? default : new DdosCustomPolicyPropertiesFormat(
+                resourceGuid is null && provisioningState is null && detectionRules is null && frontEndIPConfiguration is null ? default : new DdosCustomPolicyPropertiesFormat(
                     resourceGuid,
                     provisioningState,
                     (detectionRules ?? new ChangeTrackingList<DdosDetectionRule>()).ToList(),
-                    default,
+                    (frontEndIPConfiguration ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     default,
                     default),
                 etag);
@@ -23679,7 +23684,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="committedOn"></param>
+        /// <param name="committedOn"> Deployment time string. </param>
         /// <param name="region"> Deployment region. </param>
         /// <returns> A new <see cref="Models.ActiveConnectivityConfiguration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -23700,7 +23705,7 @@ namespace Azure.ResourceManager.Network.Models
                     default),
                 (configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>()).ToList(),
                 default,
-                default,
+                committedOn,
                 region);
         }
 
@@ -23731,29 +23736,6 @@ namespace Azure.ResourceManager.Network.Models
                 deleteExistingPeering,
                 resourceGuid,
                 default), (configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>()).ToList(), default);
-        }
-
-        /// <summary> Defines the admin rule collection. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> A description of the admin rule collection. </param>
-        /// <param name="appliesToGroups"> Groups for configuration. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="etag"></param>
-        /// <returns> A new <see cref="Network.AdminRuleGroupData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AdminRuleGroupData AdminRuleGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<NetworkManagerSecurityGroupItem> appliesToGroups = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? etag = default)
-        {
-            return new AdminRuleGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description is null && appliesToGroups is null && provisioningState is null && resourceGuid is null ? default : new AdminRuleCollectionPropertiesFormat(description, (appliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>()).ToList(), provisioningState, resourceGuid, default),
-                default);
         }
 
         /// <summary> Network profile resource. </summary>
@@ -27098,7 +27080,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="committedOn"></param>
+        /// <param name="committedOn"> Deployment time string. </param>
         /// <param name="region"> Deployment region. </param>
         /// <returns> A new <see cref="Models.ActiveConnectivityConfiguration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -27119,7 +27101,7 @@ namespace Azure.ResourceManager.Network.Models
                     default),
                 (configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>()).ToList(),
                 default,
-                default,
+                committedOn,
                 region);
         }
 
