@@ -1,0 +1,67 @@
+parameters:
+  - name: ServiceDirectory
+    type: string
+  - name: SDKType
+    type: string
+  - name: RestoreBuild
+    type: boolean
+    default: false
+  - name: RestoreAnalyze
+    type: boolean
+    default: false
+  - name: RestoreTest
+    type: boolean
+    default: false
+  - name: Condition
+    type: string
+    default: succeeded()
+
+steps:
+  # Analyze and Test both consume repository-local tools from the NuGet global-packages folder.
+  - ${{ if or(eq(parameters.RestoreAnalyze, true), eq(parameters.RestoreTest, true)) }}:
+    - pwsh: dotnet tool restore
+      condition: ${{ parameters.Condition }}
+      displayName: Restore .NET tools
+
+  - ${{ if eq(parameters.RestoreBuild, true) }}:
+    - pwsh: >
+        dotnet restore eng/service.proj
+        /p:SDKType=${{ parameters.SDKType }}
+        /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+        /p:IncludeTests=false
+        /p:IncludePerf=false
+        /p:IncludeStress=false
+        /p:IncludeIntegrationTests=false
+        /p:PublicSign=false
+        /p:Configuration=Release
+      condition: ${{ parameters.Condition }}
+      displayName: Restore Build graph
+
+  - ${{ if eq(parameters.RestoreAnalyze, true) }}:
+    - pwsh: >
+        dotnet restore eng/service.proj
+        /p:SDKType=${{ parameters.SDKType }}
+        /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+        /p:IncludeTests=false
+        /p:IncludeSamples=false
+        /p:IncludePerf=false
+        /p:IncludeStress=false
+        /p:IncludeIntegrationTests=false
+        /p:BuildSnippets=true
+        /p:Configuration=$(BuildConfiguration)
+      condition: ${{ parameters.Condition }}
+      displayName: Restore Analyze graph
+
+  - ${{ if eq(parameters.RestoreTest, true) }}:
+    - pwsh: >
+        dotnet restore eng/service.proj
+        /p:SDKType=${{ parameters.SDKType }}
+        /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+        /p:IncludeSrc=false
+        /p:IncludeSamples=false
+        /p:IncludePerf=false
+        /p:IncludeStress=false
+        /p:IncludeIntegrationTests=false
+        /p:Configuration=$(BuildConfiguration)
+      condition: ${{ parameters.Condition }}
+      displayName: Restore Test graph

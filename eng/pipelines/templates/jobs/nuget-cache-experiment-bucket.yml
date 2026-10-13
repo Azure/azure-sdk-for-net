@@ -1,0 +1,98 @@
+parameters:
+  - name: Bucket
+    type: string
+  - name: CacheLabel
+    type: string
+  - name: ServiceDirectory
+    type: string
+  - name: SDKType
+    type: string
+  - name: OSName
+    type: string
+  - name: SeedBuild
+    type: boolean
+    default: false
+  - name: SeedAnalyze
+    type: boolean
+    default: false
+  - name: SeedTest
+    type: boolean
+    default: false
+
+jobs:
+  - job: NuGet${{ parameters.Bucket }}Seed
+    displayName: NuGet ${{ parameters.CacheLabel }} seed
+    variables:
+      System.Debug: true
+    pool:
+      ${{ if eq(parameters.OSName, 'macOS') }}:
+        vmImage: $(MACVMIMAGE)
+        name: $(MACPOOL)
+        os: macOS
+      ${{ elseif eq(parameters.OSName, 'Windows') }}:
+        name: $(WINDOWSPOOL)
+        image: $(WINDOWSVMIMAGE)
+        os: windows
+      ${{ else }}:
+        name: $(LINUXPOOL)
+        image: $(LINUXVMIMAGE)
+        os: linux
+    steps:
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+        parameters:
+          EnableNuGetCache: false
+      - template: /eng/pipelines/templates/steps/nuget-cache-experiment.yml
+        parameters:
+          CacheLabel: ${{ parameters.CacheLabel }}
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      - pwsh: ./eng/scripts/Measure-NuGetCache.ps1 -Path '$(NUGET_PACKAGES)' -Label '${{ parameters.CacheLabel }} seed after cache restore'
+        displayName: Measure restored NuGet cache
+      - template: /eng/pipelines/templates/steps/nuget-cache-experiment-restore.yml
+        parameters:
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          SDKType: ${{ parameters.SDKType }}
+          RestoreBuild: ${{ parameters.SeedBuild }}
+          RestoreAnalyze: ${{ parameters.SeedAnalyze }}
+          RestoreTest: ${{ parameters.SeedTest }}
+          Condition: and(succeeded(), ne(variables['NUGET_EXPERIMENT_CACHE_HIT'], 'true'))
+      - pwsh: ./eng/scripts/Measure-NuGetCache.ps1 -Path '$(NUGET_PACKAGES)' -Label '${{ parameters.CacheLabel }} seed complete'
+        displayName: Measure seeded NuGet cache
+
+  - job: NuGet${{ parameters.Bucket }}Consumer
+    displayName: NuGet ${{ parameters.CacheLabel }} consumer
+    dependsOn: NuGet${{ parameters.Bucket }}Seed
+    variables:
+      System.Debug: true
+    pool:
+      ${{ if eq(parameters.OSName, 'macOS') }}:
+        vmImage: $(MACVMIMAGE)
+        name: $(MACPOOL)
+        os: macOS
+      ${{ elseif eq(parameters.OSName, 'Windows') }}:
+        name: $(WINDOWSPOOL)
+        image: $(WINDOWSVMIMAGE)
+        os: windows
+      ${{ else }}:
+        name: $(LINUXPOOL)
+        image: $(LINUXVMIMAGE)
+        os: linux
+    steps:
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+        parameters:
+          EnableNuGetCache: false
+      - template: /eng/pipelines/templates/steps/nuget-cache-experiment.yml
+        parameters:
+          CacheLabel: ${{ parameters.CacheLabel }}
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      - pwsh: ./eng/scripts/Measure-NuGetCache.ps1 -Path '$(NUGET_PACKAGES)' -Label '${{ parameters.CacheLabel }} consumer after cache restore'
+        displayName: Measure downloaded NuGet cache
+      # Consumers always restore; the package cache is an additive baseline, not a replacement for NuGet evaluation.
+      - template: /eng/pipelines/templates/steps/nuget-cache-experiment-restore.yml
+        parameters:
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          SDKType: ${{ parameters.SDKType }}
+          RestoreBuild: ${{ parameters.SeedBuild }}
+          RestoreAnalyze: ${{ parameters.SeedAnalyze }}
+          RestoreTest: ${{ parameters.SeedTest }}
+      - pwsh: ./eng/scripts/Measure-NuGetCache.ps1 -Path '$(NUGET_PACKAGES)' -Label '${{ parameters.CacheLabel }} consumer complete'
+        displayName: Measure NuGet cache after warm restore
