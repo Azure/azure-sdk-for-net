@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 
 namespace Azure.ResourceManager.Compute.WorkloadManager
@@ -26,23 +24,6 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         {
             _source = source;
             _converter = converter;
-        }
-
-        /// <summary> Converts the pages from AsyncPageable to Page. </summary>
-        /// <param name="continuationToken"> A continuation token from a previous response. </param>
-        /// <param name="pageSizeHint"> An optional hint to specify the desired size of each page. </param>
-        /// <returns> An enumerable of pages containing converted items of type U. </returns>
-        public override async IAsyncEnumerable<Page<U>> AsPages(string continuationToken, int? pageSizeHint)
-        {
-            await foreach (Page<T> page in _source.AsPages(continuationToken, pageSizeHint).ConfigureAwait(false))
-            {
-                List<U> convertedItems = new List<U>();
-                foreach (T item in page.Values)
-                {
-                    convertedItems.Add(_converter.Invoke(item));
-                }
-                yield return Page<U>.FromValues(convertedItems, page.ContinuationToken, page.GetRawResponse());
-            }
         }
     }
 }

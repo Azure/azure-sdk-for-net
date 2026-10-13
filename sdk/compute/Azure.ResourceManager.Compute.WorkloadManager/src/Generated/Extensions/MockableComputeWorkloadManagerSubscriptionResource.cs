@@ -36,8 +36,6 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Mocking
 
         private ClientDiagnostics WorkloadSpacesClientDiagnostics => _workloadSpacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.WorkloadManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WorkloadSpaces WorkloadSpacesRestClient => _workloadSpacesRestClient ??= new WorkloadSpaces(WorkloadSpacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01-preview");
-
         /// <summary>
         /// Lists workload spaces in a subscription.
         /// <list type="bullet">

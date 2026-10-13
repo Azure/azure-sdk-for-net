@@ -6,12 +6,10 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Compute.WorkloadManager.Models;
 
 namespace Azure.ResourceManager.Compute.WorkloadManager
 {
@@ -39,30 +37,6 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
             _spaceName = spaceName;
             _context = context;
             _diagnosticScope = diagnosticScope;
-        }
-
-        /// <summary> Gets the pages of WorkloadCapabilityDataAsyncCollectionResultOfT as an enumerable collection. </summary>
-        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of WorkloadCapabilityDataAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<WorkloadCapabilityData>> AsPages(string continuationToken, int? pageSizeHint)
-        {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            while (true)
-            {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
-                if (response is null)
-                {
-                    yield break;
-                }
-                CapabilityListResult result = CapabilityListResult.FromResponse(response);
-                nextPage = result.NextLink;
-                yield return Page<WorkloadCapabilityData>.FromValues((IReadOnlyList<WorkloadCapabilityData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                if (nextPage == null)
-                {
-                    yield break;
-                }
-            }
         }
 
         /// <summary> Get next page. </summary>

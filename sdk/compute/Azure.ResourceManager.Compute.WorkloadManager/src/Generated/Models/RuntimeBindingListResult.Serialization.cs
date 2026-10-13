@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RuntimeBindingListResult(value, nextLink, additionalBinaryDataProperties);
+            return new RuntimeBindingListResult(value ?? new ChangeTrackingList<RuntimeBindingData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

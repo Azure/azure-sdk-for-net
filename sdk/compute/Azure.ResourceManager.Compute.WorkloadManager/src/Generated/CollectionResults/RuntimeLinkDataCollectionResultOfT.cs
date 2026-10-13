@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <returns> The pages of RuntimeLinkDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<RuntimeLinkData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
