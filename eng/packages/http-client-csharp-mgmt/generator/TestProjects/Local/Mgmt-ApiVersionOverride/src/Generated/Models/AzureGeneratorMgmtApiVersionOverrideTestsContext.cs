@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure.Generator.MgmtApiVersionOverride.Tests.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtApiVersionOverride.Tests
@@ -16,12 +15,9 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(EscapedWireVersionTestData))]
-    [ModelReaderWriterBuildable(typeof(EscapedWireVersionTestListResult))]
     [ModelReaderWriterBuildable(typeof(EscapedWireVersionTestResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(WireVersionTestData))]
-    [ModelReaderWriterBuildable(typeof(WireVersionTestListResult))]
-    [ModelReaderWriterBuildable(typeof(WireVersionTestProperties))]
     [ModelReaderWriterBuildable(typeof(WireVersionTestResource))]
     public partial class AzureGeneratorMgmtApiVersionOverrideTestsContext : ModelReaderWriterContext
     {

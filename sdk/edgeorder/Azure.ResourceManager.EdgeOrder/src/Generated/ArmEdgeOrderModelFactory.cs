@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <returns> A new <see cref="Models.EdgeOrderProductMeterDetails"/> instance for mocking. </returns>
         public static EdgeOrderProductMeterDetails EdgeOrderProductMeterDetails(string billingType = default, double? multiplier = default, EdgeOrderProductChargingType? chargingType = default)
         {
-            return new UnknownMeterDetails(default, multiplier, chargingType, default);
+            return new UnknownMeterDetails(billingType is null ? default : new BillingType(billingType), multiplier, chargingType, default);
         }
 
         /// <summary> Billing type PAV2 meter details. </summary>
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <returns> A new <see cref="Models.Pav2MeterDetails"/> instance for mocking. </returns>
         public static Pav2MeterDetails Pav2MeterDetails(double? multiplier = default, EdgeOrderProductChargingType? chargingType = default, Guid? meterGuid = default)
         {
-            return new Pav2MeterDetails(default, multiplier, chargingType, default, meterGuid);
+            return new Pav2MeterDetails(BillingType.Pav2, multiplier, chargingType, default, meterGuid);
         }
 
         /// <summary> Billing type Purchase meter details. </summary>
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static PurchaseMeterDetails PurchaseMeterDetails(double? multiplier = default, EdgeOrderProductChargingType? chargingType = default, string productId = default, string skuId = default, string termId = default)
         {
             return new PurchaseMeterDetails(
-                default,
+                BillingType.Purchase,
                 multiplier,
                 chargingType,
                 default,

@@ -89,10 +89,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (_descriptionIsDefined || Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -111,13 +118,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningErrors))
             {
-                writer.WritePropertyName("provisioningErrors"u8);
-                writer.WriteStartArray();
-                foreach (MachineLearningError item in ProvisioningErrors)
+                if (ProvisioningErrors != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("provisioningErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (MachineLearningError item in ProvisioningErrors)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("provisioningErrors"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(IsAttachedCompute))
             {

@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionExtensionGetByVmsAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableComputeBulkActionsArmClient.GetByVms");
+            return new ScheduledActionResourcesAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableComputeBulkActionsArmClient.GetByVms");
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionExtensionGetByVmsCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableComputeBulkActionsArmClient.GetByVms");
+            return new ScheduledActionResourcesCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableComputeBulkActionsArmClient.GetByVms");
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OccurrenceExtensionGetOccurrenceByVmsAsyncCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context, "MockableComputeBulkActionsArmClient.GetOccurrenceByVms");
+            return new OccurrenceExtensionAsyncCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context, "MockableComputeBulkActionsArmClient.GetOccurrenceByVms");
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OccurrenceExtensionGetOccurrenceByVmsCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context, "MockableComputeBulkActionsArmClient.GetOccurrenceByVms");
+            return new OccurrenceExtensionCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context, "MockableComputeBulkActionsArmClient.GetOccurrenceByVms");
         }
     }
 }

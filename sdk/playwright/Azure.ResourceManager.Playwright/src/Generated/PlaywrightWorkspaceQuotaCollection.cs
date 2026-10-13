@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Playwright
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlaywrightWorkspaceQuotaData, PlaywrightWorkspaceQuotaResource>(new PlaywrightWorkspaceQuotasGetByPlaywrightWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PlaywrightWorkspaceQuotaData, PlaywrightWorkspaceQuotaResource>(new PlaywrightWorkspaceQuotaDataAsyncCollectionResultOfT(
                 _playwrightWorkspaceQuotasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Playwright
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlaywrightWorkspaceQuotaData, PlaywrightWorkspaceQuotaResource>(new PlaywrightWorkspaceQuotasGetByPlaywrightWorkspaceCollectionResultOfT(
+            return new PageableWrapper<PlaywrightWorkspaceQuotaData, PlaywrightWorkspaceQuotaResource>(new PlaywrightWorkspaceQuotaDataCollectionResultOfT(
                 _playwrightWorkspaceQuotasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CompareDeploymentVersionsResult(value, additionalBinaryDataProperties);
+            return new CompareDeploymentVersionsResult(value ?? new ChangeTrackingList<CdnDeploymentVersionChange>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -80,10 +80,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(RollingInputData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(PreprocessingComponentId))
+            if (_preprocessingComponentIdIsDefined || Optional.IsDefined(PreprocessingComponentId))
             {
-                writer.WritePropertyName("preprocessingComponentId"u8);
-                writer.WriteStringValue(PreprocessingComponentId);
+                if (PreprocessingComponentId != null)
+                {
+                    writer.WritePropertyName("preprocessingComponentId"u8);
+                    writer.WriteStringValue(PreprocessingComponentId);
+                }
+                else
+                {
+                    writer.WriteNull("preprocessingComponentId"u8);
+                }
             }
             writer.WritePropertyName("windowOffset"u8);
             writer.WriteStringValue(WindowOffset, "P");
@@ -116,12 +123,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IDictionary<string, string> columns = default;
+            IDictionary<string, string> columns = new ChangeTrackingDictionary<string, string>();
+            bool dataContextIsDefined = false;
             string dataContext = default;
             MonitoringInputDataType inputDataType = default;
             JobInputType jobInputType = default;
             Uri uri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool preprocessingComponentIdIsDefined = false;
             string preprocessingComponentId = default;
             TimeSpan windowOffset = default;
             TimeSpan windowSize = default;
@@ -131,6 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        columns = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -150,6 +160,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("dataContext"u8))
                 {
+                    dataContextIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         dataContext = null;
@@ -175,6 +186,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("preprocessingComponentId"u8))
                 {
+                    preprocessingComponentIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         preprocessingComponentId = null;
@@ -199,7 +211,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             return new RollingInputData(
-                columns ?? new ChangeTrackingDictionary<string, string>(),
+                columns,
                 dataContext,
                 inputDataType,
                 jobInputType,
@@ -207,7 +219,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 additionalBinaryDataProperties,
                 preprocessingComponentId,
                 windowOffset,
-                windowSize);
+                windowSize)
+            {
+                _dataContextIsDefined = dataContextIsDefined,
+                _preprocessingComponentIdIsDefined = preprocessingComponentIdIsDefined
+            };
         }
     }
 }

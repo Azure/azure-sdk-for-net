@@ -222,8 +222,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 displayName,
                 @type,
                 description,
-                allowedValues,
-                hostTypes,
+                allowedValues ?? new ChangeTrackingList<string>(),
+                hostTypes ?? new ChangeTrackingList<PublicCloudHostType>(),
                 defaultValue,
                 additionalBinaryDataProperties);
         }

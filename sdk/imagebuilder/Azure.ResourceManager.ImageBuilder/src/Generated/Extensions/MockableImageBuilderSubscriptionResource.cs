@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ImageBuilder.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImageTemplateData, ImageTemplateResource>(new VirtualMachineImageTemplatesGetAllAsyncCollectionResultOfT(VirtualMachineImageTemplatesRestClient, Id.SubscriptionId, context, "MockableImageBuilderSubscriptionResource.GetImageTemplates"), data => new ImageTemplateResource(Client, data));
+            return new AsyncPageableWrapper<ImageTemplateData, ImageTemplateResource>(new ImageTemplateDataAsync0CollectionResultOfT(VirtualMachineImageTemplatesRestClient, Id.SubscriptionId, context, "MockableImageBuilderSubscriptionResource.GetImageTemplates"), data => new ImageTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ImageBuilder.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImageTemplateData, ImageTemplateResource>(new VirtualMachineImageTemplatesGetAllCollectionResultOfT(VirtualMachineImageTemplatesRestClient, Id.SubscriptionId, context, "MockableImageBuilderSubscriptionResource.GetImageTemplates"), data => new ImageTemplateResource(Client, data));
+            return new PageableWrapper<ImageTemplateData, ImageTemplateResource>(new ImageTemplateData0CollectionResultOfT(VirtualMachineImageTemplatesRestClient, Id.SubscriptionId, context, "MockableImageBuilderSubscriptionResource.GetImageTemplates"), data => new ImageTemplateResource(Client, data));
         }
     }
 }

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscoverySupercomputerData, DiscoverySupercomputerResource>(new SupercomputersGetByResourceGroupAsyncCollectionResultOfT(_supercomputersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoverySupercomputerCollection.GetAll"), data => new DiscoverySupercomputerResource(Client, data));
+            return new AsyncPageableWrapper<DiscoverySupercomputerData, DiscoverySupercomputerResource>(new DiscoverySupercomputerDataAsyncCollectionResultOfT(_supercomputersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoverySupercomputerCollection.GetAll"), data => new DiscoverySupercomputerResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscoverySupercomputerData, DiscoverySupercomputerResource>(new SupercomputersGetByResourceGroupCollectionResultOfT(_supercomputersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoverySupercomputerCollection.GetAll"), data => new DiscoverySupercomputerResource(Client, data));
+            return new PageableWrapper<DiscoverySupercomputerData, DiscoverySupercomputerResource>(new DiscoverySupercomputerDataCollectionResultOfT(_supercomputersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoverySupercomputerCollection.GetAll"), data => new DiscoverySupercomputerResource(Client, data));
         }
 
         /// <summary>

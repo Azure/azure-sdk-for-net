@@ -16,6 +16,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private TextWeights _textWeights;
+        internal bool _textWeightsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ScoringProfile"/>. </summary>
         /// <param name="name"> The name of the scoring profile. </param>
@@ -37,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal ScoringProfile(string name, TextWeights textWeights, IList<ScoringFunction> functions, ScoringFunctionAggregation? functionAggregation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            TextWeights = textWeights;
+            _textWeights = textWeights;
             Functions = functions;
             FunctionAggregation = functionAggregation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,7 +49,18 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Name { get; set; }
 
         /// <summary> Parameters that boost scoring based on text matches in certain index fields. </summary>
-        public TextWeights TextWeights { get; set; }
+        public TextWeights TextWeights
+        {
+            get
+            {
+                return _textWeights;
+            }
+            set
+            {
+                _textWeights = value;
+                _textWeightsIsDefined = true;
+            }
+        }
 
         /// <summary> The collection of functions that influence the scoring of documents. </summary>
         public IList<ScoringFunction> Functions { get; }

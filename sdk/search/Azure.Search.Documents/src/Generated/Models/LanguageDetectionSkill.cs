@@ -14,6 +14,11 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A skill that detects the language of input text and reports a single language code for every document submitted on the request. The language code is paired with a score indicating the confidence of the analysis. </summary>
     public partial class LanguageDetectionSkill : SearchIndexerSkill
     {
+        private string _defaultCountryHint;
+        internal bool _defaultCountryHintIsDefined;
+        private string _modelVersion;
+        internal bool _modelVersionIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="LanguageDetectionSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
@@ -37,14 +42,36 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
         internal LanguageDetectionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string defaultCountryHint, string modelVersion) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
-            DefaultCountryHint = defaultCountryHint;
-            ModelVersion = modelVersion;
+            _defaultCountryHint = defaultCountryHint;
+            _modelVersion = modelVersion;
         }
 
         /// <summary> A country code to use as a hint to the language detection model if it cannot disambiguate the language. </summary>
-        public string DefaultCountryHint { get; set; }
+        public string DefaultCountryHint
+        {
+            get
+            {
+                return _defaultCountryHint;
+            }
+            set
+            {
+                _defaultCountryHint = value;
+                _defaultCountryHintIsDefined = true;
+            }
+        }
 
         /// <summary> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </summary>
-        public string ModelVersion { get; set; }
+        public string ModelVersion
+        {
+            get
+            {
+                return _modelVersion;
+            }
+            set
+            {
+                _modelVersion = value;
+                _modelVersionIsDefined = true;
+            }
+        }
     }
 }

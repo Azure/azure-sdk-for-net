@@ -112,7 +112,7 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteObjectValue(item, options);
                 writer.WriteEndElement();
             }
-            if (Optional.IsCollectionDefined(BlobPrefixes))
+            if (BlobPrefixes != null && Optional.IsCollectionDefined(BlobPrefixes))
             {
                 foreach (BlobPrefix item in BlobPrefixes)
                 {

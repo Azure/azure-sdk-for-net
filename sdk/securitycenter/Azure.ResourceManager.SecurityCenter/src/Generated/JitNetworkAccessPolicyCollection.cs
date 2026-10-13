@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPoliciesGetByResourceGroupAndRegionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPolicyDataAsyncCollectionResultOfT(
                 _jitNetworkAccessPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPoliciesGetByResourceGroupAndRegionCollectionResultOfT(
+            return new PageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPolicyDataCollectionResultOfT(
                 _jitNetworkAccessPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

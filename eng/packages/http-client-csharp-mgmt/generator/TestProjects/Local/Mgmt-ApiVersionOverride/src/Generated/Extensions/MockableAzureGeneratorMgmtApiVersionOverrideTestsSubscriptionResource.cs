@@ -83,7 +83,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EscapedWireVersionTestData, EscapedWireVersionTestResource>(new EscapedWireVersionReadsGetBySubscriptionAsyncCollectionResultOfT(EscapedWireVersionReadsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetEscapedWireVersionTests"), data => new EscapedWireVersionTestResource(Client, data));
+            return new AsyncPageableWrapper<EscapedWireVersionTestData, EscapedWireVersionTestResource>(new EscapedWireVersionTestDataAsyncCollectionResultOfT(EscapedWireVersionReadsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetEscapedWireVersionTests"), data => new EscapedWireVersionTestResource(Client, data));
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EscapedWireVersionTestData, EscapedWireVersionTestResource>(new EscapedWireVersionReadsGetBySubscriptionCollectionResultOfT(EscapedWireVersionReadsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetEscapedWireVersionTests"), data => new EscapedWireVersionTestResource(Client, data));
+            return new PageableWrapper<EscapedWireVersionTestData, EscapedWireVersionTestResource>(new EscapedWireVersionTestDataCollectionResultOfT(EscapedWireVersionReadsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetEscapedWireVersionTests"), data => new EscapedWireVersionTestResource(Client, data));
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WireVersionTestData, WireVersionTestResource>(new WireVersionOperationsGetBySubscriptionAsyncCollectionResultOfT(WireVersionOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetWireVersionTests"), data => new WireVersionTestResource(Client, data));
+            return new AsyncPageableWrapper<WireVersionTestData, WireVersionTestResource>(new WireVersionTestDataAsyncCollectionResultOfT(WireVersionOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetWireVersionTests"), data => new WireVersionTestResource(Client, data));
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WireVersionTestData, WireVersionTestResource>(new WireVersionOperationsGetBySubscriptionCollectionResultOfT(WireVersionOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetWireVersionTests"), data => new WireVersionTestResource(Client, data));
+            return new PageableWrapper<WireVersionTestData, WireVersionTestResource>(new WireVersionTestDataCollectionResultOfT(WireVersionOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetWireVersionTests"), data => new WireVersionTestResource(Client, data));
         }
 
         /// <summary>

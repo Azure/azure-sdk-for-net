@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VmmServerListResult(value, nextLink, additionalBinaryDataProperties);
+            return new VmmServerListResult(value ?? new ChangeTrackingList<ScVmmServerData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

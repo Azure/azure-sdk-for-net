@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _description;
+        internal bool _descriptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="PartialBatchDeployment"/>. </summary>
         public PartialBatchDeployment()
@@ -27,12 +29,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal PartialBatchDeployment(string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Description = description;
+            _description = description;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Description of the endpoint deployment. </summary>
         [WirePath("description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+                _descriptionIsDefined = true;
+            }
+        }
     }
 }

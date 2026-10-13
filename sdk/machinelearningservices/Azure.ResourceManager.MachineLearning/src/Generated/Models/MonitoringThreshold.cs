@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private double? _value;
+        internal bool _valueIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MonitoringThreshold"/>. </summary>
         public MonitoringThreshold()
@@ -27,12 +29,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MonitoringThreshold(double? value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Value = value;
+            _value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The threshold value. If null, the set default is dependent on the metric type. </summary>
         [WirePath("value")]
-        public double? Value { get; set; }
+        public double? Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+                _valueIsDefined = true;
+            }
+        }
     }
 }

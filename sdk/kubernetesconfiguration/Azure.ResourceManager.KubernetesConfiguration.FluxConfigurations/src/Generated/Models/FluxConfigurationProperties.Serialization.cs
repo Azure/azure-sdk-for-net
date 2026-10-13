@@ -116,70 +116,133 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             }
             if (Optional.IsCollectionDefined(Kustomizations))
             {
-                writer.WritePropertyName("kustomizations"u8);
-                writer.WriteStartObject();
-                foreach (var item in Kustomizations)
+                if (Kustomizations != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WritePropertyName("kustomizations"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Kustomizations)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value, options);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("kustomizations"u8);
+                }
             }
             if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
-                writer.WritePropertyName("configurationProtectedSettings"u8);
-                writer.WriteStartObject();
-                foreach (var item in ConfigurationProtectedSettings)
+                if (ConfigurationProtectedSettings != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("configurationProtectedSettings"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in ConfigurationProtectedSettings)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("configurationProtectedSettings"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
             {
-                writer.WritePropertyName("statuses"u8);
-                writer.WriteStartArray();
-                foreach (FluxObjectStatus item in Statuses)
+                if (Statuses != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("statuses"u8);
+                    writer.WriteStartArray();
+                    foreach (FluxObjectStatus item in Statuses)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("statuses"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(RepositoryPublicKey))
+            if (options.Format != "W" && (_repositoryPublicKeyIsDefined || Optional.IsDefined(RepositoryPublicKey)))
             {
-                writer.WritePropertyName("repositoryPublicKey"u8);
-                writer.WriteStringValue(RepositoryPublicKey);
+                if (RepositoryPublicKey != null)
+                {
+                    writer.WritePropertyName("repositoryPublicKey"u8);
+                    writer.WriteStringValue(RepositoryPublicKey);
+                }
+                else
+                {
+                    writer.WriteNull("repositoryPublicKey"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceSyncedCommitId))
+            if (options.Format != "W" && (_sourceSyncedCommitIdIsDefined || Optional.IsDefined(SourceSyncedCommitId)))
             {
-                writer.WritePropertyName("sourceSyncedCommitId"u8);
-                writer.WriteStringValue(SourceSyncedCommitId);
+                if (SourceSyncedCommitId != null)
+                {
+                    writer.WritePropertyName("sourceSyncedCommitId"u8);
+                    writer.WriteStringValue(SourceSyncedCommitId);
+                }
+                else
+                {
+                    writer.WriteNull("sourceSyncedCommitId"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceUpdatedOn))
+            if (options.Format != "W" && (_sourceUpdatedOnIsDefined || Optional.IsDefined(SourceUpdatedOn)))
             {
-                writer.WritePropertyName("sourceUpdatedAt"u8);
-                writer.WriteStringValue(SourceUpdatedOn.Value, "O");
+                if (SourceUpdatedOn != null)
+                {
+                    writer.WritePropertyName("sourceUpdatedAt"u8);
+                    writer.WriteStringValue(SourceUpdatedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("sourceUpdatedAt"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusUpdatedOn))
+            if (options.Format != "W" && (_statusUpdatedOnIsDefined || Optional.IsDefined(StatusUpdatedOn)))
             {
-                writer.WritePropertyName("statusUpdatedAt"u8);
-                writer.WriteStringValue(StatusUpdatedOn.Value, "O");
+                if (StatusUpdatedOn != null)
+                {
+                    writer.WritePropertyName("statusUpdatedAt"u8);
+                    writer.WriteStringValue(StatusUpdatedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("statusUpdatedAt"u8);
+                }
             }
-            if (Optional.IsDefined(IsWaitForReconciliation))
+            if (_isWaitForReconciliationIsDefined || Optional.IsDefined(IsWaitForReconciliation))
             {
-                writer.WritePropertyName("waitForReconciliation"u8);
-                writer.WriteBooleanValue(IsWaitForReconciliation.Value);
+                if (IsWaitForReconciliation != null)
+                {
+                    writer.WritePropertyName("waitForReconciliation"u8);
+                    writer.WriteBooleanValue(IsWaitForReconciliation.Value);
+                }
+                else
+                {
+                    writer.WriteNull("waitForReconciliation"u8);
+                }
             }
-            if (Optional.IsDefined(ReconciliationWaitDuration))
+            if (_reconciliationWaitDurationIsDefined || Optional.IsDefined(ReconciliationWaitDuration))
             {
-                writer.WritePropertyName("reconciliationWaitDuration"u8);
-                writer.WriteStringValue(ReconciliationWaitDuration);
+                if (ReconciliationWaitDuration != null)
+                {
+                    writer.WritePropertyName("reconciliationWaitDuration"u8);
+                    writer.WriteStringValue(ReconciliationWaitDuration);
+                }
+                else
+                {
+                    writer.WriteNull("reconciliationWaitDuration"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ComplianceState))
             {
@@ -191,10 +254,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && (_errorMessageIsDefined || Optional.IsDefined(ErrorMessage)))
             {
-                writer.WritePropertyName("errorMessage"u8);
-                writer.WriteStringValue(ErrorMessage);
+                if (ErrorMessage != null)
+                {
+                    writer.WritePropertyName("errorMessage"u8);
+                    writer.WriteStringValue(ErrorMessage);
+                }
+                else
+                {
+                    writer.WriteNull("errorMessage"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -246,17 +316,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             FluxBucket bucket = default;
             AzureBlob azureBlob = default;
             OciRepository ociRepository = default;
-            IDictionary<string, FluxConfigurationsKustomization> kustomizations = default;
-            IDictionary<string, string> configurationProtectedSettings = default;
-            IReadOnlyList<FluxObjectStatus> statuses = default;
+            IDictionary<string, FluxConfigurationsKustomization> kustomizations = new ChangeTrackingDictionary<string, FluxConfigurationsKustomization>();
+            IDictionary<string, string> configurationProtectedSettings = new ChangeTrackingDictionary<string, string>();
+            IReadOnlyList<FluxObjectStatus> statuses = new ChangeTrackingList<FluxObjectStatus>();
+            bool repositoryPublicKeyIsDefined = false;
             string repositoryPublicKey = default;
+            bool sourceSyncedCommitIdIsDefined = false;
             string sourceSyncedCommitId = default;
+            bool sourceUpdatedOnIsDefined = false;
             DateTimeOffset? sourceUpdatedOn = default;
+            bool statusUpdatedOnIsDefined = false;
             DateTimeOffset? statusUpdatedOn = default;
+            bool isWaitForReconciliationIsDefined = false;
             bool? isWaitForReconciliation = default;
+            bool reconciliationWaitDurationIsDefined = false;
             string reconciliationWaitDuration = default;
             FluxComplianceState? complianceState = default;
             FluxConfigurationProvisioningState? provisioningState = default;
+            bool errorMessageIsDefined = false;
             string errorMessage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -333,6 +410,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        kustomizations = null;
                         continue;
                     }
                     Dictionary<string, FluxConfigurationsKustomization> dictionary = new Dictionary<string, FluxConfigurationsKustomization>();
@@ -347,6 +425,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        configurationProtectedSettings = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -368,6 +447,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        statuses = null;
                         continue;
                     }
                     List<FluxObjectStatus> array = new List<FluxObjectStatus>();
@@ -380,6 +460,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("repositoryPublicKey"u8))
                 {
+                    repositoryPublicKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         repositoryPublicKey = null;
@@ -390,6 +471,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("sourceSyncedCommitId"u8))
                 {
+                    sourceSyncedCommitIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         sourceSyncedCommitId = null;
@@ -400,6 +482,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("sourceUpdatedAt"u8))
                 {
+                    sourceUpdatedOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         sourceUpdatedOn = null;
@@ -410,6 +493,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("statusUpdatedAt"u8))
                 {
+                    statusUpdatedOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         statusUpdatedOn = null;
@@ -420,6 +504,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("waitForReconciliation"u8))
                 {
+                    isWaitForReconciliationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isWaitForReconciliation = null;
@@ -430,6 +515,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("reconciliationWaitDuration"u8))
                 {
+                    reconciliationWaitDurationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         reconciliationWaitDuration = null;
@@ -458,6 +544,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("errorMessage"u8))
                 {
+                    errorMessageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         errorMessage = null;
@@ -480,9 +567,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 bucket,
                 azureBlob,
                 ociRepository,
-                kustomizations ?? new ChangeTrackingDictionary<string, FluxConfigurationsKustomization>(),
-                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
-                statuses ?? new ChangeTrackingList<FluxObjectStatus>(),
+                kustomizations,
+                configurationProtectedSettings,
+                statuses,
                 repositoryPublicKey,
                 sourceSyncedCommitId,
                 sourceUpdatedOn,
@@ -492,7 +579,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 complianceState,
                 provisioningState,
                 errorMessage,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _repositoryPublicKeyIsDefined = repositoryPublicKeyIsDefined,
+                _sourceSyncedCommitIdIsDefined = sourceSyncedCommitIdIsDefined,
+                _sourceUpdatedOnIsDefined = sourceUpdatedOnIsDefined,
+                _statusUpdatedOnIsDefined = statusUpdatedOnIsDefined,
+                _isWaitForReconciliationIsDefined = isWaitForReconciliationIsDefined,
+                _reconciliationWaitDurationIsDefined = reconciliationWaitDurationIsDefined,
+                _errorMessageIsDefined = errorMessageIsDefined
+            };
         }
     }
 }

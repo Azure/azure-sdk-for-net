@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricL3IsolationDomainData, NetworkFabricL3IsolationDomainResource>(new L3IsolationDomainsGetByResourceGroupAsyncCollectionResultOfT(_l3IsolationDomainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricL3IsolationDomainCollection.GetAll"), data => new NetworkFabricL3IsolationDomainResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricL3IsolationDomainData, NetworkFabricL3IsolationDomainResource>(new NetworkFabricL3IsolationDomainDataAsyncCollectionResultOfT(_l3IsolationDomainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricL3IsolationDomainCollection.GetAll"), data => new NetworkFabricL3IsolationDomainResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricL3IsolationDomainData, NetworkFabricL3IsolationDomainResource>(new L3IsolationDomainsGetByResourceGroupCollectionResultOfT(_l3IsolationDomainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricL3IsolationDomainCollection.GetAll"), data => new NetworkFabricL3IsolationDomainResource(Client, data));
+            return new PageableWrapper<NetworkFabricL3IsolationDomainData, NetworkFabricL3IsolationDomainResource>(new NetworkFabricL3IsolationDomainDataCollectionResultOfT(_l3IsolationDomainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricL3IsolationDomainCollection.GetAll"), data => new NetworkFabricL3IsolationDomainResource(Client, data));
         }
 
         /// <summary>

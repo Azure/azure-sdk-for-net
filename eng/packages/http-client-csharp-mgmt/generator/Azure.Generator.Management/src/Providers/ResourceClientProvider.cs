@@ -433,6 +433,14 @@ namespace Azure.Generator.Management.Providers
             return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethodList);
         }
 
+        internal IEnumerable<ArrayResponseCollectionResultPlan> ArrayCollectionResultPlans =>
+            _resourceServiceMethods
+                .Where(method => ArrayResponseCollectionResultPlan.IsArrayResponse(method.InputMethod) &&
+                    (IsSingleton || method.Kind is not (ResourceOperationKind.Create or ResourceOperationKind.Update)))
+                .Select(method => new ArrayResponseCollectionResultPlan(this, method.InputClient, method.InputMethod,
+                    ResourceHelpers.GetOperationMethodName(method.Kind, false, false),
+                    ResourceHelpers.GetOperationMethodName(method.Kind, true, false)));
+
         protected override MethodProvider[] BuildMethods()
         {
             var operationMethods = new List<MethodProvider>();

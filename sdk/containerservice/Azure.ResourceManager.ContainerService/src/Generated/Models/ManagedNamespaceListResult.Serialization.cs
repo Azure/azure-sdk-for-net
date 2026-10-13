@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedNamespaceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ManagedNamespaceListResult(value ?? new ChangeTrackingList<ManagedClusterNamespaceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

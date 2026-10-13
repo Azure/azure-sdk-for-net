@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImageDefinitionBuildData, ProjectCatalogImageDefinitionBuildResource>(new ProjectCatalogImageDefinitionBuildsGetByImageDefinitionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ImageDefinitionBuildData, ProjectCatalogImageDefinitionBuildResource>(new ImageDefinitionBuildDataAsyncCollectionResultOfT(
                 _projectCatalogImageDefinitionBuildsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImageDefinitionBuildData, ProjectCatalogImageDefinitionBuildResource>(new ProjectCatalogImageDefinitionBuildsGetByImageDefinitionCollectionResultOfT(
+            return new PageableWrapper<ImageDefinitionBuildData, ProjectCatalogImageDefinitionBuildResource>(new ImageDefinitionBuildDataCollectionResultOfT(
                 _projectCatalogImageDefinitionBuildsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

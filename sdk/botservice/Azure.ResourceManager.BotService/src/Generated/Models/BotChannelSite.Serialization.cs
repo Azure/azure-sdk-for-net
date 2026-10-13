@@ -119,10 +119,17 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("isDetailedLoggingEnabled"u8);
                 writer.WriteBooleanValue(IsDetailedLoggingEnabled.Value);
             }
-            if (Optional.IsDefined(IsBlockUserUploadEnabled))
+            if (_isBlockUserUploadEnabledIsDefined || Optional.IsDefined(IsBlockUserUploadEnabled))
             {
-                writer.WritePropertyName("isBlockUserUploadEnabled"u8);
-                writer.WriteBooleanValue(IsBlockUserUploadEnabled.Value);
+                if (IsBlockUserUploadEnabled != null)
+                {
+                    writer.WritePropertyName("isBlockUserUploadEnabled"u8);
+                    writer.WriteBooleanValue(IsBlockUserUploadEnabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("isBlockUserUploadEnabled"u8);
+                }
             }
             if (Optional.IsDefined(IsNoStorageEnabled))
             {
@@ -230,6 +237,7 @@ namespace Azure.ResourceManager.BotService.Models
             bool? isTokenEnabled = default;
             bool? isEndpointParametersEnabled = default;
             bool? isDetailedLoggingEnabled = default;
+            bool isBlockUserUploadEnabledIsDefined = false;
             bool? isBlockUserUploadEnabled = default;
             bool? isNoStorageEnabled = default;
             ETag? eTag = default;
@@ -306,6 +314,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("isBlockUserUploadEnabled"u8))
                 {
+                    isBlockUserUploadEnabledIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isBlockUserUploadEnabled = null;
@@ -428,7 +437,10 @@ namespace Azure.ResourceManager.BotService.Models
                 trustedOrigins ?? new ChangeTrackingList<string>(),
                 isWebChatSpeechEnabled,
                 isWebchatPreviewEnabled,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _isBlockUserUploadEnabledIsDefined = isBlockUserUploadEnabledIsDefined
+            };
         }
     }
 }

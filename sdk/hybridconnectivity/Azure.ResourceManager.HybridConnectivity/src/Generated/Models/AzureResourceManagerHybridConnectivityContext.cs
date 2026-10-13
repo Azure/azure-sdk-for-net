@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.HybridConnectivity
     [ModelReaderWriterBuildable(typeof(AwsCloudProfileUpdate))]
     [ModelReaderWriterBuildable(typeof(EndpointsList))]
     [ModelReaderWriterBuildable(typeof(GcpCloudProfile))]
-    [ModelReaderWriterBuildable(typeof(GcpCloudProfileUpdate))]
     [ModelReaderWriterBuildable(typeof(GcpOrganizationProperties))]
     [ModelReaderWriterBuildable(typeof(GcpOrganizationPropertiesPatch))]
     [ModelReaderWriterBuildable(typeof(GcpProjectProperties))]

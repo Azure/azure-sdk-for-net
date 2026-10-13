@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ThreatIntelligenceQueryConditionProperties(stixObjectType, clauses, conditionConnective, additionalBinaryDataProperties);
+            return new ThreatIntelligenceQueryConditionProperties(stixObjectType, clauses ?? new ChangeTrackingList<ThreatIntelligenceQueryConditionClause>(), conditionConnective, additionalBinaryDataProperties);
         }
     }
 }

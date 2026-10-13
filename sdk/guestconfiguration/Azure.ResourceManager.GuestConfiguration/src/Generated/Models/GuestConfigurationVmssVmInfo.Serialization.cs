@@ -95,10 +95,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("latestReportId"u8);
                 writer.WriteStringValue(LatestReportId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastComplianceCheckedOn))
+            if (options.Format != "W" && (_lastComplianceCheckedOnIsDefined || Optional.IsDefined(LastComplianceCheckedOn)))
             {
-                writer.WritePropertyName("lastComplianceChecked"u8);
-                writer.WriteStringValue(LastComplianceCheckedOn.Value, "O");
+                if (LastComplianceCheckedOn != null)
+                {
+                    writer.WritePropertyName("lastComplianceChecked"u8);
+                    writer.WriteStringValue(LastComplianceCheckedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("lastComplianceChecked"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -146,6 +153,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             ResourceIdentifier vmResourceId = default;
             AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
             Guid? latestReportId = default;
+            bool lastComplianceCheckedOnIsDefined = false;
             DateTimeOffset? lastComplianceCheckedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -188,6 +196,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (prop.NameEquals("lastComplianceChecked"u8))
                 {
+                    lastComplianceCheckedOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         lastComplianceCheckedOn = null;
@@ -207,7 +216,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 complianceStatus,
                 latestReportId,
                 lastComplianceCheckedOn,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _lastComplianceCheckedOnIsDefined = lastComplianceCheckedOnIsDefined
+            };
         }
     }
 }

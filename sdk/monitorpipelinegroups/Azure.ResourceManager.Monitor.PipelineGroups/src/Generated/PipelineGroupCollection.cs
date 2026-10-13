@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PipelineGroupData, PipelineGroupResource>(new PipelineGroupOperationsGetByResourceGroupAsyncCollectionResultOfT(_pipelineGroupOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PipelineGroupCollection.GetAll"), data => new PipelineGroupResource(Client, data));
+            return new AsyncPageableWrapper<PipelineGroupData, PipelineGroupResource>(new PipelineGroupDataAsyncCollectionResultOfT(_pipelineGroupOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PipelineGroupCollection.GetAll"), data => new PipelineGroupResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PipelineGroupData, PipelineGroupResource>(new PipelineGroupOperationsGetByResourceGroupCollectionResultOfT(_pipelineGroupOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PipelineGroupCollection.GetAll"), data => new PipelineGroupResource(Client, data));
+            return new PageableWrapper<PipelineGroupData, PipelineGroupResource>(new PipelineGroupDataCollectionResultOfT(_pipelineGroupOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PipelineGroupCollection.GetAll"), data => new PipelineGroupResource(Client, data));
         }
 
         /// <summary>

@@ -74,15 +74,29 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(AzureFirewallAutoscaleConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(MinCapacity))
+            if (_minCapacityIsDefined || Optional.IsDefined(MinCapacity))
             {
-                writer.WritePropertyName("minCapacity"u8);
-                writer.WriteNumberValue(MinCapacity.Value);
+                if (MinCapacity != null)
+                {
+                    writer.WritePropertyName("minCapacity"u8);
+                    writer.WriteNumberValue(MinCapacity.Value);
+                }
+                else
+                {
+                    writer.WriteNull("minCapacity"u8);
+                }
             }
-            if (Optional.IsDefined(MaxCapacity))
+            if (_maxCapacityIsDefined || Optional.IsDefined(MaxCapacity))
             {
-                writer.WritePropertyName("maxCapacity"u8);
-                writer.WriteNumberValue(MaxCapacity.Value);
+                if (MaxCapacity != null)
+                {
+                    writer.WritePropertyName("maxCapacity"u8);
+                    writer.WriteNumberValue(MaxCapacity.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxCapacity"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,13 +140,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
+            bool minCapacityIsDefined = false;
             int? minCapacity = default;
+            bool maxCapacityIsDefined = false;
             int? maxCapacity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("minCapacity"u8))
                 {
+                    minCapacityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         minCapacity = null;
@@ -143,6 +160,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("maxCapacity"u8))
                 {
+                    maxCapacityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         maxCapacity = null;
@@ -156,7 +174,11 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureFirewallAutoscaleConfiguration(minCapacity, maxCapacity, additionalBinaryDataProperties);
+            return new AzureFirewallAutoscaleConfiguration(minCapacity, maxCapacity, additionalBinaryDataProperties)
+            {
+                _minCapacityIsDefined = minCapacityIsDefined,
+                _maxCapacityIsDefined = maxCapacityIsDefined
+            };
         }
     }
 }

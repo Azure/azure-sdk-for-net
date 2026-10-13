@@ -95,10 +95,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(AuthIdentity))
+            if (_authIdentityIsDefined || Optional.IsDefined(AuthIdentity))
             {
-                writer.WritePropertyName("authIdentity"u8);
-                writer.WriteObjectValue(AuthIdentity, options);
+                if (AuthIdentity != null)
+                {
+                    writer.WritePropertyName("authIdentity"u8);
+                    writer.WriteObjectValue(AuthIdentity, options);
+                }
+                else
+                {
+                    writer.WriteNull("authIdentity"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,6 +152,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string modelVersion = default;
             Uri resourceUri = default;
             string apiKey = default;
+            bool authIdentityIsDefined = false;
             SearchIndexerDataIdentity authIdentity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -171,6 +179,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("authIdentity"u8))
                 {
+                    authIdentityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         authIdentity = null;
@@ -184,7 +193,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AIServicesVisionParameters(modelVersion, resourceUri, apiKey, authIdentity, additionalBinaryDataProperties);
+            return new AIServicesVisionParameters(modelVersion, resourceUri, apiKey, authIdentity, additionalBinaryDataProperties)
+            {
+                _authIdentityIsDefined = authIdentityIsDefined
+            };
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualMachineScaleSetListWithLinkResult(value, nextLink, additionalBinaryDataProperties);
+            return new VirtualMachineScaleSetListWithLinkResult(value ?? new ChangeTrackingList<VirtualMachineScaleSetData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

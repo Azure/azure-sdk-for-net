@@ -875,7 +875,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="content"> Cost allocation rule to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CostAllocationRuleCheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CostAllocationRuleCheckNameAvailabilityResult>> CheckNameAvailabilityAsync(ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 };
                 HttpMessage message = CostAllocationRulesRestClient.CreateCheckNameAvailabilityRequest(scope.Name, CostAllocationRuleCheckNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CostAllocationRuleCheckNameAvailabilityResponse> response = Response.FromValue(CostAllocationRuleCheckNameAvailabilityResponse.FromResponse(result), result);
+                Response<CostAllocationRuleCheckNameAvailabilityResult> response = Response.FromValue(CostAllocationRuleCheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="content"> Cost allocation rule to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<CostAllocationRuleCheckNameAvailabilityResponse> CheckNameAvailability(ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<CostAllocationRuleCheckNameAvailabilityResult> CheckNameAvailability(ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 };
                 HttpMessage message = CostAllocationRulesRestClient.CreateCheckNameAvailabilityRequest(scope.Name, CostAllocationRuleCheckNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CostAllocationRuleCheckNameAvailabilityResponse> response = Response.FromValue(CostAllocationRuleCheckNameAvailabilityResponse.FromResponse(result), result);
+                Response<CostAllocationRuleCheckNameAvailabilityResult> response = Response.FromValue(CostAllocationRuleCheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -986,7 +986,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitRecommendationsGetBenefitRecommendationsAsyncCollectionResultOfT(
+            return new BenefitRecommendationModelAsyncCollectionResultOfT(
                 BenefitRecommendationsRestClient,
                 scope.ToString(),
                 filter,
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitRecommendationsGetBenefitRecommendationsCollectionResultOfT(
+            return new BenefitRecommendationModelCollectionResultOfT(
                 BenefitRecommendationsRestClient,
                 scope.ToString(),
                 filter,
@@ -1069,7 +1069,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesByBillingAccountIdAsyncCollectionResultOfT(
+            return new BenefitUtilizationSummaryAsyncCollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
                 scope.Name,
                 grainParameter?.ToString(),
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesByBillingAccountIdCollectionResultOfT(
+            return new BenefitUtilizationSummaryCollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
                 scope.Name,
                 grainParameter?.ToString(),
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesByBillingProfileIdAsyncCollectionResultOfT(
+            return new BenefitUtilizationSummaryAsync0CollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -1190,7 +1190,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesByBillingProfileIdCollectionResultOfT(
+            return new BenefitUtilizationSummary0CollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -1231,7 +1231,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesBySavingsPlanOrderAsyncCollectionResultOfT(
+            return new BenefitUtilizationSummaryAsync1CollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
                 scope.Name,
                 filter,
@@ -1271,7 +1271,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesBySavingsPlanOrderCollectionResultOfT(
+            return new BenefitUtilizationSummary1CollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
                 scope.Name,
                 filter,
@@ -1311,7 +1311,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesBySavingsPlanIdAsyncCollectionResultOfT(
+            return new BenefitUtilizationSummaryAsync2CollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -1352,7 +1352,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesBySavingsPlanIdCollectionResultOfT(
+            return new BenefitUtilizationSummary2CollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -2295,7 +2295,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DimensionsGetDimensionsAsyncCollectionResultOfT(
+            return new CostManagementDimensionAsyncCollectionResultOfT(
                 DimensionsRestClient,
                 scope.ToString(),
                 filter,
@@ -2339,7 +2339,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DimensionsGetDimensionsCollectionResultOfT(
+            return new CostManagementDimensionCollectionResultOfT(
                 DimensionsRestClient,
                 scope.ToString(),
                 filter,
