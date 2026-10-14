@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private bool? _isDataExportEnabled;
-        internal bool _isDataExportEnabledIsDefined;
+        private bool _isDataExportEnabledIsDefined;
         private bool? _immediatePurgeDataOn30Days;
-        internal bool _immediatePurgeDataOn30DaysIsDefined;
+        private bool _immediatePurgeDataOn30DaysIsDefined;
         private bool? _isLogAccessUsingOnlyResourcePermissionsEnabled;
-        internal bool _isLogAccessUsingOnlyResourcePermissionsEnabledIsDefined;
+        private bool _isLogAccessUsingOnlyResourcePermissionsEnabledIsDefined;
         private bool? _isLocalAuthDisabled;
-        internal bool _isLocalAuthDisabledIsDefined;
+        private bool _isLocalAuthDisabledIsDefined;
         private bool? _isUnifiedSentinelBillingOnly;
-        internal bool _isUnifiedSentinelBillingOnlyIsDefined;
+        private bool _isUnifiedSentinelBillingOnlyIsDefined;
         private bool? _isDataAuthorizationMode;
-        internal bool _isDataAuthorizationModeIsDefined;
+        private bool _isDataAuthorizationModeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceFeatures"/>. </summary>
         public OperationalInsightsWorkspaceFeatures()
