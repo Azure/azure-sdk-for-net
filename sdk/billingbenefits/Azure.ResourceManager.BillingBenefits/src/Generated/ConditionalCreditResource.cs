@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(ResourceType, out string conditionalCreditApiVersion);
             _conditionalCreditsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
-            _conditionalCreditsRestClient = new ConditionalCredits(_conditionalCreditsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, conditionalCreditApiVersion ?? "2025-12-01-preview");
+            _conditionalCreditsRestClient = new ConditionalCredits(
+                _conditionalCreditsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                conditionalCreditApiVersion ?? "2025-12-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

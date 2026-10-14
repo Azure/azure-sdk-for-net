@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public EnvironmentServerType? EnvironmentServerType { get; set; }
 
         /// <summary> The location of the management portal. </summary>
-        public IList<Uri> ManagementPortalUri { get; }
+        public IList<Uri> ManagementPortalUri { get; set; }
     }
 }

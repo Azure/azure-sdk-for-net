@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppAttachPackageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AppAttachPackageResource.ResourceType, out string appAttachPackageApiVersion);
             _appAttachPackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", AppAttachPackageResource.ResourceType.Namespace, Diagnostics);
-            _appAttachPackageRestClient = new AppAttachPackage(_appAttachPackageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appAttachPackageApiVersion ?? "2026-03-01-preview");
+            _appAttachPackageRestClient = new AppAttachPackage(_appAttachPackageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DesktopVirtualization/appAttachPackages", out string appAttachPackageApiVersionOverride) ? appAttachPackageApiVersionOverride : "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

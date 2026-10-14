@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses/", false);
             uri.AppendPath(addressName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-02-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses/", false);
             uri.AppendPath(addressName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-02-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +96,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses/", false);
             uri.AppendPath(addressName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-02-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -131,10 +122,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses/", false);
             uri.AppendPath(addressName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-02-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -152,10 +140,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-02-01", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -188,10 +173,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2024-02-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -208,10 +190,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-02-01", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -244,10 +223,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2024-02-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

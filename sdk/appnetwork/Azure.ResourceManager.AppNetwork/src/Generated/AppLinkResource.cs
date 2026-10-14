@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.AppNetwork
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string appLinkApiVersion);
             _appLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppNetwork", ResourceType.Namespace, Diagnostics);
-            _appLinksRestClient = new AppLinks(_appLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appLinkApiVersion ?? "2026-08-01-preview");
+            _appLinksRestClient = new AppLinks(_appLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AppLink/appLinks", out string appLinksApiVersionOverride) ? appLinksApiVersionOverride : "2026-08-01-preview");
             ValidateResourceId(id);
         }
 

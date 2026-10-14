@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.Fabric.Mocking
 
         private ClientDiagnostics FabricCapacitiesClientDiagnostics => _fabricCapacitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Fabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FabricCapacities FabricCapacitiesRestClient => _fabricCapacitiesRestClient ??= new FabricCapacities(FabricCapacitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01-preview");
+        private FabricCapacities FabricCapacitiesRestClient => _fabricCapacitiesRestClient ??= new FabricCapacities(
+            FabricCapacitiesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-09-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// List FabricCapacity resources by subscription ID

@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Kubernetes
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ConnectedClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string connectedClusterApiVersion);
             _connectedClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kubernetes", ResourceType.Namespace, Diagnostics);
-            _connectedClusterRestClient = new ConnectedCluster(_connectedClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectedClusterApiVersion ?? "2025-12-01-preview");
+            _connectedClusterRestClient = new ConnectedCluster(_connectedClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Kubernetes/connectedClusters", out string connectedClusterApiVersionOverride) ? connectedClusterApiVersionOverride : "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

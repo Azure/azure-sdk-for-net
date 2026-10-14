@@ -40,6 +40,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-azure-resource-manager-resources": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/resources -g ManagementClientGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-azure-resource-manager-service-group": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/service-group -g ManagementClientGenerator",
       "commandName": "Executable",
