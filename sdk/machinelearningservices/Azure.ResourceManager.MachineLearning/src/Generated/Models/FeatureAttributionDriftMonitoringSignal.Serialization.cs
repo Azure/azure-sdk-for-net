@@ -82,14 +82,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
             {
-                writer.WritePropertyName("featureDataTypeOverride"u8);
-                writer.WriteStartObject();
-                foreach (var item in FeatureDataTypeOverride)
+                if (FeatureDataTypeOverride != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value.ToString());
+                    writer.WritePropertyName("featureDataTypeOverride"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in FeatureDataTypeOverride)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value.ToString());
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("featureDataTypeOverride"u8);
+                }
             }
             writer.WritePropertyName("featureImportanceSettings"u8);
             writer.WriteObjectValue(FeatureImportanceSettings, options);
@@ -131,11 +138,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<MonitoringNotificationType> notificationTypes = default;
-            IDictionary<string, string> properties = default;
+            IList<MonitoringNotificationType> notificationTypes = new ChangeTrackingList<MonitoringNotificationType>();
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride = default;
+            IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride = new ChangeTrackingDictionary<string, MonitoringFeatureDataType>();
             FeatureImportanceSettings featureImportanceSettings = default;
             FeatureAttributionMetricThreshold metricThreshold = default;
             IList<MonitoringInputDataBase> productionData = default;
@@ -146,6 +153,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        notificationTypes = null;
                         continue;
                     }
                     List<MonitoringNotificationType> array = new List<MonitoringNotificationType>();
@@ -160,6 +168,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -186,6 +195,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        featureDataTypeOverride = null;
                         continue;
                     }
                     Dictionary<string, MonitoringFeatureDataType> dictionary = new Dictionary<string, MonitoringFeatureDataType>();
@@ -227,14 +237,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             return new FeatureAttributionDriftMonitoringSignal(
-                notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(),
-                properties ?? new ChangeTrackingDictionary<string, string>(),
+                notificationTypes,
+                properties,
                 signalType,
                 additionalBinaryDataProperties,
-                featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>(),
+                featureDataTypeOverride,
                 featureImportanceSettings,
                 metricThreshold,
-                productionData,
+                productionData ?? new ChangeTrackingList<MonitoringInputDataBase>(),
                 referenceData);
         }
     }

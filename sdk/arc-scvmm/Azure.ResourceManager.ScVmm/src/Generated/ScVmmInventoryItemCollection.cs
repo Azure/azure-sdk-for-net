@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ScVmm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScVmmInventoryItemData, ScVmmInventoryItemResource>(new InventoryItemsGetByVmmServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ScVmmInventoryItemData, ScVmmInventoryItemResource>(new ScVmmInventoryItemDataAsyncCollectionResultOfT(
                 _inventoryItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ScVmm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScVmmInventoryItemData, ScVmmInventoryItemResource>(new InventoryItemsGetByVmmServerCollectionResultOfT(
+            return new PageableWrapper<ScVmmInventoryItemData, ScVmmInventoryItemResource>(new ScVmmInventoryItemDataCollectionResultOfT(
                 _inventoryItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

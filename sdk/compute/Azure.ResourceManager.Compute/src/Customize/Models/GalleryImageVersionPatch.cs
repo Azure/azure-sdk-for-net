@@ -20,5 +20,18 @@ namespace Azure.ResourceManager.Compute.Models
             get => IsRestoreEnabled;
             set => IsRestoreEnabled = value;
         }
+
+        /// <summary> The UEFI settings of a gallery image version. </summary>
+        [Obsolete("Use SecurityProfile instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public GalleryImageVersionUefiSettings SecurityUefiSettings
+        {
+            get => SecurityProfile?.UefiSettings;
+            set
+            {
+                SecurityProfile ??= new ImageVersionSecurityProfile();
+                SecurityProfile.UefiSettings = value;
+            }
+        }
     }
 }

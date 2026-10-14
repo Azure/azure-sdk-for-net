@@ -886,7 +886,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Cost allocation rule to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<CostAllocationRuleCheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(this ArmClient client, ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CostAllocationRuleCheckNameAvailabilityResult>> CheckNameAvailabilityAsync(this ArmClient client, ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Cost allocation rule to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<CostAllocationRuleCheckNameAvailabilityResponse> CheckNameAvailability(this ArmClient client, ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static Response<CostAllocationRuleCheckNameAvailabilityResult> CheckNameAvailability(this ArmClient client, ResourceIdentifier scope, CostAllocationRuleCheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 

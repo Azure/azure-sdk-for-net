@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _destinationName;
+        internal bool _destinationNameIsDefined;
+        private string _destinationVersion;
+        internal bool _destinationVersionIsDefined;
+        private string _registryName;
+        internal bool _registryNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DestinationAssetContent"/>. </summary>
         public DestinationAssetContent()
@@ -29,22 +35,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DestinationAssetContent(string destinationName, string destinationVersion, string registryName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DestinationName = destinationName;
-            DestinationVersion = destinationVersion;
-            RegistryName = registryName;
+            _destinationName = destinationName;
+            _destinationVersion = destinationVersion;
+            _registryName = registryName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Destination asset name. </summary>
         [WirePath("destinationName")]
-        public string DestinationName { get; set; }
+        public string DestinationName
+        {
+            get
+            {
+                return _destinationName;
+            }
+            set
+            {
+                _destinationName = value;
+                _destinationNameIsDefined = true;
+            }
+        }
 
         /// <summary> Destination asset version. </summary>
         [WirePath("destinationVersion")]
-        public string DestinationVersion { get; set; }
+        public string DestinationVersion
+        {
+            get
+            {
+                return _destinationVersion;
+            }
+            set
+            {
+                _destinationVersion = value;
+                _destinationVersionIsDefined = true;
+            }
+        }
 
         /// <summary> Destination registry name. </summary>
         [WirePath("registryName")]
-        public string RegistryName { get; set; }
+        public string RegistryName
+        {
+            get
+            {
+                return _registryName;
+            }
+            set
+            {
+                _registryName = value;
+                _registryNameIsDefined = true;
+            }
+        }
     }
 }

@@ -228,8 +228,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ChangeDataCapture(
                 folder,
                 description,
-                sourceConnectionsInfo,
-                targetConnectionsInfo,
+                sourceConnectionsInfo ?? new ChangeTrackingList<MapperSourceConnectionsInfo>(),
+                targetConnectionsInfo ?? new ChangeTrackingList<MapperTargetConnectionsInfo>(),
                 policy,
                 allowVnetOverride,
                 status,

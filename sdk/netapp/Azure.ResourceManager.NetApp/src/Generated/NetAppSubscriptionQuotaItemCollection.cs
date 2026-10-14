@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetAppSubscriptionQuotaItemData, NetAppSubscriptionQuotaItemResource>(new NetAppSubscriptionQuotaItemsGetAllAsyncCollectionResultOfT(_netAppSubscriptionQuotaItemsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "NetAppSubscriptionQuotaItemCollection.GetAll"), data => new NetAppSubscriptionQuotaItemResource(Client, data));
+            return new AsyncPageableWrapper<NetAppSubscriptionQuotaItemData, NetAppSubscriptionQuotaItemResource>(new NetAppSubscriptionQuotaItemDataAsync0CollectionResultOfT(_netAppSubscriptionQuotaItemsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "NetAppSubscriptionQuotaItemCollection.GetAll"), data => new NetAppSubscriptionQuotaItemResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetAppSubscriptionQuotaItemData, NetAppSubscriptionQuotaItemResource>(new NetAppSubscriptionQuotaItemsGetAllCollectionResultOfT(_netAppSubscriptionQuotaItemsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "NetAppSubscriptionQuotaItemCollection.GetAll"), data => new NetAppSubscriptionQuotaItemResource(Client, data));
+            return new PageableWrapper<NetAppSubscriptionQuotaItemData, NetAppSubscriptionQuotaItemResource>(new NetAppSubscriptionQuotaItemData0CollectionResultOfT(_netAppSubscriptionQuotaItemsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "NetAppSubscriptionQuotaItemCollection.GetAll"), data => new NetAppSubscriptionQuotaItemResource(Client, data));
         }
 
         /// <summary>

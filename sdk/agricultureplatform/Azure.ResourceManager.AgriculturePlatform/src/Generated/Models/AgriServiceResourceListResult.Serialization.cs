@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgriServiceResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AgriServiceResourceListResult(value ?? new ChangeTrackingList<AgricultureServiceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

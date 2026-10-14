@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudStorageApplianceData, NetworkCloudStorageApplianceResource>(new StorageAppliancesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudStorageApplianceData, NetworkCloudStorageApplianceResource>(new NetworkCloudStorageApplianceDataAsyncCollectionResultOfT(
                 _storageAppliancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudStorageApplianceData, NetworkCloudStorageApplianceResource>(new StorageAppliancesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudStorageApplianceData, NetworkCloudStorageApplianceResource>(new NetworkCloudStorageApplianceDataCollectionResultOfT(
                 _storageAppliancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

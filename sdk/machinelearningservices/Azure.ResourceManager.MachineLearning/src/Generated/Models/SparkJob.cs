@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Spark job definition. </summary>
     public partial class SparkJob : MachineLearningJobProperties
     {
+        private string _args;
+        internal bool _argsIsDefined;
+        private ResourceIdentifier _environmentId;
+        internal bool _environmentIdIsDefined;
+        private QueueSettings _queueSettings;
+        internal bool _queueSettingsIsDefined;
+        private SparkResourceConfiguration _resources;
+        internal bool _resourcesIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="SparkJob"/>. </summary>
         /// <param name="codeId"> [Required] arm-id of the code asset. </param>
         /// <param name="entry"> [Required] The entry to execute on startup of the job. </param>
@@ -74,19 +83,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal SparkJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, IList<string> archives, string args, ResourceIdentifier codeId, IDictionary<string, string> conf, SparkJobEntry entry, ResourceIdentifier environmentId, IDictionary<string, string> environmentVariables, IList<string> files, IDictionary<string, MachineLearningJobInput> inputs, IList<string> jars, IDictionary<string, MachineLearningJobOutput> outputs, IList<string> pyFiles, QueueSettings queueSettings, SparkResourceConfiguration resources) : base(description, properties, tags, additionalBinaryDataProperties, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, services, status)
         {
             Archives = archives;
-            Args = args;
+            _args = args;
             CodeId = codeId;
             Conf = conf;
             Entry = entry;
-            EnvironmentId = environmentId;
+            _environmentId = environmentId;
             EnvironmentVariables = environmentVariables;
             Files = files;
             Inputs = inputs;
             Jars = jars;
             Outputs = outputs;
             PyFiles = pyFiles;
-            QueueSettings = queueSettings;
-            Resources = resources;
+            _queueSettings = queueSettings;
+            _resources = resources;
         }
 
         /// <summary> Archive files used in the job. </summary>
@@ -95,7 +104,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Arguments for the job. </summary>
         [WirePath("args")]
-        public string Args { get; set; }
+        public string Args
+        {
+            get
+            {
+                return _args;
+            }
+            set
+            {
+                _args = value;
+                _argsIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] arm-id of the code asset. </summary>
         [WirePath("codeId")]
@@ -111,7 +131,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The ARM resource ID of the Environment specification for the job. </summary>
         [WirePath("environmentId")]
-        public ResourceIdentifier EnvironmentId { get; set; }
+        public ResourceIdentifier EnvironmentId
+        {
+            get
+            {
+                return _environmentId;
+            }
+            set
+            {
+                _environmentId = value;
+                _environmentIdIsDefined = true;
+            }
+        }
 
         /// <summary> Environment variables included in the job. </summary>
         [WirePath("environmentVariables")]
@@ -139,11 +170,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Queue settings for the job. </summary>
         [WirePath("queueSettings")]
-        internal QueueSettings QueueSettings { get; set; }
+        internal QueueSettings QueueSettings
+        {
+            get
+            {
+                return _queueSettings;
+            }
+            set
+            {
+                _queueSettings = value;
+                _queueSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> Compute Resource configuration for the job. </summary>
         [WirePath("resources")]
-        public SparkResourceConfiguration Resources { get; set; }
+        public SparkResourceConfiguration Resources
+        {
+            get
+            {
+                return _resources;
+            }
+            set
+            {
+                _resources = value;
+                _resourcesIsDefined = true;
+            }
+        }
 
         /// <summary> Enum to determine the job tier. </summary>
         [WirePath("queueSettings.jobTier")]

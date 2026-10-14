@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PreparedImageSpecificationData, PreparedImageSpecificationResource>(new PreparedImageSpecificationsGetBySubscriptionAsyncCollectionResultOfT(PreparedImageSpecificationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServicePreparedImgSpecSubscriptionResource.GetPreparedImageSpecifications"), data => new PreparedImageSpecificationResource(Client, data));
+            return new AsyncPageableWrapper<PreparedImageSpecificationData, PreparedImageSpecificationResource>(new PreparedImageSpecificationDataAsync0CollectionResultOfT(PreparedImageSpecificationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServicePreparedImgSpecSubscriptionResource.GetPreparedImageSpecifications"), data => new PreparedImageSpecificationResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PreparedImageSpecificationData, PreparedImageSpecificationResource>(new PreparedImageSpecificationsGetBySubscriptionCollectionResultOfT(PreparedImageSpecificationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServicePreparedImgSpecSubscriptionResource.GetPreparedImageSpecifications"), data => new PreparedImageSpecificationResource(Client, data));
+            return new PageableWrapper<PreparedImageSpecificationData, PreparedImageSpecificationResource>(new PreparedImageSpecificationData0CollectionResultOfT(PreparedImageSpecificationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServicePreparedImgSpecSubscriptionResource.GetPreparedImageSpecifications"), data => new PreparedImageSpecificationResource(Client, data));
         }
     }
 }

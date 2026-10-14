@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.StorageSync
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageSyncGroupData, StorageSyncGroupResource>(new SyncGroupsGetByStorageSyncServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StorageSyncGroupData, StorageSyncGroupResource>(new StorageSyncGroupDataAsyncCollectionResultOfT(
                 _syncGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.StorageSync
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageSyncGroupData, StorageSyncGroupResource>(new SyncGroupsGetByStorageSyncServiceCollectionResultOfT(
+            return new PageableWrapper<StorageSyncGroupData, StorageSyncGroupResource>(new StorageSyncGroupDataCollectionResultOfT(
                 _syncGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

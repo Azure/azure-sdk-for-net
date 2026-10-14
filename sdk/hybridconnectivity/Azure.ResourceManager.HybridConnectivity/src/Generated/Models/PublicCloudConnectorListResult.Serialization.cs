@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PublicCloudConnectorListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PublicCloudConnectorListResult(value ?? new ChangeTrackingList<PublicCloudConnectorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlServerData, SqlServerResource>(new ServersGetAllAsyncCollectionResultOfT(ServersRestClient, Guid.Parse(Id.SubscriptionId), expand, context, "MockableSqlSubscriptionResource.GetSqlServers"), data => new SqlServerResource(Client, data));
+            return new AsyncPageableWrapper<SqlServerData, SqlServerResource>(new SqlServerDataAsync0CollectionResultOfT(ServersRestClient, Guid.Parse(Id.SubscriptionId), expand, context, "MockableSqlSubscriptionResource.GetSqlServers"), data => new SqlServerResource(Client, data));
         }
 
         /// <summary>
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlServerData, SqlServerResource>(new ServersGetAllCollectionResultOfT(ServersRestClient, Guid.Parse(Id.SubscriptionId), expand, context, "MockableSqlSubscriptionResource.GetSqlServers"), data => new SqlServerResource(Client, data));
+            return new PageableWrapper<SqlServerData, SqlServerResource>(new SqlServerData0CollectionResultOfT(ServersRestClient, Guid.Parse(Id.SubscriptionId), expand, context, "MockableSqlSubscriptionResource.GetSqlServers"), data => new SqlServerResource(Client, data));
         }
 
         /// <summary>
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedInstanceData, ManagedInstanceResource>(new ManagedInstancesGetAllAsyncCollectionResultOfT(ManagedInstancesRestClient, Guid.Parse(Id.SubscriptionId), expand, context, "MockableSqlSubscriptionResource.GetManagedInstances"), data => new ManagedInstanceResource(Client, data));
+            return new AsyncPageableWrapper<ManagedInstanceData, ManagedInstanceResource>(new ManagedInstanceDataAsync0CollectionResultOfT(ManagedInstancesRestClient, Guid.Parse(Id.SubscriptionId), expand, context, "MockableSqlSubscriptionResource.GetManagedInstances"), data => new ManagedInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedInstanceData, ManagedInstanceResource>(new ManagedInstancesGetAllCollectionResultOfT(ManagedInstancesRestClient, Guid.Parse(Id.SubscriptionId), expand, context, "MockableSqlSubscriptionResource.GetManagedInstances"), data => new ManagedInstanceResource(Client, data));
+            return new PageableWrapper<ManagedInstanceData, ManagedInstanceResource>(new ManagedInstanceData0CollectionResultOfT(ManagedInstancesRestClient, Guid.Parse(Id.SubscriptionId), expand, context, "MockableSqlSubscriptionResource.GetManagedInstances"), data => new ManagedInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InstancePoolData, InstancePoolResource>(new InstancePoolsGetAllAsyncCollectionResultOfT(InstancePoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSqlSubscriptionResource.GetInstancePools"), data => new InstancePoolResource(Client, data));
+            return new AsyncPageableWrapper<InstancePoolData, InstancePoolResource>(new InstancePoolDataAsync0CollectionResultOfT(InstancePoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSqlSubscriptionResource.GetInstancePools"), data => new InstancePoolResource(Client, data));
         }
 
         /// <summary>
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InstancePoolData, InstancePoolResource>(new InstancePoolsGetAllCollectionResultOfT(InstancePoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSqlSubscriptionResource.GetInstancePools"), data => new InstancePoolResource(Client, data));
+            return new PageableWrapper<InstancePoolData, InstancePoolResource>(new InstancePoolData0CollectionResultOfT(InstancePoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSqlSubscriptionResource.GetInstancePools"), data => new InstancePoolResource(Client, data));
         }
 
         /// <summary>
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualClusterData, VirtualClusterResource>(new VirtualClustersGetAllAsyncCollectionResultOfT(VirtualClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSqlSubscriptionResource.GetVirtualClusters"), data => new VirtualClusterResource(Client, data));
+            return new AsyncPageableWrapper<VirtualClusterData, VirtualClusterResource>(new VirtualClusterDataAsync0CollectionResultOfT(VirtualClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSqlSubscriptionResource.GetVirtualClusters"), data => new VirtualClusterResource(Client, data));
         }
 
         /// <summary>
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualClusterData, VirtualClusterResource>(new VirtualClustersGetAllCollectionResultOfT(VirtualClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSqlSubscriptionResource.GetVirtualClusters"), data => new VirtualClusterResource(Client, data));
+            return new PageableWrapper<VirtualClusterData, VirtualClusterResource>(new VirtualClusterData0CollectionResultOfT(VirtualClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSqlSubscriptionResource.GetVirtualClusters"), data => new VirtualClusterResource(Client, data));
         }
 
         /// <summary>
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedServerData, DeletedServerResource>(new DeletedServersGetDeletedServersAsyncCollectionResultOfT(DeletedServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSqlSubscriptionResource.GetDeletedServers"), data => new DeletedServerResource(Client, data));
+            return new AsyncPageableWrapper<DeletedServerData, DeletedServerResource>(new DeletedServerDataAsync0CollectionResultOfT(DeletedServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSqlSubscriptionResource.GetDeletedServers"), data => new DeletedServerResource(Client, data));
         }
 
         /// <summary>
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedServerData, DeletedServerResource>(new DeletedServersGetDeletedServersCollectionResultOfT(DeletedServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSqlSubscriptionResource.GetDeletedServers"), data => new DeletedServerResource(Client, data));
+            return new PageableWrapper<DeletedServerData, DeletedServerResource>(new DeletedServerData0CollectionResultOfT(DeletedServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSqlSubscriptionResource.GetDeletedServers"), data => new DeletedServerResource(Client, data));
         }
 
         /// <summary>
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithLocationAsyncCollectionResultOfT(
+            return new LongTermRetentionBackupDataAsync1CollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 locationName,
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithLocationCollectionResultOfT(
+            return new LongTermRetentionBackupData1CollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 locationName,
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithServerAsyncCollectionResultOfT(
+            return new LongTermRetentionBackupDataAsync2CollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 locationName,
@@ -974,7 +974,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithServerCollectionResultOfT(
+            return new LongTermRetentionBackupData2CollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 locationName,
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithLocationAsyncCollectionResultOfT(
+            return new ManagedInstanceLongTermRetentionBackupDataAsync1CollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 locationName,
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithLocationCollectionResultOfT(
+            return new ManagedInstanceLongTermRetentionBackupData1CollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 locationName,
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithInstanceAsyncCollectionResultOfT(
+            return new ManagedInstanceLongTermRetentionBackupDataAsync2CollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 locationName,
@@ -1150,7 +1150,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithInstanceCollectionResultOfT(
+            return new ManagedInstanceLongTermRetentionBackupData2CollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 locationName,
@@ -1187,7 +1187,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SyncGroupsGetSyncDatabaseIdsSyncGroupsAsyncCollectionResultOfT(SyncGroupsRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockableSqlSubscriptionResource.GetSyncDatabaseIdsSyncGroups");
+            return new SubResourceAsyncCollectionResultOfT(SyncGroupsRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockableSqlSubscriptionResource.GetSyncDatabaseIdsSyncGroups");
         }
 
         /// <summary>
@@ -1216,7 +1216,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SyncGroupsGetSyncDatabaseIdsSyncGroupsCollectionResultOfT(SyncGroupsRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockableSqlSubscriptionResource.GetSyncDatabaseIdsSyncGroups");
+            return new SubResourceCollectionResultOfT(SyncGroupsRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockableSqlSubscriptionResource.GetSyncDatabaseIdsSyncGroups");
         }
 
         /// <summary>

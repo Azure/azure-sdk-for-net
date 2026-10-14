@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageCacheData, StorageCacheResource>(new CachesGetAllAsyncCollectionResultOfT(CachesRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetStorageCaches"), data => new StorageCacheResource(Client, data));
+            return new AsyncPageableWrapper<StorageCacheData, StorageCacheResource>(new StorageCacheDataAsync0CollectionResultOfT(CachesRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetStorageCaches"), data => new StorageCacheResource(Client, data));
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageCacheData, StorageCacheResource>(new CachesGetAllCollectionResultOfT(CachesRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetStorageCaches"), data => new StorageCacheResource(Client, data));
+            return new PageableWrapper<StorageCacheData, StorageCacheResource>(new StorageCacheData0CollectionResultOfT(CachesRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetStorageCaches"), data => new StorageCacheResource(Client, data));
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AmlFileSystemData, AmlFileSystemResource>(new AmlFilesystemsGetAllAsyncCollectionResultOfT(AmlFilesystemsRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetAmlFileSystems"), data => new AmlFileSystemResource(Client, data));
+            return new AsyncPageableWrapper<AmlFileSystemData, AmlFileSystemResource>(new AmlFileSystemDataAsync0CollectionResultOfT(AmlFilesystemsRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetAmlFileSystems"), data => new AmlFileSystemResource(Client, data));
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AmlFileSystemData, AmlFileSystemResource>(new AmlFilesystemsGetAllCollectionResultOfT(AmlFilesystemsRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetAmlFileSystems"), data => new AmlFileSystemResource(Client, data));
+            return new PageableWrapper<AmlFileSystemData, AmlFileSystemResource>(new AmlFileSystemData0CollectionResultOfT(AmlFilesystemsRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetAmlFileSystems"), data => new AmlFileSystemResource(Client, data));
         }
 
         /// <summary>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetStorageCacheSkusAsyncCollectionResultOfT(SkusRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetStorageCacheSkus");
+            return new StorageCacheSkuAsyncCollectionResultOfT(SkusRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetStorageCacheSkus");
         }
 
         /// <summary>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetStorageCacheSkusCollectionResultOfT(SkusRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetStorageCacheSkus");
+            return new StorageCacheSkuCollectionResultOfT(SkusRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetStorageCacheSkus");
         }
 
         /// <summary>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsageModelsGetUsageModelsAsyncCollectionResultOfT(UsageModelsRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetUsageModels");
+            return new StorageCacheUsageModelAsyncCollectionResultOfT(UsageModelsRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetUsageModels");
         }
 
         /// <summary>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsageModelsGetUsageModelsCollectionResultOfT(UsageModelsRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetUsageModels");
+            return new StorageCacheUsageModelCollectionResultOfT(UsageModelsRestClient, Id.SubscriptionId, context, "MockableStorageCacheSubscriptionResource.GetUsageModels");
         }
 
         /// <summary>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AscUsagesGetStorageCacheUsagesAsyncCollectionResultOfT(AscUsagesRestClient, Id.SubscriptionId, location, context, "MockableStorageCacheSubscriptionResource.GetStorageCacheUsages");
+            return new StorageCacheUsageAsyncCollectionResultOfT(AscUsagesRestClient, Id.SubscriptionId, location, context, "MockableStorageCacheSubscriptionResource.GetStorageCacheUsages");
         }
 
         /// <summary>
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AscUsagesGetStorageCacheUsagesCollectionResultOfT(AscUsagesRestClient, Id.SubscriptionId, location, context, "MockableStorageCacheSubscriptionResource.GetStorageCacheUsages");
+            return new StorageCacheUsageCollectionResultOfT(AscUsagesRestClient, Id.SubscriptionId, location, context, "MockableStorageCacheSubscriptionResource.GetStorageCacheUsages");
         }
     }
 }

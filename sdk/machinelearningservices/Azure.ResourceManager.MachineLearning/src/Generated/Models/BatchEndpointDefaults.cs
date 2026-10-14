@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _deploymentName;
+        internal bool _deploymentNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BatchEndpointDefaults"/>. </summary>
         public BatchEndpointDefaults()
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BatchEndpointDefaults(string deploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DeploymentName = deploymentName;
+            _deploymentName = deploymentName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +41,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// This deployment will end up getting 100% traffic when the endpoint scoring URL is invoked.
         /// </summary>
         [WirePath("deploymentName")]
-        public string DeploymentName { get; set; }
+        public string DeploymentName
+        {
+            get
+            {
+                return _deploymentName;
+            }
+            set
+            {
+                _deploymentName = value;
+                _deploymentNameIsDefined = true;
+            }
+        }
     }
 }

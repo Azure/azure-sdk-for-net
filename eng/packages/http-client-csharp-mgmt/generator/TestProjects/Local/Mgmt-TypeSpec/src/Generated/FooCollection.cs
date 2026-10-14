@@ -39,9 +39,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FooCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(FooResource.ResourceType, out string fooApiVersion);
             _foosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", FooResource.ResourceType.Namespace, Diagnostics);
-            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fooApiVersion ?? "2024-05-01");
+            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MgmtTypeSpec/foos", out string foosApiVersionOverride) ? foosApiVersionOverride : "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -296,7 +295,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FooData, FooResource>(new FoosGetAllAsyncCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FooCollection.GetAll"), data => new FooResource(Client, data));
+            return new AsyncPageableWrapper<FooData, FooResource>(new FooDataAsyncCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FooCollection.GetAll"), data => new FooResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +323,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FooData, FooResource>(new FoosGetAllCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FooCollection.GetAll"), data => new FooResource(Client, data));
+            return new PageableWrapper<FooData, FooResource>(new FooDataCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FooCollection.GetAll"), data => new FooResource(Client, data));
         }
 
         /// <summary>

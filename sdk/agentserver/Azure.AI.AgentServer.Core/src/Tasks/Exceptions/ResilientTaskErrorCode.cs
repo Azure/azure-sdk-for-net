@@ -22,6 +22,7 @@ public readonly partial struct ResilientTaskErrorCode : IEquatable<ResilientTask
     private const string ConflictValue = "Conflict";
     private const string PreconditionFailedValue = "PreconditionFailed";
     private const string QueueFullValue = "QueueFull";
+    private const string NotEnabledValue = "NotEnabled";
 
     /// <summary>Initializes a new instance of the <see cref="ResilientTaskErrorCode"/> struct.</summary>
     /// <param name="value">The underlying string value.</param>
@@ -51,6 +52,9 @@ public readonly partial struct ResilientTaskErrorCode : IEquatable<ResilientTask
 
     /// <summary>A steerable multi-turn task already holds the maximum number of pending steering inputs.</summary>
     public static ResilientTaskErrorCode QueueFull { get; } = new ResilientTaskErrorCode(QueueFullValue);
+
+    /// <summary>The host did not opt in to the resilient-task runtime before startup.</summary>
+    public static ResilientTaskErrorCode NotEnabled { get; } = new ResilientTaskErrorCode(NotEnabledValue);
 
     /// <summary>Determines if two <see cref="ResilientTaskErrorCode"/> values are the same.</summary>
     /// <param name="left">The left value to compare.</param>

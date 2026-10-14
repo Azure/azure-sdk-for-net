@@ -74,15 +74,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(FeatureWindow)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(FeatureWindowEnd))
+            if (_featureWindowEndIsDefined || Optional.IsDefined(FeatureWindowEnd))
             {
-                writer.WritePropertyName("featureWindowEnd"u8);
-                writer.WriteStringValue(FeatureWindowEnd.Value, "O");
+                if (FeatureWindowEnd != null)
+                {
+                    writer.WritePropertyName("featureWindowEnd"u8);
+                    writer.WriteStringValue(FeatureWindowEnd.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("featureWindowEnd"u8);
+                }
             }
-            if (Optional.IsDefined(FeatureWindowStart))
+            if (_featureWindowStartIsDefined || Optional.IsDefined(FeatureWindowStart))
             {
-                writer.WritePropertyName("featureWindowStart"u8);
-                writer.WriteStringValue(FeatureWindowStart.Value, "O");
+                if (FeatureWindowStart != null)
+                {
+                    writer.WritePropertyName("featureWindowStart"u8);
+                    writer.WriteStringValue(FeatureWindowStart.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("featureWindowStart"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,13 +140,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool featureWindowEndIsDefined = false;
             DateTimeOffset? featureWindowEnd = default;
+            bool featureWindowStartIsDefined = false;
             DateTimeOffset? featureWindowStart = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("featureWindowEnd"u8))
                 {
+                    featureWindowEndIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         featureWindowEnd = null;
@@ -143,6 +160,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("featureWindowStart"u8))
                 {
+                    featureWindowStartIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         featureWindowStart = null;
@@ -156,7 +174,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FeatureWindow(featureWindowEnd, featureWindowStart, additionalBinaryDataProperties);
+            return new FeatureWindow(featureWindowEnd, featureWindowStart, additionalBinaryDataProperties)
+            {
+                _featureWindowEndIsDefined = featureWindowEndIsDefined,
+                _featureWindowStartIsDefined = featureWindowStartIsDefined
+            };
         }
     }
 }

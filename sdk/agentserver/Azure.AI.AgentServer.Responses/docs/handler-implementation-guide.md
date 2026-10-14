@@ -1476,8 +1476,13 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 | `DefaultModel` | `string?` | `null` | Default model when `model` is omitted from `CreateResponse`. Falls back to `""` if null |
 | `DefaultFetchHistoryCount` | `int` | `-1` | Maximum number of history items to resolve when `GetHistoryAsync()` is called; `-1` fetches all history. Controls the `limit` parameter passed to `ResponsesProvider.GetHistoryItemIdsAsync` |
 | `ResilientBackground` | `bool` | `false` | Opts background responses into crash-recoverable re-invocation when `store=true` and `background=true` |
-| `SteerableConversations` | `bool` | `false` | Allows a new turn to queue behind an active conversation and drain as a steered turn |
+| `SteerableConversations` | `bool` | `false` | Allows a new turn to queue behind an active conversation and drain as a steered turn. Requires `ResilientBackground=true` or explicit `SetResilientTasksEnabled()` |
 | `ResponseAcceptor` | delegate | `null` | Optional hook for customizing the `queued` response returned to a POST that was queued behind an active steerable conversation |
+
+The Core resilient-task runtime is disabled by default. `ResilientBackground=true`
+enables it automatically. Without either `ResilientBackground` or an explicit
+`SetResilientTasksEnabled()` call, `store=true` requests run in-process and are not
+recovered after an ungraceful crash.
 
 **Platform environment variables** (read once at startup via `FoundryEnvironment`):
 

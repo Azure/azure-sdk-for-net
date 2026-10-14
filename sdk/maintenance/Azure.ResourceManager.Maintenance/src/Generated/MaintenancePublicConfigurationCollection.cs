@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Maintenance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceConfigurationData, MaintenancePublicConfigurationResource>(new PublicMaintenanceConfigurationsGetAllAsyncCollectionResultOfT(_publicMaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MaintenancePublicConfigurationCollection.GetAll"), data => new MaintenancePublicConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<MaintenanceConfigurationData, MaintenancePublicConfigurationResource>(new MaintenanceConfigurationDataAsyncCollectionResultOfT(_publicMaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MaintenancePublicConfigurationCollection.GetAll"), data => new MaintenancePublicConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Maintenance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceConfigurationData, MaintenancePublicConfigurationResource>(new PublicMaintenanceConfigurationsGetAllCollectionResultOfT(_publicMaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MaintenancePublicConfigurationCollection.GetAll"), data => new MaintenancePublicConfigurationResource(Client, data));
+            return new PageableWrapper<MaintenanceConfigurationData, MaintenancePublicConfigurationResource>(new MaintenanceConfigurationDataCollectionResultOfT(_publicMaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MaintenancePublicConfigurationCollection.GetAll"), data => new MaintenancePublicConfigurationResource(Client, data));
         }
 
         /// <summary>

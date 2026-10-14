@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <returns> A new <see cref="Models.SourceImageTriggerProperties"/> instance for mocking. </returns>
         public static SourceImageTriggerProperties SourceImageTriggerProperties(ImageTemplateTriggerStatus status = default, ImageBuilderProvisioningState? provisioningState = default)
         {
-            return new SourceImageTriggerProperties(default, status, provisioningState, default);
+            return new SourceImageTriggerProperties("SourceImage", status, provisioningState, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public static ImageTemplatePlatformImageSource ImageTemplatePlatformImageSource(string publisher = default, string offer = default, string sku = default, string version = default, string exactVersion = default, PlatformImagePurchasePlan planInfo = default)
         {
             return new ImageTemplatePlatformImageSource(
-                default,
+                "PlatformImage",
                 default,
                 publisher,
                 offer,
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <returns> A new <see cref="Models.ImageTemplateManagedImageSource"/> instance for mocking. </returns>
         public static ImageTemplateManagedImageSource ImageTemplateManagedImageSource(ResourceIdentifier imageId = default)
         {
-            return new ImageTemplateManagedImageSource(default, default, imageId);
+            return new ImageTemplateManagedImageSource("ManagedImage", default, imageId);
         }
 
         /// <summary> Describes an image source that is an image version in an Azure Compute Gallery or a Direct Shared Gallery. </summary>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <returns> A new <see cref="Models.ImageTemplateSharedImageVersionSource"/> instance for mocking. </returns>
         public static ImageTemplateSharedImageVersionSource ImageTemplateSharedImageVersionSource(ResourceIdentifier imageVersionId = default, string exactVersion = default)
         {
-            return new ImageTemplateSharedImageVersionSource(default, default, imageVersionId, exactVersion);
+            return new ImageTemplateSharedImageVersionSource("SharedImageVersion", default, imageVersionId, exactVersion);
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             inline ??= new ChangeTrackingList<string>();
 
             return new ImageTemplateShellCustomizer(
-                default,
+                "Shell",
                 name,
                 default,
                 scriptUri,
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public static ImageTemplateRestartCustomizer ImageTemplateRestartCustomizer(string name = default, string restartCommand = default, string restartCheckCommand = default, string restartTimeout = default)
         {
             return new ImageTemplateRestartCustomizer(
-                default,
+                "WindowsRestart",
                 name,
                 default,
                 restartCommand,
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             filters ??= new ChangeTrackingList<string>();
 
             return new ImageTemplateWindowsUpdateCustomizer(
-                default,
+                "WindowsUpdate",
                 name,
                 default,
                 searchCriteria,
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             validExitCodes ??= new ChangeTrackingList<int>();
 
             return new ImageTemplatePowerShellCustomizer(
-                default,
+                "PowerShell",
                 name,
                 default,
                 scriptUri,
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public static ImageTemplateFileCustomizer ImageTemplateFileCustomizer(string name = default, string sourceUri = default, string sha256Checksum = default, string destination = default)
         {
             return new ImageTemplateFileCustomizer(
-                default,
+                "File",
                 name,
                 default,
                 sourceUri,
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             inline ??= new ChangeTrackingList<string>();
 
             return new ImageTemplateShellValidator(
-                default,
+                "Shell",
                 name,
                 default,
                 scriptUri,
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             validExitCodes ??= new ChangeTrackingList<int>();
 
             return new ImageTemplatePowerShellValidator(
-                default,
+                "PowerShell",
                 name,
                 default,
                 scriptUri,
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public static ImageTemplateFileValidator ImageTemplateFileValidator(string name = default, string sourceUri = default, string sha256Checksum = default, string destination = default)
         {
             return new ImageTemplateFileValidator(
-                default,
+                "File",
                 name,
                 default,
                 sourceUri,
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             artifactTags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ImageTemplateManagedImageDistributor(
-                default,
+                "ManagedImage",
                 runOutputName,
                 artifactTags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             targetRegions ??= new ChangeTrackingList<ImageTemplateTargetRegion>();
 
             return new ImageTemplateSharedImageDistributor(
-                default,
+                "SharedImage",
                 runOutputName,
                 artifactTags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
@@ -489,14 +489,14 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <returns> A new <see cref="Models.DistributeVersionerLatest"/> instance for mocking. </returns>
         public static DistributeVersionerLatest DistributeVersionerLatest(int? major = default)
         {
-            return new DistributeVersionerLatest(default, default, major);
+            return new DistributeVersionerLatest("Latest", default, major);
         }
 
         /// <summary> Generates version number based on version number of source image. </summary>
         /// <returns> A new <see cref="Models.DistributeVersionerSource"/> instance for mocking. </returns>
         public static DistributeVersionerSource DistributeVersionerSource()
         {
-            return new DistributeVersionerSource(default, default);
+            return new DistributeVersionerSource("Source", default);
         }
 
         /// <summary> Distribute via VHD in a storage account. </summary>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         {
             artifactTags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ImageTemplateVhdDistributor(default, runOutputName, artifactTags ?? new ChangeTrackingDictionary<string, string>(), default, uri);
+            return new ImageTemplateVhdDistributor("VHD", runOutputName, artifactTags ?? new ChangeTrackingDictionary<string, string>(), default, uri);
         }
 
         /// <summary> Error handling options upon a build failure. </summary>

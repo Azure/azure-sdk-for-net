@@ -49,15 +49,8 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EscapedWireVersionTestResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string escapedWireVersionTestApiVersion);
             _escapedWireVersionReadsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtApiVersionOverride.Tests", ResourceType.Namespace, Diagnostics);
-            _escapedWireVersionReadsRestClient = new EscapedWireVersionReads(
-                _escapedWireVersionReadsClientDiagnostics,
-                Pipeline,
-                Diagnostics.ApplicationId,
-                Endpoint,
-                escapedWireVersionTestApiVersion ?? "2024-05-01",
-                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _escapedWireVersionReadsRestClient = new EscapedWireVersionReads(_escapedWireVersionReadsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MgmtTypeSpec/escapedWireVersionTests", out string escapedWireVersionReadsApiVersionOverride) ? escapedWireVersionReadsApiVersionOverride : "opaque-read&channel=legacy%2Fplus+#hash");
             ValidateResourceId(id);
         }
 

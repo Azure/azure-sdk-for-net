@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LocalRulestackFqdnData, LocalRulestackFqdnResource>(new FqdnListLocalRulestackGetByLocalRulestacksAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LocalRulestackFqdnData, LocalRulestackFqdnResource>(new LocalRulestackFqdnDataAsyncCollectionResultOfT(
                 _fqdnListLocalRulestackRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LocalRulestackFqdnData, LocalRulestackFqdnResource>(new FqdnListLocalRulestackGetByLocalRulestacksCollectionResultOfT(
+            return new PageableWrapper<LocalRulestackFqdnData, LocalRulestackFqdnResource>(new LocalRulestackFqdnDataCollectionResultOfT(
                 _fqdnListLocalRulestackRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

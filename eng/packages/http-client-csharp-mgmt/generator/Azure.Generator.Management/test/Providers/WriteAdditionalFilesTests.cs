@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Azure.Generator.Management.Tests.Providers
 {
@@ -50,6 +51,38 @@ namespace Azure.Generator.Management.Tests.Providers
             string content = scaffolding.TestGetTestProjectContent("Azure.ResourceManager.Test");
             Assert.That(content.Contains(@"<ProjectReference Include=""..\src\Azure.ResourceManager.Test.csproj"" />"), Is.True);
             Assert.That(content.Contains("<Project Sdk=\"Microsoft.NET.Sdk\">"), Is.True);
+        }
+
+        [Test]
+        public void GetTestProjectFileContentDefersManagementReferencesToRepositoryTargets()
+        {
+            var scaffolding = new TestableNewManagementProjectScaffolding();
+            var project = XElement.Parse(scaffolding.TestGetTestProjectFileContent());
+
+            var frameworkReference = project.Descendants("ProjectReference")
+                .Single(reference => (string?)reference.Attribute("Include") == "$(AzureCoreTestFramework)");
+            Assert.That((string?)frameworkReference.Attribute("Condition"), Is.EqualTo("'$(IsMgmtLibrary)' != 'true'"));
+
+            var packageGroup = project.Elements("ItemGroup")
+                .Single(group => group.Elements("PackageReference").Any());
+            Assert.That((string?)packageGroup.Attribute("Condition"),
+                Is.EqualTo("'$(IsMgmtLibrary)' != 'true' and '$(IsStorageTest)' != 'true'"));
+            Assert.That(packageGroup.Elements("PackageReference").Select(reference => (string?)reference.Attribute("Include")),
+                Is.EquivalentTo(new[] { "NUnit", "NUnit3TestAdapter", "Microsoft.NET.Test.Sdk", "Moq" }));
+        }
+
+        [Test]
+        public void GetTestProjectFileContentPreservesTestSettingsAndSourceReference()
+        {
+            var scaffolding = new TestableNewManagementProjectScaffolding();
+            var project = XElement.Parse(scaffolding.TestGetTestProjectFileContent());
+            string packageName = ManagementClientGenerator.Instance.Configuration.PackageName;
+
+            Assert.That(project.Descendants("TargetFrameworks").Single().Value, Is.EqualTo("$(RequiredTargetFrameworks)"));
+            Assert.That(project.Descendants("IsTestProject").Single().Value, Is.EqualTo("true"));
+            var sourceReference = project.Descendants("ProjectReference")
+                .Single(reference => (string?)reference.Attribute("Include") == $@"..\src\{packageName}.csproj");
+            Assert.That(sourceReference.Attribute("Condition"), Is.Null);
         }
 
         [Test]
@@ -127,6 +160,7 @@ namespace Azure.Generator.Management.Tests.Providers
         {
             public string TestGetReadmeContent(string packageName) => GetReadmeContent(packageName);
             public string TestGetTestProjectContent(string packageName) => GetTestProjectContent(packageName);
+            public string TestGetTestProjectFileContent() => GetTestProjectFileContent();
             public string TestGetSolutionFileContent() => GetSolutionFileContent();
             public Task TestWriteAdditionalFiles() => WriteAdditionalFiles();
             public IReadOnlyList<CSharpProjectCompileInclude> TestBuildCompileIncludes() => BuildCompileIncludes();

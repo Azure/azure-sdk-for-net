@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ScVmm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScVmmServerData, ScVmmServerResource>(new VmmServersGetByResourceGroupAsyncCollectionResultOfT(_vmmServersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmServerCollection.GetAll"), data => new ScVmmServerResource(Client, data));
+            return new AsyncPageableWrapper<ScVmmServerData, ScVmmServerResource>(new ScVmmServerDataAsyncCollectionResultOfT(_vmmServersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmServerCollection.GetAll"), data => new ScVmmServerResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ScVmm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScVmmServerData, ScVmmServerResource>(new VmmServersGetByResourceGroupCollectionResultOfT(_vmmServersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmServerCollection.GetAll"), data => new ScVmmServerResource(Client, data));
+            return new PageableWrapper<ScVmmServerData, ScVmmServerResource>(new ScVmmServerDataCollectionResultOfT(_vmmServersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmServerCollection.GetAll"), data => new ScVmmServerResource(Client, data));
         }
 
         /// <summary>

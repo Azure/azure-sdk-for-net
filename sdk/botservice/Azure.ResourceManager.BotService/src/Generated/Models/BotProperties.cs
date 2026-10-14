@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.BotService.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _schemaTransformationVersion;
+        internal bool _schemaTransformationVersionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BotProperties"/>. </summary>
         /// <param name="displayName"> The Name of the bot. </param>
@@ -109,7 +111,7 @@ namespace Azure.ResourceManager.BotService.Models
             IsDeveloperAppInsightsApiKeySet = isDeveloperAppInsightsApiKeySet;
             MigrationToken = migrationToken;
             IsLocalAuthDisabled = isLocalAuthDisabled;
-            SchemaTransformationVersion = schemaTransformationVersion;
+            _schemaTransformationVersion = schemaTransformationVersion;
             StorageResourceId = storageResourceId;
             PrivateEndpointConnections = privateEndpointConnections;
             NetworkSecurityPerimeterConfigurations = networkSecurityPerimeterConfigurations;
@@ -205,7 +207,18 @@ namespace Azure.ResourceManager.BotService.Models
         public bool? IsLocalAuthDisabled { get; set; }
 
         /// <summary> The channel schema transformation version for the bot. </summary>
-        public string SchemaTransformationVersion { get; set; }
+        public string SchemaTransformationVersion
+        {
+            get
+            {
+                return _schemaTransformationVersion;
+            }
+            set
+            {
+                _schemaTransformationVersion = value;
+                _schemaTransformationVersionIsDefined = true;
+            }
+        }
 
         /// <summary> The storage resourceId for the bot. </summary>
         public ResourceIdentifier StorageResourceId { get; set; }
