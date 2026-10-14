@@ -77,7 +77,7 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("bottom_right"u8);
             writer.WriteStartArray();
-            foreach (object item in BottomRight)
+            foreach (object item in InternalBottomRight)
             {
                 if (item == null)
                 {
@@ -89,7 +89,7 @@ namespace Azure.AI.Projects.Agents
             writer.WriteEndArray();
             writer.WritePropertyName("top_left"u8);
             writer.WriteStartArray();
-            foreach (object item in TopLeft)
+            foreach (object item in InternalTopLeft)
             {
                 if (item == null)
                 {
@@ -141,8 +141,8 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            IList<object> bottomRight = default;
-            IList<object> topLeft = default;
+            IList<object> internalBottomRight = default;
+            IList<object> internalTopLeft = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,7 +160,7 @@ namespace Azure.AI.Projects.Agents
                             array.Add(item.GetObject());
                         }
                     }
-                    bottomRight = array;
+                    internalBottomRight = array;
                     continue;
                 }
                 if (prop.NameEquals("top_left"u8))
@@ -177,7 +177,7 @@ namespace Azure.AI.Projects.Agents
                             array.Add(item.GetObject());
                         }
                     }
-                    topLeft = array;
+                    internalTopLeft = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -185,7 +185,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VoiceAgentAvatarVideoCrop(bottomRight ?? new ChangeTrackingList<object>(), topLeft ?? new ChangeTrackingList<object>(), additionalBinaryDataProperties);
+            return new VoiceAgentAvatarVideoCrop(internalBottomRight ?? new ChangeTrackingList<object>(), internalTopLeft ?? new ChangeTrackingList<object>(), additionalBinaryDataProperties);
         }
     }
 }

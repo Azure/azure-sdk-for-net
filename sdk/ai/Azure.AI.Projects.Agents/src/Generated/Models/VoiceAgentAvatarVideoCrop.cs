@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -17,33 +16,14 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAvatarVideoCrop"/>. </summary>
-        /// <param name="bottomRight"></param>
-        /// <param name="topLeft"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bottomRight"/> or <paramref name="topLeft"/> is null. </exception>
-        public VoiceAgentAvatarVideoCrop(IEnumerable<object> bottomRight, IEnumerable<object> topLeft)
-        {
-            Argument.AssertNotNull(bottomRight, nameof(bottomRight));
-            Argument.AssertNotNull(topLeft, nameof(topLeft));
-
-            BottomRight = bottomRight.ToList();
-            TopLeft = topLeft.ToList();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VoiceAgentAvatarVideoCrop"/>. </summary>
-        /// <param name="bottomRight"></param>
-        /// <param name="topLeft"></param>
+        /// <param name="internalBottomRight"></param>
+        /// <param name="internalTopLeft"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentAvatarVideoCrop(IList<object> bottomRight, IList<object> topLeft, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentAvatarVideoCrop(IList<object> internalBottomRight, IList<object> internalTopLeft, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BottomRight = bottomRight;
-            TopLeft = topLeft;
+            InternalBottomRight = internalBottomRight;
+            InternalTopLeft = internalTopLeft;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Gets the BottomRight. </summary>
-        public IList<object> BottomRight { get; }
-
-        /// <summary> Gets the TopLeft. </summary>
-        public IList<object> TopLeft { get; }
     }
 }

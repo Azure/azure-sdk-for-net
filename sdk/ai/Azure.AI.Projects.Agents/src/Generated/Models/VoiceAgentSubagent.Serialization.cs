@@ -89,10 +89,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("response_policy"u8);
                 writer.WriteObjectValue(ResponsePolicy, options);
             }
-            if (Optional.IsDefined(InvokeTimeoutSeconds))
+            if (Optional.IsDefined(InvokeTimeout))
             {
                 writer.WritePropertyName("invoke_timeout_seconds"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(InvokeTimeoutSeconds.Value.TotalSeconds)));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(InvokeTimeout.Value.TotalSeconds)));
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,7 +140,7 @@ namespace Azure.AI.Projects.Agents
             string agentVersion = default;
             string agentCapabilities = default;
             VoiceAgentSubagentResponsePolicy responsePolicy = default;
-            TimeSpan? invokeTimeoutSeconds = default;
+            TimeSpan? invokeTimeout = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,7 +174,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    invokeTimeoutSeconds = TimeSpan.FromSeconds(prop.Value.GetInt32());
+                    invokeTimeout = TimeSpan.FromSeconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (options.Format != "W")
@@ -187,7 +187,7 @@ namespace Azure.AI.Projects.Agents
                 agentVersion,
                 agentCapabilities,
                 responsePolicy,
-                invokeTimeoutSeconds,
+                invokeTimeout,
                 additionalBinaryDataProperties);
         }
     }

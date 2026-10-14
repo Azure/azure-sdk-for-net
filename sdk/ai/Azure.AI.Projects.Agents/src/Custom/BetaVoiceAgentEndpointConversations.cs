@@ -31,6 +31,8 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetAgentConversationResponsesAsync", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 public partial class BetaVoiceAgentsConversations
 {
+    /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+    public virtual ClientPipeline Pipeline { get; }
     /// <summary>
     /// Returns the conversations persisted for the specified voice agent endpoint.
     /// Conversations are present when the session's effective `store` setting is `true`, whether inherited from the
