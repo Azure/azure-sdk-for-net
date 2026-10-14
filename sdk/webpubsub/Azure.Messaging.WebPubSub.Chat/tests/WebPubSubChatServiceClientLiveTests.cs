@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -23,7 +24,8 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
         [SetUp]
         public void SetUp()
         {
-            WebPubSubChatServiceClientOptions options = InstrumentClientOptions(new WebPubSubChatServiceClientOptions());
+            WebPubSubChatServiceClientOptions options = InstrumentClientOptions(
+                new WebPubSubChatServiceClientOptions(WebPubSubChatServiceClientOptions.ServiceVersion.V2026_08_01_Preview));
             _client = new WebPubSubChatServiceClient(
                 new Uri(TestEnvironment.Endpoint),
                 "test_hub",
@@ -49,7 +51,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
 
         #region Roles
 
-        [Test]
+        [RecordedTest]
         public async Task CreateGetDeleteRole()
         {
             const string roleName = "user.e2e_create_get_delete";
@@ -71,7 +73,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ListRoles()
         {
             const string userRoleName = "user.e2e_list_test";
@@ -100,7 +102,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ListRolesWithPagination()
         {
             // Ensure at least 2 roles exist
@@ -132,7 +134,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
 
         #region Rooms
 
-        [Test]
+        [RecordedTest]
         public async Task CreateGetDeleteRoom()
         {
             const string roomId = "e2e-test-room";
@@ -152,7 +154,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetRoomConversationAndListMessages()
         {
             const string roomId = "e2e-conversation-room";
@@ -178,7 +180,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task NewRoomReturnsEmptyMessageAndMemberPages()
         {
             string roomId = $"e2e-empty-page-room-{Recording.GenerateId()}";
@@ -295,7 +297,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
 
         #region Room Members
 
-        [Test]
+        [RecordedTest]
         public async Task CreateListDeleteRoomMember()
         {
             const string roomId = "e2e-member-room";
@@ -348,7 +350,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
 
         #region Users
 
-        [Test]
+        [RecordedTest]
         public async Task CreateGetDeleteUser()
         {
             const string userId = "e2e-test-user";

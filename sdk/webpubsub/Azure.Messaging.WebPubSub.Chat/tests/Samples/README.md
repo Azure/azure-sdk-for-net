@@ -7,6 +7,7 @@ This folder contains samples that show how to use the `Azure.Messaging.WebPubSub
 | [Manage rooms and members](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub.Chat/tests/Samples/Sample1_ManageRoomsAndMembers.md) | Create rooms, users, and room members, and generate client access URIs. |
 | [Roles and permissions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub.Chat/tests/Samples/Sample2_RolesAndPermissions.md) | Use built-in roles and permissions, and define custom roles. |
 | [Read and manage messages](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub.Chat/tests/Samples/Sample3_Messages.md) | Read message history from a conversation, and update or delete messages. |
+| [Topics and discovery](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub.Chat/tests/Samples/Sample4_TopicsAndDiscovery.md) | List rooms and users, discover a user's rooms, resume pagination, and manage topic lifecycles. |
 
 ## Prerequisites
 
@@ -23,3 +24,5 @@ var client = new WebPubSubChatServiceClient("<connection-string>", "chat");
 ```
 
 See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub.Chat/README.md) for other ways to authenticate the client.
+
+All samples use the default service API version, `2026-08-01-preview`.
