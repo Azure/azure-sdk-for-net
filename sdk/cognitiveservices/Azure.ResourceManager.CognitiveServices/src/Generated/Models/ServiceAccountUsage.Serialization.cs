@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (_scopeTypeIsDefined || Optional.IsDefined(ScopeType))
+            if (Optional.IsDefined(ScopeType, _scopeTypeIsDefined))
             {
                 if (ScopeType != null)
                 {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteNull("scopeType"u8);
                 }
             }
-            if (_scopeIdIsDefined || Optional.IsDefined(ScopeId))
+            if (Optional.IsDefined(ScopeId, _scopeIdIsDefined))
             {
                 if (ScopeId != null)
                 {

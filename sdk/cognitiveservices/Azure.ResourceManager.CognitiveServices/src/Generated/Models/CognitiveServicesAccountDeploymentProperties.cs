@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private CognitiveServicesDeploymentServiceTier? _serviceTier;
-        internal bool _serviceTierIsDefined;
+        private bool _serviceTierIsDefined;
         private CognitiveServicesDeploymentState? _deploymentState;
-        internal bool _deploymentStateIsDefined;
+        private bool _deploymentStateIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentProperties"/>. </summary>
         public CognitiveServicesAccountDeploymentProperties()
