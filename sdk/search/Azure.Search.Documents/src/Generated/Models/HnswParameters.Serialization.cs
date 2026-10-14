@@ -89,7 +89,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("efSearch"u8);
                 writer.WriteNumberValue(EfSearch.Value);
             }
-            if (_metricIsDefined || Optional.IsDefined(Metric))
+            if (Optional.IsDefined(Metric, _metricIsDefined))
             {
                 if (Metric != null)
                 {

@@ -82,7 +82,7 @@ namespace Azure.Search.Documents.Indexes.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (_authIdentityIsDefined || Optional.IsDefined(AuthIdentity))
+            if (Optional.IsDefined(AuthIdentity, _authIdentityIsDefined))
             {
                 if (AuthIdentity != null)
                 {

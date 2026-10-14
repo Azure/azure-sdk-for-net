@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class HubIPConfigurationCollection : ArmCollection, IEnumerable<HubIPConfigurationResource>, IAsyncEnumerable<HubIPConfigurationResource>
     {
-        private readonly ClientDiagnostics _virtualHubIpConfigurationClientDiagnostics;
-        private readonly VirtualHubIpConfiguration _virtualHubIpConfigurationRestClient;
+        private readonly ClientDiagnostics _virtualHubIPConfigurationClientDiagnostics;
+        private readonly VirtualHubIPConfiguration _virtualHubIPConfigurationRestClient;
 
         /// <summary> Initializes a new instance of HubIPConfigurationCollection for mocking. </summary>
         protected HubIPConfigurationCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Network
         internal HubIPConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(HubIPConfigurationResource.ResourceType, out string hubIPConfigurationApiVersion);
-            _virtualHubIpConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", HubIPConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _virtualHubIpConfigurationRestClient = new VirtualHubIpConfiguration(_virtualHubIpConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hubIPConfigurationApiVersion ?? "2026-01-01");
+            _virtualHubIPConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", HubIPConfigurationResource.ResourceType.Namespace, Diagnostics);
+            _virtualHubIPConfigurationRestClient = new VirtualHubIPConfiguration(_virtualHubIPConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hubIPConfigurationApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _virtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubIpConfigurationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigName, HubIPConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = _virtualHubIPConfigurationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigName, HubIPConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<HubIPConfigurationResource> operation = new NetworkArmOperation<HubIPConfigurationResource>(
                     new HubIPConfigurationResourceOperationSource(Client),
-                    _virtualHubIpConfigurationClientDiagnostics,
+                    _virtualHubIPConfigurationClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _virtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubIpConfigurationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigName, HubIPConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = _virtualHubIPConfigurationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigName, HubIPConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<HubIPConfigurationResource> operation = new NetworkArmOperation<HubIPConfigurationResource>(
                     new HubIPConfigurationResourceOperationSource(Client),
-                    _virtualHubIpConfigurationClientDiagnostics,
+                    _virtualHubIPConfigurationClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Get");
+            using DiagnosticScope scope = _virtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Get");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubIpConfigurationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigName, context);
+                HttpMessage message = _virtualHubIPConfigurationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HubIPConfigurationData> response = Response.FromValue(HubIPConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Get");
+            using DiagnosticScope scope = _virtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Get");
             scope.Start();
             try
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubIpConfigurationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigName, context);
+                HttpMessage message = _virtualHubIPConfigurationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HubIPConfigurationData> response = Response.FromValue(HubIPConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
                 CancellationToken = cancellationToken
             };
             return new AsyncPageableWrapper<HubIPConfigurationData, HubIPConfigurationResource>(new HubIPConfigurationDataAsyncCollectionResultOfT(
-                _virtualHubIpConfigurationRestClient,
+                _virtualHubIPConfigurationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Network
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<HubIPConfigurationData, HubIPConfigurationResource>(new HubIPConfigurationDataCollectionResultOfT(
-                _virtualHubIpConfigurationRestClient,
+                _virtualHubIPConfigurationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Exists");
+            using DiagnosticScope scope = _virtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubIpConfigurationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigName, context);
+                HttpMessage message = _virtualHubIPConfigurationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HubIPConfigurationData> response = default;
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Exists");
+            using DiagnosticScope scope = _virtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubIpConfigurationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigName, context);
+                HttpMessage message = _virtualHubIPConfigurationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HubIPConfigurationData> response = default;
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _virtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubIpConfigurationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigName, context);
+                HttpMessage message = _virtualHubIPConfigurationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HubIPConfigurationData> response = default;
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            using DiagnosticScope scope = _virtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _virtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubIpConfigurationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigName, context);
+                HttpMessage message = _virtualHubIPConfigurationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HubIPConfigurationData> response = default;

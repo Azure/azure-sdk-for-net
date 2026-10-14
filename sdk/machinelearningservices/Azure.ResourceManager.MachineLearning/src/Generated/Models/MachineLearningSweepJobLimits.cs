@@ -14,6 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Sweep Job limit class. </summary>
     public partial class MachineLearningSweepJobLimits : MachineLearningJobLimits
     {
+        private int? _maxConcurrentTrials;
+        internal bool _maxConcurrentTrialsIsDefined;
+        private int? _maxTotalTrials;
+        internal bool _maxTotalTrialsIsDefined;
+        private TimeSpan? _trialTimeout;
+        internal bool _trialTimeoutIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJobLimits"/>. </summary>
         public MachineLearningSweepJobLimits() : base(JobLimitsType.Sweep)
         {
@@ -28,21 +35,54 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="trialTimeout"> Sweep Job Trial timeout value. </param>
         internal MachineLearningSweepJobLimits(JobLimitsType jobLimitsType, TimeSpan? timeout, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxConcurrentTrials, int? maxTotalTrials, TimeSpan? trialTimeout) : base(jobLimitsType, timeout, additionalBinaryDataProperties)
         {
-            MaxConcurrentTrials = maxConcurrentTrials;
-            MaxTotalTrials = maxTotalTrials;
-            TrialTimeout = trialTimeout;
+            _maxConcurrentTrials = maxConcurrentTrials;
+            _maxTotalTrials = maxTotalTrials;
+            _trialTimeout = trialTimeout;
         }
 
         /// <summary> Sweep Job max concurrent trials. </summary>
         [WirePath("maxConcurrentTrials")]
-        public int? MaxConcurrentTrials { get; set; }
+        public int? MaxConcurrentTrials
+        {
+            get
+            {
+                return _maxConcurrentTrials;
+            }
+            set
+            {
+                _maxConcurrentTrials = value;
+                _maxConcurrentTrialsIsDefined = true;
+            }
+        }
 
         /// <summary> Sweep Job max total trials. </summary>
         [WirePath("maxTotalTrials")]
-        public int? MaxTotalTrials { get; set; }
+        public int? MaxTotalTrials
+        {
+            get
+            {
+                return _maxTotalTrials;
+            }
+            set
+            {
+                _maxTotalTrials = value;
+                _maxTotalTrialsIsDefined = true;
+            }
+        }
 
         /// <summary> Sweep Job Trial timeout value. </summary>
         [WirePath("trialTimeout")]
-        public TimeSpan? TrialTimeout { get; set; }
+        public TimeSpan? TrialTimeout
+        {
+            get
+            {
+                return _trialTimeout;
+            }
+            set
+            {
+                _trialTimeout = value;
+                _trialTimeoutIsDefined = true;
+            }
+        }
     }
 }

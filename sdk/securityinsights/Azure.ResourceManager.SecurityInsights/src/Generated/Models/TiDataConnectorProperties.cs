@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> TI (Threat Intelligence) data connector properties. </summary>
     internal partial class TiDataConnectorProperties : DataConnectorTenantId
     {
+        private DateTimeOffset? _tipLookbackOn;
+        internal bool _tipLookbackOnIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="TiDataConnectorProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="dataTypesIndicatorsState"> Describe whether this data type connection is enabled or not. </param>
@@ -30,13 +33,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="dataTypes"> The available data types for the connector. </param>
         internal TiDataConnectorProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? tipLookbackOn, TiDataConnectorDataTypes dataTypes) : base(tenantId, additionalBinaryDataProperties)
         {
-            TipLookbackOn = tipLookbackOn;
+            _tipLookbackOn = tipLookbackOn;
             DataTypes = dataTypes;
         }
 
         /// <summary> The lookback period for the feed to be imported. </summary>
         [WirePath("tipLookbackPeriod")]
-        public DateTimeOffset? TipLookbackOn { get; set; }
+        public DateTimeOffset? TipLookbackOn
+        {
+            get
+            {
+                return _tipLookbackOn;
+            }
+            set
+            {
+                _tipLookbackOn = value;
+                _tipLookbackOnIsDefined = true;
+            }
+        }
 
         /// <summary> The available data types for the connector. </summary>
         [WirePath("dataTypes")]

@@ -18,7 +18,7 @@ namespace Azure.Provisioning.ApiManagement
         private CircuitBreakerFailureCondition _failureCondition;
         private BicepValue<TimeSpan> _tripDuration;
         private BicepValue<bool> _acceptRetryAfter;
-        private BackendFailureResponse _failureResponse;
+        private BackendFailureResult _failureResponse;
 
         /// <summary> Creates a new CircuitBreakerRule. </summary>
         public CircuitBreakerRule()
@@ -86,7 +86,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the FailureResponse. </summary>
-        internal BackendFailureResponse FailureResponse
+        internal BackendFailureResult FailureResponse
         {
             get
             {
@@ -111,7 +111,7 @@ namespace Azure.Provisioning.ApiManagement
             {
                 if (FailureResponse is null)
                 {
-                    FailureResponse = new BackendFailureResponse();
+                    FailureResponse = new BackendFailureResult();
                 }
                 FailureResponse.StatusCode = value;
             }
@@ -125,7 +125,7 @@ namespace Azure.Provisioning.ApiManagement
             _failureCondition = DefineModelProperty<CircuitBreakerFailureCondition>(nameof(FailureCondition), new string[] { "failureCondition" });
             _tripDuration = DefineProperty<TimeSpan>(nameof(TripDuration), new string[] { "tripDuration" }, format: "P");
             _acceptRetryAfter = DefineProperty<bool>(nameof(AcceptRetryAfter), new string[] { "acceptRetryAfter" });
-            _failureResponse = DefineModelProperty<BackendFailureResponse>(nameof(FailureResponse), new string[] { "failureResponse" });
+            _failureResponse = DefineModelProperty<BackendFailureResult>(nameof(FailureResponse), new string[] { "failureResponse" });
             DefineAdditionalProperties();
         }
 

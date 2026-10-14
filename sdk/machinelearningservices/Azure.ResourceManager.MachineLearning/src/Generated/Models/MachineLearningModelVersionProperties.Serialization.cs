@@ -77,24 +77,45 @@ namespace Azure.ResourceManager.MachineLearning.Models
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Flavors))
             {
-                writer.WritePropertyName("flavors"u8);
-                writer.WriteStartObject();
-                foreach (var item in Flavors)
+                if (Flavors != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WritePropertyName("flavors"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Flavors)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value, options);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("flavors"u8);
+                }
             }
-            if (Optional.IsDefined(JobName))
+            if (_jobNameIsDefined || Optional.IsDefined(JobName))
             {
-                writer.WritePropertyName("jobName"u8);
-                writer.WriteStringValue(JobName);
+                if (JobName != null)
+                {
+                    writer.WritePropertyName("jobName"u8);
+                    writer.WriteStringValue(JobName);
+                }
+                else
+                {
+                    writer.WriteNull("jobName"u8);
+                }
             }
-            if (Optional.IsDefined(ModelType))
+            if (_modelTypeIsDefined || Optional.IsDefined(ModelType))
             {
-                writer.WritePropertyName("modelType"u8);
-                writer.WriteStringValue(ModelType);
+                if (ModelType != null)
+                {
+                    writer.WritePropertyName("modelType"u8);
+                    writer.WriteStringValue(ModelType);
+                }
+                else
+                {
+                    writer.WriteNull("modelType"u8);
+                }
             }
             if (Optional.IsDefined(ModelUri))
             {
@@ -106,20 +127,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Stage))
+            if (_stageIsDefined || Optional.IsDefined(Stage))
             {
-                writer.WritePropertyName("stage"u8);
-                writer.WriteStringValue(Stage);
+                if (Stage != null)
+                {
+                    writer.WritePropertyName("stage"u8);
+                    writer.WriteStringValue(Stage);
+                }
+                else
+                {
+                    writer.WriteNull("stage"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Datasets))
             {
-                writer.WritePropertyName("datasets"u8);
-                writer.WriteStartArray();
-                foreach (DatasetReference item in Datasets)
+                if (Datasets != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("datasets"u8);
+                    writer.WriteStartArray();
+                    foreach (DatasetReference item in Datasets)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("datasets"u8);
+                }
             }
         }
 
@@ -148,23 +183,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? isAnonymous = default;
             bool? isArchived = default;
-            IDictionary<string, MachineLearningFlavorData> flavors = default;
+            IDictionary<string, MachineLearningFlavorData> flavors = new ChangeTrackingDictionary<string, MachineLearningFlavorData>();
+            bool jobNameIsDefined = false;
             string jobName = default;
+            bool modelTypeIsDefined = false;
             string modelType = default;
             Uri modelUri = default;
             RegistryAssetProvisioningState? provisioningState = default;
+            bool stageIsDefined = false;
             string stage = default;
-            IList<DatasetReference> datasets = default;
+            IList<DatasetReference> datasets = new ChangeTrackingList<DatasetReference>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -177,6 +217,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -198,6 +239,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -237,6 +279,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        flavors = null;
                         continue;
                     }
                     Dictionary<string, MachineLearningFlavorData> dictionary = new Dictionary<string, MachineLearningFlavorData>();
@@ -249,6 +292,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("jobName"u8))
                 {
+                    jobNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         jobName = null;
@@ -259,6 +303,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("modelType"u8))
                 {
+                    modelTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         modelType = null;
@@ -287,6 +332,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("stage"u8))
                 {
+                    stageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stage = null;
@@ -299,6 +345,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        datasets = null;
                         continue;
                     }
                     List<DatasetReference> array = new List<DatasetReference>();
@@ -316,18 +363,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new MachineLearningModelVersionProperties(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                tags,
                 additionalBinaryDataProperties,
                 isAnonymous,
                 isArchived,
-                flavors ?? new ChangeTrackingDictionary<string, MachineLearningFlavorData>(),
+                flavors,
                 jobName,
                 modelType,
                 modelUri,
                 provisioningState,
                 stage,
-                datasets ?? new ChangeTrackingList<DatasetReference>());
+                datasets)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _jobNameIsDefined = jobNameIsDefined,
+                _modelTypeIsDefined = modelTypeIsDefined,
+                _stageIsDefined = stageIsDefined
+            };
         }
     }
 }

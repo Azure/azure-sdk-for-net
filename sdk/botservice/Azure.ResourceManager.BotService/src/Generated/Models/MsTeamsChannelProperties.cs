@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.BotService.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _acceptedTerms;
+        internal bool _acceptedTermsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MsTeamsChannelProperties"/>. </summary>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.BotService.Models
             IsEnabled = isEnabled;
             IncomingCallRoute = incomingCallRoute;
             DeploymentEnvironment = deploymentEnvironment;
-            AcceptedTerms = acceptedTerms;
+            _acceptedTerms = acceptedTerms;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -58,6 +60,17 @@ namespace Azure.ResourceManager.BotService.Models
         public string DeploymentEnvironment { get; set; }
 
         /// <summary> Whether this channel accepted terms. </summary>
-        public bool? AcceptedTerms { get; set; }
+        public bool? AcceptedTerms
+        {
+            get
+            {
+                return _acceptedTerms;
+            }
+            set
+            {
+                _acceptedTerms = value;
+                _acceptedTermsIsDefined = true;
+            }
+        }
     }
 }

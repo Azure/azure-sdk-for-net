@@ -80,30 +80,58 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(ProviderName))
+            if (_providerNameIsDefined || Optional.IsDefined(ProviderName))
             {
-                writer.WritePropertyName("providerName"u8);
-                writer.WriteStringValue(ProviderName);
+                if (ProviderName != null)
+                {
+                    writer.WritePropertyName("providerName"u8);
+                    writer.WriteStringValue(ProviderName);
+                }
+                else
+                {
+                    writer.WriteNull("providerName"u8);
+                }
             }
-            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
+            if (_cognitiveServiceSubscriptionKeyIsDefined || Optional.IsDefined(CognitiveServiceSubscriptionKey))
             {
-                writer.WritePropertyName("cognitiveServiceSubscriptionKey"u8);
-                writer.WriteStringValue(CognitiveServiceSubscriptionKey);
+                if (CognitiveServiceSubscriptionKey != null)
+                {
+                    writer.WritePropertyName("cognitiveServiceSubscriptionKey"u8);
+                    writer.WriteStringValue(CognitiveServiceSubscriptionKey);
+                }
+                else
+                {
+                    writer.WriteNull("cognitiveServiceSubscriptionKey"u8);
+                }
             }
-            if (Optional.IsDefined(CognitiveServiceRegion))
+            if (_cognitiveServiceRegionIsDefined || Optional.IsDefined(CognitiveServiceRegion))
             {
-                writer.WritePropertyName("cognitiveServiceRegion"u8);
-                writer.WriteStringValue(CognitiveServiceRegion);
+                if (CognitiveServiceRegion != null)
+                {
+                    writer.WritePropertyName("cognitiveServiceRegion"u8);
+                    writer.WriteStringValue(CognitiveServiceRegion);
+                }
+                else
+                {
+                    writer.WriteNull("cognitiveServiceRegion"u8);
+                }
             }
             if (Optional.IsDefined(CognitiveServiceResourceId))
             {
                 writer.WritePropertyName("cognitiveServiceResourceId"u8);
                 writer.WriteStringValue(CognitiveServiceResourceId);
             }
-            if (Optional.IsDefined(DefaultLocale))
+            if (_defaultLocaleIsDefined || Optional.IsDefined(DefaultLocale))
             {
-                writer.WritePropertyName("defaultLocale"u8);
-                writer.WriteStringValue(DefaultLocale);
+                if (DefaultLocale != null)
+                {
+                    writer.WritePropertyName("defaultLocale"u8);
+                    writer.WriteStringValue(DefaultLocale);
+                }
+                else
+                {
+                    writer.WriteNull("defaultLocale"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -148,10 +176,14 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             string id = default;
+            bool providerNameIsDefined = false;
             string providerName = default;
+            bool cognitiveServiceSubscriptionKeyIsDefined = false;
             string cognitiveServiceSubscriptionKey = default;
+            bool cognitiveServiceRegionIsDefined = false;
             string cognitiveServiceRegion = default;
             ResourceIdentifier cognitiveServiceResourceId = default;
+            bool defaultLocaleIsDefined = false;
             string defaultLocale = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -163,6 +195,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("providerName"u8))
                 {
+                    providerNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         providerName = null;
@@ -173,6 +206,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("cognitiveServiceSubscriptionKey"u8))
                 {
+                    cognitiveServiceSubscriptionKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cognitiveServiceSubscriptionKey = null;
@@ -183,6 +217,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("cognitiveServiceRegion"u8))
                 {
+                    cognitiveServiceRegionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cognitiveServiceRegion = null;
@@ -202,6 +237,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("defaultLocale"u8))
                 {
+                    defaultLocaleIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         defaultLocale = null;
@@ -222,7 +258,13 @@ namespace Azure.ResourceManager.BotService.Models
                 cognitiveServiceRegion,
                 cognitiveServiceResourceId,
                 defaultLocale,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _providerNameIsDefined = providerNameIsDefined,
+                _cognitiveServiceSubscriptionKeyIsDefined = cognitiveServiceSubscriptionKeyIsDefined,
+                _cognitiveServiceRegionIsDefined = cognitiveServiceRegionIsDefined,
+                _defaultLocaleIsDefined = defaultLocaleIsDefined
+            };
         }
     }
 }

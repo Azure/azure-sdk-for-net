@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> The pages of PrivateStoreOfferDataAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<PrivateStoreOfferData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     yield break;
                 }
-                OfferListResponse result = OfferListResponse.FromResponse(response);
+                OfferListResult result = OfferListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<PrivateStoreOfferData>.FromValues((IReadOnlyList<PrivateStoreOfferData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

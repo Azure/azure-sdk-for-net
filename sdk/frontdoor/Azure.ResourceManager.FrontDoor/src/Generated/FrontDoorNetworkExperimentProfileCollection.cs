@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontDoorNetworkExperimentProfileCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(FrontDoorNetworkExperimentProfileResource.ResourceType, out string frontDoorNetworkExperimentProfileApiVersion);
             _networkExperimentProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorNetworkExperimentProfileResource.ResourceType.Namespace, Diagnostics);
-            _networkExperimentProfilesRestClient = new NetworkExperimentProfiles(_networkExperimentProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorNetworkExperimentProfileApiVersion ?? "2025-11-01");
+            _networkExperimentProfilesRestClient = new NetworkExperimentProfiles(_networkExperimentProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/NetworkExperimentProfiles", out string networkExperimentProfilesApiVersionOverride) ? networkExperimentProfilesApiVersionOverride : "2025-11-01");
             ValidateResourceId(id);
         }
 

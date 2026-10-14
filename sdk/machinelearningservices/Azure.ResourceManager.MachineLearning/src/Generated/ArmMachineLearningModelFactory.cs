@@ -833,21 +833,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new ManagedResourceGroupAssignedIdentities(principalId, default);
         }
 
-        /// <param name="id">
-        /// This is the private endpoint connection name created on SRP
-        /// Full resource id: /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.MachineLearningServices/{resourceType}/{resourceName}/registryPrivateEndpointConnections/{peConnectionName}
-        /// </param>
-        /// <param name="location"> Same as workspace location. </param>
-        /// <param name="groupIds"> The group ids. </param>
-        /// <param name="privateEndpoint"> The PE network resource that is linked to this PE connection. </param>
-        /// <param name="registryPrivateLinkServiceConnectionState"> The connection state. </param>
-        /// <param name="provisioningState"> One of null, "Succeeded", "Provisioning", "Failed". While not approved, it's null. </param>
-        /// <returns> A new <see cref="Models.RegistryPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static RegistryPrivateEndpointConnection RegistryPrivateEndpointConnection(ResourceIdentifier id = default, AzureLocation? location = default, IEnumerable<string> groupIds = default, RegistryPrivateEndpoint privateEndpoint = default, RegistryPrivateLinkServiceConnectionState registryPrivateLinkServiceConnectionState = default, string provisioningState = default)
-        {
-            return new RegistryPrivateEndpointConnection(id, location, groupIds is null && privateEndpoint is null && registryPrivateLinkServiceConnectionState is null && provisioningState is null ? default : new RegistryPrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpoint, registryPrivateLinkServiceConnectionState, provisioningState, default), default);
-        }
-
         /// <summary> The connection state. </summary>
         /// <param name="actionsRequired"> Some RP chose "None". Other RPs use this for region expansion. </param>
         /// <param name="description"> User-defined message that, per NRP doc, may be used for approval-related message. </param>
@@ -3005,25 +2990,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 requestSettings,
                 scaleSettings,
                 startupProbe);
-        }
-
-        /// <param name="collections">
-        /// [Required] The collection configuration. Each collection has it own configuration to collect model data and the name of collection can be arbitrary string.
-        /// Model data collector can be used for either payload logging or custom logging or both of them. Collection request and response are reserved for payload logging, others are for custom logging.
-        /// </param>
-        /// <param name="requestLoggingCaptureHeaders"> For payload logging, we only collect payload by default. If customers also want to collect the specified headers, they can set them in captureHeaders so that backend will collect those headers along with payload. </param>
-        /// <param name="rollingRate">
-        /// When model data is collected to blob storage, we need to roll the data to different path to avoid logging all of them in a single blob file.
-        /// If the rolling rate is hour, all data will be collected in the blob path /yyyy/MM/dd/HH/.
-        /// If it's day, all data will be collected in blob path /yyyy/MM/dd/.
-        /// The other benefit of rolling path is that model monitoring ui is able to select a time range of data very quickly.
-        /// </param>
-        /// <returns> A new <see cref="Models.DataCollector"/> instance for mocking. </returns>
-        public static DataCollector DataCollector(IDictionary<string, DataCollectionConfiguration> collections = default, IEnumerable<string> requestLoggingCaptureHeaders = default, RollingRateType? rollingRate = default)
-        {
-            collections ??= new ChangeTrackingDictionary<string, DataCollectionConfiguration>();
-
-            return new DataCollector(collections ?? new ChangeTrackingDictionary<string, DataCollectionConfiguration>(), requestLoggingCaptureHeaders is null ? default : new RequestLogging((requestLoggingCaptureHeaders ?? new ChangeTrackingList<string>()).ToList(), default), rollingRate, default);
         }
 
         /// <summary> The DataCollectionConfiguration. </summary>
@@ -7980,6 +7946,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningResourceName MachineLearningResourceName(string value = default, string localizedValue = default)
         {
             return new MachineLearningResourceName(value, localizedValue, default);
+        }
+
+        /// <summary> Private endpoint connection definition. </summary>
+        /// <param name="id">
+        /// This is the private endpoint connection name created on SRP
+        /// Full resource id: /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.MachineLearningServices/{resourceType}/{resourceName}/registryPrivateEndpointConnections/{peConnectionName}
+        /// </param>
+        /// <param name="location"> Same as workspace location. </param>
+        /// <param name="groupIds"> The group ids. </param>
+        /// <param name="privateEndpoint"> The PE network resource that is linked to this PE connection. </param>
+        /// <param name="registryPrivateLinkServiceConnectionState"> The connection state. </param>
+        /// <param name="provisioningState"> One of null, "Succeeded", "Provisioning", "Failed". While not approved, it's null. </param>
+        /// <returns> A new <see cref="Models.RegistryPrivateEndpointConnection"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RegistryPrivateEndpointConnection RegistryPrivateEndpointConnection(ResourceIdentifier id = default, AzureLocation? location = default, IEnumerable<string> groupIds = default, RegistryPrivateEndpoint privateEndpoint = default, RegistryPrivateLinkServiceConnectionState registryPrivateLinkServiceConnectionState = default, string provisioningState = default)
+        {
+            return new RegistryPrivateEndpointConnection(id, location, groupIds is null && privateEndpoint is null && registryPrivateLinkServiceConnectionState is null && provisioningState is null ? default : new RegistryPrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpoint, registryPrivateLinkServiceConnectionState, provisioningState, default), default);
+        }
+
+        /// <summary> The DataCollector. </summary>
+        /// <param name="collections">
+        /// [Required] The collection configuration. Each collection has it own configuration to collect model data and the name of collection can be arbitrary string.
+        /// Model data collector can be used for either payload logging or custom logging or both of them. Collection request and response are reserved for payload logging, others are for custom logging.
+        /// </param>
+        /// <param name="requestLoggingCaptureHeaders"> For payload logging, we only collect payload by default. If customers also want to collect the specified headers, they can set them in captureHeaders so that backend will collect those headers along with payload. </param>
+        /// <param name="rollingRate">
+        /// When model data is collected to blob storage, we need to roll the data to different path to avoid logging all of them in a single blob file.
+        /// If the rolling rate is hour, all data will be collected in the blob path /yyyy/MM/dd/HH/.
+        /// If it's day, all data will be collected in blob path /yyyy/MM/dd/.
+        /// The other benefit of rolling path is that model monitoring ui is able to select a time range of data very quickly.
+        /// </param>
+        /// <returns> A new <see cref="Models.DataCollector"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataCollector DataCollector(IDictionary<string, DataCollectionConfiguration> collections = default, IEnumerable<string> requestLoggingCaptureHeaders = default, RollingRateType? rollingRate = default)
+        {
+            return new DataCollector(collections ?? new ChangeTrackingDictionary<string, DataCollectionConfiguration>(), requestLoggingCaptureHeaders is null ? default : new RequestLogging((requestLoggingCaptureHeaders ?? new ChangeTrackingList<string>()).ToList(), default), rollingRate, default);
         }
 
         /// <summary> An object that represents a machine learning workspace. </summary>

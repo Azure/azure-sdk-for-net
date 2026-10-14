@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.DomainRegistration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppServiceDomainResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string appServiceDomainApiVersion);
             _domainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DomainRegistration", ResourceType.Namespace, Diagnostics);
-            _domainsRestClient = new Domains(_domainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceDomainApiVersion ?? "2024-11-01");
+            _domainsRestClient = new Domains(_domainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DomainRegistration/domains", out string domainsApiVersionOverride) ? domainsApiVersionOverride : "2024-11-01");
             ValidateResourceId(id);
         }
 

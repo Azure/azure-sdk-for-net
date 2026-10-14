@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AIManagerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string aiManagerApiVersion);
             _aiManagersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceAIManager", ResourceType.Namespace, Diagnostics);
-            _aiManagersRestClient = new AIManagers(_aiManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, aiManagerApiVersion ?? "2026-09-02-preview");
+            _aiManagersRestClient = new AIManagers(_aiManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerService/aiManagers", out string aiManagersApiVersionOverride) ? aiManagersApiVersionOverride : "2026-09-02-preview");
             ValidateResourceId(id);
         }
 

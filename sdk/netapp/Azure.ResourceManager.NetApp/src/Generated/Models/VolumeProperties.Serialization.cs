@@ -211,10 +211,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("smbEncryption"u8);
                 writer.WriteBooleanValue(IsSmbEncryptionEnabled.Value);
             }
-            if (Optional.IsDefined(SmbAccessBasedEnumeration))
+            if (_smbAccessBasedEnumerationIsDefined || Optional.IsDefined(SmbAccessBasedEnumeration))
             {
-                writer.WritePropertyName("smbAccessBasedEnumeration"u8);
-                writer.WriteStringValue(SmbAccessBasedEnumeration.Value.ToString());
+                if (SmbAccessBasedEnumeration != null)
+                {
+                    writer.WritePropertyName("smbAccessBasedEnumeration"u8);
+                    writer.WriteStringValue(SmbAccessBasedEnumeration.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("smbAccessBasedEnumeration"u8);
+                }
             }
             if (Optional.IsDefined(SmbNonBrowsable))
             {
@@ -226,10 +233,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("smbContinuouslyAvailable"u8);
                 writer.WriteBooleanValue(IsSmbContinuouslyAvailable.Value);
             }
-            if (Optional.IsDefined(ThroughputMibps))
+            if (_throughputMibpsIsDefined || Optional.IsDefined(ThroughputMibps))
             {
-                writer.WritePropertyName("throughputMibps"u8);
-                writer.WriteNumberValue(ThroughputMibps.Value);
+                if (ThroughputMibps != null)
+                {
+                    writer.WritePropertyName("throughputMibps"u8);
+                    writer.WriteNumberValue(ThroughputMibps.Value);
+                }
+                else
+                {
+                    writer.WriteNull("throughputMibps"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ActualThroughputMibps))
             {
@@ -276,15 +290,29 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("coolAccessTieringPolicy"u8);
                 writer.WriteStringValue(CoolAccessTieringPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(UnixPermissions))
+            if (_unixPermissionsIsDefined || Optional.IsDefined(UnixPermissions))
             {
-                writer.WritePropertyName("unixPermissions"u8);
-                writer.WriteStringValue(UnixPermissions);
+                if (UnixPermissions != null)
+                {
+                    writer.WritePropertyName("unixPermissions"u8);
+                    writer.WriteStringValue(UnixPermissions);
+                }
+                else
+                {
+                    writer.WriteNull("unixPermissions"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(CloneProgress))
+            if (options.Format != "W" && (_cloneProgressIsDefined || Optional.IsDefined(CloneProgress)))
             {
-                writer.WritePropertyName("cloneProgress"u8);
-                writer.WriteNumberValue(CloneProgress.Value);
+                if (CloneProgress != null)
+                {
+                    writer.WritePropertyName("cloneProgress"u8);
+                    writer.WriteNumberValue(CloneProgress.Value);
+                }
+                else
+                {
+                    writer.WriteNull("cloneProgress"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(FileAccessLogs))
             {
@@ -376,10 +404,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("enableSubvolumes"u8);
                 writer.WriteStringValue(EnableSubvolumes.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisionedAvailabilityZone))
+            if (options.Format != "W" && (_provisionedAvailabilityZoneIsDefined || Optional.IsDefined(ProvisionedAvailabilityZone)))
             {
-                writer.WritePropertyName("provisionedAvailabilityZone"u8);
-                writer.WriteStringValue(ProvisionedAvailabilityZone);
+                if (ProvisionedAvailabilityZone != null)
+                {
+                    writer.WritePropertyName("provisionedAvailabilityZone"u8);
+                    writer.WriteStringValue(ProvisionedAvailabilityZone);
+                }
+                else
+                {
+                    writer.WriteNull("provisionedAvailabilityZone"u8);
+                }
             }
             if (Optional.IsDefined(IsLargeVolume))
             {
@@ -396,10 +431,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("originatingResourceId"u8);
                 writer.WriteStringValue(OriginatingResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(InheritedSizeInBytes))
+            if (options.Format != "W" && (_inheritedSizeInBytesIsDefined || Optional.IsDefined(InheritedSizeInBytes)))
             {
-                writer.WritePropertyName("inheritedSizeInBytes"u8);
-                writer.WriteNumberValue(InheritedSizeInBytes.Value);
+                if (InheritedSizeInBytes != null)
+                {
+                    writer.WritePropertyName("inheritedSizeInBytes"u8);
+                    writer.WriteNumberValue(InheritedSizeInBytes.Value);
+                }
+                else
+                {
+                    writer.WriteNull("inheritedSizeInBytes"u8);
+                }
             }
             if (Optional.IsDefined(Language))
             {
@@ -478,9 +520,11 @@ namespace Azure.ResourceManager.NetApp.Models
             bool? isKerberosEnabled = default;
             NetAppVolumeSecurityStyle? securityStyle = default;
             bool? isSmbEncryptionEnabled = default;
+            bool smbAccessBasedEnumerationIsDefined = false;
             SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default;
             SmbNonBrowsable? smbNonBrowsable = default;
             bool? isSmbContinuouslyAvailable = default;
+            bool throughputMibpsIsDefined = false;
             float? throughputMibps = default;
             float? actualThroughputMibps = default;
             NetAppEncryptionKeySource? encryptionKeySource = default;
@@ -491,7 +535,9 @@ namespace Azure.ResourceManager.NetApp.Models
             int? coolnessPeriod = default;
             CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default;
             CoolAccessTieringPolicy? coolAccessTieringPolicy = default;
+            bool unixPermissionsIsDefined = false;
             string unixPermissions = default;
+            bool cloneProgressIsDefined = false;
             int? cloneProgress = default;
             NetAppFileAccessLog? fileAccessLogs = default;
             NetAppAvsDataStore? avsDataStore = default;
@@ -508,10 +554,12 @@ namespace Azure.ResourceManager.NetApp.Models
             bool? isEncrypted = default;
             IList<NetAppVolumePlacementRule> placementRules = default;
             EnableNetAppSubvolume? enableSubvolumes = default;
+            bool provisionedAvailabilityZoneIsDefined = false;
             string provisionedAvailabilityZone = default;
             bool? isLargeVolume = default;
             LargeVolumeType? largeVolumeType = default;
             ResourceIdentifier originatingResourceId = default;
+            bool inheritedSizeInBytesIsDefined = false;
             long? inheritedSizeInBytes = default;
             NetAppVolumeLanguage? language = default;
             BreakthroughMode? breakthroughMode = default;
@@ -730,6 +778,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("smbAccessBasedEnumeration"u8))
                 {
+                    smbAccessBasedEnumerationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         smbAccessBasedEnumeration = null;
@@ -758,6 +807,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("throughputMibps"u8))
                 {
+                    throughputMibpsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         throughputMibps = null;
@@ -849,6 +899,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("unixPermissions"u8))
                 {
+                    unixPermissionsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         unixPermissions = null;
@@ -859,6 +910,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("cloneProgress"u8))
                 {
+                    cloneProgressIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cloneProgress = null;
@@ -1009,6 +1061,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("provisionedAvailabilityZone"u8))
                 {
+                    provisionedAvailabilityZoneIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         provisionedAvailabilityZone = null;
@@ -1046,6 +1099,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("inheritedSizeInBytes"u8))
                 {
+                    inheritedSizeInBytesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         inheritedSizeInBytes = null;
@@ -1140,7 +1194,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 inheritedSizeInBytes,
                 language,
                 breakthroughMode,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _smbAccessBasedEnumerationIsDefined = smbAccessBasedEnumerationIsDefined,
+                _throughputMibpsIsDefined = throughputMibpsIsDefined,
+                _unixPermissionsIsDefined = unixPermissionsIsDefined,
+                _cloneProgressIsDefined = cloneProgressIsDefined,
+                _provisionedAvailabilityZoneIsDefined = provisionedAvailabilityZoneIsDefined,
+                _inheritedSizeInBytesIsDefined = inheritedSizeInBytesIsDefined
+            };
         }
     }
 }

@@ -89,10 +89,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("assignmentDate"u8);
                 writer.WriteStringValue(AssignmentOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(TierUpgradeEligibilityInfo))
+            if (options.Format != "W" && (_tierUpgradeEligibilityInfoIsDefined || Optional.IsDefined(TierUpgradeEligibilityInfo)))
             {
-                writer.WritePropertyName("tierUpgradeEligibilityInfo"u8);
-                writer.WriteObjectValue(TierUpgradeEligibilityInfo, options);
+                if (TierUpgradeEligibilityInfo != null)
+                {
+                    writer.WritePropertyName("tierUpgradeEligibilityInfo"u8);
+                    writer.WriteObjectValue(TierUpgradeEligibilityInfo, options);
+                }
+                else
+                {
+                    writer.WriteNull("tierUpgradeEligibilityInfo"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,6 +146,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string currentTierName = default;
             CognitiveServicesTierUpgradePolicy? tierUpgradePolicy = default;
             DateTimeOffset? assignmentOn = default;
+            bool tierUpgradeEligibilityInfoIsDefined = false;
             QuotaTierUpgradeEligibilityInfo tierUpgradeEligibilityInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -168,6 +176,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("tierUpgradeEligibilityInfo"u8))
                 {
+                    tierUpgradeEligibilityInfoIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         tierUpgradeEligibilityInfo = null;
@@ -181,7 +190,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CognitiveServicesQuotaTierProperties(currentTierName, tierUpgradePolicy, assignmentOn, tierUpgradeEligibilityInfo, additionalBinaryDataProperties);
+            return new CognitiveServicesQuotaTierProperties(currentTierName, tierUpgradePolicy, assignmentOn, tierUpgradeEligibilityInfo, additionalBinaryDataProperties)
+            {
+                _tierUpgradeEligibilityInfoIsDefined = tierUpgradeEligibilityInfoIsDefined
+            };
         }
     }
 }

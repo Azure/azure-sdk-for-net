@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IdentityBindingListResult(value, nextLink, additionalBinaryDataProperties);
+            return new IdentityBindingListResult(value ?? new ChangeTrackingList<ManagedClusterIdentityBindingData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

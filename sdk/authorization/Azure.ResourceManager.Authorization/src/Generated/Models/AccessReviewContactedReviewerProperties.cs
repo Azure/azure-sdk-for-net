@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _createdOn;
+        internal bool _createdOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewContactedReviewerProperties"/>. </summary>
         internal AccessReviewContactedReviewerProperties()
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             UserDisplayName = userDisplayName;
             UserPrincipalName = userPrincipalName;
-            CreatedOn = createdOn;
+            _createdOn = createdOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +47,12 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Date Time when the reviewer was contacted. </summary>
         [WirePath("createdDateTime")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return _createdOn;
+            }
+        }
     }
 }

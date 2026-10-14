@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FirewallRuleListResult(value, nextLink, additionalBinaryDataProperties);
+            return new FirewallRuleListResult(value ?? new ChangeTrackingList<FirewallRuleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

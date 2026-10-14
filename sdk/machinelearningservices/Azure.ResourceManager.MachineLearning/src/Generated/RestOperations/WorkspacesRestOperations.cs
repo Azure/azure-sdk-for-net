@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendPath(workspaceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendPath(workspaceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +96,7 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendPath(workspaceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +118,7 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendPath(workspaceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             if (forceToPurge != null)
             {
                 uri.AppendQuery("forceToPurge", TypeFormatters.ConvertToString(forceToPurge), true);
@@ -152,10 +140,7 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             if (kind != null)
             {
                 uri.AppendQuery("kind", kind, true);
@@ -188,10 +173,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -208,10 +190,7 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             if (kind != null)
             {
                 uri.AppendQuery("kind", kind, true);
@@ -244,10 +223,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -268,10 +244,7 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendPath(workspaceName, true);
             uri.AppendPath("/diagnose", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -297,10 +270,7 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendPath(workspaceName, true);
             uri.AppendPath("/listKeys", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -321,10 +291,7 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendPath(workspaceName, true);
             uri.AppendPath("/listNotebookAccessToken", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -345,10 +312,7 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendPath(workspaceName, true);
             uri.AppendPath("/listNotebookKeys", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -369,10 +333,7 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendPath(workspaceName, true);
             uri.AppendPath("/listStorageAccountKeys", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -393,10 +354,7 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendPath(workspaceName, true);
             uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -417,10 +375,7 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendPath(workspaceName, true);
             uri.AppendPath("/prepareNotebook", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -441,10 +396,7 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendPath(workspaceName, true);
             uri.AppendPath("/resyncKeys", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

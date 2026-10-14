@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration
 {
     internal partial class DatabaseMigrationCosmosDBMongoData0CollectionResultOfT : Pageable<DatabaseMigrationCosmosDBMongoData>
     {
-        private readonly DatabaseMigrationsMongoToCosmosDbRUMongo _client;
+        private readonly DatabaseMigrationsMongoToCosmosDBRUMongo _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _targetResourceName;
@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.DataMigration
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DatabaseMigrationCosmosDBMongoData0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DatabaseMigrationsMongoToCosmosDbRUMongo client used to send requests. </param>
+        /// <param name="client"> The DatabaseMigrationsMongoToCosmosDBRUMongo client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="targetResourceName"> The name of the target resource/account. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DatabaseMigrationCosmosDBMongoData0CollectionResultOfT(DatabaseMigrationsMongoToCosmosDbRUMongo client, Guid subscriptionId, string resourceGroupName, string targetResourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DatabaseMigrationCosmosDBMongoData0CollectionResultOfT(DatabaseMigrationsMongoToCosmosDBRUMongo client, Guid subscriptionId, string resourceGroupName, string targetResourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> The pages of DatabaseMigrationCosmosDBMongoData0CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<DatabaseMigrationCosmosDBMongoData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

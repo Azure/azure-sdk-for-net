@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DedicatedHostGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DedicatedHostGroupListResult(value ?? new ChangeTrackingList<DedicatedHostGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

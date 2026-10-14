@@ -84,10 +84,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ObjectId))
+            if (_objectIdIsDefined || Optional.IsDefined(ObjectId))
             {
-                writer.WritePropertyName("objectId"u8);
-                writer.WriteStringValue(ObjectId.Value);
+                if (ObjectId != null)
+                {
+                    writer.WritePropertyName("objectId"u8);
+                    writer.WriteStringValue(ObjectId.Value);
+                }
+                else
+                {
+                    writer.WriteNull("objectId"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,6 +140,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             string email = default;
             string name = default;
+            bool objectIdIsDefined = false;
             Guid? objectId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -149,6 +157,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("objectId"u8))
                 {
+                    objectIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         objectId = null;
@@ -162,7 +171,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SecurityInsightsUserInfo(email, name, objectId, additionalBinaryDataProperties);
+            return new SecurityInsightsUserInfo(email, name, objectId, additionalBinaryDataProperties)
+            {
+                _objectIdIsDefined = objectIdIsDefined
+            };
         }
     }
 }

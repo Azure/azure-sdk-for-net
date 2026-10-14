@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _lastComplianceCheckedOn;
+        internal bool _lastComplianceCheckedOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationVmssVmInfo"/>. </summary>
         public GuestConfigurationVmssVmInfo()
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             VmResourceId = vmResourceId;
             ComplianceStatus = complianceStatus;
             LatestReportId = latestReportId;
-            LastComplianceCheckedOn = lastComplianceCheckedOn;
+            _lastComplianceCheckedOn = lastComplianceCheckedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -58,6 +60,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Date and time when last compliance status was checked. </summary>
         [WirePath("lastComplianceChecked")]
-        public DateTimeOffset? LastComplianceCheckedOn { get; }
+        public DateTimeOffset? LastComplianceCheckedOn
+        {
+            get
+            {
+                return _lastComplianceCheckedOn;
+            }
+        }
     }
 }

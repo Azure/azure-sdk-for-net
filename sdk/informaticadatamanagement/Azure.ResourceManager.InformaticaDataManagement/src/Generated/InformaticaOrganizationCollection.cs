@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal InformaticaOrganizationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(InformaticaOrganizationResource.ResourceType, out string informaticaOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.InformaticaDataManagement", InformaticaOrganizationResource.ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, informaticaOrganizationApiVersion ?? "2024-05-08");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Informatica.DataManagement/organizations", out string organizationsApiVersionOverride) ? organizationsApiVersionOverride : "2024-05-08");
             ValidateResourceId(id);
         }
 

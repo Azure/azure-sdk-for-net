@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Fabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RpSkuEnumerationForExistingResourceResult(value, nextLink, additionalBinaryDataProperties);
+            return new RpSkuEnumerationForExistingResourceResult(value ?? new ChangeTrackingList<FabricSkuDetailsForExistingCapacity>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -79,10 +79,17 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(IsEncrypted))
+            if (_isEncryptedIsDefined || Optional.IsDefined(IsEncrypted))
             {
-                writer.WritePropertyName("isEncrypted"u8);
-                writer.WriteBooleanValue(IsEncrypted.Value);
+                if (IsEncrypted != null)
+                {
+                    writer.WritePropertyName("isEncrypted"u8);
+                    writer.WriteBooleanValue(IsEncrypted.Value);
+                }
+                else
+                {
+                    writer.WriteNull("isEncrypted"u8);
+                }
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -142,6 +149,7 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             string value = default;
+            bool isEncryptedIsDefined = false;
             bool? isEncrypted = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
@@ -156,6 +164,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("isEncrypted"u8))
                 {
+                    isEncryptedIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isEncrypted = null;
@@ -198,7 +207,10 @@ namespace Azure.ResourceManager.Automation.Models
                 createdOn,
                 lastModifiedOn,
                 description,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _isEncryptedIsDefined = isEncryptedIsDefined
+            };
         }
     }
 }

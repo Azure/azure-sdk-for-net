@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             return new EtwProviderDataSource(
-                streams,
+                streams ?? new ChangeTrackingList<string>(),
                 provider,
                 providerType,
                 logLevel,

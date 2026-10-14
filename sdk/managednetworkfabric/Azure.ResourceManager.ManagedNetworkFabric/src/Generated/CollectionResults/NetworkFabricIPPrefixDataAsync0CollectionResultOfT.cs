@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     internal partial class NetworkFabricIPPrefixDataAsync0CollectionResultOfT : AsyncPageable<NetworkFabricIPPrefixData>
     {
-        private readonly IpPrefixes _client;
+        private readonly IPPrefixes _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of NetworkFabricIPPrefixDataAsync0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The IpPrefixes client used to send requests. </param>
+        /// <param name="client"> The IPPrefixes client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public NetworkFabricIPPrefixDataAsync0CollectionResultOfT(IpPrefixes client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public NetworkFabricIPPrefixDataAsync0CollectionResultOfT(IPPrefixes client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> The pages of NetworkFabricIPPrefixDataAsync0CollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<NetworkFabricIPPrefixData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);

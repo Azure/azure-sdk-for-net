@@ -94,20 +94,34 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (Optional.IsDefined(AppliedBy))
+            if (_appliedByIsDefined || Optional.IsDefined(AppliedBy))
             {
-                writer.WritePropertyName("appliedBy"u8);
-                writer.WriteObjectValue(AppliedBy, options);
+                if (AppliedBy != null)
+                {
+                    writer.WritePropertyName("appliedBy"u8);
+                    writer.WriteObjectValue(AppliedBy, options);
+                }
+                else
+                {
+                    writer.WriteNull("appliedBy"u8);
+                }
             }
             if (Optional.IsCollectionDefined(StatusConditions))
             {
-                writer.WritePropertyName("statusConditions"u8);
-                writer.WriteStartArray();
-                foreach (FluxObjectStatusCondition item in StatusConditions)
+                if (StatusConditions != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("statusConditions"u8);
+                    writer.WriteStartArray();
+                    foreach (FluxObjectStatusCondition item in StatusConditions)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("statusConditions"u8);
+                }
             }
             if (Optional.IsDefined(HelmReleaseProperties))
             {
@@ -160,8 +174,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             string @namespace = default;
             string kind = default;
             FluxComplianceState? complianceState = default;
+            bool appliedByIsDefined = false;
             FluxObjectReference appliedBy = default;
-            IList<FluxObjectStatusCondition> statusConditions = default;
+            IList<FluxObjectStatusCondition> statusConditions = new ChangeTrackingList<FluxObjectStatusCondition>();
             HelmReleaseProperties helmReleaseProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -192,6 +207,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("appliedBy"u8))
                 {
+                    appliedByIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         appliedBy = null;
@@ -204,6 +220,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        statusConditions = null;
                         continue;
                     }
                     List<FluxObjectStatusCondition> array = new List<FluxObjectStatusCondition>();
@@ -234,9 +251,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 kind,
                 complianceState,
                 appliedBy,
-                statusConditions ?? new ChangeTrackingList<FluxObjectStatusCondition>(),
+                statusConditions,
                 helmReleaseProperties,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _appliedByIsDefined = appliedByIsDefined
+            };
         }
     }
 }

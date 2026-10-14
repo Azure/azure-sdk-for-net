@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StandbyContainerGroupPoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string standbyContainerGroupPoolApiVersion);
             _standbyContainerGroupPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", ResourceType.Namespace, Diagnostics);
-            _standbyContainerGroupPoolsRestClient = new StandbyContainerGroupPools(_standbyContainerGroupPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, standbyContainerGroupPoolApiVersion ?? "2025-10-01");
+            _standbyContainerGroupPoolsRestClient = new StandbyContainerGroupPools(_standbyContainerGroupPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.StandbyPool/standbyContainerGroupPools", out string standbyContainerGroupPoolsApiVersionOverride) ? standbyContainerGroupPoolsApiVersionOverride : "2025-10-01");
             ValidateResourceId(id);
         }
 

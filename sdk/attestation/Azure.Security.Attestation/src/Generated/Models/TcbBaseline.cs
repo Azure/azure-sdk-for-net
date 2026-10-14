@@ -14,7 +14,7 @@ namespace Azure.Security.Attestation
     /// TEE specific Tcb baseline used in attestation, and baseline details including
     /// baseline identifier, release date and minimum required software version
     /// </summary>
-    internal partial class TcbBaseline
+    public partial class TcbBaseline
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

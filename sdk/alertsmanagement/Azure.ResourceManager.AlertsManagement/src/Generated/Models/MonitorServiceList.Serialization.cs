@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MonitorServiceList(metadataIdentifier, additionalBinaryDataProperties, data);
+            return new MonitorServiceList(metadataIdentifier, additionalBinaryDataProperties, data ?? new ChangeTrackingList<MonitorServiceDetails>());
         }
     }
 }

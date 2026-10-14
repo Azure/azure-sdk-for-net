@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AlertListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AlertListResult(value ?? new ChangeTrackingList<RoleManagementAlertData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -18,13 +18,13 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private RequiredAction _requiredAction;
-        internal bool _requiredActionIsDefined;
+        private bool _requiredActionIsDefined;
         private float? _temperature;
-        internal bool _temperatureIsDefined;
+        private bool _temperatureIsDefined;
         private float? _topP;
-        internal bool _topPIsDefined;
+        private bool _topPIsDefined;
         private ToolResources _toolResources;
-        internal bool _toolResourcesIsDefined;
+        private bool _toolResourcesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ThreadRun"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>

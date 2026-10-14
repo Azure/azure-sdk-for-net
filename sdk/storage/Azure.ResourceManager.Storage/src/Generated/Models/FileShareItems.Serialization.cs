@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FileShareItems(value, nextLink, additionalBinaryDataProperties);
+            return new FileShareItems(value ?? new ChangeTrackingList<FileShareData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

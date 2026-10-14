@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureKeyVaultSecretProviderClassListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AzureKeyVaultSecretProviderClassListResult(value ?? new ChangeTrackingList<KeyVaultSecretProviderClassData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
