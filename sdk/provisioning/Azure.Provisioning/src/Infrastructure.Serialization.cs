@@ -181,7 +181,7 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
             }
         }
 
-        if (targetScope != null && targetScope != "resourceGroup")
+        if (targetScope != null)
         {
             writer.WriteString("targetScope", targetScope);
         }
@@ -270,7 +270,7 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
             string scope = scopeElement.GetString()!;
             infra.TargetScope = scope switch
             {
-                "resourceGroup" => null,
+                "resourceGroup" => DeploymentScope.ResourceGroup,
                 "subscription" => DeploymentScope.Subscription,
                 "managementGroup" => DeploymentScope.ManagementGroup,
                 "tenant" => DeploymentScope.Tenant,

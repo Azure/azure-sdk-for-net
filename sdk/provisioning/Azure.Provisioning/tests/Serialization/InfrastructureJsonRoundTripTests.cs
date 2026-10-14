@@ -252,7 +252,22 @@ public class InfrastructureJsonRoundTripTests
         Infrastructure infra = SerializationTestHelpers.DeserializeFromJson(
             """{"fileName":"main.bicep","targetScope":"resourceGroup"}""");
 
+        Assert.AreEqual(DeploymentScope.ResourceGroup, infra.TargetScope);
+
+        using JsonDocument document = JsonDocument.Parse(SerializationTestHelpers.SerializeToJson(infra));
+        Assert.AreEqual("resourceGroup", document.RootElement.GetProperty("targetScope").GetString());
+    }
+
+    [Test]
+    public void Deserialize_OmittedTargetScope()
+    {
+        Infrastructure infra = SerializationTestHelpers.DeserializeFromJson(
+            """{"fileName":"main.bicep"}""");
+
         Assert.IsNull(infra.TargetScope);
+
+        using JsonDocument document = JsonDocument.Parse(SerializationTestHelpers.SerializeToJson(infra));
+        Assert.IsFalse(document.RootElement.TryGetProperty("targetScope", out _));
     }
 
     [Test]
