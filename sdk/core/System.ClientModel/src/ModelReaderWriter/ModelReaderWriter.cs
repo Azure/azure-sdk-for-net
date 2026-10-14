@@ -111,6 +111,25 @@ public static class ModelReaderWriter
 
     private static BinaryData WritePersistableOrEnumerable<T>(T model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
     {
+        if (options.IsCoreOwned && options.HasProxies)
+        {
+            object? proxiedModel = options.ProxiedModel;
+            ModelReaderWriterContext? previousContext = options.ProxyResolutionContext;
+            try
+            {
+                return WritePersistableOrEnumerableCore(model, options, context);
+            }
+            finally
+            {
+                options.RestoreProxyState(proxiedModel, previousContext);
+            }
+        }
+
+        return WritePersistableOrEnumerableCore(model, options, context);
+    }
+
+    private static BinaryData WritePersistableOrEnumerableCore<T>(T model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+    {
         options.SetProxyResolutionContext(context);
         if (model is IPersistableModel<T> iModel)
         {
@@ -253,6 +272,21 @@ public static class ModelReaderWriter
                 throw new ArgumentNullException(nameof(data));
             }
 
+            if (options.IsCoreOwned && options.HasProxies)
+            {
+                object? proxiedModel = options.ProxiedModel;
+                ModelReaderWriterContext? previousContext = options.ProxyResolutionContext;
+                try
+                {
+                    options.SetProxyResolutionContext(context);
+                    return options.ReadWithChain<T>(template, data);
+                }
+                finally
+                {
+                    options.RestoreProxyState(proxiedModel, previousContext);
+                }
+            }
+
             options.SetProxyResolutionContext(context);
             return options.ReadWithChain<T>(template, data);
         }
@@ -262,6 +296,25 @@ public static class ModelReaderWriter
     }
 
     private static object? ReadInternal(BinaryData data, Type returnType, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+    {
+        if (options.IsCoreOwned && options.HasProxies)
+        {
+            object? proxiedModel = options.ProxiedModel;
+            ModelReaderWriterContext? previousContext = options.ProxyResolutionContext;
+            try
+            {
+                return ReadInternalCore(data, returnType, options, context);
+            }
+            finally
+            {
+                options.RestoreProxyState(proxiedModel, previousContext);
+            }
+        }
+
+        return ReadInternalCore(data, returnType, options, context);
+    }
+
+    private static object? ReadInternalCore(BinaryData data, Type returnType, ModelReaderWriterOptions options, ModelReaderWriterContext context)
     {
         if (data is null)
         {

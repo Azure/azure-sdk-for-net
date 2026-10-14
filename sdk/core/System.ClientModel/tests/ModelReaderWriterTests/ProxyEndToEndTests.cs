@@ -6,6 +6,7 @@ using System.ClientModel.Tests.Proxy.FirstPartyA;
 using System.ClientModel.Tests.Proxy.OpenAILike;
 using System.ClientModel.Tests.Proxy.OpenAILike.Mocks;
 using System.ClientModel.Tests.Proxy.ThirdPartyB;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
@@ -94,6 +95,28 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             ResponseTool tool = client.GetTool("t5");
 
             Assert.IsInstanceOf<UnknownResponseTool>(tool);
+        }
+
+        [Test]
+        public void ProxyForDeclaredToolType_RoutesSingleAndNestedCollectionItems()
+        {
+            const string payload = "{\"type\":\"azure_search\",\"index_name\":\"docs\"}";
+            var options = new ModelReaderWriterOptions("J").AddAzureTools();
+
+            ResponseTool? single = ModelReaderWriter.Read<ResponseTool>(BinaryData.FromString(payload), options);
+            List<ResponseTool>? list = ModelReaderWriter.Read<List<ResponseTool>>(
+                BinaryData.FromString($"[{payload}]"), options);
+            List<List<ResponseTool>>? nested = ModelReaderWriter.Read<List<List<ResponseTool>>>(
+                BinaryData.FromString($"[[{payload}]]"), options);
+
+            Assert.IsInstanceOf<AzureSearchTool>(single);
+            Assert.IsNotNull(list);
+            Assert.AreEqual(1, list!.Count);
+            Assert.IsInstanceOf<AzureSearchTool>(list[0]);
+            Assert.AreEqual(typeof(AzureSearchTool).Assembly, list[0].GetType().Assembly);
+            Assert.AreEqual("docs", ((AzureSearchTool)list[0]).IndexName);
+            Assert.IsNotNull(nested);
+            Assert.IsInstanceOf<AzureSearchTool>(nested![0][0]);
         }
 
         [Test]

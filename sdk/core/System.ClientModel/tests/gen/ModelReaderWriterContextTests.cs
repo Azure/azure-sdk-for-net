@@ -89,6 +89,85 @@ namespace System.ClientModel.SourceGeneration.Tests
             Assert.AreSame(options, proxy.LastOptions, "the caller's options should flow into CanHandle.");
         }
 
+        [Test]
+        public void ConditionalProxy_CollectionAndConverterUseDeclaredType_WithGeneratedContext()
+        {
+            const string payload = "{\"kind\":\"extension\"}";
+            var options = new ModelReaderWriterOptions("J");
+            var proxy = new ExtendedBaseModelProxy();
+            options.AddProxy<BaseModel>(proxy);
+
+            BaseModel? single = ModelReaderWriter.Read<BaseModel>(BinaryData.FromString(payload), options, BasicContext.Default);
+            List<BaseModel>? collection = ModelReaderWriter.Read<List<BaseModel>>(
+                BinaryData.FromString($"[{payload}]"), options, BasicContext.Default);
+            var jsonOptions = new JsonSerializerOptions
+            {
+                Converters = { new JsonModelConverter(options, BasicContext.Default) }
+            };
+            BaseModel? fromConverter = JsonSerializer.Deserialize<BaseModel>(payload, jsonOptions);
+            List<BaseModel>? converterCollection = JsonSerializer.Deserialize<List<BaseModel>>($"[{payload}]", jsonOptions);
+            BaseModel? withoutProxy = ModelReaderWriter.Read<BaseModel>(
+                BinaryData.FromString(payload), ModelReaderWriterOptions.Json, BasicContext.Default);
+
+            Assert.IsInstanceOf<ModelY>(single);
+            Assert.IsNotNull(collection);
+            Assert.IsInstanceOf<ModelY>(collection![0]);
+            Assert.AreEqual("from-proxy", collection[0].Name);
+            Assert.IsInstanceOf<ModelY>(fromConverter);
+            Assert.IsNotNull(converterCollection);
+            Assert.IsInstanceOf<ModelY>(converterCollection![0]);
+            Assert.IsInstanceOf<UnknownBaseModel>(withoutProxy);
+            Assert.AreSame(BasicContext.Default, proxy.LastContext);
+            Assert.AreSame(options, proxy.LastOptions);
+        }
+
+        private sealed class ExtendedBaseModelProxy : ConditionalModelProxy<BaseModel>
+        {
+            public ModelReaderWriterContext? LastContext { get; private set; }
+            public ModelReaderWriterOptions? LastOptions { get; private set; }
+
+            public ExtendedBaseModelProxy() : base(new ExtendedBaseModel()) { }
+
+            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+            {
+                LastContext = context;
+                LastOptions = options;
+                using JsonDocument doc = JsonDocument.Parse(data);
+                return doc.RootElement.TryGetProperty("kind", out JsonElement kind) && kind.GetString() == "extension";
+            }
+
+            public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+            {
+                LastContext = context;
+                LastOptions = options;
+                Utf8JsonReader copy = reader;
+                using JsonDocument doc = JsonDocument.ParseValue(ref copy);
+                return doc.RootElement.TryGetProperty("kind", out JsonElement kind) && kind.GetString() == "extension";
+            }
+
+            private sealed class ExtendedBaseModel : IJsonModel<BaseModel>
+            {
+                public BaseModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+                {
+                    using JsonDocument doc = JsonDocument.ParseValue(ref reader);
+                    return new ModelY { Name = "from-proxy" };
+                }
+
+                public BaseModel Create(BinaryData data, ModelReaderWriterOptions options) => new ModelY { Name = "from-proxy" };
+
+                public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+                {
+                    writer.WriteStartObject();
+                    writer.WriteString("kind", "Y");
+                    writer.WriteEndObject();
+                }
+
+                public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.FromString("{\"kind\":\"Y\"}");
+
+                public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            }
+        }
+
         /// <summary>
         /// A conditional proxy over the generated-context model <see cref="JsonModel"/> that records the
         /// options and context passed to <c>CanHandle</c> so the AOT-safe path can be verified.

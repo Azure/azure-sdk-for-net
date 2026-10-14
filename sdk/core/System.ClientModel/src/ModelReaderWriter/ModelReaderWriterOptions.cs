@@ -50,13 +50,13 @@ public class ModelReaderWriterOptions
 
         Format = format;
         _proxies = options._proxies;
-        IsCoreOwned = true;
-        _userOptions = options;
+        _userOptions = options._userOptions ?? options;
     }
 
     internal ModelReaderWriterOptions(ModelReaderWriterOptions options)
         : this(options.Format, options)
     {
+        IsCoreOwned = true;
     }
 
     internal bool HasProxies => _proxies?.Count > 0;
@@ -75,6 +75,14 @@ public class ModelReaderWriterOptions
         {
             _context = context;
         }
+    }
+
+    internal ModelReaderWriterContext? ProxyResolutionContext => _context;
+
+    internal void RestoreProxyState(object? proxiedModel, ModelReaderWriterContext? context)
+    {
+        ProxiedModel = proxiedModel;
+        _context = context;
     }
 
     /// <summary>

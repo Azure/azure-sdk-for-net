@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
@@ -41,7 +43,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         [TestCase("J")]
         [TestCase("W")]
-        public void Write_ShouldBeSameIfSecondPassThrough(string format)
+        public void Write_ClonesClientWireOptions(string format)
         {
             var options = new ModelReaderWriterOptions(format);
             var proxy = new JsonModelProxy();
@@ -81,7 +83,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         [TestCase("J")]
         [TestCase("W")]
-        public void Read_ShouldBeSameIfSecondPassThrough(string format)
+        public void Read_ClonesClientWireOptions(string format)
         {
             var options = new ModelReaderWriterOptions(format);
             var proxy = new JsonModelProxy();
@@ -100,6 +102,180 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy);
             _optionsMap.Add(proxy, options);
             ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, options);
+        }
+
+        [Test]
+        public void NestedWrite_PreservesOuterProxiedModel()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            options.AddProxy<PlainTextModel>((IJsonModel<PlainTextModel>)new NestedWriteProxy());
+
+            BinaryData result = ModelReaderWriter.Write(new PlainTextModel { Value = "outer" }, options);
+
+            Assert.AreEqual("{\"value\":\"outer\"}", result.ToString());
+        }
+
+        [Test]
+        public void NestedRead_PreservesOuterProxiedModel()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy = new NestedReadProxy();
+            options.AddProxy<PlainTextModel>((IPersistableModel<PlainTextModel>)proxy);
+
+            PlainTextModel? result = ModelReaderWriter.Read<PlainTextModel>(
+                BinaryData.FromString("{\"value\":\"outer\"}"), options);
+
+            Assert.AreEqual("outer", result!.Value);
+            Assert.IsNotNull(proxy.BeforeNestedRead);
+            Assert.AreSame(proxy.BeforeNestedRead, proxy.AfterNestedRead);
+        }
+
+        private sealed class NestedReadProxy : IPersistableModel<PlainTextModel>
+        {
+            internal object? BeforeNestedRead { get; private set; }
+            internal object? AfterNestedRead { get; private set; }
+
+            PlainTextModel IPersistableModel<PlainTextModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            {
+                BeforeNestedRead = options.ProxiedModel;
+                ModelReaderWriter.Read<SimpleModel>(BinaryData.FromString("{}"), options);
+                AfterNestedRead = options.ProxiedModel;
+                return new PlainTextModel { Value = "outer" };
+            }
+
+            BinaryData IPersistableModel<PlainTextModel>.Write(ModelReaderWriterOptions options)
+                => BinaryData.FromString("{}");
+
+            string IPersistableModel<PlainTextModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        }
+
+        [Test]
+        public void ClientWireOptions_ConcurrentReadsDoNotShareExecutionState()
+        {
+            using var barrier = new Barrier(2);
+            var proxy = new ConcurrentReadProxy(barrier);
+            var userOptions = new ModelReaderWriterOptions("J");
+            userOptions.AddProxy<SimpleModel>((IPersistableModel<SimpleModel>)proxy);
+            var wireOptions = new ModelReaderWriterOptions("W", userOptions);
+
+            Task first = Task.Factory.StartNew(
+                () => ModelReaderWriter.Read<SimpleModel>(BinaryData.FromString("{}"), wireOptions),
+                CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+            Task second = Task.Factory.StartNew(
+                () => ModelReaderWriter.Read<SimpleModel>(BinaryData.FromString("{}"), wireOptions),
+                CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+            Task.WaitAll(first, second);
+
+            var calls = proxy.Observed.ToArray();
+            Assert.AreEqual(2, calls.Length);
+            Assert.AreNotSame(wireOptions, calls[0].Options);
+            Assert.AreNotSame(wireOptions, calls[1].Options);
+            Assert.AreNotSame(calls[0].Options, calls[1].Options);
+            Assert.AreNotSame(calls[0].Model, calls[1].Model);
+        }
+
+        [Test]
+        public void ClientWireOptions_ConcurrentWritesDoNotShareExecutionState()
+        {
+            using var barrier = new Barrier(2);
+            var proxy = new ConcurrentWriteProxy(barrier);
+            var userOptions = new ModelReaderWriterOptions("J");
+            userOptions.AddProxy<PlainTextModel>((IJsonModel<PlainTextModel>)proxy);
+            var wireOptions = new ModelReaderWriterOptions("W", userOptions);
+
+            Task<string> first = Task.Factory.StartNew(
+                () => ModelReaderWriter.Write(new PlainTextModel { Value = "first" }, wireOptions).ToString(),
+                CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+            Task<string> second = Task.Factory.StartNew(
+                () => ModelReaderWriter.Write(new PlainTextModel { Value = "second" }, wireOptions).ToString(),
+                CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+            Task.WaitAll(first, second);
+
+            Assert.AreEqual("{\"value\":\"first\"}", first.Result);
+            Assert.AreEqual("{\"value\":\"second\"}", second.Result);
+            var calls = proxy.Observed.ToArray();
+            Assert.AreEqual(2, calls.Length);
+            Assert.AreNotSame(wireOptions, calls[0]);
+            Assert.AreNotSame(wireOptions, calls[1]);
+            Assert.AreNotSame(calls[0], calls[1]);
+        }
+
+        private sealed class ConcurrentWriteProxy : IJsonModel<PlainTextModel>
+        {
+            private readonly Barrier _barrier;
+            internal ConcurrentBag<ModelReaderWriterOptions> Observed { get; } = new();
+
+            internal ConcurrentWriteProxy(Barrier barrier) => _barrier = barrier;
+
+            PlainTextModel IJsonModel<PlainTextModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+                => new PlainTextModel();
+
+            PlainTextModel IPersistableModel<PlainTextModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+                => new PlainTextModel();
+
+            void IJsonModel<PlainTextModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                if (!_barrier.SignalAndWait(TimeSpan.FromSeconds(10)))
+                {
+                    throw new TimeoutException("Concurrent proxy writes did not overlap.");
+                }
+
+                Observed.Add(options);
+                writer.WriteStartObject();
+                writer.WriteString("value"u8, ((PlainTextModel)options.ProxiedModel!).Value);
+                writer.WriteEndObject();
+            }
+
+            BinaryData IPersistableModel<PlainTextModel>.Write(ModelReaderWriterOptions options)
+                => BinaryData.FromString("{}");
+
+            string IPersistableModel<PlainTextModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        }
+
+        private sealed class ConcurrentReadProxy : IPersistableModel<SimpleModel>
+        {
+            private readonly Barrier _barrier;
+            internal ConcurrentBag<(ModelReaderWriterOptions Options, object? Model)> Observed { get; } = new();
+
+            internal ConcurrentReadProxy(Barrier barrier) => _barrier = barrier;
+
+            SimpleModel IPersistableModel<SimpleModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            {
+                if (!_barrier.SignalAndWait(TimeSpan.FromSeconds(10)))
+                {
+                    throw new TimeoutException("Concurrent proxy reads did not overlap.");
+                }
+
+                Observed.Add((options, options.ProxiedModel));
+                return new SimpleModel();
+            }
+
+            BinaryData IPersistableModel<SimpleModel>.Write(ModelReaderWriterOptions options)
+                => BinaryData.FromString("{}");
+
+            string IPersistableModel<SimpleModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        }
+
+        private sealed class NestedWriteProxy : IJsonModel<PlainTextModel>
+        {
+            PlainTextModel IJsonModel<PlainTextModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+                => new PlainTextModel();
+
+            void IJsonModel<PlainTextModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                ModelReaderWriter.Write(new SimpleModel(), options);
+                writer.WriteStartObject();
+                writer.WriteString("value"u8, ((PlainTextModel)options.ProxiedModel!).Value);
+                writer.WriteEndObject();
+            }
+
+            PlainTextModel IPersistableModel<PlainTextModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+                => new PlainTextModel();
+
+            BinaryData IPersistableModel<PlainTextModel>.Write(ModelReaderWriterOptions options)
+                => BinaryData.FromString("{}");
+
+            string IPersistableModel<PlainTextModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
         private static void AssertOptions(object model, ModelReaderWriterOptions options)
@@ -536,7 +712,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void FormatAndOptionsConstructor_OverridesFormatAndPreservesProxyOptions()
+        public void FormatAndOptionsConstructor_ClonesForExecutionAndPreservesProxyOptions()
         {
             var userOptions = new FlaggedOptions(useProxy: true);
             var proxy = new OptionsAwareProxy();
@@ -546,7 +722,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             SimpleModel? result = ModelReaderWriter.Read<SimpleModel>(BinaryData.FromString("{}"), wireOptions);
 
             Assert.AreEqual("W", wireOptions.Format);
-            Assert.IsTrue(wireOptions.IsCoreOwned);
+            Assert.IsFalse(wireOptions.IsCoreOwned);
             Assert.AreSame(GetProxies(userOptions), GetProxies(wireOptions));
             Assert.IsNotNull(result);
             Assert.IsTrue(proxy.CreateWasCalled, "The conditional proxy should receive the original derived options.");
