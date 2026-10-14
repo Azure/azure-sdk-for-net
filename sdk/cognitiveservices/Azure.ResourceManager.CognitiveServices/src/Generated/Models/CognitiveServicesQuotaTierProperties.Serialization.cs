@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("assignmentDate"u8);
                 writer.WriteStringValue(AssignmentOn.Value, "O");
             }
-            if (options.Format != "W" && (_tierUpgradeEligibilityInfoIsDefined || Optional.IsDefined(TierUpgradeEligibilityInfo)))
+            if (options.Format != "W" && Optional.IsDefined(TierUpgradeEligibilityInfo, _tierUpgradeEligibilityInfoIsDefined))
             {
                 if (TierUpgradeEligibilityInfo != null)
                 {

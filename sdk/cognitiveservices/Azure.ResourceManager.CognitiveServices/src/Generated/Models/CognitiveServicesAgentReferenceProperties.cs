@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _agentId;
-        internal bool _agentIdIsDefined;
+        private protected bool _agentIdIsDefined;
         private string _agentName;
-        internal bool _agentNameIsDefined;
+        private protected bool _agentNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAgentReferenceProperties"/>. </summary>
         public CognitiveServicesAgentReferenceProperties()
