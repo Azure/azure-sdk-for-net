@@ -63,6 +63,12 @@ The existing workflow eligibility, network/authentication, and native safe-outpu
 
 ## SDK selection and infrastructure failures
 
+The azsdk installer remains in the original `steps` block, before PR-head checkout.
+On manual `/repair-build` requests, it and its sourced `eng` helpers run from the
+trusted default branch, even when the target PR is ineligible. Only the fixed SDK
+configuration and `actions/setup-dotnet` action run in `pre-agent-steps`; this
+does not execute PR-controlled installer scripts before the agent's eligibility check.
+
 After gh-aw checks out the PR head, `actions/setup-dotnet` installs the exact
 `sdk.version` from that checkout's `global.json`, not the initial base/merge
 checkout or a floating `10.0.x` release. An older open PR therefore retains its

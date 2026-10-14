@@ -103,11 +103,20 @@ network:
     # The nested azsdk Copilot client calls this API directly, unlike the outer managed-proxy agent.
     - api.githubcopilot.com
 
-# Install tools after gh-aw checks out the PR head, so SDK selection and the
-# baseline build read the same global.json.
-# Install the shared azsdk CLI (the engine) onto PATH before the agent runs. The agent
-# then invokes `azsdk tsp client customized-update` from bash. (gh-aw cannot host the
-# stdio azsdk MCP server directly; see header.)
+# Keep the repository installer and its sourced helpers on the initial checkout.
+# On manual requests this is the trusted default branch, before PR-head checkout.
+steps:
+  - name: Install azsdk CLI
+    shell: pwsh
+    run: |
+      # gh-aw exposes tool-cache bin directories inside the agent sandbox.
+      $dir = Join-Path $env:RUNNER_TOOL_CACHE 'azsdk/latest/x64/bin'
+      ./eng/common/mcp/azure-sdk-mcp.ps1 -InstallDirectory $dir
+      Add-Content -Path $env:GITHUB_PATH -Value $dir
+      & (Join-Path $dir 'azsdk') --version
+
+# Only SDK setup follows PR-head checkout, so installation and the baseline read
+# the same global.json without executing PR-controlled repository scripts.
 pre-agent-steps:
   - name: Configure isolated .NET installation
     shell: pwsh
@@ -125,15 +134,6 @@ pre-agent-steps:
     uses: actions/setup-dotnet@v6.0.0
     with:
       global-json-file: global.json
-  - name: Install azsdk CLI
-    shell: pwsh
-    run: |
-      # gh-aw exposes tool-cache bin directories inside the agent sandbox.
-      $dir = Join-Path $env:RUNNER_TOOL_CACHE 'azsdk/latest/x64/bin'
-      ./eng/common/mcp/azure-sdk-mcp.ps1 -InstallDirectory $dir
-      Add-Content -Path $env:GITHUB_PATH -Value $dir
-      & (Join-Path $dir 'azsdk') --version
-
 tools:
   github:
     toolsets: [context, repos, pull_requests]

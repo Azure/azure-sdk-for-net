@@ -100,17 +100,96 @@ test("install and selection are exact, isolated and inherited by the sandbox", (
   assert.equal(lock.jobs.agent.steps.filter((step) => /setup-dotnet@/.test(step.uses || "")).length, 1);
 });
 
-test("tool setup follows PR checkout and precedes agent execution", () => {
-  assert(source["pre-agent-steps"]);
+test("azsdk uses the initial checkout while SDK setup uses the PR-head checkout", () => {
+  assert.deepEqual(source.steps.map((step) => step.name), ["Install azsdk CLI"]);
+  assert.deepEqual(toolSetup.map((step) => step.name), [
+    "Configure isolated .NET installation", "Install approved .NET SDK",
+  ]);
   const steps = lock.jobs.agent.steps;
+  const initialCheckout = steps.findIndex((step) => step.name === "Checkout repository");
   const checkout = steps.findIndex((step) => step.id === "checkout-pr");
   const configure = steps.findIndex((step) => step.name === "Configure isolated .NET installation");
   const install = steps.findIndex((step) => step.name === "Install approved .NET SDK");
   const azsdk = steps.findIndex((step) => step.name === "Install azsdk CLI");
   const execution = steps.findIndex((step) => step.id === "agentic_execution");
-  assert(checkout >= 0 && configure > checkout && install > configure && azsdk > install);
-  assert(execution > azsdk);
+  assert(initialCheckout >= 0 && azsdk > initialCheckout && checkout > azsdk);
+  assert(configure > checkout && install > configure && execution > install);
+  assert.equal(steps[azsdk].run, source.steps[0].run);
 });
+
+for (const tampered of ["installer", "helper", "installer-and-helper"]) {
+  test(`ineligible manual PR cannot execute its ${tampered} during tool installation`, (t) => {
+    const f = fixture(t);
+    function git(...args) {
+      const result = run("git", ["-C", f.root, ...args]);
+      assert.equal(result.status, 0, result.stderr);
+      return result.stdout.trim();
+    }
+    function commit(message) {
+      git("add", "eng", "global.json");
+      git("-c", "user.name=Repair Test", "-c", "user.email=repair-test@example.invalid",
+        "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", message);
+      return git("rev-parse", "HEAD");
+    }
+    const installer = path.join(f.root, "eng/common/mcp/azure-sdk-mcp.ps1");
+    const helper = path.join(f.root, "eng/common/scripts/Helpers/AzSdkTool-Helpers.ps1");
+    for (const file of [installer, helper]) fs.mkdirSync(path.dirname(file), { recursive: true });
+    const trustedInstaller = `
+param([string]$InstallDirectory)
+Add-Content -LiteralPath $env:TEST_INSTALLER_TRACE -Value 'default-branch installer'
+. (Join-Path $PSScriptRoot '..' 'scripts' 'Helpers' 'AzSdkTool-Helpers.ps1')
+New-Item -ItemType Directory -Path $InstallDirectory -Force | Out-Null
+Set-Content -LiteralPath (Join-Path $InstallDirectory 'azsdk.ps1') -Value "'mock azsdk version'"
+`;
+    fs.writeFileSync(installer, trustedInstaller);
+    fs.writeFileSync(helper, "Add-Content -LiteralPath $env:TEST_INSTALLER_TRACE -Value 'default-branch helper'\n");
+    fs.writeFileSync(path.join(f.root, "global.json"), JSON.stringify({ sdk: { version: "10.0.402" } }));
+    git("init", "--quiet");
+    const base = commit("trusted default-branch setup");
+    for (const file of tampered === "installer" ? [installer] : tampered === "helper" ? [helper] : [installer, helper]) {
+      fs.writeFileSync(file, (file === installer ? "param([string]$InstallDirectory)\n" : "")
+        + "Set-Content -LiteralPath $env:TEST_UNTRUSTED_MARKER -Value 'PR setup executed'\n"
+        + "throw 'Ineligible PR setup must not run on the hosted runner'\n");
+    }
+    fs.writeFileSync(path.join(f.root, "global.json"), JSON.stringify({ sdk: { version: "10.0.401" } }));
+    const head = commit("ineligible manual PR");
+    const marker = path.join(f.root, "untrusted-executed");
+    const trace = path.join(f.root, "installer-trace");
+    const toolCache = path.join(f.root, "tool-cache");
+    const checkoutStep = lock.jobs.agent.steps.find((step) => step.id === "checkout-pr");
+    assert.match(checkoutStep.if, /github\.event\.issue\.pull_request/);
+    assert.match(source.if, /github\.event_name != 'pull_request'/);
+    let installerRuns = 0;
+    let installedSdk;
+    for (const step of lock.jobs.agent.steps) {
+      if (step.name === "Checkout repository") git("checkout", "--quiet", "--detach", base);
+      if (step.id === "checkout-pr") git("checkout", "--quiet", "--detach", head);
+      if (step.name === "Install azsdk CLI") {
+        const wrapper = path.join(f.root, "install-actions-step.ps1");
+        fs.writeFileSync(wrapper, `
+$ErrorActionPreference = 'Stop'
+${step.run.replace("(Join-Path $dir 'azsdk')", "(Join-Path $dir 'azsdk.ps1')")}
+`);
+        const result = run("pwsh", ["-NoProfile", "-File", wrapper], { cwd: f.root, env: {
+          ...process.env, RUNNER_TOOL_CACHE: toolCache, GITHUB_PATH: path.join(f.root, "github-path"),
+          TEST_INSTALLER_TRACE: trace, TEST_UNTRUSTED_MARKER: marker,
+        } });
+        assert.equal(result.status, 0, result.stdout + result.stderr);
+        installerRuns++;
+      }
+      if (step.name === "Install approved .NET SDK") {
+        installedSdk = JSON.parse(fs.readFileSync(path.join(f.root, step.with["global-json-file"]), "utf8")).sdk.version;
+      }
+      if (step.id === "agentic_execution") break;
+    }
+    assert.equal(installerRuns, 1);
+    assert.deepEqual(fs.readFileSync(trace, "utf8").trim().split(/\r?\n/),
+      ["default-branch installer", "default-branch helper"]);
+    assert.equal(fs.existsSync(marker), false);
+    assert.equal(installedSdk, "10.0.401");
+    assert.equal(git("rev-parse", "HEAD"), head);
+  });
+}
 
 test("installation reads the PR-head global.json when the base SDK has advanced", (t) => {
   const f = fixture(t);
