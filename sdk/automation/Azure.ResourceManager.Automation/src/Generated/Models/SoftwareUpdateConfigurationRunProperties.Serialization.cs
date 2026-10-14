@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && (_endsOnIsDefined || Optional.IsDefined(EndsOn)))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn, _endsOnIsDefined))
             {
                 if (EndsOn != null)
                 {
