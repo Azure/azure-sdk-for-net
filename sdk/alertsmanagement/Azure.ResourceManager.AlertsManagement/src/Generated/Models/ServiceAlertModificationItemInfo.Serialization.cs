@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (_detailsIsDefined || Optional.IsDefined(Details))
+            if (Optional.IsDefined(Details, _detailsIsDefined))
             {
                 if (Details != null)
                 {
