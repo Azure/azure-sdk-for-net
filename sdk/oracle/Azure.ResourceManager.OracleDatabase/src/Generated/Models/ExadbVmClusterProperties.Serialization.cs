@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 scanListenerPortTcpSsl,
                 listenerPort,
                 shape,
-                sshPublicKeys,
+                sshPublicKeys ?? new ChangeTrackingList<string>(),
                 systemVersion,
                 timeZone,
                 totalEcpuCount,

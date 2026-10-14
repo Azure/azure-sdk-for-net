@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Relay.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RelayNamespaceIdListResult(value, additionalBinaryDataProperties);
+            return new RelayNamespaceIdListResult(value ?? new ChangeTrackingList<RelayNamespaceReference>(), additionalBinaryDataProperties);
         }
     }
 }

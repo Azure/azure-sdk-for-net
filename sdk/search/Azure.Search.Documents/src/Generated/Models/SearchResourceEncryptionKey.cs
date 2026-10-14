@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private SearchIndexerDataIdentity _identity;
-        internal bool _identityIsDefined;
+        private bool _identityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/>. </summary>
         /// <param name="keyName"> The name of your Azure Key Vault key to be used to encrypt your data at rest. </param>

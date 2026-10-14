@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class TextTranslationSkill : SearchIndexerSkill
     {
         private TextTranslationSkillLanguage? _suggestedFrom;
-        internal bool _suggestedFromIsDefined;
+        private bool _suggestedFromIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="TextTranslationSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

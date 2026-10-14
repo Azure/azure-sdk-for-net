@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Automation.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HybridRunbookWorkersListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HybridRunbookWorkersListResult(value ?? new ChangeTrackingList<HybridRunbookWorkerData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

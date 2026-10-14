@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Databricks
         {
             TryGetApiVersion(ResourceType, out string databricksWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Databricks", ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databricksWorkspaceApiVersion ?? "2026-01-01");
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Databricks/workspaces", out string workspacesApiVersionOverride) ? workspacesApiVersionOverride : "2026-01-01");
             _outboundNetworkDependenciesEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Databricks", ResourceType.Namespace, Diagnostics);
             _outboundNetworkDependenciesEndpointsRestClient = new OutboundNetworkDependenciesEndpoints(_outboundNetworkDependenciesEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databricksWorkspaceApiVersion ?? "2026-01-01");
             ValidateResourceId(id);

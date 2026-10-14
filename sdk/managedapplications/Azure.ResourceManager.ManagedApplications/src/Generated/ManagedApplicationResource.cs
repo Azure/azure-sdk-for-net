@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.ManagedApplications
         {
             TryGetApiVersion(ResourceType, out string managedApplicationApiVersion);
             _applicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedApplications", ResourceType.Namespace, Diagnostics);
-            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedApplicationApiVersion ?? "2023-12-01-preview");
+            _applicationsRestClient = new Applications(
+                _applicationsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                managedApplicationApiVersion ?? "2023-12-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

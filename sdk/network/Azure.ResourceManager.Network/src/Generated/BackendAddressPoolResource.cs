@@ -55,7 +55,13 @@ namespace Azure.ResourceManager.Network
             _loadBalancerBackendAddressPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             _loadBalancerBackendAddressPoolsRestClient = new LoadBalancerBackendAddressPools(_loadBalancerBackendAddressPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backendAddressPoolApiVersion ?? "2026-01-01");
             _loadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backendAddressPoolApiVersion ?? "2026-01-01");
+            _loadBalancersRestClient = new LoadBalancers(
+                _loadBalancersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                backendAddressPoolApiVersion ?? "2026-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
 
         private ClientDiagnostics LedgerClientDiagnostics => _ledgerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Ledger LedgerRestClient => _ledgerRestClient ??= new Ledger(LedgerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-23");
+        private Ledger LedgerRestClient => _ledgerRestClient ??= new Ledger(LedgerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ConfidentialLedger/ledgers", out string apiVersion) ? apiVersion : "2026-02-23");
 
         private ClientDiagnostics ConfidentialLedgerClientClientDiagnostics => _confidentialLedgerClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

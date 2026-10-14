@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CdiConfigProperties(engineName, engineVersion, applicationConfigs, additionalBinaryDataProperties);
+            return new CdiConfigProperties(engineName, engineVersion, applicationConfigs ?? new ChangeTrackingList<InformaticaApplicationConfigs>(), additionalBinaryDataProperties);
         }
     }
 }

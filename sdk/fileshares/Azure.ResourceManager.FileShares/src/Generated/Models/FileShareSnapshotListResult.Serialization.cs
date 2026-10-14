@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.FileShares.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FileShareSnapshotListResult(value, nextLink, additionalBinaryDataProperties);
+            return new FileShareSnapshotListResult(value ?? new ChangeTrackingList<FileShareSnapshotData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

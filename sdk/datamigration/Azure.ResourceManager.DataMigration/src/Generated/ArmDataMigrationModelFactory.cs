@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             collectionList ??= new ChangeTrackingList<DataMigrationMongoMigrationCollectionInfo>();
 
             return new DatabaseMigrationPropertiesCosmosDBMongo(
-                ResourceType.MongoToCosmosDbMongo,
+                ResourceType.MongoToCosmosDBMongo,
                 scope,
                 provisioningState,
                 migrationStatus,
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             errors ??= new ChangeTrackingList<DataMigrationODataError>();
 
             return new MigrateMISyncCompleteCommandProperties(
-                DataMigrationCommandType.MigrateSqlServerAzureDbSqlMiComplete,
+                DataMigrationCommandType.MigrateSqlServerAzureDBSqlMiComplete,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 default,
@@ -977,7 +977,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<MigrateSchemaSqlServerSqlDBTaskOutput>();
 
             return new MigrateSchemaSqlServerSqlDBTaskProperties(
-                DataMigrationTaskType.MigrateSchemaSqlServerSqlDb,
+                DataMigrationTaskType.MigrateSchemaSqlServerSqlDB,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -1456,7 +1456,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<DataMigrationMongoDBClusterInfo>();
 
             return new ConnectToMongoDBTaskProperties(
-                DataMigrationTaskType.ConnectMongoDb,
+                DataMigrationTaskType.ConnectMongoDB,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -1974,7 +1974,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<ConnectToTargetSqlDBTaskOutput>();
 
             return new ConnectToTargetSqlDBTaskProperties(
-                DataMigrationTaskType.ConnectToTargetSqlDb,
+                DataMigrationTaskType.ConnectToTargetSqlDB,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -2021,7 +2021,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<ConnectToTargetSqlDBTaskOutput>();
 
             return new ConnectToTargetSqlDBSyncTaskProperties(
-                DataMigrationTaskType.ConnectToTargetSqlDbSync,
+                DataMigrationTaskType.ConnectToTargetSqlDBSync,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -2056,7 +2056,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput>();
 
             return new ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties(
-                DataMigrationTaskType.ConnectToTargetAzureDbForPostgreSqlSync,
+                DataMigrationTaskType.ConnectToTargetAzureDBForPostgreSqlSync,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -2111,7 +2111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput>();
 
             return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties(
-                DataMigrationTaskType.ConnectToTargetOracleAzureDbForPostgreSqlSync,
+                DataMigrationTaskType.ConnectToTargetOracleAzureDBForPostgreSqlSync,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -2222,7 +2222,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<GetUserTablesSqlSyncTaskOutput>();
 
             return new GetUserTablesSqlSyncTaskProperties(
-                DataMigrationTaskType.GetUserTablesAzureSqlDbSync,
+                DataMigrationTaskType.GetUserTablesAzureSqlDBSync,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -2433,7 +2433,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<ConnectToTargetSqlMITaskOutput>();
 
             return new ConnectToTargetSqlMITaskProperties(
-                DataMigrationTaskType.ConnectToTargetAzureSqlDbMI,
+                DataMigrationTaskType.ConnectToTargetAzureSqlDBMI,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -2494,7 +2494,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<ConnectToTargetSqlMISyncTaskOutput>();
 
             return new ConnectToTargetSqlMISyncTaskProperties(
-                DataMigrationTaskType.ConnectToTargetAzureSqlDbMISyncLRS,
+                DataMigrationTaskType.ConnectToTargetAzureSqlDBMISyncLRS,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -2552,7 +2552,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<ConnectToTargetAzureDBForMySqlTaskOutput>();
 
             return new ConnectToTargetAzureDBForMySqlTaskProperties(
-                DataMigrationTaskType.ConnectToTargetAzureDbForMySql,
+                DataMigrationTaskType.ConnectToTargetAzureDBForMySql,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -2609,7 +2609,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<DataMigrationMongoDBProgress>();
 
             return new MigrateMongoDBTaskProperties(
-                DataMigrationTaskType.MigrateMongoDb,
+                DataMigrationTaskType.MigrateMongoDB,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -2872,7 +2872,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<MigrateSqlServerSqlMITaskOutput>();
 
             return new MigrateSqlServerSqlMITaskProperties(
-                DataMigrationTaskType.MigrateSqlServerAzureSqlDbMI,
+                DataMigrationTaskType.MigrateSqlServerAzureSqlDBMI,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -3121,7 +3121,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<MigrateSqlServerSqlMISyncTaskOutput>();
 
             return new MigrateSqlServerSqlMISyncTaskProperties(
-                DataMigrationTaskType.MigrateSqlServerAzureSqlDbMISyncLRS,
+                DataMigrationTaskType.MigrateSqlServerAzureSqlDBMISyncLRS,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -3327,7 +3327,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<MigrateSqlServerSqlDBTaskOutput>();
 
             return new MigrateSqlServerSqlDBTaskProperties(
-                DataMigrationTaskType.MigrateSqlServerSqlDb,
+                DataMigrationTaskType.MigrateSqlServerSqlDB,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -3737,7 +3737,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<MigrateSqlServerSqlDBSyncTaskOutput>();
 
             return new MigrateSqlServerSqlDBSyncTaskProperties(
-                DataMigrationTaskType.MigrateSqlServerAzureSqlDbSync,
+                DataMigrationTaskType.MigrateSqlServerAzureSqlDBSync,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -3951,7 +3951,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<MigrateMySqlAzureDBForMySqlSyncTaskOutput>();
 
             return new MigrateMySqlAzureDBForMySqlSyncTaskProperties(
-                DataMigrationTaskType.MigrateMySqlAzureDbForMySqlSync,
+                DataMigrationTaskType.MigrateMySqlAzureDBForMySqlSync,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -4150,7 +4150,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>();
 
             return new MigrateMySqlAzureDBForMySqlOfflineTaskProperties(
-                DataMigrationTaskType.MigrateMySqlAzureDbForMySql,
+                DataMigrationTaskType.MigrateMySqlAzureDBForMySql,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -4356,7 +4356,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>();
 
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties(
-                DataMigrationTaskType.MigratePostgreSqlAzureDbForPostgreSqlSyncV2,
+                DataMigrationTaskType.MigratePostgreSqlAzureDBForPostgreSqlSyncV2,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -4585,7 +4585,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>();
 
             return new MigrateOracleAzureDBForPostgreSqlSyncTaskProperties(
-                DataMigrationTaskType.MigrateOracleAzureDbForPostgreSqlSync,
+                DataMigrationTaskType.MigrateOracleAzureDBForPostgreSqlSync,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -4786,7 +4786,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<ValidateSyncMigrationInputSqlServerTaskOutput>();
 
             return new ValidateMigrationInputSqlServerSqlDBSyncTaskProperties(
-                DataMigrationTaskType.ValidateMigrationInputSqlServerSqlDbSync,
+                DataMigrationTaskType.ValidateMigrationInputSqlServerSqlDBSync,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -4836,7 +4836,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<ValidateMigrationInputSqlServerSqlMITaskOutput>();
 
             return new ValidateMigrationInputSqlServerSqlMITaskProperties(
-                DataMigrationTaskType.ValidateMigrationInputSqlServerAzureSqlDbMI,
+                DataMigrationTaskType.ValidateMigrationInputSqlServerAzureSqlDBMI,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -4942,7 +4942,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<ValidateMigrationInputSqlServerSqlMISyncTaskOutput>();
 
             return new ValidateMigrationInputSqlServerSqlMISyncTaskProperties(
-                DataMigrationTaskType.ValidateMigrationInputSqlServerAzureSqlDbMISyncLRS,
+                DataMigrationTaskType.ValidateMigrationInputSqlServerAzureSqlDBMISyncLRS,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -5002,7 +5002,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<DataMigrationMongoDBMigrationProgress>();
 
             return new ValidateMongoDBTaskProperties(
-                DataMigrationTaskType.ValidateMongoDb,
+                DataMigrationTaskType.ValidateMongoDB,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),
@@ -5028,7 +5028,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             output ??= new ChangeTrackingList<ValidateOracleAzureDBPostgreSqlSyncTaskOutput>();
 
             return new ValidateOracleAzureDBForPostgreSqlSyncTaskProperties(
-                DataMigrationTaskType.ValidateOracleAzureDbPostgreSqlSync,
+                DataMigrationTaskType.ValidateOracleAzureDBPostgreSqlSync,
                 (errors ?? new ChangeTrackingList<DataMigrationODataError>()).ToList(),
                 state,
                 (commands ?? new ChangeTrackingList<DataMigrationCommandProperties>()).ToList(),

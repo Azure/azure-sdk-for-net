@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmMarketplaceGalleryImageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string hciVmMarketplaceGalleryImageApiVersion);
             _marketplaceGalleryImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _marketplaceGalleryImagesRestClient = new MarketplaceGalleryImages(_marketplaceGalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmMarketplaceGalleryImageApiVersion ?? "2025-09-01-preview");
+            _marketplaceGalleryImagesRestClient = new MarketplaceGalleryImages(_marketplaceGalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/marketplaceGalleryImages", out string marketplaceGalleryImagesApiVersionOverride) ? marketplaceGalleryImagesApiVersionOverride : "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _targetPath;
-        internal bool _targetPathIsDefined;
+        private bool _targetPathIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="IndexedOneLakeKnowledgeSourceParameters"/>. </summary>
         /// <param name="fabricWorkspaceId"> OneLake workspace ID. </param>

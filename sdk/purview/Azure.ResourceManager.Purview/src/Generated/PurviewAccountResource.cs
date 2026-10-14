@@ -58,7 +58,13 @@ namespace Azure.ResourceManager.Purview
         {
             TryGetApiVersion(ResourceType, out string purviewAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, purviewAccountApiVersion ?? "2024-04-01-preview");
+            _accountsRestClient = new Accounts(
+                _accountsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                purviewAccountApiVersion ?? "2024-04-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _featuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", ResourceType.Namespace, Diagnostics);
             _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, purviewAccountApiVersion ?? "2024-04-01-preview");
             _ingestionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", ResourceType.Namespace, Diagnostics);

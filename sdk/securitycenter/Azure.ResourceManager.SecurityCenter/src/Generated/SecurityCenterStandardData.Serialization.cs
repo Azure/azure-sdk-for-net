@@ -117,10 +117,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
+            if (_locationIsDefined || Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                if (Location != null)
+                {
+                    writer.WritePropertyName("location"u8);
+                    writer.WriteStringValue(Location.Value);
+                }
+                else
+                {
+                    writer.WriteNull("location"u8);
+                }
             }
             if (Optional.IsDefined(Kind))
             {
@@ -180,6 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter
             SystemData systemData = default;
             StandardProperties properties = default;
             IDictionary<string, string> tags = default;
+            bool locationIsDefined = false;
             AzureLocation? location = default;
             string kind = default;
             ETag? eTag = default;
@@ -250,6 +258,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (prop.NameEquals("location"u8))
                 {
+                    locationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         location = null;
@@ -287,7 +296,10 @@ namespace Azure.ResourceManager.SecurityCenter
                 location,
                 kind,
                 eTag,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _locationIsDefined = locationIsDefined
+            };
         }
     }
 }

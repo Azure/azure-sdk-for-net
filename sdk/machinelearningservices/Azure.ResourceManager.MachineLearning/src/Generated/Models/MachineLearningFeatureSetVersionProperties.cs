@@ -14,6 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> DTO object representing feature set version. </summary>
     public partial class MachineLearningFeatureSetVersionProperties : MachineLearningAssetBase
     {
+        private MaterializationSettings _materializationSettings;
+        internal bool _materializationSettingsIsDefined;
+        private FeaturesetSpecification _specification;
+        internal bool _specificationIsDefined;
+        private string _stage;
+        internal bool _stageIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureSetVersionProperties"/>. </summary>
         public MachineLearningFeatureSetVersionProperties()
         {
@@ -35,10 +42,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal MachineLearningFeatureSetVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isAnonymous, bool? isArchived, IList<string> entities, MaterializationSettings materializationSettings, RegistryAssetProvisioningState? provisioningState, FeaturesetSpecification specification, string stage) : base(description, properties, tags, additionalBinaryDataProperties, isAnonymous, isArchived)
         {
             Entities = entities;
-            MaterializationSettings = materializationSettings;
+            _materializationSettings = materializationSettings;
             ProvisioningState = provisioningState;
-            Specification = specification;
-            Stage = stage;
+            _specification = specification;
+            _stage = stage;
         }
 
         /// <summary> Specifies list of entities. </summary>
@@ -47,7 +54,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Specifies the materialization settings. </summary>
         [WirePath("materializationSettings")]
-        public MaterializationSettings MaterializationSettings { get; set; }
+        public MaterializationSettings MaterializationSettings
+        {
+            get
+            {
+                return _materializationSettings;
+            }
+            set
+            {
+                _materializationSettings = value;
+                _materializationSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> Provisioning state for the featureset version container. </summary>
         [WirePath("provisioningState")]
@@ -55,11 +73,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Specifies the feature spec details. </summary>
         [WirePath("specification")]
-        internal FeaturesetSpecification Specification { get; set; }
+        internal FeaturesetSpecification Specification
+        {
+            get
+            {
+                return _specification;
+            }
+            set
+            {
+                _specification = value;
+                _specificationIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies the asset stage. </summary>
         [WirePath("stage")]
-        public string Stage { get; set; }
+        public string Stage
+        {
+            get
+            {
+                return _stage;
+            }
+            set
+            {
+                _stage = value;
+                _stageIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies the spec path. </summary>
         [WirePath("specification.path")]
