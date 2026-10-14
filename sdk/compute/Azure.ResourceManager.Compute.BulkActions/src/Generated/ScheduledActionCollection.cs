@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Creates or updates a scheduled action.
+        /// Creates or updates a recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
-        /// <param name="data"> The scheduled action to create or update. </param>
+        /// <param name="scheduledActionName"> The name of the recurring bulk action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="data"> The recurring bulk action to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Creates or updates a scheduled action.
+        /// Creates or updates a recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -130,8 +130,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
-        /// <param name="data"> The scheduled action to create or update. </param>
+        /// <param name="scheduledActionName"> The name of the recurring bulk action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="data"> The recurring bulk action to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Gets the specified scheduled action.
+        /// Gets the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="scheduledActionName"> The name of the recurring bulk action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Gets the specified scheduled action.
+        /// Gets the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="scheduledActionName"> The name of the recurring bulk action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Lists scheduled actions in the specified resource group.
+        /// Lists recurring bulk actions in the specified resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Lists scheduled actions in the specified resource group.
+        /// Lists recurring bulk actions in the specified resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="scheduledActionName"> The name of the recurring bulk action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="scheduledActionName"> The name of the recurring bulk action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="scheduledActionName"> The name of the recurring bulk action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="scheduledActionName"> The name of the recurring bulk action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
