@@ -16,6 +16,7 @@ import {
 } from "@typespec/http-client-csharp";
 import { AzureEmitterOptions } from "./options.js";
 import { $lib } from "./lib/lib.js";
+import { applyApiVersionOverrides } from "./lib/api-version-override.js";
 
 export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   const [, diagnostics] = await emitAzureCodeModel(context);
@@ -71,7 +72,10 @@ export async function emitAzureCodeModel(
   // Generate metadata.json file
   await generateMetadataFile(context);
 
-  return await emitCodeModel(context, updateCodeModel);
+  return await emitCodeModel(context, (model, sdkContext) => {
+    applyApiVersionOverrides(sdkContext);
+    return updateCodeModel ? updateCodeModel(model, sdkContext) : model;
+  });
 }
 
 /**

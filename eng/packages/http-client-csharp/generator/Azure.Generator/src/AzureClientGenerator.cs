@@ -107,5 +107,6 @@ public class AzureClientGenerator : ScmCodeModelGenerator
         AddVisitor(new InvokeDelimitedMethodVisitor());
         AddVisitor(new XmlSerializableVisitor());
         AddVisitor(new ClientSettingsVisitor());
+        AddVisitor(new ClientApiVersionVisitor());
     }
 }
