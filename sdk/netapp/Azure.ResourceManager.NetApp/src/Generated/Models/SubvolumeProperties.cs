@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private long? _size;
-        internal bool _sizeIsDefined;
+        private bool _sizeIsDefined;
         private string _parentPath;
-        internal bool _parentPathIsDefined;
+        private bool _parentPathIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SubvolumeProperties"/>. </summary>
         public SubvolumeProperties()
