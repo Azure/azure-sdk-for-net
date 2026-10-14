@@ -923,6 +923,8 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(overloads[0].Signature.Parameters.Single().Type.IsNullable, Is.False);
             Assert.That(ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(overloads[0]), Is.False,
                 "The shipped factory remains visible rather than becoming a hidden compatibility overload.");
+            Assert.That(overloads[0].Signature.Parameters.Single().DefaultValue, Is.Not.Null,
+                "A visible restored primary factory must preserve published omitted-argument calls.");
         }
 
         [Test]
