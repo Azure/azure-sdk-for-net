@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RemediationDeploymentsListResult(value, nextLink, additionalBinaryDataProperties);
+            return new RemediationDeploymentsListResult(value ?? new ChangeTrackingList<RemediationDeployment>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

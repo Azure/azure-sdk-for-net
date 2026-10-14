@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Environment version details. </summary>
     public partial class MachineLearningEnvironmentVersionProperties : MachineLearningAssetBase
     {
+        private string _stage;
+        internal bool _stageIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningEnvironmentVersionProperties"/>. </summary>
         public MachineLearningEnvironmentVersionProperties()
         {
@@ -54,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             InferenceConfig = inferenceConfig;
             OSType = osType;
             ProvisioningState = provisioningState;
-            Stage = stage;
+            _stage = stage;
         }
 
         /// <summary> AutoRebuild setting for the derived image. </summary>
@@ -100,6 +103,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Stage in the environment lifecycle assigned to this environment. </summary>
         [WirePath("stage")]
-        public string Stage { get; set; }
+        public string Stage
+        {
+            get
+            {
+                return _stage;
+            }
+            set
+            {
+                _stage = value;
+                _stageIsDefined = true;
+            }
+        }
     }
 }

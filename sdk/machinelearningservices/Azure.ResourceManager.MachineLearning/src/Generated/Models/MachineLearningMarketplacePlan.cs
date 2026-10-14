@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _offerId;
+        internal bool _offerIdIsDefined;
+        private string _planId;
+        internal bool _planIdIsDefined;
+        private string _publisherId;
+        internal bool _publisherIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningMarketplacePlan"/>. </summary>
         internal MachineLearningMarketplacePlan()
@@ -29,22 +35,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningMarketplacePlan(string offerId, string planId, string publisherId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OfferId = offerId;
-            PlanId = planId;
-            PublisherId = publisherId;
+            _offerId = offerId;
+            _planId = planId;
+            _publisherId = publisherId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The identifying name of the Offer of the Marketplace Plan. </summary>
         [WirePath("offerId")]
-        public string OfferId { get; }
+        public string OfferId
+        {
+            get
+            {
+                return _offerId;
+            }
+        }
 
         /// <summary> The identifying name of the Plan of the Marketplace Plan. </summary>
         [WirePath("planId")]
-        public string PlanId { get; }
+        public string PlanId
+        {
+            get
+            {
+                return _planId;
+            }
+        }
 
         /// <summary> The identifying name of the Publisher of the Marketplace Plan. </summary>
         [WirePath("publisherId")]
-        public string PublisherId { get; }
+        public string PublisherId
+        {
+            get
+            {
+                return _publisherId;
+            }
+        }
     }
 }

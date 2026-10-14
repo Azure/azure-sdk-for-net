@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Utilities;
-using Microsoft.TypeSpec.Generator.EmitterRpc;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -132,41 +131,6 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        internal static void ValidateBackwardCompatArguments(ModelFactoryProvider factory)
-        {
-            var baseline = ManagementClientGenerator.Instance.SourceInputModel?.ApiCompatBaseline;
-            foreach (var method in factory.Methods)
-            {
-                if (!IsBackwardCompatMethod(method) || method.BodyStatements is null
-                    || baseline?.IsMethodRemovalSuppressed(factory.Type.FullyQualifiedName, method.Signature.Name,
-                        [.. method.Signature.Parameters.Select(p => p.Type)]) == true
-                    || baseline?.ReferencesSuppressedType(method.Signature.ReturnType) == true
-                    || method.Signature.Parameters.Any(p => baseline?.ReferencesSuppressedType(p.Type) == true)
-                    || factory.CustomCodeView?.Methods.Any(custom =>
-                        MethodSignatureBase.SignatureComparer.Equals(custom.Signature, method.Signature)) == true)
-                {
-                    continue;
-                }
-
-                foreach (var parameter in method.Signature.Parameters)
-                {
-                    // A stale null-coalescing assignment or a guard does not preserve the supplied value.
-                    if (method.BodyStatements.Any(statement =>
-                        statement is ExpressionStatement { Expression: KeywordExpression { Keyword: "return", Expression: { } result } }
-                        && ReferencesParameter(result, parameter)))
-                    {
-                        continue;
-                    }
-
-                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic("general-error",
-                        $"Cannot preserve parameter '{parameter.Name}' of compatibility factory '{factory.Name}.{method.Signature.Name}': "
-                        + "no compatible destination exists in the current model. Provide a custom factory overload with an explicit mapping; "
-                        + "the supplied value would otherwise be discarded.",
-                        severity: EmitterDiagnosticSeverity.Error);
-                }
-            }
-        }
-
         private static bool TryRebuildNewInstanceFromMethodSignature(
             MethodProvider method,
             NewInstanceExpression newInstanceExpression,
@@ -200,14 +164,14 @@ namespace Azure.Generator.Management.Visitors
                     constructorParameters,
                     newInstanceExpression.Parameters,
                     excludedArgumentIndex: FindOriginalArgumentIndex(method, constructorParameter, newInstanceExpression.Parameters));
-                if (TryBuildCompatibilityArgument(method, constructorParameter, unavailableDirectParameterNames, out var argument))
+                ValueExpression rebuiltArgument;
+                if (TryBuildDiscriminatorArgument(method, modelProvider, constructorParameter, out var discriminatorArgument))
                 {
-                    arguments.Add(argument.Argument);
-                    var index = arguments.Count - 1;
-                    if (!changed && !ReferenceEquals(argument.Argument, newInstanceExpression.Parameters[index]))
-                    {
-                        changed = true;
-                    }
+                    rebuiltArgument = discriminatorArgument;
+                }
+                else if (TryBuildCompatibilityArgument(method, constructorParameter, unavailableDirectParameterNames, out var argument))
+                {
+                    rebuiltArgument = argument.Argument;
                 }
                 else
                 {
@@ -217,10 +181,68 @@ namespace Azure.Generator.Management.Visitors
                     {
                         changed = true;
                     }
+                    continue;
+                }
+
+                arguments.Add(rebuiltArgument);
+                if (!changed && !ReferenceEquals(rebuiltArgument, newInstanceExpression.Parameters[arguments.Count - 1]))
+                {
+                    changed = true;
                 }
             }
             updatedArguments = changed ? arguments : null;
             return changed;
+        }
+
+        private static bool TryBuildDiscriminatorArgument(
+            MethodProvider method,
+            ModelProvider model,
+            ParameterProvider constructorParameter,
+            [NotNullWhen(true)] out ValueExpression? argument)
+        {
+            argument = null;
+            if (constructorParameter.Property is not { IsDiscriminator: true } property)
+            {
+                return false;
+            }
+
+            if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, property, out var parameter))
+            {
+                argument = BuildParameterArgument(parameter, constructorParameter.Type);
+                return true;
+            }
+
+            // Factories expose an enum discriminator's underlying type, not the internal enum itself.
+            if (constructorParameter.Type.IsEnum
+                && TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type.UnderlyingEnumType, property, out parameter))
+            {
+                var convertedArgument = constructorParameter.Type.ToEnum(parameter);
+                // Preserve omitted/null inputs, including a null nullable enum rather than an empty enum value.
+                argument = parameter.Type.IsValueType && !parameter.Type.IsNullable
+                    ? convertedArgument
+                    : new TernaryConditionalExpression(parameter.Is(Null), Default.CastTo(constructorParameter.Type), convertedArgument);
+                return true;
+            }
+
+            // Match the upstream factory's initializer/known-discriminator behavior when no input is exposed.
+            if (property.Body is AutoPropertyBody { InitializationExpression: not null } autoProperty)
+            {
+                argument = autoProperty.InitializationExpression;
+                return true;
+            }
+
+            // Different hierarchy levels can have different discriminators. Use the value belonging to
+            // this property's declaring base model, rather than always using the most-derived value.
+            for (var current = model; current.BaseModelProvider is { } baseModel; current = baseModel)
+            {
+                if (baseModel.Properties.Any(p => ReferenceEquals(p, property)))
+                {
+                    argument = current.DiscriminatorValueExpression;
+                    return argument is not null;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -784,6 +806,25 @@ namespace Azure.Generator.Management.Visitors
                 return true;
             }
 
+            // A generated C# name can change while the wire name remains stable (e.g. a factory's
+            // historical `uri` argument and a current `ClusterUri` leaf serialized as `uri`).
+            // Only use the wire name when exactly one compatible constructor destination exists
+            // across the returned model, not merely within this particular nested model.
+            var wireName = nestedParameter.Property?.WireInfo?.SerializedName;
+            if (wireName is not null && !string.Equals(wireName, nestedParameter.Name, StringComparison.OrdinalIgnoreCase)
+                && TryGetMethodParameter(method, wireName, nestedParameter.Type, nestedParameter.Property, out var wireParameter)
+                && !unavailableDirectParameterNames.Contains(wireParameter.Name)
+                && method.Signature.ReturnType is { } returnType
+                && TryGetModelProvider(returnType, out var returnModel)
+                && CountMatchingDestinations(returnModel, wireName, wireParameter.Type, []) == 1)
+            {
+                argument = new CompatibilityArgument(
+                    BuildParameterArgument(wireParameter, nestedParameter.Type),
+                    [wireParameter],
+                    [new ParameterDocumentation(wireParameter, nestedParameter.Description)]);
+                return true;
+            }
+
             return TryBuildModelCompatibilityArgument(
                 method,
                 nestedParameter,
@@ -823,6 +864,37 @@ namespace Azure.Generator.Management.Visitors
 
             parameter = matches.Length == 1 ? matches[0] : null;
             return parameter is not null;
+        }
+
+        private static int CountMatchingDestinations(ModelProvider model, string name, CSharpType parameterType, HashSet<string> visitedTypes)
+        {
+            if (!visitedTypes.Add(model.Type.FullyQualifiedName))
+            {
+                return 0;
+            }
+
+            var count = 0;
+            foreach (var parameter in model.FullConstructor.Signature.Parameters)
+            {
+                // Include ordinary C# name matches: a wire-name fallback must not reuse an old
+                // argument already claimed by a different constructor slot.
+                if ((string.Equals(parameter.Name, name, StringComparison.OrdinalIgnoreCase)
+                        || string.Equals(parameter.Property?.WireInfo?.SerializedName, name, StringComparison.OrdinalIgnoreCase))
+                    && AreCompatibleParameterTypes(parameterType, parameter.Type))
+                {
+                    count++;
+                }
+                if (!parameter.Type.IsFrameworkType && TryGetModelProvider(parameter.Type, out var nestedModel))
+                {
+                    count += CountMatchingDestinations(nestedModel, name, parameterType, visitedTypes);
+                }
+                if (count > 1)
+                {
+                    break;
+                }
+            }
+            visitedTypes.Remove(model.Type.FullyQualifiedName);
+            return count;
         }
 
         private static bool TryGetContextualMethodParameter(MethodProvider method, string parentName, ParameterProvider nestedParameter, [NotNullWhen(true)] out ParameterProvider? parameter)

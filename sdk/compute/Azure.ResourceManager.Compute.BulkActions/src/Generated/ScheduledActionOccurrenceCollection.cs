@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Lists occurrences for the specified scheduled action.
+        /// Lists occurrences for the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new OccurrencesGetByScheduledActionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new ScheduledActionOccurrenceDataAsyncCollectionResultOfT(
                 _occurrencesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Lists occurrences for the specified scheduled action.
+        /// Lists occurrences for the specified recurring bulk action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new OccurrencesGetByScheduledActionCollectionResultOfT(
+            return new PageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new ScheduledActionOccurrenceDataCollectionResultOfT(
                 _occurrencesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

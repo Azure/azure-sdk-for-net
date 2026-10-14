@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The authentication info when authType is secret. </summary>
     public partial class SecretAuthInfo : AuthBaseInfo
     {
+        private string _name;
+        internal bool _nameIsDefined;
+        private SecretBaseInfo _secretInfo;
+        internal bool _secretInfoIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="SecretAuthInfo"/>. </summary>
         public SecretAuthInfo() : base(LinkerAuthType.Secret)
         {
@@ -26,14 +31,36 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="secretInfo"> Password or key vault secret for secret auth. </param>
         internal SecretAuthInfo(LinkerAuthType authType, LinkerAuthMode? authMode, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, SecretBaseInfo secretInfo) : base(authType, authMode, additionalBinaryDataProperties)
         {
-            Name = name;
-            SecretInfo = secretInfo;
+            _name = name;
+            _secretInfo = secretInfo;
         }
 
         /// <summary> Username or account name for secret auth. </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+                _nameIsDefined = true;
+            }
+        }
 
         /// <summary> Password or key vault secret for secret auth. </summary>
-        public SecretBaseInfo SecretInfo { get; set; }
+        public SecretBaseInfo SecretInfo
+        {
+            get
+            {
+                return _secretInfo;
+            }
+            set
+            {
+                _secretInfo = value;
+                _secretInfoIsDefined = true;
+            }
+        }
     }
 }

@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Models
             return new HubRoute(
                 name,
                 destinationType,
-                destinations,
+                destinations ?? new ChangeTrackingList<string>(),
                 nextHopType,
                 nextHop,
                 additionalBinaryDataProperties);

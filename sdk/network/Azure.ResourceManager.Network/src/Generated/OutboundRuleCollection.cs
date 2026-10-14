@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OutboundRuleData, OutboundRuleResource>(new LoadBalancerOutboundRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OutboundRuleData, OutboundRuleResource>(new OutboundRuleDataAsyncCollectionResultOfT(
                 _loadBalancerOutboundRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OutboundRuleData, OutboundRuleResource>(new LoadBalancerOutboundRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<OutboundRuleData, OutboundRuleResource>(new OutboundRuleDataCollectionResultOfT(
                 _loadBalancerOutboundRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

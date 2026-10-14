@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.ServiceGroupExtension
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ServiceGroupExtensionResource))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupExtensionResourceData))]
-    [ModelReaderWriterBuildable(typeof(ServiceGroupExtensionResourceListResult))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupExtensionResourceProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerServiceGroupExtensionContext : ModelReaderWriterContext

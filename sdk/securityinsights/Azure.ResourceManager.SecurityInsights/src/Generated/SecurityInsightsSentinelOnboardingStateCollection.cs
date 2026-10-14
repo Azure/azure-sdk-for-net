@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityInsightsSentinelOnboardingStateData, SecurityInsightsSentinelOnboardingStateResource>(new SentinelOnboardingStatesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityInsightsSentinelOnboardingStateData, SecurityInsightsSentinelOnboardingStateResource>(new SecurityInsightsSentinelOnboardingStateDataAsyncCollectionResultOfT(
                 _sentinelOnboardingStatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityInsightsSentinelOnboardingStateData, SecurityInsightsSentinelOnboardingStateResource>(new SentinelOnboardingStatesGetAllCollectionResultOfT(
+            return new PageableWrapper<SecurityInsightsSentinelOnboardingStateData, SecurityInsightsSentinelOnboardingStateResource>(new SecurityInsightsSentinelOnboardingStateDataCollectionResultOfT(
                 _sentinelOnboardingStatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

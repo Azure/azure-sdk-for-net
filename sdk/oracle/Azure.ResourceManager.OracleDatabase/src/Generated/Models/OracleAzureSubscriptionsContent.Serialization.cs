@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OracleAzureSubscriptionsContent(azureSubscriptionIds, additionalBinaryDataProperties);
+            return new OracleAzureSubscriptionsContent(azureSubscriptionIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

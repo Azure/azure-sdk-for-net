@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// </summary>
     public abstract partial class CognitiveServicesAgentDeploymentProperties : CognitiveServicesResourceBase
     {
+        private string _displayName;
+        internal bool _displayNameIsDefined;
+        private string _deploymentId;
+        internal bool _deploymentIdIsDefined;
+        private CognitiveServicesAgentDeploymentState? _state;
+        internal bool _stateIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAgentDeploymentProperties"/>. </summary>
         /// <param name="deploymentType"> Gets or sets the type of deployment for the agent. </param>
         private protected CognitiveServicesAgentDeploymentProperties(AgentDeploymentType deploymentType)
@@ -39,9 +46,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="provisioningState"> Gets or sets the provisioning state of the agent deployment. </param>
         internal CognitiveServicesAgentDeploymentProperties(string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, string deploymentId, CognitiveServicesAgentDeploymentState? state, IList<CognitiveServicesAgentProtocolVersion> protocols, IList<CognitiveServicesVersionedAgentReference> agents, AgentDeploymentType deploymentType, CognitiveServicesAgentDeploymentProvisioningState? provisioningState) : base(description, tags, additionalBinaryDataProperties)
         {
-            DisplayName = displayName;
-            DeploymentId = deploymentId;
-            State = state;
+            _displayName = displayName;
+            _deploymentId = deploymentId;
+            _state = state;
             Protocols = protocols;
             Agents = agents;
             DeploymentType = deploymentType;
@@ -50,15 +57,48 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Gets or sets the display name of the deployment. </summary>
         [WirePath("displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return _displayName;
+            }
+            set
+            {
+                _displayName = value;
+                _displayNameIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the unique identifier of the deployment. </summary>
         [WirePath("deploymentId")]
-        public string DeploymentId { get; set; }
+        public string DeploymentId
+        {
+            get
+            {
+                return _deploymentId;
+            }
+            set
+            {
+                _deploymentId = value;
+                _deploymentIdIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the current operational state of the deployment (and, intrinsically, of the comprising agents). </summary>
         [WirePath("state")]
-        public CognitiveServicesAgentDeploymentState? State { get; set; }
+        public CognitiveServicesAgentDeploymentState? State
+        {
+            get
+            {
+                return _state;
+            }
+            set
+            {
+                _state = value;
+                _stateIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the supported protocol types and versions exposed by this deployment. </summary>
         [WirePath("protocols")]

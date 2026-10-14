@@ -46,23 +46,29 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
 
         private ClientDiagnostics PublishersClientDiagnostics => _publishersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridNetwork.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Publishers PublishersRestClient => _publishersRestClient ??= new Publishers(PublishersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-30");
+        private Publishers PublishersRestClient => _publishersRestClient ??= new Publishers(PublishersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridNetwork/publishers", out string apiVersion) ? apiVersion : "2025-03-30");
 
         private ClientDiagnostics ConfigurationGroupValuesClientDiagnostics => _configurationGroupValuesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridNetwork.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConfigurationGroupValues ConfigurationGroupValuesRestClient => _configurationGroupValuesRestClient ??= new ConfigurationGroupValues(ConfigurationGroupValuesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-30");
+        private ConfigurationGroupValues ConfigurationGroupValuesRestClient => _configurationGroupValuesRestClient ??= new ConfigurationGroupValues(ConfigurationGroupValuesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridNetwork/configurationGroupValues", out string apiVersion0) ? apiVersion0 : "2025-03-30");
 
         private ClientDiagnostics NetworkFunctionsClientDiagnostics => _networkFunctionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridNetwork.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkFunctions NetworkFunctionsRestClient => _networkFunctionsRestClient ??= new NetworkFunctions(NetworkFunctionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-30");
+        private NetworkFunctions NetworkFunctionsRestClient => _networkFunctionsRestClient ??= new NetworkFunctions(NetworkFunctionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridNetwork/networkFunctions", out string apiVersion1) ? apiVersion1 : "2025-03-30");
 
         private ClientDiagnostics SitesClientDiagnostics => _sitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridNetwork.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Sites SitesRestClient => _sitesRestClient ??= new Sites(SitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-30");
+        private Sites SitesRestClient => _sitesRestClient ??= new Sites(SitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridNetwork/sites", out string apiVersion2) ? apiVersion2 : "2025-03-30");
 
         private ClientDiagnostics SiteNetworkServicesClientDiagnostics => _siteNetworkServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridNetwork.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SiteNetworkServices SiteNetworkServicesRestClient => _siteNetworkServicesRestClient ??= new SiteNetworkServices(SiteNetworkServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-30");
+        private SiteNetworkServices SiteNetworkServicesRestClient => _siteNetworkServicesRestClient ??= new SiteNetworkServices(
+            SiteNetworkServicesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-03-30",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion3) ? apiVersion3 : null);
 
         /// <summary>
         /// Lists all the publishers in a subscription.
@@ -89,7 +95,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublisherData, PublisherResource>(new PublishersGetBySubscriptionAsyncCollectionResultOfT(PublishersRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetPublishers"), data => new PublisherResource(Client, data));
+            return new AsyncPageableWrapper<PublisherData, PublisherResource>(new PublisherDataAsync0CollectionResultOfT(PublishersRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetPublishers"), data => new PublisherResource(Client, data));
         }
 
         /// <summary>
@@ -117,7 +123,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublisherData, PublisherResource>(new PublishersGetBySubscriptionCollectionResultOfT(PublishersRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetPublishers"), data => new PublisherResource(Client, data));
+            return new PageableWrapper<PublisherData, PublisherResource>(new PublisherData0CollectionResultOfT(PublishersRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetPublishers"), data => new PublisherResource(Client, data));
         }
 
         /// <summary>
@@ -145,7 +151,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfigurationGroupValueData, ConfigurationGroupValueResource>(new ConfigurationGroupValuesGetBySubscriptionAsyncCollectionResultOfT(ConfigurationGroupValuesRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetConfigurationGroupValues"), data => new ConfigurationGroupValueResource(Client, data));
+            return new AsyncPageableWrapper<ConfigurationGroupValueData, ConfigurationGroupValueResource>(new ConfigurationGroupValueDataAsync0CollectionResultOfT(ConfigurationGroupValuesRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetConfigurationGroupValues"), data => new ConfigurationGroupValueResource(Client, data));
         }
 
         /// <summary>
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfigurationGroupValueData, ConfigurationGroupValueResource>(new ConfigurationGroupValuesGetBySubscriptionCollectionResultOfT(ConfigurationGroupValuesRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetConfigurationGroupValues"), data => new ConfigurationGroupValueResource(Client, data));
+            return new PageableWrapper<ConfigurationGroupValueData, ConfigurationGroupValueResource>(new ConfigurationGroupValueData0CollectionResultOfT(ConfigurationGroupValuesRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetConfigurationGroupValues"), data => new ConfigurationGroupValueResource(Client, data));
         }
 
         /// <summary>
@@ -201,7 +207,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFunctionData, NetworkFunctionResource>(new NetworkFunctionsGetBySubscriptionAsyncCollectionResultOfT(NetworkFunctionsRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetNetworkFunctions"), data => new NetworkFunctionResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFunctionData, NetworkFunctionResource>(new NetworkFunctionDataAsync0CollectionResultOfT(NetworkFunctionsRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetNetworkFunctions"), data => new NetworkFunctionResource(Client, data));
         }
 
         /// <summary>
@@ -229,7 +235,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFunctionData, NetworkFunctionResource>(new NetworkFunctionsGetBySubscriptionCollectionResultOfT(NetworkFunctionsRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetNetworkFunctions"), data => new NetworkFunctionResource(Client, data));
+            return new PageableWrapper<NetworkFunctionData, NetworkFunctionResource>(new NetworkFunctionData0CollectionResultOfT(NetworkFunctionsRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetNetworkFunctions"), data => new NetworkFunctionResource(Client, data));
         }
 
         /// <summary>
@@ -257,7 +263,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteData, SiteResource>(new SitesGetBySubscriptionAsyncCollectionResultOfT(SitesRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetSites"), data => new SiteResource(Client, data));
+            return new AsyncPageableWrapper<SiteData, SiteResource>(new SiteDataAsync0CollectionResultOfT(SitesRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetSites"), data => new SiteResource(Client, data));
         }
 
         /// <summary>
@@ -285,7 +291,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteData, SiteResource>(new SitesGetBySubscriptionCollectionResultOfT(SitesRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetSites"), data => new SiteResource(Client, data));
+            return new PageableWrapper<SiteData, SiteResource>(new SiteData0CollectionResultOfT(SitesRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetSites"), data => new SiteResource(Client, data));
         }
 
         /// <summary>
@@ -313,7 +319,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteNetworkServiceData, SiteNetworkServiceResource>(new SiteNetworkServicesGetBySubscriptionAsyncCollectionResultOfT(SiteNetworkServicesRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetSiteNetworkServices"), data => new SiteNetworkServiceResource(Client, data));
+            return new AsyncPageableWrapper<SiteNetworkServiceData, SiteNetworkServiceResource>(new SiteNetworkServiceDataAsync0CollectionResultOfT(SiteNetworkServicesRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetSiteNetworkServices"), data => new SiteNetworkServiceResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +347,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteNetworkServiceData, SiteNetworkServiceResource>(new SiteNetworkServicesGetBySubscriptionCollectionResultOfT(SiteNetworkServicesRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetSiteNetworkServices"), data => new SiteNetworkServiceResource(Client, data));
+            return new PageableWrapper<SiteNetworkServiceData, SiteNetworkServiceResource>(new SiteNetworkServiceData0CollectionResultOfT(SiteNetworkServicesRestClient, Id.SubscriptionId, context, "MockableHybridNetworkSubscriptionResource.GetSiteNetworkServices"), data => new SiteNetworkServiceResource(Client, data));
         }
 
         /// <summary>

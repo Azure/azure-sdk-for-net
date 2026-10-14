@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NGroupsListResult(value, nextLink, additionalBinaryDataProperties);
+            return new NGroupsListResult(value ?? new ChangeTrackingList<NGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

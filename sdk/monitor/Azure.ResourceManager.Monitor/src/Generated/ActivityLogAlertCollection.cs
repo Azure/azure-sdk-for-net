@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ActivityLogAlertCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ActivityLogAlertResource.ResourceType, out string activityLogAlertApiVersion);
             _activityLogAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ActivityLogAlertResource.ResourceType.Namespace, Diagnostics);
-            _activityLogAlertsRestClient = new ActivityLogAlerts(_activityLogAlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, activityLogAlertApiVersion ?? "2023-01-01-preview");
+            _activityLogAlertsRestClient = new ActivityLogAlerts(_activityLogAlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertsGetByResourceGroupAsyncCollectionResultOfT(_activityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActivityLogAlertCollection.GetAll"), data => new ActivityLogAlertResource(Client, data));
+            return new AsyncPageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertDataAsyncCollectionResultOfT(_activityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActivityLogAlertCollection.GetAll"), data => new ActivityLogAlertResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertsGetByResourceGroupCollectionResultOfT(_activityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActivityLogAlertCollection.GetAll"), data => new ActivityLogAlertResource(Client, data));
+            return new PageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertDataCollectionResultOfT(_activityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActivityLogAlertCollection.GetAll"), data => new ActivityLogAlertResource(Client, data));
         }
 
         /// <summary>

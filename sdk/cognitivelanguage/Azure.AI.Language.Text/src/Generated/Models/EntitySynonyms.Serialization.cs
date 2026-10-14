@@ -154,7 +154,7 @@ namespace Azure.AI.Language.Text
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EntitySynonyms(entityType, synonyms, additionalBinaryDataProperties);
+            return new EntitySynonyms(entityType, synonyms ?? new ChangeTrackingList<EntitySynonym>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AdvancedSecurityObject(advSecurityObjectModelType, entry, additionalBinaryDataProperties);
+            return new AdvancedSecurityObject(advSecurityObjectModelType, entry ?? new ChangeTrackingList<NameDescriptionObject>(), additionalBinaryDataProperties);
         }
     }
 }

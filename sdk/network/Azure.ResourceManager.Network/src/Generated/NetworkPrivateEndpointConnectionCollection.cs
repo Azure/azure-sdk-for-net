@@ -40,7 +40,13 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(NetworkPrivateEndpointConnectionResource.ResourceType, out string networkPrivateEndpointConnectionApiVersion);
             _privateLinkServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkServicesRestClient = new PrivateLinkServices(_privateLinkServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkPrivateEndpointConnectionApiVersion ?? "2026-01-01");
+            _privateLinkServicesRestClient = new PrivateLinkServices(
+                _privateLinkServicesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                networkPrivateEndpointConnectionApiVersion ?? "2026-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -289,7 +295,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkPrivateEndpointConnectionData, NetworkPrivateEndpointConnectionResource>(new PrivateLinkServicesGetPrivateEndpointConnectionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkPrivateEndpointConnectionData, NetworkPrivateEndpointConnectionResource>(new NetworkPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateLinkServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -323,7 +329,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkPrivateEndpointConnectionData, NetworkPrivateEndpointConnectionResource>(new PrivateLinkServicesGetPrivateEndpointConnectionsCollectionResultOfT(
+            return new PageableWrapper<NetworkPrivateEndpointConnectionData, NetworkPrivateEndpointConnectionResource>(new NetworkPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateLinkServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

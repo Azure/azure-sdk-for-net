@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             RecoveryMembersData recoveryResource = default;
-            OperationQualificationDetails operationQualificationDetails = default;
+            RecoveryOperationQualificationDetails operationQualificationDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 if (prop.NameEquals("operationQualificationDetails"u8))
                 {
-                    operationQualificationDetails = OperationQualificationDetails.DeserializeOperationQualificationDetails(prop.Value, options);
+                    operationQualificationDetails = RecoveryOperationQualificationDetails.DeserializeRecoveryOperationQualificationDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

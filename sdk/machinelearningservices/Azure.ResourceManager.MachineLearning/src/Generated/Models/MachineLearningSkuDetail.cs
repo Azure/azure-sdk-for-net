@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private MachineLearningSkuCapacity _capacity;
+        internal bool _capacityIsDefined;
+        private string _resourceType;
+        internal bool _resourceTypeIsDefined;
+        private MachineLearningSkuSetting _sku;
+        internal bool _skuIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningSkuDetail"/>. </summary>
         internal MachineLearningSkuDetail()
@@ -29,22 +35,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningSkuDetail(MachineLearningSkuCapacity capacity, string resourceType, MachineLearningSkuSetting sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Capacity = capacity;
-            ResourceType = resourceType;
-            Sku = sku;
+            _capacity = capacity;
+            _resourceType = resourceType;
+            _sku = sku;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Sku Capacity. </summary>
         [WirePath("capacity")]
-        public MachineLearningSkuCapacity Capacity { get; }
+        public MachineLearningSkuCapacity Capacity
+        {
+            get
+            {
+                return _capacity;
+            }
+        }
 
         /// <summary> The resource type name. </summary>
         [WirePath("resourceType")]
-        public string ResourceType { get; }
+        public string ResourceType
+        {
+            get
+            {
+                return _resourceType;
+            }
+        }
 
         /// <summary> Gets or sets the Sku. </summary>
         [WirePath("sku")]
-        public MachineLearningSkuSetting Sku { get; }
+        public MachineLearningSkuSetting Sku
+        {
+            get
+            {
+                return _sku;
+            }
+        }
     }
 }

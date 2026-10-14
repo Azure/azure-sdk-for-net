@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _version;
+        internal bool _versionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppRuntime"/>. </summary>
         public FunctionAppRuntime()
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal FunctionAppRuntime(FunctionAppRuntimeName? name, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Version = version;
+            _version = version;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +41,17 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Function app runtime version. Example: 8 (for dotnet-isolated). </summary>
         [WirePath("version")]
-        public string Version { get; set; }
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+                _versionIsDefined = true;
+            }
+        }
     }
 }

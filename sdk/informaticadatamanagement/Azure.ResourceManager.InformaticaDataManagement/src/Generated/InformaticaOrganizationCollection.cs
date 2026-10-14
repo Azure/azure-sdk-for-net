@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal InformaticaOrganizationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(InformaticaOrganizationResource.ResourceType, out string informaticaOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.InformaticaDataManagement", InformaticaOrganizationResource.ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, informaticaOrganizationApiVersion ?? "2024-05-08");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Informatica.DataManagement/organizations", out string organizationsApiVersionOverride) ? organizationsApiVersionOverride : "2024-05-08");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "InformaticaOrganizationCollection.GetAll"), data => new InformaticaOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new InformaticaOrganizationDataAsyncCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "InformaticaOrganizationCollection.GetAll"), data => new InformaticaOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "InformaticaOrganizationCollection.GetAll"), data => new InformaticaOrganizationResource(Client, data));
+            return new PageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new InformaticaOrganizationDataCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "InformaticaOrganizationCollection.GetAll"), data => new InformaticaOrganizationResource(Client, data));
         }
 
         /// <summary>

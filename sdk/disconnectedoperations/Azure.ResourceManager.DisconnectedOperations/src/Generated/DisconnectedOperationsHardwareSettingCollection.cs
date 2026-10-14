@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DisconnectedOperationsHardwareSettingData, DisconnectedOperationsHardwareSettingResource>(new HardwareSettingsGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DisconnectedOperationsHardwareSettingData, DisconnectedOperationsHardwareSettingResource>(new DisconnectedOperationsHardwareSettingDataAsyncCollectionResultOfT(
                 _hardwareSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DisconnectedOperationsHardwareSettingData, DisconnectedOperationsHardwareSettingResource>(new HardwareSettingsGetByParentCollectionResultOfT(
+            return new PageableWrapper<DisconnectedOperationsHardwareSettingData, DisconnectedOperationsHardwareSettingResource>(new DisconnectedOperationsHardwareSettingDataCollectionResultOfT(
                 _hardwareSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListReplications(value, nextLink, additionalBinaryDataProperties);
+            return new ListReplications(value ?? new ChangeTrackingList<NetAppVolumeReplication>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

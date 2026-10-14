@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApplianceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ApplianceListResult(value ?? new ChangeTrackingList<ResourceConnectorApplianceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

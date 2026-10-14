@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -24,7 +25,7 @@ namespace Azure.Provisioning.Sql
         /// <summary> Creates a new DeletedServer. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal DeletedServer(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Sql/locations/deletedServers", resourceVersion ?? "2025-01-01")
+        internal DeletedServer(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Sql/locations/deletedServers", resourceVersion ?? "2025-08-01-preview")
         {
         }
 
@@ -100,12 +101,30 @@ namespace Azure.Provisioning.Sql
             }
         }
 
+        /// <summary> Gets the OriginalResourceGroup. </summary>
+        public BicepValue<string> OriginalResourceGroup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginalResourceGroup;
+            }
+        }
+
         /// <summary> Gets the FullyQualifiedDomainName. </summary>
         public BicepValue<string> FullyQualifiedDomainName
         {
             get
             {
                 return Properties is null ? default : Properties.FullyQualifiedDomainName;
+            }
+        }
+
+        /// <summary> Gets the ScheduledPurgeOn. </summary>
+        public BicepValue<DateTimeOffset> ScheduledPurgeOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScheduledPurgeOn;
             }
         }
 
@@ -136,6 +155,12 @@ namespace Azure.Provisioning.Sql
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2025-08-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_08_01_PREVIEW = "2025-08-01-preview";
+            /// <summary> API version "2025-02-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_02_01_PREVIEW = "2025-02-01-preview";
             /// <summary> API version "2025-01-01". </summary>
             public static readonly string V2025_01_01 = "2025-01-01";
         }

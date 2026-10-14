@@ -158,7 +158,7 @@ namespace Azure.AI.Translation.Text
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TransliterateResult(requestId, value, additionalBinaryDataProperties);
+            return new TransliterateResult(requestId, value ?? new ChangeTrackingList<TransliteratedText>(), additionalBinaryDataProperties);
         }
     }
 }

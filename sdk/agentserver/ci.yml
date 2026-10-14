@@ -25,3 +25,5 @@ extends:
         safeName: AzureAIAgentServerInvocations
       - name: Azure.AI.AgentServer.Activity
         safeName: AzureAIAgentServerActivity
+      - name: Azure.AI.AgentServer.Optimization
+        safeName: AzureAIAgentServerOptimization

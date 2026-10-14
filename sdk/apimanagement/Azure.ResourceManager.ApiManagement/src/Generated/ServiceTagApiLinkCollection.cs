@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TagApiLinkContractData, ServiceTagApiLinkResource>(new TagApiLinkGetByProductAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TagApiLinkContractData, ServiceTagApiLinkResource>(new TagApiLinkContractDataAsyncCollectionResultOfT(
                 _tagApiLinkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TagApiLinkContractData, ServiceTagApiLinkResource>(new TagApiLinkGetByProductCollectionResultOfT(
+            return new PageableWrapper<TagApiLinkContractData, ServiceTagApiLinkResource>(new TagApiLinkContractDataCollectionResultOfT(
                 _tagApiLinkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

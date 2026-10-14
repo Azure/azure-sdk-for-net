@@ -285,7 +285,7 @@ namespace Azure.AI.Projects.Agents
                 version,
                 description,
                 createdOn,
-                tools,
+                tools ?? new ChangeTrackingList<ToolboxTool>(),
                 skills ?? new ChangeTrackingList<ToolboxSkill>(),
                 policies,
                 additionalBinaryDataProperties);
