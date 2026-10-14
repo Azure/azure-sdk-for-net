@@ -18,23 +18,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningOnlineDeploymentProperties : MachineLearningEndpointDeploymentProperties
     {
         private DataCollector _dataCollector;
-        internal bool _dataCollectorIsDefined;
+        private protected bool _dataCollectorIsDefined;
         private string _instanceType;
-        internal bool _instanceTypeIsDefined;
+        private protected bool _instanceTypeIsDefined;
         private MachineLearningProbeSettings _livenessProbe;
-        internal bool _livenessProbeIsDefined;
+        private protected bool _livenessProbeIsDefined;
         private string _model;
-        internal bool _modelIsDefined;
+        private protected bool _modelIsDefined;
         private string _modelMountPath;
-        internal bool _modelMountPathIsDefined;
+        private protected bool _modelMountPathIsDefined;
         private MachineLearningProbeSettings _readinessProbe;
-        internal bool _readinessProbeIsDefined;
+        private protected bool _readinessProbeIsDefined;
         private MachineLearningOnlineRequestSettings _requestSettings;
-        internal bool _requestSettingsIsDefined;
+        private protected bool _requestSettingsIsDefined;
         private MachineLearningOnlineScaleSettings _scaleSettings;
-        internal bool _scaleSettingsIsDefined;
+        private protected bool _scaleSettingsIsDefined;
         private MachineLearningProbeSettings _startupProbe;
-        internal bool _startupProbeIsDefined;
+        private protected bool _startupProbeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineDeploymentProperties"/>. </summary>
         /// <param name="endpointComputeType"> [Required] The compute type of the endpoint. </param>

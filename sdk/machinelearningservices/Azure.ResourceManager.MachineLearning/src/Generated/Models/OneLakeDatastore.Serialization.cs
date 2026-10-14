@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("artifact"u8);
             writer.WriteObjectValue(Artifact, options);
-            if (_endpointIsDefined || Optional.IsDefined(Endpoint))
+            if (Optional.IsDefined(Endpoint, _endpointIsDefined))
             {
                 if (Endpoint != null)
                 {

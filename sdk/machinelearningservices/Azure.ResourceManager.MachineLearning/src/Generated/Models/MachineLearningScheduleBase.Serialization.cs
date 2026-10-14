@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningScheduleBase)} does not support writing '{format}' format.");
             }
-            if (_idIsDefined || Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id, _idIsDefined))
             {
                 if (Id != null)
                 {

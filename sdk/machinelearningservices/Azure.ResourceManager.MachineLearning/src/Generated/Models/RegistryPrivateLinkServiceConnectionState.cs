@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _actionsRequired;
-        internal bool _actionsRequiredIsDefined;
+        private bool _actionsRequiredIsDefined;
         private string _description;
-        internal bool _descriptionIsDefined;
+        private bool _descriptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RegistryPrivateLinkServiceConnectionState"/>. </summary>
         public RegistryPrivateLinkServiceConnectionState()
