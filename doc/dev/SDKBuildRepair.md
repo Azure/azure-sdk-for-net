@@ -59,7 +59,35 @@ The failure summary uses only the first line of `response_error` and `message`, 
 
 The engine contract from [Azure/azure-sdk-tools#17068](https://github.com/Azure/azure-sdk-tools/pull/17068) is available in [azsdk_0.6.50](https://github.com/Azure/azure-sdk-tools/releases/tag/azsdk_0.6.50), published September 30, 2026. The latest-release installer is unchanged; the skill still checks that CLI help advertises `--max-attempts` and fails closed if unavailable.
 
-The existing workflow eligibility, network/authentication, and safe-output publishing architecture are unchanged. This change does not add independent source receipts, a second validator, or a custom publisher.
+The existing workflow eligibility, network/authentication, and native safe-output publisher are unchanged. This does not add independent source receipts, a second validator, or a custom publisher.
+
+## SDK selection and infrastructure failures
+
+`actions/setup-dotnet` installs the exact `sdk.version` from `global.json`, not a
+floating `10.0.x` release. Its job-unique installation directory is mounted in the
+agent sandbox and exported as `DOTNET_ROOT` and `DOTNET_HOST_PATH`. Only the
+approved SDK is installed there; the repository's `rollForward: feature` setting
+cannot choose a newer hosted SDK. The baseline helper verifies `dotnet --version`
+against `global.json`, and the engine inherits that installation first on PATH
+for nested build validation. The repository SDK policy and NuGet feeds are not
+modified. This avoids same-day SDK releases introducing implicit ILLink or
+ILCompiler packs before they are available through the controlled feed.
+
+The baseline helper records package identity, checkout SHA, raw build output, and
+exit code in the writable, secret-redacted agent log directory. Restore and other
+baseline infrastructure failures skip the engine. If the agent aborts or emits
+only `report_incomplete`, the existing safe-output job renders a failure comment
+from this evidence and passes it to the native `add-comment` handler. Missing
+engine responses remain `failed` / `NoEngineResult`; no response is invented and
+all push requests are removed on recovery. Capability and process failures use
+the same fallback. Complete successful output is left unchanged, and a captured
+green baseline without an engine attempt retains `skipped_already_green`.
+
+The original agent artifact still goes through output validation, so incomplete
+and infrastructure failures remain failed Actions runs even when their failure
+comment is successfully delivered. If the original artifact cannot be downloaded
+or parsed, reporting fails visibly instead of fabricating evidence. Recovered
+reports, including full oversized command records, are uploaded as `repair-report`.
 
 ## Authentication
 
@@ -97,6 +125,7 @@ With Node, PowerShell, and Bash (Git Bash on Windows) available, run the focused
 ```powershell
 npm ci --prefix eng\common\scripts\eval
 node --test .github\skills\auto-build-repair\test\bounded-invocation.test.cjs
+node --test .github\skills\auto-build-repair\test\repair-infrastructure.test.cjs
 pwsh -NoProfile -File .github\skills\auto-build-repair\test\emit-repair-report.tests.ps1
 pwsh -NoProfile -File .github\skills\auto-build-repair\test\sdk-build-repair-push-gate.tests.ps1
 ```
