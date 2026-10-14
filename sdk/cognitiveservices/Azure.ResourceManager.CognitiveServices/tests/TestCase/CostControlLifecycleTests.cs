@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
                 resource = create.Value;
 
                 Assert.That(resource.Data.Properties.Rules[0].Thresholds[0].Action,
-                    Is.EqualTo(CostControlThresholdAction.Audit));
+                    Is.EqualTo(CostControlThresholdAction.Alert));
 
                 resource = (await collection.GetAsync(costControlName)).Value;
                 Assert.That(resource.Data.ETag, Is.Not.Null);
-                Assert.That(resource.Data.Properties.Rules[0].Thresholds[0].Value, Is.Zero);
+                Assert.That(resource.Data.Properties.Rules[0].Thresholds[0].Value, Is.EqualTo(80));
 
                 var resources = await collection.GetAllAsync().ToEnumerableAsync();
                 Assert.That(resources.Any(item => item.Data.Properties.DisplayName == "SDK recorded test"), Is.True);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
                 CostControlPatchProperties patchProperties = new() { DisplayName = "SDK recorded test updated" };
                 patchProperties.Rules.Add(CreateRule(50));
                 resource = (await resource.UpdateAsync(
-                    new CognitiveServicesAccountCostControlPatch(patchProperties),
+                    new CognitiveServicesAccountCostControlPatch { Properties = patchProperties },
                     resource.Data.ETag)).Value;
 
                 Assert.That(resource.Data.Properties.DisplayName, Is.EqualTo("SDK recorded test updated"));
@@ -133,17 +133,14 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         {
             CostControlRule rule = new(
                 "account-budget",
-                new[] { new CostControlDimension(CostControlDimensionType.Account) },
+                new CostControlDimension(CostControlDimensionType.Account),
                 CostControlUnit.Usd,
                 amount)
             {
                 Period = CostControlPeriod.Month,
                 Recurring = true
             };
-            rule.Thresholds.Add(new CostControlThreshold(CostControlThresholdType.Percentage, 0)
-            {
-                Action = CostControlThresholdAction.Audit
-            });
+            rule.Thresholds.Add(new CostControlThreshold(CostControlThresholdType.Percentage, 80, CostControlThresholdAction.Alert));
             return rule;
         }
     }

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             CostControlPatchProperties patchProperties = new() { DisplayName = "SDK test updated" };
             patchProperties.Rules.Add(CreateRule(50));
             resource = (await resource.UpdateAsync(
-                new CognitiveServicesAccountCostControlPatch(patchProperties),
+                new CognitiveServicesAccountCostControlPatch { Properties = patchProperties },
                 resource.Data.ETag)).Value;
             await resource.DeleteAsync(WaitUntil.Started, resource.Data.ETag);
 
@@ -67,10 +67,12 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             Assert.That(ifNoneMatch, Is.EqualTo("*"));
 
             JsonElement createBody = BodyJson(transport.Requests[0]);
+            Assert.That(createBody.GetProperty("properties").GetProperty("rules")[0]
+                .GetProperty("counterKey").GetProperty("type").GetString(), Is.EqualTo("Account"));
             JsonElement threshold = createBody.GetProperty("properties").GetProperty("rules")[0].GetProperty("thresholds")[0];
-            Assert.That(threshold.GetProperty("type").GetString(), Is.EqualTo("percentage"));
-            Assert.That(threshold.GetProperty("value").GetDouble(), Is.Zero);
-            Assert.That(threshold.GetProperty("action").GetString(), Is.EqualTo("audit"));
+            Assert.That(threshold.GetProperty("type").GetString(), Is.EqualTo("Percentage"));
+            Assert.That(threshold.GetProperty("value").GetDouble(), Is.EqualTo(80));
+            Assert.That(threshold.GetProperty("action").GetString(), Is.EqualTo("Alert"));
 
             AssertRequest(transport.Requests[1], RequestMethod.Get, $"/costControls/{CostControlName}");
             AssertRequest(transport.Requests[2], RequestMethod.Get, "/costControls");
@@ -134,17 +136,14 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         {
             CostControlRule rule = new(
                 "account-budget",
-                new[] { new CostControlDimension(CostControlDimensionType.Account) },
+                new CostControlDimension(CostControlDimensionType.Account),
                 CostControlUnit.Usd,
                 amount)
             {
                 Period = CostControlPeriod.Month,
                 Recurring = true
             };
-            rule.Thresholds.Add(new CostControlThreshold(CostControlThresholdType.Percentage, 0)
-            {
-                Action = CostControlThresholdAction.Audit
-            });
+            rule.Thresholds.Add(new CostControlThreshold(CostControlThresholdType.Percentage, 80, CostControlThresholdAction.Alert));
             return rule;
         }
 
@@ -177,12 +176,12 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
                     "displayName":"{{displayName}}",
                     "rules":[{
                       "name":"account-budget",
-                      "counterKey":[{"type":"account"}],
-                      "unit":"usd",
+                      "counterKey":{"type":"Account"},
+                      "unit":"Usd",
                       "amount":{{amount}},
-                      "period":"month",
+                      "period":"Month",
                       "recurring":true,
-                      "thresholds":[{"type":"percentage","value":0,"action":"audit"}]
+                                            "thresholds":[{"type":"Percentage","value":80,"action":"Alert"}]
                     }]
                   }
                 }
