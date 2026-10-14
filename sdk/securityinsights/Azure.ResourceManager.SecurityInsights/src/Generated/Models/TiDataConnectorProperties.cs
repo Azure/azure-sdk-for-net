@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal partial class TiDataConnectorProperties : DataConnectorTenantId
     {
         private DateTimeOffset? _tipLookbackOn;
-        internal bool _tipLookbackOnIsDefined;
+        private bool _tipLookbackOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="TiDataConnectorProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
