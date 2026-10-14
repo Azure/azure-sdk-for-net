@@ -80,7 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         private readonly long _maxSizeBytes;
         private readonly object _createLock = new();
         private readonly object _evictLock = new();
-        // In-flight writes can outlive partition disposal, so the gate is reclaimed with the store.
+        // Not disposed: a write in progress may still hold it when the store is disposed.
         private readonly ReaderWriterLockSlim _budgetLock = new();
         private readonly Stopwatch _clock = Stopwatch.StartNew();
         private long _currentSizeBytes;
