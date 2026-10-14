@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Qumulo
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal QumuloFileSystemResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(QumuloFileSystemResource.ResourceType, out string qumuloFileSystemResourceApiVersion);
             _fileSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Qumulo", QumuloFileSystemResource.ResourceType.Namespace, Diagnostics);
-            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, qumuloFileSystemResourceApiVersion ?? "2026-04-16");
+            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Qumulo.Storage/fileSystems", out string fileSystemsApiVersionOverride) ? fileSystemsApiVersionOverride : "2026-04-16");
             ValidateResourceId(id);
         }
 

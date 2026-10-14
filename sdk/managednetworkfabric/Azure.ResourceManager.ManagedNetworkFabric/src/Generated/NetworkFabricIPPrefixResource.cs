@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkFabricIPPrefixResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string networkFabricIPPrefixApiVersion);
             _ipPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            _ipPrefixesRestClient = new IPPrefixes(_ipPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricIPPrefixApiVersion ?? "2025-07-15");
+            _ipPrefixesRestClient = new IPPrefixes(_ipPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/ipPrefixes", out string ipPrefixesApiVersionOverride) ? ipPrefixesApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 

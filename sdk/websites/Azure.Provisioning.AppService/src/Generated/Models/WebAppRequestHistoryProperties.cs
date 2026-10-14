@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppService
         private BicepValue<DateTimeOffset> _startsOn;
         private BicepValue<DateTimeOffset> _endsOn;
         private WebAppRequest _request;
-        private WebAppResponse _response;
+        private WebAppResult _response;
 
         /// <summary> Creates a new WebAppRequestHistoryProperties. </summary>
         public WebAppRequestHistoryProperties()
@@ -55,7 +55,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets the Response. </summary>
-        public WebAppResponse Response
+        public WebAppResult Response
         {
             get
             {
@@ -71,7 +71,7 @@ namespace Azure.Provisioning.AppService
             _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, format: "O");
             _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "endTime" }, format: "O");
             _request = DefineModelProperty<WebAppRequest>(nameof(Request), new string[] { "request" });
-            _response = DefineModelProperty<WebAppResponse>(nameof(Response), new string[] { "response" });
+            _response = DefineModelProperty<WebAppResult>(nameof(Response), new string[] { "response" });
             DefineAdditionalProperties();
         }
 

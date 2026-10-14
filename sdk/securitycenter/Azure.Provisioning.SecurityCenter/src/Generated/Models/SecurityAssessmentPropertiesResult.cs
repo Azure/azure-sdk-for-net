@@ -8,12 +8,12 @@
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Describes properties of an assessment. </summary>
-    internal partial class SecurityAssessmentPropertiesResponse : SecurityAssessmentPropertiesBase
+    internal partial class SecurityAssessmentPropertiesResult : SecurityAssessmentPropertiesBase
     {
         private SecurityAssessmentStatusResult _status;
 
-        /// <summary> Creates a new SecurityAssessmentPropertiesResponse. </summary>
-        public SecurityAssessmentPropertiesResponse()
+        /// <summary> Creates a new SecurityAssessmentPropertiesResult. </summary>
+        public SecurityAssessmentPropertiesResult()
         {
         }
 
@@ -32,7 +32,7 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for SecurityAssessmentPropertiesResponse. </summary>
+        /// <summary> Define all the provisionable properties for SecurityAssessmentPropertiesResult. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -40,7 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for SecurityAssessmentPropertiesResponse that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for SecurityAssessmentPropertiesResult that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
     {
         public ApiCenterEnvironmentServer() { }
         public Azure.ResourceManager.ApiCenter.Models.EnvironmentServerType? EnvironmentServerType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<System.Uri> ManagementPortalUri { get { throw null; } }
+        public System.Collections.Generic.IList<System.Uri> ManagementPortalUri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterEnvironmentServer JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterEnvironmentServer PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1183,7 +1183,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
     public partial class EnvironmentOnboardingInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.EnvironmentOnboardingInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.EnvironmentOnboardingInformation>
     {
         public EnvironmentOnboardingInformation() { }
-        public System.Collections.Generic.IList<System.Uri> DeveloperPortalUri { get { throw null; } }
+        public System.Collections.Generic.IList<System.Uri> DeveloperPortalUri { get { throw null; } set { } }
         public string Instructions { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiCenter.Models.EnvironmentOnboardingInformation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
