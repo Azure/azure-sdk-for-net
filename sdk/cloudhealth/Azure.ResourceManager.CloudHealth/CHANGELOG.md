@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- `SignalConfiguration` no longer exposes `MetricNamespace`, `MetricName`, `AggregationType`, `TimeGrain`, or `DimensionFilter` directly. Read metric-specific values from `Configuration` cast to `AzureResourceMetricRecommendationConfiguration`; use `LogAnalyticsQueryRecommendationConfiguration` or `PrometheusMetricsRecommendationConfiguration` for query-specific settings. `Unit` is now `DataUnit`. When creating a `SignalConfiguration` with `ArmCloudHealthModelFactory`, pass a kind-specific configuration through the `configuration` parameter (for example, one created with `AzureResourceMetricRecommendationConfiguration`) and pass the unit through `dataUnit`.
+
 ### Bugs Fixed
 
 ### Other Changes
