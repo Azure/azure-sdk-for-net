@@ -235,13 +235,23 @@ public class InfrastructureJsonRoundTripTests
         SerializationTestHelpers.AssertJsonRoundTrip(infra);
     }
 
-    [Test]
-    public void RoundTrip_WithTargetScope()
+    [TestCase(DeploymentScope.ResourceGroup, "resourceGroup")]
+    [TestCase(DeploymentScope.Subscription, "subscription")]
+    [TestCase(DeploymentScope.ManagementGroup, "managementGroup")]
+    [TestCase(DeploymentScope.Tenant, "tenant")]
+    public void RoundTrip_WithTargetScope(DeploymentScope targetScope, string expected)
     {
         Infrastructure infra = new()
         {
-            TargetScope = DeploymentScope.Subscription,
+            TargetScope = targetScope,
         };
+
+        string json = SerializationTestHelpers.SerializeToJson(infra);
+        using JsonDocument document = JsonDocument.Parse(json);
+        Assert.AreEqual(expected, document.RootElement.GetProperty("targetScope").GetString());
+
+        Infrastructure deserialized = SerializationTestHelpers.DeserializeFromJson(json);
+        Assert.AreEqual(targetScope, deserialized.TargetScope);
 
         SerializationTestHelpers.AssertJsonRoundTrip(infra);
     }
