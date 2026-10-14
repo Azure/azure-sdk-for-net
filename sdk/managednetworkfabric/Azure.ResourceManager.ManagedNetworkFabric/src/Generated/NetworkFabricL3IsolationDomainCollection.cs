@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkFabricL3IsolationDomainCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkFabricL3IsolationDomainResource.ResourceType, out string networkFabricL3IsolationDomainApiVersion);
             _l3IsolationDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricL3IsolationDomainResource.ResourceType.Namespace, Diagnostics);
-            _l3IsolationDomainsRestClient = new L3IsolationDomains(_l3IsolationDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricL3IsolationDomainApiVersion ?? "2025-07-15");
+            _l3IsolationDomainsRestClient = new L3IsolationDomains(_l3IsolationDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/l3IsolationDomains", out string l3IsolationDomainsApiVersionOverride) ? l3IsolationDomainsApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 

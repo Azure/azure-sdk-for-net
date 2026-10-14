@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OracleDBSystemResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string oracleDBSystemApiVersion);
             _dbSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _dbSystemsRestClient = new DBSystems(_dbSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBSystemApiVersion ?? "2025-09-01");
+            _dbSystemsRestClient = new DBSystems(_dbSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Oracle.Database/dbSystems", out string dbSystemsApiVersionOverride) ? dbSystemsApiVersionOverride : "2025-09-01");
             ValidateResourceId(id);
         }
 

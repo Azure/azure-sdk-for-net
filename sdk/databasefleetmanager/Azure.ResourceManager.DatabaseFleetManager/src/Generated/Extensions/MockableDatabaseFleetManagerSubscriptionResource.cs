@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
 
         private ClientDiagnostics FleetsClientDiagnostics => _fleetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DatabaseFleetManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Fleets FleetsRestClient => _fleetsRestClient ??= new Fleets(FleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-02-01-preview");
+        private Fleets FleetsRestClient => _fleetsRestClient ??= new Fleets(FleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DatabaseFleetManager/fleets", out string apiVersion) ? apiVersion : "2025-02-01-preview");
 
         /// <summary>
         /// Gets all fleets in a subscription.
