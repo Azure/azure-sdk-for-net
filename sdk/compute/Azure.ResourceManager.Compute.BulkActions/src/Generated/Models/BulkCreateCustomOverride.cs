@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="plan"> Plan overriding the operation-level plan. </param>
         /// <param name="extensions"> Extensions. When non-empty they replace the operation-level extensions; when omitted the operation-level extensions are inherited. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkCreateCustomOverride(string virtualMachineName, string zone, ExtendedLocation extendedLocation, Placement placement, BulkActionVMProperties virtualMachineProfile, IDictionary<string, string> tags, VirtualMachineIdentity identity, ArmPlan plan, IList<BulkActionVMExtension> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkCreateCustomOverride(string virtualMachineName, string zone, ExtendedLocation extendedLocation, BulkActionsVirtualMachinePlacement placement, BulkActionVMProperties virtualMachineProfile, IDictionary<string, string> tags, VirtualMachineIdentity identity, ArmPlan plan, IList<BulkActionVMExtension> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualMachineName = virtualMachineName;
             Zone = zone;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> The placement constraints applied to this VM. Overrides the operation-level placement for this VM only; when omitted the VM inherits the operation-level placement. </summary>
-        public Placement Placement { get; set; }
+        public BulkActionsVirtualMachinePlacement Placement { get; set; }
 
         /// <summary> VM profile, the same shape as operation-level ComputeProfile.virtualMachineProfile. Overrides the operation-level VM profile. </summary>
         public BulkActionVMProperties VirtualMachineProfile { get; set; }

@@ -12,24 +12,24 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The customer-defined constraints for virtual machine placement. </summary>
-    public partial class Placement
+    public partial class BulkActionsVirtualMachinePlacement
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Placement"/>. </summary>
-        public Placement()
+        /// <summary> Initializes a new instance of <see cref="BulkActionsVirtualMachinePlacement"/>. </summary>
+        public BulkActionsVirtualMachinePlacement()
         {
             IncludeZones = new ChangeTrackingList<string>();
             ExcludeZones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Placement"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionsVirtualMachinePlacement"/>. </summary>
         /// <param name="zonePlacementPolicy"> The policy used to select an availability zone. </param>
         /// <param name="includeZones"> The availability zones that Bulk Actions can select. When omitted, Bulk Actions can consider any supported zone in the region. </param>
         /// <param name="excludeZones"> The availability zones that Bulk Actions must not select. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Placement(ZonePlacementPolicyType? zonePlacementPolicy, IList<string> includeZones, IList<string> excludeZones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionsVirtualMachinePlacement(ZonePlacementPolicyType? zonePlacementPolicy, IList<string> includeZones, IList<string> excludeZones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ZonePlacementPolicy = zonePlacementPolicy;
             IncludeZones = includeZones;

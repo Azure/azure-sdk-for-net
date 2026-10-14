@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LocationBasedBulkCreateCustomData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BulkCreateCustomProperties properties, AzureLocation location, IList<string> zones, ExtendedLocation extendedLocation, Placement placement, IDictionary<string, string> tags, ManagedServiceIdentity identity, ArmPlan plan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal LocationBasedBulkCreateCustomData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BulkCreateCustomProperties properties, AzureLocation location, IList<string> zones, ExtendedLocation extendedLocation, BulkActionsVirtualMachinePlacement placement, IDictionary<string, string> tags, ManagedServiceIdentity identity, ArmPlan plan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> The availability zone placement constraints applied to the virtual machines created by the BulkCreateCustom operation. </summary>
-        public Placement Placement { get; set; }
+        public BulkActionsVirtualMachinePlacement Placement { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }

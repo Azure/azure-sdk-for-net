@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <returns> A new <see cref="BulkActions.LocationBasedBulkCreateCustomData"/> instance for mocking. </returns>
-        public static LocationBasedBulkCreateCustomData LocationBasedBulkCreateCustomData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BulkCreateCustomProperties properties = default, AzureLocation location = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, Placement placement = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
+        public static LocationBasedBulkCreateCustomData LocationBasedBulkCreateCustomData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BulkCreateCustomProperties properties = default, AzureLocation location = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, BulkActionsVirtualMachinePlacement placement = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
         {
             zones ??= new ChangeTrackingList<string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1291,7 +1291,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="plan"> Plan overriding the operation-level plan. </param>
         /// <param name="extensions"> Extensions. When non-empty they replace the operation-level extensions; when omitted the operation-level extensions are inherited. </param>
         /// <returns> A new <see cref="Models.BulkCreateCustomOverride"/> instance for mocking. </returns>
-        public static BulkCreateCustomOverride BulkCreateCustomOverride(string virtualMachineName = default, string zone = default, ExtendedLocation extendedLocation = default, Placement placement = default, BulkActionVMProperties virtualMachineProfile = default, IDictionary<string, string> tags = default, VirtualMachineIdentity identity = default, ArmPlan plan = default, IEnumerable<BulkActionVMExtension> extensions = default)
+        public static BulkCreateCustomOverride BulkCreateCustomOverride(string virtualMachineName = default, string zone = default, ExtendedLocation extendedLocation = default, BulkActionsVirtualMachinePlacement placement = default, BulkActionVMProperties virtualMachineProfile = default, IDictionary<string, string> tags = default, VirtualMachineIdentity identity = default, ArmPlan plan = default, IEnumerable<BulkActionVMExtension> extensions = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             extensions ??= new ChangeTrackingList<BulkActionVMExtension>();
@@ -1313,13 +1313,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="zonePlacementPolicy"> The policy used to select an availability zone. </param>
         /// <param name="includeZones"> The availability zones that Bulk Actions can select. When omitted, Bulk Actions can consider any supported zone in the region. </param>
         /// <param name="excludeZones"> The availability zones that Bulk Actions must not select. </param>
-        /// <returns> A new <see cref="Models.Placement"/> instance for mocking. </returns>
-        public static Placement Placement(ZonePlacementPolicyType? zonePlacementPolicy = default, IEnumerable<string> includeZones = default, IEnumerable<string> excludeZones = default)
+        /// <returns> A new <see cref="Models.BulkActionsVirtualMachinePlacement"/> instance for mocking. </returns>
+        public static BulkActionsVirtualMachinePlacement BulkActionsVirtualMachinePlacement(ZonePlacementPolicyType? zonePlacementPolicy = default, IEnumerable<string> includeZones = default, IEnumerable<string> excludeZones = default)
         {
             includeZones ??= new ChangeTrackingList<string>();
             excludeZones ??= new ChangeTrackingList<string>();
 
-            return new Placement(zonePlacementPolicy, (includeZones ?? new ChangeTrackingList<string>()).ToList(), (excludeZones ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new BulkActionsVirtualMachinePlacement(zonePlacementPolicy, (includeZones ?? new ChangeTrackingList<string>()).ToList(), (excludeZones ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Identity for the virtual machine. </summary>
@@ -1358,7 +1358,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <returns> A new <see cref="BulkActions.LocationBasedBulkCreateData"/> instance for mocking. </returns>
-        public static LocationBasedBulkCreateData LocationBasedBulkCreateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BulkCreateProperties properties = default, AzureLocation location = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, Placement placement = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
+        public static LocationBasedBulkCreateData LocationBasedBulkCreateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BulkCreateProperties properties = default, AzureLocation location = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, BulkActionsVirtualMachinePlacement placement = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
         {
             zones ??= new ChangeTrackingList<string>();
             tags ??= new ChangeTrackingDictionary<string, string>();

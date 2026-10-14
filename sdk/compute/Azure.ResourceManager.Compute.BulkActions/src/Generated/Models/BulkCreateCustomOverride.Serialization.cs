@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             string virtualMachineName = default;
             string zone = default;
             ExtendedLocation extendedLocation = default;
-            Placement placement = default;
+            BulkActionsVirtualMachinePlacement placement = default;
             BulkActionVMProperties virtualMachineProfile = default;
             IDictionary<string, string> tags = default;
             VirtualMachineIdentity identity = default;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    placement = Placement.DeserializePlacement(prop.Value, options);
+                    placement = BulkActionsVirtualMachinePlacement.DeserializeBulkActionsVirtualMachinePlacement(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("virtualMachineProfile"u8))

@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             AzureLocation location = default;
             IList<string> zones = default;
             ExtendedLocation extendedLocation = default;
-            Placement placement = default;
+            BulkActionsVirtualMachinePlacement placement = default;
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
             ArmPlan plan = default;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                     {
                         continue;
                     }
-                    placement = Placement.DeserializePlacement(prop.Value, options);
+                    placement = BulkActionsVirtualMachinePlacement.DeserializeBulkActionsVirtualMachinePlacement(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
