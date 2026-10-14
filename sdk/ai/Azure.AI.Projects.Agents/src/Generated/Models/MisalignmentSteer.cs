@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> The MisalignmentSteer. </summary>
     internal partial class MisalignmentSteer
