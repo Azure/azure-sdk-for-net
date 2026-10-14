@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class SessionAuthModel : CcpAuthConfig
     {
         private bool? _isPostPayloadJson;
-        internal bool _isPostPayloadJsonIsDefined;
+        private bool _isPostPayloadJsonIsDefined;
         private int? _sessionTimeoutInMinutes;
-        internal bool _sessionTimeoutInMinutesIsDefined;
+        private bool _sessionTimeoutInMinutesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SessionAuthModel"/>. </summary>
         /// <param name="userName"> The user name attribute key value. </param>
