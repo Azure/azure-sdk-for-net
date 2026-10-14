@@ -2470,7 +2470,6 @@ namespace Azure.ResourceManager.Network
         public string Size { get { throw null; } }
         public Azure.ResourceManager.Network.Models.FirewallPolicySkuTier? SkuTier { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.FirewallPolicySnat Snat { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public System.Collections.Generic.IList<string> SnatPrivateRanges { get { throw null; } }
         public Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode? ThreatIntelMode { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.FirewallPolicyThreatIntelWhitelist ThreatIntelWhitelist { get { throw null; } set { } }

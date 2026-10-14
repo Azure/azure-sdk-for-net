@@ -19,6 +19,12 @@
     <DiagnosticId>CP0014</DiagnosticId>
     <Target>P:Azure.ResourceManager.Network.Models.RoutingConfiguration.StaticRoutes:[T:System.ObsoleteAttribute]</Target>
   </Suppression>
+  <!-- The supported SNAT ranges retain their connected flattened facade.
+       Hide it with EditorBrowsable(Never), without deprecating the live field. -->
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Network.FirewallPolicyData.SnatPrivateRanges:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
   <!-- Correct ProtectedIP's obsolete guidance to its connected ProtectionMode replacement.
        The released TagToIPAddresses recommendation refers to an unrelated model. -->
   <Suppression>
