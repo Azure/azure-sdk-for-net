@@ -433,15 +433,11 @@ function SetDeploymentOutputs(
         }
     }
     else {
-        if (!$CI) {
-            # Write an extra new line to isolate the environment variables for easy reading.
-            Log "Persist the following environment variables based on your detected shell ($shell):`n"
-        }
-
-        # Write overwrite warnings first, since local execution prints a runnable command to export variables
-        foreach ($key in $deploymentOutputs.Keys) {
-            if ([Environment]::GetEnvironmentVariable($key)) {
-                Write-Warning "Deployment outputs will overwrite pre-existing environment variable '$key'"
+        if ($CI) {
+            foreach ($key in $deploymentOutputs.Keys) {
+                if ([Environment]::GetEnvironmentVariable($key)) {
+                    Write-Warning "Deployment outputs will overwrite pre-existing environment variable '$key'"
+                }
             }
         }
 
@@ -467,18 +463,36 @@ function SetDeploymentOutputs(
                 LogVsoCommand "##vso[task.setvariable variable=$key;]$value"
             }
             else {
-                Write-Host ($shellExportFormat -f $key, $value)
+                # Printed by WriteDeferredDeploymentOutputs once all deployments and post-deployment
+                # scripts have finished, so the commands aren't buried in later output.
+                $deferredDeploymentOutputs[$key] = $value
             }
-        }
-
-        if ($key) {
-            # Isolate the environment variables for easy reading.
-            Write-Host "`n"
-            $key = $null
         }
     }
 
     return $deploymentEnvironmentVariables, $deploymentOutputs
+}
+
+function WriteDeferredDeploymentOutputs([System.Collections.IDictionary]$deploymentOutputs) {
+    if (!$deploymentOutputs -or !$deploymentOutputs.Count) {
+        return
+    }
+
+    # Write overwrite warnings first, since the commands below are meant to be copied and run as-is.
+    foreach ($key in $deploymentOutputs.Keys) {
+        if ([Environment]::GetEnvironmentVariable($key)) {
+            Write-Warning "Deployment outputs will overwrite pre-existing environment variable '$key'"
+        }
+    }
+
+    # Write extra new lines to isolate the environment variables for easy reading.
+    Write-Host "`n"
+    Log "Test resources were deployed, but the following environment variables have NOT been set in your current session."
+    Log "Run the following commands in your shell ($shell) to set them before running tests:`n"
+    foreach ($key in $deploymentOutputs.Keys) {
+        Write-Host ($shellExportFormat -f $key, $deploymentOutputs[$key])
+    }
+    Write-Host "`n"
 }
 
 <#

@@ -45,7 +45,8 @@ file contains `"Dotenv": true`. It must be in your `.gitignore` file;
 otherwise, an error is returned and no file is generated.
 
 Along with some log messages, this will output environment variables based on
-your current shell like in the following example:
+your current shell like in the following example. These commands are printed at
+the end of the run, after all deployments and post-deployment scripts have completed:
 
 ```powershell
 ${env:KEYVAULT_TENANT_ID} = '<<secret>>'
