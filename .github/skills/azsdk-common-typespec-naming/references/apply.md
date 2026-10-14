@@ -20,14 +20,14 @@ Example request text:
 
 > For C# ARM, rename the unshipped SDK property for `WidgetProperties.enabled` to `IsEnabled` using `@@clientName(..., "csharp")`. Reuse the existing `client.tsp` and ensure the generation entrypoint loads it. Preserve the wire name `enabled`, all Java/Python overrides, routes and other declarations. Do not modify SDK code or dependencies.
 
-The tool owns decorator imports, placement, target resolution and customization edits. Do not duplicate that implementation with file-edit or shell tools. For exact enum names, include the verified installed TCGC capability and required spelling; if unsupported, report the blocker rather than upgrading dependencies or writing unavailable syntax.
+The tool owns decorator imports, placement, target resolution and customization edits. Calling the tool is the authorized `client.tsp` mutation; the agent must not duplicate that implementation with file-edit or shell tools. For exact enum names, include the verified installed TCGC capability and required spelling; if unsupported, report the blocker rather than upgrading dependencies or writing unavailable syntax.
 
 ## Results and Failures
 
 - Inspect `Success`, error details, change summaries and remaining guidance. Do not claim all decisions were applied if the response is incomplete or reports manual intervention.
 - If the tool is unavailable, fails, or times out, report the unresolved customization. Do not fall back to direct edits, broaden scope to `All`/`CustomCode`, or create SDK-side rename shims.
 - If a tool failure may have left partial edits, inspect the diff read-only and report them. Do not undo unrelated work or repeat mutations blindly.
-- Read the successful diff to verify planned names, scopes, customization loading and unchanged wire/other-language names. A tool success response is not evidence that generated SDK names were verified.
+- Read the successful diff to verify planned names, scopes, customization loading and unchanged wire/other-language names. A tool success response or a valid `client.tsp` override is not evidence that generated SDK names were verified.
 
 ## Validation After Writes
 
