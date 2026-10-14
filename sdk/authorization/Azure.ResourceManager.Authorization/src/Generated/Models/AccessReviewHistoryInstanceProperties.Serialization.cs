@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (_runOnIsDefined || Optional.IsDefined(RunOn))
+            if (Optional.IsDefined(RunOn, _runOnIsDefined))
             {
                 if (RunOn != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     writer.WriteNull("runDateTime"u8);
                 }
             }
-            if (_fulfilledOnIsDefined || Optional.IsDefined(FulfilledOn))
+            if (Optional.IsDefined(FulfilledOn, _fulfilledOnIsDefined))
             {
                 if (FulfilledOn != null)
                 {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("downloadUri"u8);
                 writer.WriteStringValue(DownloadUri);
             }
-            if (_expirationIsDefined || Optional.IsDefined(Expiration))
+            if (Optional.IsDefined(Expiration, _expirationIsDefined))
             {
                 if (Expiration != null)
                 {

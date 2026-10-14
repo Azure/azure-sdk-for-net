@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId.Value);
             }
-            if (options.Format != "W" && (_startedByIsDefined || Optional.IsDefined(StartedBy)))
+            if (options.Format != "W" && Optional.IsDefined(StartedBy, _startedByIsDefined))
             {
                 if (StartedBy != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && (_startsOnIsDefined || Optional.IsDefined(StartsOn)))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn, _startsOnIsDefined))
             {
                 if (StartsOn != null)
                 {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("startTime"u8);
                 }
             }
-            if (options.Format != "W" && (_endsOnIsDefined || Optional.IsDefined(EndsOn)))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn, _endsOnIsDefined))
             {
                 if (EndsOn != null)
                 {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("endTime"u8);
                 }
             }
-            if (options.Format != "W" && (_lastModifiedOnIsDefined || Optional.IsDefined(LastModifiedOn)))
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn, _lastModifiedOnIsDefined))
             {
                 if (LastModifiedOn != null)
                 {
