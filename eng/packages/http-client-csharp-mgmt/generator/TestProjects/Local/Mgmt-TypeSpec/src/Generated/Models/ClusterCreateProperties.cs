@@ -20,7 +20,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
     internal partial class ClusterCreateProperties : ClusterProperties
     {
         private PublicNetworkAccess? _publicNetworkAccess;
-        internal bool _publicNetworkAccessIsDefined;
+        private bool _publicNetworkAccessIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ClusterCreateProperties"/>. </summary>
         public ClusterCreateProperties()
