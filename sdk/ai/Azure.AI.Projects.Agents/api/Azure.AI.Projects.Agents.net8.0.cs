@@ -2710,7 +2710,7 @@ namespace Azure.AI.Projects.Agents
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground VoiceAgentAvatarVideoBackground(System.Uri imageUrl = null, string color = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop VoiceAgentAvatarVideoCrop(System.Collections.Generic.IEnumerable<object> internalBottomRight = null, System.Collections.Generic.IEnumerable<object> internalTopLeft = null) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop VoiceAgentAvatarVideoCrop(System.Collections.Generic.IEnumerable<uint> bottomRight = null, System.Collections.Generic.IEnumerable<uint> topLeft = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams VoiceAgentAvatarVideoParams(int? bitrate = default(int?), Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop crop = null, Azure.AI.Projects.Agents.VoiceAgentAvatarVideoResolution resolution = null, Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground background = null, int? gopSize = default(int?)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -4782,8 +4782,6 @@ namespace Azure.AI.Projects.Agents
     {
         public VoiceAgentAvatarVideoCrop(System.Collections.Generic.IEnumerable<uint> bottomRight, System.Collections.Generic.IEnumerable<uint> topLeft) { }
         public System.Collections.Generic.IList<uint> BottomRight { get { throw null; } }
-        public System.Collections.Generic.IList<object> InternalBottomRight { get { throw null; } }
-        public System.Collections.Generic.IList<object> InternalTopLeft { get { throw null; } }
         public System.Collections.Generic.IList<uint> TopLeft { get { throw null; } }
         protected virtual Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

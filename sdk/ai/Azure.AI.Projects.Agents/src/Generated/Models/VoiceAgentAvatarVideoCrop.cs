@@ -16,13 +16,13 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAvatarVideoCrop"/>. </summary>
-        /// <param name="internalBottomRight"></param>
-        /// <param name="internalTopLeft"></param>
+        /// <param name="bottomRight"></param>
+        /// <param name="topLeft"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentAvatarVideoCrop(IList<object> internalBottomRight, IList<object> internalTopLeft, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentAvatarVideoCrop(IList<uint> bottomRight, IList<uint> topLeft, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            InternalBottomRight = internalBottomRight;
-            InternalTopLeft = internalTopLeft;
+            BottomRight = bottomRight;
+            TopLeft = topLeft;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }

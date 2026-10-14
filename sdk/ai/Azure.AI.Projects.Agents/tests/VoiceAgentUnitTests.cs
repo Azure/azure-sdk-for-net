@@ -53,10 +53,6 @@ public class VoiceAgentUnitTests
         VoiceAgentAvatarVideoCrop crop = new(bottomRight: [1, 2, 3], topLeft: [4, 5, 6]);
         Assert.That(crop.BottomRight, Is.EqualTo([1, 2, 3]));
         Assert.That(crop.TopLeft, Is.EqualTo([4, 5, 6]));
-        // Test with the objects
-        crop = new(bottomRight: [(object)1, (object)2, (object)3], topLeft: [(object)4, (object)5, (object)6]);
-        Assert.That(crop.BottomRight, Is.EqualTo([1, 2, 3]));
-        Assert.That(crop.TopLeft, Is.EqualTo([4, 5, 6]));
     }
 
     [Test]
