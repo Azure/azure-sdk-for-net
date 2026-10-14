@@ -1,4 +1,4 @@
 directory: specification/storage/resource-manager/Microsoft.Storage/Storage
-commit: 4ed7d69a80c96d88ca090a8318f4a4d2cae6c8e6
+commit: 214f483981ab96f435c3353d6f6dbeb95adfa511
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"
