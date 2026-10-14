@@ -267,9 +267,10 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         // Parse targetScope
         if (element.TryGetProperty("targetScope", out JsonElement scopeElement))
         {
-            string scope = scopeElement.GetString()!;
+            string? scope = scopeElement.GetString();
             infra.TargetScope = scope switch
             {
+                null => null,
                 "resourceGroup" => DeploymentScope.ResourceGroup,
                 "subscription" => DeploymentScope.Subscription,
                 "managementGroup" => DeploymentScope.ManagementGroup,

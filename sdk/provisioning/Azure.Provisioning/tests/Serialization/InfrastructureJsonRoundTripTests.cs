@@ -271,6 +271,18 @@ public class InfrastructureJsonRoundTripTests
     }
 
     [Test]
+    public void Deserialize_NullTargetScope()
+    {
+        Infrastructure infra = SerializationTestHelpers.DeserializeFromJson(
+            """{"fileName":"main.bicep","targetScope":null}""");
+
+        Assert.IsNull(infra.TargetScope);
+
+        using JsonDocument document = JsonDocument.Parse(SerializationTestHelpers.SerializeToJson(infra));
+        Assert.IsFalse(document.RootElement.TryGetProperty("targetScope", out _));
+    }
+
+    [Test]
     public void Deserialize_InvalidTargetScope()
     {
         FormatException exception = Assert.Throws<FormatException>(() =>
