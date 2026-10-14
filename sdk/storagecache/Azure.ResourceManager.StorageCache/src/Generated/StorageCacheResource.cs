@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StorageCacheResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string storageCacheApiVersion);
             _cachesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ResourceType.Namespace, Diagnostics);
-            _cachesRestClient = new Caches(_cachesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageCacheApiVersion ?? "2026-08-01");
+            _cachesRestClient = new Caches(_cachesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.StorageCache/caches", out string cachesApiVersionOverride) ? cachesApiVersionOverride : "2026-08-01");
             ValidateResourceId(id);
         }
 

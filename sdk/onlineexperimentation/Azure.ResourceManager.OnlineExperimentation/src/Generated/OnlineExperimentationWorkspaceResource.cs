@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OnlineExperimentationWorkspaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string onlineExperimentationWorkspaceApiVersion);
             _onlineExperimentationWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OnlineExperimentation", ResourceType.Namespace, Diagnostics);
-            _onlineExperimentationWorkspacesRestClient = new OnlineExperimentationWorkspaces(_onlineExperimentationWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, onlineExperimentationWorkspaceApiVersion ?? "2025-08-01-preview");
+            _onlineExperimentationWorkspacesRestClient = new OnlineExperimentationWorkspaces(_onlineExperimentationWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.OnlineExperimentation/workspaces", out string onlineExperimentationWorkspacesApiVersionOverride) ? onlineExperimentationWorkspacesApiVersionOverride : "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

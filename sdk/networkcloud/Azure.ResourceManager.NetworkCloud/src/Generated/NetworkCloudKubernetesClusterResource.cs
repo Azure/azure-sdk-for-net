@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudKubernetesClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string networkCloudKubernetesClusterApiVersion);
             _kubernetesClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            _kubernetesClustersRestClient = new KubernetesClusters(_kubernetesClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudKubernetesClusterApiVersion ?? "2026-07-01");
+            _kubernetesClustersRestClient = new KubernetesClusters(_kubernetesClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkCloud/kubernetesClusters", out string kubernetesClustersApiVersionOverride) ? kubernetesClustersApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
 
         private ClientDiagnostics FleetsClientDiagnostics => _fleetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Fleets FleetsRestClient => _fleetsRestClient ??= new Fleets(FleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-02-preview");
+        private Fleets FleetsRestClient => _fleetsRestClient ??= new Fleets(FleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerService/fleets", out string apiVersion) ? apiVersion : "2026-06-02-preview");
 
         /// <summary>
         /// Lists fleets in the specified subscription.

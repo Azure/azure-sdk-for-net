@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerServiceManagedClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string containerServiceManagedClusterApiVersion);
             _managedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceManagedClusterApiVersion ?? "2026-07-01");
+            _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerService/managedClusters", out string managedClustersApiVersionOverride) ? managedClustersApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 

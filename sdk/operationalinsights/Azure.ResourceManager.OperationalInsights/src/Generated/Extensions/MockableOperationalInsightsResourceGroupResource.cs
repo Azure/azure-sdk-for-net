@@ -41,11 +41,23 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
 
         private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(
+            WorkspacesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-03-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics QueryPacksClientDiagnostics => _queryPacksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private QueryPacks QueryPacksRestClient => _queryPacksRestClient ??= new QueryPacks(QueryPacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private QueryPacks QueryPacksRestClient => _queryPacksRestClient ??= new QueryPacks(
+            QueryPacksClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-03-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DeletedWorkspacesClientDiagnostics => _deletedWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

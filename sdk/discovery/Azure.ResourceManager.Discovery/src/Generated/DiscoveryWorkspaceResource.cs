@@ -51,9 +51,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryWorkspaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string discoveryWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryWorkspaceApiVersion ?? "2026-06-01");
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Discovery/workspaces", out string workspacesApiVersionOverride) ? workspacesApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 

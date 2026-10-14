@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScalingPlanResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string scalingPlanApiVersion);
             _scalingPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _scalingPlansRestClient = new ScalingPlans(_scalingPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scalingPlanApiVersion ?? "2026-03-01-preview");
+            _scalingPlansRestClient = new ScalingPlans(_scalingPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

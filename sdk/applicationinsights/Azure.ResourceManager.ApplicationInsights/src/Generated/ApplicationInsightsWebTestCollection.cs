@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApplicationInsightsWebTestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ApplicationInsightsWebTestResource.ResourceType, out string applicationInsightsWebTestApiVersion);
             _webTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ApplicationInsightsWebTestResource.ResourceType.Namespace, Diagnostics);
-            _webTestsRestClient = new WebTests(_webTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsWebTestApiVersion ?? "2022-06-15");
+            _webTestsRestClient = new WebTests(_webTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

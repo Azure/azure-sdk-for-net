@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
 
         private ClientDiagnostics ServersClientDiagnostics => _serversClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Servers ServersRestClient => _serversRestClient ??= new Servers(ServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-30");
+        private Servers ServersRestClient => _serversRestClient ??= new Servers(ServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DBforMySQL/flexibleServers", out string apiVersion) ? apiVersion : "2024-12-30");
 
         private ClientDiagnostics LocationBasedCapabilitiesClientDiagnostics => _locationBasedCapabilitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

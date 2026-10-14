@@ -40,9 +40,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudAccessBridgeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkCloudAccessBridgeResource.ResourceType, out string networkCloudAccessBridgeApiVersion);
             _accessBridgesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudAccessBridgeResource.ResourceType.Namespace, Diagnostics);
-            _accessBridgesRestClient = new AccessBridges(_accessBridgesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudAccessBridgeApiVersion ?? "2026-07-01");
+            _accessBridgesRestClient = new AccessBridges(_accessBridgesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkCloud/accessBridges", out string accessBridgesApiVersionOverride) ? accessBridgesApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
