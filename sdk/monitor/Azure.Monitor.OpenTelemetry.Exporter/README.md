@@ -419,3 +419,15 @@ In AOT scenarios, you can configure the Azure Monitor Exporter using one of the 
             // Set other options as needed
         });
     ```
+
+## Multi-endpoint routing with Microsoft Entra ID
+
+With multi-endpoint routing enabled (the `Azure.Monitor.OpenTelemetry.EnableMultiEndpointRouting` AppContext switch), each telemetry item names its destination with the `microsoft.instrumentation_key` and `microsoft.ingestion_endpoint` attributes. To send to a resource that uses Microsoft Entra ID authentication:
+
+- Add `microsoft.ingestion_auth = "aad"` to that resource's telemetry. Resources with local authentication disabled require it; telemetry without it is sent without a token.
+- Set the same `AzureMonitorExporterOptions.Credential` on every exporter. One identity is used for all destinations and needs the Monitoring Metrics Publisher role on each resource that receives `"aad"` telemetry. Without a credential, `"aad"` telemetry is dropped.
+- Outside the public cloud, set the audience:
+
+    ```csharp
+    AppContext.SetData("Azure.Monitor.OpenTelemetry.Exporter.MultiEndpointAadAudience", "https://monitor.azure.cn/");
+    ```

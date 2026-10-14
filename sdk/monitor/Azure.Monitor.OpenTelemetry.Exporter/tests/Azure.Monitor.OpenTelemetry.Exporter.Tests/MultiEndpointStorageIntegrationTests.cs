@@ -348,6 +348,53 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(EastUs + EndpointRouting.AadRouteSuffix, dropped.Payload[2]);
         }
 
+        [Theory]
+        [InlineData(false, 401, "microsoft.ingestion_auth")]
+        [InlineData(true, 403, "Monitoring Metrics Publisher")]
+        [InlineData(true, 401, "MultiEndpointAadAudience")]
+        public void AnAuthenticationFailureNamesTheRouteAndTheLikelyFix(bool isAad, int statusCode, string hint)
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetStatus(EastUs, statusCode);
+            using var exporter = CreateExporter(ingestion, out _, isAad ? new RecordingCredential() : null);
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Warning, EventKeywords.All);
+
+            exporter.Export(CreateBatch(CreateActivity("ikey-east", EastUs, ingestionAuth: isAad ? "aad" : null)));
+
+            var failed = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedAuthenticationFailed"));
+            Assert.Equal(isAad ? EastUs + EndpointRouting.AadRouteSuffix : EastUs, failed.Payload![0]);
+            Assert.Equal(statusCode, failed.Payload[1]);
+            Assert.Contains(hint, (string)failed.Payload[2]!, StringComparison.Ordinal);
+        }
+
+        [Fact]
+        public void OtherFailuresDoNotReportAnAuthenticationFailure()
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetStatus(EastUs, 500);
+            using var exporter = CreateExporter(ingestion, out _);
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Warning, EventKeywords.All);
+
+            exporter.Export(CreateBatch(CreateActivity("ikey-east", EastUs)));
+
+            Assert.DoesNotContain(listener.Messages, e => e.EventName == "RoutedAuthenticationFailed");
+        }
+
+        [Fact]
+        public void TransmissionFailureWithoutAConnectionStringShowsNoConfiguredDestination()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Critical, EventKeywords.All);
+
+            AzureMonitorExporterEventSource.Log.TransmissionFailed(500, TelemetryItemOrigin.UnitTest, isAadEnabled: false, willRetry: false, ConnectionVars.CreateUnconfigured(), "eastus-1.in.applicationinsights.azure.com", response: null);
+
+            var failed = Assert.Single(listener.Messages.Where(e => e.EventId == 8));
+            Assert.Equal("none", failed.Payload![5]);
+            Assert.Equal("none", failed.Payload[6]);
+        }
+
         [Fact]
         public void PartitionsAreCreatedOutsideTheHostStorageDirectory()
         {
