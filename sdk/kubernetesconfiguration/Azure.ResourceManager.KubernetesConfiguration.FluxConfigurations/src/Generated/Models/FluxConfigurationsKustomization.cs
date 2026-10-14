@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private long? _timeoutInSeconds;
-        internal bool _timeoutInSecondsIsDefined;
+        private bool _timeoutInSecondsIsDefined;
         private long? _syncIntervalInSeconds;
-        internal bool _syncIntervalInSecondsIsDefined;
+        private bool _syncIntervalInSecondsIsDefined;
         private long? _retryIntervalInSeconds;
-        internal bool _retryIntervalInSecondsIsDefined;
+        private bool _retryIntervalInSecondsIsDefined;
         private FluxPostBuild _postBuild;
-        internal bool _postBuildIsDefined;
+        private bool _postBuildIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxConfigurationsKustomization"/>. </summary>
         public FluxConfigurationsKustomization()
