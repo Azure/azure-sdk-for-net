@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
             }
-            if (_acsEndpointIsDefined || Optional.IsDefined(AcsEndpoint))
+            if (Optional.IsDefined(AcsEndpoint, _acsEndpointIsDefined))
             {
                 if (AcsEndpoint != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("acsEndpoint"u8);
                 }
             }
-            if (_acsSecretIsDefined || Optional.IsDefined(AcsSecret))
+            if (Optional.IsDefined(AcsSecret, _acsSecretIsDefined))
             {
                 if (AcsSecret != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("acsResourceId"u8);
                 writer.WriteStringValue(AcsResourceId);
             }
-            if (_cognitiveServiceSubscriptionKeyIsDefined || Optional.IsDefined(CognitiveServiceSubscriptionKey))
+            if (Optional.IsDefined(CognitiveServiceSubscriptionKey, _cognitiveServiceSubscriptionKeyIsDefined))
             {
                 if (CognitiveServiceSubscriptionKey != null)
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceSubscriptionKey"u8);
                 }
             }
-            if (_cognitiveServiceRegionIsDefined || Optional.IsDefined(CognitiveServiceRegion))
+            if (Optional.IsDefined(CognitiveServiceRegion, _cognitiveServiceRegionIsDefined))
             {
                 if (CognitiveServiceRegion != null)
                 {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("cognitiveServiceResourceId"u8);
                 writer.WriteStringValue(CognitiveServiceResourceId);
             }
-            if (_defaultLocaleIsDefined || Optional.IsDefined(DefaultLocale))
+            if (Optional.IsDefined(DefaultLocale, _defaultLocaleIsDefined))
             {
                 if (DefaultLocale != null)
                 {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("defaultLocale"u8);
                 }
             }
-            if (_offerTypeIsDefined || Optional.IsDefined(OfferType))
+            if (Optional.IsDefined(OfferType, _offerTypeIsDefined))
             {
                 if (OfferType != null)
                 {

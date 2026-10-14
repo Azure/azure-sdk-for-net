@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (_valueIsDefined || Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value, _valueIsDefined))
             {
                 if (Value != null)
                 {
