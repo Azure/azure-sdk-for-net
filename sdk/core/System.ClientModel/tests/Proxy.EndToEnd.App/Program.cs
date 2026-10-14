@@ -46,8 +46,9 @@ Console.WriteLine("===========================");
 {
     var transport = new CannedResponseTransport("{\"type\":\"bing_grounding\",\"market\":\"en-US\"}");
 
-    // The customer layers the third-party Bing proxy on top; the first-party proxy stays hidden.
-    var client = new FirstPartyToolsClient(new ClientPipelineOptions { Transport = transport }, o => o.AddBingTools());
+    var clientOptions = new ClientPipelineOptions { Transport = transport };
+    clientOptions.AddProxy<ResponseTool>(new BingGroundingToolProxy());
+    var client = new FirstPartyToolsClient(clientOptions);
 
     ResponseTool tool = client.GetTool("tool-2");
 
@@ -63,13 +64,34 @@ Console.WriteLine("===========================");
     }
 }
 
-// --- Case 3: plain OpenAI client, no proxy -> base fallback (proves the proxy is what changes behavior) ---
+// --- Case 3: direct OpenAI client needs explicit registration on its client options ---
+{
+    var clientOptions = new ClientPipelineOptions
+    {
+        Transport = new CannedResponseTransport("{\"type\":\"azure_search\",\"index_name\":\"docs\"}")
+    };
+    clientOptions.AddProxy<ResponseTool>(new AzureSearchToolProxy());
+    var client = new ResponseToolsClient(clientOptions);
+    ResponseTool tool = client.GetTool("tool-3");
+
+    if (tool is AzureSearchTool azure && azure.IndexName == "docs")
+    {
+        Console.WriteLine($"PASS  direct OpenAI  -> {tool.GetType().FullName} (registered on client options)");
+    }
+    else
+    {
+        Console.Error.WriteLine($"FAIL  direct OpenAI  -> expected AzureSearchTool, got {tool.GetType().FullName}");
+        failures++;
+    }
+}
+
+// --- Case 4: plain OpenAI client, no proxy -> base fallback (proves the proxy is what changes behavior) ---
 {
     var transport = new CannedResponseTransport("{\"type\":\"azure_search\",\"index_name\":\"docs\"}");
     // No ModelReaderWriterOptions set on the pipeline options -> no proxy.
     var client = new ResponseToolsClient(new ClientPipelineOptions { Transport = transport });
 
-    ResponseTool tool = client.GetTool("tool-3");
+    ResponseTool tool = client.GetTool("tool-4");
 
     if (tool is UnknownResponseTool)
     {

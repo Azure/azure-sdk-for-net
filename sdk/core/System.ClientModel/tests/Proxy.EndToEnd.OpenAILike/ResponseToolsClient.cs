@@ -37,7 +37,9 @@ namespace System.ClientModel.Tests.Proxy.OpenAILike
 
             // Store the caller-provided MRW options (with any proxies) so serialization uses them
             // automatically — the join point a generated client would receive from the generator.
-            _mrwOptions = pipelineOptions.ModelReaderWriterOptions ?? new ModelReaderWriterOptions("J");
+            _mrwOptions = pipelineOptions.ModelReaderWriterOptions is { } configuredOptions
+                ? new ModelReaderWriterOptions("J", configuredOptions)
+                : ModelReaderWriterOptions.Json;
             _pipeline = ClientPipeline.Create(pipelineOptions);
         }
 

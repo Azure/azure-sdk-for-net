@@ -59,6 +59,16 @@ OutputModel? model = JsonSerializer.Deserialize<OutputModel>(json, options);
 
 In more advanced scenarios a library user might want to override the behavior of how a model is read or written. In this case you can implement your own class which implements the same interface, either `IPersistableModel<T>` or `IJsonModel<T>`, and register it with the `ModelReaderWriterOptions`. The proxy is only valid for a single instance of `ModelReaderWriterOptions` giving you more flexibility to turn it on or off.
 
+For a client that uses `ClientPipelineOptions`, register a proxy on the client options **before constructing the client**:
+
+```csharp
+var clientOptions = new ClientPipelineOptions();
+clientOptions.AddProxy<OutputModel>(new OutputModelProxy());
+// Pass clientOptions to the generated client constructor.
+```
+
+This works when the client forwards its configured options to `ModelReaderWriter` during serialization and deserialization; support in published generated clients requires the separate generator change. An Azure client that installs its own proxy internally needs no additional customer registration. The direct `ModelReaderWriterOptions` examples below are for standalone model serialization rather than client construction.
+
 ### Unconditional Proxy
 
 An unconditional proxy always handles the type it's registered for. Simply implement `IJsonModel<T>` (or `IPersistableModel<T>`) and register it.

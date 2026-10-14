@@ -258,11 +258,13 @@ namespace System.ClientModel.Primitives
         public bool? EnableDistributedTracing { get { throw null; } set { } }
         public bool IsReadOnly { get { throw null; } }
         public System.ClientModel.Primitives.PipelinePolicy? MessageLoggingPolicy { get { throw null; } set { } }
-        public System.ClientModel.Primitives.ModelReaderWriterOptions? ModelReaderWriterOptions { get { throw null; } set { } }
+        public System.ClientModel.Primitives.ModelReaderWriterOptions? ModelReaderWriterOptions { get { throw null; } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
+        public void AddProxy<T>(System.ClientModel.Primitives.ConditionalModelProxy<T> proxy) where T : System.ClientModel.Primitives.IPersistableModel<T> { }
+        public void AddProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> proxy) { }
         protected void AssertNotFrozen() { }
         public virtual System.ClientModel.Primitives.ClientPipelineOptions Clone() { throw null; }
         public virtual void Freeze() { }
@@ -551,7 +553,6 @@ namespace System.ClientModel.Primitives
         public object? ProxiedModel { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
         public void AddProxy<T>(System.ClientModel.Primitives.ConditionalModelProxy<T> proxy) where T : System.ClientModel.Primitives.IPersistableModel<T> { }
-        public void AddProxy<T>(System.ClientModel.Primitives.IJsonModel<T> proxy) { }
         public void AddProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> proxy) { }
         public System.ClientModel.Primitives.IJsonModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IJsonModel<T> model) { throw null; }
         public System.ClientModel.Primitives.IPersistableModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> model) { throw null; }

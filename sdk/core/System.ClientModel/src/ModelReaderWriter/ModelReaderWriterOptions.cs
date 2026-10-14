@@ -40,7 +40,7 @@ public class ModelReaderWriterOptions
 
     /// <summary>
     /// Initializes a new instance of <see cref="ModelReaderWriterOptions"/> in the specified format
-    /// that reuses the proxies registered on <paramref name="options"/>.
+    /// that copies the proxy registrations from <paramref name="options"/>.
     /// </summary>
     /// <param name="format">The format to read and write models. Pass in 'W' to use the service-defined wire format.</param>
     /// <param name="options">The options containing the proxies to reuse.</param>
@@ -49,13 +49,22 @@ public class ModelReaderWriterOptions
         Argument.AssertNotNull(options, nameof(options));
 
         Format = format;
-        _proxies = options._proxies;
+        if (options._proxies is not null)
+        {
+            _proxies = new Dictionary<Type, List<ProxyEntry>>(options._proxies.Count);
+            foreach (KeyValuePair<Type, List<ProxyEntry>> entry in options._proxies)
+            {
+                _proxies.Add(entry.Key, new List<ProxyEntry>(entry.Value));
+            }
+        }
         _userOptions = options._userOptions ?? options;
     }
 
     internal ModelReaderWriterOptions(ModelReaderWriterOptions options)
-        : this(options.Format, options)
+        : this(options.Format)
     {
+        _proxies = options._proxies;
+        _userOptions = options._userOptions ?? options;
         IsCoreOwned = true;
     }
 
@@ -107,19 +116,6 @@ public class ModelReaderWriterOptions
     /// </summary>
     /// <param name="proxy">The proxy implementation.</param>
     public void AddProxy<T>(IPersistableModel<T> proxy)
-    {
-        Argument.AssertNotNull(proxy, nameof(proxy));
-        AssertNotFrozen();
-        GetOrAddProxyList(typeof(T)).Add(new DirectProxyEntry<T>(proxy));
-    }
-
-    /// <summary>
-    /// Registers an <see cref="IJsonModel{T}"/> as a proxy for the specified type.
-    /// Proxies are consulted in the order they were registered.
-    /// Direct (non-conditional) proxies always match, the first registered one wins.
-    /// </summary>
-    /// <param name="proxy">The proxy implementation.</param>
-    public void AddProxy<T>(IJsonModel<T> proxy)
     {
         Argument.AssertNotNull(proxy, nameof(proxy));
         AssertNotFrozen();

@@ -712,7 +712,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void FormatAndOptionsConstructor_ClonesForExecutionAndPreservesProxyOptions()
+        public void FormatAndOptionsConstructor_CopiesRegistrationsAndPreservesProxyOptions()
         {
             var userOptions = new FlaggedOptions(useProxy: true);
             var proxy = new OptionsAwareProxy();
@@ -723,7 +723,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             Assert.AreEqual("W", wireOptions.Format);
             Assert.IsFalse(wireOptions.IsCoreOwned);
-            Assert.AreSame(GetProxies(userOptions), GetProxies(wireOptions));
+            Assert.AreNotSame(GetProxies(userOptions), GetProxies(wireOptions));
             Assert.IsNotNull(result);
             Assert.IsTrue(proxy.CreateWasCalled, "The conditional proxy should receive the original derived options.");
         }

@@ -126,11 +126,8 @@ public class ClientPipelineOptions
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Primitives.ModelReaderWriterOptions"/> a client should use when it
-    /// serializes and deserializes models. When set, the client stores these options and passes them to
-    /// <see cref="ModelReaderWriter"/> automatically, so any proxies registered on them take effect for
-    /// every call — without changing the client's constructors. A derived options type (e.g. a
-    /// first-party library's) inherits this property, letting that library inject its proxies transparently.
+    /// Gets the <see cref="Primitives.ModelReaderWriterOptions"/> containing proxies registered with
+    /// <see cref="AddProxy{T}(IPersistableModel{T})"/> for clients constructed with these options.
     /// </summary>
     /// <remarks>
     /// PROTOTYPE (MRW proxy E2E): this property models the agreed design of carrying
@@ -138,15 +135,30 @@ public class ClientPipelineOptions
     /// inject them at (de)serialization time. It exists to validate the end-to-end scenario locally and is
     /// pending API review before it becomes part of the public surface.
     /// </remarks>
-    public ModelReaderWriterOptions? ModelReaderWriterOptions
-    {
-        get => _modelReaderWriterOptions;
-        set
-        {
-            AssertNotFrozen();
+    public ModelReaderWriterOptions? ModelReaderWriterOptions => _modelReaderWriterOptions;
 
-            _modelReaderWriterOptions = value;
-        }
+    /// <summary>
+    /// Registers a proxy for models handled by clients constructed with these options.
+    /// </summary>
+    /// <typeparam name="T">The model type to proxy.</typeparam>
+    /// <param name="proxy">The proxy implementation.</param>
+    public void AddProxy<T>(IPersistableModel<T> proxy)
+    {
+        Argument.AssertNotNull(proxy, nameof(proxy));
+        AssertNotFrozen();
+        (_modelReaderWriterOptions ??= new ModelReaderWriterOptions("J")).AddProxy(proxy);
+    }
+
+    /// <summary>
+    /// Registers a conditional proxy for models handled by clients constructed with these options.
+    /// </summary>
+    /// <typeparam name="T">The model type to proxy.</typeparam>
+    /// <param name="proxy">The conditional proxy implementation.</param>
+    public void AddProxy<T>(ConditionalModelProxy<T> proxy) where T : IPersistableModel<T>
+    {
+        Argument.AssertNotNull(proxy, nameof(proxy));
+        AssertNotFrozen();
+        (_modelReaderWriterOptions ??= new ModelReaderWriterOptions("J")).AddProxy(proxy);
     }
 
     #endregion
@@ -305,7 +317,9 @@ public class ClientPipelineOptions
         clone._timeout = _timeout;
         clone._enabledDistributedTracing = _enabledDistributedTracing;
         clone._loggingOptions = _loggingOptions?.Clone();
-        clone._modelReaderWriterOptions = _modelReaderWriterOptions;
+        clone._modelReaderWriterOptions = _modelReaderWriterOptions is { } options
+            ? new ModelReaderWriterOptions(options.Format, options)
+            : null;
         clone.PerCallPolicies = PerCallPolicies is not null
             ? (PipelinePolicy[])PerCallPolicies.Clone()
             : null;

@@ -22,22 +22,22 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
     public class ProxyEndToEndTests
     {
         // Builds a client whose transport returns the given canned response body, with optional proxies registered.
-        private static ResponseToolsClient CreateClient(string cannedResponseJson, Action<ModelReaderWriterOptions>? registerProxies = null)
+        private static ResponseToolsClient CreateClient(string cannedResponseJson, Action<ClientPipelineOptions>? registerProxies = null)
         {
-            var mrwOptions = new ModelReaderWriterOptions("J");
-            registerProxies?.Invoke(mrwOptions);
-
             var pipelineOptions = new ClientPipelineOptions
             {
-                Transport = new CannedResponseTransport(cannedResponseJson),
-                ModelReaderWriterOptions = mrwOptions
+                Transport = new CannedResponseTransport(cannedResponseJson)
             };
+            registerProxies?.Invoke(pipelineOptions);
 
             return new ResponseToolsClient(pipelineOptions);
         }
 
-        private static void RegisterBothProxies(ModelReaderWriterOptions options)
-            => options.AddAzureTools().AddBingTools();
+        private static void RegisterBothProxies(ClientPipelineOptions options)
+        {
+            options.AddProxy<ResponseTool>(new AzureSearchToolProxy());
+            options.AddProxy<ResponseTool>(new BingGroundingToolProxy());
+        }
 
         [Test]
         public void FunctionTool_HandledByBase()
@@ -61,6 +61,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsInstanceOf<AzureSearchTool>(tool);
             Assert.AreEqual(typeof(AzureSearchTool).Assembly, tool.GetType().Assembly);
             Assert.AreEqual("docs", ((AzureSearchTool)tool).IndexName);
+        }
+
+        [Test]
+        public void DirectClient_RegistersAzureProxyOnClientOptions()
+        {
+            ResponseToolsClient client = CreateClient(
+                "{\"type\":\"azure_search\",\"index_name\":\"docs\"}",
+                options => options.AddProxy<ResponseTool>(new AzureSearchToolProxy()));
+
+            Assert.IsInstanceOf<AzureSearchTool>(client.GetTool("direct"));
         }
 
         [Test]
@@ -146,13 +156,131 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             {
                 Transport = new CannedResponseTransport("{\"type\":\"bing_grounding\",\"market\":\"en-US\"}")
             };
-            var client = new FirstPartyToolsClient(pipelineOptions, o => o.AddBingTools());
+            var client = new FirstPartyToolsClient(
+                pipelineOptions, o => o.AddProxy<ResponseTool>(new BingGroundingToolProxy()));
 
             ResponseTool tool = client.GetTool("t7");
 
             Assert.IsInstanceOf<BingGroundingTool>(tool);
             Assert.AreEqual(typeof(BingGroundingTool).Assembly, tool.GetType().Assembly);
             Assert.AreEqual("en-US", ((BingGroundingTool)tool).Market);
+        }
+
+        [Test]
+        public void FirstPartyClient_PreservesProxiesConfiguredBeforeConstruction()
+        {
+            var pipelineOptions = new ClientPipelineOptions
+            {
+                Transport = new CannedResponseTransport("{\"type\":\"bing_grounding\",\"market\":\"en-US\"}")
+            };
+            pipelineOptions.AddProxy<ResponseTool>(new BingGroundingToolProxy());
+
+            var client = new FirstPartyToolsClient(pipelineOptions);
+            ResponseTool tool = client.GetTool("t8");
+
+            Assert.IsInstanceOf<BingGroundingTool>(tool);
+            Assert.AreEqual(typeof(BingGroundingTool).Assembly, tool.GetType().Assembly);
+            Assert.AreEqual("en-US", ((BingGroundingTool)tool).Market);
+        }
+
+        [Test]
+        public void SeparateClients_UseOnlyTheirRegisteredProxies()
+        {
+            const string azurePayload = "{\"type\":\"azure_search\",\"index_name\":\"docs\"}";
+            var azureClient = CreateClient(azurePayload, options => options.AddProxy<ResponseTool>(new AzureSearchToolProxy()));
+            var bingOnlyClient = CreateClient(azurePayload, options => options.AddProxy<ResponseTool>(new BingGroundingToolProxy()));
+            var bingClient = CreateClient(
+                "{\"type\":\"bing_grounding\",\"market\":\"en-US\"}",
+                options => options.AddProxy<ResponseTool>(new BingGroundingToolProxy()));
+
+            ResponseTool azure = azureClient.GetTool("a");
+            ResponseTool noAzure = bingOnlyClient.GetTool("b");
+            ResponseTool bing = bingClient.GetTool("c");
+
+            Assert.IsInstanceOf<AzureSearchTool>(azure);
+            Assert.AreEqual(typeof(AzureSearchTool).Assembly, azure.GetType().Assembly);
+            Assert.IsInstanceOf<UnknownResponseTool>(noAzure);
+            Assert.IsInstanceOf<BingGroundingTool>(bing);
+            Assert.AreEqual(typeof(BingGroundingTool).Assembly, bing.GetType().Assembly);
+        }
+
+        [Test]
+        public void DisjointProxies_SelectByPayloadWhenRegisteredInReverseOrder()
+        {
+            var azureClient = CreateClient(
+                "{\"type\":\"azure_search\",\"index_name\":\"docs\"}",
+                options =>
+                {
+                    options.AddProxy<ResponseTool>(new BingGroundingToolProxy());
+                    options.AddProxy<ResponseTool>(new AzureSearchToolProxy());
+                });
+            var bingClient = CreateClient(
+                "{\"type\":\"bing_grounding\",\"market\":\"en-US\"}",
+                options =>
+                {
+                    options.AddProxy<ResponseTool>(new BingGroundingToolProxy());
+                    options.AddProxy<ResponseTool>(new AzureSearchToolProxy());
+                });
+
+            Assert.IsInstanceOf<AzureSearchTool>(azureClient.GetTool("a"));
+            Assert.IsInstanceOf<BingGroundingTool>(bingClient.GetTool("b"));
+        }
+
+        [Test]
+        public void ClientOptions_AddProxyRejectsNullAndFrozenOptions()
+        {
+            var options = new ClientPipelineOptions
+            {
+                Transport = new CannedResponseTransport("{\"type\":\"azure_search\"}")
+            };
+
+            Assert.Throws<ArgumentNullException>(
+                () => options.AddProxy<ResponseTool>((IPersistableModel<ResponseTool>)null!));
+            Assert.Throws<ArgumentNullException>(
+                () => options.AddProxy<ResponseTool>((ConditionalModelProxy<ResponseTool>)null!));
+
+            ClientPipeline.Create(options);
+
+            Assert.Throws<InvalidOperationException>(
+                () => options.AddProxy<ResponseTool>(new AzureSearchToolProxy()));
+        }
+
+        [Test]
+        public void ClientOptions_DoNotExposeAModelReaderWriterOptionsSetter()
+        {
+            Assert.IsNull(typeof(ClientPipelineOptions)
+                .GetProperty(nameof(ClientPipelineOptions.ModelReaderWriterOptions))!.GetSetMethod());
+        }
+
+        [Test]
+        public void ClientConstruction_SnapshotsProxyRegistrations()
+        {
+            var options = new ClientPipelineOptions
+            {
+                Transport = new CannedResponseTransport("{\"type\":\"bing_grounding\",\"market\":\"en-US\"}")
+            };
+            options.AddProxy<ResponseTool>(new AzureSearchToolProxy());
+            var client = new ResponseToolsClient(options);
+
+            options.ModelReaderWriterOptions!.AddProxy<ResponseTool>(new BingGroundingToolProxy());
+
+            Assert.IsInstanceOf<UnknownResponseTool>(client.GetTool("snapshot"));
+        }
+
+        [Test]
+        public void ClientOptionsClone_SeparatesProxyRegistrations()
+        {
+            var options = new ClientPipelineOptions
+            {
+                Transport = new CannedResponseTransport("{\"type\":\"bing_grounding\",\"market\":\"en-US\"}")
+            };
+            options.AddProxy<ResponseTool>(new AzureSearchToolProxy());
+            ClientPipelineOptions clone = options.Clone();
+            options.ModelReaderWriterOptions!.AddProxy<ResponseTool>(new BingGroundingToolProxy());
+
+            var client = new ResponseToolsClient(clone);
+
+            Assert.IsInstanceOf<UnknownResponseTool>(client.GetTool("clone"));
         }
     }
 }

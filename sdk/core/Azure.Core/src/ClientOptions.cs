@@ -139,11 +139,8 @@ namespace Azure.Core
         public HttpPipelinePolicy? RetryPolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="System.ClientModel.Primitives.ModelReaderWriterOptions"/> a client should use when it
-        /// serializes and deserializes models. When set, the client stores these options and passes them to
-        /// <see cref="ModelReaderWriter"/> automatically, so any proxies registered on them take effect for
-        /// every call — without changing the client's constructors. A derived <see cref="ClientOptions"/> type
-        /// (e.g. a first-party library's) inherits this property, letting that library inject its proxies transparently.
+        /// Gets the <see cref="System.ClientModel.Primitives.ModelReaderWriterOptions"/> containing proxies registered
+        /// with <see cref="AddProxy{T}(IPersistableModel{T})"/> for clients constructed with these options.
         /// </summary>
         /// <remarks>
         /// PROTOTYPE (MRW proxy E2E): this mirrors the equivalent property on
@@ -151,7 +148,29 @@ namespace Azure.Core
         /// available to Azure SDK clients (e.g. Foundry, which builds on Azure.Core). It exists to validate the
         /// end-to-end scenario locally and is pending API review before it becomes part of the public surface.
         /// </remarks>
-        public ModelReaderWriterOptions? ModelReaderWriterOptions { get; set; }
+        public ModelReaderWriterOptions? ModelReaderWriterOptions { get; private set; }
+
+        /// <summary>
+        /// Registers a proxy for models handled by clients constructed with these options.
+        /// </summary>
+        /// <typeparam name="T">The model type to proxy.</typeparam>
+        /// <param name="proxy">The proxy implementation.</param>
+        public void AddProxy<T>(IPersistableModel<T> proxy)
+        {
+            Argument.AssertNotNull(proxy, nameof(proxy));
+            (ModelReaderWriterOptions ??= new ModelReaderWriterOptions("J")).AddProxy(proxy);
+        }
+
+        /// <summary>
+        /// Registers a conditional proxy for models handled by clients constructed with these options.
+        /// </summary>
+        /// <typeparam name="T">The model type to proxy.</typeparam>
+        /// <param name="proxy">The conditional proxy implementation.</param>
+        public void AddProxy<T>(ConditionalModelProxy<T> proxy) where T : IPersistableModel<T>
+        {
+            Argument.AssertNotNull(proxy, nameof(proxy));
+            (ModelReaderWriterOptions ??= new ModelReaderWriterOptions("J")).AddProxy(proxy);
+        }
 
         /// <summary>
         /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by the <paramref name="position"/> parameter.
