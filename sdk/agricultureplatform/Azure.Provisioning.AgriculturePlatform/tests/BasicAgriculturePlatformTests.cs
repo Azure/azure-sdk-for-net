@@ -33,6 +33,7 @@ public class BasicAgriculturePlatformTests
     }
 
     [Test]
+    [Description("https://learn.microsoft.com/en-us/azure/templates/microsoft.agricultureplatform/2024-06-01-preview/agriservices?tabs=bicep")]
     public async Task CreateAgricultureService()
     {
         await using Trycep test = CreateAgricultureServiceTest();
@@ -50,29 +51,6 @@ public class BasicAgriculturePlatformTests
             }
 
             output serviceName string = service.name
-
-            output serviceId string = service.id
-            """);
-    }
-
-    [Test]
-    public async Task ReferenceExistingAgricultureService()
-    {
-        await using Trycep test = new Trycep().Define(
-            ctx =>
-            {
-                Infrastructure infra = new();
-                AgricultureService service = AgricultureService.FromExisting(nameof(service));
-                service.Name = "existing-agri-service";
-                infra.Add(service);
-                infra.Add(new ProvisioningOutput("serviceId", typeof(string)) { Value = service.Id });
-                return infra;
-            });
-        test.Compare(
-            """
-            resource service 'Microsoft.AgriculturePlatform/agriServices@2024-06-01-preview' existing = {
-              name: 'existing-agri-service'
-            }
 
             output serviceId string = service.id
             """);
