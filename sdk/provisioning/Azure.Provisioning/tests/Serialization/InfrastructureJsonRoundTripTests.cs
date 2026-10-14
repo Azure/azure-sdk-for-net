@@ -247,6 +247,25 @@ public class InfrastructureJsonRoundTripTests
     }
 
     [Test]
+    public void Deserialize_ExplicitResourceGroupTargetScope()
+    {
+        Infrastructure infra = SerializationTestHelpers.DeserializeFromJson(
+            """{"fileName":"main.bicep","targetScope":"resourceGroup"}""");
+
+        Assert.IsNull(infra.TargetScope);
+    }
+
+    [Test]
+    public void Deserialize_InvalidTargetScope()
+    {
+        FormatException exception = Assert.Throws<FormatException>(() =>
+            SerializationTestHelpers.DeserializeFromJson(
+                """{"fileName":"main.bicep","targetScope":"invalid"}"""))!;
+
+        Assert.IsTrue(exception.Message.Contains("invalid 'targetScope' value 'invalid'"));
+    }
+
+    [Test]
     public void RoundTrip_JsonProducesExpectedFormat()
     {
         Infrastructure infra = new();

@@ -270,10 +270,11 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
             string scope = scopeElement.GetString()!;
             infra.TargetScope = scope switch
             {
+                "resourceGroup" => null,
                 "subscription" => DeploymentScope.Subscription,
                 "managementGroup" => DeploymentScope.ManagementGroup,
                 "tenant" => DeploymentScope.Tenant,
-                _ => null // resourceGroup is the default, no need to set
+                _ => throw new FormatException($"InfraNode has invalid 'targetScope' value '{scope}'.")
             };
         }
 
