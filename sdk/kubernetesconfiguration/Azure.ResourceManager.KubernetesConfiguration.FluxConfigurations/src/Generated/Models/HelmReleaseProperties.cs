@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private long? _lastRevisionApplied;
-        internal bool _lastRevisionAppliedIsDefined;
+        private bool _lastRevisionAppliedIsDefined;
         private long? _failureCount;
-        internal bool _failureCountIsDefined;
+        private bool _failureCountIsDefined;
         private long? _installFailureCount;
-        internal bool _installFailureCountIsDefined;
+        private bool _installFailureCountIsDefined;
         private long? _upgradeFailureCount;
-        internal bool _upgradeFailureCountIsDefined;
+        private bool _upgradeFailureCountIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="HelmReleaseProperties"/>. </summary>
         internal HelmReleaseProperties()
