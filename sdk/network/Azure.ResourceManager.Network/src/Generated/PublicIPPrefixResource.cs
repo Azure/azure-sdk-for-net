@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublicIPPrefixResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string publicIPPrefixApiVersion);
             _publicIPPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _publicIPPrefixesRestClient = new PublicIPPrefixes(_publicIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicIPPrefixApiVersion ?? "2026-01-01");
+            _publicIPPrefixesRestClient = new PublicIPPrefixes(_publicIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

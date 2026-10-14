@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlVmGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SqlVmGroupResource.ResourceType, out string sqlVmGroupApiVersion);
             _sqlVirtualMachineGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVmGroupResource.ResourceType.Namespace, Diagnostics);
-            _sqlVirtualMachineGroupsRestClient = new SqlVirtualMachineGroups(_sqlVirtualMachineGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlVmGroupApiVersion ?? "2023-10-01");
+            _sqlVirtualMachineGroupsRestClient = new SqlVirtualMachineGroups(_sqlVirtualMachineGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups", out string sqlVirtualMachineGroupsApiVersionOverride) ? sqlVirtualMachineGroupsApiVersionOverride : "2023-10-01");
             ValidateResourceId(id);
         }
 

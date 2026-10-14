@@ -98,63 +98,63 @@ namespace Azure.ResourceManager.Compute.Mocking
 
         private ClientDiagnostics VirtualMachineScaleSetsSubscriptionClientDiagnostics => _virtualMachineScaleSetsSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineScaleSetsSubscription VirtualMachineScaleSetsSubscriptionRestClient => _virtualMachineScaleSetsSubscriptionRestClient ??= new VirtualMachineScaleSetsSubscription(VirtualMachineScaleSetsSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
+        private VirtualMachineScaleSetsSubscription VirtualMachineScaleSetsSubscriptionRestClient => _virtualMachineScaleSetsSubscriptionRestClient ??= new VirtualMachineScaleSetsSubscription(VirtualMachineScaleSetsSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics VirtualMachinesSubscriptionClientDiagnostics => _virtualMachinesSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachinesSubscription VirtualMachinesSubscriptionRestClient => _virtualMachinesSubscriptionRestClient ??= new VirtualMachinesSubscription(VirtualMachinesSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
+        private VirtualMachinesSubscription VirtualMachinesSubscriptionRestClient => _virtualMachinesSubscriptionRestClient ??= new VirtualMachinesSubscription(VirtualMachinesSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AvailabilitySetsClientDiagnostics => _availabilitySetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailabilitySets AvailabilitySetsRestClient => _availabilitySetsRestClient ??= new AvailabilitySets(AvailabilitySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
+        private AvailabilitySets AvailabilitySetsRestClient => _availabilitySetsRestClient ??= new AvailabilitySets(AvailabilitySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ProximityPlacementGroupsClientDiagnostics => _proximityPlacementGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProximityPlacementGroups ProximityPlacementGroupsRestClient => _proximityPlacementGroupsRestClient ??= new ProximityPlacementGroups(ProximityPlacementGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
+        private ProximityPlacementGroups ProximityPlacementGroupsRestClient => _proximityPlacementGroupsRestClient ??= new ProximityPlacementGroups(ProximityPlacementGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DedicatedHostGroupsClientDiagnostics => _dedicatedHostGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DedicatedHostGroups DedicatedHostGroupsRestClient => _dedicatedHostGroupsRestClient ??= new DedicatedHostGroups(DedicatedHostGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
+        private DedicatedHostGroups DedicatedHostGroupsRestClient => _dedicatedHostGroupsRestClient ??= new DedicatedHostGroups(DedicatedHostGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics SshPublicKeyResourcesClientDiagnostics => _sshPublicKeyResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SshPublicKeyResources SshPublicKeyResourcesRestClient => _sshPublicKeyResourcesRestClient ??= new SshPublicKeyResources(SshPublicKeyResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
+        private SshPublicKeyResources SshPublicKeyResourcesRestClient => _sshPublicKeyResourcesRestClient ??= new SshPublicKeyResources(SshPublicKeyResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ImagesClientDiagnostics => _imagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Images ImagesRestClient => _imagesRestClient ??= new Images(ImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
+        private Images ImagesRestClient => _imagesRestClient ??= new Images(ImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics RestorePointCollectionsSubscriptionClientDiagnostics => _restorePointCollectionsSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RestorePointCollectionsSubscription RestorePointCollectionsSubscriptionRestClient => _restorePointCollectionsSubscriptionRestClient ??= new RestorePointCollectionsSubscription(RestorePointCollectionsSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
+        private RestorePointCollectionsSubscription RestorePointCollectionsSubscriptionRestClient => _restorePointCollectionsSubscriptionRestClient ??= new RestorePointCollectionsSubscription(RestorePointCollectionsSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics CapacityReservationGroupsClientDiagnostics => _capacityReservationGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CapacityReservationGroups CapacityReservationGroupsRestClient => _capacityReservationGroupsRestClient ??= new CapacityReservationGroups(CapacityReservationGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
+        private CapacityReservationGroups CapacityReservationGroupsRestClient => _capacityReservationGroupsRestClient ??= new CapacityReservationGroups(CapacityReservationGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics InterconnectBlocksClientDiagnostics => _interconnectBlocksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private InterconnectBlocks InterconnectBlocksRestClient => _interconnectBlocksRestClient ??= new InterconnectBlocks(InterconnectBlocksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
+        private InterconnectBlocks InterconnectBlocksRestClient => _interconnectBlocksRestClient ??= new InterconnectBlocks(InterconnectBlocksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DisksClientDiagnostics => _disksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Disks DisksRestClient => _disksRestClient ??= new Disks(DisksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-02");
+        private Disks DisksRestClient => _disksRestClient ??= new Disks(DisksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DiskAccessesClientDiagnostics => _diskAccessesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DiskAccesses DiskAccessesRestClient => _diskAccessesRestClient ??= new DiskAccesses(DiskAccessesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-02");
+        private DiskAccesses DiskAccessesRestClient => _diskAccessesRestClient ??= new DiskAccesses(DiskAccessesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DiskEncryptionSetsClientDiagnostics => _diskEncryptionSetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DiskEncryptionSets DiskEncryptionSetsRestClient => _diskEncryptionSetsRestClient ??= new DiskEncryptionSets(DiskEncryptionSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-02");
+        private DiskEncryptionSets DiskEncryptionSetsRestClient => _diskEncryptionSetsRestClient ??= new DiskEncryptionSets(DiskEncryptionSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics SnapshotsClientDiagnostics => _snapshotsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Snapshots SnapshotsRestClient => _snapshotsRestClient ??= new Snapshots(SnapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-02");
+        private Snapshots SnapshotsRestClient => _snapshotsRestClient ??= new Snapshots(SnapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics GalleriesClientDiagnostics => _galleriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Galleries GalleriesRestClient => _galleriesRestClient ??= new Galleries(GalleriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-03");
+        private Galleries GalleriesRestClient => _galleriesRestClient ??= new Galleries(GalleriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics UsageOperationGroupClientDiagnostics => _usageOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -190,31 +190,31 @@ namespace Azure.ResourceManager.Compute.Mocking
 
         private ClientDiagnostics SharedGalleriesClientDiagnostics => _sharedGalleriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SharedGalleries SharedGalleriesRestClient => _sharedGalleriesRestClient ??= new SharedGalleries(SharedGalleriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-03");
+        private SharedGalleries SharedGalleriesRestClient => _sharedGalleriesRestClient ??= new SharedGalleries(SharedGalleriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-03");
 
         private ClientDiagnostics SharedGalleryImagesClientDiagnostics => _sharedGalleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SharedGalleryImages SharedGalleryImagesRestClient => _sharedGalleryImagesRestClient ??= new SharedGalleryImages(SharedGalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-03");
+        private SharedGalleryImages SharedGalleryImagesRestClient => _sharedGalleryImagesRestClient ??= new SharedGalleryImages(SharedGalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-03");
 
         private ClientDiagnostics SharedGalleryImageVersionsClientDiagnostics => _sharedGalleryImageVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SharedGalleryImageVersions SharedGalleryImageVersionsRestClient => _sharedGalleryImageVersionsRestClient ??= new SharedGalleryImageVersions(SharedGalleryImageVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-03");
+        private SharedGalleryImageVersions SharedGalleryImageVersionsRestClient => _sharedGalleryImageVersionsRestClient ??= new SharedGalleryImageVersions(SharedGalleryImageVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-03");
 
         private ClientDiagnostics CommunityGalleriesClientDiagnostics => _communityGalleriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CommunityGalleries CommunityGalleriesRestClient => _communityGalleriesRestClient ??= new CommunityGalleries(CommunityGalleriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-03");
+        private CommunityGalleries CommunityGalleriesRestClient => _communityGalleriesRestClient ??= new CommunityGalleries(CommunityGalleriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-03");
 
         private ClientDiagnostics CommunityGalleryImagesClientDiagnostics => _communityGalleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CommunityGalleryImages CommunityGalleryImagesRestClient => _communityGalleryImagesRestClient ??= new CommunityGalleryImages(CommunityGalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-03");
+        private CommunityGalleryImages CommunityGalleryImagesRestClient => _communityGalleryImagesRestClient ??= new CommunityGalleryImages(CommunityGalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-03");
 
         private ClientDiagnostics CommunityGalleryImageVersionsClientDiagnostics => _communityGalleryImageVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CommunityGalleryImageVersions CommunityGalleryImageVersionsRestClient => _communityGalleryImageVersionsRestClient ??= new CommunityGalleryImageVersions(CommunityGalleryImageVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-03");
+        private CommunityGalleryImageVersions CommunityGalleryImageVersionsRestClient => _communityGalleryImageVersionsRestClient ??= new CommunityGalleryImageVersions(CommunityGalleryImageVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-03");
 
         private ClientDiagnostics SharedGalleryInvitesClientDiagnostics => _sharedGalleryInvitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SharedGalleryInvites SharedGalleryInvitesRestClient => _sharedGalleryInvitesRestClient ??= new SharedGalleryInvites(SharedGalleryInvitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-03");
+        private SharedGalleryInvites SharedGalleryInvitesRestClient => _sharedGalleryInvitesRestClient ??= new SharedGalleryInvites(SharedGalleryInvitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-03");
 
         private ClientDiagnostics ResourceSkusClientDiagnostics => _resourceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -1130,7 +1130,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1158,7 +1158,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2800,7 +2800,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2850,7 +2850,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2900,7 +2900,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2936,7 +2936,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2972,7 +2972,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3024,7 +3024,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3076,7 +3076,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3118,7 +3118,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3160,7 +3160,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3214,7 +3214,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3268,7 +3268,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3313,7 +3313,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3358,7 +3358,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3408,7 +3408,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3458,7 +3458,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3510,7 +3510,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3562,7 +3562,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3602,7 +3602,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3642,7 +3642,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3696,7 +3696,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3750,7 +3750,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3793,7 +3793,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3836,7 +3836,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3889,7 +3889,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3942,7 +3942,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3995,7 +3995,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-03. </description>
+        /// <description> 2026-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>

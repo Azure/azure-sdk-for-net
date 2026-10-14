@@ -55,19 +55,25 @@ namespace Azure.ResourceManager.Sql.Mocking
 
         private ClientDiagnostics ServersClientDiagnostics => _serversClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Servers ServersRestClient => _serversRestClient ??= new Servers(ServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
+        private Servers ServersRestClient => _serversRestClient ??= new Servers(
+            ServersClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-08-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ManagedInstancesClientDiagnostics => _managedInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedInstances ManagedInstancesRestClient => _managedInstancesRestClient ??= new ManagedInstances(ManagedInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
+        private ManagedInstances ManagedInstancesRestClient => _managedInstancesRestClient ??= new ManagedInstances(ManagedInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics InstancePoolsClientDiagnostics => _instancePoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private InstancePools InstancePoolsRestClient => _instancePoolsRestClient ??= new InstancePools(InstancePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
+        private InstancePools InstancePoolsRestClient => _instancePoolsRestClient ??= new InstancePools(InstancePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Sql/instancePools", out string apiVersion0) ? apiVersion0 : "2025-08-01-preview");
 
         private ClientDiagnostics VirtualClustersClientDiagnostics => _virtualClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualClusters VirtualClustersRestClient => _virtualClustersRestClient ??= new VirtualClusters(VirtualClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
+        private VirtualClusters VirtualClustersRestClient => _virtualClustersRestClient ??= new VirtualClusters(VirtualClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Sql/virtualClusters", out string apiVersion1) ? apiVersion1 : "2025-08-01-preview");
 
         private ClientDiagnostics DeletedServersClientDiagnostics => _deletedServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

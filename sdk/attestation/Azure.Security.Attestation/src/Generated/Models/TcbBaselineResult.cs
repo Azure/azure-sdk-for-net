@@ -14,7 +14,7 @@ namespace Azure.Security.Attestation
     /// A list of all Azure supported baseline details for the a TEE type along with an
     /// indication of which one is in enforced for the attestation provider
     /// </summary>
-    internal partial class TcbBaselineResult
+    public partial class TcbBaselineResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -31,16 +31,10 @@ namespace Azure.Security.Attestation
         /// indication of which one is in enforced for the attestation provider
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TcbBaselineResult(IList<TcbBaseline> tcbBaselines, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TcbBaselineResult(IReadOnlyList<TcbBaseline> tcbBaselines, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TcbBaselines = tcbBaselines;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary>
-        /// A list of all Azure supported baseline details for the a TEE type along with an
-        /// indication of which one is in enforced for the attestation provider
-        /// </summary>
-        public IList<TcbBaseline> TcbBaselines { get; }
     }
 }

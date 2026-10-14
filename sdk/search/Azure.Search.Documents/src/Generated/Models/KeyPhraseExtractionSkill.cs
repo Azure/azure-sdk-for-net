@@ -15,9 +15,9 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class KeyPhraseExtractionSkill : SearchIndexerSkill
     {
         private int? _maxKeyPhraseCount;
-        internal bool _maxKeyPhraseCountIsDefined;
+        private bool _maxKeyPhraseCountIsDefined;
         private string _modelVersion;
-        internal bool _modelVersionIsDefined;
+        private bool _modelVersionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KeyPhraseExtractionSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

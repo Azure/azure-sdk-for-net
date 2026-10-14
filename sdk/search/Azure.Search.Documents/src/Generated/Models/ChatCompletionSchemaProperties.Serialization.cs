@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(ChatCompletionSchemaProperties)} does not support writing '{format}' format.");
             }
-            if (_nameIsDefined || Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name, _nameIsDefined))
             {
                 if (Name != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("name"u8);
                 }
             }
-            if (_descriptionIsDefined || Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description, _descriptionIsDefined))
             {
                 if (Description != null)
                 {

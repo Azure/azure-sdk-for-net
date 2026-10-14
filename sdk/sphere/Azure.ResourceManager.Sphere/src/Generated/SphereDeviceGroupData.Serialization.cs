@@ -17,7 +17,7 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    /// <summary> An device group resource belonging to a product resource. </summary>
+    /// <summary> A device group resource belonging to a product resource. </summary>
     public partial class SphereDeviceGroupData : ResourceData, IJsonModel<SphereDeviceGroupData>
     {
         /// <param name="data"> The data to parse. </param>

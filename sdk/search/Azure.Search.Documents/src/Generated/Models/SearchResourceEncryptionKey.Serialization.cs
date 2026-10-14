@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("accessCredentials"u8);
                 writer.WriteObjectValue(AccessCredentialsInternal, options);
             }
-            if (_identityIsDefined || Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity, _identityIsDefined))
             {
                 if (Identity != null)
                 {

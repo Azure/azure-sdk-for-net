@@ -15,9 +15,9 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private KeyVaultServiceError _error;
-        internal bool _errorIsDefined;
+        private bool _errorIsDefined;
         private DateTimeOffset? _endsOn;
-        internal bool _endsOnIsDefined;
+        private bool _endsOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RestoreDetailsInternal"/>. </summary>
         internal RestoreDetailsInternal()

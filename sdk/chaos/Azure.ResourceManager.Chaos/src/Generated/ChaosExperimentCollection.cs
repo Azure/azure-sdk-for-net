@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ChaosExperimentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ChaosExperimentResource.ResourceType, out string chaosExperimentApiVersion);
             _experimentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosExperimentResource.ResourceType.Namespace, Diagnostics);
-            _experimentsRestClient = new Experiments(_experimentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosExperimentApiVersion ?? "2026-08-01-preview");
+            _experimentsRestClient = new Experiments(_experimentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Chaos/experiments", out string experimentsApiVersionOverride) ? experimentsApiVersionOverride : "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
