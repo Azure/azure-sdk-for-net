@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualNetworkSubnetListResult(value, nextLink, additionalBinaryDataProperties);
+            return new VirtualNetworkSubnetListResult(value ?? new ChangeTrackingList<HciVmVirtualNetworkSubnetData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

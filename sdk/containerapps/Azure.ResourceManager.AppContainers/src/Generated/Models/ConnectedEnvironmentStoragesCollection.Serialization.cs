@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConnectedEnvironmentStoragesCollection(value, additionalBinaryDataProperties);
+            return new ConnectedEnvironmentStoragesCollection(value ?? new ChangeTrackingList<ContainerAppConnectedEnvironmentStorageData>(), additionalBinaryDataProperties);
         }
     }
 }

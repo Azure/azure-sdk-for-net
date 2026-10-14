@@ -111,7 +111,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("authResourceId"u8);
                 writer.WriteStringValue(AuthResourceId);
             }
-            if (_authIdentityIsDefined || Optional.IsDefined(AuthIdentity))
+            if (Optional.IsDefined(AuthIdentity, _authIdentityIsDefined))
             {
                 if (AuthIdentity != null)
                 {

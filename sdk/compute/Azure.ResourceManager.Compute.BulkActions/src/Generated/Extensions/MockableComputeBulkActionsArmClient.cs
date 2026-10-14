@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// Lists scheduled actions associated with the specified VM.
+        /// Lists recurring bulk actions associated with the specified VM.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// Lists scheduled actions associated with the specified VM.
+        /// Lists recurring bulk actions associated with the specified VM.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// Lists scheduled action occurrences associated with the specified VM.
+        /// Lists recurring bulk action occurrences associated with the specified VM.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// Lists scheduled action occurrences associated with the specified VM.
+        /// Lists recurring bulk action occurrences associated with the specified VM.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

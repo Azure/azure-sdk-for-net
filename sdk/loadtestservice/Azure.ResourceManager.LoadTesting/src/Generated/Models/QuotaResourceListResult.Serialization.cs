@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new QuotaResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new QuotaResourceListResult(value ?? new ChangeTrackingList<LoadTestingQuotaData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

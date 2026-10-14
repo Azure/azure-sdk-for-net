@@ -80,10 +80,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 throw new FormatException($"The model {nameof(ClusterCreateProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (_publicNetworkAccessIsDefined || Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
+                if (PublicNetworkAccess != null)
+                {
+                    writer.WritePropertyName("publicNetworkAccess"u8);
+                    writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("publicNetworkAccess"u8);
+                }
             }
         }
 
@@ -123,6 +130,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             string redisVersion = default;
             IReadOnlyList<RedisPrivateEndpointConnection> privateEndpointConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool publicNetworkAccessIsDefined = false;
             PublicNetworkAccess? publicNetworkAccess = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -215,6 +223,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
                 {
+                    publicNetworkAccessIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         publicNetworkAccess = null;
@@ -240,7 +249,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 redisVersion,
                 privateEndpointConnections ?? new ChangeTrackingList<RedisPrivateEndpointConnection>(),
                 additionalBinaryDataProperties,
-                publicNetworkAccess);
+                publicNetworkAccess)
+            {
+                _publicNetworkAccessIsDefined = publicNetworkAccessIsDefined
+            };
         }
     }
 }

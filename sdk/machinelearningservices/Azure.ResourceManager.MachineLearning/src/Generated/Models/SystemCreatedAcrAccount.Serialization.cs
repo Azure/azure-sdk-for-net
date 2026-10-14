@@ -74,20 +74,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(SystemCreatedAcrAccount)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AcrAccountName))
+            if (_acrAccountNameIsDefined || Optional.IsDefined(AcrAccountName))
             {
-                writer.WritePropertyName("acrAccountName"u8);
-                writer.WriteStringValue(AcrAccountName);
+                if (AcrAccountName != null)
+                {
+                    writer.WritePropertyName("acrAccountName"u8);
+                    writer.WriteStringValue(AcrAccountName);
+                }
+                else
+                {
+                    writer.WriteNull("acrAccountName"u8);
+                }
             }
-            if (Optional.IsDefined(AcrAccountSku))
+            if (_acrAccountSkuIsDefined || Optional.IsDefined(AcrAccountSku))
             {
-                writer.WritePropertyName("acrAccountSku"u8);
-                writer.WriteStringValue(AcrAccountSku);
+                if (AcrAccountSku != null)
+                {
+                    writer.WritePropertyName("acrAccountSku"u8);
+                    writer.WriteStringValue(AcrAccountSku);
+                }
+                else
+                {
+                    writer.WriteNull("acrAccountSku"u8);
+                }
             }
-            if (Optional.IsDefined(ArmResourceIdentifier))
+            if (_armResourceIdentifierIsDefined || Optional.IsDefined(ArmResourceIdentifier))
             {
-                writer.WritePropertyName("armResourceId"u8);
-                writer.WriteObjectValue(ArmResourceIdentifier, options);
+                if (ArmResourceIdentifier != null)
+                {
+                    writer.WritePropertyName("armResourceId"u8);
+                    writer.WriteObjectValue(ArmResourceIdentifier, options);
+                }
+                else
+                {
+                    writer.WriteNull("armResourceId"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,14 +152,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool acrAccountNameIsDefined = false;
             string acrAccountName = default;
+            bool acrAccountSkuIsDefined = false;
             string acrAccountSku = default;
+            bool armResourceIdentifierIsDefined = false;
             ArmResourceId armResourceIdentifier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("acrAccountName"u8))
                 {
+                    acrAccountNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         acrAccountName = null;
@@ -149,6 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("acrAccountSku"u8))
                 {
+                    acrAccountSkuIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         acrAccountSku = null;
@@ -159,6 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("armResourceId"u8))
                 {
+                    armResourceIdentifierIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         armResourceIdentifier = null;
@@ -172,7 +199,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SystemCreatedAcrAccount(acrAccountName, acrAccountSku, armResourceIdentifier, additionalBinaryDataProperties);
+            return new SystemCreatedAcrAccount(acrAccountName, acrAccountSku, armResourceIdentifier, additionalBinaryDataProperties)
+            {
+                _acrAccountNameIsDefined = acrAccountNameIsDefined,
+                _acrAccountSkuIsDefined = acrAccountSkuIsDefined,
+                _armResourceIdentifierIsDefined = armResourceIdentifierIsDefined
+            };
         }
     }
 }

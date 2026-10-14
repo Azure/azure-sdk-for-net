@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             MarketplaceType.AddOn => "AddOn",
             MarketplaceType.Bypass => "Bypass",
             MarketplaceType.Store => "Store",
+            MarketplaceType.ProviderHub => "ProviderHub",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MarketplaceType value.")
         };
 
@@ -39,6 +40,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Store"))
             {
                 return MarketplaceType.Store;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ProviderHub"))
+            {
+                return MarketplaceType.ProviderHub;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MarketplaceType value.");
         }

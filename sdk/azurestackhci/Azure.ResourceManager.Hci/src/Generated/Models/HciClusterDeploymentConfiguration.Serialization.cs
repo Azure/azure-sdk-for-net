@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HciClusterDeploymentConfiguration(version, scaleUnits, additionalBinaryDataProperties);
+            return new HciClusterDeploymentConfiguration(version, scaleUnits ?? new ChangeTrackingList<DeploymentSettingScaleUnits>(), additionalBinaryDataProperties);
         }
     }
 }

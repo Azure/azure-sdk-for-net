@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
 
         private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NotificationHubs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-10-01-preview");
+        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(
+            NamespacesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2023-10-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Lists all the available namespaces within the subscription.

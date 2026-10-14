@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _description;
+        internal bool _descriptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesResourceBase"/>. </summary>
         public CognitiveServicesResourceBase()
@@ -29,14 +31,25 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal CognitiveServicesResourceBase(string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Description = description;
+            _description = description;
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The asset description text. </summary>
         [WirePath("description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+                _descriptionIsDefined = true;
+            }
+        }
 
         /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
         [WirePath("tags")]

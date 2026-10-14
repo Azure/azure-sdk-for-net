@@ -84,10 +84,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("capGBPerMonth"u8);
                 writer.WriteNumberValue(CapGBPerMonth.Value);
             }
-            if (Optional.IsDefined(Filters))
+            if (_filtersIsDefined || Optional.IsDefined(Filters))
             {
-                writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters, options);
+                if (Filters != null)
+                {
+                    writer.WritePropertyName("filters"u8);
+                    writer.WriteObjectValue(Filters, options);
+                }
+                else
+                {
+                    writer.WriteNull("filters"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,6 +140,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             bool? isEnabled = default;
             int? capGBPerMonth = default;
+            bool filtersIsDefined = false;
             OnUploadFilters filters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -157,6 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (prop.NameEquals("filters"u8))
                 {
+                    filtersIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         filters = null;
@@ -170,7 +179,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OnUploadProperties(isEnabled, capGBPerMonth, filters, additionalBinaryDataProperties);
+            return new OnUploadProperties(isEnabled, capGBPerMonth, filters, additionalBinaryDataProperties)
+            {
+                _filtersIsDefined = filtersIsDefined
+            };
         }
     }
 }

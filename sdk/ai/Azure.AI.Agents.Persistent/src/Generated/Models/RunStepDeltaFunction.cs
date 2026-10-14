@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _output;
-        internal bool _outputIsDefined;
+        private bool _outputIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaFunction"/>. </summary>
         internal RunStepDeltaFunction()

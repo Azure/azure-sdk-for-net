@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FrontDoorEndpointPurgeContent(contentPaths, additionalBinaryDataProperties);
+            return new FrontDoorEndpointPurgeContent(contentPaths ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

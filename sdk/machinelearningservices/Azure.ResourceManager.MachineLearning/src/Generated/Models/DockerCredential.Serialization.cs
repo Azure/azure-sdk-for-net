@@ -75,15 +75,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(DockerCredential)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Password))
+            if (_passwordIsDefined || Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password"u8);
-                writer.WriteStringValue(Password);
+                if (Password != null)
+                {
+                    writer.WritePropertyName("password"u8);
+                    writer.WriteStringValue(Password);
+                }
+                else
+                {
+                    writer.WriteNull("password"u8);
+                }
             }
-            if (Optional.IsDefined(UserName))
+            if (_userNameIsDefined || Optional.IsDefined(UserName))
             {
-                writer.WritePropertyName("userName"u8);
-                writer.WriteStringValue(UserName);
+                if (UserName != null)
+                {
+                    writer.WritePropertyName("userName"u8);
+                    writer.WriteStringValue(UserName);
+                }
+                else
+                {
+                    writer.WriteNull("userName"u8);
+                }
             }
         }
 
@@ -114,7 +128,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             DataReferenceCredentialType credentialType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool passwordIsDefined = false;
             string password = default;
+            bool userNameIsDefined = false;
             string userName = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -125,6 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("password"u8))
                 {
+                    passwordIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         password = null;
@@ -135,6 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("userName"u8))
                 {
+                    userNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         userName = null;
@@ -148,7 +166,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DockerCredential(credentialType, additionalBinaryDataProperties, password, userName);
+            return new DockerCredential(credentialType, additionalBinaryDataProperties, password, userName)
+            {
+                _passwordIsDefined = passwordIsDefined,
+                _userNameIsDefined = userNameIsDefined
+            };
         }
     }
 }

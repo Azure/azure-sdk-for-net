@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RouteFilterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string routeFilterApiVersion);
             _routeFiltersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _routeFiltersRestClient = new RouteFilters(_routeFiltersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, routeFilterApiVersion ?? "2026-01-01");
+            _routeFiltersRestClient = new RouteFilters(_routeFiltersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

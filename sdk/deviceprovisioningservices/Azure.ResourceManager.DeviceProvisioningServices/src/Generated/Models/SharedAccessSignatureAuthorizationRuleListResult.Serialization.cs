@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SharedAccessSignatureAuthorizationRuleListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SharedAccessSignatureAuthorizationRuleListResult(value ?? new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

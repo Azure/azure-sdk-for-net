@@ -15,6 +15,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _uri;
+        internal bool _uriIsDefined;
+        private string _containerName;
+        internal bool _containerNameIsDefined;
+        private long? _timeoutInSeconds;
+        internal bool _timeoutInSecondsIsDefined;
+        private long? _syncIntervalInSeconds;
+        internal bool _syncIntervalInSecondsIsDefined;
+        private string _accountKey;
+        internal bool _accountKeyIsDefined;
+        private string _sasToken;
+        internal bool _sasTokenIsDefined;
+        private string _localAuthRef;
+        internal bool _localAuthRefIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobPatch"/>. </summary>
         public AzureBlobPatch()
@@ -34,44 +48,121 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AzureBlobPatch(string uri, string containerName, long? timeoutInSeconds, long? syncIntervalInSeconds, FluxServicePrincipalPatch servicePrincipal, string accountKey, string sasToken, ManagedIdentityPatchDefinition managedIdentity, string localAuthRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Uri = uri;
-            ContainerName = containerName;
-            TimeoutInSeconds = timeoutInSeconds;
-            SyncIntervalInSeconds = syncIntervalInSeconds;
+            _uri = uri;
+            _containerName = containerName;
+            _timeoutInSeconds = timeoutInSeconds;
+            _syncIntervalInSeconds = syncIntervalInSeconds;
             ServicePrincipal = servicePrincipal;
-            AccountKey = accountKey;
-            SasToken = sasToken;
+            _accountKey = accountKey;
+            _sasToken = sasToken;
             ManagedIdentity = managedIdentity;
-            LocalAuthRef = localAuthRef;
+            _localAuthRef = localAuthRef;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The URL to sync for the flux configuration Azure Blob storage account. </summary>
-        public string Uri { get; set; }
+        public string Uri
+        {
+            get
+            {
+                return _uri;
+            }
+            set
+            {
+                _uri = value;
+                _uriIsDefined = true;
+            }
+        }
 
         /// <summary> The Azure Blob container name to sync from the url endpoint for the flux configuration. </summary>
-        public string ContainerName { get; set; }
+        public string ContainerName
+        {
+            get
+            {
+                return _containerName;
+            }
+            set
+            {
+                _containerName = value;
+                _containerNameIsDefined = true;
+            }
+        }
 
         /// <summary> The maximum time to attempt to reconcile the cluster Azure Blob source with the remote. </summary>
-        public long? TimeoutInSeconds { get; set; }
+        public long? TimeoutInSeconds
+        {
+            get
+            {
+                return _timeoutInSeconds;
+            }
+            set
+            {
+                _timeoutInSeconds = value;
+                _timeoutInSecondsIsDefined = true;
+            }
+        }
 
         /// <summary> The interval at which to re-reconcile the cluster Azure Blob source with the remote. </summary>
-        public long? SyncIntervalInSeconds { get; set; }
+        public long? SyncIntervalInSeconds
+        {
+            get
+            {
+                return _syncIntervalInSeconds;
+            }
+            set
+            {
+                _syncIntervalInSeconds = value;
+                _syncIntervalInSecondsIsDefined = true;
+            }
+        }
 
         /// <summary> Parameters to authenticate using Service Principal. </summary>
         public FluxServicePrincipalPatch ServicePrincipal { get; set; }
 
         /// <summary> The account key (shared key) to access the storage account. </summary>
-        public string AccountKey { get; set; }
+        public string AccountKey
+        {
+            get
+            {
+                return _accountKey;
+            }
+            set
+            {
+                _accountKey = value;
+                _accountKeyIsDefined = true;
+            }
+        }
 
         /// <summary> The Shared Access token to access the storage container. </summary>
-        public string SasToken { get; set; }
+        public string SasToken
+        {
+            get
+            {
+                return _sasToken;
+            }
+            set
+            {
+                _sasToken = value;
+                _sasTokenIsDefined = true;
+            }
+        }
 
         /// <summary> Parameters to authenticate using a Managed Identity. </summary>
         internal ManagedIdentityPatchDefinition ManagedIdentity { get; set; }
 
         /// <summary> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </summary>
-        public string LocalAuthRef { get; set; }
+        public string LocalAuthRef
+        {
+            get
+            {
+                return _localAuthRef;
+            }
+            set
+            {
+                _localAuthRef = value;
+                _localAuthRefIsDefined = true;
+            }
+        }
 
         /// <summary> The client Id for authenticating a Managed Identity. </summary>
         public string ManagedIdentityClientId

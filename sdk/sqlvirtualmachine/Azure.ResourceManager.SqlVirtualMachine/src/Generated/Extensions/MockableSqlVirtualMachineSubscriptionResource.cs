@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
 
         private ClientDiagnostics SqlVirtualMachinesClientDiagnostics => _sqlVirtualMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SqlVirtualMachines SqlVirtualMachinesRestClient => _sqlVirtualMachinesRestClient ??= new SqlVirtualMachines(SqlVirtualMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-10-01");
+        private SqlVirtualMachines SqlVirtualMachinesRestClient => _sqlVirtualMachinesRestClient ??= new SqlVirtualMachines(SqlVirtualMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics SqlVirtualMachineGroupsClientDiagnostics => _sqlVirtualMachineGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SqlVirtualMachineGroups SqlVirtualMachineGroupsRestClient => _sqlVirtualMachineGroupsRestClient ??= new SqlVirtualMachineGroups(SqlVirtualMachineGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-10-01");
+        private SqlVirtualMachineGroups SqlVirtualMachineGroupsRestClient => _sqlVirtualMachineGroupsRestClient ??= new SqlVirtualMachineGroups(SqlVirtualMachineGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups", out string apiVersion0) ? apiVersion0 : "2023-10-01");
 
         /// <summary>
         /// Gets all SQL virtual machines in a subscription.

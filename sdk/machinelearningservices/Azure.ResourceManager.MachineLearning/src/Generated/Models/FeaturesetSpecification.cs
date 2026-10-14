@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _path;
+        internal bool _pathIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FeaturesetSpecification"/>. </summary>
         public FeaturesetSpecification()
@@ -27,12 +29,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FeaturesetSpecification(string path, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Path = path;
+            _path = path;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the spec path. </summary>
         [WirePath("path")]
-        public string Path { get; set; }
+        public string Path
+        {
+            get
+            {
+                return _path;
+            }
+            set
+            {
+                _path = value;
+                _pathIsDefined = true;
+            }
+        }
     }
 }

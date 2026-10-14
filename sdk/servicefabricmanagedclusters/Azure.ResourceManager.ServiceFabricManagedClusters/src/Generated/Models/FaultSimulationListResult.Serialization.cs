@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FaultSimulationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new FaultSimulationListResult(value ?? new ChangeTrackingList<FaultSimulation>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

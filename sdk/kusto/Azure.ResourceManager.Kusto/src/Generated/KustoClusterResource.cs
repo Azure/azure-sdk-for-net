@@ -65,7 +65,13 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(ResourceType, out string kustoClusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
+            _clustersRestClient = new Clusters(
+                _clustersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                kustoClusterApiVersion ?? "2025-02-14",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _attachedDatabaseConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ResourceType.Namespace, Diagnostics);
             _attachedDatabaseConfigurationsRestClient = new AttachedDatabaseConfigurations(_attachedDatabaseConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
             _clusterPrincipalAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ResourceType.Namespace, Diagnostics);

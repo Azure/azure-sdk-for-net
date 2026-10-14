@@ -83,37 +83,72 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(ImageClassificationMultilabel)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ModelSettings))
+            if (_modelSettingsIsDefined || Optional.IsDefined(ModelSettings))
             {
-                writer.WritePropertyName("modelSettings"u8);
-                writer.WriteObjectValue(ModelSettings, options);
+                if (ModelSettings != null)
+                {
+                    writer.WritePropertyName("modelSettings"u8);
+                    writer.WriteObjectValue(ModelSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("modelSettings"u8);
+                }
             }
             if (Optional.IsCollectionDefined(SearchSpace))
             {
-                writer.WritePropertyName("searchSpace"u8);
-                writer.WriteStartArray();
-                foreach (ImageModelDistributionSettingsClassification item in SearchSpace)
+                if (SearchSpace != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("searchSpace"u8);
+                    writer.WriteStartArray();
+                    foreach (ImageModelDistributionSettingsClassification item in SearchSpace)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("searchSpace"u8);
+                }
             }
             writer.WritePropertyName("limitSettings"u8);
             writer.WriteObjectValue(LimitSettings, options);
-            if (Optional.IsDefined(SweepSettings))
+            if (_sweepSettingsIsDefined || Optional.IsDefined(SweepSettings))
             {
-                writer.WritePropertyName("sweepSettings"u8);
-                writer.WriteObjectValue(SweepSettings, options);
+                if (SweepSettings != null)
+                {
+                    writer.WritePropertyName("sweepSettings"u8);
+                    writer.WriteObjectValue(SweepSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("sweepSettings"u8);
+                }
             }
-            if (Optional.IsDefined(ValidationData))
+            if (_validationDataIsDefined || Optional.IsDefined(ValidationData))
             {
-                writer.WritePropertyName("validationData"u8);
-                writer.WriteObjectValue(ValidationData, options);
+                if (ValidationData != null)
+                {
+                    writer.WritePropertyName("validationData"u8);
+                    writer.WriteObjectValue(ValidationData, options);
+                }
+                else
+                {
+                    writer.WriteNull("validationData"u8);
+                }
             }
-            if (Optional.IsDefined(ValidationDataSize))
+            if (_validationDataSizeIsDefined || Optional.IsDefined(ValidationDataSize))
             {
-                writer.WritePropertyName("validationDataSize"u8);
-                writer.WriteNumberValue(ValidationDataSize.Value);
+                if (ValidationDataSize != null)
+                {
+                    writer.WritePropertyName("validationDataSize"u8);
+                    writer.WriteNumberValue(ValidationDataSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("validationDataSize"u8);
+                }
             }
             if (Optional.IsDefined(PrimaryMetric))
             {
@@ -148,15 +183,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningLogVerbosity? logVerbosity = default;
+            bool targetColumnNameIsDefined = false;
             string targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool modelSettingsIsDefined = false;
             ImageModelSettingsClassification modelSettings = default;
-            IList<ImageModelDistributionSettingsClassification> searchSpace = default;
+            IList<ImageModelDistributionSettingsClassification> searchSpace = new ChangeTrackingList<ImageModelDistributionSettingsClassification>();
             ImageLimitSettings limitSettings = default;
+            bool sweepSettingsIsDefined = false;
             ImageSweepSettings sweepSettings = default;
+            bool validationDataIsDefined = false;
             MachineLearningTableJobInput validationData = default;
+            bool validationDataSizeIsDefined = false;
             double? validationDataSize = default;
             ClassificationMultilabelPrimaryMetric? primaryMetric = default;
             foreach (var prop in element.EnumerateObject())
@@ -172,6 +212,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("targetColumnName"u8))
                 {
+                    targetColumnNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         targetColumnName = null;
@@ -192,6 +233,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("modelSettings"u8))
                 {
+                    modelSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         modelSettings = null;
@@ -204,6 +246,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        searchSpace = null;
                         continue;
                     }
                     List<ImageModelDistributionSettingsClassification> array = new List<ImageModelDistributionSettingsClassification>();
@@ -221,6 +264,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("sweepSettings"u8))
                 {
+                    sweepSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         sweepSettings = null;
@@ -231,6 +275,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("validationData"u8))
                 {
+                    validationDataIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         validationData = null;
@@ -241,6 +286,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("validationDataSize"u8))
                 {
+                    validationDataSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         validationDataSize = null;
@@ -270,12 +316,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 trainingData,
                 additionalBinaryDataProperties,
                 modelSettings,
-                searchSpace ?? new ChangeTrackingList<ImageModelDistributionSettingsClassification>(),
+                searchSpace,
                 limitSettings,
                 sweepSettings,
                 validationData,
                 validationDataSize,
-                primaryMetric);
+                primaryMetric)
+            {
+                _targetColumnNameIsDefined = targetColumnNameIsDefined,
+                _modelSettingsIsDefined = modelSettingsIsDefined,
+                _sweepSettingsIsDefined = sweepSettingsIsDefined,
+                _validationDataIsDefined = validationDataIsDefined,
+                _validationDataSizeIsDefined = validationDataSizeIsDefined
+            };
         }
     }
 }

@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private MonitoringThreshold _threshold;
+        internal bool _thresholdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DataDriftMetricThresholdBase"/>. </summary>
         /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal DataDriftMetricThresholdBase(MonitoringFeatureDataType dataType, MonitoringThreshold threshold, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataType = dataType;
-            Threshold = threshold;
+            _threshold = threshold;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,7 +46,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The threshold value. If null, a default value will be set depending on the selected metric. </summary>
         [WirePath("threshold")]
-        internal MonitoringThreshold Threshold { get; set; }
+        internal MonitoringThreshold Threshold
+        {
+            get
+            {
+                return _threshold;
+            }
+            set
+            {
+                _threshold = value;
+                _thresholdIsDefined = true;
+            }
+        }
 
         /// <summary> The threshold value. If null, the set default is dependent on the metric type. </summary>
         [WirePath("threshold.value")]

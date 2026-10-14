@@ -74,20 +74,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningComputeInstanceCreatedBy)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(UserName))
+            if (options.Format != "W" && (_userNameIsDefined || Optional.IsDefined(UserName)))
             {
-                writer.WritePropertyName("userName"u8);
-                writer.WriteStringValue(UserName);
+                if (UserName != null)
+                {
+                    writer.WritePropertyName("userName"u8);
+                    writer.WriteStringValue(UserName);
+                }
+                else
+                {
+                    writer.WriteNull("userName"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(UserOrgId))
             {
                 writer.WritePropertyName("userOrgId"u8);
                 writer.WriteStringValue(UserOrgId);
             }
-            if (options.Format != "W" && Optional.IsDefined(UserId))
+            if (options.Format != "W" && (_userIdIsDefined || Optional.IsDefined(UserId)))
             {
-                writer.WritePropertyName("userId"u8);
-                writer.WriteStringValue(UserId);
+                if (UserId != null)
+                {
+                    writer.WritePropertyName("userId"u8);
+                    writer.WriteStringValue(UserId);
+                }
+                else
+                {
+                    writer.WriteNull("userId"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,14 +145,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool userNameIsDefined = false;
             string userName = default;
             string userOrgId = default;
+            bool userIdIsDefined = false;
             string userId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("userName"u8))
                 {
+                    userNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         userName = null;
@@ -154,6 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("userId"u8))
                 {
+                    userIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         userId = null;
@@ -167,7 +185,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningComputeInstanceCreatedBy(userName, userOrgId, userId, additionalBinaryDataProperties);
+            return new MachineLearningComputeInstanceCreatedBy(userName, userOrgId, userId, additionalBinaryDataProperties)
+            {
+                _userNameIsDefined = userNameIsDefined,
+                _userIdIsDefined = userIdIsDefined
+            };
         }
     }
 }

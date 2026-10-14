@@ -54,43 +54,55 @@ namespace Azure.ResourceManager.EventGrid.Mocking
 
         private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/namespaces", out string apiVersion) ? apiVersion : "2025-07-15-preview");
 
         private ClientDiagnostics PartnerNamespacesClientDiagnostics => _partnerNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PartnerNamespaces PartnerNamespacesRestClient => _partnerNamespacesRestClient ??= new PartnerNamespaces(PartnerNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private PartnerNamespaces PartnerNamespacesRestClient => _partnerNamespacesRestClient ??= new PartnerNamespaces(PartnerNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/partnerNamespaces", out string apiVersion0) ? apiVersion0 : "2025-07-15-preview");
 
         private ClientDiagnostics DomainsClientDiagnostics => _domainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Domains DomainsRestClient => _domainsRestClient ??= new Domains(DomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private Domains DomainsRestClient => _domainsRestClient ??= new Domains(DomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/domains", out string apiVersion1) ? apiVersion1 : "2025-07-15-preview");
 
         private ClientDiagnostics EventSubscriptionsClientDiagnostics => _eventSubscriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EventSubscriptions EventSubscriptionsRestClient => _eventSubscriptionsRestClient ??= new EventSubscriptions(EventSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private EventSubscriptions EventSubscriptionsRestClient => _eventSubscriptionsRestClient ??= new EventSubscriptions(
+            EventSubscriptionsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-07-15-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion2) ? apiVersion2 : null);
 
         private ClientDiagnostics PartnerConfigurationsClientDiagnostics => _partnerConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PartnerConfigurations PartnerConfigurationsRestClient => _partnerConfigurationsRestClient ??= new PartnerConfigurations(PartnerConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private PartnerConfigurations PartnerConfigurationsRestClient => _partnerConfigurationsRestClient ??= new PartnerConfigurations(PartnerConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/partnerConfigurations", out string apiVersion3) ? apiVersion3 : "2025-07-15-preview");
 
         private ClientDiagnostics PartnerDestinationsClientDiagnostics => _partnerDestinationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PartnerDestinations PartnerDestinationsRestClient => _partnerDestinationsRestClient ??= new PartnerDestinations(PartnerDestinationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private PartnerDestinations PartnerDestinationsRestClient => _partnerDestinationsRestClient ??= new PartnerDestinations(PartnerDestinationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/partnerDestinations", out string apiVersion4) ? apiVersion4 : "2025-07-15-preview");
 
         private ClientDiagnostics PartnerRegistrationsClientDiagnostics => _partnerRegistrationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PartnerRegistrations PartnerRegistrationsRestClient => _partnerRegistrationsRestClient ??= new PartnerRegistrations(PartnerRegistrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private PartnerRegistrations PartnerRegistrationsRestClient => _partnerRegistrationsRestClient ??= new PartnerRegistrations(PartnerRegistrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/partnerRegistrations", out string apiVersion5) ? apiVersion5 : "2025-07-15-preview");
 
         private ClientDiagnostics PartnerTopicsClientDiagnostics => _partnerTopicsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PartnerTopics PartnerTopicsRestClient => _partnerTopicsRestClient ??= new PartnerTopics(PartnerTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private PartnerTopics PartnerTopicsRestClient => _partnerTopicsRestClient ??= new PartnerTopics(PartnerTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/partnerTopics", out string apiVersion6) ? apiVersion6 : "2025-07-15-preview");
 
         private ClientDiagnostics SystemTopicsClientDiagnostics => _systemTopicsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SystemTopics SystemTopicsRestClient => _systemTopicsRestClient ??= new SystemTopics(SystemTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private SystemTopics SystemTopicsRestClient => _systemTopicsRestClient ??= new SystemTopics(SystemTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/systemTopics", out string apiVersion7) ? apiVersion7 : "2025-07-15-preview");
 
         private ClientDiagnostics TopicsClientDiagnostics => _topicsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Topics TopicsRestClient => _topicsRestClient ??= new Topics(TopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private Topics TopicsRestClient => _topicsRestClient ??= new Topics(
+            TopicsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-07-15-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion2) ? apiVersion2 : null);
 
         /// <summary>
         /// List all the namespaces under an Azure subscription.

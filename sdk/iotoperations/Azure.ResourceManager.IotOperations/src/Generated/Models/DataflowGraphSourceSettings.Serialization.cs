@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataflowGraphSourceSettings(endpointRef, dataSources, assetRef, additionalBinaryDataProperties);
+            return new DataflowGraphSourceSettings(endpointRef, dataSources ?? new ChangeTrackingList<string>(), assetRef, additionalBinaryDataProperties);
         }
     }
 }
