@@ -13,8 +13,6 @@
 
 ### Other Changes
 
-- Multi-endpoint routing logs the rejected route and the likely fix when ingestion returns 401 or 403.
-
 ## 1.10.0 (2026-10-05)
 
 ### Features Added
