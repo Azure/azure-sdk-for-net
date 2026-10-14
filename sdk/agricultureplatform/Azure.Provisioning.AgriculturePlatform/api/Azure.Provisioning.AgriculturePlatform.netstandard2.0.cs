@@ -51,7 +51,7 @@ namespace Azure.Provisioning.AgriculturePlatform
         public AgricultureServiceConfig() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> AppServiceResourceId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> CosmosDBResourceId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> InstanceUri { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Uri> InstanceUri { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> KeyVaultResourceId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> RedisCacheResourceId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> StorageAccountResourceId { get { throw null; } }
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.AgriculturePlatform
         public DataConnectorCredentials() { }
         public Azure.Provisioning.BicepValue<string> ClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> KeyName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> KeyVaultUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> KeyVaultUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> KeyVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AgriculturePlatform.AuthCredentialsKind> Kind { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }

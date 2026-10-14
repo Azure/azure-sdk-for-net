@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.AgriculturePlatform
     /// <summary> Config of the AgriService resource instance. </summary>
     public partial class AgricultureServiceConfig : ProvisionableConstruct
     {
-        private BicepValue<string> _instanceUri;
+        private BicepValue<Uri> _instanceUri;
         private BicepValue<string> _version;
         private BicepValue<ResourceIdentifier> _appServiceResourceId;
         private BicepValue<ResourceIdentifier> _cosmosDBResourceId;
@@ -28,7 +29,7 @@ namespace Azure.Provisioning.AgriculturePlatform
         }
 
         /// <summary> Gets the InstanceUri. </summary>
-        public BicepValue<string> InstanceUri
+        public BicepValue<Uri> InstanceUri
         {
             get
             {
@@ -101,7 +102,7 @@ namespace Azure.Provisioning.AgriculturePlatform
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _instanceUri = DefineProperty<string>(nameof(InstanceUri), new string[] { "instanceUri" }, isOutput: true);
+            _instanceUri = DefineProperty<Uri>(nameof(InstanceUri), new string[] { "instanceUri" }, isOutput: true);
             _version = DefineProperty<string>(nameof(Version), new string[] { "version" }, isOutput: true);
             _appServiceResourceId = DefineProperty<ResourceIdentifier>(nameof(AppServiceResourceId), new string[] { "appServiceResourceId" }, isOutput: true);
             _cosmosDBResourceId = DefineProperty<ResourceIdentifier>(nameof(CosmosDBResourceId), new string[] { "cosmosDbResourceId" }, isOutput: true);

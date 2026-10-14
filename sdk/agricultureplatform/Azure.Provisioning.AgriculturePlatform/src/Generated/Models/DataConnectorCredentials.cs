@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,7 +16,7 @@ namespace Azure.Provisioning.AgriculturePlatform
     {
         private BicepValue<AuthCredentialsKind> _kind;
         private BicepValue<string> _clientId;
-        private BicepValue<string> _keyVaultUri;
+        private BicepValue<Uri> _keyVaultUri;
         private BicepValue<string> _keyName;
         private BicepValue<string> _keyVersion;
 
@@ -55,7 +56,7 @@ namespace Azure.Provisioning.AgriculturePlatform
         }
 
         /// <summary> Gets or sets the KeyVaultUri. </summary>
-        public BicepValue<string> KeyVaultUri
+        public BicepValue<Uri> KeyVaultUri
         {
             get
             {
@@ -105,7 +106,7 @@ namespace Azure.Provisioning.AgriculturePlatform
             base.DefineProvisionableProperties();
             _kind = DefineProperty<AuthCredentialsKind>(nameof(Kind), new string[] { "kind" });
             _clientId = DefineProperty<string>(nameof(ClientId), new string[] { "clientId" });
-            _keyVaultUri = DefineProperty<string>(nameof(KeyVaultUri), new string[] { "keyVaultUri" });
+            _keyVaultUri = DefineProperty<Uri>(nameof(KeyVaultUri), new string[] { "keyVaultUri" });
             _keyName = DefineProperty<string>(nameof(KeyName), new string[] { "keyName" });
             _keyVersion = DefineProperty<string>(nameof(KeyVersion), new string[] { "keyVersion" });
             DefineAdditionalProperties();
