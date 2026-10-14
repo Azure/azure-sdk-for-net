@@ -1481,9 +1481,9 @@ ResponseResult response = await responseClient.CreateResponseAsync(responseOptio
 Console.WriteLine(response.GetOutputText());
 ```
 
-### Browser automation (preview)<a id="browser-automation"></a>
+### Browser automation<a id="browser-automation"></a>
 
-Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an Agent using the BrowserAutomationAgentTool.
+Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an agent using the GA `BrowserAutomationTool` (`browser_automation`).
 
 #### Create Azure Playwright workspace
 
@@ -1509,6 +1509,7 @@ Please note that Browser automation operations may take longer than typical call
 The `BrowserAutomationTool` is using MCP connection as opposed to `BrowserAutomationPreviewTool`, which uses the serverless connection.
 Please refer to the playwright [quickstart document](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/quickstart-automate-browser-tasks-remote-mcp) to configure playwright mcp connection.
 The preferred way to access MCP server is  by using EntraID; see this [document](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/how-to-playwright-workspaces-remote-mcp) on how to create a project connection.
+Set `FOUNDRY_PROJECT_ENDPOINT` to your project endpoint and `FOUNDRY_MODEL_NAME` to your model deployment name. Despite its name, `PLAYWRIGHT_MCP_CONNECTION_NAME` must contain the full project connection resource ID.
 
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
@@ -1521,7 +1522,7 @@ AIProjectClientOptions options = new()
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
 
-To use Azure Playwright workspace we need to create agent with `BrowserAutomationAgentTool`.
+To use Azure Playwright workspace we need to create an agent with `BrowserAutomationTool`.
 
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
 BrowserAutomationTool playwrightTool = new(
@@ -1541,27 +1542,43 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
-Streaming response outputs with browser automation provides incremental updates as the automation is processed. This is advised for interactive scenarios, as browser automation can require several minutes to fully complete.
+Stream browser automation responses using the exact agent version created above. Leave tool choice at its default, and ask the browser to read `https://example.com`. Print complete text messages once, not token-by-token, and log GA remote function action names, call IDs, and arguments without `browserSessionId`. The [browser automation sample](samples/Sample23_BrowserAutomationTool.md) includes the `ParseResponse` helper and synchronous equivalent.
+
+**Warning:** Complete messages may contain sensitive browser live-view URLs. Use these only in a trusted local terminal and redact them from saved logs or shared output.
 
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Async
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-CreateResponseOptions responseOptions = new()
+try
 {
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
-    StreamingEnabled = true,
-    InputItems =
+    ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
+        new AgentReference(agentVersion.Name, agentVersion.Version));
+    CreateResponseOptions responseOptions = new()
     {
-        ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
-            "To do that, go to the website finance.yahoo.com.\n" +
-            "At the top of the page, you will find a search bar.\n" +
-            "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
-            "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
-            "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
+        StreamingEnabled = true,
+        InputItems =
+        {
+            ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://example.com. " +
+                "Read the page and report its title and the visible description paragraph. " +
+                "Base your answer on the browser results, not on prior knowledge.")
+        }
+    };
+    bool responseCompleted = false;
+    await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
+    {
+        responseCompleted |= ParseResponse(update);
     }
-};
-await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
+    if (!responseCompleted)
+    {
+        throw new InvalidOperationException("The stream ended before the response completed.");
+    }
+}
+```
+
+Always pair the response block with `finally` to delete only the agent version created by this run, including when streaming fails.
+
+```C# Snippet:Sample_Cleanup_BrowserAutomotion_Async
+finally
 {
-    ParseResponse(update);
+    await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 }
 ```
 

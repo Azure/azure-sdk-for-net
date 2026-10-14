@@ -28,7 +28,7 @@ See the [Playwright Workspaces remote MCP quickstart](https://learn.microsoft.co
 
 ## Run this sample.
 
-1. Create an `AIProjectClient` and read the required environment variables. Browser automation operations can take longer than other requests, so configure a network timeout of at least five minutes.
+1. Create an `AIProjectClient` and read the required environment variables: `FOUNDRY_PROJECT_ENDPOINT`, `FOUNDRY_MODEL_NAME`, and `PLAYWRIGHT_MCP_CONNECTION_NAME`. Despite its name, `PLAYWRIGHT_MCP_CONNECTION_NAME` must contain the full project connection resource ID, not just the connection name. Browser automation operations can take longer than other requests, so configure a network timeout of at least five minutes. `DefaultAzureCredential` can use your Azure CLI login for local development.
 
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
@@ -41,7 +41,7 @@ AIProjectClientOptions options = new()
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
 
-2. Create an agent with a `BrowserAutomationTool`, and pass the MCP project connection name to `BrowserAutomationToolConnectionOptions`.
+2. Create an agent with the GA `BrowserAutomationTool` (`browser_automation`), and pass the MCP project connection resource ID to `BrowserAutomationToolConnectionOptions`.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
@@ -81,101 +81,129 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
-3. Create a `ParseResponse` helper method to process streaming response updates from the agent.
+3. Create a `ParseResponse` helper method to process streaming response updates from the agent. Print each complete message once on `response.output_text.done`, rather than printing text deltas. GA browser actions arrive as `remote_function_call` and `remote_function_call_output` items. These items are not strongly typed in the current SDK, so inspect their JSON to log action names, call IDs, and arguments without `browserSessionId`. Do not log raw tool outputs, which may contain sensitive session information.
+
+> **Warning:** Complete text messages can include a live-view URL that grants access to the browser session. Treat that URL as sensitive: use it only in a trusted local terminal and redact it before sharing output or saving logs.
 
 ```C# Snippet:Sample_ParseResponse_BrowserAutomotion
-private static void ParseResponse(StreamingResponseUpdate streamResponse)
+internal static bool ParseResponse(StreamingResponseUpdate streamResponse)
 {
-    StringBuilder errorMessage = new();
-    string errorCode = default;
-    bool hasError = false;
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
     {
         Console.WriteLine($"Stream response created with ID: {createUpdate.Response.Id}");
-    }
-    else if (streamResponse is StreamingResponseOutputTextDeltaUpdate textDelta)
-    {
-        Console.WriteLine($"Delta: {textDelta.Delta}");
     }
     else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
     {
         Console.WriteLine($"Response done with full message: {textDoneUpdate.Text}");
     }
+    else if (streamResponse is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
+    {
+        // GA browser actions use remote function items, which are not strongly typed by this SDK.
+        string kind = itemDoneUpdate.Item.Kind.ToString();
+        if (kind == "remote_function_call" || kind == "remote_function_call_output")
+        {
+            JsonNode item = JsonNode.Parse(ModelReaderWriter.Write(itemDoneUpdate.Item).ToString());
+            string callId = item["call_id"].GetValue<string>();
+            if (kind == "remote_function_call")
+            {
+                JsonObject arguments = JsonNode.Parse(item["arguments"].GetValue<string>()).AsObject();
+                arguments.Remove("browserSessionId");
+                Console.WriteLine($"Browser action: {item["name"].GetValue<string>()}, call ID: {callId}, arguments: {arguments.ToJsonString()}");
+            }
+            else
+            {
+                Console.WriteLine($"Browser action completed: {callId}");
+            }
+        }
+    }
     else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
     {
-        hasError = true;
-        if (!string.IsNullOrEmpty(errorUpdate.Code))
-        {
-            errorCode = errorUpdate.Code;
-        }
-        if (!string.IsNullOrEmpty(errorUpdate.Message))
-        {
-            errorMessage.Append(errorUpdate.Message);
-        }
+        throw new InvalidOperationException($"The stream has failed: {errorUpdate.Message}, error code: {errorUpdate.Code}");
     }
-    if (hasError)
+    else if (streamResponse is StreamingResponseFailedUpdate failedUpdate)
     {
-        throw new InvalidOperationException($"The stream has failed with the error: {errorMessage}, error code: {errorCode}");
+        throw new InvalidOperationException($"The response has failed: {failedUpdate.Response.Error?.Message}, error code: {failedUpdate.Response.Error?.Code}");
     }
+    else if (streamResponse is StreamingResponseIncompleteUpdate incompleteUpdate)
+    {
+        throw new InvalidOperationException($"The response is incomplete: {incompleteUpdate.Response.Id}");
+    }
+    return streamResponse is StreamingResponseCompletedUpdate;
 }
 ```
 
-4. Create a streaming response. Require the agent to use a tool by setting `ToolChoice = ResponseToolChoice.CreateRequiredChoice()` on `CreateResponseOptions`.
+4. Create a streaming response using the exact agent version created above. Ask the agent to visit `https://example.com` and report its title and description based on the browser results. Leave tool choice at its default so the agent can finish with a text answer after using the browser. Failed, incomplete, and prematurely ended streams must throw rather than appear successful.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Sync
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-CreateResponseOptions responseOptions = new()
+try
 {
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
-    StreamingEnabled = true,
-    InputItems =
+    ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
+        new AgentReference(agentVersion.Name, agentVersion.Version));
+    CreateResponseOptions responseOptions = new()
     {
-        ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
-            "To do that, go to the website finance.yahoo.com.\n" +
-            "At the top of the page, you will find a search bar.\n" +
-            "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
-            "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
-            "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
+        StreamingEnabled = true,
+        InputItems =
+        {
+            ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://example.com. " +
+                "Read the page and report its title and the visible description paragraph. " +
+                "Base your answer on the browser results, not on prior knowledge.")
+        }
+    };
+    bool responseCompleted = false;
+    foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(responseOptions))
+    {
+        responseCompleted |= ParseResponse(update);
     }
-};
-foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(responseOptions))
-{
-    ParseResponse(update);
+    if (!responseCompleted)
+    {
+        throw new InvalidOperationException("The stream ended before the response completed.");
+    }
 }
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Async
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-CreateResponseOptions responseOptions = new()
+try
 {
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
-    StreamingEnabled = true,
-    InputItems =
+    ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
+        new AgentReference(agentVersion.Name, agentVersion.Version));
+    CreateResponseOptions responseOptions = new()
     {
-        ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
-            "To do that, go to the website finance.yahoo.com.\n" +
-            "At the top of the page, you will find a search bar.\n" +
-            "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
-            "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
-            "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
+        StreamingEnabled = true,
+        InputItems =
+        {
+            ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://example.com. " +
+                "Read the page and report its title and the visible description paragraph. " +
+                "Base your answer on the browser results, not on prior knowledge.")
+        }
+    };
+    bool responseCompleted = false;
+    await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
+    {
+        responseCompleted |= ParseResponse(update);
     }
-};
-await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
-{
-    ParseResponse(update);
+    if (!responseCompleted)
+    {
+        throw new InvalidOperationException("The stream ended before the response completed.");
+    }
 }
 ```
 
-5. After the sample completes, delete the agent version that you created.
+5. Use `finally` to delete only the agent version that you created, whether the response succeeds or fails. Do not delete the whole agent or other retained versions.
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_BrowserAutomotion_Sync
-projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+finally
+{
+    projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+}
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_BrowserAutomotion_Async
-await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+finally
+{
+    await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+}
 ```

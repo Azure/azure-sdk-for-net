@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text;
+using System.ClientModel.Primitives;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
@@ -16,39 +17,49 @@ namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
 {
     #region Snippet:Sample_ParseResponse_BrowserAutomotion
-    private static void ParseResponse(StreamingResponseUpdate streamResponse)
+    internal static bool ParseResponse(StreamingResponseUpdate streamResponse)
     {
-        StringBuilder errorMessage = new();
-        string errorCode = default;
-        bool hasError = false;
         if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
         {
             Console.WriteLine($"Stream response created with ID: {createUpdate.Response.Id}");
-        }
-        else if (streamResponse is StreamingResponseOutputTextDeltaUpdate textDelta)
-        {
-            Console.WriteLine($"Delta: {textDelta.Delta}");
         }
         else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
         {
             Console.WriteLine($"Response done with full message: {textDoneUpdate.Text}");
         }
+        else if (streamResponse is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
+        {
+            // GA browser actions use remote function items, which are not strongly typed by this SDK.
+            string kind = itemDoneUpdate.Item.Kind.ToString();
+            if (kind == "remote_function_call" || kind == "remote_function_call_output")
+            {
+                JsonNode item = JsonNode.Parse(ModelReaderWriter.Write(itemDoneUpdate.Item).ToString());
+                string callId = item["call_id"].GetValue<string>();
+                if (kind == "remote_function_call")
+                {
+                    JsonObject arguments = JsonNode.Parse(item["arguments"].GetValue<string>()).AsObject();
+                    arguments.Remove("browserSessionId");
+                    Console.WriteLine($"Browser action: {item["name"].GetValue<string>()}, call ID: {callId}, arguments: {arguments.ToJsonString()}");
+                }
+                else
+                {
+                    Console.WriteLine($"Browser action completed: {callId}");
+                }
+            }
+        }
         else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
         {
-            hasError = true;
-            if (!string.IsNullOrEmpty(errorUpdate.Code))
-            {
-                errorCode = errorUpdate.Code;
-            }
-            if (!string.IsNullOrEmpty(errorUpdate.Message))
-            {
-                errorMessage.Append(errorUpdate.Message);
-            }
+            throw new InvalidOperationException($"The stream has failed: {errorUpdate.Message}, error code: {errorUpdate.Code}");
         }
-        if (hasError)
+        else if (streamResponse is StreamingResponseFailedUpdate failedUpdate)
         {
-            throw new InvalidOperationException($"The stream has failed with the error: {errorMessage}, error code: {errorCode}");
+            throw new InvalidOperationException($"The response has failed: {failedUpdate.Response.Error?.Message}, error code: {failedUpdate.Response.Error?.Code}");
         }
+        else if (streamResponse is StreamingResponseIncompleteUpdate incompleteUpdate)
+        {
+            throw new InvalidOperationException($"The response is incomplete: {incompleteUpdate.Response.Id}");
+        }
+        return streamResponse is StreamingResponseCompletedUpdate;
     }
     #endregion
 
@@ -92,29 +103,37 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_BrowserAutomotion_Async
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-        CreateResponseOptions responseOptions = new()
+        try
         {
-            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
-            StreamingEnabled = true,
-            InputItems =
+            ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
+                new AgentReference(agentVersion.Name, agentVersion.Version));
+            CreateResponseOptions responseOptions = new()
             {
-                ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
-                    "To do that, go to the website finance.yahoo.com.\n" +
-                    "At the top of the page, you will find a search bar.\n" +
-                    "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
-                    "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
-                    "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
+                StreamingEnabled = true,
+                InputItems =
+                {
+                    ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://example.com. " +
+                        "Read the page and report its title and the visible description paragraph. " +
+                        "Base your answer on the browser results, not on prior knowledge.")
+                }
+            };
+            bool responseCompleted = false;
+            await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
+            {
+                responseCompleted |= ParseResponse(update);
             }
-        };
-        await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
-        {
-            ParseResponse(update);
+            if (!responseCompleted)
+            {
+                throw new InvalidOperationException("The stream ended before the response completed.");
+            }
         }
         #endregion
 
         #region Snippet:Sample_Cleanup_BrowserAutomotion_Async
-        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        finally
+        {
+            await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
         #endregion
     }
 
@@ -155,29 +174,37 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_BrowserAutomotion_Sync
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-        CreateResponseOptions responseOptions = new()
+        try
         {
-            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
-            StreamingEnabled = true,
-            InputItems =
+            ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
+                new AgentReference(agentVersion.Name, agentVersion.Version));
+            CreateResponseOptions responseOptions = new()
             {
-                ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
-                    "To do that, go to the website finance.yahoo.com.\n" +
-                    "At the top of the page, you will find a search bar.\n" +
-                    "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
-                    "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
-                    "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
+                StreamingEnabled = true,
+                InputItems =
+                {
+                    ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://example.com. " +
+                        "Read the page and report its title and the visible description paragraph. " +
+                        "Base your answer on the browser results, not on prior knowledge.")
+                }
+            };
+            bool responseCompleted = false;
+            foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(responseOptions))
+            {
+                responseCompleted |= ParseResponse(update);
             }
-        };
-        foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(responseOptions))
-        {
-            ParseResponse(update);
+            if (!responseCompleted)
+            {
+                throw new InvalidOperationException("The stream ended before the response completed.");
+            }
         }
         #endregion
 
         #region Snippet:Sample_Cleanup_BrowserAutomotion_Sync
-        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        finally
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
         #endregion
     }
 
