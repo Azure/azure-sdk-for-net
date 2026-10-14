@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 writer.WritePropertyName("oidcIssuerProfile"u8);
                 writer.WriteObjectValue(OidcIssuerProfile, options);
             }
-            if (_gatewayIsDefined || Optional.IsDefined(Gateway))
+            if (Optional.IsDefined(Gateway, _gatewayIsDefined))
             {
                 if (Gateway != null)
                 {
