@@ -1499,7 +1499,7 @@ Follow [Set up Browser Automation in Microsoft Foundry](https://learn.microsoft.
 #### Using Browser automation tool
 
 Please note that Browser automation operations may take longer than typical calls to process. Using background mode for Responses or applying a network timeout of at least five minutes for non-background calls is highly recommended.
-`BrowserAutomationTool` uses a PlaywrightWorkspaces connection, not a generic MCP connection. `BrowserAutomationPreviewTool` uses a Serverless Model connection.
+`BrowserAutomationTool` uses a PlaywrightWorkspaces connection. `BrowserAutomationPreviewTool` uses a Serverless Model connection.
 Set `FOUNDRY_PROJECT_ENDPOINT` to your project endpoint and `FOUNDRY_MODEL_NAME` to your model deployment name. Despite its name, `PLAYWRIGHT_MCP_CONNECTION_NAME` must contain the full project connection resource ID.
 
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion

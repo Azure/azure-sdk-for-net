@@ -15,7 +15,7 @@ Playwright is an open-source framework for end-to-end testing and browser automa
 
 ## Configure Microsoft Foundry
 
-**Note:** `BrowserAutomationTool` uses a PlaywrightWorkspaces connection, not a generic MCP connection. `BrowserAutomationPreviewTool` uses a Serverless Model connection.
+**Note:** `BrowserAutomationTool` uses a PlaywrightWorkspaces connection. `BrowserAutomationPreviewTool` uses a Serverless Model connection.
 
 Follow [Set up Browser Automation in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/browser-automation#set-up-browser-automation) to connect your Playwright workspace. In the Foundry portal, select **Build** > **Tools**, create a toolbox, and add **Browser Automation**. Select your Playwright workspace and authentication method to create the PlaywrightWorkspaces connection. Copy the **Project connection ID** from the tool's details page for use in this sample.
 
