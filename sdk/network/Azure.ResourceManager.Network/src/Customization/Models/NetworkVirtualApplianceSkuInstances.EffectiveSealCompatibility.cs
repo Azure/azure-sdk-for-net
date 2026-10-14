@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the NetworkVirtualApplianceSkuInstances type. </summary>
     public partial class NetworkVirtualApplianceSkuInstances
     {
         /// <summary> Initializes a new instance of the NetworkVirtualApplianceSkuInstances class. </summary>

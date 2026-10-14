@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ConnectionMonitorData type. </summary>
     [CodeGenSuppress("Endpoints")]
     [CodeGenSuppress("Outputs")]
     [CodeGenSuppress("TestConfigurations")]

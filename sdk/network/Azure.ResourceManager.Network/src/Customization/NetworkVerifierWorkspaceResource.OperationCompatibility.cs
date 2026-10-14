@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkVerifierWorkspaceResource type. </summary>
     public partial class NetworkVerifierWorkspaceResource
     {
         /// <summary> Invokes the DeleteAsync compatibility operation. </summary>

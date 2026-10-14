@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Destination of a routing rule. </summary>
     [CodeGenSuppress("DeserializeRoutingRuleRouteDestination", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     public partial class RoutingRuleRouteDestination
     {

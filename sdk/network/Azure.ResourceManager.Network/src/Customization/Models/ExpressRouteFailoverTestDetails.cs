@@ -9,7 +9,6 @@ using System.Globalization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ExpressRouteFailoverTestDetails type. </summary>
     public partial class ExpressRouteFailoverTestDetails
     {
         // Native dates own storage; retain the migration's string names as round-trip aliases.

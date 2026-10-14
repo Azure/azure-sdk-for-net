@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the FrontendIPConfigurationData type. </summary>
     [CodeGenSuppress("InboundNatPools")]
     [CodeGenSuppress("InboundNatRules")]
     [CodeGenSuppress("LoadBalancingRules")]

@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the TroubleshootingContent type. </summary>
     public partial class TroubleshootingContent
     {
         // Keep the native string path, including relative paths, behind the released URI facade.

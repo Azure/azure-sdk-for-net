@@ -7,7 +7,6 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewayRedirectConfiguration type. </summary>
     public partial class ApplicationGatewayRedirectConfiguration
     {
         // Internal in 1.15.0; unnecessarily exposed publicly during the 1.16.0 TypeSpec migration.

@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewayFirewallRuleGroup type. </summary>
     public partial class ApplicationGatewayFirewallRuleGroup
     {
         /// <summary> Initializes a new instance of the ApplicationGatewayFirewallRuleGroup class. </summary>

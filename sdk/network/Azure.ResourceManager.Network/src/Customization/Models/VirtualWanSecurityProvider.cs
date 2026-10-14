@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the VirtualWanSecurityProvider type. </summary>
     public partial class VirtualWanSecurityProvider
     {
         // Restore the original native name and retain the migration name over the same storage.

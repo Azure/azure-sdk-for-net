@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the IPGroupData type. </summary>
     [CodeGenSuppress("FirewallPolicies")]
     [CodeGenSuppress("Firewalls")]
     public partial class IPGroupData

@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the CloudServiceSwapResource type. </summary>
     public partial class CloudServiceSwapResource
     {
         /// <summary> Generate the resource identifier for this resource. </summary>

@@ -14,7 +14,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewayResource type. </summary>
     public partial class ApplicationGatewayResource
     {
         /// <summary> Invokes the GetApplicationGatewayPrivateLinkResourcesAsync compatibility operation. </summary>

@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Information on flow logging configuration. </summary>
     public partial class FlowLogInformation
     {
         // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.

@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Defines contents of a web application firewall global configuration. </summary>
     public partial class PolicySettings
     {
         // The service replaced the old wire property in API version 2025-07-01.

@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ServiceGatewayData type. </summary>
     public partial class ServiceGatewayData
     {
         /// <summary> Invokes the this compatibility operation. </summary>

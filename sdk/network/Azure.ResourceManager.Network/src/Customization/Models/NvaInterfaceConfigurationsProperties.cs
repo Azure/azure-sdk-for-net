@@ -9,7 +9,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Network virtual appliance interface configuration properties. </summary>
     public partial class NvaInterfaceConfigurationsProperties
     {
         // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.

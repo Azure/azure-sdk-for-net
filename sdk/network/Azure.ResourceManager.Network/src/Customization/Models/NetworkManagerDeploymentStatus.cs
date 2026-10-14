@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the NetworkManagerDeploymentStatus type. </summary>
     public partial class NetworkManagerDeploymentStatus
     {
         // The migration name remains canonical; the released alias reads the same extensible enum.

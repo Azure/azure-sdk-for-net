@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The network private link service connection. </summary>
     public partial class NetworkPrivateLinkServiceConnection
     {
         // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.

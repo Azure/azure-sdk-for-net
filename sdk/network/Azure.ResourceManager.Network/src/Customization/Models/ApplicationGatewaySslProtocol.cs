@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewaySslProtocol type. </summary>
     public readonly partial struct ApplicationGatewaySslProtocol
     {
         /// <inheritdoc cref="Tls1_0"/>

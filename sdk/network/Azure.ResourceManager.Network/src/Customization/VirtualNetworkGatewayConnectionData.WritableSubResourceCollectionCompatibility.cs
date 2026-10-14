@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VirtualNetworkGatewayConnectionData type. </summary>
     [CodeGenSuppress("EgressNatRules")]
     [CodeGenSuppress("IngressNatRules")]
     public partial class VirtualNetworkGatewayConnectionData

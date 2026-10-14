@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRoutePortAuthorizationData type. </summary>
     [CodeGenSuppress("CircuitResourceUri")]
     public partial class ExpressRoutePortAuthorizationData
     {

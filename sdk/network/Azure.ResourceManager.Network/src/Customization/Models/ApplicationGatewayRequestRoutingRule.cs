@@ -10,7 +10,6 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewayRequestRoutingRule type. </summary>
     public partial class ApplicationGatewayRequestRoutingRule
     {
         // Preserve the TypeSpec-generated property name because it maps to the same wire property as the preferred member.

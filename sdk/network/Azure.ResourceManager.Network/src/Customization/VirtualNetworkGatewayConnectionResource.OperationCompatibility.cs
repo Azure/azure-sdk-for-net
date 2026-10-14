@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VirtualNetworkGatewayConnectionResource type. </summary>
     public partial class VirtualNetworkGatewayConnectionResource
     {
         /// <summary> Invokes the StartPacketCaptureAsync compatibility operation. </summary>

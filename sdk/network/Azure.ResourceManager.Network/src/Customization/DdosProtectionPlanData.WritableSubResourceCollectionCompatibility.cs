@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the DdosProtectionPlanData type. </summary>
     [CodeGenSuppress("PublicIPAddresses")]
     [CodeGenSuppress("VirtualNetworks")]
     public partial class DdosProtectionPlanData

@@ -9,7 +9,6 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the ApplicationGatewayPrivateEndpointConnection data model. </summary>
     public partial class ApplicationGatewayPrivateEndpointConnectionData
     {
         // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.

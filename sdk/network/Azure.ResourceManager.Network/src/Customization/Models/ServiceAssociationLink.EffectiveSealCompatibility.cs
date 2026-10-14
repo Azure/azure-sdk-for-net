@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ServiceAssociationLink type. </summary>
     public partial class ServiceAssociationLink
     {
         /// <summary> Initializes a new instance of the ServiceAssociationLink class. </summary>

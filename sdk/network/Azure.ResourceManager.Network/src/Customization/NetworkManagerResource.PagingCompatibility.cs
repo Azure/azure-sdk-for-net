@@ -14,7 +14,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkManagerResource type. </summary>
     [CodeGenSuppress("GetActiveConnectivityConfigurationsAsync", typeof(ActiveConfigurationContent), typeof(int?), typeof(CancellationToken))]
     [CodeGenSuppress("GetActiveConnectivityConfigurations", typeof(ActiveConfigurationContent), typeof(int?), typeof(CancellationToken))]
     [CodeGenSuppress("GetActiveSecurityAdminRulesAsync", typeof(ActiveConfigurationContent), typeof(int?), typeof(CancellationToken))]

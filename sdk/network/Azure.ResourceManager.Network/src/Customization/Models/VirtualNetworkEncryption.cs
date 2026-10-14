@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Encryption settings for a virtual network. </summary>
     [CodeGenSuppress("DeserializeVirtualNetworkEncryption", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     public partial class VirtualNetworkEncryption
     {

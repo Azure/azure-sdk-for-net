@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the Subnet data model. </summary>
     [CodeGenSuppress("IPAllocations")]
     public partial class SubnetData
     {

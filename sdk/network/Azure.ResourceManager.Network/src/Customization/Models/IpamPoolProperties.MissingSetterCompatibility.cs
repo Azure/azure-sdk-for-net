@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the IpamPoolProperties type. </summary>
     public partial class IpamPoolProperties
     {
         /// <summary> Gets or sets the ProvisioningState compatibility property. </summary>

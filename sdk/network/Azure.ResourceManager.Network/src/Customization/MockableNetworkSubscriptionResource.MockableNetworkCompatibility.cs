@@ -10,7 +10,6 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network.Mocking
 {
-    /// <summary> Compatibility declaration for the MockableNetworkSubscriptionResource type. </summary>
     public partial class MockableNetworkSubscriptionResource
     {
         /// <summary> Invokes the GetExpressRouteCrossConnectionsAsync compatibility operation. </summary>

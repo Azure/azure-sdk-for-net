@@ -10,7 +10,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRouteGatewayData type. </summary>
     public partial class ExpressRouteGatewayData
     {
         // The released alias reads the canonical generated list; it must not own separate storage.

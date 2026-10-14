@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Probe of the application gateway. </summary>
     public partial class ApplicationGatewayProbe
     {
         // Preserve the TypeSpec-generated property name because it maps to the same wire property as the preferred member.

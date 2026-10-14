@@ -11,7 +11,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the DdosCustomPolicyData type. </summary>
     // Suppress the flattened member to retain the released WritableSubResource list contract.
     // Forward to native storage to preserve list/element mutations and wire connectivity.
     // Legacy elements intentionally drop unknown element JSON; parent/root data is unaffected.

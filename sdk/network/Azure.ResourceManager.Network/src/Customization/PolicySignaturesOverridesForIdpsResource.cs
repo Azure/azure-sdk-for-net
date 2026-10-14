@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the PolicySignaturesOverridesForIdpsResource type. </summary>
     public partial class PolicySignaturesOverridesForIdpsResource
     {
         /// <summary> Invokes the Update compatibility operation. </summary>

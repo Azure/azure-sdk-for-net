@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The application gateway private link IP configuration. </summary>
     public partial class ApplicationGatewayPrivateLinkIPConfiguration
     {
         // Preserve the TypeSpec-generated property name because it maps to the same wire property as the preferred member.

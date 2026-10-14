@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewaySslCipherSuite type. </summary>
     public readonly partial struct ApplicationGatewaySslCipherSuite
     {
         /// <inheritdoc cref="TlsECDiffieHellmanECDsaWithAes128CbcSha"/>

@@ -14,7 +14,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the SubnetResource type. </summary>
     [CodeGenSuppress("GetResourceNavigationLinksAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetResourceNavigationLinks", typeof(CancellationToken))]
     [CodeGenSuppress("GetServiceAssociationLinksAsync", typeof(CancellationToken))]

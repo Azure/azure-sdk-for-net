@@ -10,7 +10,6 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRouteCircuitPeeringData type. </summary>
     public partial class ExpressRouteCircuitPeeringData
     {
         /// <summary> Gets or sets the ID of the ExpressRoute connection. </summary>

@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Describes the behavior of a connection monitor endpoint filter. </summary>
     public partial class ConnectionMonitorEndpointFilter
     {
         // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.

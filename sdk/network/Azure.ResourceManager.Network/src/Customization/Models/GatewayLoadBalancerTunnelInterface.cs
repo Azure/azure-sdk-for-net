@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Gateway load balancer tunnel interface of a load balancer backend address pool. </summary>
     public partial class GatewayLoadBalancerTunnelInterface
     {
         // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.

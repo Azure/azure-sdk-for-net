@@ -12,7 +12,6 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A load balancing rule for a load balancer. </summary>
     public partial class LoadBalancingRuleData
     {
         /// <summary> Gets the backend address pools. </summary>

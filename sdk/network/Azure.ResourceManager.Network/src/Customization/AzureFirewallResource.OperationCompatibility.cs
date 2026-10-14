@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the AzureFirewallResource type. </summary>
     public partial class AzureFirewallResource
     {
         /// <summary> Invokes the PacketCaptureAsync compatibility operation. </summary>

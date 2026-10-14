@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VirtualHubData type. </summary>
     [CodeGenSuppress("BgpConnections")]
     [CodeGenSuppress("RouteMaps")]
     public partial class VirtualHubData

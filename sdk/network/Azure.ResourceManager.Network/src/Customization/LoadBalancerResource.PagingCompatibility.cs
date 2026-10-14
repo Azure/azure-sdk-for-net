@@ -14,7 +14,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the LoadBalancerResource type. </summary>
     public partial class LoadBalancerResource
     {
         /// <summary> Invokes the GetLoadBalancerNetworkInterfacesAsync compatibility operation. </summary>

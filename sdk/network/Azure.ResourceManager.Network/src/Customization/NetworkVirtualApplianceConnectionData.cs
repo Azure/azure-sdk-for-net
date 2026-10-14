@@ -9,7 +9,6 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkVirtualApplianceConnectionData type. </summary>
     public partial class NetworkVirtualApplianceConnectionData
     {
         /// <summary> Compatibility member. </summary>

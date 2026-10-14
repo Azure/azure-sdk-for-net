@@ -7,7 +7,6 @@ using System;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the DdosSettings type. </summary>
     public partial class DdosSettings
     {
         // Preserve the 1.15 behavioral alias, including null and unknown protection modes.

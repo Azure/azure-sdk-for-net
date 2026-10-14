@@ -14,7 +14,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRouteGatewayCollection type. </summary>
     public partial class ExpressRouteGatewayCollection
     {
         /// <summary> Invokes the GetAllAsync compatibility operation. </summary>

@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the BgpServiceCommunity type. </summary>
     public partial class BgpServiceCommunity
     {
         /// <summary> Initializes a new instance of the BgpServiceCommunity class. </summary>

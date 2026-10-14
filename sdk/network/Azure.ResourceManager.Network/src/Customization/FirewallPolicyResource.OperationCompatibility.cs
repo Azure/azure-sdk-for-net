@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the FirewallPolicyResource type. </summary>
     public partial class FirewallPolicyResource
     {
         /// <summary> Invokes the DeployFirewallPolicyDeploymentAsync compatibility operation. </summary>

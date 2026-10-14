@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ResourceNavigationLink type. </summary>
     public partial class ResourceNavigationLink
     {
         /// <summary> Initializes a new instance of the ResourceNavigationLink class. </summary>

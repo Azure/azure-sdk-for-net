@@ -9,7 +9,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the ApplicationGateway data model. </summary>
     public partial class ApplicationGatewayData
     {
         // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.

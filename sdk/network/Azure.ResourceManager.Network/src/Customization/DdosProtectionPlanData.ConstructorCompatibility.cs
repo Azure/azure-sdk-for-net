@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the DdosProtectionPlanData type. </summary>
     public partial class DdosProtectionPlanData
     {
         /// <summary> Invokes the base compatibility operation. </summary>

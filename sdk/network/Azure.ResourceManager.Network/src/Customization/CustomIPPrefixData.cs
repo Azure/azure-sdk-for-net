@@ -9,7 +9,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the CustomIPPrefixData type. </summary>
     [CodeGenSuppress("ChildCustomIPPrefixes")]
     [CodeGenSuppress("PublicIPPrefixes")]
     public partial class CustomIPPrefixData

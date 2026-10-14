@@ -7,7 +7,6 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the VirtualNetworkGatewayIPConfiguration type. </summary>
     public partial class VirtualNetworkGatewayIPConfiguration
     {
         // The following two references were internal in 1.15.0 and unnecessarily exposed publicly

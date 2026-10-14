@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Mocking
 {
-    /// <summary> Compatibility declaration for the MockableNetworkResourceGroupResource type. </summary>
     public partial class MockableNetworkResourceGroupResource
     {
         /// <summary> Invokes the CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService compatibility operation. </summary>

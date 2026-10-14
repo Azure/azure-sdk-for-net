@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ConnectivityInformation type. </summary>
     public partial class ConnectivityInformation
     {
         /// <summary> Compatibility member. </summary>

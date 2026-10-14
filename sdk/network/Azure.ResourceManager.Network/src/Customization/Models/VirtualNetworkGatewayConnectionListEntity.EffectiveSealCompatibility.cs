@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the VirtualNetworkGatewayConnectionListEntity type. </summary>
     public partial class VirtualNetworkGatewayConnectionListEntity
     {
         /// <summary> Initializes a new instance of the VirtualNetworkGatewayConnectionListEntity class. </summary>

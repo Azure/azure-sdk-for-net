@@ -14,7 +14,6 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkExtensions type. </summary>
     public static partial class NetworkExtensions
     {
         /// <summary> Invokes the SwapPublicIPAddressesLoadBalancer compatibility operation. </summary>

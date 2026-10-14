@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkInterfaceData type. </summary>
     public partial class NetworkInterfaceData
     {
         /// <summary> Compatibility member. </summary>

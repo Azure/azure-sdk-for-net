@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the PacketCaptureResource type. </summary>
     public partial class PacketCaptureResource
     {
         /// <summary> Invokes the UpdateAsync compatibility operation. </summary>

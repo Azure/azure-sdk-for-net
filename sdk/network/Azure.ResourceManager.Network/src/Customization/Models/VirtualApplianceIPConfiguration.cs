@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Network virtual appliance IP configuration. </summary>
     public partial class VirtualApplianceIPConfiguration
     {
         // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.

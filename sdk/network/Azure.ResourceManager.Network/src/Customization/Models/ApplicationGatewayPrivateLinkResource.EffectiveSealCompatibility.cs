@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewayPrivateLinkResource type. </summary>
     public partial class ApplicationGatewayPrivateLinkResource
     {
         /// <summary> Initializes a new instance of the ApplicationGatewayPrivateLinkResource class. </summary>

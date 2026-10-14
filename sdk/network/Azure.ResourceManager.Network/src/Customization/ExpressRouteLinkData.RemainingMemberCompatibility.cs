@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRouteLinkData type. </summary>
     public partial class ExpressRouteLinkData
     {
         /// <summary> Gets or sets the ETag compatibility property. </summary>

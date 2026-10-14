@@ -14,7 +14,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VirtualNetworkGatewayResource type. </summary>
     [CodeGenSuppress("GetRadiusSecretsAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetRadiusSecrets", typeof(CancellationToken))]
     public partial class VirtualNetworkGatewayResource

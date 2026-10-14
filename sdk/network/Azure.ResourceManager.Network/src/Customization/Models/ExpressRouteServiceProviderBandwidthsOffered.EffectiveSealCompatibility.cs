@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ExpressRouteServiceProviderBandwidthsOffered type. </summary>
     public partial class ExpressRouteServiceProviderBandwidthsOffered
     {
         /// <summary> Initializes a new instance of the ExpressRouteServiceProviderBandwidthsOffered class. </summary>

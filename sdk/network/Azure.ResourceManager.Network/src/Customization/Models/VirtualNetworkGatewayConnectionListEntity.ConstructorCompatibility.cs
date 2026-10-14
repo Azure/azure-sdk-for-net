@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the VirtualNetworkGatewayConnectionListEntity type. </summary>
     [CodeGenSuppress("VirtualNetworkGatewayConnectionListEntity", typeof(WritableSubResource), typeof(VirtualNetworkGatewayConnectionType))]
     public partial class VirtualNetworkGatewayConnectionListEntity
     {

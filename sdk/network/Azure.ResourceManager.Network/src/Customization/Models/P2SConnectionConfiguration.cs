@@ -12,7 +12,6 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the P2SConnectionConfiguration type. </summary>
     public partial class P2SConnectionConfiguration : NetworkResourceData
     {
         // Preserve the flattened API because the address-space model now has multiple properties and is no longer flattened.

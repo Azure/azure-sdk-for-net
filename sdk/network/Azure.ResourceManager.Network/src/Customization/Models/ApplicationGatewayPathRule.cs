@@ -7,7 +7,6 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewayPathRule type. </summary>
     public partial class ApplicationGatewayPathRule
     {
         // The following two references were internal in 1.15.0 and unnecessarily exposed publicly

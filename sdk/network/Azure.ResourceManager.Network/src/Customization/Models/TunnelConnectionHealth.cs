@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Virtual network gateway tunnel connection health. </summary>
     public partial class TunnelConnectionHealth
     {
         // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.

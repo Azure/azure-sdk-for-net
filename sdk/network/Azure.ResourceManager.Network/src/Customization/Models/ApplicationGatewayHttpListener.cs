@@ -7,7 +7,6 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewayHttpListener type. </summary>
     public partial class ApplicationGatewayHttpListener
     {
         // The following three references were internal in 1.15.0 and unnecessarily exposed publicly

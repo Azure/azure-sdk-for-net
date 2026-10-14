@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the SubnetResource type. </summary>
     public partial class SubnetResource
     {
     }

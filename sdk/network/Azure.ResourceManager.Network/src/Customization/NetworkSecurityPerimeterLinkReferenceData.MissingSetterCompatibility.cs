@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkSecurityPerimeterLinkReferenceData type. </summary>
     public partial class NetworkSecurityPerimeterLinkReferenceData
     {
         /// <summary> Gets or sets the Status compatibility property. </summary>

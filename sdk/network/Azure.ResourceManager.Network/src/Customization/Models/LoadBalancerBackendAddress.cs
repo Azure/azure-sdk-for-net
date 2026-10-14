@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the LoadBalancerBackendAddress type. </summary>
     public partial class LoadBalancerBackendAddress
     {
         // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.

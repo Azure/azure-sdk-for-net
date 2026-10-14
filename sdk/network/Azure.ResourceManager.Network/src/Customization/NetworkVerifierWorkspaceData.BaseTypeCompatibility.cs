@@ -12,6 +12,5 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkVerifierWorkspaceData type. </summary>
     public partial class NetworkVerifierWorkspaceData : TrackedResourceData { }
 }

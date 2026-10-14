@@ -10,7 +10,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Inbound NAT pool of the load balancer. </summary>
     public partial class LoadBalancerInboundNatPool
     {
         /// <summary> Gets or sets the transport protocol. </summary>

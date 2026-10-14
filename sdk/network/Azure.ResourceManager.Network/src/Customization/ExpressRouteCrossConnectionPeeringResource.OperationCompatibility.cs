@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRouteCrossConnectionPeeringResource type. </summary>
     public partial class ExpressRouteCrossConnectionPeeringResource
     {
         /// <summary> Invokes the GetArpTableExpressRouteCrossConnectionAsync compatibility operation. </summary>

@@ -7,7 +7,6 @@ using System;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> DDoS settings protection coverage. </summary>
     // Retain the released value type required by the local-only DdosSettings.ProtectionCoverage API.
     // The current service model has no coverage field; these values do not map to ProtectionMode.
     [Obsolete("This type is obsolete and might be removed in a future version", false)]

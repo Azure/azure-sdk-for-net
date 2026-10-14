@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRouteProviderPortData type. </summary>
     public partial class ExpressRouteProviderPortData
     {
         /// <summary> Initializes a new instance of the ExpressRouteProviderPortData class. </summary>

@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the VngClientConnectionConfiguration type. </summary>
     public partial class VngClientConnectionConfiguration
     {
         // Lazily restore the supported flattened facade using the native change-tracking list.

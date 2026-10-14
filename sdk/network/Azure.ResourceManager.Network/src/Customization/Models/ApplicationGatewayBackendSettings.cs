@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Backend settings of an application gateway. </summary>
     public partial class ApplicationGatewayBackendSettings
     {
         // Preserve the previous acronym spelling as an alias of the preferred generated property.

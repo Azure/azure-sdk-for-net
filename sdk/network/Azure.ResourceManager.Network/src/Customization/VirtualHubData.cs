@@ -10,7 +10,6 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the VirtualHub data model. </summary>
     public partial class VirtualHubData
     {
         // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.

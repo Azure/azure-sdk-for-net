@@ -8,7 +8,6 @@ using System.Globalization;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VirtualNetworkApplianceData type. </summary>
     public partial class VirtualNetworkApplianceData
     {
         /// <summary> Gets or sets the bandwidth in gigabits per second as an invariant-culture string. </summary>

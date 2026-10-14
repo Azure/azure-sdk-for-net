@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the HubRouteTableData type. </summary>
     public partial class HubRouteTableData
     {
         /// <summary> Gets or sets the ETag compatibility property. </summary>

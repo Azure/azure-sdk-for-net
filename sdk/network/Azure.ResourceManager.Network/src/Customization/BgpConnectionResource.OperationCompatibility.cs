@@ -18,7 +18,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the BgpConnectionResource type. </summary>
     [CodeGenSuppress("GetAdvertisedRoutesAsync", typeof(WaitUntil), typeof(CancellationToken))]
     [CodeGenSuppress("GetAdvertisedRoutes", typeof(WaitUntil), typeof(CancellationToken))]
     [CodeGenSuppress("GetLearnedRoutesAsync", typeof(WaitUntil), typeof(CancellationToken))]

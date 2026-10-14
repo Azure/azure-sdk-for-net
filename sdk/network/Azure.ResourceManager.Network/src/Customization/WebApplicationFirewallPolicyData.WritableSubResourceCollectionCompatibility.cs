@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the WebApplicationFirewallPolicyData type. </summary>
     [CodeGenSuppress("HttpListeners")]
     [CodeGenSuppress("PathBasedRules")]
     public partial class WebApplicationFirewallPolicyData

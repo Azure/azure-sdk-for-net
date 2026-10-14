@@ -12,7 +12,6 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the VirtualNetworkGateway data model. </summary>
     public partial class VirtualNetworkGatewayData
     {
         // Preserve the flattened API because the address-space model now has multiple properties and is no longer flattened.

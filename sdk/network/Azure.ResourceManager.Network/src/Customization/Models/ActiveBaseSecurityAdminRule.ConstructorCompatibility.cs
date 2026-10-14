@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ActiveBaseSecurityAdminRule type. </summary>
     [CodeGenSuppress("ActiveBaseSecurityAdminRule")]
     public abstract partial class ActiveBaseSecurityAdminRule
     {

@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRoutePortsLocationResource type. </summary>
     public partial class ExpressRoutePortsLocationResource
     {
         /// <summary> Invokes the AddTag compatibility operation. </summary>

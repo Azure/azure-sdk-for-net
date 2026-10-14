@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkVirtualApplianceResource type. </summary>
     public partial class NetworkVirtualApplianceResource
     {
         /// <summary> Invokes the CreateOrUpdateInboundSecurityRule compatibility operation. </summary>

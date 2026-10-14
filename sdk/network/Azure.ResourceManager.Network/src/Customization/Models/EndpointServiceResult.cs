@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the EndpointServiceResult type. </summary>
     public partial class EndpointServiceResult
     {
         // ApiCompat CP0002: 1.17.0 requires ResourceType.set; native read-only metadata alone would remove it.

@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the PeerExpressRouteCircuitConnectionData type. </summary>
     public partial class PeerExpressRouteCircuitConnectionData
     {
         /// <summary> Initializes a new instance of the PeerExpressRouteCircuitConnectionData class. </summary>
