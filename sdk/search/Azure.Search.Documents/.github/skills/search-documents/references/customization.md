@@ -152,7 +152,11 @@ public partial class SearchClientOptions : ClientOptions { }
 
 SDK usages: `SearchClientOptions.cs` (`DocumentsClientOptions` → `SearchClientOptions`), `SearchModelFactory.cs` (`DocumentsModelFactory` → `SearchModelFactory`), `SearchOptions` (`SearchRequest`), `SuggestOptions` (`SuggestPostRequest`), `AutocompleteOptions` (`AutocompletePostRequest`).
 
-**Danger:** If the generated type is renamed in a new spec version, the `[CodeGenType("OldName")]` mapping breaks **silently** — the custom partial disconnects from generated code with no compile error.
+Client builder extensions use `[CodeGenType("DocumentsClientBuilderExtensions")]` to generate the existing `SearchClientBuilderExtensions` name. The separately shipped `DocumentsClientBuilderExtensions` type is retained in custom code with `EditorBrowsable(Never)` on the type and all members; its extension signatures must remain intact for API compatibility.
+
+Builder-supplied credential and knowledge-base registration signatures remain public only on the compatibility type. The canonical type uses targeted generation suppression and internal non-extension registration helpers for those signatures. Do not generate public copies on the canonical type: `EditorBrowsable(Never)` does not exclude the compatibility methods from compiler overload resolution, so previously working extension calls would become ambiguous.
+
+**Danger:** If the generated type is renamed in a new spec version, the `[CodeGenType("OldName")]` mapping breaks **silently** - the custom partial disconnects from generated code with no compile error.
 
 ### `[CodeGenMember("OriginalPropertyName")]`
 Renames a generated property/field in the custom partial. **61 usages** across the package.
