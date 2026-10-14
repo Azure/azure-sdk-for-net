@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private GuestConfigurationAssignmentReportDetails _details;
-        internal bool _detailsIsDefined;
+        private bool _detailsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportProperties"/>. </summary>
         internal GuestConfigurationAssignmentReportProperties()
