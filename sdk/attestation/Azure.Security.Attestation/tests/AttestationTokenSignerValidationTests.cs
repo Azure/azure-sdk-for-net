@@ -32,6 +32,10 @@ namespace Azure.Security.Attestation.Tests
         private const string EmbeddedP384Certificate =
             "MIIBcjCB+qADAgECAgkAvgZuTskAh/UwCgYIKoZIzj0EAwMwITEfMB0GA1UEAxMWQXR0ZXN0YXRpb24gUC0zODQgVGVzdDAeFw0yNjAxMDEwMDAwMDBaFw0zNjAxMDEwMDAwMDBaMCExHzAdBgNVBAMTFkF0dGVzdGF0aW9uIFAtMzg0IFRlc3QwdjAQBgcqhkjOPQIBBgUrgQQAIgNiAAQahajdM6T2iWTygCTJ5PUQeweCmSwOaQ0aUF9yw+PnZE9/oCeoXr2e5DRT18SbzsfosRUM+EBC8LnW33cjgf9ukmVAc9x83/N7AQUkaSlXVKuOFbJyOKpUStknUXFOosYwCgYIKoZIzj0EAwMDZwAwZAIwbd69Qd93t8BkgrS7IkKoQOL60c98wmlqWGR042QnQ5ekoMzRUp27IHYF35CG6jpYAjAUSFMkS4WVMlmu7DeA2IRbNKTsl9Jzy68lrWkXwBORhA5F5KSN0wMkYBxzUfOlgak=";
 
+        // A public-only, self-signed ECDSA secp256k1 certificate: a 256-bit curve that is not P-256.
+        private const string EmbeddedSecp256k1Certificate =
+            "MIIBPDCB4qADAgECAgkA2kApujDJLjkwCgYIKoZIzj0EAwIwJTEjMCEGA1UEAxMaQXR0ZXN0YXRpb24gc2VjcDI1NmsxIFRlc3QwHhcNMjYwMTAxMDAwMDAwWhcNMzYwMTAxMDAwMDAwWjAlMSMwIQYDVQQDExpBdHRlc3RhdGlvbiBzZWNwMjU2azEgVGVzdDBWMBAGByqGSM49AgEGBSuBBAAKA0IABCbqvTKwT67ctAgob9W6QNJfBt8MEfKgXnU3nWyZZ7+SNkhR1VJc/o2oGIjD4Xg16ynsuSZvgjBdK4j7U5hgqC4wCgYIKoZIzj0EAwIDSQAwRgIhAOvljrLmoXdETiHoGOkbUhpSCSoSy9Zj8l+JsjS3ycjMAiEA308KGCf12Sm5iu73GQMtuXEZRBYFfmJul8ed7XE4f1I=";
+
         // Checks curve detection on every target framework, including .NET Framework: a P-384 key is rejected for its curve,
         // while a P-256 key passes that check and fails only later, because a public key can't sign.
         [Test]
@@ -43,6 +47,22 @@ namespace Azure.Security.Attestation.Tests
             StringAssert.Contains("P-256", Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(p384.GetECDsaPublicKey(), p384)).Message);
             Exception p256Failure = Assert.Catch(() => new AttestationTokenSigningKey(p256.GetECDsaPublicKey(), p256));
             Assert.IsFalse(p256Failure.Message.Contains("P-256"), p256Failure.ToString());
+        }
+
+        // A curve of the same size as P-256 is identified by name, not mistaken for P-256 because of its size. The curve is
+        // checked before the certificate's key is loaded, so this needs no secp256k1 support from the platform.
+        [Test]
+        public void SameSizeUnsupportedCurveIsRejectedOnAllFrameworks()
+        {
+            using X509Certificate2 secp256k1 = LoadCertificate(EmbeddedSecp256k1Certificate);
+            using X509Certificate2 p256 = LoadCertificate(EmbeddedCertificate);
+
+            StringAssert.Contains("P-256", Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(p256.GetECDsaPublicKey(), secp256k1)).Message);
+
+            AttestationToken token = UnsignedToken(new Dictionary<string, object> { ["alg"] = "ES256" }, $"{{\"iss\":\"{Provider}\"}}", new byte[64]);
+            var options = new AttestationTokenValidationOptions { ExpectedIssuer = Provider };
+            Exception ex = Assert.Throws<Exception>(() => token.ValidateToken(options, new[] { new AttestationSigner(new[] { secp256k1 }, null) }));
+            StringAssert.Contains("Could not find a certificate which was used to sign the token", ex.Message);
         }
 
         private static X509Certificate2 LoadCertificate(string base64)
@@ -98,12 +118,12 @@ namespace Azure.Security.Attestation.Tests
             Assert.AreEqual(0, new AttestationTokenValidationOptions { TimeValidationSlack = 0 }.Clone().TimeValidationSlack);
         }
 
-        // Only the header is read, so the body and signature are placeholders.
-        private static AttestationToken UnsignedToken(Dictionary<string, object> header)
+        // By default only the header is read, so the body and signature are placeholders.
+        private static AttestationToken UnsignedToken(Dictionary<string, object> header, string body = "{}", byte[] signature = null)
             => AttestationToken.Deserialize(
                 Base64Url.Encode(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(header))) + "." +
-                Base64Url.Encode(Encoding.UTF8.GetBytes("{}")) + "." +
-                Base64Url.Encode(new byte[] { 1 }));
+                Base64Url.Encode(Encoding.UTF8.GetBytes(body)) + "." +
+                Base64Url.Encode(signature ?? new byte[] { 1 }));
 
 #if NET6_0_OR_GREATER
         // CertificateRequest and RSA.Create(int) are unavailable on .NET Framework 4.6.2.
@@ -332,6 +352,36 @@ namespace Azure.Security.Attestation.Tests
 
             StringAssert.Contains("P-256", Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(key, certificate)).Message);
             StringAssert.Contains("P-256", Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(certificate)).Message);
+        }
+
+        // secp256k1 has the same key size as P-256, but a token signed with it is not ES256.
+        [Test]
+        public void Secp256k1IsNotTreatedAsP256()
+        {
+            ECDsa key;
+            X509Certificate2 certificate;
+            try
+            {
+                key = ECDsa.Create(ECCurve.CreateFromFriendlyName("secP256k1"));
+                certificate = new CertificateRequest("CN=secp256k1", key, HashAlgorithmName.SHA256)
+                    .CreateSelfSigned(DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddDays(1));
+            }
+            catch (Exception ex) when (ex is PlatformNotSupportedException || ex is CryptographicException)
+            {
+                Assert.Ignore($"secp256k1 is not supported on this platform: {ex.Message}");
+                return;
+            }
+
+            using (key)
+            using (certificate)
+            {
+                Assert.AreEqual(256, key.KeySize);
+                StringAssert.Contains("P-256", Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(key, certificate)).Message);
+                StringAssert.Contains("P-256", Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(certificate)).Message);
+
+                Exception ex = Assert.Throws<Exception>(() => EcdsaToken(key, "ES256", HashAlgorithmName.SHA256).ValidateToken(Options(), Signers(certificate, null)));
+                StringAssert.Contains("Could not find a certificate which was used to sign the token", ex.Message);
+            }
         }
 
         private static AttestationToken EcdsaToken(ECDsa key, string algorithm, HashAlgorithmName hash)

@@ -457,15 +457,7 @@ namespace Azure.Security.Attestation
             {
                 // The leaf certificate is defined as the certificate which signed the token, so we just need to look
                 // at the first certificate in the chain.
-                AsymmetricAlgorithm asymmetricAlgorithm = GetPublicKey(signer.SigningCertificates[0]);
-                bool signatureValidated = asymmetricAlgorithm switch
-                {
-                    RSA rsaKey => rsaKey.VerifyData(signedData, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1),
-                    // The hash comes from the trusted certificate's curve, never from the token's alg header.
-                    ECDsa ecdsa => GetEcdsaHashAlgorithm(ecdsa) is HashAlgorithmName hash && ecdsa.VerifyData(signedData, signature, hash),
-                    _ => false,
-                };
-                if (signatureValidated)
+                if (VerifySignature(signer.SigningCertificates[0], signedData, signature))
                 {
                     actualSigner = signer;
                     break;
@@ -480,59 +472,66 @@ namespace Azure.Security.Attestation
             return actualSigner != null;
         }
 
+        private static bool VerifySignature(X509Certificate2 certificate, byte[] signedData, byte[] signature)
+        {
+            if (IsEcdsaCertificate(certificate))
+            {
+                // The hash comes from the trusted certificate's curve, never from the token's alg header. A certificate on
+                // any other curve is skipped before its key is loaded.
+                if (!(GetEcdsaHashAlgorithm(certificate) is HashAlgorithmName hash))
+                {
+                    return false;
+                }
+                using ECDsa ecdsa = certificate.GetECDsaPublicKey();
+                return ecdsa != null && ecdsa.VerifyData(signedData, signature, hash);
+            }
+
+            using RSA rsa = certificate.GetRSAPublicKey();
+            return rsa != null && rsa.VerifyData(signedData, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+        }
+
         // Returns the certificate's RSA or ECDsa public key, or null if it has neither.
         internal static AsymmetricAlgorithm GetPublicKey(X509Certificate2 certificate)
             => (AsymmetricAlgorithm)certificate.GetRSAPublicKey() ?? certificate.GetECDsaPublicKey();
 
+        private const string EcPublicKeyOid = "1.2.840.10045.2.1";
+
+        // The DER-encoded namedCurve OIDs in an EC certificate's SubjectPublicKeyInfo parameters (RFC 5480).
+        private static readonly byte[] s_p256Curve = { 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x03, 0x01, 0x07 };
+        private static readonly byte[] s_p384Curve = { 0x06, 0x05, 0x2B, 0x81, 0x04, 0x00, 0x22 };
+        private static readonly byte[] s_p521Curve = { 0x06, 0x05, 0x2B, 0x81, 0x04, 0x00, 0x23 };
+
+        internal static bool IsEcdsaCertificate(X509Certificate2 certificate)
+            => certificate.PublicKey.Oid?.Value == EcPublicKeyOid;
+
         // Each ECDSA JWS algorithm pairs one curve with one hash (RFC 7518 section 3.4): ES256 is P-256 with SHA-256,
-        // ES384 is P-384 with SHA-384, and ES512 is P-521 with SHA-512. Returns null for any other curve.
-        internal static HashAlgorithmName? GetEcdsaHashAlgorithm(ECDsa key)
+        // ES384 is P-384 with SHA-384, and ES512 is P-521 with SHA-512. The curve is read from the certificate, the same way
+        // on every target framework. Returns null for any other or unnamed curve, and for certificates without an EC key.
+        internal static HashAlgorithmName? GetEcdsaHashAlgorithm(X509Certificate2 certificate)
         {
-#if NET8_0_OR_GREATER
-            string curve = null;
-            try
+            if (!IsEcdsaCertificate(certificate))
             {
-                Oid oid = key.ExportParameters(false).Curve.Oid;
-                curve = oid?.Value ?? oid?.FriendlyName;
-            }
-            catch (Exception ex) when (ex is CryptographicException || ex is NotSupportedException || ex is PlatformNotSupportedException)
-            {
-                // Fall back to the key size below.
+                return null;
             }
 
-            switch (curve)
+            byte[] curve = certificate.PublicKey.EncodedParameters?.RawData;
+            if (curve == null)
             {
-                case null:
-                    break;
-                case "1.2.840.10045.3.1.7":
-                case "nistP256":
-                case "ECDSA_P256":
-                case "secp256r1":
-                case "prime256v1":
-                    return HashAlgorithmName.SHA256;
-                case "1.3.132.0.34":
-                case "nistP384":
-                case "ECDSA_P384":
-                case "secp384r1":
-                    return HashAlgorithmName.SHA384;
-                case "1.3.132.0.35":
-                case "nistP521":
-                case "ECDSA_P521":
-                case "secp521r1":
-                    return HashAlgorithmName.SHA512;
-                default:
-                    return null;
+                return null;
             }
-#endif
-            // The curve can't be read from this key, or, in the netstandard2.0 build, can't be read on every .NET Framework
-            // version (ECParameters may not load), so identify it by its size, which matches only one of the three curves.
-            return key.KeySize switch
+            if (curve.SequenceEqual(s_p256Curve))
             {
-                256 => HashAlgorithmName.SHA256,
-                384 => HashAlgorithmName.SHA384,
-                521 => HashAlgorithmName.SHA512,
-                _ => null,
-            };
+                return HashAlgorithmName.SHA256;
+            }
+            if (curve.SequenceEqual(s_p384Curve))
+            {
+                return HashAlgorithmName.SHA384;
+            }
+            if (curve.SequenceEqual(s_p521Curve))
+            {
+                return HashAlgorithmName.SHA512;
+            }
+            return null;
         }
 
         /// <summary>
