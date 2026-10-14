@@ -53,9 +53,8 @@ namespace Azure.ResourceManager.LargeInstance
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LargeInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string largeInstanceApiVersion);
             _azureLargeInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LargeInstance", ResourceType.Namespace, Diagnostics);
-            _azureLargeInstanceRestClient = new AzureLargeInstance(_azureLargeInstanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, largeInstanceApiVersion ?? "2024-08-01-preview");
+            _azureLargeInstanceRestClient = new AzureLargeInstance(_azureLargeInstanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureLargeInstance/azureLargeInstances", out string azureLargeInstanceApiVersionOverride) ? azureLargeInstanceApiVersionOverride : "2024-08-01-preview");
             ValidateResourceId(id);
         }
 

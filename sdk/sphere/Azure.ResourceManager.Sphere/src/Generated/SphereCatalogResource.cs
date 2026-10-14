@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SphereCatalogResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string sphereCatalogApiVersion);
             _catalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", ResourceType.Namespace, Diagnostics);
-            _catalogsRestClient = new Catalogs(_catalogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sphereCatalogApiVersion ?? "2024-04-01");
+            _catalogsRestClient = new Catalogs(_catalogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureSphere/catalogs", out string catalogsApiVersionOverride) ? catalogsApiVersionOverride : "2024-04-01");
             ValidateResourceId(id);
         }
 
