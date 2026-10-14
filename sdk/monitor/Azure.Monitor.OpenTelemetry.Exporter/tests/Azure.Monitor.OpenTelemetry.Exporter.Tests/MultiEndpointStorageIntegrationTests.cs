@@ -383,6 +383,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void AnAuthenticationFailureOnReplayNamesTheRoute()
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetStatus(EastUs, 500);
+            using var exporter = CreateExporter(ingestion, out var transmitter);
+
+            exporter.Export(CreateBatch(CreateActivity("ikey-east", EastUs)));
+
+            ingestion.SetStatus(EastUs, 401);
+            var partition = transmitter._multiEndpointStorage!.TryGet(EastUs)!;
+            partition.TransmissionStateManager.ResetConsecutiveErrors();
+            partition.TransmissionStateManager.CloseTransmission();
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Warning, EventKeywords.All);
+
+            partition.TransmitFromStorageHandler.Drain();
+
+            var failed = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedAuthenticationFailed"));
+            Assert.Equal(EastUs, failed.Payload![0]);
+            Assert.Equal(401, failed.Payload[1]);
+        }
+
+        [Fact]
         public void TransmissionFailureWithoutAConnectionStringShowsNoConfiguredDestination()
         {
             using var listener = new TestEventListener();

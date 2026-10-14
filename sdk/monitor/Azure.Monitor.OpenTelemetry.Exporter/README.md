@@ -429,5 +429,5 @@ With multi-endpoint routing enabled (the `Azure.Monitor.OpenTelemetry.EnableMult
 - Outside the public cloud, set the audience:
 
     ```csharp
-    AppContext.SetData("Azure.Monitor.OpenTelemetry.Exporter.MultiEndpointAadAudience", "https://monitor.azure.cn/");
+    AppDomain.CurrentDomain.SetData("Azure.Monitor.OpenTelemetry.Exporter.MultiEndpointAadAudience", "https://monitor.azure.cn/");
     ```
