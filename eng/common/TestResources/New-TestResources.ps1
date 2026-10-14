@@ -599,6 +599,9 @@ try {
         'PowerShell', '${{env:{0}}} = ''{1}'''
     }
 
+    # Populated by SetDeploymentOutputs for local runs and printed after all deployments finish.
+    $deferredDeploymentOutputs = [ordered]@{}
+
     # Deploy the templates
     foreach ($templateFile in $templateFiles) {
         # Reset so a stale value from a previous iteration can't leak through if the try block
@@ -731,6 +734,10 @@ $postDeploymentScript `@parameters
     }
 } finally {
     $exitActions.Invoke()
+}
+
+if (!$CI) {
+    WriteDeferredDeploymentOutputs $deferredDeploymentOutputs
 }
 
 # Suppress output locally
