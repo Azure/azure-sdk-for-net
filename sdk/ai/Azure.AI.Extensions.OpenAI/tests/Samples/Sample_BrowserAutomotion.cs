@@ -17,7 +17,7 @@ namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
 {
     #region Snippet:Sample_ParseResponse_BrowserAutomotion
-    internal static bool ParseResponse(StreamingResponseUpdate streamResponse)
+    private static bool ParseResponse(StreamingResponseUpdate streamResponse)
     {
         if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
         {

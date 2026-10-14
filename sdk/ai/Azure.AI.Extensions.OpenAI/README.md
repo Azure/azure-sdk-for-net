@@ -1483,7 +1483,7 @@ Console.WriteLine(response.GetOutputText());
 
 ### Browser automation<a id="browser-automation"></a>
 
-Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an agent using the GA `BrowserAutomationTool` (`browser_automation`).
+Playwright is a Node.js library for browser automation. Microsoft provides [Playwright Workspaces](https://learn.microsoft.com/azure/app-testing/playwright-workspaces/overview-what-is-microsoft-playwright-workspaces), which can execute Playwright-based tasks triggered by an agent using the GA `BrowserAutomationTool` (`browser_automation`).
 
 #### Create Azure Playwright workspace
 
@@ -1494,21 +1494,12 @@ Playwright is a Node.js library for browser automation. Microsoft provides the [
 
 #### Configure Microsoft Foundry
 
-See the [Playwright Workspaces remote MCP quickstart](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/quickstart-automate-browser-tasks-remote-mcp) to configure the connection. Microsoft Entra ID is the preferred authentication method. For instructions to create a project connection, see [Automate browsers with the Playwright Workspaces remote MCP server](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/how-to-playwright-workspaces-remote-mcp). You can also use a workspace access token as described in the following steps.
-1. In the Microsoft foundry portal select **Build**.
-2. On the left panel select **Tools** sectrion and click **Connect a tool**.
-3. In the opened window select **Custom** tab, choose **Model Context Protocol (MCP)** and click **Create**.
-4. Name the connection.
-5. Open the Playwright workspace in the Azure portal and copy the Mcp endpoint address to `Remote MCP Server endpoint` (Mcp endpoint can be found on the **Overview** section).
-6. Paste the token generagted in the previous section to "Credential" section and name this key `x-api-k`.
-7. Click **Connect**.
+Follow [Set up Browser Automation in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/browser-automation#set-up-browser-automation) to connect your Playwright workspace. In the Foundry portal, select **Build** > **Tools**, create a toolbox, and add **Browser Automation**. Select your Playwright workspace and authentication method to create the PlaywrightWorkspaces connection. Copy the **Project connection ID** from the tool's details page for use in this sample. Prefer Microsoft Entra ID authentication when supported; never include workspace access tokens in source code, prompts, or logs.
 
 #### Using Browser automation tool
 
 Please note that Browser automation operations may take longer than typical calls to process. Using background mode for Responses or applying a network timeout of at least five minutes for non-background calls is highly recommended.
-The `BrowserAutomationTool` is using MCP connection as opposed to `BrowserAutomationPreviewTool`, which uses the serverless connection.
-Please refer to the playwright [quickstart document](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/quickstart-automate-browser-tasks-remote-mcp) to configure playwright mcp connection.
-The preferred way to access MCP server is  by using EntraID; see this [document](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/how-to-playwright-workspaces-remote-mcp) on how to create a project connection.
+`BrowserAutomationTool` uses a PlaywrightWorkspaces connection, not a generic MCP connection. `BrowserAutomationPreviewTool` uses a Serverless Model connection.
 Set `FOUNDRY_PROJECT_ENDPOINT` to your project endpoint and `FOUNDRY_MODEL_NAME` to your model deployment name. Despite its name, `PLAYWRIGHT_MCP_CONNECTION_NAME` must contain the full project connection resource ID.
 
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
@@ -1587,7 +1578,7 @@ finally
 Along with `BrowserAutomationTool`, Azure.AI.Extensions.OpenAI contain `BrowserAutomationPreviewTool`, which has the same functionality as `BrowserAutomationTool`.
 This tool was released to preview the functionality, please use the stable version of the tool.
 
-`BrowserAutomationPreviewTool` is using Serverless Model connection as opposed to MCP connection, used by `BrowserAutomationTool`. Please follow the steps below to create it.
+`BrowserAutomationPreviewTool` uses a Serverless Model connection as opposed to the PlaywrightWorkspaces connection used by `BrowserAutomationTool`. Please follow the steps below to create it.
 
 1. On the left panel select **Management center**.
 2. Choose **Connected resources**.

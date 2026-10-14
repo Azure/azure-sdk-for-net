@@ -11,20 +11,13 @@ Playwright is an open-source framework for end-to-end testing and browser automa
 5. Enter a name and expiration date, and then generate the token.
 6. Copy the token immediately. You can't retrieve its value later.
 
-> **Warning:** Use Microsoft Entra ID when the MCP client supports it. Workspace access tokens are less secure and are disabled by default. Treat an access token like a password, and never commit it to source control or include it in prompts or logs.
+> **Warning:** Prefer Microsoft Entra ID authentication when supported by the PlaywrightWorkspaces connection. Workspace access tokens are less secure and are disabled by default. Treat an access token like a password, and never commit it to source control or include it in prompts or logs.
 
 ## Configure Microsoft Foundry
 
-**Note:** The `BrowserAutomationTool` is using MCP connection as opposed to `BrowserAutomationPreviewTool`, which uses the serverless connection.
+**Note:** `BrowserAutomationTool` uses a PlaywrightWorkspaces connection, not a generic MCP connection. `BrowserAutomationPreviewTool` uses a Serverless Model connection.
 
-See the [Playwright Workspaces remote MCP quickstart](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/quickstart-automate-browser-tasks-remote-mcp) to configure the connection. Microsoft Entra ID is the preferred authentication method. For instructions to create a project connection, see [Automate browsers with the Playwright Workspaces remote MCP server](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/how-to-playwright-workspaces-remote-mcp). You can also use a workspace access token as described in the following steps.
-1. In the Microsoft foundry portal select **Build**.
-2. On the left panel select **Tools** sectrion and click **Connect a tool**.
-3. In the opened window select **Custom** tab, choose **Model Context Protocol (MCP)** and click **Create**.
-4. Name the connection.
-5. Open the Playwright workspace in the Azure portal and copy the Mcp endpoint address to `Remote MCP Server endpoint` (Mcp endpoint can be found on the **Overview** section).
-6. Paste the token generagted in the previous section to "Credential" section and name this key `x-api-k`.
-7. Click **Connect**.
+Follow [Set up Browser Automation in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/browser-automation#set-up-browser-automation) to connect your Playwright workspace. In the Foundry portal, select **Build** > **Tools**, create a toolbox, and add **Browser Automation**. Select your Playwright workspace and authentication method to create the PlaywrightWorkspaces connection. Copy the **Project connection ID** from the tool's details page for use in this sample.
 
 ## Run this sample.
 
@@ -41,7 +34,7 @@ AIProjectClientOptions options = new()
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
 
-2. Create an agent with the GA `BrowserAutomationTool` (`browser_automation`), and pass the MCP project connection resource ID to `BrowserAutomationToolConnectionOptions`.
+2. Create an agent with the GA `BrowserAutomationTool` (`browser_automation`), and pass the PlaywrightWorkspaces project connection resource ID to `BrowserAutomationToolConnectionOptions`.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
@@ -86,7 +79,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
 > **Warning:** Complete text messages can include a live-view URL that grants access to the browser session. Treat that URL as sensitive: use it only in a trusted local terminal and redact it before sharing output or saving logs.
 
 ```C# Snippet:Sample_ParseResponse_BrowserAutomotion
-internal static bool ParseResponse(StreamingResponseUpdate streamResponse)
+private static bool ParseResponse(StreamingResponseUpdate streamResponse)
 {
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
     {
