@@ -14,6 +14,13 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A skill to split a string into chunks of text. </summary>
     public partial class SplitSkill : SearchIndexerSkill
     {
+        private int? _maximumPageLength;
+        private bool _maximumPageLengthIsDefined;
+        private int? _pageOverlapLength;
+        private bool _pageOverlapLengthIsDefined;
+        private int? _maximumPagesToTake;
+        private bool _maximumPagesToTakeIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="SplitSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
@@ -42,9 +49,9 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             DefaultLanguageCode = defaultLanguageCode;
             TextSplitMode = textSplitMode;
-            MaximumPageLength = maximumPageLength;
-            PageOverlapLength = pageOverlapLength;
-            MaximumPagesToTake = maximumPagesToTake;
+            _maximumPageLength = maximumPageLength;
+            _pageOverlapLength = pageOverlapLength;
+            _maximumPagesToTake = maximumPagesToTake;
         }
 
         /// <summary> A value indicating which language code to use. Default is `en`. </summary>
@@ -54,12 +61,45 @@ namespace Azure.Search.Documents.Indexes.Models
         public TextSplitMode? TextSplitMode { get; set; }
 
         /// <summary> The desired maximum page length. Default is 10000. </summary>
-        public int? MaximumPageLength { get; set; }
+        public int? MaximumPageLength
+        {
+            get
+            {
+                return _maximumPageLength;
+            }
+            set
+            {
+                _maximumPageLength = value;
+                _maximumPageLengthIsDefined = true;
+            }
+        }
 
         /// <summary> Only applicable when textSplitMode is set to 'pages'. If specified, n+1th chunk will start with this number of characters/tokens from the end of the nth chunk. </summary>
-        public int? PageOverlapLength { get; set; }
+        public int? PageOverlapLength
+        {
+            get
+            {
+                return _pageOverlapLength;
+            }
+            set
+            {
+                _pageOverlapLength = value;
+                _pageOverlapLengthIsDefined = true;
+            }
+        }
 
         /// <summary> Only applicable when textSplitMode is set to 'pages'. If specified, the SplitSkill will discontinue splitting after processing the first 'maximumPagesToTake' pages, in order to improve performance when only a few initial pages are needed from each document. </summary>
-        public int? MaximumPagesToTake { get; set; }
+        public int? MaximumPagesToTake
+        {
+            get
+            {
+                return _maximumPagesToTake;
+            }
+            set
+            {
+                _maximumPagesToTake = value;
+                _maximumPagesToTakeIsDefined = true;
+            }
+        }
     }
 }

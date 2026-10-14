@@ -19,7 +19,6 @@ namespace Azure.Search.Documents.Models
         private const string PostFilterValue = "postFilter";
         /// <summary> The filter will be applied before the search query. </summary>
         private const string PreFilterValue = "preFilter";
-        /// <summary> The filter will be applied after the global top-k candidate set of vector results is returned. This will result in fewer results than requested by the parameter 'k'. </summary>
         private const string StrictPostFilterValue = "strictPostFilter";
 
         /// <summary> Initializes a new instance of <see cref="VectorFilterMode"/>. </summary>
@@ -38,7 +37,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> The filter will be applied before the search query. </summary>
         public static VectorFilterMode PreFilter { get; } = new VectorFilterMode(PreFilterValue);
 
-        /// <summary> The filter will be applied after the global top-k candidate set of vector results is returned. This will result in fewer results than requested by the parameter 'k'. </summary>
+        /// <summary> Gets the StrictPostFilter. </summary>
         public static VectorFilterMode StrictPostFilter { get; } = new VectorFilterMode(StrictPostFilterValue);
 
         /// <summary> Determines if two <see cref="VectorFilterMode"/> values are the same. </summary>

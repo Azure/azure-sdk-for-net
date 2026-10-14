@@ -95,25 +95,53 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
             writer.WritePropertyName("synchronizationStatus"u8);
             writer.WriteStringValue(SynchronizationStatus.ToString());
-            if (Optional.IsDefined(SynchronizationInterval))
+            if (Optional.IsDefined(SynchronizationInterval, _synchronizationIntervalIsDefined))
             {
-                writer.WritePropertyName("synchronizationInterval"u8);
-                writer.WriteStringValue(SynchronizationInterval);
+                if (SynchronizationInterval != null)
+                {
+                    writer.WritePropertyName("synchronizationInterval"u8);
+                    writer.WriteStringValue(SynchronizationInterval);
+                }
+                else
+                {
+                    writer.WriteNull("synchronizationInterval"u8);
+                }
             }
-            if (Optional.IsDefined(CurrentSynchronizationState))
+            if (Optional.IsDefined(CurrentSynchronizationState, _currentSynchronizationStateIsDefined))
             {
-                writer.WritePropertyName("currentSynchronizationState"u8);
-                writer.WriteObjectValue(CurrentSynchronizationState, options);
+                if (CurrentSynchronizationState != null)
+                {
+                    writer.WritePropertyName("currentSynchronizationState"u8);
+                    writer.WriteObjectValue(CurrentSynchronizationState, options);
+                }
+                else
+                {
+                    writer.WriteNull("currentSynchronizationState"u8);
+                }
             }
-            if (Optional.IsDefined(LastSynchronizationState))
+            if (Optional.IsDefined(LastSynchronizationState, _lastSynchronizationStateIsDefined))
             {
-                writer.WritePropertyName("lastSynchronizationState"u8);
-                writer.WriteObjectValue(LastSynchronizationState, options);
+                if (LastSynchronizationState != null)
+                {
+                    writer.WritePropertyName("lastSynchronizationState"u8);
+                    writer.WriteObjectValue(LastSynchronizationState, options);
+                }
+                else
+                {
+                    writer.WriteNull("lastSynchronizationState"u8);
+                }
             }
-            if (Optional.IsDefined(Statistics))
+            if (Optional.IsDefined(Statistics, _statisticsIsDefined))
             {
-                writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics, options);
+                if (Statistics != null)
+                {
+                    writer.WritePropertyName("statistics"u8);
+                    writer.WriteObjectValue(Statistics, options);
+                }
+                else
+                {
+                    writer.WriteNull("statistics"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(FileCapacity))
             {
@@ -164,9 +192,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
             KnowledgeSourceKind? kind = default;
             KnowledgeSourceSynchronizationStatus synchronizationStatus = default;
+            bool synchronizationIntervalIsDefined = false;
             string synchronizationInterval = default;
+            bool currentSynchronizationStateIsDefined = false;
             SynchronizationState currentSynchronizationState = default;
+            bool lastSynchronizationStateIsDefined = false;
             CompletedSynchronizationState lastSynchronizationState = default;
+            bool statisticsIsDefined = false;
             KnowledgeSourceStatistics statistics = default;
             KnowledgeSourceFileCapacity fileCapacity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -188,6 +220,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("synchronizationInterval"u8))
                 {
+                    synchronizationIntervalIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         synchronizationInterval = null;
@@ -198,6 +231,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("currentSynchronizationState"u8))
                 {
+                    currentSynchronizationStateIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         currentSynchronizationState = null;
@@ -208,6 +242,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("lastSynchronizationState"u8))
                 {
+                    lastSynchronizationStateIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         lastSynchronizationState = null;
@@ -218,6 +253,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("statistics"u8))
                 {
+                    statisticsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         statistics = null;
@@ -248,7 +284,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 lastSynchronizationState,
                 statistics,
                 fileCapacity,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _synchronizationIntervalIsDefined = synchronizationIntervalIsDefined,
+                _currentSynchronizationStateIsDefined = currentSynchronizationStateIsDefined,
+                _lastSynchronizationStateIsDefined = lastSynchronizationStateIsDefined,
+                _statisticsIsDefined = statisticsIsDefined
+            };
         }
     }
 }

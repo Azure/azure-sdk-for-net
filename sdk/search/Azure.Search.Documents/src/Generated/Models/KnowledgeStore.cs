@@ -17,6 +17,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private SearchIndexerDataIdentity _identity;
+        private bool _identityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeStore"/>. </summary>
         /// <param name="storageConnectionString"> The connection string to the storage account projections will be stored in. </param>
@@ -40,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             StorageConnectionString = storageConnectionString;
             Projections = projections;
-            Identity = identity;
+            _identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +53,17 @@ namespace Azure.Search.Documents.Indexes.Models
         public IList<KnowledgeStoreProjection> Projections { get; }
 
         /// <summary> The user-assigned managed identity used for connections to Azure Storage when writing knowledge store projections. If the connection string indicates an identity (ResourceId) and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </summary>
-        public SearchIndexerDataIdentity Identity { get; set; }
+        public SearchIndexerDataIdentity Identity
+        {
+            get
+            {
+                return _identity;
+            }
+            set
+            {
+                _identity = value;
+                _identityIsDefined = true;
+            }
+        }
     }
 }

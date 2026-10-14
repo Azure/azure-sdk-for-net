@@ -15,6 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private PermissionFilter? _permissionFilter;
+        private bool _permissionFilterIsDefined;
+        private string _vectorSearchProfileName;
+        private bool _vectorSearchProfileNameIsDefined;
+        private VectorEncodingFormat? _vectorEncodingFormat;
+        private bool _vectorEncodingFormatIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchField"/>. </summary>
         /// <param name="name"> The name of the field, which must be unique within the fields collection of the index or parent field. </param>
@@ -50,7 +56,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IsFilterable = isFilterable;
             IsSortable = isSortable;
             IsFacetable = isFacetable;
-            PermissionFilter = permissionFilter;
+            _permissionFilter = permissionFilter;
             OrganizationAccessExpiration = organizationAccessExpiration;
             SharepointSiteUrl = sharepointSiteUrl;
             AnalyzerName = analyzerName;
@@ -58,15 +64,26 @@ namespace Azure.Search.Documents.Indexes.Models
             IndexAnalyzerName = indexAnalyzerName;
             NormalizerName = normalizerName;
             VectorSearchDimensions = vectorSearchDimensions;
-            VectorSearchProfileName = vectorSearchProfileName;
-            VectorEncodingFormat = vectorEncodingFormat;
+            _vectorSearchProfileName = vectorSearchProfileName;
+            _vectorEncodingFormat = vectorEncodingFormat;
             SynonymMapNames = synonymMapNames;
             Fields = fields;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A value indicating whether the field should be used as a permission filter. </summary>
-        public PermissionFilter? PermissionFilter { get; set; }
+        public PermissionFilter? PermissionFilter
+        {
+            get
+            {
+                return _permissionFilter;
+            }
+            set
+            {
+                _permissionFilter = value;
+                _permissionFilterIsDefined = true;
+            }
+        }
 
         /// <summary> A value indicating whether the field contains the expiration timestamp for organization-scoped SharePoint sharing links. At most one top-level field of type Edm.DateTimeOffset can have this property set to true. On permission-filtered queries, expiration applies only to orgLink:&lt;tenantId&gt; values in a userIds permission-filter field whose tenant ID matches the validated user's tenant ID. The grant is valid only before the timestamp; an absent expiration field or a null timestamp means no time limit. Expiration does not affect orgGroup:&lt;tenantId&gt; values in groupIds permission-filter fields or ordinary user and group grants. If omitted or false, this field is not used for organization-link expiration. </summary>
         public bool? OrganizationAccessExpiration { get; set; }
@@ -78,9 +95,31 @@ namespace Azure.Search.Documents.Indexes.Models
         public int? VectorSearchDimensions { get; set; }
 
         /// <summary> The name of the vector search profile that specifies the algorithm and vectorizer to use when searching the vector field. </summary>
-        public string VectorSearchProfileName { get; set; }
+        public string VectorSearchProfileName
+        {
+            get
+            {
+                return _vectorSearchProfileName;
+            }
+            set
+            {
+                _vectorSearchProfileName = value;
+                _vectorSearchProfileNameIsDefined = true;
+            }
+        }
 
         /// <summary> The encoding format to interpret the field contents. </summary>
-        public VectorEncodingFormat? VectorEncodingFormat { get; set; }
+        public VectorEncodingFormat? VectorEncodingFormat
+        {
+            get
+            {
+                return _vectorEncodingFormat;
+            }
+            set
+            {
+                _vectorEncodingFormat = value;
+                _vectorEncodingFormatIsDefined = true;
+            }
+        }
     }
 }

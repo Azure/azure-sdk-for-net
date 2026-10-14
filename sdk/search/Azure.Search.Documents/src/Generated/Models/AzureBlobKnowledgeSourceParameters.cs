@@ -17,6 +17,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _folderPath;
+        private bool _folderPathIsDefined;
+        private KnowledgeSourceIngestionParameters _ingestionParameters;
+        private bool _ingestionParametersIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobKnowledgeSourceParameters"/>. </summary>
         /// <param name="connectionString"> Key-based connection string or the ResourceId format if using a managed identity. </param>
@@ -43,9 +47,9 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             ConnectionString = connectionString;
             ContainerName = containerName;
-            FolderPath = folderPath;
+            _folderPath = folderPath;
             IsADLSGen2 = isADLSGen2;
-            IngestionParameters = ingestionParameters;
+            _ingestionParameters = ingestionParameters;
             CreatedResources = createdResources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -57,13 +61,35 @@ namespace Azure.Search.Documents.Indexes.Models
         public string ContainerName { get; set; }
 
         /// <summary> Optional folder path within the container. </summary>
-        public string FolderPath { get; set; }
+        public string FolderPath
+        {
+            get
+            {
+                return _folderPath;
+            }
+            set
+            {
+                _folderPath = value;
+                _folderPathIsDefined = true;
+            }
+        }
 
         /// <summary> Set to true if connecting to an ADLS Gen2 storage account. Default is false. </summary>
         public bool? IsADLSGen2 { get; set; }
 
         /// <summary> Consolidates all general ingestion settings. </summary>
-        public KnowledgeSourceIngestionParameters IngestionParameters { get; set; }
+        public KnowledgeSourceIngestionParameters IngestionParameters
+        {
+            get
+            {
+                return _ingestionParameters;
+            }
+            set
+            {
+                _ingestionParameters = value;
+                _ingestionParametersIsDefined = true;
+            }
+        }
 
         /// <summary> Resources created by the knowledge source. </summary>
         public CreatedResources CreatedResources { get; }

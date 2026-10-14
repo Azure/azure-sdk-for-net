@@ -133,10 +133,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(EncryptionKey))
+            if (Optional.IsDefined(EncryptionKey, _encryptionKeyIsDefined))
             {
-                writer.WritePropertyName("encryptionKey"u8);
-                writer.WriteObjectValue(EncryptionKey, options);
+                if (EncryptionKey != null)
+                {
+                    writer.WritePropertyName("encryptionKey"u8);
+                    writer.WriteObjectValue(EncryptionKey, options);
+                }
+                else
+                {
+                    writer.WriteNull("encryptionKey"u8);
+                }
             }
             if (Optional.IsDefined(Description))
             {
@@ -206,6 +213,7 @@ namespace Azure.Search.Documents.Indexes.Models
             KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default;
             KnowledgeRetrievalOutputMode? outputMode = default;
             ETag? eTag = default;
+            bool encryptionKeyIsDefined = false;
             SearchResourceEncryptionKey encryptionKey = default;
             string description = default;
             string retrievalInstructions = default;
@@ -272,6 +280,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
+                    encryptionKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         encryptionKey = null;
@@ -311,7 +320,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new KnowledgeBase(
                 name,
-                knowledgeSources,
+                knowledgeSources ?? new ChangeTrackingList<KnowledgeSourceReference>(),
                 models ?? new ChangeTrackingList<KnowledgeBaseModel>(),
                 retrievalReasoningEffort,
                 outputMode,
@@ -321,7 +330,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 retrievalInstructions,
                 answerInstructions,
                 corsOptions,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _encryptionKeyIsDefined = encryptionKeyIsDefined
+            };
         }
     }
 }

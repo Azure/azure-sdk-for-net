@@ -114,15 +114,29 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("targetIndexName"u8);
             writer.WriteStringValue(TargetIndexName);
-            if (Optional.IsDefined(Schedule))
+            if (Optional.IsDefined(Schedule, _scheduleIsDefined))
             {
-                writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                if (Schedule != null)
+                {
+                    writer.WritePropertyName("schedule"u8);
+                    writer.WriteObjectValue(Schedule, options);
+                }
+                else
+                {
+                    writer.WriteNull("schedule"u8);
+                }
             }
-            if (Optional.IsDefined(Parameters))
+            if (Optional.IsDefined(Parameters, _parametersIsDefined))
             {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters, options);
+                if (Parameters != null)
+                {
+                    writer.WritePropertyName("parameters"u8);
+                    writer.WriteObjectValue(Parameters, options);
+                }
+                else
+                {
+                    writer.WriteNull("parameters"u8);
+                }
             }
             if (Optional.IsCollectionDefined(FieldMappings))
             {
@@ -144,20 +158,34 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsDisabled))
+            if (Optional.IsDefined(IsDisabled, _isDisabledIsDefined))
             {
-                writer.WritePropertyName("disabled"u8);
-                writer.WriteBooleanValue(IsDisabled.Value);
+                if (IsDisabled != null)
+                {
+                    writer.WritePropertyName("disabled"u8);
+                    writer.WriteBooleanValue(IsDisabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("disabled"u8);
+                }
             }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(EncryptionKey))
+            if (Optional.IsDefined(EncryptionKey, _encryptionKeyIsDefined))
             {
-                writer.WritePropertyName("encryptionKey"u8);
-                writer.WriteObjectValue(EncryptionKey, options);
+                if (EncryptionKey != null)
+                {
+                    writer.WritePropertyName("encryptionKey"u8);
+                    writer.WriteObjectValue(EncryptionKey, options);
+                }
+                else
+                {
+                    writer.WriteNull("encryptionKey"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -206,12 +234,16 @@ namespace Azure.Search.Documents.Indexes.Models
             string dataSourceName = default;
             string skillsetName = default;
             string targetIndexName = default;
+            bool scheduleIsDefined = false;
             IndexingSchedule schedule = default;
+            bool parametersIsDefined = false;
             IndexingParameters parameters = default;
             IList<FieldMapping> fieldMappings = default;
             IList<FieldMapping> outputFieldMappings = default;
+            bool isDisabledIsDefined = false;
             bool? isDisabled = default;
             ETag? eTag = default;
+            bool encryptionKeyIsDefined = false;
             SearchResourceEncryptionKey encryptionKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -243,6 +275,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("schedule"u8))
                 {
+                    scheduleIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         schedule = null;
@@ -253,6 +286,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
+                    parametersIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         parameters = null;
@@ -291,6 +325,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("disabled"u8))
                 {
+                    isDisabledIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isDisabled = null;
@@ -310,6 +345,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
+                    encryptionKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         encryptionKey = null;
@@ -336,7 +372,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 isDisabled,
                 eTag,
                 encryptionKey,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _scheduleIsDefined = scheduleIsDefined,
+                _parametersIsDefined = parametersIsDefined,
+                _isDisabledIsDefined = isDisabledIsDefined,
+                _encryptionKeyIsDefined = encryptionKeyIsDefined
+            };
         }
     }
 }

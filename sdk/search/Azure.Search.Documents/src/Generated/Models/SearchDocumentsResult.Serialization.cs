@@ -114,13 +114,20 @@ namespace Azure.Search.Documents.Models
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Answers))
             {
-                writer.WritePropertyName("@search.answers"u8);
-                writer.WriteStartArray();
-                foreach (QueryAnswerResult item in Answers)
+                if (Answers != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("@search.answers"u8);
+                    writer.WriteStartArray();
+                    foreach (QueryAnswerResult item in Answers)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("@search.answers"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(NextPageParameters))
             {
@@ -197,7 +204,7 @@ namespace Azure.Search.Documents.Models
             long? count = default;
             double? coverage = default;
             IReadOnlyDictionary<string, IList<FacetResult>> facets = default;
-            IReadOnlyList<QueryAnswerResult> answers = default;
+            IReadOnlyList<QueryAnswerResult> answers = new ChangeTrackingList<QueryAnswerResult>();
             SearchOptions nextPageParameters = default;
             IReadOnlyList<SearchResult> results = default;
             string nextLink = default;
@@ -254,6 +261,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        answers = null;
                         continue;
                     }
                     List<QueryAnswerResult> array = new List<QueryAnswerResult>();
@@ -315,9 +323,9 @@ namespace Azure.Search.Documents.Models
                 count,
                 coverage,
                 facets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(),
-                answers ?? new ChangeTrackingList<QueryAnswerResult>(),
+                answers,
                 nextPageParameters,
-                results,
+                results ?? new ChangeTrackingList<SearchResult>(),
                 nextLink,
                 semanticPartialResponseReason,
                 semanticPartialResponseType,

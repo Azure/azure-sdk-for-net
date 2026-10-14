@@ -14,6 +14,9 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A skill that leverages Azure AI Content Understanding to process and extract structured insights from documents, enabling enriched, searchable content for enhanced document indexing and retrieval. </summary>
     public partial class ContentUnderstandingSkill : SearchIndexerSkill
     {
+        private ContentUnderstandingSkillChunkingProperties _chunkingProperties;
+        private bool _chunkingPropertiesIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ContentUnderstandingSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
@@ -41,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal ContentUnderstandingSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ContentUnderstandingSkillExtractionOptions> extractionOptions, ContentUnderstandingSkillChunkingProperties chunkingProperties, string modelName, string modelDeployment) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             ExtractionOptions = extractionOptions;
-            ChunkingProperties = chunkingProperties;
+            _chunkingProperties = chunkingProperties;
             ModelName = modelName;
             ModelDeployment = modelDeployment;
         }
@@ -50,7 +53,18 @@ namespace Azure.Search.Documents.Indexes.Models
         public IList<ContentUnderstandingSkillExtractionOptions> ExtractionOptions { get; set; }
 
         /// <summary> Controls the cardinality for chunking the content. </summary>
-        public ContentUnderstandingSkillChunkingProperties ChunkingProperties { get; set; }
+        public ContentUnderstandingSkillChunkingProperties ChunkingProperties
+        {
+            get
+            {
+                return _chunkingProperties;
+            }
+            set
+            {
+                _chunkingProperties = value;
+                _chunkingPropertiesIsDefined = true;
+            }
+        }
 
         /// <summary> The name of the chat-completion model used for image description. Must be provided together with modelDeployment. </summary>
         public string ModelName { get; set; }

@@ -237,7 +237,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response Retrieve(RequestContent content, RequestContext context)
         {
-            return Retrieve(content: content, querySourceAuthorization: default, queryWorkIQSourceAuthorization: default, context: context);
+            return Retrieve(content: content, querySourceAuthorization: default, context: context);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response> RetrieveAsync(RequestContent content, RequestContext context)
         {
-            return RetrieveAsync(content: content, querySourceAuthorization: default, queryWorkIQSourceAuthorization: default, context: context);
+            return RetrieveAsync(content: content, querySourceAuthorization: default, context: context);
         }
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>

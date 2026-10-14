@@ -90,20 +90,41 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("textSplitMode"u8);
                 writer.WriteStringValue(TextSplitMode.Value.ToString());
             }
-            if (Optional.IsDefined(MaximumPageLength))
+            if (Optional.IsDefined(MaximumPageLength, _maximumPageLengthIsDefined))
             {
-                writer.WritePropertyName("maximumPageLength"u8);
-                writer.WriteNumberValue(MaximumPageLength.Value);
+                if (MaximumPageLength != null)
+                {
+                    writer.WritePropertyName("maximumPageLength"u8);
+                    writer.WriteNumberValue(MaximumPageLength.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maximumPageLength"u8);
+                }
             }
-            if (Optional.IsDefined(PageOverlapLength))
+            if (Optional.IsDefined(PageOverlapLength, _pageOverlapLengthIsDefined))
             {
-                writer.WritePropertyName("pageOverlapLength"u8);
-                writer.WriteNumberValue(PageOverlapLength.Value);
+                if (PageOverlapLength != null)
+                {
+                    writer.WritePropertyName("pageOverlapLength"u8);
+                    writer.WriteNumberValue(PageOverlapLength.Value);
+                }
+                else
+                {
+                    writer.WriteNull("pageOverlapLength"u8);
+                }
             }
-            if (Optional.IsDefined(MaximumPagesToTake))
+            if (Optional.IsDefined(MaximumPagesToTake, _maximumPagesToTakeIsDefined))
             {
-                writer.WritePropertyName("maximumPagesToTake"u8);
-                writer.WriteNumberValue(MaximumPagesToTake.Value);
+                if (MaximumPagesToTake != null)
+                {
+                    writer.WritePropertyName("maximumPagesToTake"u8);
+                    writer.WriteNumberValue(MaximumPagesToTake.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maximumPagesToTake"u8);
+                }
             }
         }
 
@@ -141,8 +162,11 @@ namespace Azure.Search.Documents.Indexes.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             SplitSkillLanguage? defaultLanguageCode = default;
             TextSplitMode? textSplitMode = default;
+            bool maximumPageLengthIsDefined = false;
             int? maximumPageLength = default;
+            bool pageOverlapLengthIsDefined = false;
             int? pageOverlapLength = default;
+            bool maximumPagesToTakeIsDefined = false;
             int? maximumPagesToTake = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -206,6 +230,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("maximumPageLength"u8))
                 {
+                    maximumPageLengthIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         maximumPageLength = null;
@@ -216,6 +241,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("pageOverlapLength"u8))
                 {
+                    pageOverlapLengthIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         pageOverlapLength = null;
@@ -226,6 +252,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("maximumPagesToTake"u8))
                 {
+                    maximumPagesToTakeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         maximumPagesToTake = null;
@@ -244,14 +271,19 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 context,
-                inputs,
-                outputs,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                outputs ?? new ChangeTrackingList<OutputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
                 defaultLanguageCode,
                 textSplitMode,
                 maximumPageLength,
                 pageOverlapLength,
-                maximumPagesToTake);
+                maximumPagesToTake)
+            {
+                _maximumPageLengthIsDefined = maximumPageLengthIsDefined,
+                _pageOverlapLengthIsDefined = pageOverlapLengthIsDefined,
+                _maximumPagesToTakeIsDefined = maximumPagesToTakeIsDefined
+            };
         }
     }
 }
