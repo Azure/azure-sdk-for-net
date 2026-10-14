@@ -43,6 +43,24 @@ namespace System.ClientModel.Tests.Proxy.OpenAILike
             _pipeline = ClientPipeline.Create(pipelineOptions);
         }
 
+        private ResponseToolsClient(Uri endpoint, ClientPipeline pipeline, ModelReaderWriterOptions options)
+        {
+            _endpoint = endpoint;
+            _pipeline = pipeline;
+            _mrwOptions = options;
+        }
+
+        public ResponseToolsClient GetSubclient(string name)
+        {
+            if (name is null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            return new ResponseToolsClient(
+                new Uri(_endpoint, $"subclients/{Uri.EscapeDataString(name)}/"), _pipeline, _mrwOptions);
+        }
+
         /// <summary>
         /// Simulates a service call that returns a response tool. The response body is produced by the
         /// pipeline's transport (a mock in tests); deserialization routes through any proxy registered
@@ -52,9 +70,24 @@ namespace System.ClientModel.Tests.Proxy.OpenAILike
         /// <returns>The deserialized <see cref="ResponseTool"/> — a proxy-provided subtype when a proxy handled it.</returns>
         public ResponseTool GetTool(string toolId)
         {
-            PipelineMessage message = _pipeline.CreateMessage();
+            using PipelineMessage message = _pipeline.CreateMessage();
             message.Request.Method = "GET";
-            message.Request.Uri = new Uri(_endpoint, $"/tools/{toolId}");
+            message.Request.Uri = new Uri(_endpoint, $"tools/{toolId}");
+
+            _pipeline.Send(message);
+
+            PipelineResponse response = message.Response
+                ?? throw new InvalidOperationException("The pipeline did not produce a response.");
+
+            return ModelReaderWriter.Read<ResponseTool>(response.Content, _mrwOptions)!;
+        }
+
+        public ResponseTool SubmitTool(ResponseTool tool)
+        {
+            using PipelineMessage message = _pipeline.CreateMessage();
+            message.Request.Method = "POST";
+            message.Request.Uri = new Uri(_endpoint, "tools");
+            message.Request.Content = BinaryContent.Create(tool, _mrwOptions);
 
             _pipeline.Send(message);
 

@@ -7,6 +7,9 @@ using System.ClientModel.Tests.Proxy.OpenAILike;
 using System.ClientModel.Tests.Proxy.OpenAILike.Mocks;
 using System.ClientModel.Tests.Proxy.ThirdPartyB;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
@@ -74,6 +77,70 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
+        public void DirectClient_SerializesRequestAndDeserializesProxiedResponse()
+        {
+            var transport = new CannedResponseTransport("{\"type\":\"azure_search\",\"index_name\":\"response-docs\"}");
+            var options = new ClientPipelineOptions { Transport = transport };
+            options.AddProxy<ResponseTool>(new AzureSearchToolProxy());
+            var client = new ResponseToolsClient(options);
+
+            ResponseTool response = client.SubmitTool(new AzureSearchTool("request-docs"));
+
+            Assert.IsTrue(transport.RequestBodies.TryDequeue(out BinaryData? requestBody));
+            Assert.AreEqual("{\"type\":\"azure_search\",\"index_name\":\"request-docs\"}", requestBody!.ToString());
+            Assert.IsInstanceOf<AzureSearchTool>(response);
+            Assert.AreEqual("response-docs", ((AzureSearchTool)response).IndexName);
+            Assert.AreEqual(typeof(AzureSearchTool).Assembly, response.GetType().Assembly);
+        }
+
+        [Test]
+        public void DirectClient_ConcurrentRequestsKeepSerializedToolsIndependent()
+        {
+            var transport = new CannedResponseTransport("{\"type\":\"azure_search\",\"index_name\":\"response\"}");
+            var options = new ClientPipelineOptions { Transport = transport };
+            options.AddProxy<ResponseTool>(new AzureSearchToolProxy());
+            var client = new ResponseToolsClient(options);
+            var calls = new List<Task<ResponseTool>>();
+
+            for (int i = 0; i < 8; i++)
+            {
+                int index = i;
+                calls.Add(Task.Run(() => client.SubmitTool(new AzureSearchTool($"index-{index}"))));
+            }
+
+            Task.WaitAll(calls.ToArray());
+
+            var requestNames = new HashSet<string>();
+            while (transport.RequestBodies.TryDequeue(out BinaryData? requestBody))
+            {
+                using JsonDocument document = JsonDocument.Parse(requestBody.ToString());
+                requestNames.Add(document.RootElement.GetProperty("index_name").GetString()!);
+            }
+
+            Assert.AreEqual(8, requestNames.Count);
+            for (int i = 0; i < 8; i++)
+            {
+                Assert.IsTrue(requestNames.Contains($"index-{i}"));
+                Assert.IsInstanceOf<AzureSearchTool>(calls[i].Result);
+            }
+        }
+
+        [Test]
+        public void Subclient_InheritsProxyRegistrationsAndUsesItsOwnRequestPath()
+        {
+            var transport = new CannedResponseTransport("{\"type\":\"azure_search\",\"index_name\":\"docs\"}");
+            var options = new ClientPipelineOptions { Transport = transport };
+            options.AddProxy<ResponseTool>(new AzureSearchToolProxy());
+            var subclient = new ResponseToolsClient(options).GetSubclient("group");
+
+            ResponseTool result = subclient.GetTool("tool");
+
+            Assert.IsInstanceOf<AzureSearchTool>(result);
+            Assert.IsTrue(transport.RequestUris.TryDequeue(out Uri? requestUri));
+            Assert.AreEqual("/subclients/group/tools/tool", requestUri!.AbsolutePath);
+        }
+
+        [Test]
         public void BingGrounding_RoutedToThirdPartyB()
         {
             ResponseToolsClient client = CreateClient("{\"type\":\"bing_grounding\",\"market\":\"en-US\"}", RegisterBothProxies);
@@ -127,6 +194,44 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("docs", ((AzureSearchTool)list[0]).IndexName);
             Assert.IsNotNull(nested);
             Assert.IsInstanceOf<AzureSearchTool>(nested![0][0]);
+            Assert.AreEqual(typeof(AzureSearchTool).Assembly, nested[0][0].GetType().Assembly);
+            Assert.AreEqual("docs", ((AzureSearchTool)nested[0][0]).IndexName);
+        }
+
+        [Test]
+        public void ProxyForDeclaredToolType_RoutesMixedCollectionAndFallback()
+        {
+            const string payload = "[{\"type\":\"azure_search\",\"index_name\":\"docs\"}," +
+                "{\"type\":\"bing_grounding\",\"market\":\"en-US\"}," +
+                "{\"type\":\"function\",\"function_name\":\"get_weather\"}," +
+                "{\"type\":\"unrecognized\"}]";
+            var options = new ModelReaderWriterOptions("J").AddAzureTools().AddBingTools();
+
+            List<ResponseTool>? tools = ModelReaderWriter.Read<List<ResponseTool>>(
+                BinaryData.FromString(payload), options);
+            List<List<ResponseTool>>? nested = ModelReaderWriter.Read<List<List<ResponseTool>>>(
+                BinaryData.FromString($"[{payload}]"), options);
+
+            Assert.IsNotNull(tools);
+            Assert.IsNotNull(nested);
+            Assert.AreEqual(1, nested!.Count);
+            AssertMixedTools(tools!);
+            AssertMixedTools(nested[0]);
+        }
+
+        private static void AssertMixedTools(IReadOnlyList<ResponseTool> tools)
+        {
+            Assert.AreEqual(4, tools.Count);
+            Assert.IsInstanceOf<AzureSearchTool>(tools[0]);
+            Assert.AreEqual(typeof(AzureSearchTool).Assembly, tools[0].GetType().Assembly);
+            Assert.AreEqual("docs", ((AzureSearchTool)tools[0]).IndexName);
+            Assert.IsInstanceOf<BingGroundingTool>(tools[1]);
+            Assert.AreEqual(typeof(BingGroundingTool).Assembly, tools[1].GetType().Assembly);
+            Assert.AreEqual("en-US", ((BingGroundingTool)tools[1]).Market);
+            Assert.IsInstanceOf<FunctionTool>(tools[2]);
+            Assert.AreEqual(typeof(ResponseTool).Assembly, tools[2].GetType().Assembly);
+            Assert.IsInstanceOf<UnknownResponseTool>(tools[3]);
+            Assert.AreEqual(typeof(ResponseTool).Assembly, tools[3].GetType().Assembly);
         }
 
         [Test]
@@ -202,6 +307,36 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsInstanceOf<UnknownResponseTool>(noAzure);
             Assert.IsInstanceOf<BingGroundingTool>(bing);
             Assert.AreEqual(typeof(BingGroundingTool).Assembly, bing.GetType().Assembly);
+        }
+
+        [Test]
+        public void SeparateClients_ConcurrentCallsDoNotShareProxyRegistrations()
+        {
+            const string azurePayload = "{\"type\":\"azure_search\",\"index_name\":\"docs\"}";
+            using var barrier = new Barrier(2);
+            var azureOptions = new ClientPipelineOptions
+            {
+                Transport = new CannedResponseTransport(azurePayload, processBarrier: barrier)
+            };
+            azureOptions.AddProxy<ResponseTool>(new AzureSearchToolProxy());
+            var bingOnlyOptions = new ClientPipelineOptions
+            {
+                Transport = new CannedResponseTransport(azurePayload, processBarrier: barrier)
+            };
+            bingOnlyOptions.AddProxy<ResponseTool>(new BingGroundingToolProxy());
+            var azureClient = new ResponseToolsClient(azureOptions);
+            var bingOnlyClient = new ResponseToolsClient(bingOnlyOptions);
+
+            Task<ResponseTool> azureCall = Task.Factory.StartNew(
+                () => azureClient.GetTool("azure"),
+                CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+            Task<ResponseTool> bingOnlyCall = Task.Factory.StartNew(
+                () => bingOnlyClient.GetTool("bing"),
+                CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+            Task.WaitAll(azureCall, bingOnlyCall);
+
+            Assert.IsInstanceOf<AzureSearchTool>(azureCall.Result);
+            Assert.IsInstanceOf<UnknownResponseTool>(bingOnlyCall.Result);
         }
 
         [Test]

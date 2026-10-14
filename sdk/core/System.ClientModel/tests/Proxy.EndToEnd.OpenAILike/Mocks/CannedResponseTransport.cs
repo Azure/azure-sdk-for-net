@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -20,18 +21,40 @@ namespace System.ClientModel.Tests.Proxy.OpenAILike.Mocks
     {
         private readonly byte[] _body;
         private readonly int _status;
+        private readonly Barrier? _processBarrier;
+
+        public ConcurrentQueue<BinaryData> RequestBodies { get; } = new();
+        public ConcurrentQueue<Uri> RequestUris { get; } = new();
 
         /// <summary>Creates a transport that answers every request with <paramref name="responseBody"/>.</summary>
-        public CannedResponseTransport(string responseBody, int status = 200)
+        public CannedResponseTransport(string responseBody, int status = 200, Barrier? processBarrier = null)
         {
             _body = Encoding.UTF8.GetBytes(responseBody);
             _status = status;
+            _processBarrier = processBarrier;
         }
 
         protected override PipelineMessage CreateMessageCore() => new CannedMessage();
 
         protected override void ProcessCore(PipelineMessage message)
-            => ((CannedMessage)message).SetResponse(new CannedResponse(_status, _body));
+        {
+            RequestUris.Enqueue(message.Request.Uri
+                ?? throw new InvalidOperationException("Request URI was not set."));
+
+            if (message.Request.Content is { } content)
+            {
+                using var stream = new MemoryStream();
+                content.WriteTo(stream);
+                RequestBodies.Enqueue(new BinaryData(stream.ToArray()));
+            }
+
+            if (_processBarrier is not null && !_processBarrier.SignalAndWait(TimeSpan.FromSeconds(10)))
+            {
+                throw new TimeoutException("Concurrent client calls did not overlap.");
+            }
+
+            ((CannedMessage)message).SetResponse(new CannedResponse(_status, _body));
+        }
 
         protected override ValueTask ProcessCoreAsync(PipelineMessage message)
         {
@@ -99,8 +122,10 @@ namespace System.ClientModel.Tests.Proxy.OpenAILike.Mocks
             public override bool TryGetValue(string name, out string? value) => _headers.TryGetValue(name, out value);
             public override bool TryGetValues(string name, out IEnumerable<string>? values)
             {
-                if (_headers.TryGetValue(name, out var v) && !string.IsNullOrEmpty(v)) { values = v.Split(','); return true; }
-                values = null; return false;
+                if (_headers.TryGetValue(name, out var v) && !string.IsNullOrEmpty(v))
+                { values = v.Split(','); return true; }
+                values = null;
+                return false;
             }
             public override IEnumerator<KeyValuePair<string, string>> GetEnumerator() => _headers.GetEnumerator();
         }
@@ -111,8 +136,10 @@ namespace System.ClientModel.Tests.Proxy.OpenAILike.Mocks
             public override bool TryGetValue(string name, out string? value) => _headers.TryGetValue(name, out value);
             public override bool TryGetValues(string name, out IEnumerable<string>? values)
             {
-                if (_headers.TryGetValue(name, out var v) && !string.IsNullOrEmpty(v)) { values = v.Split(','); return true; }
-                values = null; return false;
+                if (_headers.TryGetValue(name, out var v) && !string.IsNullOrEmpty(v))
+                { values = v.Split(','); return true; }
+                values = null;
+                return false;
             }
             public override IEnumerator<KeyValuePair<string, string>> GetEnumerator() => _headers.GetEnumerator();
         }
