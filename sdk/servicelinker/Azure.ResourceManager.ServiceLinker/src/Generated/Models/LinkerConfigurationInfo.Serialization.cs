@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 writer.WriteEndObject();
             }
-            if (_configurationStoreIsDefined || Optional.IsDefined(ConfigurationStore))
+            if (Optional.IsDefined(ConfigurationStore, _configurationStoreIsDefined))
             {
                 if (ConfigurationStore != null)
                 {
