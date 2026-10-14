@@ -6,14 +6,17 @@ Sources: [.NET management naming conventions](https://github.com/Azure/azure-sdk
 
 ## Properties and Parameters
 
-| Applies to                | Guidance                                                                    | Guardrails                                                                                                                                                       |
-| ------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Boolean                   | Start with a verb, normally `Is`, `Can`, or `Has`: `enabled` -> `IsEnabled` | Preserve meaningful existing verbs. The review skill also accepts `Does`, `Should`, `Allow`, `Enable`, `Disable`, `Use`, `Support`; do not produce `IsIsEnabled` |
-| Date/time                 | Prefer `On`: `StartOn`, `EndOn`, `CreatedOn`                                | Use active/passive voice appropriately. The review skill also accepts `At` for `DateTimeOffset`; do not churn an accepted name such as `CreatedAt`               |
-| Integer interval/duration | Include the verified unit: `MonitoringIntervalInSeconds`                    | Never infer seconds from an integer type or name alone. Do not append integer-unit suffixes to a `duration` scalar or an encoded duration value                  |
-| Numeric TTL               | Prefer `TimeToLiveIn<Unit>`, e.g. `TimeToLiveInMinutes`                     | Confirm the unit from the contract/documentation; keep units and serialized values unchanged                                                                     |
+| Applies to                | Guidance                                                                                      | Guardrails                                                                                                                                                       |
+| ------------------------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Boolean                   | Start with a verb, normally `Is`, `Can`, or `Has`: `enabled` -> `IsEnabled`                   | Preserve meaningful existing verbs. The review skill also accepts `Does`, `Should`, `Allow`, `Enable`, `Disable`, `Use`, `Support`; do not produce `IsIsEnabled` |
+| Date/time                 | Prefer `On`: `StartOn`, `EndOn`, `CreatedOn`                                                  | Use active/passive voice appropriately. The review skill also accepts `At` for `DateTimeOffset`; do not churn an accepted name such as `CreatedAt`               |
+| Integer interval/duration | Include the verified unit: `MonitoringIntervalInSeconds`                                      | Never infer seconds from an integer type or name alone. Do not append integer-unit suffixes to a `duration` scalar or an encoded duration value                  |
+| Numeric TTL               | Use `TimeToLiveIn<Unit>` when the unit is verified: `ttl` in minutes -> `TimeToLiveInMinutes` | Confirm the unit from the contract/documentation; keep units and serialized values unchanged                                                                     |
 
 Name checks depend on semantic types, not substrings alone. A string containing a timestamp-like name is not automatically a date/time property. A duration already carrying units must not receive another unit suffix.
+For new, unshipped members with verified semantics, apply the matching rule
+instead of returning only emitter-normalized casing such as `Enabled`,
+`RetryInterval`, or `Ttl`.
 
 ## Operations
 
