@@ -64,6 +64,16 @@ namespace Azure.Security.Attestation.Tests
             Assert.IsEmpty(token.X509CertificateChain);
         }
 
+        [Test]
+        public void TimeValidationSlackDefaultsToFiveSeconds()
+        {
+            var options = new AttestationTokenValidationOptions();
+
+            Assert.AreEqual(5, options.TimeValidationSlack);
+            Assert.AreEqual(5, options.Clone().TimeValidationSlack);
+            Assert.AreEqual(0, new AttestationTokenValidationOptions { TimeValidationSlack = 0 }.Clone().TimeValidationSlack);
+        }
+
         // Only the header is read, so the body and signature are placeholders.
         private static AttestationToken UnsignedToken(Dictionary<string, object> header)
             => AttestationToken.Deserialize(
@@ -301,7 +311,38 @@ namespace Azure.Security.Attestation.Tests
 
             Assert.AreEqual(DateTimeOffset.MaxValue, token.NotBeforeTime);
             Exception ex = Assert.Throws<Exception>(() => token.ValidateToken(Options(), Signers(_trustedCertificate, null)));
-            StringAssert.Contains("not yet valid", ex.Message);
+            StringAssert.Contains("will not become valid", ex.Message);
+        }
+
+        // A fresh token can carry an nbf slightly ahead of the caller's clock; the default slack accepts small skew only.
+        [TestCase("nbf", 2, true)]
+        [TestCase("nbf", 30, false)]
+        [TestCase("exp", -2, true)]
+        [TestCase("exp", -30, false)]
+        public void DefaultSlackToleratesSmallClockSkew(string claim, int offsetSeconds, bool accepted)
+        {
+            long time = DateTimeOffset.UtcNow.AddSeconds(offsetSeconds).ToUnixTimeSeconds();
+            AttestationToken token = SignedToken(_trustedKey, "{\"alg\":\"RS256\"}", $"{{\"iss\":\"{Provider}\",\"{claim}\":{time}}}");
+
+            if (accepted)
+            {
+                Assert.IsTrue(token.ValidateToken(Options(), Signers(_trustedCertificate, null)));
+            }
+            else
+            {
+                Assert.Throws<Exception>(() => token.ValidateToken(Options(), Signers(_trustedCertificate, null)));
+            }
+        }
+
+        [TestCase("nbf", 2)]
+        [TestCase("exp", -2)]
+        public void ZeroSlackRejectsAnySkew(string claim, int offsetSeconds)
+        {
+            long time = DateTimeOffset.UtcNow.AddSeconds(offsetSeconds).ToUnixTimeSeconds();
+            AttestationToken token = SignedToken(_trustedKey, "{\"alg\":\"RS256\"}", $"{{\"iss\":\"{Provider}\",\"{claim}\":{time}}}");
+            var strict = new AttestationTokenValidationOptions { ExpectedIssuer = Provider, TimeValidationSlack = 0 };
+
+            Assert.Throws<Exception>(() => token.ValidateToken(strict, Signers(_trustedCertificate, null)));
         }
 
         [Test]

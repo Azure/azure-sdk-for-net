@@ -237,7 +237,7 @@ namespace Azure.Security.Attestation.Tests
             var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
 
             Exception ex = Assert.CatchAsync(() => Attest(client, "SevSnpVm", request, async));
-            Assert.AreEqual("Attestation token expired.", ex.Message);
+            StringAssert.StartsWith("Attestation token expired", ex.Message);
         }
 
         // 61 s is outside a 10 s slack even though its seconds component (1) is inside it.

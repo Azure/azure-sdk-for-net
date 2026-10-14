@@ -33,6 +33,7 @@
 - Tokens signed with an `AttestationTokenSigningKey` created from a certificate alone now use the certificate's private key. Previously, on .NET 8 and later, signing failed with a `CryptographicException`.
 - `ValidateToken` and `ValidateTokenAsync` now throw `ArgumentNullException` when `options` is `null` or `attestationSigningCertificates` contains `null`, throw `ArgumentException` when one of the signers has no certificate, and return `false` for a token without an `alg` header, instead of throwing `NullReferenceException` or `ArgumentOutOfRangeException`.
 - `AttestationToken.ExpirationTime`, `NotBeforeTime`, and `IssuedAtTime` now return `DateTimeOffset.MaxValue` or `DateTimeOffset.MinValue` for claims outside the range of `DateTimeOffset`, instead of throwing `ArgumentOutOfRangeException`, so such tokens are validated against those values.
+- `AttestationTokenValidationOptions.TimeValidationSlack` now defaults to 5 seconds instead of 0. The service sets a token's `nbf` claim with its own clock, which can be slightly ahead of the caller's, so with no slack a token returned by the service was intermittently rejected as not yet valid. Set `TimeValidationSlack` to 0 to restore exact time checks.
 
 ### Other Changes
 

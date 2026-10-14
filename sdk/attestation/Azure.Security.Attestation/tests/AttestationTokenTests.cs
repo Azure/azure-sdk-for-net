@@ -166,8 +166,8 @@ namespace Azure.Security.Attestation.Tests
             var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody), new AttestationTokenSigningKey(privateKey, fullCertificate));
             string serializedToken = token.Serialize();
 
-            // This check should fail since the token expired 5 seconds ago.
-            Assert.ThrowsAsync(typeof(Exception), async () => await ValidateSerializedToken(serializedToken, tokenBody));
+            // This check should fail since the token expired 5 seconds ago and no slack is allowed.
+            Assert.ThrowsAsync(typeof(Exception), async () => await ValidateSerializedToken(serializedToken, tokenBody, new AttestationTokenValidationOptions { TimeValidationSlack = 0, ValidateIssuer = false }));
 
             // This check should succeed since the token slack is greater than the 5 second expiration time.
             await ValidateSerializedToken(serializedToken, tokenBody, new AttestationTokenValidationOptions { TimeValidationSlack = 10, ValidateIssuer = false });
@@ -190,8 +190,8 @@ namespace Azure.Security.Attestation.Tests
             var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody), new AttestationTokenSigningKey(privateKey, fullCertificate));
             string serializedToken = token.Serialize();
 
-            // This check should fail since the token won't be valid for another 5 seconds.
-            Assert.ThrowsAsync(typeof(Exception), async () => await ValidateSerializedToken(serializedToken, tokenBody));
+            // This check should fail since the token won't be valid for another 5 seconds and no slack is allowed.
+            Assert.ThrowsAsync(typeof(Exception), async () => await ValidateSerializedToken(serializedToken, tokenBody, new AttestationTokenValidationOptions { TimeValidationSlack = 0, ValidateIssuer = false }));
 
             // This check should succeed since the token slack is greater than the 10 seconds before it becomes valid.
             await ValidateSerializedToken(serializedToken, tokenBody, new AttestationTokenValidationOptions { TimeValidationSlack = 10, ValidateIssuer = false });

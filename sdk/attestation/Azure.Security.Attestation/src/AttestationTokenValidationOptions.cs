@@ -31,7 +31,12 @@ namespace Azure.Security.Attestation
             ValidateNotBeforeTime = true;
             ValidateToken = true;
             ValidateIssuer = true;
+            TimeValidationSlack = DefaultTimeValidationSlack;
         }
+
+        // The service stamps nbf with its own clock, which can be slightly ahead of the caller's, so a fresh token can
+        // appear to be valid only from a moment in the future.
+        private const long DefaultTimeValidationSlack = 5;
 
         internal async Task<bool> RaiseValidationCallbackAsync(AttestationToken token, AttestationSigner signer, ClientDiagnostics diagnostics, bool isRunningSynchronously, CancellationToken cancellationToken)
         {
@@ -114,7 +119,7 @@ namespace Azure.Security.Attestation
 
         /// <summary>
         /// Allowable slack in time validations - used to account for differences between the clock on the client
-        /// and the clock on the server.
+        /// and the clock on the server, in seconds. Defaults to 5 seconds.
         /// </summary>
         public long TimeValidationSlack { get; set; }
 
