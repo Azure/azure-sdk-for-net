@@ -277,6 +277,35 @@
       ]
     },
     {
+      "filename": "**/sdk/azurearcdata/**/*.cs",
+      "words": [
+        "aesrc",
+        "awsvm",
+        "digi",
+        "dmscli",
+        "dmsps",
+        "dmssdk",
+        "gcpvm",
+        "hadr",
+        "hekaton",
+        "mbps",
+        "ntlm",
+        "onpremises",
+        "payg",
+        "pbirs",
+        "perdb",
+        "sqlvm",
+        "ssas",
+        "ssis",
+        "ssma",
+        "ssms",
+        "ssrs",
+        "tlsciphers",
+        "tlsprotocols",
+        "wsfc"
+      ]
+    },
+    {
       "filename": "**/sdk/azurestackhci/**/*.cs",
       "words": [
         "adou",
