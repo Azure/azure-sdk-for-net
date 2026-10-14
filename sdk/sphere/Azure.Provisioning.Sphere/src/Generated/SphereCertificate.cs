@@ -13,7 +13,7 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Sphere
 {
-    /// <summary> An certificate resource belonging to a catalog resource. </summary>
+    /// <summary> A certificate resource belonging to a catalog resource. </summary>
     public partial class SphereCertificate : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

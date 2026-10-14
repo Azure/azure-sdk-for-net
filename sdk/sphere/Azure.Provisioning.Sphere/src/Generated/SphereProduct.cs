@@ -13,7 +13,7 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Sphere
 {
-    /// <summary> An product resource belonging to a catalog resource. </summary>
+    /// <summary> A product resource belonging to a catalog resource. </summary>
     public partial class SphereProduct : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

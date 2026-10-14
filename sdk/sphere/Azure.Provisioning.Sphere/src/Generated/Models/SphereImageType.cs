@@ -54,7 +54,7 @@ namespace Azure.Provisioning.Sphere
         CustomerUpdateManifest = 20,
         /// <summary> Recovery manifest image type. </summary>
         RecoveryManifest = 21,
-        /// <summary> manifest set image type. </summary>
+        /// <summary> Manifest set image type. </summary>
         ManifestSet = 22,
         /// <summary> Other image type. </summary>
         Other = 23

@@ -14,7 +14,7 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Sphere
 {
-    /// <summary> An device resource belonging to a device group resource. </summary>
+    /// <summary> A device resource belonging to a device group resource. </summary>
     public partial class SphereDevice : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

@@ -13,7 +13,7 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Sphere
 {
-    /// <summary> An device group resource belonging to a product resource. </summary>
+    /// <summary> A device group resource belonging to a product resource. </summary>
     public partial class SphereDeviceGroup : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
