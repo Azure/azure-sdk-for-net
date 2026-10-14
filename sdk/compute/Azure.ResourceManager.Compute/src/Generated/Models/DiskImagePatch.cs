@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier SourceVirtualMachineId
+        public virtual ResourceIdentifier SourceVirtualMachineId
         {
             get
             {
