@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         private readonly string _value;
         private const string IscsiValue = "Iscsi";
+        /// <summary> Direct attach storage target type. </summary>
+        private const string DirectAttachValue = "DirectAttach";
         private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanStorageTargetType"/>. </summary>
@@ -30,6 +32,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Gets the Iscsi. </summary>
         public static ElasticSanStorageTargetType Iscsi { get; } = new ElasticSanStorageTargetType(IscsiValue);
+
+        /// <summary> Direct attach storage target type. </summary>
+        public static ElasticSanStorageTargetType DirectAttach { get; } = new ElasticSanStorageTargetType(DirectAttachValue);
 
         /// <summary> Gets the None. </summary>
         public static ElasticSanStorageTargetType None { get; } = new ElasticSanStorageTargetType(NoneValue);

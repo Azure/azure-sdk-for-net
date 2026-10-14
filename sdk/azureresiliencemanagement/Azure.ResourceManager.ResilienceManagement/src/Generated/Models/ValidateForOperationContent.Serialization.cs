@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            RecoveryOperationNames operationName = default;
+            RecoveryOperationName operationName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("operationName"u8))
                 {
-                    operationName = new RecoveryOperationNames(prop.Value.GetString());
+                    operationName = new RecoveryOperationName(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

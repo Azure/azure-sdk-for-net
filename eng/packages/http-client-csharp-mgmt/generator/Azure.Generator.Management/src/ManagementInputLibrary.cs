@@ -29,6 +29,7 @@ namespace Azure.Generator.Management
         private HashSet<InputServiceMethod>? _clientNameOverriddenMethods;
         private ArmProviderSchema? _providerSchema;
         private IReadOnlyDictionary<string, InputModelType>? _modelsByCrossLanguageDefinitionId;
+        internal Dictionary<InputClient, (string ResourceType, string DefaultVersion)?> ConstructorApiVersions { get; } = [];
 
         private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)>? _resourceUpdateModelToResourceNameMap;
 

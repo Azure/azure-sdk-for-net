@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRSharedPrivateLinkResourceData, SignalRReplicaSharedPrivateLinkResource>(new SignalRReplicaSharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SignalRSharedPrivateLinkResourceData, SignalRReplicaSharedPrivateLinkResource>(new SignalRSharedPrivateLinkResourceDataAsync0CollectionResultOfT(
                 _signalRReplicaSharedPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRSharedPrivateLinkResourceData, SignalRReplicaSharedPrivateLinkResource>(new SignalRReplicaSharedPrivateLinkResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<SignalRSharedPrivateLinkResourceData, SignalRReplicaSharedPrivateLinkResource>(new SignalRSharedPrivateLinkResourceData0CollectionResultOfT(
                 _signalRReplicaSharedPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

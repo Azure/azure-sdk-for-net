@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/serverfarms/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/getrdppassword", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -81,10 +78,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/workers/", false);
             uri.AppendPath(workerName, true);
             uri.AppendPath("/recycleinstance", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -105,10 +99,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/serverfarms/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/listinstances", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -128,10 +119,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Web/serverfarms/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -151,10 +139,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Web/serverfarms/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -176,10 +161,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Web/serverfarms/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -201,10 +183,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Web/serverfarms/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -222,10 +201,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Web/serverfarms", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -246,10 +222,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-03-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -266,10 +239,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Web/serverfarms", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-15", true);
             if (detailed != null)
             {
                 uri.AppendQuery("detailed", TypeFormatters.ConvertToString(detailed), true);
@@ -294,10 +264,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-03-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -318,10 +285,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/serverfarms/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/capabilities", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -342,10 +306,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/serverfarms/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/hybridConnectionRelays", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -366,10 +327,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-03-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -390,10 +348,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/serverfarms/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/restartSites", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-15", true);
             if (softRestart != null)
             {
                 uri.AppendQuery("softRestart", TypeFormatters.ConvertToString(softRestart), true);
@@ -417,10 +372,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/serverfarms/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/sites", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-15", true);
             if (skipToken != null)
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
@@ -453,10 +405,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-03-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -477,10 +426,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/serverfarms/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/skus", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -501,10 +447,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/serverfarms/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/usages", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-15", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -529,10 +472,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-03-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -555,10 +495,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/workers/", false);
             uri.AppendPath(workerName, true);
             uri.AppendPath("/reboot", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

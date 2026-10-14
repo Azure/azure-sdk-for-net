@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Dell.Storage
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DellFileSystemCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DellFileSystemResource.ResourceType, out string dellFileSystemApiVersion);
             _fileSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dell.Storage", DellFileSystemResource.ResourceType.Namespace, Diagnostics);
-            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dellFileSystemApiVersion ?? "2025-03-21");
+            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Dell.Storage/filesystems", out string fileSystemsApiVersionOverride) ? fileSystemsApiVersionOverride : "2025-03-21");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Dell.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetByResourceGroupAsyncCollectionResultOfT(_fileSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DellFileSystemCollection.GetAll"), data => new DellFileSystemResource(Client, data));
+            return new AsyncPageableWrapper<DellFileSystemData, DellFileSystemResource>(new DellFileSystemDataAsyncCollectionResultOfT(_fileSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DellFileSystemCollection.GetAll"), data => new DellFileSystemResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Dell.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetByResourceGroupCollectionResultOfT(_fileSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DellFileSystemCollection.GetAll"), data => new DellFileSystemResource(Client, data));
+            return new PageableWrapper<DellFileSystemData, DellFileSystemResource>(new DellFileSystemDataCollectionResultOfT(_fileSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DellFileSystemCollection.GetAll"), data => new DellFileSystemResource(Client, data));
         }
 
         /// <summary>

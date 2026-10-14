@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublicIPAddressCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PublicIPAddressResource.ResourceType, out string publicIPAddressApiVersion);
             _publicIPAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PublicIPAddressResource.ResourceType.Namespace, Diagnostics);
-            _publicIPAddressesRestClient = new PublicIPAddresses(_publicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicIPAddressApiVersion ?? "2026-01-01");
+            _publicIPAddressesRestClient = new PublicIPAddresses(_publicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicIPAddressData, PublicIPAddressResource>(new PublicIPAddressesListAsyncCollectionResultOfT(_publicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicIPAddressCollection.GetAll"), data => new PublicIPAddressResource(Client, data));
+            return new AsyncPageableWrapper<PublicIPAddressData, PublicIPAddressResource>(new PublicIPAddressDataAsyncCollectionResultOfT(_publicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicIPAddressCollection.GetAll"), data => new PublicIPAddressResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicIPAddressData, PublicIPAddressResource>(new PublicIPAddressesListCollectionResultOfT(_publicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicIPAddressCollection.GetAll"), data => new PublicIPAddressResource(Client, data));
+            return new PageableWrapper<PublicIPAddressData, PublicIPAddressResource>(new PublicIPAddressDataCollectionResultOfT(_publicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicIPAddressCollection.GetAll"), data => new PublicIPAddressResource(Client, data));
         }
 
         /// <summary>

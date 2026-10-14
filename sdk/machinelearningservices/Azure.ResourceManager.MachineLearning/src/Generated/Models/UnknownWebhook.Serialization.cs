@@ -112,6 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool eventTypeIsDefined = false;
             string eventType = default;
             WebhookType webhookType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("eventType"u8))
                 {
+                    eventTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         eventType = null;
@@ -137,7 +139,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownWebhook(eventType, webhookType, additionalBinaryDataProperties);
+            return new UnknownWebhook(eventType, webhookType, additionalBinaryDataProperties)
+            {
+                _eventTypeIsDefined = eventTypeIsDefined
+            };
         }
     }
 }

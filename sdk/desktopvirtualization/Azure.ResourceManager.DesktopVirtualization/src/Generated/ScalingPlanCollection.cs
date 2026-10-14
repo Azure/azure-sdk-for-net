@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScalingPlanCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ScalingPlanResource.ResourceType, out string scalingPlanApiVersion);
             _scalingPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ScalingPlanResource.ResourceType.Namespace, Diagnostics);
-            _scalingPlansRestClient = new ScalingPlans(_scalingPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scalingPlanApiVersion ?? "2026-03-01-preview");
+            _scalingPlansRestClient = new ScalingPlans(_scalingPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -291,7 +290,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlanDataAsyncCollectionResultOfT(
                 _scalingPlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +329,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlanDataCollectionResultOfT(
                 _scalingPlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

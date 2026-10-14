@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationRunbookData, AutomationRunbookResource>(new RunbookGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationRunbookData, AutomationRunbookResource>(new AutomationRunbookDataAsyncCollectionResultOfT(
                 _runbookRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationRunbookData, AutomationRunbookResource>(new RunbookGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationRunbookData, AutomationRunbookResource>(new AutomationRunbookDataCollectionResultOfT(
                 _runbookRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

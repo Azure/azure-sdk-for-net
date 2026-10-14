@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private MachineLearningDistributionConfiguration _distribution;
+        internal bool _distributionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningTrialComponent"/>. </summary>
         /// <param name="command"> [Required] The command to execute on startup of the job. eg. "python train.py". </param>
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             CodeId = codeId;
             Command = command;
-            Distribution = distribution;
+            _distribution = distribution;
             EnvironmentId = environmentId;
             EnvironmentVariables = environmentVariables;
             Resources = resources;
@@ -61,7 +63,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </summary>
         [WirePath("distribution")]
-        public MachineLearningDistributionConfiguration Distribution { get; set; }
+        public MachineLearningDistributionConfiguration Distribution
+        {
+            get
+            {
+                return _distribution;
+            }
+            set
+            {
+                _distribution = value;
+                _distributionIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] The ARM resource ID of the Environment specification for the job. </summary>
         [WirePath("environmentId")]

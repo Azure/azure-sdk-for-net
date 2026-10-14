@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ElasticPoolListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ElasticPoolListResult(value ?? new ChangeTrackingList<ElasticPoolData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

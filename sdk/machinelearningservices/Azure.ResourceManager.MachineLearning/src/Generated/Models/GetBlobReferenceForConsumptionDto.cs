@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Uri _blobUri;
+        internal bool _blobUriIsDefined;
+        private DataReferenceCredential _credential;
+        internal bool _credentialIsDefined;
+        private string _storageAccountArmId;
+        internal bool _storageAccountArmIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="GetBlobReferenceForConsumptionDto"/>. </summary>
         internal GetBlobReferenceForConsumptionDto()
@@ -29,22 +35,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal GetBlobReferenceForConsumptionDto(Uri blobUri, DataReferenceCredential credential, string storageAccountArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BlobUri = blobUri;
-            Credential = credential;
-            StorageAccountArmId = storageAccountArmId;
+            _blobUri = blobUri;
+            _credential = credential;
+            _storageAccountArmId = storageAccountArmId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Blob uri, example: https://blob.windows.core.net/Container/Path. </summary>
         [WirePath("blobUri")]
-        public Uri BlobUri { get; }
+        public Uri BlobUri
+        {
+            get
+            {
+                return _blobUri;
+            }
+        }
 
         /// <summary> Credential info to access storage account. </summary>
         [WirePath("credential")]
-        public DataReferenceCredential Credential { get; }
+        public DataReferenceCredential Credential
+        {
+            get
+            {
+                return _credential;
+            }
+        }
 
         /// <summary> The ARM id of the storage account. </summary>
         [WirePath("storageAccountArmId")]
-        public string StorageAccountArmId { get; }
+        public string StorageAccountArmId
+        {
+            get
+            {
+                return _storageAccountArmId;
+            }
+        }
     }
 }

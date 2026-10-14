@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkSecurityPerimeterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkSecurityPerimeterResource.ResourceType, out string networkSecurityPerimeterApiVersion);
             _networkSecurityPerimetersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkSecurityPerimeterResource.ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimetersRestClient = new NetworkSecurityPerimeters(_networkSecurityPerimetersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkSecurityPerimeterApiVersion ?? "2026-01-01");
+            _networkSecurityPerimetersRestClient = new NetworkSecurityPerimeters(_networkSecurityPerimetersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -290,7 +289,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkSecurityPerimeterData, NetworkSecurityPerimeterResource>(new NetworkSecurityPerimetersGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkSecurityPerimeterData, NetworkSecurityPerimeterResource>(new NetworkSecurityPerimeterDataAsyncCollectionResultOfT(
                 _networkSecurityPerimetersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkSecurityPerimeterData, NetworkSecurityPerimeterResource>(new NetworkSecurityPerimetersGetAllCollectionResultOfT(
+            return new PageableWrapper<NetworkSecurityPerimeterData, NetworkSecurityPerimeterResource>(new NetworkSecurityPerimeterDataCollectionResultOfT(
                 _networkSecurityPerimetersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -19,7 +19,7 @@ namespace Azure.Provisioning.AppService
         private BicepValue<string> _code;
         private BicepValue<string> _clientRequestId;
         private BicepValue<string> _serviceRequestId;
-        private WebAppErrorResponse _error;
+        private WebAppErrorResult _error;
 
         /// <summary> Creates a new WebAppRetryHistory. </summary>
         public WebAppRetryHistory()
@@ -77,7 +77,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets the Error. </summary>
-        internal WebAppErrorResponse Error
+        internal WebAppErrorResult Error
         {
             get
             {
@@ -104,7 +104,7 @@ namespace Azure.Provisioning.AppService
             _code = DefineProperty<string>(nameof(Code), new string[] { "code" });
             _clientRequestId = DefineProperty<string>(nameof(ClientRequestId), new string[] { "clientRequestId" });
             _serviceRequestId = DefineProperty<string>(nameof(ServiceRequestId), new string[] { "serviceRequestId" });
-            _error = DefineModelProperty<WebAppErrorResponse>(nameof(Error), new string[] { "error" });
+            _error = DefineModelProperty<WebAppErrorResult>(nameof(Error), new string[] { "error" });
             DefineAdditionalProperties();
         }
 

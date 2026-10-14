@@ -207,7 +207,7 @@ namespace Azure.AI.DocumentIntelligence
                 classifierId,
                 description,
                 baseClassifierId,
-                documentTypes,
+                documentTypes ?? new ChangeTrackingDictionary<string, ClassifierDocumentTypeDetails>(),
                 allowOverwrite,
                 additionalBinaryDataProperties);
         }

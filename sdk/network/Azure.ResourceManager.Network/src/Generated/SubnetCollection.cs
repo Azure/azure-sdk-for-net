@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SubnetData, SubnetResource>(new SubnetsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SubnetData, SubnetResource>(new SubnetDataAsyncCollectionResultOfT(
                 _subnetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SubnetData, SubnetResource>(new SubnetsGetAllCollectionResultOfT(
+            return new PageableWrapper<SubnetData, SubnetResource>(new SubnetDataCollectionResultOfT(
                 _subnetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

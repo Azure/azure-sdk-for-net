@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ProgramEnrollment
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EduEnrollmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EduEnrollmentResource.ResourceType, out string eduEnrollmentApiVersion);
             _eduEnrollmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProgramEnrollment", EduEnrollmentResource.ResourceType.Namespace, Diagnostics);
-            _eduEnrollmentsRestClient = new EduEnrollments(_eduEnrollmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eduEnrollmentApiVersion ?? "2026-03-01-preview");
+            _eduEnrollmentsRestClient = new EduEnrollments(_eduEnrollmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ProgramEnrollment/eduEnrollments", out string eduEnrollmentsApiVersionOverride) ? eduEnrollmentsApiVersionOverride : "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.ProgramEnrollment
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EduEnrollmentData, EduEnrollmentResource>(new EduEnrollmentsGetByResourceGroupAsyncCollectionResultOfT(_eduEnrollmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EduEnrollmentCollection.GetAll"), data => new EduEnrollmentResource(Client, data));
+            return new AsyncPageableWrapper<EduEnrollmentData, EduEnrollmentResource>(new EduEnrollmentDataAsyncCollectionResultOfT(_eduEnrollmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EduEnrollmentCollection.GetAll"), data => new EduEnrollmentResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ProgramEnrollment
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EduEnrollmentData, EduEnrollmentResource>(new EduEnrollmentsGetByResourceGroupCollectionResultOfT(_eduEnrollmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EduEnrollmentCollection.GetAll"), data => new EduEnrollmentResource(Client, data));
+            return new PageableWrapper<EduEnrollmentData, EduEnrollmentResource>(new EduEnrollmentDataCollectionResultOfT(_eduEnrollmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EduEnrollmentCollection.GetAll"), data => new EduEnrollmentResource(Client, data));
         }
 
         /// <summary>

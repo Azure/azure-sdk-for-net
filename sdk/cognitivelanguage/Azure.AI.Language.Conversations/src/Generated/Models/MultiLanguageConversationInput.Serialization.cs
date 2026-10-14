@@ -147,7 +147,7 @@ namespace Azure.AI.Language.Conversations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MultiLanguageConversationInput(conversations, additionalBinaryDataProperties);
+            return new MultiLanguageConversationInput(conversations ?? new ChangeTrackingList<ConversationInput>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MonitorNotificationSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EmailNotificationSettings))
+            if (_emailNotificationSettingsIsDefined || Optional.IsDefined(EmailNotificationSettings))
             {
-                writer.WritePropertyName("emailNotificationSettings"u8);
-                writer.WriteObjectValue(EmailNotificationSettings, options);
+                if (EmailNotificationSettings != null)
+                {
+                    writer.WritePropertyName("emailNotificationSettings"u8);
+                    writer.WriteObjectValue(EmailNotificationSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("emailNotificationSettings"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,12 +128,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool emailNotificationSettingsIsDefined = false;
             MonitorEmailNotificationSettings emailNotificationSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("emailNotificationSettings"u8))
                 {
+                    emailNotificationSettingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         emailNotificationSettings = null;
@@ -140,7 +149,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MonitorNotificationSettings(emailNotificationSettings, additionalBinaryDataProperties);
+            return new MonitorNotificationSettings(emailNotificationSettings, additionalBinaryDataProperties)
+            {
+                _emailNotificationSettingsIsDefined = emailNotificationSettingsIsDefined
+            };
         }
     }
 }

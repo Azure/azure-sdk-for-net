@@ -121,7 +121,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             continue;
                         }
 
-                        var group = routeBatch.GetOrAdd(ingestionEndpoint);
+                        var group = routeBatch.GetOrAdd(ingestionEndpoint, EndpointRouting.IsAadRoute(ref activityTagsProcessor.MappedTags));
                         var telemetryItems = group.TelemetryItems;
 
                         // The _APPRESOURCEPREVIEW_ envelope is withheld: it describes the host

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _startsOn;
+        internal bool _startsOnIsDefined;
+        private DateTimeOffset? _endsOn;
+        internal bool _endsOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewRecurrenceRange"/>. </summary>
         public AccessReviewRecurrenceRange()
@@ -32,8 +36,8 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             Type = @type;
             NumberOfOccurrences = numberOfOccurrences;
-            StartsOn = startsOn;
-            EndsOn = endsOn;
+            _startsOn = startsOn;
+            _endsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,10 +51,32 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> The DateTime when the review is scheduled to be start. This could be a date in the future. Required on create. </summary>
         [WirePath("startDate")]
-        public DateTimeOffset? StartsOn { get; set; }
+        public DateTimeOffset? StartsOn
+        {
+            get
+            {
+                return _startsOn;
+            }
+            set
+            {
+                _startsOn = value;
+                _startsOnIsDefined = true;
+            }
+        }
 
         /// <summary> The DateTime when the review is scheduled to end. Required if type is endDate. </summary>
         [WirePath("endDate")]
-        public DateTimeOffset? EndsOn { get; set; }
+        public DateTimeOffset? EndsOn
+        {
+            get
+            {
+                return _endsOn;
+            }
+            set
+            {
+                _endsOn = value;
+                _endsOnIsDefined = true;
+            }
+        }
     }
 }

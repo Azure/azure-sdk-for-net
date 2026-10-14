@@ -84,10 +84,17 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("userPrincipalName"u8);
                 writer.WriteStringValue(UserPrincipalName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && (_createdOnIsDefined || Optional.IsDefined(CreatedOn)))
             {
-                writer.WritePropertyName("createdDateTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                if (CreatedOn != null)
+                {
+                    writer.WritePropertyName("createdDateTime"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("createdDateTime"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,6 +140,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             string userDisplayName = default;
             string userPrincipalName = default;
+            bool createdOnIsDefined = false;
             DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -149,6 +157,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("createdDateTime"u8))
                 {
+                    createdOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         createdOn = null;
@@ -162,7 +171,10 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AccessReviewContactedReviewerProperties(userDisplayName, userPrincipalName, createdOn, additionalBinaryDataProperties);
+            return new AccessReviewContactedReviewerProperties(userDisplayName, userPrincipalName, createdOn, additionalBinaryDataProperties)
+            {
+                _createdOnIsDefined = createdOnIsDefined
+            };
         }
     }
 }

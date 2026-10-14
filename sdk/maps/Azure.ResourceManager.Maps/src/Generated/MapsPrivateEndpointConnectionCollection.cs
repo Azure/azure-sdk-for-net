@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MapsPrivateEndpointConnectionData, MapsPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MapsPrivateEndpointConnectionData, MapsPrivateEndpointConnectionResource>(new MapsPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MapsPrivateEndpointConnectionData, MapsPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByAccountCollectionResultOfT(
+            return new PageableWrapper<MapsPrivateEndpointConnectionData, MapsPrivateEndpointConnectionResource>(new MapsPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

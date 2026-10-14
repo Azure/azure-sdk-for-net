@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GitHubOwnerData, GitHubOwnerResource>(new GitHubOwnersGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GitHubOwnerData, GitHubOwnerResource>(new GitHubOwnerDataAsyncCollectionResultOfT(
                 _gitHubOwnersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GitHubOwnerData, GitHubOwnerResource>(new GitHubOwnersGetAllCollectionResultOfT(
+            return new PageableWrapper<GitHubOwnerData, GitHubOwnerResource>(new GitHubOwnerDataCollectionResultOfT(
                 _gitHubOwnersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

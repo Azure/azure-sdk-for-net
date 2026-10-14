@@ -94,10 +94,17 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
-            if (Optional.IsDefined(AvailabilityZone))
+            if (_availabilityZoneIsDefined || Optional.IsDefined(AvailabilityZone))
             {
-                writer.WritePropertyName("availabilityZone"u8);
-                writer.WriteStringValue(AvailabilityZone);
+                if (AvailabilityZone != null)
+                {
+                    writer.WritePropertyName("availabilityZone"u8);
+                    writer.WriteStringValue(AvailabilityZone);
+                }
+                else
+                {
+                    writer.WriteNull("availabilityZone"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -143,6 +150,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             string name = default;
             ResourceIdentifier subnetId = default;
+            bool availabilityZoneIsDefined = false;
             string availabilityZone = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,6 +167,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("availabilityZone"u8))
                 {
+                    availabilityZoneIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         availabilityZone = null;
@@ -172,7 +181,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetAppFilePathAvailabilityContent(name, subnetId, availabilityZone, additionalBinaryDataProperties);
+            return new NetAppFilePathAvailabilityContent(name, subnetId, availabilityZone, additionalBinaryDataProperties)
+            {
+                _availabilityZoneIsDefined = availabilityZoneIsDefined
+            };
         }
     }
 }

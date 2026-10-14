@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PaloAltoNetworksFirewallCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PaloAltoNetworksFirewallResource.ResourceType, out string paloAltoNetworksFirewallApiVersion);
             _firewallsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", PaloAltoNetworksFirewallResource.ResourceType.Namespace, Diagnostics);
-            _firewallsRestClient = new Firewalls(_firewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, paloAltoNetworksFirewallApiVersion ?? "2026-07-29-preview");
+            _firewallsRestClient = new Firewalls(_firewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("PaloAltoNetworks.Cloudngfw/firewalls", out string firewallsApiVersionOverride) ? firewallsApiVersionOverride : "2026-07-29-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PaloAltoNetworksFirewallData, PaloAltoNetworksFirewallResource>(new FirewallsGetByResourceGroupAsyncCollectionResultOfT(_firewallsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PaloAltoNetworksFirewallCollection.GetAll"), data => new PaloAltoNetworksFirewallResource(Client, data));
+            return new AsyncPageableWrapper<PaloAltoNetworksFirewallData, PaloAltoNetworksFirewallResource>(new PaloAltoNetworksFirewallDataAsyncCollectionResultOfT(_firewallsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PaloAltoNetworksFirewallCollection.GetAll"), data => new PaloAltoNetworksFirewallResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PaloAltoNetworksFirewallData, PaloAltoNetworksFirewallResource>(new FirewallsGetByResourceGroupCollectionResultOfT(_firewallsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PaloAltoNetworksFirewallCollection.GetAll"), data => new PaloAltoNetworksFirewallResource(Client, data));
+            return new PageableWrapper<PaloAltoNetworksFirewallData, PaloAltoNetworksFirewallResource>(new PaloAltoNetworksFirewallDataCollectionResultOfT(_firewallsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PaloAltoNetworksFirewallCollection.GetAll"), data => new PaloAltoNetworksFirewallResource(Client, data));
         }
 
         /// <summary>

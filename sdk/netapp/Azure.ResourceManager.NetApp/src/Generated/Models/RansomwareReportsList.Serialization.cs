@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RansomwareReportsList(value, nextLink, additionalBinaryDataProperties);
+            return new RansomwareReportsList(value ?? new ChangeTrackingList<RansomwareReportData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

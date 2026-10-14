@@ -4,19 +4,27 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 
 using OpenTelemetry;
 
 using Xunit;
+
+using TestEventListener = Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework.TestEventListener;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
@@ -159,6 +167,188 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void AadAndInstrumentationKeyGroupsForOneEndpointArePersistedSeparately()
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetStatus(EastUs, 500);
+
+            using var exporter = CreateExporter(ingestion, out var transmitter, new RecordingCredential());
+
+            exporter.Export(CreateBatch(
+                CreateActivity("ikey-east", EastUs),
+                CreateActivity("aad-east", EastUs, ingestionAuth: "aad")));
+
+            Assert.Equal(2, ingestion.Requests.Count);
+            Assert.All(ingestion.Requests, request => Assert.Equal(EastUs + "v2.1/track", request.Uri));
+
+            var ikeyPartition = transmitter._multiEndpointStorage!.TryGet(EastUs)!;
+            var aadPartition = transmitter._multiEndpointStorage.TryGet(EastUs, isAad: true)!;
+            Assert.Equal(2, transmitter._multiEndpointStorage.Partitions.Count());
+            Assert.NotEqual(ikeyPartition.Directory, aadPartition.Directory);
+
+            var ikeyBlob = Encoding.UTF8.GetString(File.ReadAllBytes(Directory.GetFiles(ikeyPartition.Directory, "*.blob").Single()));
+            var aadBlob = Encoding.UTF8.GetString(File.ReadAllBytes(Directory.GetFiles(aadPartition.Directory, "*.blob").Single()));
+
+            Assert.Contains("ikey-east", ikeyBlob, StringComparison.Ordinal);
+            Assert.DoesNotContain("aad-east", ikeyBlob, StringComparison.Ordinal);
+            Assert.Contains("aad-east", aadBlob, StringComparison.Ordinal);
+            Assert.DoesNotContain("ikey-east", aadBlob, StringComparison.Ordinal);
+        }
+
+        [Fact]
+        public void BackOffOnAnAadRouteDoesNotStopTheInstrumentationKeyRouteToTheSameEndpoint()
+        {
+            var ingestion = new MockIngestion();
+            using var exporter = CreateExporter(ingestion, out var transmitter, new RecordingCredential());
+
+            transmitter._multiEndpointStorage!.TryGet(EastUs, isAad: true)!.TransmissionStateManager.OpenTransmission();
+
+            exporter.Export(CreateBatch(
+                CreateActivity("ikey-east", EastUs),
+                CreateActivity("aad-east", EastUs, ingestionAuth: "aad")));
+
+            // The AAD route is backed off and goes to disk; the instrumentation-key route still transmits.
+            var request = Assert.Single(ingestion.Requests);
+            Assert.Contains("ikey-east", request.Body, StringComparison.Ordinal);
+            Assert.DoesNotContain("aad-east", request.Body, StringComparison.Ordinal);
+        }
+
+        [Fact]
+        public void OnlyTheAadRouteCarriesAToken()
+        {
+            var ingestion = new MockIngestion();
+            using var exporter = CreateExporter(ingestion, out _, new RecordingCredential());
+
+            exporter.Export(CreateBatch(
+                CreateActivity("ikey-east", EastUs),
+                CreateActivity("aad-east", EastUs, ingestionAuth: "aad"),
+                CreateActivity("ikey-west", WestUs)));
+
+            Assert.Equal(3, ingestion.Requests.Count);
+
+            var aad = Assert.Single(ingestion.Requests.Where(r => r.Body.Contains("aad-east")));
+            Assert.Equal("Bearer " + RecordingCredential.Token, aad.Authorization);
+
+            Assert.All(
+                ingestion.Requests.Where(r => !r.Body.Contains("aad-east")),
+                request => Assert.Null(request.Authorization));
+        }
+
+        [Fact]
+        public void TheAadRouteTokenUsesThePublicCloudScopeByDefault()
+        {
+            var ingestion = new MockIngestion();
+            var credential = new RecordingCredential();
+            using var exporter = CreateExporter(ingestion, out _, credential);
+
+            exporter.Export(CreateBatch(CreateActivity("aad-east", EastUs, ingestionAuth: "aad")));
+
+            Assert.Equal(new[] { AadHelper.DefaultAadScope }, credential.RequestedScopes.Distinct());
+        }
+
+        // AppContext data is process-wide, so it is always cleared; tests in this assembly run serially.
+        [Fact]
+        public void TheAadRouteTokenUsesTheConfiguredAudience()
+        {
+            AppDomain.CurrentDomain.SetData(MultiEndpointConfig.AadAudienceName, " https://monitor.azure.cn/ ");
+
+            try
+            {
+                var ingestion = new MockIngestion();
+                var credential = new RecordingCredential();
+                using var exporter = CreateExporter(ingestion, out _, credential);
+
+                exporter.Export(CreateBatch(CreateActivity("aad-east", EastUs, ingestionAuth: "aad")));
+
+                Assert.Equal(new[] { "https://monitor.azure.cn//.default" }, credential.RequestedScopes.Distinct());
+            }
+            finally
+            {
+                AppDomain.CurrentDomain.SetData(MultiEndpointConfig.AadAudienceName, null);
+            }
+        }
+
+        [Fact]
+        public void ANonStringAudienceIsIgnoredInFavourOfThePublicCloud()
+        {
+            AppDomain.CurrentDomain.SetData(MultiEndpointConfig.AadAudienceName, 42);
+
+            try
+            {
+                using var listener = new TestEventListener();
+                listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Warning, EventKeywords.All);
+
+                Assert.Equal(AadHelper.DefaultAadScope, MultiEndpointConfig.GetAadScope());
+
+                var ignored = Assert.Single(listener.Messages.Where(e => e.EventName == "MultiEndpointAadAudienceIgnored"));
+                Assert.Equal(MultiEndpointConfig.AadAudienceName, ignored.Payload![0]);
+            }
+            finally
+            {
+                AppDomain.CurrentDomain.SetData(MultiEndpointConfig.AadAudienceName, null);
+            }
+        }
+
+        [Fact]
+        public void EachPartitionDrainsWithItsRoutesAuthentication()
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetStatus(EastUs, 500);
+
+            using var exporter = CreateExporter(ingestion, out var transmitter, new RecordingCredential());
+
+            exporter.Export(CreateBatch(
+                CreateActivity("ikey-east", EastUs),
+                CreateActivity("aad-east", EastUs, ingestionAuth: "aad")));
+
+            ingestion.SetStatus(EastUs, 200);
+            ingestion.Requests.Clear();
+
+            foreach (var isAad in new[] { false, true })
+            {
+                var partition = transmitter._multiEndpointStorage!.TryGet(EastUs, isAad)!;
+                partition.TransmissionStateManager.ResetConsecutiveErrors();
+                partition.TransmissionStateManager.CloseTransmission();
+                partition.TransmitFromStorageHandler.Drain();
+            }
+
+            Assert.Equal(2, ingestion.Requests.Count);
+
+            var aadReplay = Assert.Single(ingestion.Requests.Where(r => r.Body.Contains("aad-east")));
+            Assert.Equal("Bearer " + RecordingCredential.Token, aadReplay.Authorization);
+
+            var ikeyReplay = Assert.Single(ingestion.Requests.Where(r => r.Body.Contains("ikey-east")));
+            Assert.Null(ikeyReplay.Authorization);
+        }
+
+        [Fact]
+        public void AadTelemetryIsDroppedWhenNoCredentialIsConfigured()
+        {
+            var ingestion = new MockIngestion();
+            using var exporter = CreateExporter(ingestion, out var transmitter);
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Warning, EventKeywords.All);
+
+            var result = exporter.Export(CreateBatch(
+                CreateActivity("ikey-east", EastUs),
+                CreateActivity("aad-east", EastUs, ingestionAuth: "aad")));
+
+            Assert.Equal(ExportResult.Failure, result);
+
+            var request = Assert.Single(ingestion.Requests);
+            Assert.Contains("ikey-east", request.Body, StringComparison.Ordinal);
+            Assert.DoesNotContain("aad-east", request.Body, StringComparison.Ordinal);
+            Assert.Null(request.Authorization);
+
+            Assert.Null(transmitter._multiEndpointStorage!.TryGet(EastUs, isAad: true));
+            Assert.DoesNotContain(transmitter._multiEndpointStorage.Partitions, p => p.Directory.EndsWith(HashHelper.GetSHA256Hash(MultiEndpointStorage.AadPartitionKeyPrefix + EastUs), StringComparison.Ordinal));
+
+            var dropped = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedAadTelemetryDroppedWithoutCredential"));
+            Assert.Equal(1, dropped.Payload![1]);
+            Assert.Equal(EastUs + EndpointRouting.AadRouteSuffix, dropped.Payload[2]);
+        }
+
+        [Fact]
         public void PartitionsAreCreatedOutsideTheHostStorageDirectory()
         {
             var ingestion = new MockIngestion();
@@ -204,7 +394,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .GetField("_storageDirectory", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
                 ?.GetValue(transmitter) as string;
 
-        private AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, out AzureMonitorTransmitter transmitter)
+        private AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, out AzureMonitorTransmitter transmitter, TokenCredential? credential = null)
         {
             var options = new AzureMonitorExporterOptions
             {
@@ -212,6 +402,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 Transport = ingestion.Transport,
                 StorageDirectory = _storageDirectory,
                 EnableStatsbeat = false,
+                Credential = credential,
             };
 
             transmitter = new AzureMonitorTransmitter(options, DefaultPlatform.Instance, multiEndpointEnabled: true);
@@ -221,11 +412,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private static Batch<Activity> CreateBatch(params Activity[] activities) => new(activities, activities.Length);
 
-        private static Activity CreateActivity(string instrumentationKey, string ingestionEndpoint)
+        private static Activity CreateActivity(string instrumentationKey, string ingestionEndpoint, string? ingestionAuth = null)
         {
             var activity = s_activitySource.StartActivity("StorageIntegrationTest", ActivityKind.Server)!;
             activity.SetTag(SemanticConventions.AttributeMicrosoftInstrumentationKey, instrumentationKey);
             activity.SetTag(SemanticConventions.AttributeMicrosoftIngestionEndpoint, ingestionEndpoint);
+
+            if (ingestionAuth != null)
+            {
+                activity.SetTag(SemanticConventions.AttributeMicrosoftIngestionAuth, ingestionAuth);
+            }
+
             activity.Stop();
 
             return activity;
@@ -264,7 +461,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
                 lock (Requests)
                 {
-                    Requests.Add(new CapturedRequest(request.Uri.ToString(), ReadBody(request)));
+                    request.Headers.TryGetValue("Authorization", out var authorization);
+                    Requests.Add(new CapturedRequest(request.Uri.ToString(), ReadBody(request), authorization));
                 }
 
                 return new MockResponse(_statusByEndpoint.TryGetValue(host, out var status) ? status : 200);
@@ -286,15 +484,50 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private sealed class CapturedRequest
         {
-            internal CapturedRequest(string uri, string body)
+            internal CapturedRequest(string uri, string body, string? authorization)
             {
                 Uri = uri;
                 Body = body;
+                Authorization = authorization;
             }
 
             internal string Uri { get; }
 
             internal string Body { get; }
+
+            internal string? Authorization { get; }
+        }
+
+        /// <summary>Issues a fixed token and records every scope it was asked for.</summary>
+        private sealed class RecordingCredential : TokenCredential
+        {
+            internal const string Token = "routed-aad-token";
+
+            private readonly List<string> _requestedScopes = new();
+
+            internal IReadOnlyList<string> RequestedScopes
+            {
+                get
+                {
+                    lock (_requestedScopes)
+                    {
+                        return _requestedScopes.ToArray();
+                    }
+                }
+            }
+
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                lock (_requestedScopes)
+                {
+                    _requestedScopes.AddRange(requestContext.Scopes);
+                }
+
+                return new AccessToken(Token, DateTimeOffset.UtcNow.AddHours(1));
+            }
+
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => new(GetToken(requestContext, cancellationToken));
         }
     }
 }

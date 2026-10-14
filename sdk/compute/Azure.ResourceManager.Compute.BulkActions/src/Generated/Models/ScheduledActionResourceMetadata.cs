@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> A compute resource associated with a scheduled action. </summary>
+    /// <summary> A compute resource associated with a recurring bulk action. </summary>
     public partial class ScheduledActionResourceMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

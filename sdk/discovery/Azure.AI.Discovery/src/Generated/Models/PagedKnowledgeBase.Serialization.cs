@@ -169,7 +169,7 @@ namespace Azure.AI.Discovery
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedKnowledgeBase(value, nextLink, additionalBinaryDataProperties);
+            return new PagedKnowledgeBase(value ?? new ChangeTrackingList<KnowledgeBase>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -94,10 +94,17 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableProxy"u8);
                 writer.WriteBooleanValue(EnableProxy.Value);
             }
-            if (Optional.IsDefined(RequireProxyForNetworkRules))
+            if (_requireProxyForNetworkRulesIsDefined || Optional.IsDefined(RequireProxyForNetworkRules))
             {
-                writer.WritePropertyName("requireProxyForNetworkRules"u8);
-                writer.WriteBooleanValue(RequireProxyForNetworkRules.Value);
+                if (RequireProxyForNetworkRules != null)
+                {
+                    writer.WritePropertyName("requireProxyForNetworkRules"u8);
+                    writer.WriteBooleanValue(RequireProxyForNetworkRules.Value);
+                }
+                else
+                {
+                    writer.WriteNull("requireProxyForNetworkRules"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -143,6 +150,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             IList<string> servers = default;
             bool? enableProxy = default;
+            bool requireProxyForNetworkRulesIsDefined = false;
             bool? requireProxyForNetworkRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -179,6 +187,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("requireProxyForNetworkRules"u8))
                 {
+                    requireProxyForNetworkRulesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         requireProxyForNetworkRules = null;
@@ -192,7 +201,10 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DnsSettings(servers ?? new ChangeTrackingList<string>(), enableProxy, requireProxyForNetworkRules, additionalBinaryDataProperties);
+            return new DnsSettings(servers ?? new ChangeTrackingList<string>(), enableProxy, requireProxyForNetworkRules, additionalBinaryDataProperties)
+            {
+                _requireProxyForNetworkRulesIsDefined = requireProxyForNetworkRulesIsDefined
+            };
         }
     }
 }

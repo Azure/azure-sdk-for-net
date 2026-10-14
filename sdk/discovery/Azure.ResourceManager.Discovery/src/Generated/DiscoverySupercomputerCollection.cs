@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoverySupercomputerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiscoverySupercomputerResource.ResourceType, out string discoverySupercomputerApiVersion);
             _supercomputersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoverySupercomputerResource.ResourceType.Namespace, Diagnostics);
-            _supercomputersRestClient = new Supercomputers(_supercomputersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoverySupercomputerApiVersion ?? "2026-06-01");
+            _supercomputersRestClient = new Supercomputers(_supercomputersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Discovery/supercomputers", out string supercomputersApiVersionOverride) ? supercomputersApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscoverySupercomputerData, DiscoverySupercomputerResource>(new SupercomputersGetByResourceGroupAsyncCollectionResultOfT(_supercomputersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoverySupercomputerCollection.GetAll"), data => new DiscoverySupercomputerResource(Client, data));
+            return new AsyncPageableWrapper<DiscoverySupercomputerData, DiscoverySupercomputerResource>(new DiscoverySupercomputerDataAsyncCollectionResultOfT(_supercomputersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoverySupercomputerCollection.GetAll"), data => new DiscoverySupercomputerResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscoverySupercomputerData, DiscoverySupercomputerResource>(new SupercomputersGetByResourceGroupCollectionResultOfT(_supercomputersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoverySupercomputerCollection.GetAll"), data => new DiscoverySupercomputerResource(Client, data));
+            return new PageableWrapper<DiscoverySupercomputerData, DiscoverySupercomputerResource>(new DiscoverySupercomputerDataCollectionResultOfT(_supercomputersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoverySupercomputerCollection.GetAll"), data => new DiscoverySupercomputerResource(Client, data));
         }
 
         /// <summary>

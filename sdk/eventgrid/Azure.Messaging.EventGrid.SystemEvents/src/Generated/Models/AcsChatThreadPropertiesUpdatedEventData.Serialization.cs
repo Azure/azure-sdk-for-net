@@ -259,8 +259,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 version,
                 editedByCommunicationIdentifier,
                 editTime,
-                properties,
-                metadata,
+                properties ?? new ChangeTrackingDictionary<string, object>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
                 retentionPolicy);
         }
 

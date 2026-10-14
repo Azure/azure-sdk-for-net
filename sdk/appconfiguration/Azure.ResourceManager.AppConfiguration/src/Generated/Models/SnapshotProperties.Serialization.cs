@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             return new SnapshotProperties(
                 provisioningState,
                 status,
-                filters,
+                filters ?? new ChangeTrackingList<SnapshotKeyValueFilter>(),
                 compositionType,
                 createdOn,
                 expiresOn,

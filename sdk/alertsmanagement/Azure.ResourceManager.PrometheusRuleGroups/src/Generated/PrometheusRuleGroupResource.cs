@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PrometheusRuleGroups.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PrometheusRuleGroups
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PrometheusRuleGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string prometheusRuleGroupApiVersion);
             _prometheusRuleGroupResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrometheusRuleGroups", ResourceType.Namespace, Diagnostics);
-            _prometheusRuleGroupResourcesRestClient = new PrometheusRuleGroupResources(_prometheusRuleGroupResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, prometheusRuleGroupApiVersion ?? "2023-03-01");
+            _prometheusRuleGroupResourcesRestClient = new PrometheusRuleGroupResources(_prometheusRuleGroupResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AlertsManagement/prometheusRuleGroups", out string prometheusRuleGroupResourcesApiVersionOverride) ? prometheusRuleGroupResourcesApiVersionOverride : "2023-03-01");
             ValidateResourceId(id);
         }
 
@@ -505,10 +505,9 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -548,10 +547,9 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

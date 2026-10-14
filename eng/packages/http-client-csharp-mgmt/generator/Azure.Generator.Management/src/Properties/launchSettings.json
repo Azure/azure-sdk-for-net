@@ -1,5 +1,10 @@
 {
   "profiles": {
+    "http-azure-resource-manager-common-properties": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/common-properties -g ManagementClientGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-azure-resource-manager-large-header": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/large-header -g ManagementClientGenerator",
       "commandName": "Executable",
@@ -7,6 +12,11 @@
     },
     "http-azure-resource-manager-management-group": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/management-group -g ManagementClientGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
+    "http-azure-resource-manager-method-subscription-id": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/method-subscription-id -g ManagementClientGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
@@ -32,6 +42,11 @@
     },
     "http-azure-resource-manager-service-group": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/service-group -g ManagementClientGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
+    "Mgmt-ApiVersionOverride": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Local/Mgmt-ApiVersionOverride -g ManagementClientGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },

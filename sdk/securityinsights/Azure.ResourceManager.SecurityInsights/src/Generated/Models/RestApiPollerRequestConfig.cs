@@ -17,6 +17,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private int? _rateLimitQPS;
+        internal bool _rateLimitQPSIsDefined;
+        private int? _queryWindowInMin;
+        internal bool _queryWindowInMinIsDefined;
+        private int? _retryCount;
+        internal bool _retryCountIsDefined;
+        private int? _timeoutInSeconds;
+        internal bool _timeoutInSecondsIsDefined;
+        private bool? _isPostPayloadJson;
+        internal bool _isPostPayloadJsonIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RestApiPollerRequestConfig"/>. </summary>
         /// <param name="apiEndpoint"> The API endpoint. </param>
@@ -51,13 +61,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         internal RestApiPollerRequestConfig(string apiEndpoint, int? rateLimitQPS, int? queryWindowInMin, ConnectorHttpMethodVerb? httpMethod, string queryTimeFormat, int? retryCount, int? timeoutInSeconds, bool? isPostPayloadJson, IDictionary<string, string> headers, IDictionary<string, BinaryData> queryParameters, string queryParametersTemplate, string startTimeAttributeName, string endTimeAttributeName, string queryTimeIntervalAttributeName, string queryTimeIntervalPrepend, string queryTimeIntervalDelimiter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApiEndpoint = apiEndpoint;
-            RateLimitQPS = rateLimitQPS;
-            QueryWindowInMin = queryWindowInMin;
+            _rateLimitQPS = rateLimitQPS;
+            _queryWindowInMin = queryWindowInMin;
             HttpMethod = httpMethod;
             QueryTimeFormat = queryTimeFormat;
-            RetryCount = retryCount;
-            TimeoutInSeconds = timeoutInSeconds;
-            IsPostPayloadJson = isPostPayloadJson;
+            _retryCount = retryCount;
+            _timeoutInSeconds = timeoutInSeconds;
+            _isPostPayloadJson = isPostPayloadJson;
             Headers = headers;
             QueryParameters = queryParameters;
             QueryParametersTemplate = queryParametersTemplate;
@@ -75,11 +85,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The Rate limit queries per second for the request.. </summary>
         [WirePath("rateLimitQPS")]
-        public int? RateLimitQPS { get; set; }
+        public int? RateLimitQPS
+        {
+            get
+            {
+                return _rateLimitQPS;
+            }
+            set
+            {
+                _rateLimitQPS = value;
+                _rateLimitQPSIsDefined = true;
+            }
+        }
 
         /// <summary> The query window in minutes for the request. </summary>
         [WirePath("queryWindowInMin")]
-        public int? QueryWindowInMin { get; set; }
+        public int? QueryWindowInMin
+        {
+            get
+            {
+                return _queryWindowInMin;
+            }
+            set
+            {
+                _queryWindowInMin = value;
+                _queryWindowInMinIsDefined = true;
+            }
+        }
 
         /// <summary> The HTTP method, default value GET. </summary>
         [WirePath("httpMethod")]
@@ -91,15 +123,48 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The retry count. </summary>
         [WirePath("retryCount")]
-        public int? RetryCount { get; set; }
+        public int? RetryCount
+        {
+            get
+            {
+                return _retryCount;
+            }
+            set
+            {
+                _retryCount = value;
+                _retryCountIsDefined = true;
+            }
+        }
 
         /// <summary> The timeout in seconds. </summary>
         [WirePath("timeoutInSeconds")]
-        public int? TimeoutInSeconds { get; set; }
+        public int? TimeoutInSeconds
+        {
+            get
+            {
+                return _timeoutInSeconds;
+            }
+            set
+            {
+                _timeoutInSeconds = value;
+                _timeoutInSecondsIsDefined = true;
+            }
+        }
 
         /// <summary> Flag to indicate if HTTP POST payload is in JSON format (vs form-urlencoded). </summary>
         [WirePath("isPostPayloadJson")]
-        public bool? IsPostPayloadJson { get; set; }
+        public bool? IsPostPayloadJson
+        {
+            get
+            {
+                return _isPostPayloadJson;
+            }
+            set
+            {
+                _isPostPayloadJson = value;
+                _isPostPayloadJsonIsDefined = true;
+            }
+        }
 
         /// <summary> The header for the request for the remote server. </summary>
         [WirePath("headers")]
