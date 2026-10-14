@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("capabilityHostKind"u8);
                 writer.WriteStringValue(CapabilityHostKind.Value.ToString());
             }
-            if (_customerSubnetIsDefined || Optional.IsDefined(CustomerSubnet))
+            if (Optional.IsDefined(CustomerSubnet, _customerSubnetIsDefined))
             {
                 if (CustomerSubnet != null)
                 {

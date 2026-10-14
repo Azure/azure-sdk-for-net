@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featureDataTypeOverride"u8);
                 }
             }
-            if (_featureImportanceSettingsIsDefined || Optional.IsDefined(FeatureImportanceSettings))
+            if (Optional.IsDefined(FeatureImportanceSettings, _featureImportanceSettingsIsDefined))
             {
                 if (FeatureImportanceSettings != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featureImportanceSettings"u8);
                 }
             }
-            if (_featuresIsDefined || Optional.IsDefined(Features))
+            if (Optional.IsDefined(Features, _featuresIsDefined))
             {
                 if (Features != null)
                 {
