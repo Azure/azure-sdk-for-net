@@ -42,7 +42,8 @@ namespace Azure.ResourceManager.FileShares.Tests
         [RecordedTest]
         public async Task GetProvisioningRecommendation()
         {
-            var content = new FileShareProvisioningRecommendationContent(1024);
+            var content = new FileShareProvisioningRecommendationContent(
+                new FileShareProvisioningRecommendationInputProperties(1024));
 
             var result = await DefaultSubscription.GetProvisioningRecommendationAsync(
                 new AzureLocation(DefaultLocation), content);
