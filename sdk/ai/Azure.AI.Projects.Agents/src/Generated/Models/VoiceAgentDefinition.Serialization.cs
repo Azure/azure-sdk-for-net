@@ -157,13 +157,13 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ToolChoice))
+            if (Optional.IsDefined(InternalToolChoice))
             {
                 writer.WritePropertyName("tool_choice"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(ToolChoice);
+                writer.WriteRawValue(InternalToolChoice);
 #else
-                using (JsonDocument document = JsonDocument.Parse(ToolChoice))
+                using (JsonDocument document = JsonDocument.Parse(InternalToolChoice))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -237,7 +237,7 @@ namespace Azure.AI.Projects.Agents
             VoiceAgentInterimResponseConfig interimResponse = default;
             VoiceAgentAvatarConfig avatar = default;
             IList<VoiceAgentTool> tools = default;
-            BinaryData toolChoice = default;
+            BinaryData internalToolChoice = default;
             bool? parallelToolCalls = default;
             IDictionary<string, StructuredInputDefinition> structuredInputs = default;
             VoiceAgentSubagentConfig subagentConfig = default;
@@ -379,7 +379,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    toolChoice = prop.Value.GetUtf8Bytes();
+                    internalToolChoice = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("parallel_tool_calls"u8))
@@ -444,7 +444,7 @@ namespace Azure.AI.Projects.Agents
                 interimResponse,
                 avatar,
                 tools ?? new ChangeTrackingList<VoiceAgentTool>(),
-                toolChoice,
+                internalToolChoice,
                 parallelToolCalls,
                 structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>(),
                 subagentConfig,

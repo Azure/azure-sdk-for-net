@@ -153,24 +153,17 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("allowed_callers"u8);
                 }
             }
-            if (Optional.IsDefined(RequireApproval, _requireApprovalIsDefined))
+            if (Optional.IsDefined(RequireApprovalInternal))
             {
-                if (RequireApproval != null)
-                {
-                    writer.WritePropertyName("require_approval"u8);
+                writer.WritePropertyName("require_approval"u8);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(RequireApproval);
+                writer.WriteRawValue(RequireApprovalInternal);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(RequireApproval))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                else
+                using (JsonDocument document = JsonDocument.Parse(RequireApprovalInternal))
                 {
-                    writer.WriteNull("require_approval"u8);
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
             if (Optional.IsDefined(DeferLoading))
             {
@@ -240,8 +233,7 @@ namespace Azure.AI.Projects.Agents
             bool allowedToolsIsDefined = false;
             BinaryData allowedTools = default;
             IList<CallableToolAllowedCaller> allowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
-            bool requireApprovalIsDefined = false;
-            BinaryData requireApproval = default;
+            BinaryData requireApprovalInternal = default;
             bool? deferLoading = default;
             string projectConnectionId = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
@@ -327,13 +319,12 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("require_approval"u8))
                 {
-                    requireApprovalIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requireApproval = null;
+                        requireApprovalInternal = null;
                         continue;
                     }
-                    requireApproval = prop.Value.GetUtf8Bytes();
+                    requireApprovalInternal = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("defer_loading"u8))
@@ -395,14 +386,13 @@ namespace Azure.AI.Projects.Agents
                 headers,
                 allowedTools,
                 allowedCallers,
-                requireApproval,
+                requireApprovalInternal,
                 deferLoading,
                 projectConnectionId,
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 responseScheduling)
             {
-                _allowedToolsIsDefined = allowedToolsIsDefined,
-                _requireApprovalIsDefined = requireApprovalIsDefined
+                _allowedToolsIsDefined = allowedToolsIsDefined
             };
         }
     }

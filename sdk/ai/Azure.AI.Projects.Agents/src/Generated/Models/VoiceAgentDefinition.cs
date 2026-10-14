@@ -5,8 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
-using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -53,7 +51,7 @@ namespace Azure.AI.Projects.Agents
         /// `system` (service-managed session controls), and `toolbox`. Server-side tools such as `web_search`,
         /// `azure_ai_search`, and `openapi` are provided through a toolbox rather than declared directly.
         /// </param>
-        /// <param name="toolChoice">
+        /// <param name="internalToolChoice">
         /// How the model chooses tools for generated responses. `none` prevents tool calls, `auto` lets the model decide,
         /// `required` requires at least one tool call, and a specific function or MCP tool can be selected with an object.
         /// Defaults to `auto`.
@@ -69,7 +67,7 @@ namespace Azure.AI.Projects.Agents
         /// time-to-first-audio, inter-token latency, interruption) is observability-only (customer trace / App Insights) and
         /// is not part of the persisted conversation content.
         /// </param>
-        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, string instructions, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData toolChoice, bool? parallelToolCalls, IDictionary<string, StructuredInputDefinition> structuredInputs, VoiceAgentSubagentConfig subagentConfig, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, string instructions, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, IDictionary<string, StructuredInputDefinition> structuredInputs, VoiceAgentSubagentConfig subagentConfig, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             ModelType = modelType;
             Model = model;
@@ -83,7 +81,7 @@ namespace Azure.AI.Projects.Agents
             InterimResponse = interimResponse;
             Avatar = avatar;
             Tools = tools;
-            ToolChoice = toolChoice;
+            InternalToolChoice = internalToolChoice;
             ParallelToolCalls = parallelToolCalls;
             StructuredInputs = structuredInputs;
             SubagentConfig = subagentConfig;
@@ -132,58 +130,6 @@ namespace Azure.AI.Projects.Agents
         /// `azure_ai_search`, and `openapi` are provided through a toolbox rather than declared directly.
         /// </summary>
         public IList<VoiceAgentTool> Tools { get; }
-
-        /// <summary>
-        /// How the model chooses tools for generated responses. `none` prevents tool calls, `auto` lets the model decide,
-        /// `required` requires at least one tool call, and a specific function or MCP tool can be selected with an object.
-        /// Defaults to `auto`.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> "none". </description>
-        /// </item>
-        /// <item>
-        /// <description> "auto". </description>
-        /// </item>
-        /// <item>
-        /// <description> "required". </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="RealtimeCustomFunctionToolChoice"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="RealtimeCustomMcpToolChoice"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ToolChoice { get; set; }
 
         /// <summary> Whether the model may call multiple tools in parallel. </summary>
         public bool? ParallelToolCalls { get; set; }
