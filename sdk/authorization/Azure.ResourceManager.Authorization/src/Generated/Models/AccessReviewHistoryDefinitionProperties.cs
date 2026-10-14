@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DateTimeOffset? _reviewHistoryPeriodStartsOn;
-        internal bool _reviewHistoryPeriodStartsOnIsDefined;
+        private bool _reviewHistoryPeriodStartsOnIsDefined;
         private DateTimeOffset? _reviewHistoryPeriodEndsOn;
-        internal bool _reviewHistoryPeriodEndsOnIsDefined;
+        private bool _reviewHistoryPeriodEndsOnIsDefined;
         private DateTimeOffset? _createdOn;
-        internal bool _createdOnIsDefined;
+        private bool _createdOnIsDefined;
         private AccessReviewActorIdentity _createdBy;
-        internal bool _createdByIsDefined;
+        private bool _createdByIsDefined;
         private AccessReviewHistoryScheduleSettings _settings;
-        internal bool _settingsIsDefined;
+        private bool _settingsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewHistoryDefinitionProperties"/>. </summary>
         public AccessReviewHistoryDefinitionProperties()
