@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(FluxGitRepositoryPatch)} does not support writing '{format}' format.");
             }
-            if (_uriIsDefined || Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Uri, _uriIsDefined))
             {
                 if (Uri != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("url"u8);
                 }
             }
-            if (_timeoutInSecondsIsDefined || Optional.IsDefined(TimeoutInSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds, _timeoutInSecondsIsDefined))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("timeoutInSeconds"u8);
                 }
             }
-            if (_syncIntervalInSecondsIsDefined || Optional.IsDefined(SyncIntervalInSeconds))
+            if (Optional.IsDefined(SyncIntervalInSeconds, _syncIntervalInSecondsIsDefined))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("repositoryRef"u8);
                 writer.WriteObjectValue(RepositoryRef, options);
             }
-            if (_sshKnownHostsIsDefined || Optional.IsDefined(SshKnownHosts))
+            if (Optional.IsDefined(SshKnownHosts, _sshKnownHostsIsDefined))
             {
                 if (SshKnownHosts != null)
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("sshKnownHosts"u8);
                 }
             }
-            if (_httpsUserIsDefined || Optional.IsDefined(HttpsUser))
+            if (Optional.IsDefined(HttpsUser, _httpsUserIsDefined))
             {
                 if (HttpsUser != null)
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("httpsUser"u8);
                 }
             }
-            if (_httpsCACertIsDefined || Optional.IsDefined(HttpsCACert))
+            if (Optional.IsDefined(HttpsCACert, _httpsCACertIsDefined))
             {
                 if (HttpsCACert != null)
                 {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("httpsCACert"u8);
                 }
             }
-            if (_localAuthRefIsDefined || Optional.IsDefined(LocalAuthRef))
+            if (Optional.IsDefined(LocalAuthRef, _localAuthRefIsDefined))
             {
                 if (LocalAuthRef != null)
                 {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("localAuthRef"u8);
                 }
             }
-            if (_providerIsDefined || Optional.IsDefined(Provider))
+            if (Optional.IsDefined(Provider, _providerIsDefined))
             {
                 if (Provider != null)
                 {
