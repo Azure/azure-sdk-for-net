@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("autoScaleConfiguration"u8);
                 writer.WriteObjectValue(AutoScaleConfiguration, options);
             }
-            if (Optional.IsCollectionDefined(ExpressRouteConnections))
+            if (Optional.IsCollectionDefined(ExpressRouteConnectionList))
             {
                 writer.WritePropertyName("expressRouteConnections"u8);
                 writer.WriteStartArray();
-                foreach (ExpressRouteConnectionData item in ExpressRouteConnections)
+                foreach (ExpressRouteConnectionData item in ExpressRouteConnectionList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration = default;
-            IList<ExpressRouteConnectionData> expressRouteConnections = default;
+            IList<ExpressRouteConnectionData> expressRouteConnectionList = default;
             NetworkProvisioningState? provisioningState = default;
             VirtualHubId virtualHub = default;
             bool? allowNonVirtualWanTraffic = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(item, options));
                     }
-                    expressRouteConnections = array;
+                    expressRouteConnectionList = array;
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new ExpressRouteGatewayProperties(
                 autoScaleConfiguration,
-                expressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionData>(),
+                expressRouteConnectionList ?? new ChangeTrackingList<ExpressRouteConnectionData>(),
                 provisioningState,
                 virtualHub,
                 allowNonVirtualWanTraffic,

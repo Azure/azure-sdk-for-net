@@ -44,6 +44,20 @@ namespace Azure.ResourceManager.Network
         [WirePath("etag")]
         public ETag? ETag { get; }
 
+        /// <summary> List of ExpressRoute connections to the ExpressRoute gateway. </summary>
+        [WirePath("properties.expressRouteConnections")]
+        public IList<ExpressRouteConnectionData> ExpressRouteConnectionList
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteGatewayProperties();
+                }
+                return Properties.ExpressRouteConnectionList;
+            }
+        }
+
         /// <summary> The provisioning state of the express route gateway resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState

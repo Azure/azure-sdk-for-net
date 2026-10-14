@@ -1448,7 +1448,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="zones"> A list of availability zones denoting the zone in which Nat Gateway should be deployed. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NatGatewayData"/> instance for mocking. </returns>
-        public static NatGatewayData NatGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, int? idleTimeoutInMinutes, IEnumerable<NetworkSubResource> publicIPAddresses, IEnumerable<NetworkSubResource> publicIPAddressesV6, IEnumerable<NetworkSubResource> publicIPPrefixes, IEnumerable<NetworkSubResource> publicIPPrefixesV6, IEnumerable<WritableSubResource> subnets, Nat64State? nat64, Guid? resourceGuid, NetworkProvisioningState? provisioningState, ResourceIdentifier sourceVirtualNetworkId, ResourceIdentifier serviceGatewayId, NatGatewaySkuName? skuName, IEnumerable<string> zones, ETag? eTag)
+        public static NatGatewayData NatGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, int? idleTimeoutInMinutes, IEnumerable<WritableSubResource> publicIPAddresses, IEnumerable<WritableSubResource> publicIPAddressesV6, IEnumerable<WritableSubResource> publicIPPrefixes, IEnumerable<WritableSubResource> publicIPPrefixesV6, IEnumerable<WritableSubResource> subnets, Nat64State? nat64, Guid? resourceGuid, NetworkProvisioningState? provisioningState, ResourceIdentifier sourceVirtualNetworkId, ResourceIdentifier serviceGatewayId, NatGatewaySkuName? skuName, IEnumerable<string> zones, ETag? eTag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -1462,10 +1462,10 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 idleTimeoutInMinutes is null && publicIPAddresses is null && publicIPAddressesV6 is null && publicIPPrefixes is null && publicIPPrefixesV6 is null && subnets is null && sourceVirtualNetworkId is null && serviceGatewayId is null && nat64 is null && resourceGuid is null && provisioningState is null ? default : new NatGatewayPropertiesFormat(
                     idleTimeoutInMinutes,
-                    (publicIPAddresses ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
-                    (publicIPAddressesV6 ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
-                    (publicIPPrefixes ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
-                    (publicIPPrefixesV6 ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
+                    (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (publicIPAddressesV6 ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (publicIPPrefixesV6 ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (subnets ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     sourceVirtualNetworkId is null ? default : new NetworkSubResource(sourceVirtualNetworkId, default),
                     serviceGatewayId is null ? default : new NetworkSubResource(serviceGatewayId, default),
@@ -6881,7 +6881,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="identity"> The service principal that has read access to cloud-init and config blob. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkVirtualApplianceData"/> instance for mocking. </returns>
-        public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, VirtualApplianceSkuProperties nvaSku, string addressPrefix, string addressPrefixV6, IEnumerable<string> bootStrapConfigurationBlobs, IEnumerable<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics, IEnumerable<InternetIngressPublicIpsProperties> internetIngressPublicIPs, IEnumerable<WritableSubResource> virtualApplianceSites, IEnumerable<WritableSubResource> virtualApplianceConnections, IEnumerable<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource, IEnumerable<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations, IEnumerable<NetworkIPVersion> addressFamily, IPAddress privateIPAddress, string privateIPAddressV6, NetworkVirtualApplianceMigrationStatus migrationStatus, ResourceIdentifier virtualHubId, IEnumerable<VirtualApplianceNetworkInterfaceConfiguration> networkInterfaceConfigurations, ManagedServiceIdentity identity, ETag? eTag)
+        public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, VirtualApplianceSkuProperties nvaSku, string addressPrefix, string addressPrefixV6, IEnumerable<string> bootStrapConfigurationBlobs, IEnumerable<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics, IEnumerable<WritableSubResource> internetIngressPublicIPs, IEnumerable<WritableSubResource> virtualApplianceSites, IEnumerable<WritableSubResource> virtualApplianceConnections, IEnumerable<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource, IEnumerable<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations, IEnumerable<NetworkIPVersion> addressFamily, IPAddress privateIPAddress, string privateIPAddressV6, NetworkVirtualApplianceMigrationStatus migrationStatus, ResourceIdentifier virtualHubId, IEnumerable<VirtualApplianceNetworkInterfaceConfiguration> networkInterfaceConfigurations, ManagedServiceIdentity identity, ETag? eTag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -6905,7 +6905,7 @@ namespace Azure.ResourceManager.Network.Models
                     (virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>()).ToList(),
                     networkInterfaceConfigurations is null ? default : new NetworkVirtualAppliancePropertiesFormatNetworkProfile((networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualApplianceNetworkInterfaceConfiguration>()).ToList(), default),
                     (additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>()).ToList(),
-                    (internetIngressPublicIPs ?? new ChangeTrackingList<InternetIngressPublicIpsProperties>()).ToList(),
+                    (internetIngressPublicIPs ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
@@ -6978,14 +6978,6 @@ namespace Azure.ResourceManager.Network.Models
         public static VirtualApplianceAdditionalNicProperties VirtualApplianceAdditionalNicProperties(string name = default, bool? hasPublicIp = default)
         {
             return new VirtualApplianceAdditionalNicProperties(name, hasPublicIp, default);
-        }
-
-        /// <summary> Internet Ingress Public Ip Properties. </summary>
-        /// <param name="id"> Resource Uri of Public Ip. </param>
-        /// <returns> A new <see cref="Models.InternetIngressPublicIpsProperties"/> instance for mocking. </returns>
-        public static InternetIngressPublicIpsProperties InternetIngressPublicIpsProperties(ResourceIdentifier id = default)
-        {
-            return new InternetIngressPublicIpsProperties(id, default);
         }
 
         /// <summary> Properties of the delegation. </summary>
@@ -10284,14 +10276,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="expressRouteConnections"> List of ExpressRoute connections to the ExpressRoute gateway. </param>
+        /// <param name="expressRouteConnectionList"> List of ExpressRoute connections to the ExpressRoute gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the express route gateway resource. </param>
         /// <param name="allowNonVirtualWanTraffic"> Configures this gateway to accept traffic from non Virtual WAN networks. </param>
         /// <param name="autoScaleBounds"> Minimum and maximum number of scale units to deploy. </param>
         /// <param name="virtualHubId"> The resource URI for the Virtual Hub where the ExpressRoute gateway is or will be deployed. The Virtual Hub resource and the ExpressRoute gateway resource reside in the same subscription. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.ExpressRouteGatewayData"/> instance for mocking. </returns>
-        public static ExpressRouteGatewayData ExpressRouteGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<ExpressRouteConnectionData> expressRouteConnections, NetworkProvisioningState? provisioningState, bool? allowNonVirtualWanTraffic, ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds autoScaleBounds, ResourceIdentifier virtualHubId, ETag? eTag)
+        public static ExpressRouteGatewayData ExpressRouteGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<ExpressRouteConnectionData> expressRouteConnectionList, NetworkProvisioningState? provisioningState, bool? allowNonVirtualWanTraffic, ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds autoScaleBounds, ResourceIdentifier virtualHubId, ETag? eTag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -10302,9 +10294,9 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                autoScaleBounds is null && expressRouteConnections is null && provisioningState is null && virtualHubId is null && allowNonVirtualWanTraffic is null ? default : new ExpressRouteGatewayProperties(
+                autoScaleBounds is null && expressRouteConnectionList is null && provisioningState is null && virtualHubId is null && allowNonVirtualWanTraffic is null ? default : new ExpressRouteGatewayProperties(
                     autoScaleBounds is null ? default : new ExpressRouteGatewayPropertiesAutoScaleConfiguration(autoScaleBounds, default),
-                    (expressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionData>()).ToList(),
+                    (expressRouteConnectionList ?? new ChangeTrackingList<ExpressRouteConnectionData>()).ToList(),
                     provisioningState,
                     new VirtualHubId(virtualHubId, default),
                     allowNonVirtualWanTraffic,
@@ -12866,6 +12858,14 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkUsageName(value, localizedValue, default);
         }
 
+        /// <summary> Internet Ingress Public Ip Properties. </summary>
+        /// <param name="id"> Resource Uri of Public Ip. </param>
+        /// <returns> A new <see cref="Models.InternetIngressPublicIpsProperties"/> instance for mocking. </returns>
+        public static InternetIngressPublicIpsProperties InternetIngressPublicIpsProperties(ResourceIdentifier id = default)
+        {
+            return new InternetIngressPublicIpsProperties(id, default);
+        }
+
         /// <summary> Application gateway resource. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -13900,10 +13900,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the nat gateway. </param>
-        /// <param name="publicIpAddresses"> An array of public ip addresses V4 associated with the nat gateway resource. </param>
-        /// <param name="publicIpAddressesV6"> An array of public ip addresses V6 associated with the nat gateway resource. </param>
-        /// <param name="publicIpPrefixes"> An array of public ip prefixes V4 associated with the nat gateway resource. </param>
-        /// <param name="publicIpPrefixesV6"> An array of public ip prefixes V6 associated with the nat gateway resource. </param>
+        /// <param name="publicIpAddresses"></param>
+        /// <param name="publicIpAddressesV6"></param>
+        /// <param name="publicIpPrefixes"></param>
+        /// <param name="publicIpPrefixesV6"></param>
         /// <param name="subnets"> An array of references to the subnets using this nat gateway resource. </param>
         /// <param name="nat64"> Whether Nat64 is enabled for the NAT gateway resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the NAT gateway resource. </param>
@@ -13924,12 +13924,12 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                idleTimeoutInMinutes is null && publicIpAddresses is null && publicIpAddressesV6 is null && publicIpPrefixes is null && publicIpPrefixesV6 is null && subnets is null && sourceVirtualNetworkId is null && serviceGatewayId is null && nat64 is null && resourceGuid is null && provisioningState is null ? default : new NatGatewayPropertiesFormat(
+                idleTimeoutInMinutes is null && subnets is null && sourceVirtualNetworkId is null && serviceGatewayId is null && nat64 is null && resourceGuid is null && provisioningState is null ? default : new NatGatewayPropertiesFormat(
                     idleTimeoutInMinutes,
-                    (publicIpAddresses ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
-                    (publicIpAddressesV6 ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
-                    (publicIpPrefixes ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
-                    (publicIpPrefixesV6 ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
+                    default,
+                    default,
+                    default,
+                    default,
                     (subnets ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     sourceVirtualNetworkId is null ? default : new NetworkSubResource(sourceVirtualNetworkId, default),
                     serviceGatewayId is null ? default : new NetworkSubResource(serviceGatewayId, default),
@@ -16600,7 +16600,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sshPublicKey"> Public key for SSH login. </param>
         /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
         /// <param name="additionalNics"> Details required for Additional Network Interface. This property is not compatible with the NVA deployed in VNets. </param>
-        /// <param name="internetIngressPublicIPs"> List of Resource Uri of Public IPs for Internet Ingress Scenario. </param>
+        /// <param name="internetIngressPublicIPs"></param>
         /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
         /// <param name="virtualApplianceConnections"> List of references to VirtualApplianceConnections. </param>
         /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
@@ -16628,7 +16628,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                nvaSku is null && addressPrefix is null && addressPrefixV6 is null && bootStrapConfigurationBlobs is null && virtualHubId is null && cloudInitConfigurationBlobs is null && cloudInitConfiguration is null && virtualApplianceAsn is null && sshPublicKey is null && virtualApplianceNics is null && networkInterfaceConfigurations is null && additionalNics is null && internetIngressPublicIPs is null && virtualApplianceSites is null && virtualApplianceConnections is null && inboundSecurityRules is null && provisioningState is null && deploymentType is null && delegation is null && partnerManagedResource is null && nvaInterfaceConfigurations is null && addressFamily is null && privateIPAddressV6 is null && migrationStatus is null ? default : new NetworkVirtualAppliancePropertiesFormat(
+                nvaSku is null && addressPrefix is null && addressPrefixV6 is null && bootStrapConfigurationBlobs is null && virtualHubId is null && cloudInitConfigurationBlobs is null && cloudInitConfiguration is null && virtualApplianceAsn is null && sshPublicKey is null && virtualApplianceNics is null && networkInterfaceConfigurations is null && additionalNics is null && virtualApplianceSites is null && virtualApplianceConnections is null && inboundSecurityRules is null && provisioningState is null && deploymentType is null && delegation is null && partnerManagedResource is null && nvaInterfaceConfigurations is null && addressFamily is null && privateIPAddressV6 is null && migrationStatus is null ? default : new NetworkVirtualAppliancePropertiesFormat(
                     nvaSku,
                     addressPrefix,
                     addressPrefixV6,
@@ -16641,7 +16641,7 @@ namespace Azure.ResourceManager.Network.Models
                     (virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>()).ToList(),
                     networkInterfaceConfigurations is null ? default : new NetworkVirtualAppliancePropertiesFormatNetworkProfile((networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualApplianceNetworkInterfaceConfiguration>()).ToList(), default),
                     (additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>()).ToList(),
-                    (internetIngressPublicIPs ?? new ChangeTrackingList<InternetIngressPublicIpsProperties>()).ToList(),
+                    default,
                     (virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
@@ -19492,7 +19492,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sshPublicKey"> Public key for SSH login. </param>
         /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
         /// <param name="additionalNics"> Details required for Additional Network Interface. This property is not compatible with the NVA deployed in VNets. </param>
-        /// <param name="internetIngressPublicIps"> List of Resource Uri of Public IPs for Internet Ingress Scenario. </param>
+        /// <param name="internetIngressPublicIps"></param>
         /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
         /// <param name="virtualApplianceConnections"> List of references to VirtualApplianceConnections. </param>
         /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
@@ -19517,7 +19517,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                nvaSku is null && addressPrefix is null && bootStrapConfigurationBlobs is null && virtualHubId is null && cloudInitConfigurationBlobs is null && cloudInitConfiguration is null && virtualApplianceAsn is null && sshPublicKey is null && virtualApplianceNics is null && networkInterfaceConfigurations is null && additionalNics is null && internetIngressPublicIps is null && virtualApplianceSites is null && virtualApplianceConnections is null && inboundSecurityRules is null && provisioningState is null && deploymentType is null && delegation is null && partnerManagedResource is null && nvaInterfaceConfigurations is null ? default : new NetworkVirtualAppliancePropertiesFormat(
+                nvaSku is null && addressPrefix is null && bootStrapConfigurationBlobs is null && virtualHubId is null && cloudInitConfigurationBlobs is null && cloudInitConfiguration is null && virtualApplianceAsn is null && sshPublicKey is null && virtualApplianceNics is null && networkInterfaceConfigurations is null && additionalNics is null && virtualApplianceSites is null && virtualApplianceConnections is null && inboundSecurityRules is null && provisioningState is null && deploymentType is null && delegation is null && partnerManagedResource is null && nvaInterfaceConfigurations is null ? default : new NetworkVirtualAppliancePropertiesFormat(
                     nvaSku,
                     addressPrefix,
                     default,
@@ -19530,7 +19530,7 @@ namespace Azure.ResourceManager.Network.Models
                     (virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>()).ToList(),
                     networkInterfaceConfigurations is null ? default : new NetworkVirtualAppliancePropertiesFormatNetworkProfile((networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualApplianceNetworkInterfaceConfiguration>()).ToList(), default),
                     (additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>()).ToList(),
-                    (internetIngressPublicIps ?? new ChangeTrackingList<InternetIngressPublicIpsProperties>()).ToList(),
+                    default,
                     (virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
@@ -21584,10 +21584,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="zones"> A list of availability zones denoting the zone in which Nat Gateway should be deployed. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the nat gateway. </param>
-        /// <param name="publicIPAddresses"></param>
-        /// <param name="publicIPAddressesV6"></param>
-        /// <param name="publicIPPrefixes"></param>
-        /// <param name="publicIPPrefixesV6"></param>
+        /// <param name="publicIPAddresses"> An array of public ip addresses V4 associated with the nat gateway resource. </param>
+        /// <param name="publicIPAddressesV6"> An array of public ip addresses V6 associated with the nat gateway resource. </param>
+        /// <param name="publicIPPrefixes"> An array of public ip prefixes V4 associated with the nat gateway resource. </param>
+        /// <param name="publicIPPrefixesV6"> An array of public ip prefixes V6 associated with the nat gateway resource. </param>
         /// <param name="subnets"> An array of references to the subnets using this nat gateway resource. </param>
         /// <param name="sourceVirtualNetworkId"> Resource ID. </param>
         /// <param name="serviceGatewayId"> Resource ID. </param>
@@ -21604,12 +21604,12 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                idleTimeoutInMinutes is null && subnets is null && sourceVirtualNetworkId is null && serviceGatewayId is null && resourceGuid is null && provisioningState is null ? default : new NatGatewayPropertiesFormat(
+                idleTimeoutInMinutes is null && publicIPAddresses is null && publicIPAddressesV6 is null && publicIPPrefixes is null && publicIPPrefixesV6 is null && subnets is null && sourceVirtualNetworkId is null && serviceGatewayId is null && resourceGuid is null && provisioningState is null ? default : new NatGatewayPropertiesFormat(
                     idleTimeoutInMinutes,
-                    default,
-                    default,
-                    default,
-                    default,
+                    (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (publicIPAddressesV6 ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (publicIPPrefixesV6 ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (subnets ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     sourceVirtualNetworkId is null ? default : new NetworkSubResource(sourceVirtualNetworkId, default),
                     serviceGatewayId is null ? default : new NetworkSubResource(serviceGatewayId, default),
@@ -23968,7 +23968,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
         /// <param name="networkInterfaceConfigurations"></param>
         /// <param name="additionalNics"> Details required for Additional Network Interface. This property is not compatible with the NVA deployed in VNets. </param>
-        /// <param name="internetIngressPublicIPs"></param>
+        /// <param name="internetIngressPublicIPs"> List of Resource Uri of Public IPs for Internet Ingress Scenario. </param>
         /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
         /// <param name="virtualApplianceConnections"> List of references to VirtualApplianceConnections. </param>
         /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
@@ -23989,7 +23989,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                nvaSku is null && addressPrefix is null && bootStrapConfigurationBlobs is null && virtualHubId is null && cloudInitConfigurationBlobs is null && cloudInitConfiguration is null && virtualApplianceAsn is null && sshPublicKey is null && virtualApplianceNics is null && networkInterfaceConfigurations is null && additionalNics is null && virtualApplianceSites is null && virtualApplianceConnections is null && inboundSecurityRules is null && provisioningState is null && deploymentType is null && delegation is null && partnerManagedResource is null && nvaInterfaceConfigurations is null && privateIPAddress is null ? default : new NetworkVirtualAppliancePropertiesFormat(
+                nvaSku is null && addressPrefix is null && bootStrapConfigurationBlobs is null && virtualHubId is null && cloudInitConfigurationBlobs is null && cloudInitConfiguration is null && virtualApplianceAsn is null && sshPublicKey is null && virtualApplianceNics is null && networkInterfaceConfigurations is null && additionalNics is null && internetIngressPublicIPs is null && virtualApplianceSites is null && virtualApplianceConnections is null && inboundSecurityRules is null && provisioningState is null && deploymentType is null && delegation is null && partnerManagedResource is null && nvaInterfaceConfigurations is null && privateIPAddress is null ? default : new NetworkVirtualAppliancePropertiesFormat(
                     nvaSku,
                     addressPrefix,
                     default,
@@ -24002,7 +24002,7 @@ namespace Azure.ResourceManager.Network.Models
                     (virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>()).ToList(),
                     networkInterfaceConfigurations is null ? default : new NetworkVirtualAppliancePropertiesFormatNetworkProfile((networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualApplianceNetworkInterfaceConfiguration>()).ToList(), default),
                     (additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>()).ToList(),
-                    default,
+                    (internetIngressPublicIPs ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
@@ -25524,7 +25524,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="autoScaleBounds"> Minimum and maximum number of scale units to deploy. </param>
-        /// <param name="expressRouteConnectionList"></param>
+        /// <param name="expressRouteConnectionList"> List of ExpressRoute connections to the ExpressRoute gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the express route gateway resource. </param>
         /// <param name="virtualHubId"> The resource URI for the Virtual Hub where the ExpressRoute gateway is or will be deployed. The Virtual Hub resource and the ExpressRoute gateway resource reside in the same subscription. </param>
         /// <param name="allowNonVirtualWanTraffic"> Configures this gateway to accept traffic from non Virtual WAN networks. </param>
@@ -25539,9 +25539,9 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                autoScaleBounds is null && provisioningState is null && virtualHubId is null && allowNonVirtualWanTraffic is null ? default : new ExpressRouteGatewayProperties(
+                autoScaleBounds is null && expressRouteConnectionList is null && provisioningState is null && virtualHubId is null && allowNonVirtualWanTraffic is null ? default : new ExpressRouteGatewayProperties(
                     autoScaleBounds is null ? default : new ExpressRouteGatewayPropertiesAutoScaleConfiguration(autoScaleBounds, default),
-                    default,
+                    (expressRouteConnectionList ?? new ChangeTrackingList<ExpressRouteConnectionData>()).ToList(),
                     provisioningState,
                     new VirtualHubId(virtualHubId, default),
                     allowNonVirtualWanTraffic,
@@ -25809,10 +25809,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="zones"> A list of availability zones denoting the zone in which Nat Gateway should be deployed. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the nat gateway. </param>
-        /// <param name="publicIPAddresses"></param>
-        /// <param name="publicIPAddressesV6"></param>
-        /// <param name="publicIPPrefixes"></param>
-        /// <param name="publicIPPrefixesV6"></param>
+        /// <param name="publicIPAddresses"> An array of public ip addresses V4 associated with the nat gateway resource. </param>
+        /// <param name="publicIPAddressesV6"> An array of public ip addresses V6 associated with the nat gateway resource. </param>
+        /// <param name="publicIPPrefixes"> An array of public ip prefixes V4 associated with the nat gateway resource. </param>
+        /// <param name="publicIPPrefixesV6"> An array of public ip prefixes V6 associated with the nat gateway resource. </param>
         /// <param name="subnets"> An array of references to the subnets using this nat gateway resource. </param>
         /// <param name="sourceVirtualNetworkId"> Resource ID. </param>
         /// <param name="resourceGuid"> The resource GUID property of the NAT gateway resource. </param>
@@ -25828,12 +25828,12 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                idleTimeoutInMinutes is null && subnets is null && sourceVirtualNetworkId is null && resourceGuid is null && provisioningState is null ? default : new NatGatewayPropertiesFormat(
+                idleTimeoutInMinutes is null && publicIPAddresses is null && publicIPAddressesV6 is null && publicIPPrefixes is null && publicIPPrefixesV6 is null && subnets is null && sourceVirtualNetworkId is null && resourceGuid is null && provisioningState is null ? default : new NatGatewayPropertiesFormat(
                     idleTimeoutInMinutes,
-                    default,
-                    default,
-                    default,
-                    default,
+                    (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (publicIPAddressesV6 ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (publicIPPrefixesV6 ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (subnets ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     sourceVirtualNetworkId is null ? default : new NetworkSubResource(sourceVirtualNetworkId, default),
                     default,
@@ -26522,7 +26522,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
         /// <param name="networkInterfaceConfigurations"></param>
         /// <param name="additionalNics"> Details required for Additional Network Interface. This property is not compatible with the NVA deployed in VNets. </param>
-        /// <param name="internetIngressPublicIPs"></param>
+        /// <param name="internetIngressPublicIPs"> List of Resource Uri of Public IPs for Internet Ingress Scenario. </param>
         /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
         /// <param name="virtualApplianceConnections"> List of references to VirtualApplianceConnections. </param>
         /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
@@ -26541,7 +26541,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                nvaSku is null && addressPrefix is null && bootStrapConfigurationBlobs is null && virtualHubId is null && cloudInitConfigurationBlobs is null && cloudInitConfiguration is null && virtualApplianceAsn is null && sshPublicKey is null && virtualApplianceNics is null && networkInterfaceConfigurations is null && additionalNics is null && virtualApplianceSites is null && virtualApplianceConnections is null && inboundSecurityRules is null && provisioningState is null && deploymentType is null && delegation is null && partnerManagedResource is null ? default : new NetworkVirtualAppliancePropertiesFormat(
+                nvaSku is null && addressPrefix is null && bootStrapConfigurationBlobs is null && virtualHubId is null && cloudInitConfigurationBlobs is null && cloudInitConfiguration is null && virtualApplianceAsn is null && sshPublicKey is null && virtualApplianceNics is null && networkInterfaceConfigurations is null && additionalNics is null && internetIngressPublicIPs is null && virtualApplianceSites is null && virtualApplianceConnections is null && inboundSecurityRules is null && provisioningState is null && deploymentType is null && delegation is null && partnerManagedResource is null ? default : new NetworkVirtualAppliancePropertiesFormat(
                     nvaSku,
                     addressPrefix,
                     default,
@@ -26554,7 +26554,7 @@ namespace Azure.ResourceManager.Network.Models
                     (virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>()).ToList(),
                     networkInterfaceConfigurations is null ? default : new NetworkVirtualAppliancePropertiesFormatNetworkProfile((networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualApplianceNetworkInterfaceConfiguration>()).ToList(), default),
                     (additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>()).ToList(),
-                    default,
+                    (internetIngressPublicIPs ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
@@ -26963,8 +26963,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="zones"> A list of availability zones denoting the zone in which Nat Gateway should be deployed. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the nat gateway. </param>
-        /// <param name="publicIPAddresses"></param>
-        /// <param name="publicIPPrefixes"></param>
+        /// <param name="publicIPAddresses"> An array of public ip addresses V4 associated with the nat gateway resource. </param>
+        /// <param name="publicIPPrefixes"> An array of public ip prefixes V4 associated with the nat gateway resource. </param>
         /// <param name="subnets"> An array of references to the subnets using this nat gateway resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the NAT gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT gateway resource. </param>
@@ -26979,11 +26979,11 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                idleTimeoutInMinutes is null && subnets is null && resourceGuid is null && provisioningState is null ? default : new NatGatewayPropertiesFormat(
+                idleTimeoutInMinutes is null && publicIPAddresses is null && publicIPPrefixes is null && subnets is null && resourceGuid is null && provisioningState is null ? default : new NatGatewayPropertiesFormat(
                     idleTimeoutInMinutes,
+                    (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     default,
-                    default,
-                    default,
+                    (publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     default,
                     (subnets ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     default,
@@ -28165,7 +28165,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sshPublicKey"> Public key for SSH login. </param>
         /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
         /// <param name="additionalNics"> Details required for Additional Network Interface. This property is not compatible with the NVA deployed in VNets. </param>
-        /// <param name="internetIngressPublicIPs"></param>
+        /// <param name="internetIngressPublicIPs"> List of Resource Uri of Public IPs for Internet Ingress Scenario. </param>
         /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
         /// <param name="virtualApplianceConnections"> List of references to VirtualApplianceConnections. </param>
         /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
@@ -28184,7 +28184,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                nvaSku is null && addressPrefix is null && bootStrapConfigurationBlobs is null && virtualHubId is null && cloudInitConfigurationBlobs is null && cloudInitConfiguration is null && virtualApplianceAsn is null && sshPublicKey is null && virtualApplianceNics is null && additionalNics is null && virtualApplianceSites is null && virtualApplianceConnections is null && inboundSecurityRules is null && provisioningState is null && deploymentType is null && delegation is null && partnerManagedResource is null ? default : new NetworkVirtualAppliancePropertiesFormat(
+                nvaSku is null && addressPrefix is null && bootStrapConfigurationBlobs is null && virtualHubId is null && cloudInitConfigurationBlobs is null && cloudInitConfiguration is null && virtualApplianceAsn is null && sshPublicKey is null && virtualApplianceNics is null && additionalNics is null && internetIngressPublicIPs is null && virtualApplianceSites is null && virtualApplianceConnections is null && inboundSecurityRules is null && provisioningState is null && deploymentType is null && delegation is null && partnerManagedResource is null ? default : new NetworkVirtualAppliancePropertiesFormat(
                     nvaSku,
                     addressPrefix,
                     default,
@@ -28197,7 +28197,7 @@ namespace Azure.ResourceManager.Network.Models
                     (virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>()).ToList(),
                     default,
                     (additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>()).ToList(),
-                    default,
+                    (internetIngressPublicIPs ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),

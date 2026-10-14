@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -197,6 +198,20 @@ namespace Azure.ResourceManager.Network
                     Properties = new NetworkVirtualAppliancePropertiesFormat();
                 }
                 return Properties.AdditionalNics;
+            }
+        }
+
+        /// <summary> List of Resource Uri of Public IPs for Internet Ingress Scenario. </summary>
+        [WirePath("properties.internetIngressPublicIps")]
+        public IList<WritableSubResource> InternetIngressPublicIPs
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualAppliancePropertiesFormat();
+                }
+                return Properties.InternetIngressPublicIPs;
             }
         }
 

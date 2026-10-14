@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.Network.Models
         public ExpressRouteGatewayProperties()
         {
 
-            ExpressRouteConnections = new ChangeTrackingList<ExpressRouteConnectionData>();
+            ExpressRouteConnectionList = new ChangeTrackingList<ExpressRouteConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayProperties"/>. </summary>
         /// <param name="autoScaleConfiguration"> Configuration for auto scaling. </param>
-        /// <param name="expressRouteConnections"> List of ExpressRoute connections to the ExpressRoute gateway. </param>
+        /// <param name="expressRouteConnectionList"> List of ExpressRoute connections to the ExpressRoute gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the express route gateway resource. </param>
         /// <param name="virtualHub"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
         /// <param name="allowNonVirtualWanTraffic"> Configures this gateway to accept traffic from non Virtual WAN networks. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteGatewayProperties(ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IList<ExpressRouteConnectionData> expressRouteConnections, NetworkProvisioningState? provisioningState, VirtualHubId virtualHub, bool? allowNonVirtualWanTraffic, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteGatewayProperties(ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IList<ExpressRouteConnectionData> expressRouteConnectionList, NetworkProvisioningState? provisioningState, VirtualHubId virtualHub, bool? allowNonVirtualWanTraffic, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoScaleConfiguration = autoScaleConfiguration;
-            ExpressRouteConnections = expressRouteConnections;
+            ExpressRouteConnectionList = expressRouteConnectionList;
             ProvisioningState = provisioningState;
             VirtualHub = virtualHub;
             AllowNonVirtualWanTraffic = allowNonVirtualWanTraffic;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of ExpressRoute connections to the ExpressRoute gateway. </summary>
         [WirePath("expressRouteConnections")]
-        public IList<ExpressRouteConnectionData> ExpressRouteConnections { get; } = new ChangeTrackingList<ExpressRouteConnectionData>();
+        public IList<ExpressRouteConnectionData> ExpressRouteConnectionList { get; } = new ChangeTrackingList<ExpressRouteConnectionData>();
 
         /// <summary> The provisioning state of the express route gateway resource. </summary>
         [WirePath("provisioningState")]

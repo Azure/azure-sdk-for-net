@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -72,6 +73,62 @@ namespace Azure.ResourceManager.Network
                     Properties = new NatGatewayPropertiesFormat();
                 }
                 Properties.IdleTimeoutInMinutes = value;
+            }
+        }
+
+        /// <summary> An array of public ip addresses V4 associated with the nat gateway resource. </summary>
+        [WirePath("properties.publicIpAddresses")]
+        public IList<WritableSubResource> PublicIPAddresses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NatGatewayPropertiesFormat();
+                }
+                return Properties.PublicIPAddresses;
+            }
+        }
+
+        /// <summary> An array of public ip addresses V6 associated with the nat gateway resource. </summary>
+        [WirePath("properties.publicIpAddressesV6")]
+        public IList<WritableSubResource> PublicIPAddressesV6
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NatGatewayPropertiesFormat();
+                }
+                return Properties.PublicIPAddressesV6;
+            }
+        }
+
+        /// <summary> An array of public ip prefixes V4 associated with the nat gateway resource. </summary>
+        [WirePath("properties.publicIpPrefixes")]
+        public IList<WritableSubResource> PublicIPPrefixes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NatGatewayPropertiesFormat();
+                }
+                return Properties.PublicIPPrefixes;
+            }
+        }
+
+        /// <summary> An array of public ip prefixes V6 associated with the nat gateway resource. </summary>
+        [WirePath("properties.publicIpPrefixesV6")]
+        public IList<WritableSubResource> PublicIPPrefixesV6
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NatGatewayPropertiesFormat();
+                }
+                return Properties.PublicIPPrefixesV6;
             }
         }
 
