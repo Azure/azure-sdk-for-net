@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningModelVersionProperties : MachineLearningAssetBase
     {
         private string _jobName;
-        internal bool _jobNameIsDefined;
+        private bool _jobNameIsDefined;
         private string _modelType;
-        internal bool _modelTypeIsDefined;
+        private bool _modelTypeIsDefined;
         private string _stage;
-        internal bool _stageIsDefined;
+        private bool _stageIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningModelVersionProperties"/>. </summary>
         public MachineLearningModelVersionProperties()

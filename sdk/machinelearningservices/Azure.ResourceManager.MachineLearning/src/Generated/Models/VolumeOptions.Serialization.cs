@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(VolumeOptions)} does not support writing '{format}' format.");
             }
-            if (_nocopyIsDefined || Optional.IsDefined(Nocopy))
+            if (Optional.IsDefined(Nocopy, _nocopyIsDefined))
             {
                 if (Nocopy != null)
                 {

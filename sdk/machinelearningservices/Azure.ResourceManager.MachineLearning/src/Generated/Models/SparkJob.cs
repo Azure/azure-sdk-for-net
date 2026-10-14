@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class SparkJob : MachineLearningJobProperties
     {
         private string _args;
-        internal bool _argsIsDefined;
+        private bool _argsIsDefined;
         private ResourceIdentifier _environmentId;
-        internal bool _environmentIdIsDefined;
+        private bool _environmentIdIsDefined;
         private QueueSettings _queueSettings;
-        internal bool _queueSettingsIsDefined;
+        private bool _queueSettingsIsDefined;
         private SparkResourceConfiguration _resources;
-        internal bool _resourcesIsDefined;
+        private bool _resourcesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SparkJob"/>. </summary>
         /// <param name="codeId"> [Required] arm-id of the code asset. </param>

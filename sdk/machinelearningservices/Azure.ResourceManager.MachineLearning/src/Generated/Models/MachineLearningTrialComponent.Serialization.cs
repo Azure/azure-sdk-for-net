@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
-            if (_distributionIsDefined || Optional.IsDefined(Distribution))
+            if (Optional.IsDefined(Distribution, _distributionIsDefined))
             {
                 if (Distribution != null)
                 {

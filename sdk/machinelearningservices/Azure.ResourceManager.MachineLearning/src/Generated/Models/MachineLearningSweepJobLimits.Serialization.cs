@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningSweepJobLimits)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_maxConcurrentTrialsIsDefined || Optional.IsDefined(MaxConcurrentTrials))
+            if (Optional.IsDefined(MaxConcurrentTrials, _maxConcurrentTrialsIsDefined))
             {
                 if (MaxConcurrentTrials != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxConcurrentTrials"u8);
                 }
             }
-            if (_maxTotalTrialsIsDefined || Optional.IsDefined(MaxTotalTrials))
+            if (Optional.IsDefined(MaxTotalTrials, _maxTotalTrialsIsDefined))
             {
                 if (MaxTotalTrials != null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxTotalTrials"u8);
                 }
             }
-            if (_trialTimeoutIsDefined || Optional.IsDefined(TrialTimeout))
+            if (Optional.IsDefined(TrialTimeout, _trialTimeoutIsDefined))
             {
                 if (TrialTimeout != null)
                 {

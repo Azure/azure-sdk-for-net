@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("scoringRoute"u8);
                 writer.WriteObjectValue(ScoringRoute, options);
             }
-            if (_startupRouteIsDefined || Optional.IsDefined(StartupRoute))
+            if (Optional.IsDefined(StartupRoute, _startupRouteIsDefined))
             {
                 if (StartupRoute != null)
                 {

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MpiDistributionConfiguration)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_processCountPerInstanceIsDefined || Optional.IsDefined(ProcessCountPerInstance))
+            if (Optional.IsDefined(ProcessCountPerInstance, _processCountPerInstanceIsDefined))
             {
                 if (ProcessCountPerInstance != null)
                 {

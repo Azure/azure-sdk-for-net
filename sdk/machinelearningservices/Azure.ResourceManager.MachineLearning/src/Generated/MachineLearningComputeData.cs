@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private MachineLearningSku _sku;
-        internal bool _skuIsDefined;
+        private bool _skuIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
