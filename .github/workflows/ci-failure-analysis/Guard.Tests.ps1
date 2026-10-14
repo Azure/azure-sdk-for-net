@@ -79,7 +79,7 @@ Describe 'CI failure analysis original behavior' -Tag 'Original' {
         Write-TestJson $Fixture.AgentOutputPath (New-CiAgentOutput)
         Invoke-CiWorkflowStep 'ci-failure-analysis.lock.yml' 'Revalidate CI identity before publishing' $Fixture $prepared
         $output = ConvertFrom-CiJson ([IO.File]::ReadAllText($Fixture.AgentOutputPath))
-        $output.items[0].body | Should -Match '<!-- ci-failure-analysis:'
+        $output.items[0].body | Should -Match '<sub>ci-failure-analysis:'
     }
 
     It '[G09] the actual compiled startup script blocks failed-job reruns before the agent' {
@@ -259,7 +259,7 @@ Describe 'CI failure analysis original behavior' -Tag 'Original' {
         $prepared = New-CiPrepared $Fixture
         $result = Protect-CiAnalysisOutput -Context $Fixture.Context -Prepared $prepared -AgentOutput (New-CiAgentOutput)
         $result.disposition | Should -BeExactly 'publish'
-        $result.agentOutput.items[0].body | Should -Match '<!-- ci-failure-analysis:'
+        $result.agentOutput.items[0].body | Should -Match '<sub>ci-failure-analysis:'
         $result.agentOutput.items[0].body | Should -Match ('a' * 40)
         $result.agentOutput.items[0].body | Should -Match '2026-09-10T18:00:00Z'
         $result.agentOutput.items[0].body.StartsWith('## 🔍 CI Failure Analysis for PR #42', [StringComparison]::Ordinal) | Should -BeTrue

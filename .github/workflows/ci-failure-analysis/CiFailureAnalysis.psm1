@@ -210,6 +210,13 @@ function Get-CiKey {
     return "ci-failure-analysis:$($Context.payload.repository.id):${PrNumber}:$($check.head_sha):$($check.id):$($check.completed_at)"
 }
 
+function Get-CiCompletionMarker {
+    param($Context, $PrNumber)
+
+    # <sub> survives the add_comment safe-output sanitizer; an HTML comment is always stripped by it.
+    return "<sub>$(Get-CiKey $Context $PrNumber)</sub>"
+}
+
 function Get-CiWorkflowAttempt {
     param($Context)
 
@@ -250,7 +257,7 @@ function Test-CiCurrentPr {
 function Test-CiReportExists {
     param($Context, $PrNumber)
 
-    $marker = "<!-- $(Get-CiKey $Context $PrNumber) -->"
+    $marker = Get-CiCompletionMarker $Context $PrNumber
     $header = "## 🔍 CI Failure Analysis for PR #$PrNumber`n"
     $comments = Get-CiCollection -Context $Context -Path "$(Get-CiRepoPath $Context)/issues/$PrNumber/comments?per_page=100"
     foreach ($comment in $comments) {
@@ -448,7 +455,7 @@ function Protect-CiAnalysisOutput {
         !$comments[0].body.StartsWith($header, [StringComparison]::Ordinal)) {
         throw 'Expected exactly one CI failure analysis comment for the target PR.'
     }
-    $marker = "<!-- $(Get-CiKey $Context $Prepared.prNumber) -->"
+    $marker = Get-CiCompletionMarker $Context $Prepared.prNumber
     $copy['items'] = @(
         foreach ($item in $AgentOutput.items) {
             if ($item.type -ceq 'add_comment') {

@@ -45,7 +45,7 @@ Describe 'PowerShell runtime boundaries' -Tag 'Boundary' {
         Write-TestJson $Fixture.AgentOutputPath (New-CiAgentOutput)
         & $Entry -Action GuardOutput
         $json = ConvertFrom-CiJson ([IO.File]::ReadAllText($Fixture.AgentOutputPath))
-        $json.items[0].body.EndsWith(":$Timestamp -->", [StringComparison]::Ordinal) | Should -BeTrue
+        $json.items[0].body.EndsWith(":$Timestamp</sub>", [StringComparison]::Ordinal) | Should -BeTrue
     }
 
     It 'does not normalize timestamps while resolving and revalidating fallback PRs' {
@@ -98,7 +98,7 @@ Describe 'PowerShell runtime boundaries' -Tag 'Boundary' {
         $actual.items.Count | Should -Be 4
         ConvertTo-CiJson $actual.metadata | Should -BeExactly (ConvertTo-CiJson $output.metadata)
         ConvertTo-CiJson $actual.items[1..3] | Should -BeExactly (ConvertTo-CiJson $output.items[1..3])
-        $actual.items[0].body | Should -BeExactly ($output.items[0].body + "`n`n<!-- ci-failure-analysis:789:42:$('a' * 40):123:2026-09-10T18:00:00Z -->")
+        $actual.items[0].body | Should -BeExactly ($output.items[0].body + "`n`n<sub>ci-failure-analysis:789:42:$('a' * 40):123:2026-09-10T18:00:00Z</sub>")
         ConvertTo-CiJson $output | Should -BeExactly $original
     }
 
@@ -183,7 +183,7 @@ Describe 'PowerShell runtime boundaries' -Tag 'Boundary' {
         @{ Label = 'header not at the beginning'; Change = { param($c) $c.body = 'Intro' + $c.body } }
         @{ Label = 'a different PR header'; Change = { param($c) $c.body = $c.body.Replace('PR #42', 'PR #43') } }
         @{ Label = 'a different completion marker'; Change = { param($c) $c.body = $c.body.Replace('18:00:00Z', '19:00:00Z') } }
-        @{ Label = 'a missing completion marker'; Change = { param($c) $c.body = ($c.body -split '<!--')[0] } }
+        @{ Label = 'a missing completion marker'; Change = { param($c) $c.body = ($c.body -split '<sub>')[0] } }
     ) {
         $prepared = New-CiPrepared $Fixture
         Add-CiPublishedReport $Fixture $prepared
@@ -285,6 +285,16 @@ Describe 'PowerShell runtime boundaries' -Tag 'Boundary' {
         { Complete-CiFailureAnalysis -Context $Fixture.Context -Prepared $prepared -JobResults @{ analyze = 'success' } } |
             Should -Throw '*expected report*'
         $Fixture.State.claims[0].conclusion | Should -BeExactly 'failure'
+    }
+
+    It 'recognizes a published report after safe-output sanitization strips HTML comments from its body' {
+        $prepared = New-CiPrepared $Fixture
+        Add-CiPublishedReport $Fixture $prepared
+        # Mirrors gh-aw's add_comment safe-output sanitizer, which unconditionally strips every
+        # <!-- ... --> span from a comment body before it reaches the GitHub API.
+        $Fixture.State.comments[0].body = $Fixture.State.comments[0].body -replace '<!--.*?-->', ''
+        Complete-CiFailureAnalysis -Context $Fixture.Context -Prepared $prepared -JobResults @{ analyze = 'success' }
+        $Fixture.State.claims[0].conclusion | Should -BeExactly 'success'
     }
 
     It 'executes the actual finalizer run block successfully only after report verification' {
