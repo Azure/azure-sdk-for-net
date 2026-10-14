@@ -386,8 +386,8 @@ namespace Azure.Search.Documents.Tests
         }
 
         private static Dictionary<string, string> GetQuery(MockTransport transport, int requestIndex = 0) =>
-            transport.Requests[requestIndex].Uri.ToUri().Query.TrimStart('?').Split('&', StringSplitOptions.RemoveEmptyEntries)
-                .Select(part => part.Split('=', 2))
+            transport.Requests[requestIndex].Uri.ToUri().Query.TrimStart('?').Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(part => part.Split(new[] { '=' }, 2))
                 .ToDictionary(part => Uri.UnescapeDataString(part[0]), part => Uri.UnescapeDataString(part[1]));
 
         private static string ResourcePath(string resource) => resource switch

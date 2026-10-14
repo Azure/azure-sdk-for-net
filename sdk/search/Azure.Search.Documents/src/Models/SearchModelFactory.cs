@@ -633,7 +633,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         public static QueryAnswerResult QueryAnswerResult(double? score = null, string key = null, string text = null, string highlights = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
-            return new QueryAnswerResult(score, key, text, highlights, (IDictionary<string, object>)additionalProperties);
+            return new QueryAnswerResult(score, key, text, highlights, additionalProperties?.ToDictionary(property => property.Key, property => property.Value));
         }
 
         /// <summary> Initializes a new instance of FacetResult. </summary>

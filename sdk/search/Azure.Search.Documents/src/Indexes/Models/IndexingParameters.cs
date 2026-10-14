@@ -14,12 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexingParameters
     {
         private IndexingParametersConfiguration _indexingParametersConfiguration;
+        private ConfigurationAdapter _configuration;
 
         /// <summary> Initializes a new instance of IndexingParameters. </summary>
-        public IndexingParameters()
-        {
-            Configuration = new ConfigurationAdapter(this);
-        }
+        public IndexingParameters() { }
 
         /// <summary>
         /// A dictionary of indexer-specific configuration properties.
@@ -28,7 +26,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Use <see cref="IndexingParametersConfiguration"/> instead to set well-known properties intuitively.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IDictionary<string, object> Configuration { get; }
+        public IDictionary<string, object> Configuration =>
+            LazyInitializer.EnsureInitialized(ref _configuration, () => new ConfigurationAdapter(this));
 
         /// <summary>
         /// Indexer-specific configuration properties.

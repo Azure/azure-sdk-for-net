@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
@@ -57,6 +59,24 @@ namespace Azure.Search.Documents.Tests
             Assert.Throws<ArgumentNullException>(() => service.GetSearchClient(null));
             Assert.Throws<ArgumentException>(() => service.GetSearchClient(string.Empty));
         }
+
+#pragma warning disable SCME0002
+        [Test]
+        public void SettingsConstructorUsesCustomSerializer()
+        {
+            JsonObjectSerializer serializer = new JsonObjectSerializer(new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            });
+            SearchIndexClient client = new SearchIndexClient(new SearchIndexClientSettings
+            {
+                Endpoint = new Uri("https://fake-search.search.windows.net"),
+                Options = new SearchClientOptions { Serializer = serializer },
+            });
+
+            Assert.AreSame(serializer, client.GetSearchClient("test-index").Serializer);
+        }
+#pragma warning restore SCME0002
 
         private class TestPipelinePolicy : HttpPipelineSynchronousPolicy
         {

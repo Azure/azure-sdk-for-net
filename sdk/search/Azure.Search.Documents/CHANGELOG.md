@@ -13,6 +13,10 @@
 ### Bugs Fixed
 
 - Resource listing methods now honor `AsPages(pageSizeHint)` on initial and continuation requests while preserving the service-provided cursor.
+- Fixed indexing configuration round trips, including `RefreshAllAcls`, markdown settings, custom dictionary entries, and the legacy `IndexingParameters.Configuration` adapter on deserialized models.
+- Fixed semantic and vector search options being lost during deserialization and continuation-token round trips.
+- Fixed query-answer thresholds using culture-dependent formatting and parsing, and value facets failing to convert compatible numeric types.
+- Fixed settings-based clients ignoring custom document serializers and the `QueryAnswerResult` model factory rejecting read-only-only dictionaries.
 
 ### Breaking Changes
 

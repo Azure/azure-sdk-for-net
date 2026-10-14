@@ -187,6 +187,7 @@ namespace Azure.Search.Documents.Indexes
             options ??= new SearchClientOptions();
 
             _endpoint = endpoint;
+            _serializer = options.Serializer;
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             _apiVersion = options.Version.ToVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);

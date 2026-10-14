@@ -81,7 +81,6 @@ namespace Azure.Search.Documents
         public double? MinimumCoverage { get; set; }
 
         /// <summary> The key of the document to use as the basis for finding similar documents. This parameter cannot be used together with search text. </summary>
-        [CodeGenMember("MoreLikeThis")]
         public string MoreLikeThis { get; set; }
 
         /// <summary> A value that specifies the syntax of the search query. The default is 'simple'. Use 'full' if your query uses the Lucene query syntax. </summary>
@@ -214,6 +213,10 @@ namespace Azure.Search.Documents
             get { return SemanticSearch?.SemanticConfigurationName; }
             set
             {
+                if (value != null)
+                {
+                    SemanticSearch ??= new SemanticSearchOptions();
+                }
                 if (SemanticSearch != null)
                 {
                     SemanticSearch.SemanticConfigurationName = value;
@@ -258,6 +261,10 @@ namespace Azure.Search.Documents
             get { return SemanticSearch?.SemanticQuery; }
             set
             {
+                if (value != null)
+                {
+                    SemanticSearch ??= new SemanticSearchOptions();
+                }
                 if (SemanticSearch != null)
                 {
                     SemanticSearch.SemanticQuery = value;
@@ -272,6 +279,10 @@ namespace Azure.Search.Documents
             get { return SemanticSearch?.ErrorMode; }
             set
             {
+                if (value != null)
+                {
+                    SemanticSearch ??= new SemanticSearchOptions();
+                }
                 if (SemanticSearch != null)
                 {
                     SemanticSearch.ErrorMode = value;
@@ -288,6 +299,10 @@ namespace Azure.Search.Documents
             }
             set
             {
+                if (value != null)
+                {
+                    SemanticSearch ??= new SemanticSearchOptions();
+                }
                 if (SemanticSearch != null)
                 {
                     SemanticSearch.MaxWait = value.HasValue ? TimeSpan.FromMilliseconds(value.Value) : null;
@@ -301,6 +316,10 @@ namespace Azure.Search.Documents
             get { return VectorSearch?.Queries != null ? VectorSearch.Queries : new ChangeTrackingList<VectorQuery>(); }
             set
             {
+                if (value != null && value.Count > 0)
+                {
+                    VectorSearch ??= new VectorSearchOptions();
+                }
                 if (VectorSearch != null)
                 {
                     VectorSearch.Queries = value;
@@ -315,6 +334,10 @@ namespace Azure.Search.Documents
             get { return VectorSearch?.FilterMode; }
             set
             {
+                if (value != null)
+                {
+                    VectorSearch ??= new VectorSearchOptions();
+                }
                 if (VectorSearch != null)
                 {
                     VectorSearch.FilterMode = value;

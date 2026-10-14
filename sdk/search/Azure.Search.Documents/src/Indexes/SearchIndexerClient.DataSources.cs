@@ -36,55 +36,16 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // CancellationToken is intentionally required to preserve the existing overload.
-        public virtual Response<SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(
-#pragma warning restore AZC0002
-            SearchIndexerDataSourceConnection dataSourceConnection,
-            bool onlyIfUnchanged,
-            CancellationToken cancellationToken) => CreateOrUpdateDataSourceConnection(
-                dataSourceConnection,
-                onlyIfUnchanged,
-                ignoreCacheResetRequirements: null,
-                cancellationToken);
-
-        /// <summary>
-        /// Creates a new data source or updates an existing data source connection.
-        /// </summary>
-        /// <param name="dataSourceConnection">Required. The <see cref="SearchIndexerDataSourceConnection"/> to create or update.</param>
-        /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
-        /// otherwise, the current service version will be overwritten.
-        /// </param>
-        /// <param name="ignoreCacheResetRequirements">Not supported by the GA API. Must be null.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
-        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        [ForwardsClientCalls]
         public virtual Response<SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(
             SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged = false,
-            bool? ignoreCacheResetRequirements = null,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
-            if (ignoreCacheResetRequirements.HasValue)
-            {
-                throw new NotSupportedException("Indexer cache options are not supported by the GA API.");
-            }
 
             MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = dataSourceConnection?.ETag } : null;
-            return CreateOrUpdateDataSourceConnection(
-                dataSourceConnection?.Name,
-                dataSourceConnection,
-                matchConditions,
-                cancellationToken);
+            return CreateOrUpdateDataSourceConnection(dataSourceConnection?.Name, dataSourceConnection, matchConditions, cancellationToken);
         }
-
         /// <summary>
         /// Creates a new data source or updates an existing data source connection.
         /// </summary>
@@ -93,36 +54,6 @@ namespace Azure.Search.Documents.Indexes
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
-        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        [ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // CancellationToken is intentionally required to preserve the existing overload.
-        public virtual async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(
-#pragma warning restore AZC0002
-            SearchIndexerDataSourceConnection dataSourceConnection,
-            bool onlyIfUnchanged,
-            CancellationToken cancellationToken) => await CreateOrUpdateDataSourceConnectionAsync(
-                dataSourceConnection,
-                onlyIfUnchanged,
-                ignoreCacheResetRequirements: null,
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// Creates a new data source or updates an existing data source connection.
-        /// </summary>
-        /// <param name="dataSourceConnection">Required. The <see cref="SearchIndexerDataSourceConnection"/> to create or update.</param>
-        /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
-        /// otherwise, the current service version will be overwritten.
-        /// </param>
-        /// <param name="ignoreCacheResetRequirements">Not supported by the GA API. Must be null.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
@@ -134,21 +65,12 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(
             SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged = false,
-            bool? ignoreCacheResetRequirements = null,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
-            if (ignoreCacheResetRequirements.HasValue)
-            {
-                throw new NotSupportedException("Indexer cache options are not supported by the GA API.");
-            }
 
             MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = dataSourceConnection?.ETag } : null;
-            return await CreateOrUpdateDataSourceConnectionAsync(
-                dataSourceConnection?.Name,
-                dataSourceConnection,
-                matchConditions,
-                cancellationToken).ConfigureAwait(false);
+            return await CreateOrUpdateDataSourceConnectionAsync(dataSourceConnection?.Name, dataSourceConnection, matchConditions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -160,11 +82,9 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnectionName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-#pragma warning disable AZC0002 // CancellationToken is intentionally required to disambiguate from (string, MatchConditions, CancellationToken) overload
         public virtual Response DeleteDataSourceConnection(
             string dataSourceConnectionName,
-            CancellationToken cancellationToken)
-#pragma warning restore AZC0002
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
             return DeleteDataSourceConnection(dataSourceConnectionName, matchConditions: null, cancellationToken);
@@ -179,11 +99,9 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnectionName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-#pragma warning disable AZC0002 // CancellationToken is intentionally required to disambiguate from (string, MatchConditions, CancellationToken) overload
         public virtual async Task<Response> DeleteDataSourceConnectionAsync(
             string dataSourceConnectionName,
-            CancellationToken cancellationToken)
-#pragma warning restore AZC0002
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
             return await DeleteDataSourceConnectionAsync(dataSourceConnectionName, matchConditions: null, cancellationToken).ConfigureAwait(false);

@@ -134,7 +134,6 @@ namespace Azure.Search.Documents.Indexes
         }
 
         #region Indexer operations - Convenience overloads
-
         /// <summary>
         /// Creates a new indexer or updates an existing indexer.
         /// </summary>
@@ -143,37 +142,6 @@ namespace Azure.Search.Documents.Indexes
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
-        /// This may differ slightly from what was passed into the service.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        [ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // CancellationToken is intentionally required to preserve the existing overload.
-        public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
-#pragma warning restore AZC0002
-            SearchIndexer indexer,
-            bool onlyIfUnchanged,
-            CancellationToken cancellationToken) => CreateOrUpdateIndexer(
-                indexer,
-                onlyIfUnchanged,
-                ignoreCacheResetRequirements: null,
-                disableCacheReprocessingChangeDetection: null,
-                cancellationToken);
-
-        /// <summary>
-        /// Creates a new indexer or updates an existing indexer.
-        /// </summary>
-        /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
-        /// <param name="onlyIfUnchanged">
-        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
-        /// otherwise, the current service version will be overwritten.
-        /// </param>
-        /// <param name="ignoreCacheResetRequirements">Not supported by the GA API. Must be null.</param>
-        /// <param name="disableCacheReprocessingChangeDetection">Not supported by the GA API. Must be null.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
@@ -185,15 +153,9 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
-            bool? ignoreCacheResetRequirements = null,
-            bool? disableCacheReprocessingChangeDetection = null,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(indexer, nameof(indexer));
-            if (ignoreCacheResetRequirements.HasValue || disableCacheReprocessingChangeDetection.HasValue)
-            {
-                throw new NotSupportedException("Indexer cache options are not supported by the GA API.");
-            }
 
             return CreateOrUpdateIndexer(
                 indexer?.Name,
@@ -202,6 +164,37 @@ namespace Azure.Search.Documents.Indexes
                 cancellationToken);
         }
 
+        /// <summary>
+        /// Creates a new indexer or updates an existing indexer.
+        /// </summary>
+        /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
+        /// This may differ slightly from what was passed into the service.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
+            SearchIndexer indexer,
+            bool onlyIfUnchanged = false,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(indexer, nameof(indexer));
+
+            return await CreateOrUpdateIndexerAsync(
+                indexer?.Name,
+                indexer,
+                onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null,
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        /* Preview only feature: Indexer cache options are not supported by the GA API.
         /// <summary>
         /// Creates a new indexer or updates an existing indexer.
         /// </summary>
@@ -269,6 +262,7 @@ namespace Azure.Search.Documents.Indexes
                 onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null,
                 cancellationToken).ConfigureAwait(false);
         }
+        */
 
         /// <summary>
         /// Deletes an indexer.

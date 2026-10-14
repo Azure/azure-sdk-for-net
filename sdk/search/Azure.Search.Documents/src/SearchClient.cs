@@ -73,6 +73,7 @@ namespace Azure.Search.Documents
 
             _endpoint = endpoint;
             _indexName = indexName;
+            Serializer = options.Serializer;
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             _apiVersion = options.Version.ToVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
