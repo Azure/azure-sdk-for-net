@@ -12,22 +12,22 @@ using Azure.ResourceManager.ArcData;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> Authentication related configuration for the SQL Server Instance. </summary>
-    public partial class Authentication
+    public partial class SqlServerAuthentication
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Authentication"/>. </summary>
-        public Authentication()
+        /// <summary> Initializes a new instance of <see cref="SqlServerAuthentication"/>. </summary>
+        public SqlServerAuthentication()
         {
             SqlServerEntraIdentity = new ChangeTrackingList<EntraAuthentication>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Authentication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerAuthentication"/>. </summary>
         /// <param name="mode"> Mode of authentication in SqlServer. </param>
         /// <param name="sqlServerEntraIdentity"> Entra Authentication configuration for the SQL Server Instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Authentication(Mode? mode, IList<EntraAuthentication> sqlServerEntraIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerAuthentication(SqlServerAuthenticationMode? mode, IList<EntraAuthentication> sqlServerEntraIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             SqlServerEntraIdentity = sqlServerEntraIdentity;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> Mode of authentication in SqlServer. </summary>
-        public Mode? Mode { get; set; }
+        public SqlServerAuthenticationMode? Mode { get; set; }
 
         /// <summary> Entra Authentication configuration for the SQL Server Instance. </summary>
         public IList<EntraAuthentication> SqlServerEntraIdentity { get; }

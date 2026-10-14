@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SecondaryAllowConnections value) => value switch
         {
-            SecondaryAllowConnections.NO => "NO",
-            SecondaryAllowConnections.ALL => "ALL",
+            SecondaryAllowConnections.No => "NO",
+            SecondaryAllowConnections.All => "ALL",
             SecondaryAllowConnections.ReadOnly => "READ_ONLY",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecondaryAllowConnections value.")
         };
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.ArcData.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "NO"))
             {
-                return SecondaryAllowConnections.NO;
+                return SecondaryAllowConnections.No;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ALL"))
             {
-                return SecondaryAllowConnections.ALL;
+                return SecondaryAllowConnections.All;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "READ_ONLY"))
             {

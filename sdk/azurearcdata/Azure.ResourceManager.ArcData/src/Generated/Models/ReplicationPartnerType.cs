@@ -11,11 +11,11 @@ namespace Azure.ResourceManager.ArcData.Models
     public enum ReplicationPartnerType
     {
         /// <summary> SQLServer. </summary>
-        SQLServer,
+        SqlServer,
         /// <summary> AzureSQLVM. </summary>
-        AzureSqlvm,
+        AzureSqlVm,
         /// <summary> AzureSQLManagedInstance. </summary>
-        AzureSQLManagedInstance,
+        AzureSqlManagedInstance,
         /// <summary> Unknown. </summary>
         Unknown
     }

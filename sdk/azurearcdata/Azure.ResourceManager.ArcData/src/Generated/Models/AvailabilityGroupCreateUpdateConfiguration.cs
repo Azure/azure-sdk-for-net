@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="clusterType"> Set to WSFC when availability group is on a failover cluster instance on a Windows Server failover cluster. Set to NONE when availability group not using WSFC for cluster coordination. </param>
         /// <param name="listener"> The listener for the sql server availability group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailabilityGroupCreateUpdateConfiguration(string availabilityGroupName, IList<AvailabilityGroupCreateUpdateReplicaConfiguration> replicas, IList<string> databases, AutomatedBackupPreference? automatedBackupPreference, FailureConditionLevel? failureConditionLevel, int? healthCheckTimeout, DBFailover? dbFailover, DtcSupport? dtcSupport, int? requiredSynchronizedSecondariesToCommit, ClusterType? clusterType, SqlAvailabilityGroupStaticIPListenerProperties listener, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvailabilityGroupCreateUpdateConfiguration(string availabilityGroupName, IList<AvailabilityGroupCreateUpdateReplicaConfiguration> replicas, IList<string> databases, AutomatedBackupPreference? automatedBackupPreference, FailureConditionLevel? failureConditionLevel, int? healthCheckTimeout, DbFailover? dbFailover, DtcSupport? dtcSupport, int? requiredSynchronizedSecondariesToCommit, ClusterType? clusterType, SqlAvailabilityGroupStaticIPListenerProperties listener, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AvailabilityGroupName = availabilityGroupName;
             Replicas = replicas;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ArcData.Models
             AutomatedBackupPreference = automatedBackupPreference;
             FailureConditionLevel = failureConditionLevel;
             HealthCheckTimeout = healthCheckTimeout;
-            DBFailover = dbFailover;
+            DbFailover = dbFailover;
             DtcSupport = dtcSupport;
             RequiredSynchronizedSecondariesToCommit = requiredSynchronizedSecondariesToCommit;
             ClusterType = clusterType;
@@ -70,9 +70,6 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Wait time (in milliseconds) for the sp_server_diagnostics system stored procedure to return server-health information, before the server instance is assumed to be slow or not responding. </summary>
         public int? HealthCheckTimeout { get; set; }
-
-        /// <summary> Specifies whether the availability group supports failover for database health conditions. </summary>
-        public DBFailover? DBFailover { get; set; }
 
         /// <summary> Specifies whether DTC support has been enabled for this availability group. </summary>
         public DtcSupport? DtcSupport { get; set; }

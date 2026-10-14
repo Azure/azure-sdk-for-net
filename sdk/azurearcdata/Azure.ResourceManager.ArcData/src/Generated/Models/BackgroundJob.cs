@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="lastExecutionOn"> The last execution time of the background job in ISO 8601 date-time format. </param>
         /// <param name="nextExecutionOn"> The next execution time of the background job in ISO 8601 date-time format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackgroundJob(State? state, ExecutionState? executionState, DateTimeOffset? startsOn, DateTimeOffset? endsOn, LastExecutionStatus? lastExecutionStatus, DateTimeOffset? lastExecutionOn, DateTimeOffset? nextExecutionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackgroundJob(BackgroundJobState? state, ExecutionState? executionState, DateTimeOffset? startsOn, DateTimeOffset? endsOn, LastExecutionStatus? lastExecutionStatus, DateTimeOffset? lastExecutionOn, DateTimeOffset? nextExecutionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             ExecutionState = executionState;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> The state of the background job. </summary>
-        public State? State { get; }
+        public BackgroundJobState? State { get; }
 
         /// <summary> The execution state of the background job. </summary>
         public ExecutionState? ExecutionState { get; }

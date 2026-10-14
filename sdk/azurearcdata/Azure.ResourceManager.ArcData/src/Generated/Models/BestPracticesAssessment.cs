@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="enabled"> Indicates if SQL best practices assessment is enabled for the SQL Server instance. </param>
         /// <param name="schedule"> The scheduling configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BestPracticesAssessment(bool? enabled, Schedule schedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BestPracticesAssessment(bool? enabled, BestPracticesAssessmentSchedule schedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             Schedule = schedule;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public bool? Enabled { get; set; }
 
         /// <summary> The scheduling configuration. </summary>
-        public Schedule Schedule { get; set; }
+        public BestPracticesAssessmentSchedule Schedule { get; set; }
     }
 }

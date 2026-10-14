@@ -13,52 +13,52 @@ using Azure.ResourceManager.ArcData;
 
 namespace Azure.ResourceManager.ArcData.Models
 {
-    /// <summary> Transparent data encryption information. </summary>
-    public partial class K8stransparentDataEncryption : IJsonModel<K8stransparentDataEncryption>
+    /// <summary> Authentication related configuration for the SQL Server Instance. </summary>
+    public partial class SqlServerAuthentication : IJsonModel<SqlServerAuthentication>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual K8stransparentDataEncryption PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SqlServerAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<K8stransparentDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeK8stransparentDataEncryption(document.RootElement, options);
+                        return DeserializeSqlServerAuthentication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(K8stransparentDataEncryption)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerAuthentication)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<K8stransparentDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerArcDataContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(K8stransparentDataEncryption)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerAuthentication)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<K8stransparentDataEncryption>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SqlServerAuthentication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        K8stransparentDataEncryption IPersistableModel<K8stransparentDataEncryption>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SqlServerAuthentication IPersistableModel<SqlServerAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<K8stransparentDataEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SqlServerAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<K8stransparentDataEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SqlServerAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,25 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<K8stransparentDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(K8stransparentDataEncryption)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerAuthentication)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode);
+                writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(ProtectorSecret))
+            if (Optional.IsCollectionDefined(SqlServerEntraIdentity))
             {
-                writer.WritePropertyName("protectorSecret"u8);
-                writer.WriteStringValue(ProtectorSecret);
+                writer.WritePropertyName("sqlServerEntraIdentity"u8);
+                writer.WriteStartArray();
+                foreach (EntraAuthentication item in SqlServerEntraIdentity)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,42 +108,55 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        K8stransparentDataEncryption IJsonModel<K8stransparentDataEncryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SqlServerAuthentication IJsonModel<SqlServerAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual K8stransparentDataEncryption JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SqlServerAuthentication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<K8stransparentDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(K8stransparentDataEncryption)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerAuthentication)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeK8stransparentDataEncryption(document.RootElement, options);
+            return DeserializeSqlServerAuthentication(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static K8stransparentDataEncryption DeserializeK8stransparentDataEncryption(JsonElement element, ModelReaderWriterOptions options)
+        internal static SqlServerAuthentication DeserializeSqlServerAuthentication(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string mode = default;
-            string protectorSecret = default;
+            SqlServerAuthenticationMode? mode = default;
+            IList<EntraAuthentication> sqlServerEntraIdentity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("mode"u8))
                 {
-                    mode = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mode = new SqlServerAuthenticationMode(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("protectorSecret"u8))
+                if (prop.NameEquals("sqlServerEntraIdentity"u8))
                 {
-                    protectorSecret = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EntraAuthentication> array = new List<EntraAuthentication>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(EntraAuthentication.DeserializeEntraAuthentication(item, options));
+                    }
+                    sqlServerEntraIdentity = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +164,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new K8stransparentDataEncryption(mode, protectorSecret, additionalBinaryDataProperties);
+            return new SqlServerAuthentication(mode, sqlServerEntraIdentity ?? new ChangeTrackingList<EntraAuthentication>(), additionalBinaryDataProperties);
         }
     }
 }

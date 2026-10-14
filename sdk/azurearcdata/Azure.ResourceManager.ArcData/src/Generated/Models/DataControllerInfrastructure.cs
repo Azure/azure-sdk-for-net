@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> The infrastructure the data controller is running on. </summary>
-    public enum Infrastructure
+    public enum DataControllerInfrastructure
     {
         /// <summary> azure. </summary>
         Azure,

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 return null;
             }
             ActiveDirectoryConnectorDomainDetails activeDirectory = default;
-            ActiveDirectoryConnectorDNSDetails dns = default;
+            ActiveDirectoryConnectorDnsDetails dns = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 }
                 if (prop.NameEquals("dns"u8))
                 {
-                    dns = ActiveDirectoryConnectorDNSDetails.DeserializeActiveDirectoryConnectorDNSDetails(prop.Value, options);
+                    dns = ActiveDirectoryConnectorDnsDetails.DeserializeActiveDirectoryConnectorDnsDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

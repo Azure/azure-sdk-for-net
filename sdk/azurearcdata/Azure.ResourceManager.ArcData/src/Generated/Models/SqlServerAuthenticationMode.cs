@@ -12,7 +12,7 @@ using Azure.ResourceManager.ArcData;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> Mode of authentication in SqlServer. </summary>
-    public readonly partial struct Mode : IEquatable<Mode>
+    public readonly partial struct SqlServerAuthenticationMode : IEquatable<SqlServerAuthenticationMode>
     {
         private readonly string _value;
         /// <summary> Mixed mode authentication for SQL Server which includes windows and SQL Authentication. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Used for scenarios were the mode cannot be determined. </summary>
         private const string UndefinedValue = "Undefined";
 
-        /// <summary> Initializes a new instance of <see cref="Mode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerAuthenticationMode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Mode(string value)
+        public SqlServerAuthenticationMode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> Mixed mode authentication for SQL Server which includes windows and SQL Authentication. </summary>
-        public static Mode Mixed { get; } = new Mode(MixedValue);
+        public static SqlServerAuthenticationMode Mixed { get; } = new SqlServerAuthenticationMode(MixedValue);
 
         /// <summary> Windows Authentication for SQL Server. </summary>
-        public static Mode Windows { get; } = new Mode(WindowsValue);
+        public static SqlServerAuthenticationMode Windows { get; } = new SqlServerAuthenticationMode(WindowsValue);
 
         /// <summary> Used for scenarios were the mode cannot be determined. </summary>
-        public static Mode Undefined { get; } = new Mode(UndefinedValue);
+        public static SqlServerAuthenticationMode Undefined { get; } = new SqlServerAuthenticationMode(UndefinedValue);
 
-        /// <summary> Determines if two <see cref="Mode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SqlServerAuthenticationMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Mode left, Mode right) => left.Equals(right);
+        public static bool operator ==(SqlServerAuthenticationMode left, SqlServerAuthenticationMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Mode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SqlServerAuthenticationMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Mode left, Mode right) => !left.Equals(right);
+        public static bool operator !=(SqlServerAuthenticationMode left, SqlServerAuthenticationMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Mode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SqlServerAuthenticationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Mode(string value) => new Mode(value);
+        public static implicit operator SqlServerAuthenticationMode(string value) => new SqlServerAuthenticationMode(value);
 
-        /// <summary> Converts a string to a <see cref="Mode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SqlServerAuthenticationMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Mode?(string value) => value == null ? null : new Mode(value);
+        public static implicit operator SqlServerAuthenticationMode?(string value) => value == null ? null : new SqlServerAuthenticationMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Mode other && Equals(other);
+        public override bool Equals(object obj) => obj is SqlServerAuthenticationMode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Mode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SqlServerAuthenticationMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="clusterId"> If a CustomLocation is provided, this contains the ARM id of the connected cluster the custom location belongs to. </param>
         /// <param name="extensionId"> If a CustomLocation is provided, this contains the ARM id of the extension the custom location belongs to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataControllerProperties(Infrastructure? infrastructure, OnPremiseProperty onPremiseProperty, BinaryData k8sRaw, UploadWatermark uploadWatermark, DateTimeOffset? lastUploadedOn, BasicLoginInformation basicLoginInformation, BasicLoginInformation metricsDashboardCredential, BasicLoginInformation logsDashboardCredential, LogAnalyticsWorkspaceConfig logAnalyticsWorkspaceConfig, UploadServicePrincipal uploadServicePrincipal, string provisioningState, string clusterId, string extensionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataControllerProperties(DataControllerInfrastructure? infrastructure, OnPremiseProperty onPremiseProperty, BinaryData k8sRaw, UploadWatermark uploadWatermark, DateTimeOffset? lastUploadedOn, BasicLoginInformation basicLoginInformation, BasicLoginInformation metricsDashboardCredential, BasicLoginInformation logsDashboardCredential, LogAnalyticsWorkspaceConfig logAnalyticsWorkspaceConfig, UploadServicePrincipal uploadServicePrincipal, string provisioningState, string clusterId, string extensionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Infrastructure = infrastructure;
             OnPremiseProperty = onPremiseProperty;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> The infrastructure the data controller is running on. </summary>
-        public Infrastructure? Infrastructure { get; set; }
+        public DataControllerInfrastructure? Infrastructure { get; set; }
 
         /// <summary> Properties from the Kubernetes data controller. </summary>
         public OnPremiseProperty OnPremiseProperty { get; set; }

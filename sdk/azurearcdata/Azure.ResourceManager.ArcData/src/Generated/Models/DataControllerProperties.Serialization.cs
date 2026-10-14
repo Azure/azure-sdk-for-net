@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            Infrastructure? infrastructure = default;
+            DataControllerInfrastructure? infrastructure = default;
             OnPremiseProperty onPremiseProperty = default;
             BinaryData k8sRaw = default;
             UploadWatermark uploadWatermark = default;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    infrastructure = prop.Value.GetString().ToInfrastructure();
+                    infrastructure = prop.Value.GetString().ToDataControllerInfrastructure();
                     continue;
                 }
                 if (prop.NameEquals("onPremiseProperty"u8))

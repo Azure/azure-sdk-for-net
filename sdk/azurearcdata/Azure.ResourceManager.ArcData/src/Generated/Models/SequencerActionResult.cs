@@ -12,7 +12,7 @@ using Azure.ResourceManager.ArcData;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> The result of the sequencer action. </summary>
-    public readonly partial struct Result : IEquatable<Result>
+    public readonly partial struct SequencerActionResult : IEquatable<SequencerActionResult>
     {
         private readonly string _value;
         /// <summary> NotCompleted. </summary>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Skipped. </summary>
         private const string SkippedValue = "Skipped";
 
-        /// <summary> Initializes a new instance of <see cref="Result"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SequencerActionResult"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Result(string value)
+        public SequencerActionResult(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,44 +37,44 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> NotCompleted. </summary>
-        public static Result NotCompleted { get; } = new Result(NotCompletedValue);
+        public static SequencerActionResult NotCompleted { get; } = new SequencerActionResult(NotCompletedValue);
 
         /// <summary> Succeeded. </summary>
-        public static Result Succeeded { get; } = new Result(SucceededValue);
+        public static SequencerActionResult Succeeded { get; } = new SequencerActionResult(SucceededValue);
 
         /// <summary> Failed. </summary>
-        public static Result Failed { get; } = new Result(FailedValue);
+        public static SequencerActionResult Failed { get; } = new SequencerActionResult(FailedValue);
 
         /// <summary> TimedOut. </summary>
-        public static Result TimedOut { get; } = new Result(TimedOutValue);
+        public static SequencerActionResult TimedOut { get; } = new SequencerActionResult(TimedOutValue);
 
         /// <summary> Skipped. </summary>
-        public static Result Skipped { get; } = new Result(SkippedValue);
+        public static SequencerActionResult Skipped { get; } = new SequencerActionResult(SkippedValue);
 
-        /// <summary> Determines if two <see cref="Result"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SequencerActionResult"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Result left, Result right) => left.Equals(right);
+        public static bool operator ==(SequencerActionResult left, SequencerActionResult right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Result"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SequencerActionResult"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Result left, Result right) => !left.Equals(right);
+        public static bool operator !=(SequencerActionResult left, SequencerActionResult right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Result"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SequencerActionResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Result(string value) => new Result(value);
+        public static implicit operator SequencerActionResult(string value) => new SequencerActionResult(value);
 
-        /// <summary> Converts a string to a <see cref="Result"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SequencerActionResult"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Result?(string value) => value == null ? null : new Result(value);
+        public static implicit operator SequencerActionResult?(string value) => value == null ? null : new SequencerActionResult(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Result other && Equals(other);
+        public override bool Equals(object obj) => obj is SequencerActionResult other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Result other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SequencerActionResult other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

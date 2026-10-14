@@ -348,19 +348,19 @@ namespace Azure.ResourceManager.ArcData.Models
             DateTimeOffset? lastUsageUploadOn = default;
             HostType? hostType = default;
             AlwaysOnRole? alwaysOnRole = default;
-            DBMEndpoint databaseMirroringEndpoint = default;
+            DbmEndpoint databaseMirroringEndpoint = default;
             FailoverCluster failoverCluster = default;
             BackupPolicy backupPolicy = default;
             DateTimeOffset? upgradeLockedUntil = default;
             Monitoring monitoring = default;
-            Migration migration = default;
+            SqlServerInstanceMigration migration = default;
             BestPracticesAssessment bestPracticesAssessment = default;
             ClientConnection clientConnection = default;
             ServiceType? serviceType = default;
             long? maxServerMemoryMB = default;
             bool? isMicrosoftPkiCertTrustConfigured = default;
             bool? isDigiCertPkiCertTrustConfigured = default;
-            Authentication authentication = default;
+            SqlServerAuthentication authentication = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    databaseMirroringEndpoint = DBMEndpoint.DeserializeDBMEndpoint(prop.Value, options);
+                    databaseMirroringEndpoint = DbmEndpoint.DeserializeDbmEndpoint(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("failoverCluster"u8))
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    migration = Migration.DeserializeMigration(prop.Value, options);
+                    migration = SqlServerInstanceMigration.DeserializeSqlServerInstanceMigration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("bestPracticesAssessment"u8))
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    authentication = Authentication.DeserializeAuthentication(prop.Value, options);
+                    authentication = SqlServerAuthentication.DeserializeSqlServerAuthentication(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

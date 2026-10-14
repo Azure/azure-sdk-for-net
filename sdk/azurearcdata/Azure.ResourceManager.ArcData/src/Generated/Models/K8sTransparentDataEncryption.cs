@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> Transparent data encryption information. </summary>
-    public partial class K8stransparentDataEncryption
+    public partial class K8sTransparentDataEncryption
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="K8stransparentDataEncryption"/>. </summary>
-        public K8stransparentDataEncryption()
+        /// <summary> Initializes a new instance of <see cref="K8sTransparentDataEncryption"/>. </summary>
+        public K8sTransparentDataEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="K8stransparentDataEncryption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="K8sTransparentDataEncryption"/>. </summary>
         /// <param name="mode"> Transparent data encryption mode. Can be Service Managed, Customer managed or disabled. </param>
         /// <param name="protectorSecret"> Protector secret for customer managed Transparent data encryption mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal K8stransparentDataEncryption(string mode, string protectorSecret, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal K8sTransparentDataEncryption(string mode, string protectorSecret, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             ProtectorSecret = protectorSecret;

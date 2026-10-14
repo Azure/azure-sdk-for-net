@@ -752,22 +752,22 @@ namespace Azure.ResourceManager.ArcData.Models
         public static bool operator !=(Azure.ResourceManager.ArcData.Models.ActivationState left, Azure.ResourceManager.ArcData.Models.ActivationState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ActiveDirectoryConnectorDNSDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDNSDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDNSDetails>
+    public partial class ActiveDirectoryConnectorDnsDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails>
     {
-        public ActiveDirectoryConnectorDNSDetails(System.Collections.Generic.IEnumerable<string> nameserverIPAddresses) { }
+        public ActiveDirectoryConnectorDnsDetails(System.Collections.Generic.IEnumerable<string> nameserverIPAddresses) { }
         public string DomainName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> NameserverIPAddresses { get { throw null; } }
         public bool? PreferK8sDnsForPtrLookups { get { throw null; } set { } }
         public long? Replicas { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDNSDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDNSDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDNSDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDNSDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDNSDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDNSDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDNSDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDNSDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDNSDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ActiveDirectoryConnectorDomainDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDomainDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDomainDetails>
     {
@@ -806,9 +806,9 @@ namespace Azure.ResourceManager.ArcData.Models
     }
     public partial class ActiveDirectoryConnectorSpec : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorSpec>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorSpec>
     {
-        public ActiveDirectoryConnectorSpec(Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDomainDetails activeDirectory, Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDNSDetails dns) { }
+        public ActiveDirectoryConnectorSpec(Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDomainDetails activeDirectory, Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails dns) { }
         public Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDomainDetails ActiveDirectory { get { throw null; } set { } }
-        public Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDNSDetails Dns { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails Dns { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorSpec JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorSpec PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1081,11 +1081,11 @@ namespace Azure.ResourceManager.ArcData.Models
     }
     public static partial class ArmArcDataModelFactory
     {
-        public static Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDNSDetails ActiveDirectoryConnectorDNSDetails(string domainName = null, System.Collections.Generic.IEnumerable<string> nameserverIPAddresses = null, long? replicas = default(long?), bool? preferK8sDnsForPtrLookups = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails ActiveDirectoryConnectorDnsDetails(string domainName = null, System.Collections.Generic.IEnumerable<string> nameserverIPAddresses = null, long? replicas = default(long?), bool? preferK8sDnsForPtrLookups = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDomainDetails ActiveDirectoryConnectorDomainDetails(string realm = null, string netbiosDomainName = null, Azure.ResourceManager.ArcData.Models.AccountProvisioningMode? serviceAccountProvisioning = default(Azure.ResourceManager.ArcData.Models.AccountProvisioningMode?), string ouDistinguishedName = null, Azure.ResourceManager.ArcData.Models.ActiveDirectoryDomainControllers domainControllers = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorProperties ActiveDirectoryConnectorProperties(Azure.ResourceManager.ArcData.Models.BasicLoginInformation domainServiceAccountLoginInformation = null, string provisioningState = null, Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorSpec spec = null, Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorStatus status = null) { throw null; }
         public static Azure.ResourceManager.ArcData.ActiveDirectoryConnectorResourceData ActiveDirectoryConnectorResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorSpec ActiveDirectoryConnectorSpec(Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDomainDetails activeDirectory = null, Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDNSDetails dns = null) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorSpec ActiveDirectoryConnectorSpec(Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDomainDetails activeDirectory = null, Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails dns = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorStatus ActiveDirectoryConnectorStatus(string lastUpdateTime = null, long? observedGeneration = default(long?), string state = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.ActiveDirectoryDomainController ActiveDirectoryDomainController(string hostname = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.ActiveDirectoryDomainControllers ActiveDirectoryDomainControllers(string primaryDomainControllerHostname = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.ActiveDirectoryDomainController> secondaryDomainControllers = null) { throw null; }
@@ -1095,30 +1095,30 @@ namespace Azure.ResourceManager.ArcData.Models
         public static Azure.ResourceManager.ArcData.Models.ArcDataSqlServerInstanceManagedInstanceLinkAssessmentRequestContent ArcDataSqlServerInstanceManagedInstanceLinkAssessmentRequestContent(Azure.Core.ResourceIdentifier azureManagedInstanceResourceId = null, Azure.ResourceManager.ArcData.Models.AzureManagedInstanceRole? azureManagedInstanceRole = default(Azure.ResourceManager.ArcData.Models.AzureManagedInstanceRole?), System.Collections.Generic.IEnumerable<string> databaseNames = null, string availabilityGroupName = null, string distributedAvailabilityGroupName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.MiLinkAssessmentCategory> assessmentCategories = null, string sqlServerIPAddress = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.ArcDataSqlServerInstanceRunTargetRecommendationJobRequestContent ArcDataSqlServerInstanceRunTargetRecommendationJobRequestContent(Azure.ResourceManager.ArcData.Models.ResourceUpdateMode? resourceUpdateMode = default(Azure.ResourceManager.ArcData.Models.ResourceUpdateMode?), bool? includeFileLevelRequirements = default(bool?), string targetLocation = null, int? percentile = default(int?), int? lookbackPeriodInDays = default(int?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.ArcDataSqlServerInstanceTargetRecommendationReportsRequestContent ArcDataSqlServerInstanceTargetRecommendationReportsRequestContent(int? reportOffset = default(int?), int? sectionOffset = default(int?), Azure.ResourceManager.ArcData.Models.SqlServerInstanceTargetRecommendationReportSectionType? sectionType = default(Azure.ResourceManager.ArcData.Models.SqlServerInstanceTargetRecommendationReportSectionType?), System.Collections.Generic.IEnumerable<string> databaseNames = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.Authentication Authentication(Azure.ResourceManager.ArcData.Models.Mode? mode = default(Azure.ResourceManager.ArcData.Models.Mode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.EntraAuthentication> sqlServerEntraIdentity = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.AvailabilityGroupConfigure AvailabilityGroupConfigure(string endpointName = null, string endpointUri = null, Azure.ResourceManager.ArcData.Models.ConnectionAuth? endpointAuthenticationMode = default(Azure.ResourceManager.ArcData.Models.ConnectionAuth?), string certificateName = null, string endpointConnectLogin = null, Azure.ResourceManager.ArcData.Models.ArcSqlServerAvailabilityMode? availabilityMode = default(Azure.ResourceManager.ArcData.Models.ArcSqlServerAvailabilityMode?), string availabilityModeDescription = null, Azure.ResourceManager.ArcData.Models.ArcSqlServerFailoverMode? failoverMode = default(Azure.ResourceManager.ArcData.Models.ArcSqlServerFailoverMode?), string failoverModeDescription = null, int? sessionTimeout = default(int?), Azure.ResourceManager.ArcData.Models.PrimaryAllowConnections? primaryAllowConnections = default(Azure.ResourceManager.ArcData.Models.PrimaryAllowConnections?), string primaryRoleAllowConnectionsDescription = null, Azure.ResourceManager.ArcData.Models.SecondaryAllowConnections? secondaryAllowConnections = default(Azure.ResourceManager.ArcData.Models.SecondaryAllowConnections?), string secondaryRoleAllowConnectionsDescription = null, System.DateTimeOffset? replicaCreateOn = default(System.DateTimeOffset?), System.DateTimeOffset? replicaModifyOn = default(System.DateTimeOffset?), int? backupPriority = default(int?), string readOnlyRoutingUri = null, string readWriteRoutingUri = null, Azure.ResourceManager.ArcData.Models.SeedingMode? seedingMode = default(Azure.ResourceManager.ArcData.Models.SeedingMode?), string seedingModeDescription = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.AvailabilityGroupCreateUpdateConfiguration AvailabilityGroupCreateUpdateConfiguration(string availabilityGroupName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.AvailabilityGroupCreateUpdateReplicaConfiguration> replicas = null, System.Collections.Generic.IEnumerable<string> databases = null, Azure.ResourceManager.ArcData.Models.AutomatedBackupPreference? automatedBackupPreference = default(Azure.ResourceManager.ArcData.Models.AutomatedBackupPreference?), Azure.ResourceManager.ArcData.Models.FailureConditionLevel? failureConditionLevel = default(Azure.ResourceManager.ArcData.Models.FailureConditionLevel?), int? healthCheckTimeout = default(int?), Azure.ResourceManager.ArcData.Models.DBFailover? dbFailover = default(Azure.ResourceManager.ArcData.Models.DBFailover?), Azure.ResourceManager.ArcData.Models.DtcSupport? dtcSupport = default(Azure.ResourceManager.ArcData.Models.DtcSupport?), int? requiredSynchronizedSecondariesToCommit = default(int?), Azure.ResourceManager.ArcData.Models.ClusterType? clusterType = default(Azure.ResourceManager.ArcData.Models.ClusterType?), Azure.ResourceManager.ArcData.Models.SqlAvailabilityGroupStaticIPListenerProperties listener = null) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.AvailabilityGroupCreateUpdateConfiguration AvailabilityGroupCreateUpdateConfiguration(string availabilityGroupName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.AvailabilityGroupCreateUpdateReplicaConfiguration> replicas = null, System.Collections.Generic.IEnumerable<string> databases = null, Azure.ResourceManager.ArcData.Models.AutomatedBackupPreference? automatedBackupPreference = default(Azure.ResourceManager.ArcData.Models.AutomatedBackupPreference?), Azure.ResourceManager.ArcData.Models.FailureConditionLevel? failureConditionLevel = default(Azure.ResourceManager.ArcData.Models.FailureConditionLevel?), int? healthCheckTimeout = default(int?), Azure.ResourceManager.ArcData.Models.DbFailover? dbFailover = default(Azure.ResourceManager.ArcData.Models.DbFailover?), Azure.ResourceManager.ArcData.Models.DtcSupport? dtcSupport = default(Azure.ResourceManager.ArcData.Models.DtcSupport?), int? requiredSynchronizedSecondariesToCommit = default(int?), Azure.ResourceManager.ArcData.Models.ClusterType? clusterType = default(Azure.ResourceManager.ArcData.Models.ClusterType?), Azure.ResourceManager.ArcData.Models.SqlAvailabilityGroupStaticIPListenerProperties listener = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.AvailabilityGroupCreateUpdateReplicaConfiguration AvailabilityGroupCreateUpdateReplicaConfiguration(string serverInstance = null, string endpointName = null, string endpointUri = null, Azure.ResourceManager.ArcData.Models.ConnectionAuth? endpointAuthenticationMode = default(Azure.ResourceManager.ArcData.Models.ConnectionAuth?), string certificateName = null, string endpointConnectLogin = null, Azure.ResourceManager.ArcData.Models.ArcSqlServerAvailabilityMode? availabilityMode = default(Azure.ResourceManager.ArcData.Models.ArcSqlServerAvailabilityMode?), Azure.ResourceManager.ArcData.Models.ArcSqlServerFailoverMode? failoverMode = default(Azure.ResourceManager.ArcData.Models.ArcSqlServerFailoverMode?), Azure.ResourceManager.ArcData.Models.SeedingMode? seedingMode = default(Azure.ResourceManager.ArcData.Models.SeedingMode?), int? backupPriority = default(int?), Azure.ResourceManager.ArcData.Models.SecondaryAllowConnections? secondaryRoleAllowConnections = default(Azure.ResourceManager.ArcData.Models.SecondaryAllowConnections?), string secondaryRoleReadOnlyRoutingUri = null, Azure.ResourceManager.ArcData.Models.PrimaryAllowConnections? primaryRoleAllowConnections = default(Azure.ResourceManager.ArcData.Models.PrimaryAllowConnections?), System.Collections.Generic.IEnumerable<string> primaryRoleReadOnlyRoutingList = null, int? sessionTimeout = default(int?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.AvailabilityGroupInfo AvailabilityGroupInfo(int? failureConditionLevel = default(int?), int? healthCheckTimeout = default(int?), string automatedBackupPreferenceDescription = null, int? version = default(int?), bool? basicFeatures = default(bool?), bool? dtcSupport = default(bool?), bool? dbFailover = default(bool?), bool? isDistributed = default(bool?), string clusterTypeDescription = null, int? requiredSynchronizedSecondariesToCommit = default(int?), bool? isContained = default(bool?), string primaryReplica = null, string primaryRecoveryHealthDescription = null, string secondaryRecoveryHealthDescription = null, string synchronizationHealthDescription = null, Azure.ResourceManager.ArcData.Models.ReplicationPartnerType? replicationPartnerType = default(Azure.ResourceManager.ArcData.Models.ReplicationPartnerType?), Azure.ResourceManager.ArcData.Models.SqlAvailabilityGroupStaticIPListenerProperties listener = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.AvailabilityGroupRetrievalFilters AvailabilityGroupRetrievalFilters(Azure.ResourceManager.ArcData.Models.ArcSqlServerAvailabilityGroupTypeFilter? availabilityGroupTypeFilter = default(Azure.ResourceManager.ArcData.Models.ArcSqlServerAvailabilityGroupTypeFilter?), Azure.ResourceManager.ArcData.Models.ReplicationPartnerType? replicationPartnerTypeFilter = default(Azure.ResourceManager.ArcData.Models.ReplicationPartnerType?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.AvailabilityGroupState AvailabilityGroupState(string availabilityGroupReplicaRole = null, string operationalStateDescription = null, string recoveryHealthDescription = null, string synchronizationHealthDescription = null, string connectedStateDescription = null, string lastConnectErrorDescription = null, System.DateTimeOffset? lastConnectErrorOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.BackgroundJob BackgroundJob(Azure.ResourceManager.ArcData.Models.State? state = default(Azure.ResourceManager.ArcData.Models.State?), Azure.ResourceManager.ArcData.Models.ExecutionState? executionState = default(Azure.ResourceManager.ArcData.Models.ExecutionState?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.LastExecutionStatus? lastExecutionStatus = default(Azure.ResourceManager.ArcData.Models.LastExecutionStatus?), System.DateTimeOffset? lastExecutionOn = default(System.DateTimeOffset?), System.DateTimeOffset? nextExecutionOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.BackgroundJob BackgroundJob(Azure.ResourceManager.ArcData.Models.BackgroundJobState? state = default(Azure.ResourceManager.ArcData.Models.BackgroundJobState?), Azure.ResourceManager.ArcData.Models.ExecutionState? executionState = default(Azure.ResourceManager.ArcData.Models.ExecutionState?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.LastExecutionStatus? lastExecutionStatus = default(Azure.ResourceManager.ArcData.Models.LastExecutionStatus?), System.DateTimeOffset? lastExecutionOn = default(System.DateTimeOffset?), System.DateTimeOffset? nextExecutionOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.BackupPolicy BackupPolicy(int? retentionPeriodDays = default(int?), int? fullBackupDays = default(int?), Azure.ResourceManager.ArcData.Models.DifferentialBackupHours? differentialBackupHours = default(Azure.ResourceManager.ArcData.Models.DifferentialBackupHours?), int? transactionLogBackupMinutes = default(int?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.BasicLoginInformation BasicLoginInformation(string username = null, string password = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.BestPracticesAssessment BestPracticesAssessment(bool? enabled = default(bool?), Azure.ResourceManager.ArcData.Models.Schedule schedule = null) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.BestPracticesAssessment BestPracticesAssessment(bool? enabled = default(bool?), Azure.ResourceManager.ArcData.Models.BestPracticesAssessmentSchedule schedule = null) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.BestPracticesAssessmentSchedule BestPracticesAssessmentSchedule(bool? enabled = default(bool?), Azure.ResourceManager.ArcData.Models.CronTrigger cronTrigger = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.CommonSku CommonSku(string name = null, bool? dev = default(bool?), string size = null, string family = null, int? capacity = default(int?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.CostOptionSelectedValues CostOptionSelectedValues(string computeAndStorageCostOption = null, string sqlLicenseCostOption = null, string windowsLicenseCostOption = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.CostTypeValues CostTypeValues(float? computeCost = default(float?), float? storageCost = default(float?), float? iopsCost = default(float?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.CronTrigger CronTrigger(string startTime = null, string timeZone = null, string expression = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.DatabaseAssessmentsItem DatabaseAssessmentsItem(string appliesToMigrationTargetPlatform = null, string featureId = null, string issueCategory = null, string moreInformation = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.DataBaseMigration DataBaseMigration(Azure.ResourceManager.ArcData.Models.DataBaseMigrationAssessment assessment = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.DatabaseMigrationJobsItem> jobs = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.DataBaseMigrationAssessment DataBaseMigrationAssessment(System.DateTimeOffset? assessmentUploadOn = default(System.DateTimeOffset?), System.DateTimeOffset? targetRecommendationGenerationOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.DatabaseAssessmentsItem> databaseAssessments = null, Azure.ResourceManager.ArcData.Models.TargetReadiness targetReadiness = null) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.DatabaseMigration DatabaseMigration(Azure.ResourceManager.ArcData.Models.DatabaseMigrationAssessment assessment = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.DatabaseMigrationJobsItem> jobs = null) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.DatabaseMigrationAssessment DatabaseMigrationAssessment(System.DateTimeOffset? assessmentUploadOn = default(System.DateTimeOffset?), System.DateTimeOffset? targetRecommendationGenerationOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.DatabaseAssessmentsItem> databaseAssessments = null, Azure.ResourceManager.ArcData.Models.TargetReadiness targetReadiness = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.DatabaseMigrationJobsItem DatabaseMigrationJobsItem(string migrationTrackingId = null, Azure.ResourceManager.ArcData.Models.MigrationMode? migrationMode = default(Azure.ResourceManager.ArcData.Models.MigrationMode?), Azure.ResourceManager.ArcData.Models.InitiatedFrom? initiatedFrom = default(Azure.ResourceManager.ArcData.Models.InitiatedFrom?), Azure.ResourceManager.ArcData.Models.MigrationStatus? status = default(Azure.ResourceManager.ArcData.Models.MigrationStatus?), string lastError = null, Azure.ResourceManager.ArcData.Models.TargetType? targetType = default(Azure.ResourceManager.ArcData.Models.TargetType?), string targetResourceId = null, System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.AdditionalMigrationJobAttributes> additionalAttributes = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.Databases Databases(System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.DataControllerProperties DataControllerProperties(Azure.ResourceManager.ArcData.Models.Infrastructure? infrastructure = default(Azure.ResourceManager.ArcData.Models.Infrastructure?), Azure.ResourceManager.ArcData.Models.OnPremiseProperty onPremiseProperty = null, System.BinaryData k8sRaw = null, Azure.ResourceManager.ArcData.Models.UploadWatermark uploadWatermark = null, System.DateTimeOffset? lastUploadedOn = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.BasicLoginInformation basicLoginInformation = null, Azure.ResourceManager.ArcData.Models.BasicLoginInformation metricsDashboardCredential = null, Azure.ResourceManager.ArcData.Models.BasicLoginInformation logsDashboardCredential = null, Azure.ResourceManager.ArcData.Models.LogAnalyticsWorkspaceConfig logAnalyticsWorkspaceConfig = null, Azure.ResourceManager.ArcData.Models.UploadServicePrincipal uploadServicePrincipal = null, string provisioningState = null, string clusterId = null, string extensionId = null) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.DataControllerProperties DataControllerProperties(Azure.ResourceManager.ArcData.Models.DataControllerInfrastructure? infrastructure = default(Azure.ResourceManager.ArcData.Models.DataControllerInfrastructure?), Azure.ResourceManager.ArcData.Models.OnPremiseProperty onPremiseProperty = null, System.BinaryData k8sRaw = null, Azure.ResourceManager.ArcData.Models.UploadWatermark uploadWatermark = null, System.DateTimeOffset? lastUploadedOn = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.BasicLoginInformation basicLoginInformation = null, Azure.ResourceManager.ArcData.Models.BasicLoginInformation metricsDashboardCredential = null, Azure.ResourceManager.ArcData.Models.BasicLoginInformation logsDashboardCredential = null, Azure.ResourceManager.ArcData.Models.LogAnalyticsWorkspaceConfig logAnalyticsWorkspaceConfig = null, Azure.ResourceManager.ArcData.Models.UploadServicePrincipal uploadServicePrincipal = null, string provisioningState = null, string clusterId = null, string extensionId = null) { throw null; }
         public static Azure.ResourceManager.ArcData.DataControllerResourceData DataControllerResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ArcData.Models.DataControllerProperties properties = null, Azure.ResourceManager.ArcData.Models.ExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.DataControllerResourcePatch DataControllerResourcePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ArcData.Models.DataControllerProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.DBMEndpoint DBMEndpoint(string endpointName = null, Azure.ResourceManager.ArcData.Models.Role? role = default(Azure.ResourceManager.ArcData.Models.Role?), bool? isEncryptionEnabled = default(bool?), Azure.ResourceManager.ArcData.Models.EncryptionAlgorithm? encryptionAlgorithm = default(Azure.ResourceManager.ArcData.Models.EncryptionAlgorithm?), Azure.ResourceManager.ArcData.Models.ConnectionAuth? connectionAuth = default(Azure.ResourceManager.ArcData.Models.ConnectionAuth?), int? port = default(int?), bool? isDynamicPort = default(bool?), string ipAddress = null, string certificateName = null, System.DateTimeOffset? certificateExpiryOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.DbmEndpoint DbmEndpoint(string endpointName = null, Azure.ResourceManager.ArcData.Models.DatabaseMirroringRole? role = default(Azure.ResourceManager.ArcData.Models.DatabaseMirroringRole?), bool? isEncryptionEnabled = default(bool?), Azure.ResourceManager.ArcData.Models.EncryptionAlgorithm? encryptionAlgorithm = default(Azure.ResourceManager.ArcData.Models.EncryptionAlgorithm?), Azure.ResourceManager.ArcData.Models.ConnectionAuth? connectionAuth = default(Azure.ResourceManager.ArcData.Models.ConnectionAuth?), int? port = default(int?), bool? isDynamicPort = default(bool?), string ipAddress = null, string certificateName = null, System.DateTimeOffset? certificateExpiryOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.DiskSizes DiskSizes(string diskType = null, string redundancy = null, string size = null, string caching = null, float? maxSizeInGib = default(float?), float? maxThroughputInMbps = default(float?), float? maxIops = default(float?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.DistributedAvailabilityGroupCreateUpdateAvailabilityGroupConfiguration DistributedAvailabilityGroupCreateUpdateAvailabilityGroupConfiguration(Azure.Core.ResourceIdentifier availabilityGroup = null, System.Uri listenerUri = null, Azure.ResourceManager.ArcData.Models.ArcSqlServerAvailabilityMode? availabilityMode = default(Azure.ResourceManager.ArcData.Models.ArcSqlServerAvailabilityMode?), Azure.ResourceManager.ArcData.Models.ArcSqlServerFailoverMode? failoverMode = default(Azure.ResourceManager.ArcData.Models.ArcSqlServerFailoverMode?), Azure.ResourceManager.ArcData.Models.SeedingMode? seedingMode = default(Azure.ResourceManager.ArcData.Models.SeedingMode?), string certificateName = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.DistributedAvailabilityGroupCreateUpdateConfiguration DistributedAvailabilityGroupCreateUpdateConfiguration(string availabilityGroupName = null, Azure.ResourceManager.ArcData.Models.DistributedAvailabilityGroupCreateUpdateAvailabilityGroupConfiguration primaryAvailabilityGroup = null, Azure.ResourceManager.ArcData.Models.DistributedAvailabilityGroupCreateUpdateAvailabilityGroupConfiguration secondaryAvailabilityGroup = null) { throw null; }
@@ -1138,12 +1138,11 @@ namespace Azure.ResourceManager.ArcData.Models
         public static Azure.ResourceManager.ArcData.Models.K8sResourceRequirements K8sResourceRequirements(System.Collections.Generic.IDictionary<string, string> requests = null, System.Collections.Generic.IDictionary<string, string> limits = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.K8sScheduling K8sScheduling(Azure.ResourceManager.ArcData.Models.K8sSchedulingOptions @default = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.K8sSchedulingOptions K8sSchedulingOptions(Azure.ResourceManager.ArcData.Models.K8sResourceRequirements resources = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.K8sSecurity K8sSecurity(string adminLoginSecret = null, string serviceCertificateSecret = null, Azure.ResourceManager.ArcData.Models.K8sActiveDirectory activeDirectory = null, Azure.ResourceManager.ArcData.Models.K8stransparentDataEncryption transparentDataEncryption = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.K8sSecurity K8sSecurity(string adminLoginSecret = null, string serviceCertificateSecret = null, Azure.ResourceManager.ArcData.Models.K8sActiveDirectory activeDirectory = null, Azure.ResourceManager.ArcData.Models.K8sTransparentDataEncryption transparentDataEncryption = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.K8sSettings K8sSettings(Azure.ResourceManager.ArcData.Models.K8sNetworkSettings network = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.K8stransparentDataEncryption K8stransparentDataEncryption(string mode = null, string protectorSecret = null) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.K8sTransparentDataEncryption K8sTransparentDataEncryption(string mode = null, string protectorSecret = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.LogAnalyticsWorkspaceConfig LogAnalyticsWorkspaceConfig(string workspaceId = null, string primaryKey = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.ManagedInstanceLinkCreateUpdateConfiguration ManagedInstanceLinkCreateUpdateConfiguration(Azure.ResourceManager.ArcData.Models.AvailabilityGroupCreateUpdateConfiguration availabilityGroup = null, Azure.ResourceManager.ArcData.Models.DistributedAvailabilityGroupCreateUpdateConfiguration distributedAvailabilityGroup = null, string miLinkInstanceAvailabilityGroupName = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.Migration Migration(Azure.ResourceManager.ArcData.Models.MigrationAssessment assessment = null, System.DateTimeOffset? targetSelectedOn = default(System.DateTimeOffset?), string targetResourceId = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.MigrationAssessment MigrationAssessment(bool? enabled = default(bool?), System.DateTimeOffset? assessmentUploadOn = default(System.DateTimeOffset?), System.DateTimeOffset? assessmentViewedOn = default(System.DateTimeOffset?), System.DateTimeOffset? targetRecommendationGenerationOn = default(System.DateTimeOffset?), string version = null, Azure.ResourceManager.ArcData.Models.MigrationAssessmentSettings settings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.ServerAssessmentsItem> serverAssessments = null, Azure.ResourceManager.ArcData.Models.SkuRecommendationResults skuRecommendationResults = null, Azure.ResourceManager.ArcData.Models.ImpactedObjectsSuitabilitySummary impactedObjectsSummary = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.MigrationAssessmentSettings MigrationAssessmentSettings(string targetLocation = null, float? percentile = default(float?), int? lookbackPeriodInDays = default(int?), int? comfortFactor = default(int?), string strategy = null, string currency = null, float? discountPercentage = default(float?), Azure.ResourceManager.ArcData.Models.CostOptionSelectedValues costOptions = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.OnPremiseProperty OnPremiseProperty(string id = null, string publicSigningKey = null, string signingCertificateThumbprint = null) { throw null; }
@@ -1151,8 +1150,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public static Azure.ResourceManager.ArcData.Models.PostgresInstancePatch PostgresInstancePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ArcData.Models.PostgresInstanceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.PostgresInstanceProperties PostgresInstanceProperties(string dataControllerId = null, string admin = null, Azure.ResourceManager.ArcData.Models.BasicLoginInformation basicLoginInformation = null, System.BinaryData k8sRaw = null, System.DateTimeOffset? lastUploadedOn = default(System.DateTimeOffset?), string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.PostgresInstanceSku PostgresInstanceSku(string name = null, bool? dev = default(bool?), string size = null, string family = null, int? capacity = default(int?), Azure.ResourceManager.ArcData.Models.PostgresInstanceSkuTier? tier = default(Azure.ResourceManager.ArcData.Models.PostgresInstanceSkuTier?)) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.Schedule Schedule(bool? enabled = default(bool?), Azure.ResourceManager.ArcData.Models.CronTrigger cronTrigger = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.SequencerAction SequencerAction(string actionId = null, Azure.ResourceManager.ArcData.Models.SequencerState? state = default(Azure.ResourceManager.ArcData.Models.SequencerState?), Azure.ResourceManager.ArcData.Models.Result? result = default(Azure.ResourceManager.ArcData.Models.Result?)) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.SequencerAction SequencerAction(string actionId = null, Azure.ResourceManager.ArcData.Models.SequencerState? state = default(Azure.ResourceManager.ArcData.Models.SequencerState?), Azure.ResourceManager.ArcData.Models.SequencerActionResult? result = default(Azure.ResourceManager.ArcData.Models.SequencerActionResult?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.ServerAssessmentsItem ServerAssessmentsItem(string appliesToMigrationTargetPlatform = null, string featureId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.ServerAssessmentsPropertiesItemsItem> impactedObjects = null, string issueCategory = null, string moreInformation = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.ServerAssessmentsPropertiesItemsItem ServerAssessmentsPropertiesItemsItem(string impactDetail = null, string name = null, string objectType = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SkuRecommendationResults SkuRecommendationResults(Azure.ResourceManager.ArcData.Models.SkuRecommendationResultsAzureSqlDatabase azureSqlDatabase = null, Azure.ResourceManager.ArcData.Models.SkuRecommendationResultsAzureSqlManagedInstance azureSqlManagedInstance = null, Azure.ResourceManager.ArcData.Models.SkuRecommendationResultsAzureSqlVirtualMachine azureSqlVirtualMachine = null) { throw null; }
@@ -1181,6 +1179,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public static Azure.ResourceManager.ArcData.Models.SqlManagedInstancePatch SqlManagedInstancePatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlManagedInstanceProperties SqlManagedInstanceProperties(string dataControllerId = null, string admin = null, string startTime = null, string endTime = null, Azure.ResourceManager.ArcData.Models.SqlManagedInstanceK8sRaw k8sRaw = null, Azure.ResourceManager.ArcData.Models.BasicLoginInformation basicLoginInformation = null, System.DateTimeOffset? lastUploadedOn = default(System.DateTimeOffset?), string provisioningState = null, string activeDirectoryInformationKeytab = null, Azure.ResourceManager.ArcData.Models.ArcSqlManagedInstanceLicenseType? licenseType = default(Azure.ResourceManager.ArcData.Models.ArcSqlManagedInstanceLicenseType?), string clusterId = null, string extensionId = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlManagedInstanceSku SqlManagedInstanceSku(Azure.ResourceManager.ArcData.Models.SqlManagedInstanceSkuTier? tier = default(Azure.ResourceManager.ArcData.Models.SqlManagedInstanceSkuTier?), bool? dev = default(bool?), string size = null, string family = null, int? capacity = default(int?)) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerAuthentication SqlServerAuthentication(Azure.ResourceManager.ArcData.Models.SqlServerAuthenticationMode? mode = default(Azure.ResourceManager.ArcData.Models.SqlServerAuthenticationMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.EntraAuthentication> sqlServerEntraIdentity = null) { throw null; }
         public static Azure.ResourceManager.ArcData.SqlServerAvailabilityGroupResourceData SqlServerAvailabilityGroupResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ArcData.Models.SqlServerAvailabilityGroupResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerAvailabilityGroupResourcePatch SqlServerAvailabilityGroupResourcePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ArcData.Models.SqlServerAvailabilityGroupResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerAvailabilityGroupResourceProperties SqlServerAvailabilityGroupResourceProperties(string availabilityGroupId = null, string serverName = null, string instanceName = null, string vmId = null, System.DateTimeOffset? collectionOn = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.AvailabilityGroupInfo info = null, Azure.ResourceManager.ArcData.Models.SqlServerAvailabilityGroupResourcePropertiesReplicas replicas = null, Azure.ResourceManager.ArcData.Models.SqlServerAvailabilityGroupResourcePropertiesDatabases databases = null, string provisioningState = null) { throw null; }
@@ -1188,13 +1187,13 @@ namespace Azure.ResourceManager.ArcData.Models
         public static Azure.ResourceManager.ArcData.Models.SqlServerAvailabilityGroupResourcePropertiesReplicas SqlServerAvailabilityGroupResourcePropertiesReplicas(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.SqlAvailabilityGroupReplicaResourceProperties> value = null, string nextLink = null) { throw null; }
         public static Azure.ResourceManager.ArcData.SqlServerDatabaseResourceData SqlServerDatabaseResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ArcData.Models.SqlServerDatabaseResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerDatabaseResourcePatch SqlServerDatabaseResourcePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ArcData.Models.SqlServerDatabaseResourceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerDatabaseResourceProperties SqlServerDatabaseResourceProperties(string collationName = null, System.DateTimeOffset? databaseCreatedOn = default(System.DateTimeOffset?), int? compatibilityLevel = default(int?), float? sizeMB = default(float?), float? logFileSizeMB = default(float?), float? dataFileSizeMB = default(float?), float? spaceAvailableMB = default(float?), Azure.ResourceManager.ArcData.Models.DatabaseState? state = default(Azure.ResourceManager.ArcData.Models.DatabaseState?), bool? isReadOnly = default(bool?), Azure.ResourceManager.ArcData.Models.RecoveryMode? recoveryMode = default(Azure.ResourceManager.ArcData.Models.RecoveryMode?), Azure.ResourceManager.ArcData.Models.SqlServerDatabaseResourcePropertiesDatabaseOptions databaseOptions = null, Azure.ResourceManager.ArcData.Models.SqlServerDatabaseResourcePropertiesBackupInformation backupInformation = null, Azure.ResourceManager.ArcData.Models.BackupPolicy backupPolicy = null, System.DateTimeOffset? earliestRestoreOn = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.DatabaseCreateMode? createMode = default(Azure.ResourceManager.ArcData.Models.DatabaseCreateMode?), string sourceDatabaseId = null, string vmId = null, System.DateTimeOffset? restorePointInTime = default(System.DateTimeOffset?), string provisioningState = null, System.DateTimeOffset? lastDatabaseUploadOn = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.DataBaseMigration migration = null) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerDatabaseResourceProperties SqlServerDatabaseResourceProperties(string collationName = null, System.DateTimeOffset? databaseCreatedOn = default(System.DateTimeOffset?), int? compatibilityLevel = default(int?), float? sizeMB = default(float?), float? logFileSizeMB = default(float?), float? dataFileSizeMB = default(float?), float? spaceAvailableMB = default(float?), Azure.ResourceManager.ArcData.Models.DatabaseState? state = default(Azure.ResourceManager.ArcData.Models.DatabaseState?), bool? isReadOnly = default(bool?), Azure.ResourceManager.ArcData.Models.RecoveryMode? recoveryMode = default(Azure.ResourceManager.ArcData.Models.RecoveryMode?), Azure.ResourceManager.ArcData.Models.SqlServerDatabaseResourcePropertiesDatabaseOptions databaseOptions = null, Azure.ResourceManager.ArcData.Models.SqlServerDatabaseResourcePropertiesBackupInformation backupInformation = null, Azure.ResourceManager.ArcData.Models.BackupPolicy backupPolicy = null, System.DateTimeOffset? earliestRestoreOn = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.DatabaseCreateMode? createMode = default(Azure.ResourceManager.ArcData.Models.DatabaseCreateMode?), string sourceDatabaseId = null, string vmId = null, System.DateTimeOffset? restorePointInTime = default(System.DateTimeOffset?), string provisioningState = null, System.DateTimeOffset? lastDatabaseUploadOn = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.DatabaseMigration migration = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerDatabaseResourcePropertiesBackupInformation SqlServerDatabaseResourcePropertiesBackupInformation(System.DateTimeOffset? lastFullBackup = default(System.DateTimeOffset?), System.DateTimeOffset? lastLogBackup = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerDatabaseResourcePropertiesDatabaseOptions SqlServerDatabaseResourcePropertiesDatabaseOptions(bool? isAutoCloseOn = default(bool?), bool? isAutoShrinkOn = default(bool?), bool? isAutoCreateStatsOn = default(bool?), bool? isAutoUpdateStatsOn = default(bool?), bool? isRemoteDataArchiveEnabled = default(bool?), bool? isMemoryOptimizationEnabled = default(bool?), bool? isEncrypted = default(bool?), bool? isTrustworthyOn = default(bool?), bool? isHekatonFilesOn = default(bool?), int? numberOfHekatonFiles = default(int?)) { throw null; }
         public static Azure.ResourceManager.ArcData.SqlServerEsuLicenseData SqlServerEsuLicenseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicensePatch SqlServerEsuLicensePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseUpdateProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseProperties SqlServerEsuLicenseProperties(Azure.ResourceManager.ArcData.Models.BillingPlan billingPlan = default(Azure.ResourceManager.ArcData.Models.BillingPlan), Azure.ResourceManager.ArcData.Models.Version version = default(Azure.ResourceManager.ArcData.Models.Version), string uniqueId = null, int physicalCores = 0, Azure.ResourceManager.ArcData.Models.State activationState = default(Azure.ResourceManager.ArcData.Models.State), Azure.ResourceManager.ArcData.Models.ScopeType scopeType = default(Azure.ResourceManager.ArcData.Models.ScopeType), System.DateTimeOffset? activatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? terminatedOn = default(System.DateTimeOffset?), string tenantId = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseUpdateProperties SqlServerEsuLicenseUpdateProperties(Azure.ResourceManager.ArcData.Models.BillingPlan? billingPlan = default(Azure.ResourceManager.ArcData.Models.BillingPlan?), Azure.ResourceManager.ArcData.Models.Version? version = default(Azure.ResourceManager.ArcData.Models.Version?), string uniqueId = null, int? physicalCores = default(int?), Azure.ResourceManager.ArcData.Models.State? activationState = default(Azure.ResourceManager.ArcData.Models.State?), Azure.ResourceManager.ArcData.Models.ScopeType? scopeType = default(Azure.ResourceManager.ArcData.Models.ScopeType?), System.DateTimeOffset? activatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? terminatedOn = default(System.DateTimeOffset?), string tenantId = null) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseProperties SqlServerEsuLicenseProperties(Azure.ResourceManager.ArcData.Models.BillingPlan billingPlan = default(Azure.ResourceManager.ArcData.Models.BillingPlan), Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion version = default(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion), string uniqueId = null, int physicalCores = 0, Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState activationState = default(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState), Azure.ResourceManager.ArcData.Models.ScopeType scopeType = default(Azure.ResourceManager.ArcData.Models.ScopeType), System.DateTimeOffset? activatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? terminatedOn = default(System.DateTimeOffset?), string tenantId = null) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseUpdateProperties SqlServerEsuLicenseUpdateProperties(Azure.ResourceManager.ArcData.Models.BillingPlan? billingPlan = default(Azure.ResourceManager.ArcData.Models.BillingPlan?), Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion? version = default(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion?), string uniqueId = null, int? physicalCores = default(int?), Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState? activationState = default(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState?), Azure.ResourceManager.ArcData.Models.ScopeType? scopeType = default(Azure.ResourceManager.ArcData.Models.ScopeType?), System.DateTimeOffset? activatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? terminatedOn = default(System.DateTimeOffset?), string tenantId = null) { throw null; }
         public static Azure.ResourceManager.ArcData.SqlServerInstanceData SqlServerInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ArcData.Models.SqlServerInstanceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceJob SqlServerInstanceJob(string id = null, string instanceName = null, Azure.ResourceManager.ArcData.Models.JobStatus? jobStatus = default(Azure.ResourceManager.ArcData.Models.JobStatus?), string jobException = null, Azure.ResourceManager.ArcData.Models.BackgroundJob backgroundJob = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.SequencerAction> sequencerActions = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceJobsResult SqlServerInstanceJobsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.SqlServerInstanceJob> jobs = null) { throw null; }
@@ -1202,9 +1201,10 @@ namespace Azure.ResourceManager.ArcData.Models
         public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceJobStatus SqlServerInstanceJobStatus(string id = null, string instanceName = null, Azure.ResourceManager.ArcData.Models.JobStatus? jobStatus = default(Azure.ResourceManager.ArcData.Models.JobStatus?), string jobException = null, Azure.ResourceManager.ArcData.Models.BackgroundJob backgroundJob = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.SequencerAction> sequencerActions = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceManagedInstanceLinkAssessment SqlServerInstanceManagedInstanceLinkAssessment(string name = null, Azure.ResourceManager.ArcData.Models.MiLinkAssessmentCategory? category = default(Azure.ResourceManager.ArcData.Models.MiLinkAssessmentCategory?), Azure.ResourceManager.ArcData.Models.AssessmentStatus? status = default(Azure.ResourceManager.ArcData.Models.AssessmentStatus?), string information = null, string additionalInformation = null, System.Collections.Generic.IEnumerable<string> failingDbs = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceManagedInstanceLinkAssessmentResult SqlServerInstanceManagedInstanceLinkAssessmentResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.SqlServerInstanceManagedInstanceLinkAssessment> assessments = null) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigration SqlServerInstanceMigration(Azure.ResourceManager.ArcData.Models.MigrationAssessment assessment = null, System.DateTimeOffset? targetSelectedOn = default(System.DateTimeOffset?), string targetResourceId = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigrationReadinessReportResult SqlServerInstanceMigrationReadinessReportResult(string report = null, bool? isCompressed = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerInstancePatch SqlServerInstancePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ArcData.Models.SqlServerInstanceUpdateProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceProperties SqlServerInstanceProperties(Azure.ResourceManager.ArcData.Models.SqlVersion? version = default(Azure.ResourceManager.ArcData.Models.SqlVersion?), Azure.ResourceManager.ArcData.Models.EditionType? edition = default(Azure.ResourceManager.ArcData.Models.EditionType?), string containerResourceId = null, string vmId = null, string createTime = null, string vCore = null, string cores = null, Azure.ResourceManager.ArcData.Models.ConnectionStatus? status = default(Azure.ResourceManager.ArcData.Models.ConnectionStatus?), Azure.ResourceManager.ArcData.Models.DiscoverySource? discoverySource = default(Azure.ResourceManager.ArcData.Models.DiscoverySource?), string patchLevel = null, string collation = null, bool? dbMasterKeyExists = default(bool?), bool? isHadrEnabled = default(bool?), System.Collections.Generic.IEnumerable<int> traceFlags = null, string currentVersion = null, string instanceName = null, string tcpDynamicPorts = null, string tcpStaticPorts = null, string productId = null, Azure.ResourceManager.ArcData.Models.ArcSqlServerLicenseType? licenseType = default(Azure.ResourceManager.ArcData.Models.ArcSqlServerLicenseType?), System.DateTimeOffset? azureDefenderStatusLastUpdated = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.DefenderStatus? azureDefenderStatus = default(Azure.ResourceManager.ArcData.Models.DefenderStatus?), string provisioningState = null, System.DateTimeOffset? lastInventoryUploadOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUsageUploadOn = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.HostType? hostType = default(Azure.ResourceManager.ArcData.Models.HostType?), Azure.ResourceManager.ArcData.Models.AlwaysOnRole? alwaysOnRole = default(Azure.ResourceManager.ArcData.Models.AlwaysOnRole?), Azure.ResourceManager.ArcData.Models.DBMEndpoint databaseMirroringEndpoint = null, Azure.ResourceManager.ArcData.Models.FailoverCluster failoverCluster = null, Azure.ResourceManager.ArcData.Models.BackupPolicy backupPolicy = null, System.DateTimeOffset? upgradeLockedUntil = default(System.DateTimeOffset?), bool? monitoringEnabled = default(bool?), Azure.ResourceManager.ArcData.Models.Migration migration = null, Azure.ResourceManager.ArcData.Models.BestPracticesAssessment bestPracticesAssessment = null, bool? clientConnectionEnabled = default(bool?), Azure.ResourceManager.ArcData.Models.ServiceType? serviceType = default(Azure.ResourceManager.ArcData.Models.ServiceType?), long? maxServerMemoryMB = default(long?), bool? isMicrosoftPkiCertTrustConfigured = default(bool?), bool? isDigiCertPkiCertTrustConfigured = default(bool?), Azure.ResourceManager.ArcData.Models.Authentication authentication = null) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceProperties SqlServerInstanceProperties(Azure.ResourceManager.ArcData.Models.SqlVersion? version = default(Azure.ResourceManager.ArcData.Models.SqlVersion?), Azure.ResourceManager.ArcData.Models.EditionType? edition = default(Azure.ResourceManager.ArcData.Models.EditionType?), string containerResourceId = null, string vmId = null, string createTime = null, string vCore = null, string cores = null, Azure.ResourceManager.ArcData.Models.ConnectionStatus? status = default(Azure.ResourceManager.ArcData.Models.ConnectionStatus?), Azure.ResourceManager.ArcData.Models.DiscoverySource? discoverySource = default(Azure.ResourceManager.ArcData.Models.DiscoverySource?), string patchLevel = null, string collation = null, bool? dbMasterKeyExists = default(bool?), bool? isHadrEnabled = default(bool?), System.Collections.Generic.IEnumerable<int> traceFlags = null, string currentVersion = null, string instanceName = null, string tcpDynamicPorts = null, string tcpStaticPorts = null, string productId = null, Azure.ResourceManager.ArcData.Models.ArcSqlServerLicenseType? licenseType = default(Azure.ResourceManager.ArcData.Models.ArcSqlServerLicenseType?), System.DateTimeOffset? azureDefenderStatusLastUpdated = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.DefenderStatus? azureDefenderStatus = default(Azure.ResourceManager.ArcData.Models.DefenderStatus?), string provisioningState = null, System.DateTimeOffset? lastInventoryUploadOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUsageUploadOn = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.HostType? hostType = default(Azure.ResourceManager.ArcData.Models.HostType?), Azure.ResourceManager.ArcData.Models.AlwaysOnRole? alwaysOnRole = default(Azure.ResourceManager.ArcData.Models.AlwaysOnRole?), Azure.ResourceManager.ArcData.Models.DbmEndpoint databaseMirroringEndpoint = null, Azure.ResourceManager.ArcData.Models.FailoverCluster failoverCluster = null, Azure.ResourceManager.ArcData.Models.BackupPolicy backupPolicy = null, System.DateTimeOffset? upgradeLockedUntil = default(System.DateTimeOffset?), bool? monitoringEnabled = default(bool?), Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigration migration = null, Azure.ResourceManager.ArcData.Models.BestPracticesAssessment bestPracticesAssessment = null, bool? clientConnectionEnabled = default(bool?), Azure.ResourceManager.ArcData.Models.ServiceType? serviceType = default(Azure.ResourceManager.ArcData.Models.ServiceType?), long? maxServerMemoryMB = default(long?), bool? isMicrosoftPkiCertTrustConfigured = default(bool?), bool? isDigiCertPkiCertTrustConfigured = default(bool?), Azure.ResourceManager.ArcData.Models.SqlServerAuthentication authentication = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceRunBestPracticesAssessmentResult SqlServerInstanceRunBestPracticesAssessmentResult(string id = null, string instanceName = null, Azure.ResourceManager.ArcData.Models.JobStatus? jobStatus = default(Azure.ResourceManager.ArcData.Models.JobStatus?), string jobException = null, Azure.ResourceManager.ArcData.Models.BackgroundJob backgroundJob = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.SequencerAction> sequencerActions = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceRunMigrationAssessmentResult SqlServerInstanceRunMigrationAssessmentResult(string id = null, string instanceName = null, Azure.ResourceManager.ArcData.Models.JobStatus? jobStatus = default(Azure.ResourceManager.ArcData.Models.JobStatus?), string jobException = null, Azure.ResourceManager.ArcData.Models.BackgroundJob backgroundJob = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.SequencerAction> sequencerActions = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceRunMigrationReadinessAssessmentResult SqlServerInstanceRunMigrationReadinessAssessmentResult(string id = null, string instanceName = null, Azure.ResourceManager.ArcData.Models.JobStatus? jobStatus = default(Azure.ResourceManager.ArcData.Models.JobStatus?), string jobException = null, Azure.ResourceManager.ArcData.Models.BackgroundJob backgroundJob = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.SequencerAction> sequencerActions = null) { throw null; }
@@ -1212,7 +1212,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceTargetRecommendationReport SqlServerInstanceTargetRecommendationReport(string reportId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.SqlServerInstanceTargetRecommendationReportSection> sections = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceTargetRecommendationReportSection SqlServerInstanceTargetRecommendationReportSection(string data = null, Azure.ResourceManager.ArcData.Models.SqlServerInstanceTargetRecommendationReportSectionType? type = default(Azure.ResourceManager.ArcData.Models.SqlServerInstanceTargetRecommendationReportSectionType?), string databaseName = null, bool? isCompressed = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceTargetRecommendationReportsResult SqlServerInstanceTargetRecommendationReportsResult(Azure.ResourceManager.ArcData.Models.JobStatus? jobStatus = default(Azure.ResourceManager.ArcData.Models.JobStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ArcData.Models.SqlServerInstanceTargetRecommendationReport> reports = null, int? totalReportCount = default(int?), int? nextReportOffset = default(int?), int? nextSectionOffset = default(int?)) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceUpdateProperties SqlServerInstanceUpdateProperties(Azure.ResourceManager.ArcData.Models.SqlVersion? version = default(Azure.ResourceManager.ArcData.Models.SqlVersion?), Azure.ResourceManager.ArcData.Models.EditionType? edition = default(Azure.ResourceManager.ArcData.Models.EditionType?), string containerResourceId = null, string vmId = null, string createTime = null, string vCore = null, string cores = null, Azure.ResourceManager.ArcData.Models.ConnectionStatus? status = default(Azure.ResourceManager.ArcData.Models.ConnectionStatus?), Azure.ResourceManager.ArcData.Models.DiscoverySource? discoverySource = default(Azure.ResourceManager.ArcData.Models.DiscoverySource?), string patchLevel = null, string collation = null, bool? dbMasterKeyExists = default(bool?), bool? isHadrEnabled = default(bool?), System.Collections.Generic.IEnumerable<int> traceFlags = null, string currentVersion = null, string instanceName = null, string tcpDynamicPorts = null, string tcpStaticPorts = null, string productId = null, Azure.ResourceManager.ArcData.Models.ArcSqlServerLicenseType? licenseType = default(Azure.ResourceManager.ArcData.Models.ArcSqlServerLicenseType?), System.DateTimeOffset? azureDefenderStatusLastUpdated = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.DefenderStatus? azureDefenderStatus = default(Azure.ResourceManager.ArcData.Models.DefenderStatus?), string provisioningState = null, System.DateTimeOffset? lastInventoryUploadOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUsageUploadOn = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.HostType? hostType = default(Azure.ResourceManager.ArcData.Models.HostType?), Azure.ResourceManager.ArcData.Models.AlwaysOnRole? alwaysOnRole = default(Azure.ResourceManager.ArcData.Models.AlwaysOnRole?), Azure.ResourceManager.ArcData.Models.FailoverCluster failoverCluster = null, Azure.ResourceManager.ArcData.Models.BackupPolicy backupPolicy = null, System.DateTimeOffset? upgradeLockedUntil = default(System.DateTimeOffset?), bool? monitoringEnabled = default(bool?), Azure.ResourceManager.ArcData.Models.Migration migration = null, Azure.ResourceManager.ArcData.Models.BestPracticesAssessment bestPracticesAssessment = null, bool? clientConnectionEnabled = default(bool?), Azure.ResourceManager.ArcData.Models.ServiceType? serviceType = default(Azure.ResourceManager.ArcData.Models.ServiceType?), Azure.ResourceManager.ArcData.Models.Authentication authentication = null, Azure.ResourceManager.ArcData.Models.DBMEndpoint databaseMirroringEndpoint = null, bool? isMicrosoftPkiCertTrustConfigured = default(bool?), bool? isDigiCertPkiCertTrustConfigured = default(bool?), long? maxServerMemoryMB = default(long?)) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerInstanceUpdateProperties SqlServerInstanceUpdateProperties(Azure.ResourceManager.ArcData.Models.SqlVersion? version = default(Azure.ResourceManager.ArcData.Models.SqlVersion?), Azure.ResourceManager.ArcData.Models.EditionType? edition = default(Azure.ResourceManager.ArcData.Models.EditionType?), string containerResourceId = null, string vmId = null, string createTime = null, string vCore = null, string cores = null, Azure.ResourceManager.ArcData.Models.ConnectionStatus? status = default(Azure.ResourceManager.ArcData.Models.ConnectionStatus?), Azure.ResourceManager.ArcData.Models.DiscoverySource? discoverySource = default(Azure.ResourceManager.ArcData.Models.DiscoverySource?), string patchLevel = null, string collation = null, bool? dbMasterKeyExists = default(bool?), bool? isHadrEnabled = default(bool?), System.Collections.Generic.IEnumerable<int> traceFlags = null, string currentVersion = null, string instanceName = null, string tcpDynamicPorts = null, string tcpStaticPorts = null, string productId = null, Azure.ResourceManager.ArcData.Models.ArcSqlServerLicenseType? licenseType = default(Azure.ResourceManager.ArcData.Models.ArcSqlServerLicenseType?), System.DateTimeOffset? azureDefenderStatusLastUpdated = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.DefenderStatus? azureDefenderStatus = default(Azure.ResourceManager.ArcData.Models.DefenderStatus?), string provisioningState = null, System.DateTimeOffset? lastInventoryUploadOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUsageUploadOn = default(System.DateTimeOffset?), Azure.ResourceManager.ArcData.Models.HostType? hostType = default(Azure.ResourceManager.ArcData.Models.HostType?), Azure.ResourceManager.ArcData.Models.AlwaysOnRole? alwaysOnRole = default(Azure.ResourceManager.ArcData.Models.AlwaysOnRole?), Azure.ResourceManager.ArcData.Models.FailoverCluster failoverCluster = null, Azure.ResourceManager.ArcData.Models.BackupPolicy backupPolicy = null, System.DateTimeOffset? upgradeLockedUntil = default(System.DateTimeOffset?), bool? monitoringEnabled = default(bool?), Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigration migration = null, Azure.ResourceManager.ArcData.Models.BestPracticesAssessment bestPracticesAssessment = null, bool? clientConnectionEnabled = default(bool?), Azure.ResourceManager.ArcData.Models.ServiceType? serviceType = default(Azure.ResourceManager.ArcData.Models.ServiceType?), Azure.ResourceManager.ArcData.Models.SqlServerAuthentication authentication = null, Azure.ResourceManager.ArcData.Models.DbmEndpoint databaseMirroringEndpoint = null, bool? isMicrosoftPkiCertTrustConfigured = default(bool?), bool? isDigiCertPkiCertTrustConfigured = default(bool?), long? maxServerMemoryMB = default(long?)) { throw null; }
         public static Azure.ResourceManager.ArcData.SqlServerLicenseData SqlServerLicenseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ArcData.Models.SqlServerLicenseProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerLicensePatch SqlServerLicensePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ArcData.Models.SqlServerLicenseUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.SqlServerLicenseProperties SqlServerLicenseProperties(Azure.ResourceManager.ArcData.Models.BillingPlan billingPlan = default(Azure.ResourceManager.ArcData.Models.BillingPlan), int physicalCores = 0, Azure.ResourceManager.ArcData.Models.LicenseCategory licenseCategory = default(Azure.ResourceManager.ArcData.Models.LicenseCategory), Azure.ResourceManager.ArcData.Models.ActivationState activationState = default(Azure.ResourceManager.ArcData.Models.ActivationState), Azure.ResourceManager.ArcData.Models.ScopeType scopeType = default(Azure.ResourceManager.ArcData.Models.ScopeType), System.DateTimeOffset? lastActivatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastDeactivatedOn = default(System.DateTimeOffset?), string tenantId = null) { throw null; }
@@ -1238,21 +1238,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public static implicit operator Azure.ResourceManager.ArcData.Models.AssessmentStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ArcData.Models.AssessmentStatus left, Azure.ResourceManager.ArcData.Models.AssessmentStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class Authentication : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.Authentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.Authentication>
-    {
-        public Authentication() { }
-        public Azure.ResourceManager.ArcData.Models.Mode? Mode { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ArcData.Models.EntraAuthentication> SqlServerEntraIdentity { get { throw null; } }
-        protected virtual Azure.ResourceManager.ArcData.Models.Authentication JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ArcData.Models.Authentication PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ArcData.Models.Authentication System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.Authentication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.Authentication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ArcData.Models.Authentication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.Authentication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.Authentication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.Authentication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum AutomatedBackupPreference
     {
@@ -1302,7 +1287,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public string AvailabilityGroupName { get { throw null; } set { } }
         public Azure.ResourceManager.ArcData.Models.ClusterType? ClusterType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Databases { get { throw null; } }
-        public Azure.ResourceManager.ArcData.Models.DBFailover? DBFailover { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.DbFailover? DbFailover { get { throw null; } set { } }
         public Azure.ResourceManager.ArcData.Models.DtcSupport? DtcSupport { get { throw null; } set { } }
         public Azure.ResourceManager.ArcData.Models.FailureConditionLevel? FailureConditionLevel { get { throw null; } set { } }
         public int? HealthCheckTimeout { get { throw null; } set { } }
@@ -1353,7 +1338,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public string AutomatedBackupPreferenceDescription { get { throw null; } }
         public bool? BasicFeatures { get { throw null; } set { } }
         public string ClusterTypeDescription { get { throw null; } }
-        public bool? DBFailover { get { throw null; } set { } }
+        public bool? DbFailover { get { throw null; } set { } }
         public bool? DtcSupport { get { throw null; } set { } }
         public int? FailureConditionLevel { get { throw null; } set { } }
         public int? HealthCheckTimeout { get { throw null; } set { } }
@@ -1438,7 +1423,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public Azure.ResourceManager.ArcData.Models.LastExecutionStatus? LastExecutionStatus { get { throw null; } }
         public System.DateTimeOffset? NextExecutionOn { get { throw null; } }
         public System.DateTimeOffset? StartsOn { get { throw null; } }
-        public Azure.ResourceManager.ArcData.Models.State? State { get { throw null; } }
+        public Azure.ResourceManager.ArcData.Models.BackgroundJobState? State { get { throw null; } }
         protected virtual Azure.ResourceManager.ArcData.Models.BackgroundJob JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ArcData.Models.BackgroundJob PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1448,6 +1433,27 @@ namespace Azure.ResourceManager.ArcData.Models
         Azure.ResourceManager.ArcData.Models.BackgroundJob System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.BackgroundJob>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.BackgroundJob>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.BackgroundJob>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BackgroundJobState : System.IEquatable<Azure.ResourceManager.ArcData.Models.BackgroundJobState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BackgroundJobState(string value) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.BackgroundJobState Completed { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.BackgroundJobState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.BackgroundJobState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.BackgroundJobState Enabled { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.BackgroundJobState Faulted { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.BackgroundJobState Suspended { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ArcData.Models.BackgroundJobState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ArcData.Models.BackgroundJobState left, Azure.ResourceManager.ArcData.Models.BackgroundJobState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArcData.Models.BackgroundJobState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArcData.Models.BackgroundJobState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ArcData.Models.BackgroundJobState left, Azure.ResourceManager.ArcData.Models.BackgroundJobState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class BackupPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.BackupPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.BackupPolicy>
     {
@@ -1485,7 +1491,7 @@ namespace Azure.ResourceManager.ArcData.Models
     {
         public BestPracticesAssessment() { }
         public bool? Enabled { get { throw null; } set { } }
-        public Azure.ResourceManager.ArcData.Models.Schedule Schedule { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.BestPracticesAssessmentSchedule Schedule { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ArcData.Models.BestPracticesAssessment JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ArcData.Models.BestPracticesAssessment PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1495,6 +1501,21 @@ namespace Azure.ResourceManager.ArcData.Models
         Azure.ResourceManager.ArcData.Models.BestPracticesAssessment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.BestPracticesAssessment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.BestPracticesAssessment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.BestPracticesAssessment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BestPracticesAssessmentSchedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.BestPracticesAssessmentSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.BestPracticesAssessmentSchedule>
+    {
+        public BestPracticesAssessmentSchedule() { }
+        public Azure.ResourceManager.ArcData.Models.CronTrigger CronTrigger { get { throw null; } set { } }
+        public bool? Enabled { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ArcData.Models.BestPracticesAssessmentSchedule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ArcData.Models.BestPracticesAssessmentSchedule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ArcData.Models.BestPracticesAssessmentSchedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.BestPracticesAssessmentSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.BestPracticesAssessmentSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcData.Models.BestPracticesAssessmentSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.BestPracticesAssessmentSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.BestPracticesAssessmentSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.BestPracticesAssessmentSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BillingPlan : System.IEquatable<Azure.ResourceManager.ArcData.Models.BillingPlan>
@@ -1663,37 +1684,37 @@ namespace Azure.ResourceManager.ArcData.Models
         public static bool operator !=(Azure.ResourceManager.ArcData.Models.DatabaseCreateMode left, Azure.ResourceManager.ArcData.Models.DatabaseCreateMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DataBaseMigration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DataBaseMigration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DataBaseMigration>
+    public partial class DatabaseMigration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DatabaseMigration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DatabaseMigration>
     {
-        public DataBaseMigration() { }
-        public Azure.ResourceManager.ArcData.Models.DataBaseMigrationAssessment Assessment { get { throw null; } set { } }
+        public DatabaseMigration() { }
+        public Azure.ResourceManager.ArcData.Models.DatabaseMigrationAssessment Assessment { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ArcData.Models.DatabaseMigrationJobsItem> Jobs { get { throw null; } }
-        protected virtual Azure.ResourceManager.ArcData.Models.DataBaseMigration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ArcData.Models.DatabaseMigration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ArcData.Models.DataBaseMigration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ArcData.Models.DatabaseMigration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ArcData.Models.DataBaseMigration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DataBaseMigration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DataBaseMigration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ArcData.Models.DataBaseMigration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DataBaseMigration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DataBaseMigration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DataBaseMigration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ArcData.Models.DatabaseMigration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DatabaseMigration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DatabaseMigration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcData.Models.DatabaseMigration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DatabaseMigration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DatabaseMigration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DatabaseMigration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBaseMigrationAssessment : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DataBaseMigrationAssessment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DataBaseMigrationAssessment>
+    public partial class DatabaseMigrationAssessment : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DatabaseMigrationAssessment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DatabaseMigrationAssessment>
     {
-        public DataBaseMigrationAssessment() { }
+        public DatabaseMigrationAssessment() { }
         public System.DateTimeOffset? AssessmentUploadOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ArcData.Models.DatabaseAssessmentsItem> DatabaseAssessments { get { throw null; } }
         public Azure.ResourceManager.ArcData.Models.TargetReadiness TargetReadiness { get { throw null; } }
         public System.DateTimeOffset? TargetRecommendationGenerationOn { get { throw null; } }
-        protected virtual Azure.ResourceManager.ArcData.Models.DataBaseMigrationAssessment JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ArcData.Models.DatabaseMigrationAssessment JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ArcData.Models.DataBaseMigrationAssessment PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ArcData.Models.DatabaseMigrationAssessment PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ArcData.Models.DataBaseMigrationAssessment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DataBaseMigrationAssessment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DataBaseMigrationAssessment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ArcData.Models.DataBaseMigrationAssessment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DataBaseMigrationAssessment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DataBaseMigrationAssessment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DataBaseMigrationAssessment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ArcData.Models.DatabaseMigrationAssessment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DatabaseMigrationAssessment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DatabaseMigrationAssessment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcData.Models.DatabaseMigrationAssessment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DatabaseMigrationAssessment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DatabaseMigrationAssessment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DatabaseMigrationAssessment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DatabaseMigrationJobsItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DatabaseMigrationJobsItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DatabaseMigrationJobsItem>
     {
@@ -1717,6 +1738,25 @@ namespace Azure.ResourceManager.ArcData.Models
         Azure.ResourceManager.ArcData.Models.DatabaseMigrationJobsItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DatabaseMigrationJobsItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DatabaseMigrationJobsItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DatabaseMigrationJobsItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DatabaseMirroringRole : System.IEquatable<Azure.ResourceManager.ArcData.Models.DatabaseMirroringRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DatabaseMirroringRole(string value) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.DatabaseMirroringRole All { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.DatabaseMirroringRole None { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.DatabaseMirroringRole Partner { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.DatabaseMirroringRole Witness { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ArcData.Models.DatabaseMirroringRole other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ArcData.Models.DatabaseMirroringRole left, Azure.ResourceManager.ArcData.Models.DatabaseMirroringRole right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArcData.Models.DatabaseMirroringRole (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArcData.Models.DatabaseMirroringRole? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ArcData.Models.DatabaseMirroringRole left, Azure.ResourceManager.ArcData.Models.DatabaseMirroringRole right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class Databases : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.Databases>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.Databases>
     {
@@ -1756,13 +1796,22 @@ namespace Azure.ResourceManager.ArcData.Models
         public static bool operator !=(Azure.ResourceManager.ArcData.Models.DatabaseState left, Azure.ResourceManager.ArcData.Models.DatabaseState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public enum DataControllerInfrastructure
+    {
+        Azure = 0,
+        Gcp = 1,
+        Aws = 2,
+        Alibaba = 3,
+        Onpremises = 4,
+        Other = 5,
+    }
     public partial class DataControllerProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DataControllerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DataControllerProperties>
     {
         public DataControllerProperties() { }
         public Azure.ResourceManager.ArcData.Models.BasicLoginInformation BasicLoginInformation { get { throw null; } set { } }
         public string ClusterId { get { throw null; } set { } }
         public string ExtensionId { get { throw null; } set { } }
-        public Azure.ResourceManager.ArcData.Models.Infrastructure? Infrastructure { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.DataControllerInfrastructure? Infrastructure { get { throw null; } set { } }
         public System.BinaryData K8sRaw { get { throw null; } set { } }
         public System.DateTimeOffset? LastUploadedOn { get { throw null; } set { } }
         public Azure.ResourceManager.ArcData.Models.LogAnalyticsWorkspaceConfig LogAnalyticsWorkspaceConfig { get { throw null; } set { } }
@@ -1797,33 +1846,33 @@ namespace Azure.ResourceManager.ArcData.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DataControllerResourcePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DataControllerResourcePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum DBFailover
+    public enum DbFailover
     {
-        ON = 0,
-        OFF = 1,
+        On = 0,
+        Off = 1,
     }
-    public partial class DBMEndpoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DBMEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DBMEndpoint>
+    public partial class DbmEndpoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DbmEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DbmEndpoint>
     {
-        public DBMEndpoint() { }
+        public DbmEndpoint() { }
         public System.DateTimeOffset? CertificateExpiryOn { get { throw null; } }
         public string CertificateName { get { throw null; } }
         public Azure.ResourceManager.ArcData.Models.ConnectionAuth? ConnectionAuth { get { throw null; } }
         public Azure.ResourceManager.ArcData.Models.EncryptionAlgorithm? EncryptionAlgorithm { get { throw null; } }
         public string EndpointName { get { throw null; } }
-        public string IPAddress { get { throw null; } }
+        public string IpAddress { get { throw null; } }
         public bool? IsDynamicPort { get { throw null; } }
         public bool? IsEncryptionEnabled { get { throw null; } }
         public int? Port { get { throw null; } }
-        public Azure.ResourceManager.ArcData.Models.Role? Role { get { throw null; } }
-        protected virtual Azure.ResourceManager.ArcData.Models.DBMEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public Azure.ResourceManager.ArcData.Models.DatabaseMirroringRole? Role { get { throw null; } }
+        protected virtual Azure.ResourceManager.ArcData.Models.DbmEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ArcData.Models.DBMEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ArcData.Models.DbmEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ArcData.Models.DBMEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DBMEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DBMEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ArcData.Models.DBMEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DBMEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DBMEndpoint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DBMEndpoint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ArcData.Models.DbmEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DbmEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.DbmEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcData.Models.DbmEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DbmEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DbmEndpoint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.DbmEndpoint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DefenderStatus : System.IEquatable<Azure.ResourceManager.ArcData.Models.DefenderStatus>
@@ -2234,15 +2283,6 @@ namespace Azure.ResourceManager.ArcData.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.ImpactedObjectsSuitabilitySummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.ImpactedObjectsSuitabilitySummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum Infrastructure
-    {
-        Azure = 0,
-        Gcp = 1,
-        Aws = 2,
-        Alibaba = 3,
-        Onpremises = 4,
-        Other = 5,
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct InitiatedFrom : System.IEquatable<Azure.ResourceManager.ArcData.Models.InitiatedFrom>
     {
@@ -2406,7 +2446,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public string AdminLoginSecret { get { throw null; } set { } }
         public string ServiceCertificateSecret { get { throw null; } set { } }
-        public Azure.ResourceManager.ArcData.Models.K8stransparentDataEncryption TransparentDataEncryption { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.K8sTransparentDataEncryption TransparentDataEncryption { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ArcData.Models.K8sSecurity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ArcData.Models.K8sSecurity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2432,20 +2472,20 @@ namespace Azure.ResourceManager.ArcData.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.K8sSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.K8sSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class K8stransparentDataEncryption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.K8stransparentDataEncryption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.K8stransparentDataEncryption>
+    public partial class K8sTransparentDataEncryption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.K8sTransparentDataEncryption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.K8sTransparentDataEncryption>
     {
-        public K8stransparentDataEncryption() { }
+        public K8sTransparentDataEncryption() { }
         public string Mode { get { throw null; } set { } }
         public string ProtectorSecret { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ArcData.Models.K8stransparentDataEncryption JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ArcData.Models.K8sTransparentDataEncryption JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ArcData.Models.K8stransparentDataEncryption PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ArcData.Models.K8sTransparentDataEncryption PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ArcData.Models.K8stransparentDataEncryption System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.K8stransparentDataEncryption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.K8stransparentDataEncryption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ArcData.Models.K8stransparentDataEncryption System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.K8stransparentDataEncryption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.K8stransparentDataEncryption>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.K8stransparentDataEncryption>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ArcData.Models.K8sTransparentDataEncryption System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.K8sTransparentDataEncryption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.K8sTransparentDataEncryption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcData.Models.K8sTransparentDataEncryption System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.K8sTransparentDataEncryption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.K8sTransparentDataEncryption>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.K8sTransparentDataEncryption>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LastExecutionStatus : System.IEquatable<Azure.ResourceManager.ArcData.Models.LastExecutionStatus>
@@ -2514,22 +2554,6 @@ namespace Azure.ResourceManager.ArcData.Models
         Azure.ResourceManager.ArcData.Models.ManagedInstanceLinkCreateUpdateConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.ManagedInstanceLinkCreateUpdateConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.ManagedInstanceLinkCreateUpdateConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.ManagedInstanceLinkCreateUpdateConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class Migration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.Migration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.Migration>
-    {
-        public Migration() { }
-        public Azure.ResourceManager.ArcData.Models.MigrationAssessment Assessment { get { throw null; } set { } }
-        public string TargetResourceId { get { throw null; } set { } }
-        public System.DateTimeOffset? TargetSelectedOn { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ArcData.Models.Migration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ArcData.Models.Migration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ArcData.Models.Migration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.Migration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.Migration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ArcData.Models.Migration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.Migration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.Migration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.Migration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MigrationAssessment : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.MigrationAssessment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.MigrationAssessment>
     {
@@ -2639,24 +2663,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public static implicit operator Azure.ResourceManager.ArcData.Models.MiLinkAssessmentCategory (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.ArcData.Models.MiLinkAssessmentCategory? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ArcData.Models.MiLinkAssessmentCategory left, Azure.ResourceManager.ArcData.Models.MiLinkAssessmentCategory right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Mode : System.IEquatable<Azure.ResourceManager.ArcData.Models.Mode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Mode(string value) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.Mode Mixed { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.Mode Undefined { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.Mode Windows { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ArcData.Models.Mode other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ArcData.Models.Mode left, Azure.ResourceManager.ArcData.Models.Mode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ArcData.Models.Mode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ArcData.Models.Mode? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ArcData.Models.Mode left, Azure.ResourceManager.ArcData.Models.Mode right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class OnPremiseProperty : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.OnPremiseProperty>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.OnPremiseProperty>
@@ -2802,9 +2808,9 @@ namespace Azure.ResourceManager.ArcData.Models
     }
     public enum ReplicationPartnerType
     {
-        SQLServer = 0,
-        AzureSqlvm = 1,
-        AzureSQLManagedInstance = 2,
+        SqlServer = 0,
+        AzureSqlVm = 1,
+        AzureSqlManagedInstance = 2,
         Unknown = 3,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2823,60 +2829,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public static implicit operator Azure.ResourceManager.ArcData.Models.ResourceUpdateMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ArcData.Models.ResourceUpdateMode left, Azure.ResourceManager.ArcData.Models.ResourceUpdateMode right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Result : System.IEquatable<Azure.ResourceManager.ArcData.Models.Result>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Result(string value) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.Result Failed { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.Result NotCompleted { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.Result Skipped { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.Result Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.Result TimedOut { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ArcData.Models.Result other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ArcData.Models.Result left, Azure.ResourceManager.ArcData.Models.Result right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ArcData.Models.Result (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ArcData.Models.Result? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ArcData.Models.Result left, Azure.ResourceManager.ArcData.Models.Result right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Role : System.IEquatable<Azure.ResourceManager.ArcData.Models.Role>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Role(string value) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.Role ALL { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.Role None { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.Role Partner { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.Role Witness { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ArcData.Models.Role other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ArcData.Models.Role left, Azure.ResourceManager.ArcData.Models.Role right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ArcData.Models.Role (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ArcData.Models.Role? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ArcData.Models.Role left, Azure.ResourceManager.ArcData.Models.Role right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class Schedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.Schedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.Schedule>
-    {
-        public Schedule() { }
-        public Azure.ResourceManager.ArcData.Models.CronTrigger CronTrigger { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ArcData.Models.Schedule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ArcData.Models.Schedule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ArcData.Models.Schedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.Schedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.Schedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ArcData.Models.Schedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.Schedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.Schedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.Schedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScopeType : System.IEquatable<Azure.ResourceManager.ArcData.Models.ScopeType>
@@ -2898,8 +2850,8 @@ namespace Azure.ResourceManager.ArcData.Models
     }
     public enum SecondaryAllowConnections
     {
-        NO = 0,
-        ALL = 1,
+        No = 0,
+        All = 1,
         ReadOnly = 2,
     }
     public enum SeedingMode
@@ -2911,7 +2863,7 @@ namespace Azure.ResourceManager.ArcData.Models
     {
         internal SequencerAction() { }
         public string ActionId { get { throw null; } }
-        public Azure.ResourceManager.ArcData.Models.Result? Result { get { throw null; } }
+        public Azure.ResourceManager.ArcData.Models.SequencerActionResult? Result { get { throw null; } }
         public Azure.ResourceManager.ArcData.Models.SequencerState? State { get { throw null; } }
         protected virtual Azure.ResourceManager.ArcData.Models.SequencerAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2922,6 +2874,26 @@ namespace Azure.ResourceManager.ArcData.Models
         Azure.ResourceManager.ArcData.Models.SequencerAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SequencerAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SequencerAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SequencerAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SequencerActionResult : System.IEquatable<Azure.ResourceManager.ArcData.Models.SequencerActionResult>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SequencerActionResult(string value) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.SequencerActionResult Failed { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.SequencerActionResult NotCompleted { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.SequencerActionResult Skipped { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.SequencerActionResult Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.SequencerActionResult TimedOut { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ArcData.Models.SequencerActionResult other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ArcData.Models.SequencerActionResult left, Azure.ResourceManager.ArcData.Models.SequencerActionResult right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArcData.Models.SequencerActionResult (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArcData.Models.SequencerActionResult? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ArcData.Models.SequencerActionResult left, Azure.ResourceManager.ArcData.Models.SequencerActionResult right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SequencerState : System.IEquatable<Azure.ResourceManager.ArcData.Models.SequencerState>
@@ -3458,6 +3430,39 @@ namespace Azure.ResourceManager.ArcData.Models
         GeneralPurpose = 0,
         BusinessCritical = 1,
     }
+    public partial class SqlServerAuthentication : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.SqlServerAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerAuthentication>
+    {
+        public SqlServerAuthentication() { }
+        public Azure.ResourceManager.ArcData.Models.SqlServerAuthenticationMode? Mode { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ArcData.Models.EntraAuthentication> SqlServerEntraIdentity { get { throw null; } }
+        protected virtual Azure.ResourceManager.ArcData.Models.SqlServerAuthentication JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ArcData.Models.SqlServerAuthentication PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ArcData.Models.SqlServerAuthentication System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.SqlServerAuthentication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.SqlServerAuthentication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcData.Models.SqlServerAuthentication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerAuthentication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerAuthentication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerAuthentication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SqlServerAuthenticationMode : System.IEquatable<Azure.ResourceManager.ArcData.Models.SqlServerAuthenticationMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SqlServerAuthenticationMode(string value) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerAuthenticationMode Mixed { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerAuthenticationMode Undefined { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerAuthenticationMode Windows { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ArcData.Models.SqlServerAuthenticationMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ArcData.Models.SqlServerAuthenticationMode left, Azure.ResourceManager.ArcData.Models.SqlServerAuthenticationMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArcData.Models.SqlServerAuthenticationMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArcData.Models.SqlServerAuthenticationMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ArcData.Models.SqlServerAuthenticationMode left, Azure.ResourceManager.ArcData.Models.SqlServerAuthenticationMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SqlServerAvailabilityGroupResourcePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.SqlServerAvailabilityGroupResourcePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerAvailabilityGroupResourcePatch>
     {
         public SqlServerAvailabilityGroupResourcePatch() { }
@@ -3555,7 +3560,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public bool? IsReadOnly { get { throw null; } set { } }
         public System.DateTimeOffset? LastDatabaseUploadOn { get { throw null; } }
         public float? LogFileSizeMB { get { throw null; } set { } }
-        public Azure.ResourceManager.ArcData.Models.DataBaseMigration Migration { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.DatabaseMigration Migration { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ArcData.Models.RecoveryMode? RecoveryMode { get { throw null; } set { } }
         public System.DateTimeOffset? RestorePointInTime { get { throw null; } set { } }
@@ -3612,6 +3617,24 @@ namespace Azure.ResourceManager.ArcData.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerDatabaseResourcePropertiesDatabaseOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerDatabaseResourcePropertiesDatabaseOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SqlServerEsuLicenseActivationState : System.IEquatable<Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SqlServerEsuLicenseActivationState(string value) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState Active { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState Inactive { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState Terminated { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState left, Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState left, Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SqlServerEsuLicensePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.SqlServerEsuLicensePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerEsuLicensePatch>
     {
         public SqlServerEsuLicensePatch() { }
@@ -3629,16 +3652,16 @@ namespace Azure.ResourceManager.ArcData.Models
     }
     public partial class SqlServerEsuLicenseProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseProperties>
     {
-        public SqlServerEsuLicenseProperties(Azure.ResourceManager.ArcData.Models.BillingPlan billingPlan, Azure.ResourceManager.ArcData.Models.Version version, int physicalCores, Azure.ResourceManager.ArcData.Models.State activationState, Azure.ResourceManager.ArcData.Models.ScopeType scopeType) { }
+        public SqlServerEsuLicenseProperties(Azure.ResourceManager.ArcData.Models.BillingPlan billingPlan, Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion version, int physicalCores, Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState activationState, Azure.ResourceManager.ArcData.Models.ScopeType scopeType) { }
         public System.DateTimeOffset? ActivatedOn { get { throw null; } }
-        public Azure.ResourceManager.ArcData.Models.State ActivationState { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState ActivationState { get { throw null; } set { } }
         public Azure.ResourceManager.ArcData.Models.BillingPlan BillingPlan { get { throw null; } set { } }
         public int PhysicalCores { get { throw null; } set { } }
         public Azure.ResourceManager.ArcData.Models.ScopeType ScopeType { get { throw null; } set { } }
         public string TenantId { get { throw null; } }
         public System.DateTimeOffset? TerminatedOn { get { throw null; } }
         public string UniqueId { get { throw null; } }
-        public Azure.ResourceManager.ArcData.Models.Version Version { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion Version { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3653,14 +3676,14 @@ namespace Azure.ResourceManager.ArcData.Models
     {
         public SqlServerEsuLicenseUpdateProperties() { }
         public System.DateTimeOffset? ActivatedOn { get { throw null; } }
-        public Azure.ResourceManager.ArcData.Models.State? ActivationState { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseActivationState? ActivationState { get { throw null; } set { } }
         public Azure.ResourceManager.ArcData.Models.BillingPlan? BillingPlan { get { throw null; } set { } }
         public int? PhysicalCores { get { throw null; } set { } }
         public Azure.ResourceManager.ArcData.Models.ScopeType? ScopeType { get { throw null; } set { } }
         public string TenantId { get { throw null; } }
         public System.DateTimeOffset? TerminatedOn { get { throw null; } }
         public string UniqueId { get { throw null; } }
-        public Azure.ResourceManager.ArcData.Models.Version? Version { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion? Version { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3670,6 +3693,24 @@ namespace Azure.ResourceManager.ArcData.Models
         Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SqlServerEsuLicenseVersion : System.IEquatable<Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SqlServerEsuLicenseVersion(string value) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion SqlServer2012 { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion SqlServer2014 { get { throw null; } }
+        public static Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion SqlServer2016 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion left, Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion left, Azure.ResourceManager.ArcData.Models.SqlServerEsuLicenseVersion right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class SqlServerInstanceJob : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.SqlServerInstanceJob>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerInstanceJob>
     {
@@ -3770,6 +3811,22 @@ namespace Azure.ResourceManager.ArcData.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerInstanceManagedInstanceLinkAssessmentResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerInstanceManagedInstanceLinkAssessmentResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class SqlServerInstanceMigration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigration>
+    {
+        public SqlServerInstanceMigration() { }
+        public Azure.ResourceManager.ArcData.Models.MigrationAssessment Assessment { get { throw null; } set { } }
+        public string TargetResourceId { get { throw null; } set { } }
+        public System.DateTimeOffset? TargetSelectedOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SqlServerInstanceMigrationReadinessReportResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigrationReadinessReportResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigrationReadinessReportResult>
     {
         internal SqlServerInstanceMigrationReadinessReportResult() { }
@@ -3805,7 +3862,7 @@ namespace Azure.ResourceManager.ArcData.Models
     {
         public SqlServerInstanceProperties() { }
         public Azure.ResourceManager.ArcData.Models.AlwaysOnRole? AlwaysOnRole { get { throw null; } }
-        public Azure.ResourceManager.ArcData.Models.Authentication Authentication { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.SqlServerAuthentication Authentication { get { throw null; } set { } }
         public Azure.ResourceManager.ArcData.Models.DefenderStatus? AzureDefenderStatus { get { throw null; } }
         public System.DateTimeOffset? AzureDefenderStatusLastUpdated { get { throw null; } }
         public Azure.ResourceManager.ArcData.Models.BackupPolicy BackupPolicy { get { throw null; } set { } }
@@ -3816,7 +3873,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public string Cores { get { throw null; } set { } }
         public string CreateTime { get { throw null; } }
         public string CurrentVersion { get { throw null; } }
-        public Azure.ResourceManager.ArcData.Models.DBMEndpoint DatabaseMirroringEndpoint { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.DbmEndpoint DatabaseMirroringEndpoint { get { throw null; } set { } }
         public bool? DBMasterKeyExists { get { throw null; } }
         public Azure.ResourceManager.ArcData.Models.DiscoverySource? DiscoverySource { get { throw null; } set { } }
         public Azure.ResourceManager.ArcData.Models.EditionType? Edition { get { throw null; } set { } }
@@ -3830,7 +3887,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public System.DateTimeOffset? LastUsageUploadOn { get { throw null; } }
         public Azure.ResourceManager.ArcData.Models.ArcSqlServerLicenseType? LicenseType { get { throw null; } }
         public long? MaxServerMemoryMB { get { throw null; } }
-        public Azure.ResourceManager.ArcData.Models.Migration Migration { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigration Migration { get { throw null; } set { } }
         public bool? MonitoringEnabled { get { throw null; } set { } }
         public string PatchLevel { get { throw null; } }
         public string ProductId { get { throw null; } }
@@ -4001,7 +4058,7 @@ namespace Azure.ResourceManager.ArcData.Models
     {
         public SqlServerInstanceUpdateProperties() { }
         public Azure.ResourceManager.ArcData.Models.AlwaysOnRole? AlwaysOnRole { get { throw null; } }
-        public Azure.ResourceManager.ArcData.Models.Authentication Authentication { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.SqlServerAuthentication Authentication { get { throw null; } set { } }
         public Azure.ResourceManager.ArcData.Models.DefenderStatus? AzureDefenderStatus { get { throw null; } }
         public System.DateTimeOffset? AzureDefenderStatusLastUpdated { get { throw null; } }
         public Azure.ResourceManager.ArcData.Models.BackupPolicy BackupPolicy { get { throw null; } set { } }
@@ -4012,7 +4069,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public string Cores { get { throw null; } set { } }
         public string CreateTime { get { throw null; } }
         public string CurrentVersion { get { throw null; } }
-        public Azure.ResourceManager.ArcData.Models.DBMEndpoint DatabaseMirroringEndpoint { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.DbmEndpoint DatabaseMirroringEndpoint { get { throw null; } set { } }
         public bool? DBMasterKeyExists { get { throw null; } }
         public Azure.ResourceManager.ArcData.Models.DiscoverySource? DiscoverySource { get { throw null; } set { } }
         public Azure.ResourceManager.ArcData.Models.EditionType? Edition { get { throw null; } set { } }
@@ -4026,7 +4083,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public System.DateTimeOffset? LastUsageUploadOn { get { throw null; } }
         public Azure.ResourceManager.ArcData.Models.ArcSqlServerLicenseType? LicenseType { get { throw null; } }
         public long? MaxServerMemoryMB { get { throw null; } set { } }
-        public Azure.ResourceManager.ArcData.Models.Migration Migration { get { throw null; } set { } }
+        public Azure.ResourceManager.ArcData.Models.SqlServerInstanceMigration Migration { get { throw null; } set { } }
         public bool? MonitoringEnabled { get { throw null; } set { } }
         public string PatchLevel { get { throw null; } }
         public string ProductId { get { throw null; } }
@@ -4130,30 +4187,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public static bool operator !=(Azure.ResourceManager.ArcData.Models.SqlVersion left, Azure.ResourceManager.ArcData.Models.SqlVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct State : System.IEquatable<Azure.ResourceManager.ArcData.Models.State>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public State(string value) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.State Active { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.State Completed { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.State Deleted { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.State Disabled { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.State Enabled { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.State Faulted { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.State Inactive { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.State Suspended { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.State Terminated { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ArcData.Models.State other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ArcData.Models.State left, Azure.ResourceManager.ArcData.Models.State right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ArcData.Models.State (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ArcData.Models.State? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ArcData.Models.State left, Azure.ResourceManager.ArcData.Models.State right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class TargetReadiness : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.TargetReadiness>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.TargetReadiness>
     {
         internal TargetReadiness() { }
@@ -4220,23 +4253,5 @@ namespace Azure.ResourceManager.ArcData.Models
         Azure.ResourceManager.ArcData.Models.UploadWatermark System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.UploadWatermark>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.UploadWatermark>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.UploadWatermark>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Version : System.IEquatable<Azure.ResourceManager.ArcData.Models.Version>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Version(string value) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.Version SQLServer2012 { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.Version SQLServer2014 { get { throw null; } }
-        public static Azure.ResourceManager.ArcData.Models.Version SQLServer2016 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ArcData.Models.Version other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ArcData.Models.Version left, Azure.ResourceManager.ArcData.Models.Version right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ArcData.Models.Version (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ArcData.Models.Version? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ArcData.Models.Version left, Azure.ResourceManager.ArcData.Models.Version right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }

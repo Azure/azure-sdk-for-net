@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> Migration related configuration. </summary>
-    public partial class Migration
+    public partial class SqlServerInstanceMigration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Migration"/>. </summary>
-        public Migration()
+        /// <summary> Initializes a new instance of <see cref="SqlServerInstanceMigration"/>. </summary>
+        public SqlServerInstanceMigration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Migration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerInstanceMigration"/>. </summary>
         /// <param name="assessment"> Migration assessments related configuration. </param>
         /// <param name="targetSelectedOn"> The last time when the target resource was selected for migration. </param>
         /// <param name="targetResourceId"> Resource Id of the created or selected target SQL resource for migration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Migration(MigrationAssessment assessment, DateTimeOffset? targetSelectedOn, string targetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerInstanceMigration(MigrationAssessment assessment, DateTimeOffset? targetSelectedOn, string targetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Assessment = assessment;
             TargetSelectedOn = targetSelectedOn;

@@ -11,9 +11,9 @@ namespace Azure.ResourceManager.ArcData.Models
     public enum SecondaryAllowConnections
     {
         /// <summary> NO. </summary>
-        NO,
+        No,
         /// <summary> ALL. </summary>
-        ALL,
+        All,
         /// <summary> READ_ONLY. </summary>
         ReadOnly
     }

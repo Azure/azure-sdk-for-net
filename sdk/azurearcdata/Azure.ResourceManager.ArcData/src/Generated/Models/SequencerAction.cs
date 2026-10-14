@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="state"> The state of the sequencer action. </param>
         /// <param name="result"> The result of the sequencer action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SequencerAction(string actionId, SequencerState? state, Result? result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SequencerAction(string actionId, SequencerState? state, SequencerActionResult? result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionId = actionId;
             State = state;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public SequencerState? State { get; }
 
         /// <summary> The result of the sequencer action. </summary>
-        public Result? Result { get; }
+        public SequencerActionResult? Result { get; }
     }
 }

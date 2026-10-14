@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 writer.WritePropertyName("healthCheckTimeout"u8);
                 writer.WriteNumberValue(HealthCheckTimeout.Value);
             }
-            if (Optional.IsDefined(DBFailover))
+            if (Optional.IsDefined(DbFailover))
             {
                 writer.WritePropertyName("dbFailover"u8);
-                writer.WriteStringValue(DBFailover.Value.ToSerialString());
+                writer.WriteStringValue(DbFailover.Value.ToSerialString());
             }
             if (Optional.IsDefined(DtcSupport))
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ArcData.Models
             AutomatedBackupPreference? automatedBackupPreference = default;
             FailureConditionLevel? failureConditionLevel = default;
             int? healthCheckTimeout = default;
-            DBFailover? dbFailover = default;
+            DbFailover? dbFailover = default;
             DtcSupport? dtcSupport = default;
             int? requiredSynchronizedSecondariesToCommit = default;
             ClusterType? clusterType = default;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    dbFailover = prop.Value.GetString().ToDBFailover();
+                    dbFailover = prop.Value.GetString().ToDbFailover();
                     continue;
                 }
                 if (prop.NameEquals("dtcSupport"u8))

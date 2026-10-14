@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 writer.WritePropertyName("dtcSupport"u8);
                 writer.WriteBooleanValue(DtcSupport.Value);
             }
-            if (Optional.IsDefined(DBFailover))
+            if (Optional.IsDefined(DbFailover))
             {
                 writer.WritePropertyName("dbFailover"u8);
-                writer.WriteBooleanValue(DBFailover.Value);
+                writer.WriteBooleanValue(DbFailover.Value);
             }
             if (Optional.IsDefined(IsDistributed))
             {

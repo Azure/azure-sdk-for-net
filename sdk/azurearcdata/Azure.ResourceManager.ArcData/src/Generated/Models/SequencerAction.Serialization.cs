@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ArcData.Models
             }
             string actionId = default;
             SequencerState? state = default;
-            Result? result = default;
+            SequencerActionResult? result = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    result = new Result(prop.Value.GetString());
+                    result = new SequencerActionResult(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

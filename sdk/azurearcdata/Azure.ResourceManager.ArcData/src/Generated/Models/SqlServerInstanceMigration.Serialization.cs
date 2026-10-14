@@ -14,51 +14,51 @@ using Azure.ResourceManager.ArcData;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> Migration related configuration. </summary>
-    public partial class DataBaseMigration : IJsonModel<DataBaseMigration>
+    public partial class SqlServerInstanceMigration : IJsonModel<SqlServerInstanceMigration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataBaseMigration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SqlServerInstanceMigration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBaseMigration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceMigration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDataBaseMigration(document.RootElement, options);
+                        return DeserializeSqlServerInstanceMigration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBaseMigration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerInstanceMigration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBaseMigration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceMigration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerArcDataContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DataBaseMigration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerInstanceMigration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataBaseMigration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SqlServerInstanceMigration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataBaseMigration IPersistableModel<DataBaseMigration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SqlServerInstanceMigration IPersistableModel<SqlServerInstanceMigration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataBaseMigration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SqlServerInstanceMigration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DataBaseMigration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SqlServerInstanceMigration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +69,25 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBaseMigration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceMigration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBaseMigration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerInstanceMigration)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Assessment))
             {
                 writer.WritePropertyName("assessment"u8);
                 writer.WriteObjectValue(Assessment, options);
             }
-            if (Optional.IsCollectionDefined(Jobs))
+            if (Optional.IsDefined(TargetSelectedOn))
             {
-                writer.WritePropertyName("jobs"u8);
-                writer.WriteStartArray();
-                foreach (DatabaseMigrationJobsItem item in Jobs)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("targetSelectedTime"u8);
+                writer.WriteStringValue(TargetSelectedOn.Value, "O");
+            }
+            if (Optional.IsDefined(TargetResourceId))
+            {
+                writer.WritePropertyName("targetResourceId"u8);
+                writer.WriteStringValue(TargetResourceId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,31 +108,32 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataBaseMigration IJsonModel<DataBaseMigration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SqlServerInstanceMigration IJsonModel<SqlServerInstanceMigration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataBaseMigration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SqlServerInstanceMigration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBaseMigration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerInstanceMigration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBaseMigration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerInstanceMigration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataBaseMigration(document.RootElement, options);
+            return DeserializeSqlServerInstanceMigration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataBaseMigration DeserializeDataBaseMigration(JsonElement element, ModelReaderWriterOptions options)
+        internal static SqlServerInstanceMigration DeserializeSqlServerInstanceMigration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataBaseMigrationAssessment assessment = default;
-            IList<DatabaseMigrationJobsItem> jobs = default;
+            MigrationAssessment assessment = default;
+            DateTimeOffset? targetSelectedOn = default;
+            string targetResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,21 +143,21 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    assessment = DataBaseMigrationAssessment.DeserializeDataBaseMigrationAssessment(prop.Value, options);
+                    assessment = MigrationAssessment.DeserializeMigrationAssessment(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("jobs"u8))
+                if (prop.NameEquals("targetSelectedTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<DatabaseMigrationJobsItem> array = new List<DatabaseMigrationJobsItem>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(DatabaseMigrationJobsItem.DeserializeDatabaseMigrationJobsItem(item, options));
-                    }
-                    jobs = array;
+                    targetSelectedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("targetResourceId"u8))
+                {
+                    targetResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataBaseMigration(assessment, jobs ?? new ChangeTrackingList<DatabaseMigrationJobsItem>(), additionalBinaryDataProperties);
+            return new SqlServerInstanceMigration(assessment, targetSelectedOn, targetResourceId, additionalBinaryDataProperties);
         }
     }
 }

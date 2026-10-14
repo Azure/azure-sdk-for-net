@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="activeDirectory"> null. </param>
         /// <param name="dns"> null. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="activeDirectory"/> or <paramref name="dns"/> is null. </exception>
-        public ActiveDirectoryConnectorSpec(ActiveDirectoryConnectorDomainDetails activeDirectory, ActiveDirectoryConnectorDNSDetails dns)
+        public ActiveDirectoryConnectorSpec(ActiveDirectoryConnectorDomainDetails activeDirectory, ActiveDirectoryConnectorDnsDetails dns)
         {
             Argument.AssertNotNull(activeDirectory, nameof(activeDirectory));
             Argument.AssertNotNull(dns, nameof(dns));
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="activeDirectory"> null. </param>
         /// <param name="dns"> null. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActiveDirectoryConnectorSpec(ActiveDirectoryConnectorDomainDetails activeDirectory, ActiveDirectoryConnectorDNSDetails dns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActiveDirectoryConnectorSpec(ActiveDirectoryConnectorDomainDetails activeDirectory, ActiveDirectoryConnectorDnsDetails dns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActiveDirectory = activeDirectory;
             Dns = dns;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public ActiveDirectoryConnectorDomainDetails ActiveDirectory { get; set; }
 
         /// <summary> null. </summary>
-        public ActiveDirectoryConnectorDNSDetails Dns { get; set; }
+        public ActiveDirectoryConnectorDnsDetails Dns { get; set; }
     }
 }

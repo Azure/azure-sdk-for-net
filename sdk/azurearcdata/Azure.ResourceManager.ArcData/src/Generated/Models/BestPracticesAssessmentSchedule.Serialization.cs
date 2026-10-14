@@ -13,52 +13,52 @@ using Azure.ResourceManager.ArcData;
 
 namespace Azure.ResourceManager.ArcData.Models
 {
-    /// <summary> Migration related configuration. </summary>
-    public partial class Migration : IJsonModel<Migration>
+    /// <summary> The scheduling configuration. </summary>
+    public partial class BestPracticesAssessmentSchedule : IJsonModel<BestPracticesAssessmentSchedule>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Migration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BestPracticesAssessmentSchedule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Migration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BestPracticesAssessmentSchedule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMigration(document.RootElement, options);
+                        return DeserializeBestPracticesAssessmentSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Migration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BestPracticesAssessmentSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Migration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BestPracticesAssessmentSchedule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerArcDataContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Migration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BestPracticesAssessmentSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Migration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BestPracticesAssessmentSchedule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Migration IPersistableModel<Migration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BestPracticesAssessmentSchedule IPersistableModel<BestPracticesAssessmentSchedule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Migration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BestPracticesAssessmentSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Migration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BestPracticesAssessmentSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +69,20 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Migration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BestPracticesAssessmentSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Migration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BestPracticesAssessmentSchedule)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Assessment))
+            if (Optional.IsDefined(Enabled))
             {
-                writer.WritePropertyName("assessment"u8);
-                writer.WriteObjectValue(Assessment, options);
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(TargetSelectedOn))
+            if (Optional.IsDefined(CronTrigger))
             {
-                writer.WritePropertyName("targetSelectedTime"u8);
-                writer.WriteStringValue(TargetSelectedOn.Value, "O");
-            }
-            if (Optional.IsDefined(TargetResourceId))
-            {
-                writer.WritePropertyName("targetResourceId"u8);
-                writer.WriteStringValue(TargetResourceId);
+                writer.WritePropertyName("cronTrigger"u8);
+                writer.WriteObjectValue(CronTrigger, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,56 +103,50 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Migration IJsonModel<Migration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BestPracticesAssessmentSchedule IJsonModel<BestPracticesAssessmentSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Migration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BestPracticesAssessmentSchedule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Migration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BestPracticesAssessmentSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Migration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BestPracticesAssessmentSchedule)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMigration(document.RootElement, options);
+            return DeserializeBestPracticesAssessmentSchedule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Migration DeserializeMigration(JsonElement element, ModelReaderWriterOptions options)
+        internal static BestPracticesAssessmentSchedule DeserializeBestPracticesAssessmentSchedule(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            MigrationAssessment assessment = default;
-            DateTimeOffset? targetSelectedOn = default;
-            string targetResourceId = default;
+            bool? enabled = default;
+            CronTrigger cronTrigger = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("assessment"u8))
+                if (prop.NameEquals("enabled"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    assessment = MigrationAssessment.DeserializeMigrationAssessment(prop.Value, options);
+                    enabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("targetSelectedTime"u8))
+                if (prop.NameEquals("cronTrigger"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetSelectedOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("targetResourceId"u8))
-                {
-                    targetResourceId = prop.Value.GetString();
+                    cronTrigger = CronTrigger.DeserializeCronTrigger(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -165,7 +154,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new Migration(assessment, targetSelectedOn, targetResourceId, additionalBinaryDataProperties);
+            return new BestPracticesAssessmentSchedule(enabled, cronTrigger, additionalBinaryDataProperties);
         }
     }
 }

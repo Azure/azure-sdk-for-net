@@ -12,22 +12,22 @@ using Azure.ResourceManager.ArcData;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> Migration related configuration. </summary>
-    public partial class DataBaseMigration
+    public partial class DatabaseMigration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataBaseMigration"/>. </summary>
-        public DataBaseMigration()
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigration"/>. </summary>
+        public DatabaseMigration()
         {
             Jobs = new ChangeTrackingList<DatabaseMigrationJobsItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataBaseMigration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigration"/>. </summary>
         /// <param name="assessment"> Migration assessments related configuration. </param>
         /// <param name="jobs"> Migration jobs/actual data movement/data migrations associated with this database related information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataBaseMigration(DataBaseMigrationAssessment assessment, IList<DatabaseMigrationJobsItem> jobs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseMigration(DatabaseMigrationAssessment assessment, IList<DatabaseMigrationJobsItem> jobs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Assessment = assessment;
             Jobs = jobs;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> Migration assessments related configuration. </summary>
-        public DataBaseMigrationAssessment Assessment { get; set; }
+        public DatabaseMigrationAssessment Assessment { get; set; }
 
         /// <summary> Migration jobs/actual data movement/data migrations associated with this database related information. </summary>
         public IList<DatabaseMigrationJobsItem> Jobs { get; }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.ArcData;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> Mirroring Role. </summary>
-    public readonly partial struct Role : IEquatable<Role>
+    public readonly partial struct DatabaseMirroringRole : IEquatable<DatabaseMirroringRole>
     {
         private readonly string _value;
         /// <summary> NONE. </summary>
@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> WITNESS. </summary>
         private const string WitnessValue = "WITNESS";
         /// <summary> ALL. </summary>
-        private const string ALLValue = "ALL";
+        private const string AllValue = "ALL";
 
-        /// <summary> Initializes a new instance of <see cref="Role"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMirroringRole"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Role(string value)
+        public DatabaseMirroringRole(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> NONE. </summary>
-        public static Role None { get; } = new Role(NoneValue);
+        public static DatabaseMirroringRole None { get; } = new DatabaseMirroringRole(NoneValue);
 
         /// <summary> PARTNER. </summary>
-        public static Role Partner { get; } = new Role(PartnerValue);
+        public static DatabaseMirroringRole Partner { get; } = new DatabaseMirroringRole(PartnerValue);
 
         /// <summary> WITNESS. </summary>
-        public static Role Witness { get; } = new Role(WitnessValue);
+        public static DatabaseMirroringRole Witness { get; } = new DatabaseMirroringRole(WitnessValue);
 
         /// <summary> ALL. </summary>
-        public static Role ALL { get; } = new Role(ALLValue);
+        public static DatabaseMirroringRole All { get; } = new DatabaseMirroringRole(AllValue);
 
-        /// <summary> Determines if two <see cref="Role"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DatabaseMirroringRole"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Role left, Role right) => left.Equals(right);
+        public static bool operator ==(DatabaseMirroringRole left, DatabaseMirroringRole right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Role"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DatabaseMirroringRole"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Role left, Role right) => !left.Equals(right);
+        public static bool operator !=(DatabaseMirroringRole left, DatabaseMirroringRole right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Role"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DatabaseMirroringRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Role(string value) => new Role(value);
+        public static implicit operator DatabaseMirroringRole(string value) => new DatabaseMirroringRole(value);
 
-        /// <summary> Converts a string to a <see cref="Role"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DatabaseMirroringRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Role?(string value) => value == null ? null : new Role(value);
+        public static implicit operator DatabaseMirroringRole?(string value) => value == null ? null : new DatabaseMirroringRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Role other && Equals(other);
+        public override bool Equals(object obj) => obj is DatabaseMirroringRole other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Role other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DatabaseMirroringRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

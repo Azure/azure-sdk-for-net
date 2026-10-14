@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ArcData.Models
             Version = version;
             BasicFeatures = basicFeatures;
             DtcSupport = dtcSupport;
-            DBFailover = dbFailover;
+            DbFailover = dbFailover;
             IsDistributed = isDistributed;
             ClusterTypeDescription = clusterTypeDescription;
             RequiredSynchronizedSecondariesToCommit = requiredSynchronizedSecondariesToCommit;
@@ -79,9 +79,6 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Specifies whether DTC support has been enabled for this availability group. </summary>
         public bool? DtcSupport { get; set; }
-
-        /// <summary> Specifies whether the availability group supports failover for database health conditions. </summary>
-        public bool? DBFailover { get; set; }
 
         /// <summary> Specifies whether this is a distributed availability group. </summary>
         public bool? IsDistributed { get; set; }

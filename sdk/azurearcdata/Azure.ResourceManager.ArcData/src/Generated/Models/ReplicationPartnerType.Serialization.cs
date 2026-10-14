@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ReplicationPartnerType value) => value switch
         {
-            ReplicationPartnerType.SQLServer => "SQLServer",
-            ReplicationPartnerType.AzureSqlvm => "AzureSQLVM",
-            ReplicationPartnerType.AzureSQLManagedInstance => "AzureSQLManagedInstance",
+            ReplicationPartnerType.SqlServer => "SQLServer",
+            ReplicationPartnerType.AzureSqlVm => "AzureSQLVM",
+            ReplicationPartnerType.AzureSqlManagedInstance => "AzureSQLManagedInstance",
             ReplicationPartnerType.Unknown => "Unknown",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ReplicationPartnerType value.")
         };
@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.ArcData.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "SQLServer"))
             {
-                return ReplicationPartnerType.SQLServer;
+                return ReplicationPartnerType.SqlServer;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureSQLVM"))
             {
-                return ReplicationPartnerType.AzureSqlvm;
+                return ReplicationPartnerType.AzureSqlVm;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureSQLManagedInstance"))
             {
-                return ReplicationPartnerType.AzureSQLManagedInstance;
+                return ReplicationPartnerType.AzureSqlManagedInstance;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown"))
             {

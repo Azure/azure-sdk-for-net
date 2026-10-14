@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="isDigiCertPkiCertTrustConfigured"> Indicates whether DigiCert PKI root-authority certificate (trusted by Azure) exists in SQL Server and trusted for Azure database.windows.net domains. </param>
         /// <param name="authentication"> Authentication related configuration for the SQL Server Instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerInstanceProperties(SqlVersion? version, EditionType? edition, string containerResourceId, string vmId, string createTime, string vCore, string cores, ConnectionStatus? status, DiscoverySource? discoverySource, string patchLevel, string collation, bool? dbMasterKeyExists, bool? isHadrEnabled, IReadOnlyList<int> traceFlags, string currentVersion, string instanceName, string tcpDynamicPorts, string tcpStaticPorts, string productId, ArcSqlServerLicenseType? licenseType, DateTimeOffset? azureDefenderStatusLastUpdated, DefenderStatus? azureDefenderStatus, string provisioningState, DateTimeOffset? lastInventoryUploadOn, DateTimeOffset? lastUsageUploadOn, HostType? hostType, AlwaysOnRole? alwaysOnRole, DBMEndpoint databaseMirroringEndpoint, FailoverCluster failoverCluster, BackupPolicy backupPolicy, DateTimeOffset? upgradeLockedUntil, Monitoring monitoring, Migration migration, BestPracticesAssessment bestPracticesAssessment, ClientConnection clientConnection, ServiceType? serviceType, long? maxServerMemoryMB, bool? isMicrosoftPkiCertTrustConfigured, bool? isDigiCertPkiCertTrustConfigured, Authentication authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerInstanceProperties(SqlVersion? version, EditionType? edition, string containerResourceId, string vmId, string createTime, string vCore, string cores, ConnectionStatus? status, DiscoverySource? discoverySource, string patchLevel, string collation, bool? dbMasterKeyExists, bool? isHadrEnabled, IReadOnlyList<int> traceFlags, string currentVersion, string instanceName, string tcpDynamicPorts, string tcpStaticPorts, string productId, ArcSqlServerLicenseType? licenseType, DateTimeOffset? azureDefenderStatusLastUpdated, DefenderStatus? azureDefenderStatus, string provisioningState, DateTimeOffset? lastInventoryUploadOn, DateTimeOffset? lastUsageUploadOn, HostType? hostType, AlwaysOnRole? alwaysOnRole, DbmEndpoint databaseMirroringEndpoint, FailoverCluster failoverCluster, BackupPolicy backupPolicy, DateTimeOffset? upgradeLockedUntil, Monitoring monitoring, SqlServerInstanceMigration migration, BestPracticesAssessment bestPracticesAssessment, ClientConnection clientConnection, ServiceType? serviceType, long? maxServerMemoryMB, bool? isMicrosoftPkiCertTrustConfigured, bool? isDigiCertPkiCertTrustConfigured, SqlServerAuthentication authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             Edition = edition;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public AlwaysOnRole? AlwaysOnRole { get; }
 
         /// <summary> Database mirroring endpoint related properties. </summary>
-        public DBMEndpoint DatabaseMirroringEndpoint { get; set; }
+        public DbmEndpoint DatabaseMirroringEndpoint { get; set; }
 
         /// <summary> Failover Cluster Instance properties. </summary>
         public FailoverCluster FailoverCluster { get; set; }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ArcData.Models
         internal Monitoring Monitoring { get; set; }
 
         /// <summary> Migration related configuration and status. </summary>
-        public Migration Migration { get; set; }
+        public SqlServerInstanceMigration Migration { get; set; }
 
         /// <summary> The configuration related to SQL best practices assessment. </summary>
         public BestPracticesAssessment BestPracticesAssessment { get; set; }
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public bool? IsDigiCertPkiCertTrustConfigured { get; }
 
         /// <summary> Authentication related configuration for the SQL Server Instance. </summary>
-        public Authentication Authentication { get; set; }
+        public SqlServerAuthentication Authentication { get; set; }
 
         /// <summary> Indicates if monitoring is enabled for this SQL Server instance. </summary>
         public bool? MonitoringEnabled

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 return null;
             }
             bool? enabled = default;
-            Schedule schedule = default;
+            BestPracticesAssessmentSchedule schedule = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    schedule = Schedule.DeserializeSchedule(prop.Value, options);
+                    schedule = BestPracticesAssessmentSchedule.DeserializeBestPracticesAssessmentSchedule(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

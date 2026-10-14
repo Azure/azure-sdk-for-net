@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> Database mirroring endpoint related properties. </summary>
-    public partial class DBMEndpoint
+    public partial class DbmEndpoint
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DBMEndpoint"/>. </summary>
-        public DBMEndpoint()
+        /// <summary> Initializes a new instance of <see cref="DbmEndpoint"/>. </summary>
+        public DbmEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DBMEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DbmEndpoint"/>. </summary>
         /// <param name="endpointName"> Name of the database mirroring endpoint. </param>
         /// <param name="role"> Mirroring Role. </param>
         /// <param name="isEncryptionEnabled"> Is Encryption enabled. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="certificateName"> Name of the certificate. </param>
         /// <param name="certificateExpiryOn"> The certificate expiry date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DBMEndpoint(string endpointName, Role? role, bool? isEncryptionEnabled, EncryptionAlgorithm? encryptionAlgorithm, ConnectionAuth? connectionAuth, int? port, bool? isDynamicPort, string ipAddress, string certificateName, DateTimeOffset? certificateExpiryOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DbmEndpoint(string endpointName, DatabaseMirroringRole? role, bool? isEncryptionEnabled, EncryptionAlgorithm? encryptionAlgorithm, ConnectionAuth? connectionAuth, int? port, bool? isDynamicPort, string ipAddress, string certificateName, DateTimeOffset? certificateExpiryOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointName = endpointName;
             Role = role;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ArcData.Models
             ConnectionAuth = connectionAuth;
             Port = port;
             IsDynamicPort = isDynamicPort;
-            IPAddress = ipAddress;
+            IpAddress = ipAddress;
             CertificateName = certificateName;
             CertificateExpiryOn = certificateExpiryOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public string EndpointName { get; }
 
         /// <summary> Mirroring Role. </summary>
-        public Role? Role { get; }
+        public DatabaseMirroringRole? Role { get; }
 
         /// <summary> Is Encryption enabled. </summary>
         public bool? IsEncryptionEnabled { get; }
@@ -68,9 +68,6 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Is the port number dynamically assigned. </summary>
         public bool? IsDynamicPort { get; }
-
-        /// <summary> Listener IP address. </summary>
-        public string IPAddress { get; }
 
         /// <summary> Name of the certificate. </summary>
         public string CertificateName { get; }

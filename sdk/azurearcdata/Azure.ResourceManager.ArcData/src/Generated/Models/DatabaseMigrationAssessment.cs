@@ -12,24 +12,24 @@ using Azure.ResourceManager.ArcData;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> The migration assessment related configuration. </summary>
-    public partial class DataBaseMigrationAssessment
+    public partial class DatabaseMigrationAssessment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataBaseMigrationAssessment"/>. </summary>
-        public DataBaseMigrationAssessment()
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationAssessment"/>. </summary>
+        public DatabaseMigrationAssessment()
         {
             DatabaseAssessments = new ChangeTrackingList<DatabaseAssessmentsItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataBaseMigrationAssessment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationAssessment"/>. </summary>
         /// <param name="assessmentUploadOn"> The time when Migration Assessment Report upload was last performed. </param>
         /// <param name="targetRecommendationGenerationOn"> The UTC timestamp in ISO 8601 format indicating when the latest target recommendations were generated for this database. This value is set as part of a successful RunTargetRecommendation job and is independent of when the migration readiness results were uploaded (assessmentUploadTime). </param>
         /// <param name="databaseAssessments"> Issues and warnings impacting the migration of Database to particular Azure Migration Target. </param>
         /// <param name="targetReadiness"> The target readiness for migration for this database. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataBaseMigrationAssessment(DateTimeOffset? assessmentUploadOn, DateTimeOffset? targetRecommendationGenerationOn, IReadOnlyList<DatabaseAssessmentsItem> databaseAssessments, TargetReadiness targetReadiness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseMigrationAssessment(DateTimeOffset? assessmentUploadOn, DateTimeOffset? targetRecommendationGenerationOn, IReadOnlyList<DatabaseAssessmentsItem> databaseAssessments, TargetReadiness targetReadiness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AssessmentUploadOn = assessmentUploadOn;
             TargetRecommendationGenerationOn = targetRecommendationGenerationOn;

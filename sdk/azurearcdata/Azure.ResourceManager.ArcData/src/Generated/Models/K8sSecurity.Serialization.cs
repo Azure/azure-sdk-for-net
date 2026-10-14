@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ArcData.Models
             string adminLoginSecret = default;
             string serviceCertificateSecret = default;
             K8sActiveDirectory activeDirectory = default;
-            K8stransparentDataEncryption transparentDataEncryption = default;
+            K8sTransparentDataEncryption transparentDataEncryption = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    transparentDataEncryption = K8stransparentDataEncryption.DeserializeK8stransparentDataEncryption(prop.Value, options);
+                    transparentDataEncryption = K8sTransparentDataEncryption.DeserializeK8sTransparentDataEncryption(prop.Value, options);
                     continue;
                 }
                 additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());

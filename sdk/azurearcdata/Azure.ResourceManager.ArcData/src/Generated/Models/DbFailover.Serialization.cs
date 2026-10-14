@@ -9,28 +9,28 @@ using System;
 
 namespace Azure.ResourceManager.ArcData.Models
 {
-    internal static partial class DBFailoverExtensions
+    internal static partial class DbFailoverExtensions
     {
         /// <param name="value"> The value to serialize. </param>
-        public static string ToSerialString(this DBFailover value) => value switch
+        public static string ToSerialString(this DbFailover value) => value switch
         {
-            DBFailover.ON => "ON",
-            DBFailover.OFF => "OFF",
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DBFailover value.")
+            DbFailover.On => "ON",
+            DbFailover.Off => "OFF",
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DbFailover value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
-        public static DBFailover ToDBFailover(this string value)
+        public static DbFailover ToDbFailover(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ON"))
             {
-                return DBFailover.ON;
+                return DbFailover.On;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "OFF"))
             {
-                return DBFailover.OFF;
+                return DbFailover.Off;
             }
-            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DBFailover value.");
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DbFailover value.");
         }
     }
 }

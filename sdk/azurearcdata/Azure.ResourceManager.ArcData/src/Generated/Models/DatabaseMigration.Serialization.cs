@@ -13,52 +13,52 @@ using Azure.ResourceManager.ArcData;
 
 namespace Azure.ResourceManager.ArcData.Models
 {
-    /// <summary> The scheduling configuration. </summary>
-    public partial class Schedule : IJsonModel<Schedule>
+    /// <summary> Migration related configuration. </summary>
+    public partial class DatabaseMigration : IJsonModel<DatabaseMigration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Schedule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DatabaseMigration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Schedule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseMigration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSchedule(document.RootElement, options);
+                        return DeserializeDatabaseMigration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Schedule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseMigration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Schedule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseMigration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerArcDataContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Schedule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseMigration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Schedule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DatabaseMigration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Schedule IPersistableModel<Schedule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DatabaseMigration IPersistableModel<DatabaseMigration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Schedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DatabaseMigration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Schedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DatabaseMigration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,25 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Schedule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseMigration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Schedule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseMigration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(Assessment))
             {
-                writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WritePropertyName("assessment"u8);
+                writer.WriteObjectValue(Assessment, options);
             }
-            if (Optional.IsDefined(CronTrigger))
+            if (Optional.IsCollectionDefined(Jobs))
             {
-                writer.WritePropertyName("cronTrigger"u8);
-                writer.WriteObjectValue(CronTrigger, options);
+                writer.WritePropertyName("jobs"u8);
+                writer.WriteStartArray();
+                foreach (DatabaseMigrationJobsItem item in Jobs)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +108,55 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Schedule IJsonModel<Schedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DatabaseMigration IJsonModel<DatabaseMigration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Schedule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DatabaseMigration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Schedule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseMigration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Schedule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseMigration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSchedule(document.RootElement, options);
+            return DeserializeDatabaseMigration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Schedule DeserializeSchedule(JsonElement element, ModelReaderWriterOptions options)
+        internal static DatabaseMigration DeserializeDatabaseMigration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? enabled = default;
-            CronTrigger cronTrigger = default;
+            DatabaseMigrationAssessment assessment = default;
+            IList<DatabaseMigrationJobsItem> jobs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("enabled"u8))
+                if (prop.NameEquals("assessment"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    assessment = DatabaseMigrationAssessment.DeserializeDatabaseMigrationAssessment(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("cronTrigger"u8))
+                if (prop.NameEquals("jobs"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cronTrigger = CronTrigger.DeserializeCronTrigger(prop.Value, options);
+                    List<DatabaseMigrationJobsItem> array = new List<DatabaseMigrationJobsItem>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DatabaseMigrationJobsItem.DeserializeDatabaseMigrationJobsItem(item, options));
+                    }
+                    jobs = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +164,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new Schedule(enabled, cronTrigger, additionalBinaryDataProperties);
+            return new DatabaseMigration(assessment, jobs ?? new ChangeTrackingList<DatabaseMigrationJobsItem>(), additionalBinaryDataProperties);
         }
     }
 }

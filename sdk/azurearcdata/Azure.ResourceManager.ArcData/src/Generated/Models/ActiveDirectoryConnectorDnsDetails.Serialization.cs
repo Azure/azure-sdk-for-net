@@ -14,56 +14,56 @@ using Azure.ResourceManager.ArcData;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> DNS server details. </summary>
-    public partial class ActiveDirectoryConnectorDNSDetails : IJsonModel<ActiveDirectoryConnectorDNSDetails>
+    public partial class ActiveDirectoryConnectorDnsDetails : IJsonModel<ActiveDirectoryConnectorDnsDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="ActiveDirectoryConnectorDNSDetails"/> for deserialization. </summary>
-        internal ActiveDirectoryConnectorDNSDetails()
+        /// <summary> Initializes a new instance of <see cref="ActiveDirectoryConnectorDnsDetails"/> for deserialization. </summary>
+        internal ActiveDirectoryConnectorDnsDetails()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ActiveDirectoryConnectorDNSDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ActiveDirectoryConnectorDnsDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActiveDirectoryConnectorDNSDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActiveDirectoryConnectorDnsDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeActiveDirectoryConnectorDNSDetails(document.RootElement, options);
+                        return DeserializeActiveDirectoryConnectorDnsDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActiveDirectoryConnectorDNSDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActiveDirectoryConnectorDnsDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActiveDirectoryConnectorDNSDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActiveDirectoryConnectorDnsDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerArcDataContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ActiveDirectoryConnectorDNSDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActiveDirectoryConnectorDnsDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ActiveDirectoryConnectorDNSDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ActiveDirectoryConnectorDnsDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActiveDirectoryConnectorDNSDetails IPersistableModel<ActiveDirectoryConnectorDNSDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ActiveDirectoryConnectorDnsDetails IPersistableModel<ActiveDirectoryConnectorDnsDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ActiveDirectoryConnectorDNSDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ActiveDirectoryConnectorDnsDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ActiveDirectoryConnectorDNSDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ActiveDirectoryConnectorDnsDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActiveDirectoryConnectorDNSDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActiveDirectoryConnectorDnsDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActiveDirectoryConnectorDNSDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ActiveDirectoryConnectorDnsDetails)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(DomainName))
             {
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActiveDirectoryConnectorDNSDetails IJsonModel<ActiveDirectoryConnectorDNSDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ActiveDirectoryConnectorDnsDetails IJsonModel<ActiveDirectoryConnectorDnsDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ActiveDirectoryConnectorDNSDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ActiveDirectoryConnectorDnsDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActiveDirectoryConnectorDNSDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActiveDirectoryConnectorDnsDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActiveDirectoryConnectorDNSDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ActiveDirectoryConnectorDnsDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeActiveDirectoryConnectorDNSDetails(document.RootElement, options);
+            return DeserializeActiveDirectoryConnectorDnsDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ActiveDirectoryConnectorDNSDetails DeserializeActiveDirectoryConnectorDNSDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static ActiveDirectoryConnectorDnsDetails DeserializeActiveDirectoryConnectorDnsDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ActiveDirectoryConnectorDNSDetails(domainName, nameserverIPAddresses ?? new ChangeTrackingList<string>(), replicas, preferK8sDnsForPtrLookups, additionalBinaryDataProperties);
+            return new ActiveDirectoryConnectorDnsDetails(domainName, nameserverIPAddresses ?? new ChangeTrackingList<string>(), replicas, preferK8sDnsForPtrLookups, additionalBinaryDataProperties);
         }
     }
 }

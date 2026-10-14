@@ -14,51 +14,51 @@ using Azure.ResourceManager.ArcData;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> Database mirroring endpoint related properties. </summary>
-    public partial class DBMEndpoint : IJsonModel<DBMEndpoint>
+    public partial class DbmEndpoint : IJsonModel<DbmEndpoint>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DBMEndpoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DbmEndpoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DBMEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DbmEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDBMEndpoint(document.RootElement, options);
+                        return DeserializeDbmEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DBMEndpoint)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DbmEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DBMEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DbmEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerArcDataContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DBMEndpoint)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DbmEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DBMEndpoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DbmEndpoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DBMEndpoint IPersistableModel<DBMEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DbmEndpoint IPersistableModel<DbmEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DBMEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DbmEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DBMEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DbmEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DBMEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DbmEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DBMEndpoint)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DbmEndpoint)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(EndpointName))
             {
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 writer.WritePropertyName("isDynamicPort"u8);
                 writer.WriteBooleanValue(IsDynamicPort.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IPAddress))
+            if (options.Format != "W" && Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IPAddress);
+                writer.WriteStringValue(IpAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(CertificateName))
             {
@@ -143,31 +143,31 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DBMEndpoint IJsonModel<DBMEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DbmEndpoint IJsonModel<DbmEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DBMEndpoint JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DbmEndpoint JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DBMEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DbmEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DBMEndpoint)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DbmEndpoint)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDBMEndpoint(document.RootElement, options);
+            return DeserializeDbmEndpoint(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DBMEndpoint DeserializeDBMEndpoint(JsonElement element, ModelReaderWriterOptions options)
+        internal static DbmEndpoint DeserializeDbmEndpoint(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string endpointName = default;
-            Role? role = default;
+            DatabaseMirroringRole? role = default;
             bool? isEncryptionEnabled = default;
             EncryptionAlgorithm? encryptionAlgorithm = default;
             ConnectionAuth? connectionAuth = default;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    role = new Role(prop.Value.GetString());
+                    role = new DatabaseMirroringRole(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("isEncryptionEnabled"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DBMEndpoint(
+            return new DbmEndpoint(
                 endpointName,
                 role,
                 isEncryptionEnabled,

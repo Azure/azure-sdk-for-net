@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ArcData.Models
             DateTimeOffset? restorePointInTime = default;
             string provisioningState = default;
             DateTimeOffset? lastDatabaseUploadOn = default;
-            DataBaseMigration migration = default;
+            DatabaseMigration migration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    migration = DataBaseMigration.DeserializeDataBaseMigration(prop.Value, options);
+                    migration = DatabaseMigration.DeserializeDatabaseMigration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

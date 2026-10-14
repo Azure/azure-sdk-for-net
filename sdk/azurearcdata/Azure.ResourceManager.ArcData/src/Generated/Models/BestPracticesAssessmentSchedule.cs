@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> The scheduling configuration. </summary>
-    public partial class Schedule
+    public partial class BestPracticesAssessmentSchedule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Schedule"/>. </summary>
-        public Schedule()
+        /// <summary> Initializes a new instance of <see cref="BestPracticesAssessmentSchedule"/>. </summary>
+        public BestPracticesAssessmentSchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Schedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BestPracticesAssessmentSchedule"/>. </summary>
         /// <param name="enabled"> Indicates whether scheduling is enabled. </param>
         /// <param name="cronTrigger"> The cron trigger configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Schedule(bool? enabled, CronTrigger cronTrigger, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BestPracticesAssessmentSchedule(bool? enabled, CronTrigger cronTrigger, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             CronTrigger = cronTrigger;

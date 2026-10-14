@@ -352,12 +352,12 @@ namespace Azure.ResourceManager.ArcData.Models
             BackupPolicy backupPolicy = default;
             DateTimeOffset? upgradeLockedUntil = default;
             Monitoring monitoring = default;
-            Migration migration = default;
+            SqlServerInstanceMigration migration = default;
             BestPracticesAssessment bestPracticesAssessment = default;
             ClientConnection clientConnection = default;
             ServiceType? serviceType = default;
-            Authentication authentication = default;
-            DBMEndpoint databaseMirroringEndpoint = default;
+            SqlServerAuthentication authentication = default;
+            DbmEndpoint databaseMirroringEndpoint = default;
             bool? isMicrosoftPkiCertTrustConfigured = default;
             bool? isDigiCertPkiCertTrustConfigured = default;
             long? maxServerMemoryMB = default;
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    migration = Migration.DeserializeMigration(prop.Value, options);
+                    migration = SqlServerInstanceMigration.DeserializeSqlServerInstanceMigration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("bestPracticesAssessment"u8))
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    authentication = Authentication.DeserializeAuthentication(prop.Value, options);
+                    authentication = SqlServerAuthentication.DeserializeSqlServerAuthentication(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("databaseMirroringEndpoint"u8))
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    databaseMirroringEndpoint = DBMEndpoint.DeserializeDBMEndpoint(prop.Value, options);
+                    databaseMirroringEndpoint = DbmEndpoint.DeserializeDbmEndpoint(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("isMicrosoftPkiCertTrustConfigured"u8))

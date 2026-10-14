@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="activeDirectory"> The kubernetes active directory information. </param>
         /// <param name="transparentDataEncryption"> Transparent data encryption information. </param>
         /// <param name="additionalProperties"></param>
-        internal K8sSecurity(string adminLoginSecret, string serviceCertificateSecret, K8sActiveDirectory activeDirectory, K8stransparentDataEncryption transparentDataEncryption, IDictionary<string, BinaryData> additionalProperties)
+        internal K8sSecurity(string adminLoginSecret, string serviceCertificateSecret, K8sActiveDirectory activeDirectory, K8sTransparentDataEncryption transparentDataEncryption, IDictionary<string, BinaryData> additionalProperties)
         {
             AdminLoginSecret = adminLoginSecret;
             ServiceCertificateSecret = serviceCertificateSecret;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public K8sActiveDirectory ActiveDirectory { get; set; }
 
         /// <summary> Transparent data encryption information. </summary>
-        public K8stransparentDataEncryption TransparentDataEncryption { get; set; }
+        public K8sTransparentDataEncryption TransparentDataEncryption { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
