@@ -1,4 +1,4 @@
-name: azure-sdk-dotnet-code-review-management-eval
+name: code-review-management-eval
 description: Management applicability, shared semantic guidance, and legitimate exceptions without a second reviewer or naming scanner.
 
 type: capability
@@ -23,7 +23,7 @@ scoring:
 stimuli:
   - name: require-coordinated-management-major-release
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      First invoke the code-review skill. Review this synthetic PR and return
       findings only. The owning shipping package is Azure.ResourceManager.Compute. Its version
       changes from 1.9.0 to 2.0.0 with an accurate changelog and no API or behavioral breaks.
       The author explicitly says this is an independent service-team decision, not a coordinated
@@ -31,7 +31,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
           disallowed: ["azure-sdk-mgmt-pr-review", "mpg-migration-pr-review"]
       - type: output-matches
         config:
@@ -42,7 +42,7 @@ stimuli:
 
   - name: allow-approved-management-major-release
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      First invoke the code-review skill. Review this synthetic PR and return
       findings only. Azure.ResourceManager.Compute changes from 1.9.0 to 2.0.0 as part of a
       coordinated management SDK major release. The supplied architecture decision explicitly
       approves this package's participation. Its changelog is accurate, dependencies are stable,
@@ -51,14 +51,14 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
 
   - name: management-patch-wrapper-needs-patch-name
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic API addition
+      First invoke the code-review skill. Review this synthetic API addition
       and return findings only. Project metadata identifies Azure.ResourceManager.Compute.
       A new model named VirtualMachineUpdateContent exists solely as the partial-update body
       for one HTTP PATCH operation. It is not resource data or a reusable domain model. The
@@ -67,7 +67,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
           disallowed: ["azure-sdk-mgmt-pr-review", "mpg-migration-pr-review"]
       - type: output-matches
         config:
@@ -78,7 +78,7 @@ stimuli:
 
   - name: apply-management-body-names-per-library-in-mixed-pr
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic mixed PR and
+      First invoke the code-review skill. Review this synthetic mixed PR and
       return findings only. Project metadata identifies two shipping libraries: management package
       Azure.ResourceManager.Compute and data-plane package Azure.Data.Tables. The former adds
       VirtualMachinePatch solely for a management HTTP PATCH partial-update body. The latter adds
@@ -88,7 +88,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
           disallowed: ["azure-sdk-mgmt-pr-review", "mpg-migration-pr-review"]
       - type: output-matches
         config:
@@ -96,7 +96,7 @@ stimuli:
 
   - name: preserve-resource-data-request-model-role
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      First invoke the code-review skill. Review this synthetic new API and
       return findings only. Azure.ResourceManager.Compute adds VirtualMachineData derived from
       TrackedResourceData. It represents the actual managed resource and is both returned by GET
       and accepted by PUT. It is not a dedicated transport wrapper. All constructors, properties,
@@ -105,14 +105,14 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
 
   - name: do-not-rename-reusable-domain-model-by-http-verb
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic API addition
+      First invoke the code-review skill. Review this synthetic API addition
       and return findings only. Azure.ResourceManager.Compute adds a correctly implemented model
       called MaintenanceWindow, a reusable domain concept with start, end and recurrence data.
       It is nested in resource responses and in several POST and PATCH request bodies. It is
@@ -121,14 +121,14 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
 
   - name: numeric-duration-unit-rule-also-applies-to-data-plane
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new public
+      First invoke the code-review skill. Review this synthetic new public
       property and return findings only. In data-plane Azure.Storage.Blobs, a model adds
       `public double RetentionInterval { get; set; }`. The service contract and conversion code
       define this value as a duration in milliseconds, with no selectable unit. Serialization,
@@ -137,7 +137,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?i)millisecond'
@@ -147,7 +147,7 @@ stimuli:
 
   - name: no-unit-suffix-for-timespan-or-selectable-units
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review these synthetic new public
+      First invoke the code-review skill. Review these synthetic new public
       properties and return findings only. One model uses `TimeSpan TimeToLive`. Another uses
       `double RetentionInterval` with an explicit `RetentionIntervalUnit` value that determines
       whether the numeric value is seconds, minutes or hours. Both contracts, serialization,
@@ -156,14 +156,14 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
 
   - name: use-guid-for-contractually-guaranteed-uuid
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new public API
+      First invoke the code-review skill. Review this synthetic new public API
       and return findings only. A data-plane model adds `public string CorrelationId { get; set; }`.
       The service schema guarantees UUID values and permits no opaque alternatives. The current
       generator supports a Guid mapping with the same wire format and accepted values. No
@@ -171,14 +171,14 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-contains
         config:
           substring: "Guid"
 
   - name: semantic-arm-types-also-apply-to-data-plane
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new data-plane
+      First invoke the code-review skill. Review this synthetic new data-plane
       model and return findings only. It uses strings for ManagedResourceId, ManagedResourceType
       and ETag, plus a collection of strings for AllowedLocations. The service contract defines
       these respectively as ARM resource IDs, ARM resource types, opaque HTTP entity tags, and
@@ -188,7 +188,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-contains
         config:
           substring: "ResourceIdentifier"
@@ -204,7 +204,7 @@ stimuli:
 
   - name: do-not-infer-semantic-types-from-property-names
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic model addition
+      First invoke the code-review skill. Review this synthetic model addition
       and return findings only. ResourceId is an opaque service identifier that accepts both
       UUID-looking strings and arbitrary names, not ARM IDs. Location is a warehouse aisle
       label, not an Azure region or URI. Size is a SKU label such as Standard_D2s_v3. A raw
@@ -214,14 +214,14 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
 
   - name: do-not-coerce-calendar-duration-to-timespan
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new property
+      First invoke the code-review skill. Review this synthetic new property
       and return findings only. A string RetentionPeriod carries ISO 8601 calendar durations,
       including P1M and P1Y. Their meaning depends on the actual calendar interval, not a fixed
       number of days. The project's .NET duration mapping is TimeSpan and cannot preserve that
@@ -230,14 +230,14 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
 
   - name: allow-id-vm-and-a-singular-flags-name
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic API addition
+      First invoke the code-review skill. Review this synthetic API addition
       and return findings only. A model has a string VmId containing opaque virtual-machine
       identifiers, not UUIDs or ARM resource IDs. A closed flags enum named StorageFileAccess follows
       the established domain convention and declares None = 0, Read = 1 and Write = 2 with FlagsAttribute.
@@ -246,14 +246,14 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
 
   - name: power-of-two-values-do-not-establish-flags-semantics
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new enum and
+      First invoke the code-review skill. Review this synthetic new enum and
       return findings only. StorageAccessModes is a closed enum with ReadOnly = 1, ReadWrite = 2
       and AppendOnly = 4. It does not have FlagsAttribute, and the contract explicitly forbids
       combining values. All other API and generation requirements are satisfied. No enabled
@@ -261,7 +261,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '\bStorageAccessMode\b'
@@ -271,7 +271,7 @@ stimuli:
 
   - name: retain-resource-when-it-is-part-of-the-domain
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new ARM model
+      First invoke the code-review skill. Review this synthetic new ARM model
       and return findings only. NetworkPrivateLinkResourceData derives from ResourceData. The
       service calls the domain concept a private link resource, so Resource belongs to the
       domain name rather than being a redundant role word. Its name, members, generation and
@@ -280,14 +280,14 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
 
   - name: prefer-targetable-typespec-customization-in-data-plane
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic data-plane PR
+      First invoke the code-review skill. Review this synthetic data-plane PR
       and return findings only. It introduces a new generated model and adds a C# CodeGenMember
       customization solely to choose the new property's public spelling. The service-defined
       TypeSpec property is directly addressable in client.tsp, and the project's installed
@@ -296,7 +296,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-contains
         config:
           substring: "client.tsp"
@@ -306,7 +306,7 @@ stimuli:
 
   - name: allow-csharp-customization-for-untargetable-symbol
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic TypeSpec-backed
+      First invoke the code-review skill. Review this synthetic TypeSpec-backed
       SDK PR and return findings only. A C# customization preserves the required public enum
       spelling Tls1_0 without changing the wire value. The enum member is synthesized, and the
       installed generator's documented client.tsp customization mechanisms cannot address it.
@@ -315,14 +315,14 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
 
   - name: arm-common-type-redefinition-is-flagged
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      First invoke the code-review skill. Review this synthetic new API and
       return findings only. Azure.ResourceManager.Compute's PR diff adds a brand-new public
       model named SystemData with its own properties, used nowhere else before this PR. The
       package already has ResourceData.SystemData available from Azure.ResourceManager. The
@@ -331,7 +331,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?i)SystemData'
@@ -341,7 +341,7 @@ stimuli:
 
   - name: pre-existing-arm-common-type-redefinition-out-of-scope
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      First invoke the code-review skill. Review this synthetic PR and return
       findings only. Azure.ResourceManager.Compute has shipped its own public SystemData model
       for several GA releases, predating this PR. The PR's actual diff only adds an unrelated
       new property to a different model, VirtualMachineData.DiagnosticsProfile, and does not
@@ -351,14 +351,14 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
 
   - name: checknameavailability-naming-pattern-enforced
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      First invoke the code-review skill. Review this synthetic new API and
       return findings only. Azure.ResourceManager.Compute adds a new client method named
       CheckAvailability that checks whether a virtual machine name is available, a new response
       model named AvailabilityResult, and a new enum named UnavailableReason. All three are
@@ -367,7 +367,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?i)NameAvailability'
@@ -377,7 +377,7 @@ stimuli:
 
   - name: definition-and-operation-suffix-are-reserved
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      First invoke the code-review skill. Review this synthetic new API and
       return findings only. Azure.ResourceManager.Compute adds two brand-new public types in
       this PR: VirtualMachineScaleSetDefinition, a plain data model with no naming collision
       concern, and MaintenanceOperation, a plain data/info class that does not inherit
@@ -386,7 +386,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?i)Definition'
@@ -399,7 +399,7 @@ stimuli:
 
   - name: data-and-collection-suffix-reserved-for-resource-trio
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      First invoke the code-review skill. Review this synthetic new API and
       return findings only. Azure.ResourceManager.Compute adds a brand-new public type named
       DiagnosticsSettingsData in this PR. It is a plain configuration payload model that does
       not inherit ResourceData or TrackedResourceData and is not a resource. Its
@@ -407,7 +407,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?i)DiagnosticsSettingsData'
@@ -417,7 +417,7 @@ stimuli:
 
   - name: domain-collection-exception-is-not-flagged
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      First invoke the code-review skill. Review this synthetic new API and
       return findings only. A data-plane library adds a brand-new public type named
       MongoDBCollection representing an actual MongoDB collection domain concept, not an
       ArmCollection. This is an established exception name already used elsewhere in the SDK
@@ -426,14 +426,14 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
 
   - name: new-listoperations-method-is-flagged
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      First invoke the code-review skill. Review this synthetic new API and
       return findings only. Azure.ResourceManager.Compute's generator just regenerated the
       VirtualMachineResource type as part of this PR's diff, and the regenerated output
       includes a new public method, ListOperations, alongside every other operation already
@@ -442,7 +442,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?i)ListOperations'
@@ -452,7 +452,7 @@ stimuli:
 
   - name: pre-existing-listoperations-method-out-of-scope
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      First invoke the code-review skill. Review this synthetic PR and return
       findings only. Azure.ResourceManager.Compute's VirtualMachineResource type has shipped a
       public ListOperations method for several GA releases. This PR's actual diff only changes
       an unrelated method, GetAsync's retry policy, in a different file, and does not
@@ -461,14 +461,14 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
 
   - name: new-put-patch-body-must-be-required
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      First invoke the code-review skill. Review this synthetic new API and
       return findings only. Azure.ResourceManager.Compute introduces a brand-new PATCH
       operation in this PR, exposed as UpdateAsync(VirtualMachinePatch patch = null,
       CancellationToken cancellationToken = default). This is the operation's first appearance;
@@ -477,7 +477,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?i)required'
@@ -487,7 +487,7 @@ stimuli:
 
   - name: existing-shipped-optional-body-not-retrofitted
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      First invoke the code-review skill. Review this synthetic PR and return
       findings only. Azure.ResourceManager.Compute shipped UpdateAsync(VirtualMachinePatch
       patch = null, CancellationToken cancellationToken = default) several GA releases ago,
       with the body parameter already optional. This PR's actual diff only adds an unrelated
@@ -497,14 +497,14 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
 
   - name: new-discriminated-hierarchy-base-must-be-abstract
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      First invoke the code-review skill. Review this synthetic new API and
       return findings only. Azure.ResourceManager.Compute introduces a brand-new polymorphic
       model family in this PR: a public, non-abstract base class NetworkConfiguration with its
       own discriminator value, plus two new derived types for other discriminator values. All
@@ -513,7 +513,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?i)abstract'
@@ -523,7 +523,7 @@ stimuli:
 
   - name: existing-concrete-discriminator-base-not-retroactively-flagged
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      First invoke the code-review skill. Review this synthetic PR and return
       findings only. Azure.ResourceManager.Compute has shipped a public, non-abstract
       polymorphic base class NetworkConfiguration for several GA releases, with existing
       derived subtypes. This PR's actual diff only adds one brand-new derived subtype for a
@@ -533,7 +533,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'

@@ -1,4 +1,4 @@
-name: azure-sdk-dotnet-code-review-precision-eval
+name: code-review-precision-eval
 description: Initial precision checks for open-ended findings, deterministic repository rules, and false-positive suppression.
 
 type: capability
@@ -23,27 +23,27 @@ scoring:
 stimuli:
   - name: retain-open-ended-bug-review
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Then use it to review this synthetic
+      First invoke the code-review skill. Then use it to review this synthetic
       changed line and return findings only:
       `for (int i = 0; i <= items.Count; i++) total += items[i];`
       The surrounding method is otherwise correct.
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?i)IndexOutOfRangeException|ArgumentOutOfRangeException|one past'
 
   - name: report-test-project-suppression
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Then use it to review this synthetic
+      First invoke the code-review skill. Then use it to review this synthetic
       Azure SDK test-project diff and return findings only:
       `<NoWarn>$(NoWarn);CA2000</NoWarn>` was added to the test csproj.
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-contains
         config:
           substring: "CA2000"
@@ -53,14 +53,14 @@ stimuli:
 
   - name: allow-prerelease-dependency-in-prerelease-library
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Then use it to review this synthetic
+      First invoke the code-review skill. Then use it to review this synthetic
       csproj diff and return findings only. The package version is `1.0.0-beta.2` and it adds a
       PackageReference that resolves to `2.0.0-beta.1`. There are no other changes. If there is no
       finding, return exactly `No findings.`
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
@@ -70,14 +70,14 @@ stimuli:
 
   - name: ignore-unrelated-unchanged-code
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Then use it to review this synthetic PR
+      First invoke the code-review skill. Then use it to review this synthetic PR
       and return findings only. The only changed line fixes a spelling error in README.md. An
       unchanged source file elsewhere has a public `DateTime StartTime` property. Do not review
       unchanged code. If there is no finding, return exactly `No findings.`
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
@@ -87,14 +87,14 @@ stimuli:
 
   - name: do-not-repeat-normal-ci-diagnostic
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Then use it to review this synthetic PR
+      First invoke the code-review skill. Then use it to review this synthetic PR
       and return findings only. CI already reports AZC0015 for a changed client constructor. The PR
       adds no suppression, opt-out, baseline, or allow-list entry. If there is no finding, return
       exactly `No findings.`
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
@@ -104,13 +104,13 @@ stimuli:
 
   - name: report-analyzer-opt-out
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Then use it to review this synthetic
+      First invoke the code-review skill. Then use it to review this synthetic
       csproj diff and return findings only:
       `<DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>` was added.
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-contains
         config:
           substring: "DisableEnhancedAnalysis"
@@ -120,21 +120,21 @@ stimuli:
 
   - name: report-missing-client-settings-schema
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Then use it to review this synthetic
+      First invoke the code-review skill. Then use it to review this synthetic
       hand-written client-library diff and return findings only. It adds a public
       `WidgetClientSettings` type for appsettings configuration but adds no ConfigurationSchema.json
       file.
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-contains
         config:
           substring: "ConfigurationSchema.json"
 
   - name: allow-preview-only-member-rename-on-ga-type
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      First invoke the code-review skill. Review this synthetic PR and return
       findings only. Azure.Widgets 1.0.0 shipped WidgetClient.GetWidget in GA. GetWidgetSummary
       and its async counterpart first appeared on that same client in 1.1.0-beta.1 and have never
       appeared in a GA release. The 1.1.0-beta.2 PR renames only those preview methods to
@@ -145,7 +145,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
@@ -155,7 +155,7 @@ stimuli:
 
   - name: protect-ga-member-in-mixed-preview-diff
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR.
+      First invoke the code-review skill. Review this synthetic PR.
       Azure.Widgets 1.0.0 shipped WidgetClient.GetWidget in GA. On the same type,
       GetWidgetDetails appeared only in 1.1.0-beta.1 and never shipped GA. The 1.1.0-beta.2 PR
       removes both methods and their async counterparts, with no replacements. The released
@@ -166,7 +166,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '"symbol"\s*:\s*"GetWidget"'
@@ -176,7 +176,7 @@ stimuli:
 
   - name: allow-never-shipped-api-change-in-stable-candidate
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      First invoke the code-review skill. Review this synthetic PR and return
       findings only. Azure.Widgets has GA releases through 1.0.0. A new WidgetClient.GetWidgetDetails
       method was checked into main and its API listing after 1.0.0, but has never been published in
       any package. The current PR removes that method and its async counterpart while preparing
@@ -187,7 +187,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
@@ -197,7 +197,7 @@ stimuli:
 
   - name: allow-listing-change-that-restores-ga-contract
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      First invoke the code-review skill. Review this synthetic PR and return
       findings only. Azure.Widgets explicitly uses ApiCompatVersion 1.0.0, and that released GA
       assembly exposes GetWidget(string widgetName). A previous beta mistakenly changed this to
       GetWidget(string name). The current PR changes the parameter back to widgetName everywhere,
@@ -208,7 +208,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
@@ -218,7 +218,7 @@ stimuli:
 
   - name: do-not-invent-ga-history-from-api-listing
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      First invoke the code-review skill. Review this synthetic PR and return
       findings only. A WidgetClient method and its async counterpart are renamed consistently
       in source and checked-in API listings. The new names and all other changes satisfy the
       applicable rules. The package has prior GA releases, but the supplied evidence does not
@@ -229,7 +229,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
@@ -239,7 +239,7 @@ stimuli:
 
   - name: allow-preview-only-contract-reshaping
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      First invoke the code-review skill. Review this synthetic PR and return
       findings only. Azure.Widgets has shipped GA, but WidgetClientOptions.DetailedOutput and
       the matching appsettings key DetailedOutput appeared only in 1.1.0-beta.1. The current PR
       renames both to IncludeDetails and consistently updates the configuration schema, defaults,
@@ -250,7 +250,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
@@ -260,7 +260,7 @@ stimuli:
 
   - name: protect-ga-configuration-contract-in-preview-candidate
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      First invoke the code-review skill. Review this synthetic PR and return
       findings only. Azure.Widgets 1.0.0 GA documented and supported the appsettings key Endpoint.
       In 1.1.0-beta.1 the PR changes the binder and schema to accept only ServiceEndpoint, so
       existing GA applications using Endpoint can no longer configure the client. Public C#
@@ -269,7 +269,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-contains
         config:
           substring: "Endpoint"
@@ -282,7 +282,7 @@ stimuli:
 
   - name: review-never-shipped-api-for-independent-design-violations
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      First invoke the code-review skill. Review this synthetic PR and return
       findings only. Azure.Widgets 1.1.0-beta.1 adds new public service operations GetWidgetDetails
       and GetWidgetDetailsAsync on WidgetClient. Neither has ever shipped. Both methods are
       non-virtual, preventing mocked clients from overriding them. Their implementations,
@@ -291,7 +291,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?i)virtual|mock'
@@ -301,7 +301,7 @@ stimuli:
 
   - name: detect-additive-change-that-breaks-ga-callers
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      First invoke the code-review skill. Review this synthetic PR and return
       findings only. Azure.Widgets 1.0.0 GA exposes GetWidget(string widgetName), and
       client.GetWidget(null) compiles against that release. The 1.1.0-beta.1 PR adds
       GetWidget(Uri widgetUri) alongside the unchanged string overload. The same GA caller
@@ -311,7 +311,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?i)ambig|overload resolution'
@@ -321,7 +321,7 @@ stimuli:
 
   - name: allow-experimental-api-change-in-ga-package
     prompt: >-
-      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      First invoke the code-review skill. Review this synthetic PR and return
       findings only. Azure.Widgets 1.0.0 is a GA package. WidgetClient.GetWidget is a GA API,
       but GetWidgetDetails and its async counterpart were marked Experimental from their first
       release and explicitly documented as unsupported preview contracts. Those two methods are
@@ -332,7 +332,7 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azure-sdk-dotnet-code-review"]
+          required: ["code-review"]
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'

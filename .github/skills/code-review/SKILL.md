@@ -1,5 +1,5 @@
 ---
-name: azure-sdk-dotnet-code-review
+name: code-review
 description: "MUST USE for every Azure SDK for .NET code review. WHEN: review this PR or pull request; review my changes, diff, patch, or commit; API review; pre-PR review; automatic GitHub Copilot review. Performs open-ended bug, security, correctness, reliability, and maintainability analysis plus Azure SDK API design, analyzer, packaging, testing, documentation, and generated-code checks. Applies management-plane guidance per owning library."
 ---
 

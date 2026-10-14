@@ -53,7 +53,7 @@ Before committing changes to SDK packages under `sdk/`, always run the pre-commi
 
 Before inspecting or commenting on any pull request, diff, patch, commit, or local changes for code
 review, load and follow
-[`azure-sdk-dotnet-code-review`](skills/azure-sdk-dotnet-code-review/SKILL.md) as the first review
-step. When Agent Skill invocation is available, invoke `azure-sdk-dotnet-code-review` before
+[`code-review`](skills/code-review/SKILL.md) as the first review
+step. When Agent Skill invocation is available, invoke `code-review` before
 reviewing. Its Azure SDK-specific rules augment rather than replace the normal open-ended review
 for bugs, security, correctness, reliability, and maintainability.
