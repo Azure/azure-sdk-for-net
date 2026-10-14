@@ -94,8 +94,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         [Test]
         public void FilterCountsDefaultToZeroWhenElementsAbsent()
         {
-            // A service region that has not yet deployed the topic filter-count feature
-            // omits the elements entirely; the counts must gracefully default to zero.
+            // Older service API responses can omit the filter-count elements; the counts default to zero.
             XElement entry = BuildTopicEntry("<SubscriptionCount>1</SubscriptionCount>");
 
             TopicRuntimeProperties properties =

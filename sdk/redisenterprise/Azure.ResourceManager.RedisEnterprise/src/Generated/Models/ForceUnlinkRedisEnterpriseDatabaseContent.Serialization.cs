@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ForceUnlinkRedisEnterpriseDatabaseContent(ids, additionalBinaryDataProperties);
+            return new ForceUnlinkRedisEnterpriseDatabaseContent(ids ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

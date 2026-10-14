@@ -68,9 +68,11 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.AreEqual(original.Format, deserialized.Format);
         }
 
-        [Test]
-        public void RoundtripSerializationWithEncryptionKey()
+        [TestCase("J")]
+        [TestCase("W")]
+        public void RoundtripSerializationWithEncryptionKey(string format)
         {
+            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
             SynonymMap original = new SynonymMap("test-synonyms", "ms,msft=>Microsoft\naz=>Azure")
             {
                 EncryptionKey = new SearchResourceEncryptionKey(
@@ -80,10 +82,10 @@ namespace Azure.Search.Documents.Tests.Models
             };
 
             // Serialize
-            BinaryData data = ModelReaderWriter.Write(original, ModelReaderWriterOptions.Json);
+            BinaryData data = ModelReaderWriter.Write(original, options);
 
             // Deserialize
-            SynonymMap deserialized = ModelReaderWriter.Read<SynonymMap>(data, ModelReaderWriterOptions.Json);
+            SynonymMap deserialized = ModelReaderWriter.Read<SynonymMap>(data, options);
 
             // Assert
             Assert.IsNotNull(deserialized);
@@ -93,6 +95,68 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.AreEqual(original.EncryptionKey.KeyName, deserialized.EncryptionKey.KeyName);
             Assert.AreEqual(original.EncryptionKey.KeyVersion, deserialized.EncryptionKey.KeyVersion);
             Assert.AreEqual(original.EncryptionKey.VaultUri, deserialized.EncryptionKey.VaultUri);
+        }
+
+        [Test]
+        public void EncryptionKeyPresenceRoundtrips(
+            [Values("J", "W")] string format,
+            [Values(false, true)] bool isDefined)
+        {
+            string json = isDefined
+                ? @"{""name"":""test-map"",""format"":""solr"",""synonyms"":""test=>example"",""encryptionKey"":null}"
+                : @"{""name"":""test-map"",""format"":""solr"",""synonyms"":""test=>example""}";
+            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
+            SynonymMap map = ModelReaderWriter.Read<SynonymMap>(BinaryData.FromString(json), options);
+
+            Assert.IsNull(map.EncryptionKey);
+
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(map, options));
+            JsonElement root = document.RootElement;
+            Assert.AreEqual("test-map", root.GetProperty("name").GetString());
+            Assert.AreEqual("solr", root.GetProperty("format").GetString());
+            Assert.AreEqual("test=>example", root.GetProperty("synonyms").GetString());
+            Assert.AreEqual(isDefined, root.TryGetProperty("encryptionKey", out JsonElement encryptionKey));
+            if (isDefined)
+            {
+                Assert.AreEqual(JsonValueKind.Null, encryptionKey.ValueKind);
+            }
+        }
+
+        [Test]
+        public void EncryptionKeySerializationDistinguishesUnsetAndNull(
+            [Values("J", "W")] string format,
+            [Values(false, true)] bool isDefined)
+        {
+            SynonymMap map = new SynonymMap("test-map", "test=>example");
+            if (isDefined)
+            {
+                map.EncryptionKey = null;
+            }
+
+            using JsonDocument document = JsonDocument.Parse(
+                ModelReaderWriter.Write(map, new ModelReaderWriterOptions(format)));
+            Assert.AreEqual(isDefined, document.RootElement.TryGetProperty("encryptionKey", out JsonElement encryptionKey));
+            if (isDefined)
+            {
+                Assert.AreEqual(JsonValueKind.Null, encryptionKey.ValueKind);
+            }
+        }
+
+        [Test]
+        public void ClearingEncryptionKeySerializesNull([Values("J", "W")] string format)
+        {
+            SynonymMap map = new SynonymMap("test-map", "test=>example")
+            {
+                EncryptionKey = new SearchResourceEncryptionKey(
+                    new Uri("https://test-keyvault.vault.azure.net"),
+                    "test-key",
+                    "test-version")
+            };
+            map.EncryptionKey = null;
+
+            using JsonDocument document = JsonDocument.Parse(
+                ModelReaderWriter.Write(map, new ModelReaderWriterOptions(format)));
+            Assert.AreEqual(JsonValueKind.Null, document.RootElement.GetProperty("encryptionKey").ValueKind);
         }
 
         [Test]

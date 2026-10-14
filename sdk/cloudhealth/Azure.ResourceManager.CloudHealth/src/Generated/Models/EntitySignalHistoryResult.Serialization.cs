@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EntitySignalHistoryResult(entityName, signalName, history, nextMarker, additionalBinaryDataProperties);
+            return new EntitySignalHistoryResult(entityName, signalName, history ?? new ChangeTrackingList<SignalHistoryDataPoint>(), nextMarker, additionalBinaryDataProperties);
         }
     }
 }

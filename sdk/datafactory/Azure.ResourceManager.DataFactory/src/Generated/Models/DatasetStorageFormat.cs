@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// The format definition of a storage.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DatasetTextFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetAvroFormat"/>, <see cref="DatasetOrcFormat"/>, and <see cref="DatasetParquetFormat"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/>, and <see cref="DatasetTextFormat"/>.
     /// </summary>
     public abstract partial class DatasetStorageFormat
     {
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Serializer = serializer;
             Deserializer = deserializer;
             _additionalBinaryDataProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatasetStorageFormat"/>. </summary>
+        protected DatasetStorageFormat() : this(default)
+        {
         }
 
         /// <summary> Type of dataset storage format. </summary>

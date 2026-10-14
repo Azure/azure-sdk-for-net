@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MongoDBAtlasRegionsByTierResult(organizationId, projectId, regionsByTier, additionalBinaryDataProperties);
+            return new MongoDBAtlasRegionsByTierResult(organizationId, projectId, regionsByTier ?? new ChangeTrackingList<MongoDBAtlasTierRegions>(), additionalBinaryDataProperties);
         }
     }
 }

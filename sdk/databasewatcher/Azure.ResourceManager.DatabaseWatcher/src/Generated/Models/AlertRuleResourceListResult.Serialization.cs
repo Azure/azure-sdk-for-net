@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AlertRuleResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AlertRuleResourceListResult(value ?? new ChangeTrackingList<DatabaseWatcherAlertRuleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

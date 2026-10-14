@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql
             TryGetApiVersion(SqlTimeZoneResource.ResourceType, out string sqlTimeZoneApiVersion);
             _locationName = locationName;
             _timeZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlTimeZoneResource.ResourceType.Namespace, Diagnostics);
-            _timeZonesRestClient = new TimeZones(_timeZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlTimeZoneApiVersion ?? "2025-02-01-preview");
+            _timeZonesRestClient = new TimeZones(_timeZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlTimeZoneApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlTimeZoneData, SqlTimeZoneResource>(new TimeZonesGetByLocationAsyncCollectionResultOfT(_timeZonesRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "SqlTimeZoneCollection.GetAll"), data => new SqlTimeZoneResource(Client, data));
+            return new AsyncPageableWrapper<SqlTimeZoneData, SqlTimeZoneResource>(new SqlTimeZoneDataAsyncCollectionResultOfT(_timeZonesRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "SqlTimeZoneCollection.GetAll"), data => new SqlTimeZoneResource(Client, data));
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlTimeZoneData, SqlTimeZoneResource>(new TimeZonesGetByLocationCollectionResultOfT(_timeZonesRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "SqlTimeZoneCollection.GetAll"), data => new SqlTimeZoneResource(Client, data));
+            return new PageableWrapper<SqlTimeZoneData, SqlTimeZoneResource>(new SqlTimeZoneDataCollectionResultOfT(_timeZonesRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "SqlTimeZoneCollection.GetAll"), data => new SqlTimeZoneResource(Client, data));
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

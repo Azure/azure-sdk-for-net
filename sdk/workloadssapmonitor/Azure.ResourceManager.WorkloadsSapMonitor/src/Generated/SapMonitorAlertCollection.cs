@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapMonitorAlertData, SapMonitorAlertResource>(new AlertsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SapMonitorAlertData, SapMonitorAlertResource>(new SapMonitorAlertDataAsyncCollectionResultOfT(
                 _alertsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapMonitorAlertData, SapMonitorAlertResource>(new AlertsGetAllCollectionResultOfT(
+            return new PageableWrapper<SapMonitorAlertData, SapMonitorAlertResource>(new SapMonitorAlertDataCollectionResultOfT(
                 _alertsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

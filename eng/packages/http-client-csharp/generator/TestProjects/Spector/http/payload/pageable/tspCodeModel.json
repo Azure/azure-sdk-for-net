@@ -1832,6 +1832,7 @@
                   "pets"
                 ],
                 "nextLink": {
+                  "verb": "GET",
                   "responseSegments": [
                     "next"
                   ],
@@ -1944,6 +1945,7 @@
                   "pets"
                 ],
                 "nextLink": {
+                  "verb": "GET",
                   "responseSegments": [
                     "next"
                   ],
@@ -2058,6 +2060,7 @@
                   "pets"
                 ],
                 "nextLink": {
+                  "verb": "GET",
                   "responseSegments": [
                     "nestedNext",
                     "next"
@@ -2314,6 +2317,7 @@
                       "pets"
                     ],
                     "nextLink": {
+                      "verb": "GET",
                       "responseSegments": [
                         "next"
                       ],
@@ -4604,6 +4608,7 @@
                   "Pets"
                 ],
                 "nextLink": {
+                  "verb": "GET",
                   "responseSegments": [
                     "NextLink"
                   ],

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OperatorApiConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(OperatorApiConnectionResource.ResourceType, out string operatorApiConnectionApiVersion);
             _operatorApiConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProgrammableConnectivity", OperatorApiConnectionResource.ResourceType.Namespace, Diagnostics);
-            _operatorApiConnectionsRestClient = new OperatorApiConnections(_operatorApiConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operatorApiConnectionApiVersion ?? "2025-03-30-preview");
+            _operatorApiConnectionsRestClient = new OperatorApiConnections(_operatorApiConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ProgrammableConnectivity/operatorApiConnections", out string operatorApiConnectionsApiVersionOverride) ? operatorApiConnectionsApiVersionOverride : "2025-03-30-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OperatorApiConnectionData, OperatorApiConnectionResource>(new OperatorApiConnectionsGetByResourceGroupAsyncCollectionResultOfT(_operatorApiConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OperatorApiConnectionCollection.GetAll"), data => new OperatorApiConnectionResource(Client, data));
+            return new AsyncPageableWrapper<OperatorApiConnectionData, OperatorApiConnectionResource>(new OperatorApiConnectionDataAsyncCollectionResultOfT(_operatorApiConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OperatorApiConnectionCollection.GetAll"), data => new OperatorApiConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OperatorApiConnectionData, OperatorApiConnectionResource>(new OperatorApiConnectionsGetByResourceGroupCollectionResultOfT(_operatorApiConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OperatorApiConnectionCollection.GetAll"), data => new OperatorApiConnectionResource(Client, data));
+            return new PageableWrapper<OperatorApiConnectionData, OperatorApiConnectionResource>(new OperatorApiConnectionDataCollectionResultOfT(_operatorApiConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OperatorApiConnectionCollection.GetAll"), data => new OperatorApiConnectionResource(Client, data));
         }
 
         /// <summary>

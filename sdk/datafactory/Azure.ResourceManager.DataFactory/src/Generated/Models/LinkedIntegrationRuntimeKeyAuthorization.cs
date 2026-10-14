@@ -8,12 +8,23 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The key authorization type integration runtime. </summary>
     public partial class LinkedIntegrationRuntimeKeyAuthorization : LinkedIntegrationRuntimeType
     {
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeKeyAuthorization"/>. </summary>
+        /// <param name="key"> The key used for authorization. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public LinkedIntegrationRuntimeKeyAuthorization(DataFactorySecretString key) : base("Key")
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            Key = key;
+        }
+
         /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeKeyAuthorization"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>

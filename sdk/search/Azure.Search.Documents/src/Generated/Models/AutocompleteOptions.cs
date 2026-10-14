@@ -43,5 +43,10 @@ namespace Azure.Search.Documents
             Size = size;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Initializes a new instance of <see cref="AutocompleteOptions"/>. </summary>
+        public AutocompleteOptions()
+        {
+        }
     }
 }

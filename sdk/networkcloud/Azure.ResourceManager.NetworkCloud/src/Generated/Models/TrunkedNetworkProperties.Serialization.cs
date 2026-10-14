@@ -368,14 +368,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TrunkedNetworkProperties(
                 hybridAksPluginType,
                 interfaceName,
-                isolationDomainIds,
-                vlans,
+                isolationDomainIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                vlans ?? new ChangeTrackingList<long>(),
                 associatedResourceIds ?? new ChangeTrackingList<string>(),
                 clusterId,
                 detailedStatus,

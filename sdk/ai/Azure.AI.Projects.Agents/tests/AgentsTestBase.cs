@@ -30,6 +30,9 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     protected const string VECTOR_STORE = "cs-e2e-tests-vector-store";
     protected const string TOOLBOX = "test-toolbox";
     protected const string SKILL = "test-skill";
+    protected const string TELEPHONY_AGENT_NAME = "cs-e2e-tests-telephony";
+    protected const string CONVERSATIONS_AGENT_NAME = "cs-e2e-tests-conversations";
+    protected const string VOICE_CRUD_AGENT_NAME = "cs-e2e-tests-voice-crud";
     protected readonly string MEMORY_STORE_SCOPE = "user_123";
     protected readonly int PAGE_SIZE = 3;
 
@@ -211,6 +214,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         OpenAPI,
         A2A,
         BrowserAutomation,
+        BrowserAutomationGA,
         ReminderPreview,
         WorkIQ,
         FabricIQ,
@@ -294,7 +298,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 Name = "mcp-tool",
                 Description = "Test mcp tool",
                 ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-                ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+                ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
             },
             ToolType.OpenAPI => new OpenApiToolboxTool(new OpenApiFunctionDefinition(
                 name: "get_weather",
@@ -308,6 +312,14 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             ToolType.BrowserAutomation => new BrowserAutomationPreviewToolboxTool(
             new BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
+            ))
+            {
+                Name = "browser-automation",
+                Description = "Test browser automation"
+            },
+            ToolType.BrowserAutomationGA => new BrowserAutomationToolboxTool(
+            new BrowserAutomationToolOptions(
+                new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_MCP_CONNECTION_NAME)
             ))
             {
                 Name = "browser-automation",
@@ -328,7 +340,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             {
                 Name = "fabric-iq",
                 Description = "Test Fabric IQ",
-                RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+                RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
             },
             ToolType.ReminderPreview => new ReminderPreviewToolboxTool()
             {
@@ -339,7 +351,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             {
                 Name = "web-iq",
                 Description = "Test Web IQ",
-                RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+                RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
             },
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
@@ -378,6 +390,18 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         {
             agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
+        foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: TELEPHONY_AGENT_NAME))
+        {
+            agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: CONVERSATIONS_AGENT_NAME))
+        {
+            agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: VOICE_CRUD_AGENT_NAME))
+        {
+            agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
         List<string> hostedAgents = [.. agentsClient.GetAgents().Select(x => x.Name).Where(x => x.StartsWith(HOSTED_AGENT))];
         foreach (string agentName in hostedAgents)
         {
@@ -403,7 +427,22 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         List<string> records = await jobsClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending, agentName: AGENT_NAME).Select(x => x.Id).ToListAsync();
         foreach (string record in records)
         {
-            await jobsClient.DeleteAsync(record, cancellationToken: default);
+            DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(5);
+            while (DateTime.UtcNow < deadline)
+            {
+                try
+                {
+                    await jobsClient.DeleteAsync(jobId: record, cancellationToken: default);
+                    break;
+                }
+                catch (ClientResultException e) {
+                    if (e.Status != 409)
+                    {
+                        throw;
+                    }
+                    await Task.Delay(500);
+                }
+            }
         }
     }
     #endregion

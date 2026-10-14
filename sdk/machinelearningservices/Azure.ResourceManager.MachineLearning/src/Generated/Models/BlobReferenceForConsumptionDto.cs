@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Uri _blobUri;
+        internal bool _blobUriIsDefined;
+        private PendingUploadCredentialDto _credential;
+        internal bool _credentialIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BlobReferenceForConsumptionDto"/>. </summary>
         internal BlobReferenceForConsumptionDto()
@@ -33,8 +37,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BlobReferenceForConsumptionDto(Uri blobUri, PendingUploadCredentialDto credential, ResourceIdentifier storageAccountArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BlobUri = blobUri;
-            Credential = credential;
+            _blobUri = blobUri;
+            _credential = credential;
             StorageAccountArmId = storageAccountArmId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -44,11 +48,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Example: https://blob.windows.core.net/Container/Path
         /// </summary>
         [WirePath("blobUri")]
-        public Uri BlobUri { get; }
+        public Uri BlobUri
+        {
+            get
+            {
+                return _blobUri;
+            }
+        }
 
         /// <summary> Credential info to access storage account. </summary>
         [WirePath("credential")]
-        public PendingUploadCredentialDto Credential { get; }
+        public PendingUploadCredentialDto Credential
+        {
+            get
+            {
+                return _credential;
+            }
+        }
 
         /// <summary> Arm ID of the storage account to use. </summary>
         [WirePath("storageAccountArmId")]

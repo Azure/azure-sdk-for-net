@@ -2379,7 +2379,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="actionProperties"> The properties of an action properties. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <returns> A new <see cref="Monitor.MetricAlertData"/> instance for mocking. </returns>
-        public static MetricAlertData MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan? windowSize, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, MetricAlertResolveConfiguration resolveConfiguration = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default, ManagedServiceIdentity identity = default)
+        public static MetricAlertData MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, MetricAlertResolveConfiguration resolveConfiguration, IEnumerable<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2414,7 +2414,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary>
         /// The rule criteria that defines the conditions of the alert rule.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="Models.WebtestLocationAvailabilityCriteria"/>, <see cref="Models.MetricAlertMultipleResourceMultipleMetricCriteria"/>, and <see cref="Models.PromQLCriteria"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="Models.MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="Models.PromQLCriteria"/>, and <see cref="Models.WebtestLocationAvailabilityCriteria"/>.
         /// </summary>
         /// <param name="odataType"> Specifies the type of the alert criteria. Previously undocumented values might be returned. </param>
         /// <param name="additionalProperties"></param>
@@ -2423,7 +2423,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new MetricAlertCriteria(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new MetricAlertCriteria(odataType is null ? default : new Odatatype(odataType), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <summary> Specifies the metric alert criteria for a single resource that has multiple metric criteria. </summary>
@@ -2435,7 +2435,7 @@ namespace Azure.ResourceManager.Monitor.Models
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
             allOf ??= new ChangeTrackingList<MetricCriteria>();
 
-            return new MetricAlertSingleResourceMultipleMetricCriteria(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), (allOf ?? new ChangeTrackingList<MetricCriteria>()).ToList());
+            return new MetricAlertSingleResourceMultipleMetricCriteria(Odatatype.MicrosoftAzureMonitorSingleResourceMultipleMetricCriteria, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), (allOf ?? new ChangeTrackingList<MetricCriteria>()).ToList());
         }
 
         /// <summary> Criterion to filter metrics. </summary>
@@ -2455,7 +2455,7 @@ namespace Azure.ResourceManager.Monitor.Models
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new MetricCriteria(
-                default,
+                ScheduledQueryRuleCriterionType.StaticThresholdCriterion,
                 name,
                 metricName,
                 metricNamespace,
@@ -2469,7 +2469,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary>
         /// The types of conditions for a multi resource alert.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.MetricCriteria"/> and <see cref="Models.DynamicMetricCriteria"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.DynamicMetricCriteria"/> and <see cref="Models.MetricCriteria"/>.
         /// </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
         /// <param name="name"> Name of the criteria. </param>
@@ -2486,7 +2486,7 @@ namespace Azure.ResourceManager.Monitor.Models
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new MultiMetricCriteria(
-                default,
+                criterionType is null ? default : new ScheduledQueryRuleCriterionType(criterionType),
                 name,
                 metricName,
                 metricNamespace,
@@ -2527,7 +2527,7 @@ namespace Azure.ResourceManager.Monitor.Models
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new DynamicMetricCriteria(
-                default,
+                ScheduledQueryRuleCriterionType.DynamicThresholdCriterion,
                 name,
                 metricName,
                 metricNamespace,
@@ -2560,7 +2560,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new WebtestLocationAvailabilityCriteria(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), webTestId, componentId, failedLocationCount);
+            return new WebtestLocationAvailabilityCriteria(Odatatype.MicrosoftAzureMonitorWebtestLocationAvailabilityCriteria, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), webTestId, componentId, failedLocationCount);
         }
 
         /// <summary> Specifies the metric alert criteria for multiple resource that has multiple metric criteria. </summary>
@@ -2572,7 +2572,7 @@ namespace Azure.ResourceManager.Monitor.Models
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
             allOf ??= new ChangeTrackingList<MultiMetricCriteria>();
 
-            return new MetricAlertMultipleResourceMultipleMetricCriteria(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), (allOf ?? new ChangeTrackingList<MultiMetricCriteria>()).ToList());
+            return new MetricAlertMultipleResourceMultipleMetricCriteria(Odatatype.MicrosoftAzureMonitorMultipleResourceMultipleMetricCriteria, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), (allOf ?? new ChangeTrackingList<MultiMetricCriteria>()).ToList());
         }
 
         /// <param name="additionalProperties"></param>
@@ -2584,12 +2584,12 @@ namespace Azure.ResourceManager.Monitor.Models
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
             allOf ??= new ChangeTrackingList<MultiPromQLCriteria>();
 
-            return new PromQLCriteria(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), failingPeriodsFor is null ? default : new QueryFailingPeriods(failingPeriodsFor.GetValueOrDefault(), default), (allOf ?? new ChangeTrackingList<MultiPromQLCriteria>()).ToList());
+            return new PromQLCriteria(Odatatype.MicrosoftAzureMonitorPromQLCriteria, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), failingPeriodsFor is null ? default : new QueryFailingPeriods(failingPeriodsFor.GetValueOrDefault(), default), (allOf ?? new ChangeTrackingList<MultiPromQLCriteria>()).ToList());
         }
 
         /// <summary>
         /// The types of conditions for a multi query metric alert.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.StaticPromQLCriteria"/> and <see cref="Models.DynamicPromQLCriteria"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DynamicPromQLCriteria"/> and <see cref="Models.StaticPromQLCriteria"/>.
         /// </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
         /// <param name="name"> Name of the criteria. </param>
@@ -2597,7 +2597,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <returns> A new <see cref="Models.MultiPromQLCriteria"/> instance for mocking. </returns>
         public static MultiPromQLCriteria MultiPromQLCriteria(string criterionType = default, string name = default, string query = default)
         {
-            return new UnknownMultiPromQLCriteria(default, name, query, default);
+            return new UnknownMultiPromQLCriteria(criterionType is null ? default : new ScheduledQueryRuleCriterionType(criterionType), name, query, default);
         }
 
         /// <summary> The criterion for static prom query. </summary>
@@ -2606,7 +2606,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <returns> A new <see cref="Models.StaticPromQLCriteria"/> instance for mocking. </returns>
         public static StaticPromQLCriteria StaticPromQLCriteria(string name = default, string query = default)
         {
-            return new StaticPromQLCriteria(default, name, query, default);
+            return new StaticPromQLCriteria(ScheduledQueryRuleCriterionType.StaticThresholdCriterion, name, query, default);
         }
 
         /// <summary> The criterion for dynamic prom query. </summary>
@@ -2619,7 +2619,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static DynamicPromQLCriteria DynamicPromQLCriteria(string name = default, string query = default, DynamicThresholdOperator @operator = default, DynamicThresholdSensitivity alertSensitivity = default, DateTimeOffset? ignoreDataBefore = default)
         {
             return new DynamicPromQLCriteria(
-                default,
+                ScheduledQueryRuleCriterionType.DynamicThresholdCriterion,
                 name,
                 query,
                 default,

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OnlineExperimentationWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(OnlineExperimentationWorkspaceResource.ResourceType, out string onlineExperimentationWorkspaceApiVersion);
             _onlineExperimentationWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OnlineExperimentation", OnlineExperimentationWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _onlineExperimentationWorkspacesRestClient = new OnlineExperimentationWorkspaces(_onlineExperimentationWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, onlineExperimentationWorkspaceApiVersion ?? "2025-08-01-preview");
+            _onlineExperimentationWorkspacesRestClient = new OnlineExperimentationWorkspaces(_onlineExperimentationWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.OnlineExperimentation/workspaces", out string onlineExperimentationWorkspacesApiVersionOverride) ? onlineExperimentationWorkspacesApiVersionOverride : "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OnlineExperimentationWorkspaceData, OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspacesGetByResourceGroupAsyncCollectionResultOfT(_onlineExperimentationWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OnlineExperimentationWorkspaceCollection.GetAll"), data => new OnlineExperimentationWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<OnlineExperimentationWorkspaceData, OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspaceDataAsyncCollectionResultOfT(_onlineExperimentationWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OnlineExperimentationWorkspaceCollection.GetAll"), data => new OnlineExperimentationWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OnlineExperimentationWorkspaceData, OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspacesGetByResourceGroupCollectionResultOfT(_onlineExperimentationWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OnlineExperimentationWorkspaceCollection.GetAll"), data => new OnlineExperimentationWorkspaceResource(Client, data));
+            return new PageableWrapper<OnlineExperimentationWorkspaceData, OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspaceDataCollectionResultOfT(_onlineExperimentationWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OnlineExperimentationWorkspaceCollection.GetAll"), data => new OnlineExperimentationWorkspaceResource(Client, data));
         }
 
         /// <summary>

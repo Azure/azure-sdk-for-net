@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for all non-success response details.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponseCancelledDetails"/>, <see cref="ResponseIncompleteDetails"/>, and <see cref="ResponseFailedDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponseCancelledDetails"/>, <see cref="ResponseFailedDetails"/>, and <see cref="ResponseIncompleteDetails"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownResponseStatusDetails))]
     public abstract partial class ResponseStatusDetails : IJsonModel<ResponseStatusDetails>
@@ -131,10 +131,10 @@ namespace Azure.AI.VoiceLive
                 {
                     case "cancelled":
                         return ResponseCancelledDetails.DeserializeResponseCancelledDetails(element, options);
-                    case "incomplete":
-                        return ResponseIncompleteDetails.DeserializeResponseIncompleteDetails(element, options);
                     case "failed":
                         return ResponseFailedDetails.DeserializeResponseFailedDetails(element, options);
+                    case "incomplete":
+                        return ResponseIncompleteDetails.DeserializeResponseIncompleteDetails(element, options);
                 }
             }
             return UnknownResponseStatusDetails.DeserializeUnknownResponseStatusDetails(element, options);

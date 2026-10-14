@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ResourceConnector
         {
             TryGetApiVersion(ResourceConnectorApplianceResource.ResourceType, out string resourceConnectorApplianceApiVersion);
             _appliancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceConnector", ResourceConnectorApplianceResource.ResourceType.Namespace, Diagnostics);
-            _appliancesRestClient = new Appliances(_appliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceConnectorApplianceApiVersion ?? "2025-03-01-preview");
+            _appliancesRestClient = new Appliances(
+                _appliancesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                resourceConnectorApplianceApiVersion ?? "2025-03-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.ResourceConnector
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetByResourceGroupAsyncCollectionResultOfT(_appliancesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ResourceConnectorApplianceCollection.GetAll"), data => new ResourceConnectorApplianceResource(Client, data));
+            return new AsyncPageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new ResourceConnectorApplianceDataAsyncCollectionResultOfT(_appliancesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ResourceConnectorApplianceCollection.GetAll"), data => new ResourceConnectorApplianceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.ResourceConnector
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetByResourceGroupCollectionResultOfT(_appliancesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ResourceConnectorApplianceCollection.GetAll"), data => new ResourceConnectorApplianceResource(Client, data));
+            return new PageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new ResourceConnectorApplianceDataCollectionResultOfT(_appliancesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ResourceConnectorApplianceCollection.GetAll"), data => new ResourceConnectorApplianceResource(Client, data));
         }
 
         /// <summary>

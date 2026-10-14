@@ -19,7 +19,10 @@ namespace Azure.AI.AgentServer.Core.Streaming.Backings;
 /// <see cref="SseItem{T}.EventId"/>, and <see cref="SseItem{T}.EventType"/>); the data is already a
 /// string, so no payload codec is required.
 /// </summary>
-internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposable
+internal sealed class FileBackedReplayEventStream :
+    ReplayEventStream,
+    IDisposable,
+    ITaskOwnedEventStream
 {
     private const string TerminalKey = "__terminal__";
     private const string EmitTimeKey = "emit_time";
@@ -32,26 +35,63 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
     private readonly object _fileGate = new();
     private readonly string _filePath;
     private readonly string _lockPath;
+    private readonly string _ownerPath;
     private FileStream? _lock;
     private FileStream? _data;
+    private long? _rollbackPosition;
     private int _evictionsSinceCompaction;
     private bool _disposed;
+    private string? _taskId;
+    private bool _failNextDurableFlushForTest;
+
+    // Test-only seam: arms a single fail-after-write on the next durable flush. The written bytes are
+    // pushed through to the OS (so another handle's IsFileTerminated peek can read the terminal
+    // marker) and the durability flush then throws once, reproducing a close whose marker became
+    // readable but whose fsync failed. Never used outside tests.
+    internal void FailNextDurableFlushForTest() => _failNextDurableFlushForTest = true;
 
     public FileBackedReplayEventStream(
         string id,
         string storageDirectory,
         TimeSpan? ttl,
-        Action onDestroy)
+        Action onDestroy,
+        string? taskId = null)
+        : this(id, storageDirectory, ttl, onDestroy, taskId, existingOnly: false)
+    {
+    }
+
+    private FileBackedReplayEventStream(
+        string id,
+        string storageDirectory,
+        TimeSpan? ttl,
+        Action onDestroy,
+        string? taskId,
+        bool existingOnly)
         : base(id, ttl, onDestroy)
     {
-        Directory.CreateDirectory(storageDirectory);
+        if (!existingOnly)
+        {
+            Directory.CreateDirectory(storageDirectory);
+        }
         string stem = ToSafeFileStem(id);
         _filePath = Path.Combine(storageDirectory, stem + ".jsonl");
         _lockPath = Path.Combine(storageDirectory, stem + ".lock");
+        _ownerPath = Path.Combine(storageDirectory, stem + ".owner");
 
         AcquireWriterLock();
         try
         {
+            if (existingOnly && !File.Exists(_filePath))
+            {
+                throw new FileNotFoundException("The existing stream backing no longer exists.", _filePath);
+            }
+
+            LoadTaskOwner();
+            if (taskId is not null)
+            {
+                ValidateOrClaimTask(taskId);
+            }
+
             Rehydrate();
 
             // Open ONE long-lived append handle after any rehydrate-time truncation rewrite, and
@@ -60,7 +100,7 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
             // only the redundant open/close syscalls per event are removed. The separate `_lock`
             // file keeps the single-writer guarantee independent of this data handle, so compaction
             // can freely close and reopen it across the atomic replace without releasing exclusivity.
-            _data = OpenAppendHandle();
+            _data = OpenAppendHandle(existingOnly);
         }
         catch
         {
@@ -71,8 +111,161 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
         }
     }
 
-    private FileStream OpenAppendHandle()
-        => new FileStream(_filePath, FileMode.Append, FileAccess.Write, FileShare.Read);
+    private FileStream OpenAppendHandle(bool existingOnly = false)
+    {
+        var stream = new FileStream(
+            _filePath,
+            existingOnly ? FileMode.Open : FileMode.OpenOrCreate,
+            FileAccess.Write,
+            FileShare.Read);
+        try
+        {
+            stream.Seek(0, SeekOrigin.End);
+            return stream;
+        }
+        catch
+        {
+            stream.Dispose();
+            throw;
+        }
+    }
+
+    internal static FileBackedReplayEventStream? OpenExisting(
+        string id,
+        string storageDirectory,
+        TimeSpan? ttl,
+        Action onDestroy,
+        string taskId)
+    {
+        if (!Directory.Exists(storageDirectory))
+        {
+            return null;
+        }
+
+        try
+        {
+            return new FileBackedReplayEventStream(id, storageDirectory, ttl, onDestroy, taskId, existingOnly: true);
+        }
+        catch (FileNotFoundException)
+        {
+            return null;
+        }
+    }
+
+    internal static bool Exists(string id, string storageDirectory)
+        => File.Exists(Path.Combine(storageDirectory, ToSafeFileStem(id) + ".jsonl"));
+
+    // True when a filename stem is a well-formed id that maps to itself (i.e. the id was used
+    // verbatim, not hash-encoded). For such a stem the on-disk name IS the original input id, so the
+    // orphan sweep can reopen it existing-only; hash-encoded stems cannot be inverted and are skipped.
+    internal static bool IsSelfMappingStem(string stem)
+        => ToSafeFileStem(stem) == stem;
+
+    // Cheap peek used by the orphan sweep to skip streams that were already closed: true when the
+    // file's FINAL complete record is the terminal sentinel (a torn trailing partial line is ignored,
+    // matching rehydrate). Scans backwards from the end in bounded chunks and materializes only the
+    // last line, so an already-closed multi-megabyte log costs a small tail read rather than loading
+    // its entire history into memory during the startup-blocking sweep.
+    internal static bool IsFileTerminated(string filePath)
+    {
+        try
+        {
+            using var file = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            long length = file.Length;
+            if (length == 0)
+            {
+                return false;
+            }
+
+            // Locate the last two newlines: the final COMPLETE line is the text terminated by the
+            // last '\n' (bytes after it are a torn, unterminated partial and are ignored). Its start
+            // is one past the preceding '\n', or the start of file when there is none.
+            const int chunkSize = 8192;
+            long position = length;
+            long lastNewline = -1;
+            long previousNewline = -1;
+            int newlinesFound = 0;
+            var buffer = new byte[chunkSize];
+
+            while (position > 0 && newlinesFound < 2)
+            {
+                int toRead = (int)Math.Min(chunkSize, position);
+                position -= toRead;
+                file.Seek(position, SeekOrigin.Begin);
+                file.ReadExactly(buffer, 0, toRead);
+                for (int i = toRead - 1; i >= 0; i--)
+                {
+                    if (buffer[i] != (byte)'\n')
+                    {
+                        continue;
+                    }
+
+                    if (newlinesFound == 0)
+                    {
+                        lastNewline = position + i;
+                        newlinesFound = 1;
+                    }
+                    else
+                    {
+                        previousNewline = position + i;
+                        newlinesFound = 2;
+                        break;
+                    }
+                }
+            }
+
+            if (lastNewline < 0)
+            {
+                // No newline at all: the file is a single unterminated (torn) line — not terminated.
+                return false;
+            }
+
+            long start = previousNewline + 1;
+            int lineLength = (int)(lastNewline - start);
+            if (lineLength <= 0)
+            {
+                return false;
+            }
+
+            var lineBytes = new byte[lineLength];
+            file.Seek(start, SeekOrigin.Begin);
+            file.ReadExactly(lineBytes, 0, lineLength);
+            string line = Encoding.UTF8.GetString(lineBytes);
+
+            return TryParse(line) is JsonObject obj
+                && obj[TerminalKey] is JsonValue value
+                && value.TryGetValue(out bool terminal)
+                && terminal;
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+        {
+            return false;
+        }
+    }
+
+    public string? TaskId => _taskId;
+
+    public void ValidateOrClaimTask(string taskId)
+    {
+        lock (_fileGate)
+        {
+            if (_taskId is not null)
+            {
+                if (!string.Equals(_taskId, taskId, StringComparison.Ordinal))
+                {
+                    throw new AgentEventStreamException(
+                        $"Task stream '{Id}' is already owned by task '{_taskId}' and " +
+                        $"cannot be reused by task '{taskId}'. Explicit input ids used for " +
+                        "task-bound streams must be unique across tasks.");
+                }
+
+                return;
+            }
+
+            WriteTaskOwner(taskId);
+            _taskId = taskId;
+        }
+    }
 
     // Maps a stream id to a single, safe on-disk filename stem. Well-formed ids (GUIDs and other
     // tokens using [A-Za-z0-9._-], with no "."/".." path segment, that are not already shaped like
@@ -143,8 +336,8 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
 
     protected override void PersistEmitAndClose(SseItem<string> item, double emitTime)
     {
-        // Append the event line and the terminal sentinel in a single write+flush so a crash can
-        // never leave a durable event without its terminal marker (atomic emit-and-close).
+        // Append the event and terminal sentinel under one writer lock and flush before
+        // publication. Recovery must still handle a process stopping during the write.
         var terminalLine = new JsonObject { [TerminalKey] = true };
         AppendLines(EncodeItemLine(item, emitTime), terminalLine.ToJsonString());
     }
@@ -156,7 +349,45 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
             _data?.Dispose();
             _data = null;
             TryDeleteFile(_filePath);
+            TryDeleteFile(_ownerPath);
             ReleaseWriterLock();
+        }
+    }
+
+    private void LoadTaskOwner()
+    {
+        if (!File.Exists(_ownerPath))
+        {
+            return;
+        }
+
+        string owner = File.ReadAllText(_ownerPath, Encoding.UTF8).Trim();
+        _taskId = owner.Length == 0 ? null : owner;
+    }
+
+    private void WriteTaskOwner(string taskId)
+    {
+        string tempPath = _ownerPath + ".tmp";
+        byte[] bytes = Encoding.UTF8.GetBytes(taskId);
+        using (var stream = new FileStream(
+            tempPath,
+            FileMode.Create,
+            FileAccess.Write,
+            FileShare.None,
+            bufferSize: 4096,
+            FileOptions.WriteThrough))
+        {
+            stream.Write(bytes, 0, bytes.Length);
+            stream.Flush(flushToDisk: true);
+        }
+
+        try
+        {
+            File.Move(tempPath, _ownerPath, overwrite: true);
+        }
+        finally
+        {
+            TryDeleteFile(tempPath);
         }
     }
 
@@ -330,6 +561,7 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
         try
         {
             File.Move(tempPath, _filePath, overwrite: true);
+            _rollbackPosition = null;
         }
         finally
         {
@@ -418,8 +650,7 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
                 // Persist-before-fan-out durability: flush the OS buffer to disk so a crash after
                 // emit() returns cannot silently lose an event that a subscriber already observed.
                 // Write through the single long-lived append handle and fsync per event. Multiple
-                // lines are written under a single flush so an emit-and-close pair is an atomic
-                // durable unit.
+                // lines share one write and flush; a failed append is repaired before retry.
                 var sb = new StringBuilder();
                 foreach (string line in lines)
                 {
@@ -439,8 +670,31 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
 
                 FileStream fs = _data
                     ?? throw new AgentEventStreamException($"The write handle for stream '{Id}' is not open.");
+                if (_rollbackPosition is { } position)
+                {
+                    // A failed append may have left bytes on disk. Repair its unacknowledged
+                    // tail under writer ownership before another append can follow it.
+                    fs.SetLength(position);
+                    fs.Position = position;
+                    fs.Flush(flushToDisk: true);
+                    _rollbackPosition = null;
+                }
+
+                _rollbackPosition = fs.Position;
                 fs.Write(bytes, 0, bytes.Length);
+                if (_failNextDurableFlushForTest)
+                {
+                    _failNextDurableFlushForTest = false;
+
+                    // Make the written bytes readable to other handles (mirrors a real close whose
+                    // page-cache write is already visible) before failing the durability flush, so
+                    // _rollbackPosition is left set for the next append to repair.
+                    fs.Flush(flushToDisk: false);
+                    throw new IOException("Injected durable-flush failure (test-only).");
+                }
+
                 fs.Flush(flushToDisk: true);
+                _rollbackPosition = null;
             }
             catch (IOException ex)
             {

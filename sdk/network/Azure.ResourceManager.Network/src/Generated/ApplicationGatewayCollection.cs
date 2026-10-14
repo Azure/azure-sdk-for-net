@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ApplicationGatewayResource.ResourceType, out string applicationGatewayApiVersion);
             _applicationGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGatewayResource.ResourceType.Namespace, Diagnostics);
-            _applicationGatewaysRestClient = new ApplicationGateways(_applicationGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationGatewayApiVersion ?? "2025-09-01");
+            _applicationGatewaysRestClient = new ApplicationGateways(
+                _applicationGatewaysClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                applicationGatewayApiVersion ?? "2026-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -68,7 +74,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +132,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +190,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +239,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +288,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationGatewayData, ApplicationGatewayResource>(new ApplicationGatewaysListAsyncCollectionResultOfT(_applicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationGatewayCollection.GetAll"), data => new ApplicationGatewayResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationGatewayData, ApplicationGatewayResource>(new ApplicationGatewayDataAsyncCollectionResultOfT(_applicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationGatewayCollection.GetAll"), data => new ApplicationGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +316,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationGatewayData, ApplicationGatewayResource>(new ApplicationGatewaysListCollectionResultOfT(_applicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationGatewayCollection.GetAll"), data => new ApplicationGatewayResource(Client, data));
+            return new PageableWrapper<ApplicationGatewayData, ApplicationGatewayResource>(new ApplicationGatewayDataCollectionResultOfT(_applicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationGatewayCollection.GetAll"), data => new ApplicationGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +344,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +401,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +458,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +519,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

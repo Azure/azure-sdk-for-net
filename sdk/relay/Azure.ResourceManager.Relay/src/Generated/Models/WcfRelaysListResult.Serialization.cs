@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Relay.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WcfRelaysListResult(value, nextLink, additionalBinaryDataProperties);
+            return new WcfRelaysListResult(value ?? new ChangeTrackingList<WcfRelayData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

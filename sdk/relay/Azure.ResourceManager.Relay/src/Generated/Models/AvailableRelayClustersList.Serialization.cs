@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.Relay.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AvailableRelayClustersList(value, additionalBinaryDataProperties);
+            return new AvailableRelayClustersList(value ?? new ChangeTrackingList<AvailableRelayClusterRegion>(), additionalBinaryDataProperties);
         }
     }
 }

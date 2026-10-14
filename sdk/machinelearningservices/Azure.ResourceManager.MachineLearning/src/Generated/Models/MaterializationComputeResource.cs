@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _instanceType;
+        internal bool _instanceTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MaterializationComputeResource"/>. </summary>
         public MaterializationComputeResource()
@@ -27,12 +29,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MaterializationComputeResource(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            InstanceType = instanceType;
+            _instanceType = instanceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the instance type. </summary>
         [WirePath("instanceType")]
-        public string InstanceType { get; set; }
+        public string InstanceType
+        {
+            get
+            {
+                return _instanceType;
+            }
+            set
+            {
+                _instanceType = value;
+                _instanceTypeIsDefined = true;
+            }
+        }
     }
 }

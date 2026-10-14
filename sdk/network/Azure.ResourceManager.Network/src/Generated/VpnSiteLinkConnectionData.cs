@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -269,6 +270,34 @@ namespace Azure.ResourceManager.Network
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> List of ingress NatRules. </summary>
+        [WirePath("properties.ingressNatRules")]
+        public IList<WritableSubResource> IngressNatRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteLinkConnectionProperties();
+                }
+                return Properties.IngressNatRules;
+            }
+        }
+
+        /// <summary> List of egress NatRules. </summary>
+        [WirePath("properties.egressNatRules")]
+        public IList<WritableSubResource> EgressNatRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteLinkConnectionProperties();
+                }
+                return Properties.EgressNatRules;
             }
         }
 

@@ -181,10 +181,10 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedCisaCveResult(value, nextLink, totalElements, additionalBinaryDataProperties);
+            return new PagedCisaCveResult(value ?? new ChangeTrackingList<CisaCveResult>(), nextLink, totalElements, additionalBinaryDataProperties);
         }
     }
 }

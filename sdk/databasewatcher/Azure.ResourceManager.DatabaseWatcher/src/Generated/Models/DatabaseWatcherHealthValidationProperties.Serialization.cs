@@ -190,14 +190,14 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DatabaseWatcherHealthValidationProperties(
                 startsOn,
                 endsOn,
                 status,
-                issues,
+                issues ?? new ChangeTrackingList<DatabaseWatcherHealthValidationIssue>(),
                 provisioningState,
                 additionalBinaryDataProperties);
         }

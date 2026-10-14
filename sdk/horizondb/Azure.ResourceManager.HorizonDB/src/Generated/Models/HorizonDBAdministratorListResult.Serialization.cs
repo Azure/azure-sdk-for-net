@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HorizonDBAdministratorListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HorizonDBAdministratorListResult(value ?? new ChangeTrackingList<HorizonDBAdministratorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

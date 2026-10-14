@@ -41,6 +41,14 @@ namespace Azure.ResourceManager.EdgeOrder
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="contactDetails"> Contact details for the address. </param>
+        public EdgeOrderAddressData(AzureLocation location, EdgeOrderAddressContactDetails contactDetails) : this(location)
+        {
+            ContactDetails = contactDetails;
+        }
+
         /// <summary> Properties of an address. </summary>
         internal EdgeOrderItemAddressProperties Properties { get; set; }
 

@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LogAlertRuleDimension(name, @operator, values, additionalBinaryDataProperties);
+            return new LogAlertRuleDimension(name, @operator, values ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

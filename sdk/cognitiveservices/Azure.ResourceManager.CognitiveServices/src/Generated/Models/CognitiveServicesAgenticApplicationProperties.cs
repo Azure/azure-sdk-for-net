@@ -14,6 +14,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Resource type representing an agentic application as a management construct. </summary>
     public partial class CognitiveServicesAgenticApplicationProperties : CognitiveServicesResourceBase
     {
+        private string _displayName;
+        internal bool _displayNameIsDefined;
+        private string _baseUri;
+        internal bool _baseUriIsDefined;
+        private CognitiveServicesAssignedIdentity _agentIdentityBlueprint;
+        internal bool _agentIdentityBlueprintIsDefined;
+        private CognitiveServicesAssignedIdentity _defaultInstanceIdentity;
+        internal bool _defaultInstanceIdentityIsDefined;
+        private CognitiveServicesApplicationAuthorizationPolicy _authorizationPolicy;
+        internal bool _authorizationPolicyIsDefined;
+        private CognitiveServicesApplicationTrafficRoutingPolicy _trafficRoutingPolicy;
+        internal bool _trafficRoutingPolicyIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAgenticApplicationProperties"/>. </summary>
         public CognitiveServicesAgenticApplicationProperties()
         {
@@ -35,24 +48,46 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="isEnabled"> Enabledstate of the application. </param>
         internal CognitiveServicesAgenticApplicationProperties(string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, string baseUri, IList<CognitiveServicesAgentReferenceProperties> agents, CognitiveServicesAssignedIdentity agentIdentityBlueprint, CognitiveServicesAssignedIdentity defaultInstanceIdentity, CognitiveServicesApplicationAuthorizationPolicy authorizationPolicy, CognitiveServicesApplicationTrafficRoutingPolicy trafficRoutingPolicy, CognitiveServicesAgenticApplicationProvisioningState? provisioningState, bool? isEnabled) : base(description, tags, additionalBinaryDataProperties)
         {
-            DisplayName = displayName;
-            BaseUri = baseUri;
+            _displayName = displayName;
+            _baseUri = baseUri;
             Agents = agents;
-            AgentIdentityBlueprint = agentIdentityBlueprint;
-            DefaultInstanceIdentity = defaultInstanceIdentity;
-            AuthorizationPolicy = authorizationPolicy;
-            TrafficRoutingPolicy = trafficRoutingPolicy;
+            _agentIdentityBlueprint = agentIdentityBlueprint;
+            _defaultInstanceIdentity = defaultInstanceIdentity;
+            _authorizationPolicy = authorizationPolicy;
+            _trafficRoutingPolicy = trafficRoutingPolicy;
             ProvisioningState = provisioningState;
             IsEnabled = isEnabled;
         }
 
         /// <summary> The display name of the application. </summary>
         [WirePath("displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return _displayName;
+            }
+            set
+            {
+                _displayName = value;
+                _displayNameIsDefined = true;
+            }
+        }
 
         /// <summary> The application's dedicated invocation endpoint. </summary>
         [WirePath("baseUrl")]
-        public string BaseUri { get; set; }
+        public string BaseUri
+        {
+            get
+            {
+                return _baseUri;
+            }
+            set
+            {
+                _baseUri = value;
+                _baseUriIsDefined = true;
+            }
+        }
 
         /// <summary> The list of agent definitions comprising this application, returned as references to the objects under the parent project; use this to obtain a flat list of all agent-version pairs represented by this application. </summary>
         [WirePath("agents")]
@@ -60,19 +95,63 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The EntraId Agentic Blueprint of the application. </summary>
         [WirePath("agentIdentityBlueprint")]
-        public CognitiveServicesAssignedIdentity AgentIdentityBlueprint { get; set; }
+        public CognitiveServicesAssignedIdentity AgentIdentityBlueprint
+        {
+            get
+            {
+                return _agentIdentityBlueprint;
+            }
+            set
+            {
+                _agentIdentityBlueprint = value;
+                _agentIdentityBlueprintIsDefined = true;
+            }
+        }
 
         /// <summary> The (default) agent instance identity of the application. </summary>
         [WirePath("defaultInstanceIdentity")]
-        public CognitiveServicesAssignedIdentity DefaultInstanceIdentity { get; set; }
+        public CognitiveServicesAssignedIdentity DefaultInstanceIdentity
+        {
+            get
+            {
+                return _defaultInstanceIdentity;
+            }
+            set
+            {
+                _defaultInstanceIdentity = value;
+                _defaultInstanceIdentityIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the authorization policy associated with this agentic application instance. </summary>
         [WirePath("authorizationPolicy")]
-        public CognitiveServicesApplicationAuthorizationPolicy AuthorizationPolicy { get; set; }
+        public CognitiveServicesApplicationAuthorizationPolicy AuthorizationPolicy
+        {
+            get
+            {
+                return _authorizationPolicy;
+            }
+            set
+            {
+                _authorizationPolicy = value;
+                _authorizationPolicyIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the traffic routing policy for the application's deployments. </summary>
         [WirePath("trafficRoutingPolicy")]
-        public CognitiveServicesApplicationTrafficRoutingPolicy TrafficRoutingPolicy { get; set; }
+        public CognitiveServicesApplicationTrafficRoutingPolicy TrafficRoutingPolicy
+        {
+            get
+            {
+                return _trafficRoutingPolicy;
+            }
+            set
+            {
+                _trafficRoutingPolicy = value;
+                _trafficRoutingPolicyIsDefined = true;
+            }
+        }
 
         /// <summary> Provisioning state of the application. </summary>
         [WirePath("provisioningState")]

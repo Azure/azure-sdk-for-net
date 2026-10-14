@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Logs
         private readonly ILoggerFactory _loggerFactory;
         private readonly EndpointRoutingLogProcessor _routingProcessor;
 
-        public MultiEndpointLogDemo(string exporterConnectionString, IReadOnlyList<MultiEndpointTraceDemo.EndpointRoute> routes, string runId, bool faultRoutedEndpoints = false)
+        public MultiEndpointLogDemo(string? exporterConnectionString, IReadOnlyList<MultiEndpointTraceDemo.EndpointRoute> routes, string runId, bool faultRoutedEndpoints = false)
         {
             _routingProcessor = new EndpointRoutingLogProcessor(routes, runId);
 
@@ -58,7 +58,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Logs
 
                     options.AddAzureMonitorLogExporter(o =>
                     {
-                        o.ConnectionString = exporterConnectionString;
+                        if (!string.IsNullOrWhiteSpace(exporterConnectionString))
+                        {
+                            o.ConnectionString = exporterConnectionString;
+                        }
 
                         if (faultRoutedEndpoints)
                         {

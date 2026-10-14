@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ScheduledQueryRuleActions(actionGroups ?? new ChangeTrackingList<string>(), customProperties ?? new ChangeTrackingDictionary<string, string>(), actionProperties ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);

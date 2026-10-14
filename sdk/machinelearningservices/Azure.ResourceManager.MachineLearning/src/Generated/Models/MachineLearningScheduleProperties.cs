@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Base definition of a schedule. </summary>
     public partial class MachineLearningScheduleProperties : MachineLearningResourceBase
     {
+        private string _displayName;
+        internal bool _displayNameIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleProperties"/>. </summary>
         /// <param name="action"> [Required] Specifies the action of the schedule. </param>
         /// <param name="trigger"> [Required] Specifies the trigger details. </param>
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal MachineLearningScheduleProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, MachineLearningScheduleAction action, string displayName, bool? isEnabled, MachineLearningScheduleProvisioningStatus? provisioningState, MachineLearningTriggerBase trigger) : base(description, properties, tags, additionalBinaryDataProperties)
         {
             Action = action;
-            DisplayName = displayName;
+            _displayName = displayName;
             IsEnabled = isEnabled;
             ProvisioningState = provisioningState;
             Trigger = trigger;
@@ -52,7 +55,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Display name of schedule. </summary>
         [WirePath("displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return _displayName;
+            }
+            set
+            {
+                _displayName = value;
+                _displayNameIsDefined = true;
+            }
+        }
 
         /// <summary> Is the schedule enabled?. </summary>
         [WirePath("isEnabled")]

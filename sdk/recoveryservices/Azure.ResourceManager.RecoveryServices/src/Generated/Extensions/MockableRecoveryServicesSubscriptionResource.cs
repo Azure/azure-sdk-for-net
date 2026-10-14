@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
 
         private ClientDiagnostics VaultsClientDiagnostics => _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(VaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(VaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.RecoveryServices/vaults", out string apiVersion) ? apiVersion : "2026-07-01");
 
         private ClientDiagnostics RecoveryServicesOperationGroupClientDiagnostics => _recoveryServicesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecoveryServicesVaultData, RecoveryServicesVaultResource>(new VaultsGetBySubscriptionIdAsyncCollectionResultOfT(VaultsRestClient, Id.SubscriptionId, context, "MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesVaults"), data => new RecoveryServicesVaultResource(Client, data));
+            return new AsyncPageableWrapper<RecoveryServicesVaultData, RecoveryServicesVaultResource>(new RecoveryServicesVaultDataAsyncCollectionResultOfT(VaultsRestClient, Id.SubscriptionId, context, "MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesVaults"), data => new RecoveryServicesVaultResource(Client, data));
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecoveryServicesVaultData, RecoveryServicesVaultResource>(new VaultsGetBySubscriptionIdCollectionResultOfT(VaultsRestClient, Id.SubscriptionId, context, "MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesVaults"), data => new RecoveryServicesVaultResource(Client, data));
+            return new PageableWrapper<RecoveryServicesVaultData, RecoveryServicesVaultResource>(new RecoveryServicesVaultDataCollectionResultOfT(VaultsRestClient, Id.SubscriptionId, context, "MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesVaults"), data => new RecoveryServicesVaultResource(Client, data));
         }
 
         /// <summary>

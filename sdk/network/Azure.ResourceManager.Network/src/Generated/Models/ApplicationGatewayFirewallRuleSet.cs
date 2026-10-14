@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Network.Models
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleSet"/>. </summary>
+        public ApplicationGatewayFirewallRuleSet() : this(default)
+        {
+        }
+
         /// <summary> Properties of the application gateway firewall rule set. </summary>
         [WirePath("properties")]
         internal ApplicationGatewayFirewallRuleSetPropertiesFormat Properties { get; }
@@ -39,6 +44,16 @@ namespace Azure.ResourceManager.Network.Models
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </summary>
+        [WirePath("properties.displayName")]
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
 

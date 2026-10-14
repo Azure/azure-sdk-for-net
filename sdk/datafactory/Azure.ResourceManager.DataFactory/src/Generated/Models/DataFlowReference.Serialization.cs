@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    datasetParameters = BinaryData.FromString(prop.Value.GetRawText());
+                    datasetParameters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))
@@ -198,13 +198,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     parameters = dictionary;
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new DataFlowReference(referenceType, referenceName, datasetParameters, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalProperties);
         }
