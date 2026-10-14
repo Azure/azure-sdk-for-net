@@ -565,13 +565,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(62, Message = "Live Metrics was disabled because multi-endpoint routing is enabled. Live Metrics streams to the endpoint from the exporter's own connection string and cannot serve routed destinations.", Level = EventLevel.Warning)]
         public void LiveMetricsDisabledForMultiEndpointRouting() => WriteEvent(62);
 
-        [Event(63, Message = "Failed to persist routed telemetry for ingestion endpoint '{0}'. This telemetry item will be lost. The endpoint's storage partition is full or unwritable.", Level = EventLevel.Error)]
+        [Event(63, Message = "Failed to persist routed telemetry for route '{0}'. This telemetry item will be lost. The route's storage partition is full or unwritable.", Level = EventLevel.Error)]
         public void FailedToPersistRoutedTelemetry(string ingestionEndpoint) => WriteEvent(63, ingestionEndpoint);
 
         [Event(64, Message = "Rate-limited sampling of {0} traces per second was ignored because multi-endpoint routing is enabled. The limit is per process, so it would be shared across every destination the process carries. Fixed-rate sampling of {1} is used instead; set SamplingRatio to change it.", Level = EventLevel.Warning)]
         public void RateLimitedSamplingIgnoredForMultiEndpointRouting(double tracesPerSecond, float samplingRatio) => WriteEvent(64, tracesPerSecond, samplingRatio);
 
-        [Event(65, Message = "Storage partition for ingestion endpoint '{0}' is directory '{1}'. The directory name is a hash of the endpoint and cannot be reversed.", Level = EventLevel.Informational)]
+        // Parameter names are the payload contract and are kept; AAD routes carry an " (aad)" suffix.
+        [Event(65, Message = "Storage partition for route '{0}' is directory '{1}'. The directory name is a hash of the route's partition key - the ingestion endpoint, prefixed with 'aad|' for a Microsoft Entra ID route - and cannot be reversed.", Level = EventLevel.Informational)]
         public void MultiEndpointPartitionCreated(string ingestionEndpoint, string directory) => WriteEvent(65, ingestionEndpoint, directory);
 
         [NonEvent]
@@ -583,7 +584,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(66, Message = "Failed to persist routed telemetry for ingestion endpoint '{0}'. This telemetry item will be lost. {1}", Level = EventLevel.Error)]
+        [Event(66, Message = "Failed to persist routed telemetry for route '{0}'. This telemetry item will be lost. {1}", Level = EventLevel.Error)]
         public void RoutedTelemetryPersistenceThrew(string ingestionEndpoint, string exceptionMessage) => WriteEvent(66, ingestionEndpoint, exceptionMessage);
 
         [NonEvent]
@@ -610,7 +611,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(68, Message = "Export {0}: dropped telemetry that could not be routed. Reason: {1}. Trace Id: {2}. Span Id: {3}. The Activity must carry a valid microsoft.instrumentation_key and microsoft.ingestion_endpoint.", Level = EventLevel.Verbose)]
         public void RoutedTelemetryRejected(long exportSequence, string reason, string traceId, string spanId) => WriteEvent(68, exportSequence, reason, traceId, spanId);
 
-        [Event(69, Message = "No storage partition for ingestion endpoint '{0}': the limit of {1} partitions is already in use. Telemetry for this endpoint is transmitted without an offline storage fallback.", Level = EventLevel.Warning)]
+        [Event(69, Message = "No storage partition for route '{0}': the limit of {1} partitions is already in use. Telemetry for this route is transmitted without an offline storage fallback.", Level = EventLevel.Warning)]
         public void MultiEndpointPartitionCapReached(string ingestionEndpoint, int partitionCount) => WriteEvent(69, ingestionEndpoint, partitionCount);
 
         [NonEvent]
@@ -622,12 +623,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(70, Message = "Evicted stored telemetry owned by '{0}' ({1} bytes) to make room for a write from ingestion endpoint '{2}'. The owner is an ingestion endpoint, or a storage directory name when the partition was left by an earlier run. The evicted telemetry was never transmitted and is lost.", Level = EventLevel.Warning)]
+        [Event(70, Message = "Evicted stored telemetry owned by '{0}' ({1} bytes) to make room for a write from route '{2}'. The owner is a route, or a storage directory name when the partition was left by an earlier run. The evicted telemetry was never transmitted and is lost.", Level = EventLevel.Warning)]
         public void RoutedTelemetryEvicted(string evictedOwner, string evictedBytes, string requestingEndpoint) => WriteEvent(70, evictedOwner, evictedBytes, requestingEndpoint);
 
         // Guarded in the body: neither parameter list matches a typed WriteEvent overload, so the
         // call allocates an argument array whether or not anything is listening.
-        [Event(71, Message = "Export {0}: routed {1} Activities or metric points to {2} ingestion endpoints and dropped {3} that could not be routed. These count routing inputs, not envelopes - one Activity can produce several - so event 72 reports the item count actually sent to each endpoint.", Level = EventLevel.Informational)]
+        [Event(71, Message = "Export {0}: routed {1} Activities or metric points to {2} routes and dropped {3} that could not be routed. A route is an ingestion endpoint and authentication mode, so one endpoint reached both with and without Microsoft Entra ID counts as two. These count routing inputs, not envelopes - one Activity can produce several - so event 72 reports the item count actually sent on each route.", Level = EventLevel.Informational)]
         public void RoutedExportSummary(long exportSequence, int collected, int endpointCount, int rejected)
         {
             if (IsEnabled(EventLevel.Informational))
@@ -636,7 +637,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(72, Message = "Export {0}: {1} telemetry items for ingestion endpoint '{2}' were {3}. Accepted by ingestion: {4}, where -1 means ingestion reported no usable count. Status code: {5}", Level = EventLevel.Informational)]
+        [Event(72, Message = "Export {0}: {1} telemetry items for route '{2}' were {3}. Accepted by ingestion: {4}, where -1 means ingestion reported no usable count. Status code: {5}", Level = EventLevel.Informational)]
         public void RoutedGroupOutcome(long exportSequence, int itemCount, string ingestionEndpoint, string outcome, int itemsAccepted, int statusCode)
         {
             if (IsEnabled(EventLevel.Informational))
@@ -689,5 +690,68 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(78, Message = "Telemetry that was not routed has been dropped because no connection string is configured, so there is no destination of this process's own to send it to.", Level = EventLevel.Warning)]
         public void DroppedUnroutedTelemetryWithoutConnectionString() => WriteEvent(78);
+
+        [Event(79, Message = "Persistent storage sub directory is named from the '{0}' AppContext value '{1}' instead of the process name and application directory. Storage directory: {2}", Level = EventLevel.Informational)]
+        public void StorageSubDirectoryOverrideApplied(string settingName, string value, string storageDirectory)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                WriteEvent(79, settingName, value, storageDirectory);
+            }
+        }
+
+        [Event(80, Message = "The '{0}' AppContext value was ignored because it must be a string, but was a {1}. The default persistent storage sub directory is used.", Level = EventLevel.Warning)]
+        public void StorageSubDirectoryOverrideIgnored(string settingName, string valueType)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                WriteEvent(80, settingName, valueType);
+            }
+        }
+
+        [Event(81, Message = "Routed telemetry marked for Microsoft Entra ID is authenticated with credential type {0} and scope '{1}'. Telemetry not marked for Entra ID is sent without a token.", Level = EventLevel.Informational)]
+        public void MultiEndpointAadEnabled(string credentialType, string scope)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                WriteEvent(81, credentialType, scope);
+            }
+        }
+
+        [Event(82, Message = "The '{0}' AppContext value was ignored because it must be a string, but was a {1}. The public cloud Microsoft Entra ID audience is used.", Level = EventLevel.Warning)]
+        public void MultiEndpointAadAudienceIgnored(string settingName, string valueType)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                WriteEvent(82, settingName, valueType);
+            }
+        }
+
+        [Event(83, Message = "Export {0}: dropped {1} telemetry items for route '{2}'. The telemetry is marked for Microsoft Entra ID, but this transmitter was built without a credential (see event 84 if this exporter's Credential is set), so it is neither sent without a token nor persisted.", Level = EventLevel.Warning)]
+        public void RoutedAadTelemetryDroppedWithoutCredential(long exportSequence, int itemCount, string route)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                WriteEvent(83, exportSequence, itemCount, route);
+            }
+        }
+
+        [Event(84, Message = "This exporter's Credential setting is ignored because it reuses a shared connection created by an earlier exporter. The shared connection was created {0} a Credential; this exporter is configured {1} a Credential. Set the same AzureMonitorExporterOptions.Credential on all exporters sharing a connection string. With multi-endpoint routing, all exporters share one connection and must use the same Credential setting.", Level = EventLevel.Warning)]
+        public void CachedTransmitterCredentialMismatch(string transmitterCredential, string exporterCredential)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                WriteEvent(84, transmitterCredential, exporterCredential);
+            }
+        }
+
+        [NonEvent]
+        public void CachedTransmitterCredentialMismatch(bool transmitterHasCredential, bool exporterHasCredential)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                CachedTransmitterCredentialMismatch(transmitterHasCredential ? "with" : "without", exporterHasCredential ? "with" : "without");
+            }
+        }
     }
 }

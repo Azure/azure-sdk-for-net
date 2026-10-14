@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScheduledActionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string scheduledActionApiVersion);
             _scheduledActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions", ResourceType.Namespace, Diagnostics);
-            _scheduledActionsRestClient = new ScheduledActions(_scheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledActionApiVersion ?? "2026-09-06-preview");
+            _scheduledActionsRestClient = new ScheduledActions(_scheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Compute/scheduledActions", out string scheduledActionsApiVersionOverride) ? scheduledActionsApiVersionOverride : "2026-10-06-preview");
             ValidateResourceId(id);
         }
 
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +200,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +253,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -307,7 +306,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -356,7 +355,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -405,7 +404,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -464,7 +463,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -523,7 +522,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -582,7 +581,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -641,7 +640,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -700,7 +699,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -759,7 +758,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -808,7 +807,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -857,7 +856,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -906,7 +905,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -955,7 +954,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -971,7 +970,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionsGetResourcesAsyncCollectionResultOfT(
+            return new ScheduledActionResourceMetadataAsyncCollectionResultOfT(
                 _scheduledActionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -993,7 +992,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1009,7 +1008,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionsGetResourcesCollectionResultOfT(
+            return new ScheduledActionResourceMetadataCollectionResultOfT(
                 _scheduledActionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1031,7 +1030,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1083,7 +1082,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1135,7 +1134,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1190,7 +1189,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

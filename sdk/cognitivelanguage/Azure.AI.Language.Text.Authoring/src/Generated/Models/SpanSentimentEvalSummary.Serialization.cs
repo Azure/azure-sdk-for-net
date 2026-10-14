@@ -215,8 +215,8 @@ namespace Azure.AI.Language.Text.Authoring
                 }
             }
             return new SpanSentimentEvalSummary(
-                confusionMatrix,
-                sentiments,
+                confusionMatrix ?? new ChangeTrackingDictionary<string, TextAuthoringConfusionMatrixRow>(),
+                sentiments ?? new ChangeTrackingDictionary<string, SentimentEvalSummary>(),
                 microF1,
                 microPrecision,
                 microRecall,

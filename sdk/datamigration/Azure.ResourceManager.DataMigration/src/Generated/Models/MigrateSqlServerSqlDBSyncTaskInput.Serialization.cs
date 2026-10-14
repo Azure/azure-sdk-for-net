@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MigrateSqlServerSqlDBSyncTaskInput(sourceConnectionInfo, targetConnectionInfo, additionalBinaryDataProperties, selectedDatabases, validationOptions);
+            return new MigrateSqlServerSqlDBSyncTaskInput(sourceConnectionInfo, targetConnectionInfo, additionalBinaryDataProperties, selectedDatabases ?? new ChangeTrackingList<MigrateSqlServerSqlDBSyncDatabaseInput>(), validationOptions);
         }
     }
 }

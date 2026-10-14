@@ -41,6 +41,12 @@ internal class NameVisitor : ScmLibraryVisitor
             "PrivateLinkResourceListResult"
         };
 
+    protected override TypeProvider? VisitType(TypeProvider type)
+    {
+        ManagementClientGenerator.Instance.OutputLibrary.ApplyRegularCollectionResultName(type);
+        return base.VisitType(type);
+    }
+
     protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
     {
         if (type is null)

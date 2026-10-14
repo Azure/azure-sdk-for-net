@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CommitmentPlanAccountAssociationData, CommitmentPlanAccountAssociationResource>(new CommitmentPlanAccountAssociationsGetAssociationsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CommitmentPlanAccountAssociationData, CommitmentPlanAccountAssociationResource>(new CommitmentPlanAccountAssociationDataAsyncCollectionResultOfT(
                 _commitmentPlanAccountAssociationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CommitmentPlanAccountAssociationData, CommitmentPlanAccountAssociationResource>(new CommitmentPlanAccountAssociationsGetAssociationsCollectionResultOfT(
+            return new PageableWrapper<CommitmentPlanAccountAssociationData, CommitmentPlanAccountAssociationResource>(new CommitmentPlanAccountAssociationDataCollectionResultOfT(
                 _commitmentPlanAccountAssociationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

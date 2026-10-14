@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckGlobalAsync(CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckGlobalAsync(CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 };
                 HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckGlobalRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CheckNameAvailabilityResponse> response = Response.FromValue(CheckNameAvailabilityResponse.FromResponse(result), result);
+                Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResponse> CheckGlobal(CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResult> CheckGlobal(CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 };
                 HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckGlobalRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CheckNameAvailabilityResponse> response = Response.FromValue(CheckNameAvailabilityResponse.FromResponse(result), result);
+                Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckLocalAsync(AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckLocalAsync(AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 };
                 HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckLocalRequest(Guid.Parse(Id.SubscriptionId), location, CheckNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CheckNameAvailabilityResponse> response = Response.FromValue(CheckNameAvailabilityResponse.FromResponse(result), result);
+                Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResponse> CheckLocal(AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResult> CheckLocal(AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                 };
                 HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckLocalRequest(Guid.Parse(Id.SubscriptionId), location, CheckNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CheckNameAvailabilityResponse> response = Response.FromValue(CheckNameAvailabilityResponse.FromResponse(result), result);
+                Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

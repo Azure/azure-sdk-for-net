@@ -143,11 +143,11 @@ namespace BasicTypeSpec
             return new RenamedModel(name, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The ReturnsAnonymousModelResponse. </summary>
-        /// <returns> A new <see cref="BasicTypeSpec.ReturnsAnonymousModelResponse"/> instance for mocking. </returns>
-        public static ReturnsAnonymousModelResponse ReturnsAnonymousModelResponse()
+        /// <summary> The ReturnsAnonymousModelResult. </summary>
+        /// <returns> A new <see cref="BasicTypeSpec.ReturnsAnonymousModelResult"/> instance for mocking. </returns>
+        public static ReturnsAnonymousModelResult ReturnsAnonymousModelResult()
         {
-            return new ReturnsAnonymousModelResponse(additionalBinaryDataProperties: null);
+            return new ReturnsAnonymousModelResult(additionalBinaryDataProperties: null);
         }
 
         /// <summary> The MultipartRequestRequest. </summary>

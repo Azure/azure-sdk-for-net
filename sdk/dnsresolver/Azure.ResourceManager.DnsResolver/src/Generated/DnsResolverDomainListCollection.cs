@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DnsResolverDomainListCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DnsResolverDomainListResource.ResourceType, out string dnsResolverDomainListApiVersion);
             _dnsResolverDomainListsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverDomainListResource.ResourceType.Namespace, Diagnostics);
-            _dnsResolverDomainListsRestClient = new DnsResolverDomainLists(_dnsResolverDomainListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverDomainListApiVersion ?? "2025-10-01-preview");
+            _dnsResolverDomainListsRestClient = new DnsResolverDomainLists(_dnsResolverDomainListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/dnsResolverDomainLists", out string dnsResolverDomainListsApiVersionOverride) ? dnsResolverDomainListsApiVersionOverride : "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -297,7 +296,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsResolverDomainListData, DnsResolverDomainListResource>(new DnsResolverDomainListsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DnsResolverDomainListData, DnsResolverDomainListResource>(new DnsResolverDomainListDataAsyncCollectionResultOfT(
                 _dnsResolverDomainListsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +331,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsResolverDomainListData, DnsResolverDomainListResource>(new DnsResolverDomainListsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DnsResolverDomainListData, DnsResolverDomainListResource>(new DnsResolverDomainListDataCollectionResultOfT(
                 _dnsResolverDomainListsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

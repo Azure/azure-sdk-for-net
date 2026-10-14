@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApplicationGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ApplicationGroupListResult(value ?? new ChangeTrackingList<EventHubsApplicationGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

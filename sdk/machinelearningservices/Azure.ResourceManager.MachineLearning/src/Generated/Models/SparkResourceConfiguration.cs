@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _instanceType;
+        internal bool _instanceTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SparkResourceConfiguration"/>. </summary>
         public SparkResourceConfiguration()
@@ -28,14 +30,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SparkResourceConfiguration(string instanceType, string runtimeVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            InstanceType = instanceType;
+            _instanceType = instanceType;
             RuntimeVersion = runtimeVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional type of VM used as supported by the compute target. </summary>
         [WirePath("instanceType")]
-        public string InstanceType { get; set; }
+        public string InstanceType
+        {
+            get
+            {
+                return _instanceType;
+            }
+            set
+            {
+                _instanceType = value;
+                _instanceTypeIsDefined = true;
+            }
+        }
 
         /// <summary> Version of spark runtime used for the job. </summary>
         [WirePath("runtimeVersion")]

@@ -15,6 +15,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Managed identity configuration. </summary>
     public partial class MachineLearningManagedIdentity : MachineLearningIdentityConfiguration
     {
+        private Guid? _clientId;
+        internal bool _clientIdIsDefined;
+        private Guid? _objectId;
+        internal bool _objectIdIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningManagedIdentity"/>. </summary>
         public MachineLearningManagedIdentity() : base(IdentityConfigurationType.Managed)
         {
@@ -28,18 +33,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="resourceId"> Specifies a user-assigned identity by ARM resource ID. For system-assigned, do not set this field. </param>
         internal MachineLearningManagedIdentity(IdentityConfigurationType identityType, IDictionary<string, BinaryData> additionalBinaryDataProperties, Guid? clientId, Guid? objectId, ResourceIdentifier resourceId) : base(identityType, additionalBinaryDataProperties)
         {
-            ClientId = clientId;
-            ObjectId = objectId;
+            _clientId = clientId;
+            _objectId = objectId;
             ResourceId = resourceId;
         }
 
         /// <summary> Specifies a user-assigned identity by client ID. For system-assigned, do not set this field. </summary>
         [WirePath("clientId")]
-        public Guid? ClientId { get; set; }
+        public Guid? ClientId
+        {
+            get
+            {
+                return _clientId;
+            }
+            set
+            {
+                _clientId = value;
+                _clientIdIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies a user-assigned identity by object ID. For system-assigned, do not set this field. </summary>
         [WirePath("objectId")]
-        public Guid? ObjectId { get; set; }
+        public Guid? ObjectId
+        {
+            get
+            {
+                return _objectId;
+            }
+            set
+            {
+                _objectId = value;
+                _objectIdIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies a user-assigned identity by ARM resource ID. For system-assigned, do not set this field. </summary>
         [WirePath("resourceId")]

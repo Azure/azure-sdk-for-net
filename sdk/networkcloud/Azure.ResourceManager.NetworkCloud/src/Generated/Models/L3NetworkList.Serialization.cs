@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new L3NetworkList(value, nextLink, additionalBinaryDataProperties);
+            return new L3NetworkList(value ?? new ChangeTrackingList<NetworkCloudL3NetworkData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

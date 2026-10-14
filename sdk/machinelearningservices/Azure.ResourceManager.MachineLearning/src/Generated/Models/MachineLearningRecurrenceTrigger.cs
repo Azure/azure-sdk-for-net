@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningRecurrenceTrigger. </summary>
     public partial class MachineLearningRecurrenceTrigger : MachineLearningTriggerBase
     {
+        private MachineLearningRecurrenceSchedule _schedule;
+        internal bool _scheduleIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningRecurrenceTrigger"/>. </summary>
         /// <param name="frequency"> [Required] The frequency to trigger schedule. </param>
         /// <param name="interval"> [Required] Specifies schedule interval in conjunction with frequency. </param>
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Frequency = frequency;
             Interval = interval;
-            Schedule = schedule;
+            _schedule = schedule;
         }
 
         /// <summary> [Required] The frequency to trigger schedule. </summary>
@@ -56,6 +59,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The recurrence schedule. </summary>
         [WirePath("schedule")]
-        public MachineLearningRecurrenceSchedule Schedule { get; set; }
+        public MachineLearningRecurrenceSchedule Schedule
+        {
+            get
+            {
+                return _schedule;
+            }
+            set
+            {
+                _schedule = value;
+                _scheduleIsDefined = true;
+            }
+        }
     }
 }

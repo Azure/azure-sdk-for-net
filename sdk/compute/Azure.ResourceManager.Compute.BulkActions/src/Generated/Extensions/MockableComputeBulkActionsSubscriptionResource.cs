@@ -45,19 +45,31 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
 
         private ClientDiagnostics BulkCreateCustomClientDiagnostics => _bulkCreateCustomClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BulkCreateCustom BulkCreateCustomRestClient => _bulkCreateCustomRestClient ??= new BulkCreateCustom(BulkCreateCustomClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-06-preview");
+        private BulkCreateCustom BulkCreateCustomRestClient => _bulkCreateCustomRestClient ??= new BulkCreateCustom(
+            BulkCreateCustomClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-10-06-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics BulkCreateClientDiagnostics => _bulkCreateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BulkCreate BulkCreateRestClient => _bulkCreateRestClient ??= new BulkCreate(BulkCreateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-06-preview");
+        private BulkCreate BulkCreateRestClient => _bulkCreateRestClient ??= new BulkCreate(
+            BulkCreateClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-10-06-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-06-preview");
+        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Compute/scheduledActions", out string apiVersion0) ? apiVersion0 : "2026-10-06-preview");
 
         private ClientDiagnostics ScheduledActionOperationStatusClientDiagnostics => _scheduledActionOperationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledActionOperationStatus ScheduledActionOperationStatusRestClient => _scheduledActionOperationStatusRestClient ??= new ScheduledActionOperationStatus(ScheduledActionOperationStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-06-preview");
+        private ScheduledActionOperationStatus ScheduledActionOperationStatusRestClient => _scheduledActionOperationStatusRestClient ??= new ScheduledActionOperationStatus(ScheduledActionOperationStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-06-preview");
 
         /// <summary>
         /// List BulkCreateCustom resources by subscriptionId.
@@ -72,7 +84,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -85,7 +97,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LocationBasedBulkCreateCustomData, LocationBasedBulkCreateCustomResource>(new BulkCreateCustomGetBySubscriptionAsyncCollectionResultOfT(BulkCreateCustomRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableComputeBulkActionsSubscriptionResource.GetLocationBasedBulkCreateCustoms"), data => new LocationBasedBulkCreateCustomResource(Client, data));
+            return new AsyncPageableWrapper<LocationBasedBulkCreateCustomData, LocationBasedBulkCreateCustomResource>(new LocationBasedBulkCreateCustomDataAsync0CollectionResultOfT(BulkCreateCustomRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableComputeBulkActionsSubscriptionResource.GetLocationBasedBulkCreateCustoms"), data => new LocationBasedBulkCreateCustomResource(Client, data));
         }
 
         /// <summary>
@@ -101,7 +113,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -114,7 +126,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LocationBasedBulkCreateCustomData, LocationBasedBulkCreateCustomResource>(new BulkCreateCustomGetBySubscriptionCollectionResultOfT(BulkCreateCustomRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableComputeBulkActionsSubscriptionResource.GetLocationBasedBulkCreateCustoms"), data => new LocationBasedBulkCreateCustomResource(Client, data));
+            return new PageableWrapper<LocationBasedBulkCreateCustomData, LocationBasedBulkCreateCustomResource>(new LocationBasedBulkCreateCustomData0CollectionResultOfT(BulkCreateCustomRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableComputeBulkActionsSubscriptionResource.GetLocationBasedBulkCreateCustoms"), data => new LocationBasedBulkCreateCustomResource(Client, data));
         }
 
         /// <summary>
@@ -130,7 +142,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,7 +155,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LocationBasedBulkCreateData, LocationBasedBulkCreateResource>(new BulkCreateGetBySubscriptionAsyncCollectionResultOfT(BulkCreateRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableComputeBulkActionsSubscriptionResource.GetLocationBasedBulkCreates"), data => new LocationBasedBulkCreateResource(Client, data));
+            return new AsyncPageableWrapper<LocationBasedBulkCreateData, LocationBasedBulkCreateResource>(new LocationBasedBulkCreateDataAsync0CollectionResultOfT(BulkCreateRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableComputeBulkActionsSubscriptionResource.GetLocationBasedBulkCreates"), data => new LocationBasedBulkCreateResource(Client, data));
         }
 
         /// <summary>
@@ -159,7 +171,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,7 +184,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LocationBasedBulkCreateData, LocationBasedBulkCreateResource>(new BulkCreateGetBySubscriptionCollectionResultOfT(BulkCreateRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableComputeBulkActionsSubscriptionResource.GetLocationBasedBulkCreates"), data => new LocationBasedBulkCreateResource(Client, data));
+            return new PageableWrapper<LocationBasedBulkCreateData, LocationBasedBulkCreateResource>(new LocationBasedBulkCreateData0CollectionResultOfT(BulkCreateRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableComputeBulkActionsSubscriptionResource.GetLocationBasedBulkCreates"), data => new LocationBasedBulkCreateResource(Client, data));
         }
 
         /// <summary>
@@ -188,7 +200,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,7 +212,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetBySubscriptionAsyncCollectionResultOfT(ScheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeBulkActionsSubscriptionResource.GetScheduledActions"), data => new ScheduledActionResource(Client, data));
+            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionDataAsync0CollectionResultOfT(ScheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeBulkActionsSubscriptionResource.GetScheduledActions"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>
@@ -216,7 +228,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,7 +240,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetBySubscriptionCollectionResultOfT(ScheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeBulkActionsSubscriptionResource.GetScheduledActions"), data => new ScheduledActionResource(Client, data));
+            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionData0CollectionResultOfT(ScheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeBulkActionsSubscriptionResource.GetScheduledActions"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>
@@ -244,7 +256,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +306,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -344,7 +356,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -394,7 +406,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -444,7 +456,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -494,7 +506,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

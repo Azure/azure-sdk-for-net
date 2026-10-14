@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRouteAuthorizationData, ExpressRouteAuthorizationResource>(new AuthorizationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ExpressRouteAuthorizationData, ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationDataAsyncCollectionResultOfT(
                 _authorizationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRouteAuthorizationData, ExpressRouteAuthorizationResource>(new AuthorizationsGetAllCollectionResultOfT(
+            return new PageableWrapper<ExpressRouteAuthorizationData, ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationDataCollectionResultOfT(
                 _authorizationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary>
     /// Abstract placement policy properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmPlacementPolicyProperties"/> and <see cref="VmHostPlacementPolicyProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmHostPlacementPolicyProperties"/> and <see cref="VmPlacementPolicyProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownPlacementPolicyProperties))]
     public abstract partial class PlacementPolicyProperties : IJsonModel<PlacementPolicyProperties>
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "VmVm":
-                        return VmPlacementPolicyProperties.DeserializeVmPlacementPolicyProperties(element, options);
                     case "VmHost":
                         return VmHostPlacementPolicyProperties.DeserializeVmHostPlacementPolicyProperties(element, options);
+                    case "VmVm":
+                        return VmPlacementPolicyProperties.DeserializeVmPlacementPolicyProperties(element, options);
                 }
             }
             return UnknownPlacementPolicyProperties.DeserializeUnknownPlacementPolicyProperties(element, options);

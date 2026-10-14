@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private RequestLogging _requestLogging;
+        internal bool _requestLoggingIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DataCollector"/>. </summary>
         /// <param name="collections">
@@ -46,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal DataCollector(IDictionary<string, DataCollectionConfiguration> collections, RequestLogging requestLogging, RollingRateType? rollingRate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Collections = collections;
-            RequestLogging = requestLogging;
+            _requestLogging = requestLogging;
             RollingRate = rollingRate;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -60,7 +62,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The request logging configuration for mdc, it includes advanced logging settings for all collections. It's optional. </summary>
         [WirePath("requestLogging")]
-        internal RequestLogging RequestLogging { get; set; }
+        internal RequestLogging RequestLogging
+        {
+            get
+            {
+                return _requestLogging;
+            }
+            set
+            {
+                _requestLogging = value;
+                _requestLoggingIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// When model data is collected to blob storage, we need to roll the data to different path to avoid logging all of them in a single blob file.

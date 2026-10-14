@@ -16,6 +16,13 @@ the server crashes mid-response:
 - Stream events are preserved for client reconnection.
 - Conversation state is maintained across crashes.
 
+When `ResilientBackground` is `false` and the application has not explicitly called
+`SetResilientTasksEnabled()`, stored responses still execute and persist normally, but they
+run in-process: no task store is initialized and an ungraceful crash does not recover or
+mark the in-flight response. Applications may explicitly enable Core tasks while leaving
+`ResilientBackground` false; those requests use durable tasks with mark-failed recovery
+rather than handler re-invocation.
+
 **Opting in (`ResilientBackground = true`) gets you the framework half for
 free**: re-invocation on restart, event replay for reconnecting clients, and
 conversation continuity — with no handler changes. A naive handler re-invoked

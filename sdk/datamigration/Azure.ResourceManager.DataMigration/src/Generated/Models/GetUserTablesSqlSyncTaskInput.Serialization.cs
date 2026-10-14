@@ -202,10 +202,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GetUserTablesSqlSyncTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedSourceDatabases, selectedTargetDatabases, additionalBinaryDataProperties);
+            return new GetUserTablesSqlSyncTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedSourceDatabases ?? new ChangeTrackingList<string>(), selectedTargetDatabases ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

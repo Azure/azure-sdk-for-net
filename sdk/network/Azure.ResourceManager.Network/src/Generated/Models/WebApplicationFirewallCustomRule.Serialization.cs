@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WebApplicationFirewallCustomRule(
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Network.Models
                 rateLimitDuration,
                 rateLimitThreshold,
                 ruleType,
-                matchConditions,
+                matchConditions ?? new ChangeTrackingList<MatchCondition>(),
                 groupByUserSession ?? new ChangeTrackingList<GroupByUserSession>(),
                 action,
                 additionalBinaryDataProperties);

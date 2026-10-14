@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScheduledActionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ScheduledActionResource.ResourceType, out string scheduledActionApiVersion);
             _scheduledActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions", ScheduledActionResource.ResourceType.Namespace, Diagnostics);
-            _scheduledActionsRestClient = new ScheduledActions(_scheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledActionApiVersion ?? "2026-09-06-preview");
+            _scheduledActionsRestClient = new ScheduledActions(_scheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Compute/scheduledActions", out string scheduledActionsApiVersionOverride) ? scheduledActionsApiVersionOverride : "2026-10-06-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetByResourceGroupAsyncCollectionResultOfT(_scheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
+            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionDataAsyncCollectionResultOfT(_scheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetByResourceGroupCollectionResultOfT(_scheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
+            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionDataCollectionResultOfT(_scheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

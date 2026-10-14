@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CloudExadataInfrastructureCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(CloudExadataInfrastructureResource.ResourceType, out string cloudExadataInfrastructureApiVersion);
             _cloudExadataInfrastructuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudExadataInfrastructureResource.ResourceType.Namespace, Diagnostics);
-            _cloudExadataInfrastructuresRestClient = new CloudExadataInfrastructures(_cloudExadataInfrastructuresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudExadataInfrastructureApiVersion ?? "2025-09-01");
+            _cloudExadataInfrastructuresRestClient = new CloudExadataInfrastructures(_cloudExadataInfrastructuresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Oracle.Database/cloudExadataInfrastructures", out string cloudExadataInfrastructuresApiVersionOverride) ? cloudExadataInfrastructuresApiVersionOverride : "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudExadataInfrastructureData, CloudExadataInfrastructureResource>(new CloudExadataInfrastructuresGetByResourceGroupAsyncCollectionResultOfT(_cloudExadataInfrastructuresRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudExadataInfrastructureCollection.GetAll"), data => new CloudExadataInfrastructureResource(Client, data));
+            return new AsyncPageableWrapper<CloudExadataInfrastructureData, CloudExadataInfrastructureResource>(new CloudExadataInfrastructureDataAsync0CollectionResultOfT(_cloudExadataInfrastructuresRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudExadataInfrastructureCollection.GetAll"), data => new CloudExadataInfrastructureResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudExadataInfrastructureData, CloudExadataInfrastructureResource>(new CloudExadataInfrastructuresGetByResourceGroupCollectionResultOfT(_cloudExadataInfrastructuresRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudExadataInfrastructureCollection.GetAll"), data => new CloudExadataInfrastructureResource(Client, data));
+            return new PageableWrapper<CloudExadataInfrastructureData, CloudExadataInfrastructureResource>(new CloudExadataInfrastructureData0CollectionResultOfT(_cloudExadataInfrastructuresRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudExadataInfrastructureCollection.GetAll"), data => new CloudExadataInfrastructureResource(Client, data));
         }
 
         /// <summary>

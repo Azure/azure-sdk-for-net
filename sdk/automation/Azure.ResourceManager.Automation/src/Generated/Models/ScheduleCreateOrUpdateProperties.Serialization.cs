@@ -86,10 +86,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartsOn, "O");
-            if (Optional.IsDefined(ExpiresOn))
+            if (_expiresOnIsDefined || Optional.IsDefined(ExpiresOn))
             {
-                writer.WritePropertyName("expiryTime"u8);
-                writer.WriteStringValue(ExpiresOn.Value, "O");
+                if (ExpiresOn != null)
+                {
+                    writer.WritePropertyName("expiryTime"u8);
+                    writer.WriteStringValue(ExpiresOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("expiryTime"u8);
+                }
             }
             if (Optional.IsDefined(Interval))
             {
@@ -159,6 +166,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             string description = default;
             DateTimeOffset startsOn = default;
+            bool expiresOnIsDefined = false;
             DateTimeOffset? expiresOn = default;
             BinaryData interval = default;
             AutomationScheduleFrequency frequency = default;
@@ -179,6 +187,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("expiryTime"u8))
                 {
+                    expiresOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         expiresOn = null;
@@ -193,7 +202,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    interval = BinaryData.FromString(prop.Value.GetRawText());
+                    interval = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("frequency"u8))
@@ -217,7 +226,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ScheduleCreateOrUpdateProperties(
@@ -228,7 +237,10 @@ namespace Azure.ResourceManager.Automation.Models
                 frequency,
                 timeZone,
                 advancedSchedule,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _expiresOnIsDefined = expiresOnIsDefined
+            };
         }
     }
 }

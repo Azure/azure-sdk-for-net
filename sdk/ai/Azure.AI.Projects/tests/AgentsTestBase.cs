@@ -214,7 +214,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.OpenAPI, "openapi_call"},
         {ToolType.OpenAPIConnection, "openapi_call"},
         {ToolType.BrowserAutomation, "browser_automation_preview_call"},
-        {ToolType.BrowserAutomationGA, "browser_automation_call"},
+        {ToolType.BrowserAutomationGA, "remote_function_call"},
         {ToolType.Sharepoint, "sharepoint_grounding_preview_call"},
         {ToolType.MicrosoftFabric, "fabric_dataagent_preview_call_output"},
         {ToolType.FabricIQ, "mcp_call"},
@@ -230,6 +230,10 @@ public class AgentsTestBase : ProjectsClientTestBase
     protected const string HOSTED_AGENT = "cs-e2e-tests-hosted";
     protected const string VECTOR_STORE = "cs-e2e-tests-vector-store";
     protected const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
+    protected const string CONVERSATION_AGENT_NAME = "cs-e2e-tests-voice-conversation";
+    protected const string LIFECYCLE_AGENT_NAME = "cs-e2e-tests-voice-lifecycle";
+    protected const string AUDIO_CONVERSATION_AGENT_NAME = "cs-e2e-tests-voice-audio";
+    protected const string TOOLCALL_AGENT_NAME = "cs-e2e-tests-voice-toolcall";
     private readonly List<string> _conversationIDs = [];
     private ProjectConversationsClient _conversations = null;
     protected readonly string MEMORY_STORE_NAME = "test-memory-store";
@@ -624,10 +628,10 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.OpenAPIConnection => GetOpenAPITool(projectClient, true),
             ToolType.Sharepoint => GetSharepointTool(projectClient),
             // TODO: Uncomment this code when the service will be available and BrowserAutomationTool will be generated.
-            //ToolType.BrowserAutomationGA => new global::Azure.AI.Extensions.OpenAI.BrowserAutomationTool(
-            //new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
-            //    new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
-            //)),
+            ToolType.BrowserAutomationGA => new global::Azure.AI.Extensions.OpenAI.BrowserAutomationTool(
+            new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
+                new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_MCP_CONNECTION_NAME)
+            )),
             ToolType.BrowserAutomation => new global::Azure.AI.Extensions.OpenAI.BrowserAutomationPreviewTool(
             new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
                 new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
@@ -722,6 +726,22 @@ public class AgentsTestBase : ProjectsClientTestBase
             projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
         foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AGENT_NAME2))
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: CONVERSATION_AGENT_NAME))
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: LIFECYCLE_AGENT_NAME))
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AUDIO_CONVERSATION_AGENT_NAME))
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: TOOLCALL_AGENT_NAME))
         {
             projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }

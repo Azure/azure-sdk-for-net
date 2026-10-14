@@ -25,14 +25,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="type"> The priority type for VM allocation. </param>
         /// <param name="maxPricePerVM"> Price per hour of each Spot VM will never exceed this. </param>
         /// <param name="evictionPolicy"> Eviction Policy to follow when evicting Spot VMs. </param>
-        /// <param name="allocationStrategy"> The allocation strategy for VM size selection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkCreateCustomPriorityProfile(PriorityType? @type, float? maxPricePerVM, EvictionPolicy? evictionPolicy, BulkCreateCustomAllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkCreateCustomPriorityProfile(PriorityType? @type, float? maxPricePerVM, EvictionPolicy? evictionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             MaxPricePerVM = maxPricePerVM;
             EvictionPolicy = evictionPolicy;
-            AllocationStrategy = allocationStrategy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,8 +42,5 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Eviction Policy to follow when evicting Spot VMs. </summary>
         public EvictionPolicy? EvictionPolicy { get; set; }
-
-        /// <summary> The allocation strategy for VM size selection. </summary>
-        public BulkCreateCustomAllocationStrategy? AllocationStrategy { get; set; }
     }
 }

@@ -34,14 +34,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
         /// <param name="status"> The rule set status. </param>
+        /// <param name="displayName"> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </param>
         /// <param name="tiers"> Tier of an application gateway that support the rule set. </param>
         /// <param name="ruleGroups"> The rule groups of the web application firewall rule set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayFirewallManifestRuleSet(string ruleSetType, string ruleSetVersion, ApplicationGatewayRuleSetStatusOption? status, IReadOnlyList<ApplicationGatewayTierType> tiers, IReadOnlyList<ApplicationGatewayFirewallRuleGroup> ruleGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayFirewallManifestRuleSet(string ruleSetType, string ruleSetVersion, ApplicationGatewayRuleSetStatusOption? status, string displayName, IReadOnlyList<ApplicationGatewayTierType> tiers, IReadOnlyList<ApplicationGatewayFirewallRuleGroup> ruleGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
             Status = status;
+            DisplayName = displayName;
             Tiers = tiers;
             RuleGroups = ruleGroups;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -58,6 +60,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The rule set status. </summary>
         [WirePath("status")]
         public ApplicationGatewayRuleSetStatusOption? Status { get; }
+
+        /// <summary> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </summary>
+        [WirePath("displayName")]
+        public string DisplayName { get; }
 
         /// <summary> Tier of an application gateway that support the rule set. </summary>
         [WirePath("tiers")]

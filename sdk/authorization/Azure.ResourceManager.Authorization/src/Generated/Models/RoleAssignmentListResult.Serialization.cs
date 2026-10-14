@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RoleAssignmentListResult(value, nextLink, additionalBinaryDataProperties);
+            return new RoleAssignmentListResult(value ?? new ChangeTrackingList<RoleAssignmentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ScenarioProperties(
@@ -233,8 +233,8 @@ namespace Azure.ResourceManager.Chaos.Models
                 createdFrom,
                 version,
                 description,
-                parameters,
-                actions,
+                parameters ?? new ChangeTrackingList<ChaosScenarioParameterInfo>(),
+                actions ?? new ChangeTrackingList<ScenarioAction>(),
                 recommendation,
                 additionalBinaryDataProperties);
         }

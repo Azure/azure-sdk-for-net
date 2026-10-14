@@ -162,7 +162,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SearchIndexerIndexProjection(selectors, parameters, additionalBinaryDataProperties);
+            return new SearchIndexerIndexProjection(selectors ?? new ChangeTrackingList<SearchIndexerIndexProjectionSelector>(), parameters, additionalBinaryDataProperties);
         }
     }
 }

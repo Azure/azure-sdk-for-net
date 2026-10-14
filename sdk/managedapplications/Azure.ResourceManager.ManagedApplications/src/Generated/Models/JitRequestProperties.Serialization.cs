@@ -232,13 +232,13 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new JitRequestProperties(
                 applicationResourceId,
                 publisherTenantId,
-                jitAuthorizationPolicies,
+                jitAuthorizationPolicies ?? new ChangeTrackingList<JitAuthorizationPolicies>(),
                 jitSchedulingPolicy,
                 provisioningState,
                 jitRequestState,

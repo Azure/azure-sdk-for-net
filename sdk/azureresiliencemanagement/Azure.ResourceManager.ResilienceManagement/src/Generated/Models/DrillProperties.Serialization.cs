@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary>
     /// Properties of the Resiliency Drill.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ZonalDrillProperties"/> and <see cref="RegionalDrillProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RegionalDrillProperties"/> and <see cref="ZonalDrillProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDrillProperties))]
     public abstract partial class DrillProperties : IJsonModel<DrillProperties>
@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("recoveryPlanProperties"u8);
                 writer.WriteObjectValue(RecoveryPlanProperties, options);
             }
+            if (Optional.IsDefined(GoalAssignmentProperties))
+            {
+                writer.WritePropertyName("goalAssignmentProperties"u8);
+                writer.WriteObjectValue(GoalAssignmentProperties, options);
+            }
             if (Optional.IsDefined(DrillAssetProperties))
             {
                 writer.WritePropertyName("drillAssetProperties"u8);
@@ -148,17 +153,22 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("lastResyncReadinessCheckTime"u8);
                 writer.WriteStringValue(LastResyncReadinessCheckOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagedOnBehalfOfConfiguration))
-            {
-                writer.WritePropertyName("managedOnBehalfOfConfiguration"u8);
-                writer.WriteObjectValue(ManagedOnBehalfOfConfiguration, options);
-            }
             writer.WritePropertyName("drillType"u8);
             writer.WriteStringValue(DrillType.ToString());
             if (Optional.IsDefined(MonitoringProperties))
             {
                 writer.WritePropertyName("monitoringProperties"u8);
                 writer.WriteObjectValue(MonitoringProperties, options);
+            }
+            if (Optional.IsDefined(HealthModelMonitoringProperties))
+            {
+                writer.WritePropertyName("healthModelMonitoringProperties"u8);
+                writer.WriteObjectValue(HealthModelMonitoringProperties, options);
+            }
+            if (Optional.IsDefined(SliMonitoringProperties))
+            {
+                writer.WritePropertyName("sliMonitoringProperties"u8);
+                writer.WriteObjectValue(SliMonitoringProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
@@ -211,10 +221,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Zonal":
-                        return ZonalDrillProperties.DeserializeZonalDrillProperties(element, options);
                     case "Regional":
                         return RegionalDrillProperties.DeserializeRegionalDrillProperties(element, options);
+                    case "Zonal":
+                        return ZonalDrillProperties.DeserializeZonalDrillProperties(element, options);
                 }
             }
             return UnknownDrillProperties.DeserializeUnknownDrillProperties(element, options);

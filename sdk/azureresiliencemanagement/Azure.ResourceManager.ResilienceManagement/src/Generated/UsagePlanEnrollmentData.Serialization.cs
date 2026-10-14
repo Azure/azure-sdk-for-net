@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            EnrollmentProperties properties = default;
+            UsagePlanEnrollmentProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,12 +189,12 @@ namespace Azure.ResourceManager.ResilienceManagement
                     {
                         continue;
                     }
-                    properties = EnrollmentProperties.DeserializeEnrollmentProperties(prop.Value, options);
+                    properties = UsagePlanEnrollmentProperties.DeserializeUsagePlanEnrollmentProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UsagePlanEnrollmentData(

@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Playwright.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PlaywrightWorkspaceQuotaListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PlaywrightWorkspaceQuotaListResult(value ?? new ChangeTrackingList<PlaywrightWorkspaceQuotaData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

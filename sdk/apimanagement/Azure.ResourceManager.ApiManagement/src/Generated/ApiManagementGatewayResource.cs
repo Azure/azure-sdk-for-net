@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new GatewayApiGetByServiceAsyncCollectionResultOfT(
+            return new ApiDataAsync2CollectionResultOfT(
                 _gatewayApiRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new GatewayApiGetByServiceCollectionResultOfT(
+            return new ApiData2CollectionResultOfT(
                 _gatewayApiRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1241,7 +1241,7 @@ namespace Azure.ResourceManager.ApiManagement
                     Dictionary<string, BinaryData> valueResult = new Dictionary<string, BinaryData>();
                     foreach (JsonProperty valueResultProperty in document.RootElement.EnumerateObject())
                     {
-                        valueResult.Add(valueResultProperty.Name, BinaryData.FromString(valueResultProperty.Value.GetRawText()));
+                        valueResult.Add(valueResultProperty.Name, valueResultProperty.Value.GetUtf8Bytes());
                     }
                     value = valueResult;
                 }
@@ -1304,7 +1304,7 @@ namespace Azure.ResourceManager.ApiManagement
                     Dictionary<string, BinaryData> valueResult = new Dictionary<string, BinaryData>();
                     foreach (JsonProperty valueResultProperty in document.RootElement.EnumerateObject())
                     {
-                        valueResult.Add(valueResultProperty.Name, BinaryData.FromString(valueResultProperty.Value.GetRawText()));
+                        valueResult.Add(valueResultProperty.Name, valueResultProperty.Value.GetUtf8Bytes());
                     }
                     value = valueResult;
                 }

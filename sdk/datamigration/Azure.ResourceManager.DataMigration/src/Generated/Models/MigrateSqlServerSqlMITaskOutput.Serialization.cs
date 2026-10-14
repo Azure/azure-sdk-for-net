@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Output for task that migrates SQL Server databases to Azure SQL Database Managed Instance.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSqlServerSqlMITaskOutputMigrationLevel"/>, <see cref="MigrateSqlServerSqlMITaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlMITaskOutputAgentJobLevel"/>, <see cref="MigrateSqlServerSqlMITaskOutputLoginLevel"/>, and <see cref="MigrateSqlServerSqlMITaskOutputError"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSqlServerSqlMITaskOutputAgentJobLevel"/>, <see cref="MigrateSqlServerSqlMITaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlMITaskOutputError"/>, <see cref="MigrateSqlServerSqlMITaskOutputLoginLevel"/>, and <see cref="MigrateSqlServerSqlMITaskOutputMigrationLevel"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMigrateSqlServerSqlMITaskOutput))]
     public abstract partial class MigrateSqlServerSqlMITaskOutput : IJsonModel<MigrateSqlServerSqlMITaskOutput>
@@ -130,16 +130,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "MigrationLevelOutput":
-                        return MigrateSqlServerSqlMITaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlMITaskOutputMigrationLevel(element, options);
-                    case "DatabaseLevelOutput":
-                        return MigrateSqlServerSqlMITaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlMITaskOutputDatabaseLevel(element, options);
                     case "AgentJobLevelOutput":
                         return MigrateSqlServerSqlMITaskOutputAgentJobLevel.DeserializeMigrateSqlServerSqlMITaskOutputAgentJobLevel(element, options);
-                    case "LoginLevelOutput":
-                        return MigrateSqlServerSqlMITaskOutputLoginLevel.DeserializeMigrateSqlServerSqlMITaskOutputLoginLevel(element, options);
+                    case "DatabaseLevelOutput":
+                        return MigrateSqlServerSqlMITaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlMITaskOutputDatabaseLevel(element, options);
                     case "ErrorOutput":
                         return MigrateSqlServerSqlMITaskOutputError.DeserializeMigrateSqlServerSqlMITaskOutputError(element, options);
+                    case "LoginLevelOutput":
+                        return MigrateSqlServerSqlMITaskOutputLoginLevel.DeserializeMigrateSqlServerSqlMITaskOutputLoginLevel(element, options);
+                    case "MigrationLevelOutput":
+                        return MigrateSqlServerSqlMITaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlMITaskOutputMigrationLevel(element, options);
                 }
             }
             return UnknownMigrateSqlServerSqlMITaskOutput.DeserializeUnknownMigrateSqlServerSqlMITaskOutput(element, options);

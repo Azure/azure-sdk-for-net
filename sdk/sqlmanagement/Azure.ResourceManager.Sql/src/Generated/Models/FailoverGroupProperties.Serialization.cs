@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FailoverGroupProperties(
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Sql.Models
                 readOnlyEndpoint,
                 replicationRole,
                 replicationState,
-                partnerServers,
+                partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(),
                 failoverDatabases ?? new ChangeTrackingList<ResourceIdentifier>(),
                 secondaryType,
                 additionalBinaryDataProperties);

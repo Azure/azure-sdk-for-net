@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> PyTorch distribution configuration. </summary>
     public partial class PyTorchDistributionConfiguration : MachineLearningDistributionConfiguration
     {
+        private int? _processCountPerInstance;
+        internal bool _processCountPerInstanceIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="PyTorchDistributionConfiguration"/>. </summary>
         public PyTorchDistributionConfiguration() : base(DistributionType.PyTorch)
         {
@@ -25,11 +28,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="processCountPerInstance"> Number of processes per node. </param>
         internal PyTorchDistributionConfiguration(DistributionType distributionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? processCountPerInstance) : base(distributionType, additionalBinaryDataProperties)
         {
-            ProcessCountPerInstance = processCountPerInstance;
+            _processCountPerInstance = processCountPerInstance;
         }
 
         /// <summary> Number of processes per node. </summary>
         [WirePath("processCountPerInstance")]
-        public int? ProcessCountPerInstance { get; set; }
+        public int? ProcessCountPerInstance
+        {
+            get
+            {
+                return _processCountPerInstance;
+            }
+            set
+            {
+                _processCountPerInstance = value;
+                _processCountPerInstanceIsDefined = true;
+            }
+        }
     }
 }

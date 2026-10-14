@@ -31,11 +31,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 TypeProperties.ScriptLinkedService = value;
             }
         }
-
-        /// <summary> Initializes a new instance restored as workaround for issues #59298 and #59852. </summary>
-        public DataLakeAnalyticsUsqlActivity(string name, DataFactoryElement<string> scriptPath, DataFactoryLinkedServiceReference scriptLinkedService) : base(name)
-        {
-            TypeProperties = new DataLakeAnalyticsUSQLActivityTypeProperties(scriptPath, scriptLinkedService);
-        }
     }
 }
