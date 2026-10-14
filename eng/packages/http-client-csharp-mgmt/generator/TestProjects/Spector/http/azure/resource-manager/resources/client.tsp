@@ -4,9 +4,9 @@
 import "../../../../../../../node_modules/@azure-tools/azure-http-specs/specs/azure/resource-manager/resources/main.tsp";
 import "@azure-tools/typespec-client-generator-core";
 
-// GET and LIST otherwise both become CreateGetByResourceGroupRequest in the REST client.
-@@Azure.ClientGenerator.Core.clientName(
+// Skip this scenario until the upstream GET/LIST request-name collision is fixed.
+// https://github.com/microsoft/typespec/issues/12175
+@@Azure.ClientGenerator.Core.scope(
   Azure.ResourceManager.Resources.Singleton.listByResourceGroup,
-  "getAllByResourceGroup",
-  "csharp"
+  "!csharp"
 );

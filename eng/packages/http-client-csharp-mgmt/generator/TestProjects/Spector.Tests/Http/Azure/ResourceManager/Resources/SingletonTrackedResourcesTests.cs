@@ -41,8 +41,9 @@ namespace TestProjects.Spector.Tests.Http.Azure.ResourceManager.Resources
             AssertData(response.Value.Data, "valid2");
         });
 
-        // The generator does not emit a collection or a public list method for singleton resources,
-        // so Azure_ResourceManager_Resources_Singleton_listByResourceGroup cannot be exercised here.
+        // Azure_ResourceManager_Resources_Singleton_listByResourceGroup is scoped out of C# generation
+        // until https://github.com/microsoft/typespec/issues/12175 is fixed. The management generator
+        // also does not currently emit a collection or a public list method for singleton resources.
 
         private static SingletonTrackedResourceData CreateData(string description) => new(Location)
         {

@@ -76,12 +76,6 @@ foreach ($specFile in Get-Sorted-Specs) {
         continue
     }
 
-    # Allow fixture-local client customizations without modifying the installed specs.
-    $localClientSpec = Join-Path $generationDir "client.tsp"
-    if (Test-Path $localClientSpec) {
-        $specFile = $localClientSpec
-    }
-
     Invoke (Get-Mgmt-TspCommand $specFile $generationDir -debug:$Debug)
 
     # exit if the generation failed
