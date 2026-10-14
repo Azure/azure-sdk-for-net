@@ -167,6 +167,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return winner.Task;
             }
 
+            // The exporter's own upload must not be recorded as telemetry, as on the export path.
+            using var suppress = SuppressInstrumentationScope.Begin();
+
             try
             {
                 ReclaimExpiredLeases();
