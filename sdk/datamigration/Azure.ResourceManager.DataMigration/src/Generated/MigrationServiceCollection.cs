@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MigrationServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MigrationServiceResource.ResourceType, out string migrationServiceApiVersion);
             _migrationServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", MigrationServiceResource.ResourceType.Namespace, Diagnostics);
-            _migrationServicesRestClient = new MigrationServices(_migrationServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, migrationServiceApiVersion ?? "2025-09-01-preview");
+            _migrationServicesRestClient = new MigrationServices(_migrationServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DataMigration/migrationServices", out string migrationServicesApiVersionOverride) ? migrationServicesApiVersionOverride : "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MigrationServiceData, MigrationServiceResource>(new MigrationServicesGetByResourceGroupAsyncCollectionResultOfT(_migrationServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MigrationServiceCollection.GetAll"), data => new MigrationServiceResource(Client, data));
+            return new AsyncPageableWrapper<MigrationServiceData, MigrationServiceResource>(new MigrationServiceDataAsyncCollectionResultOfT(_migrationServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MigrationServiceCollection.GetAll"), data => new MigrationServiceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MigrationServiceData, MigrationServiceResource>(new MigrationServicesGetByResourceGroupCollectionResultOfT(_migrationServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MigrationServiceCollection.GetAll"), data => new MigrationServiceResource(Client, data));
+            return new PageableWrapper<MigrationServiceData, MigrationServiceResource>(new MigrationServiceDataCollectionResultOfT(_migrationServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MigrationServiceCollection.GetAll"), data => new MigrationServiceResource(Client, data));
         }
 
         /// <summary>

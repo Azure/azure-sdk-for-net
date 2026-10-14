@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.PowerBIDedicated
         {
             TryGetApiVersion(DedicatedCapacityResource.ResourceType, out string dedicatedCapacityApiVersion);
             _capacitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PowerBIDedicated", DedicatedCapacityResource.ResourceType.Namespace, Diagnostics);
-            _capacitiesRestClient = new Capacities(_capacitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dedicatedCapacityApiVersion ?? "2021-01-01");
+            _capacitiesRestClient = new Capacities(
+                _capacitiesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dedicatedCapacityApiVersion ?? "2021-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedCapacityData, DedicatedCapacityResource>(new CapacitiesGetByResourceGroupAsyncCollectionResultOfT(_capacitiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DedicatedCapacityCollection.GetAll"), data => new DedicatedCapacityResource(Client, data));
+            return new AsyncPageableWrapper<DedicatedCapacityData, DedicatedCapacityResource>(new DedicatedCapacityDataAsyncCollectionResultOfT(_capacitiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DedicatedCapacityCollection.GetAll"), data => new DedicatedCapacityResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedCapacityData, DedicatedCapacityResource>(new CapacitiesGetByResourceGroupCollectionResultOfT(_capacitiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DedicatedCapacityCollection.GetAll"), data => new DedicatedCapacityResource(Client, data));
+            return new PageableWrapper<DedicatedCapacityData, DedicatedCapacityResource>(new DedicatedCapacityDataCollectionResultOfT(_capacitiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DedicatedCapacityCollection.GetAll"), data => new DedicatedCapacityResource(Client, data));
         }
 
         /// <summary>

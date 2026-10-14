@@ -6084,13 +6084,13 @@ namespace Azure.Provisioning.AppService
         public WebAppRequestHistoryProperties() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
         public Azure.Provisioning.AppService.WebAppRequest Request { get { throw null; } }
-        public Azure.Provisioning.AppService.WebAppResponse Response { get { throw null; } }
+        public Azure.Provisioning.AppService.WebAppResult Response { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class WebAppResponse : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class WebAppResult : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public WebAppResponse() { }
+        public WebAppResult() { }
         public Azure.Provisioning.AppService.WebAppContentLink BodyLink { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.BinaryData> Headers { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> StatusCode { get { throw null; } }

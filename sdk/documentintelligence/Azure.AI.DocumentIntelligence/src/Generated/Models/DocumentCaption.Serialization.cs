@@ -216,7 +216,7 @@ namespace Azure.AI.DocumentIntelligence
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DocumentCaption(content, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans, elements ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new DocumentCaption(content, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans ?? new ChangeTrackingList<DocumentSpan>(), elements ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

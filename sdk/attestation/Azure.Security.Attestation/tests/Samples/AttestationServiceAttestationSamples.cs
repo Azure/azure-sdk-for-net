@@ -13,7 +13,6 @@ using System.Xml;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Azure.Security.Attestation.Models;
 using NUnit.Framework;
 
 namespace Azure.Security.Attestation.Tests.Samples
@@ -196,6 +195,37 @@ namespace Azure.Security.Attestation.Tests.Samples
         private BinaryData SendTokenToRelyingParty(AttestationToken token)
         {
             return null;
+        }
+
+        // Not a test: confidential VM evidence can only be produced inside the VM. Compiled to keep the README snippets valid.
+        public async Task AttestingConfidentialVms(AttestationClient client, byte[] tdxQuote, byte[] snpEvidence, byte[] runtimeData, string nonce)
+        {
+            #region Snippet:AttestTdxVm
+            AttestationResponse<AttestationResult> tdxResult = await client.AttestTdxVmAsync(new AttestationRequest
+            {
+                Evidence = BinaryData.FromBytes(tdxQuote),
+                RuntimeData = new AttestationData(BinaryData.FromBytes(runtimeData), dataIsJson: true),
+                Nonce = nonce,
+            });
+
+            // TDX claims have no dedicated properties; read them from AdditionalClaims.
+            string mrtd = tdxResult.Value.AdditionalClaims["tdx_mrtd"].ToObjectFromJson<string>();
+            bool tdxIsDebuggable = tdxResult.Value.AdditionalClaims["tdx_td_attributes_debug"].ToObjectFromJson<bool>();
+            #endregion
+
+            #region Snippet:AttestSevSnpVm
+            // The evidence is the JSON document containing SnpReport, VcekCertChain and, optionally, Endorsements.
+            AttestationResponse<AttestationResult> snpResult = await client.AttestSevSnpVmAsync(new AttestationRequest
+            {
+                Evidence = BinaryData.FromBytes(snpEvidence),
+                RuntimeData = new AttestationData(BinaryData.FromBytes(runtimeData), dataIsJson: true),
+                Nonce = nonce,
+            });
+
+            // SEV-SNP claims have no dedicated properties; read them from AdditionalClaims.
+            string launchMeasurement = snpResult.Value.AdditionalClaims["x-ms-sevsnpvm-launchmeasurement"].ToObjectFromJson<string>();
+            bool snpIsDebuggable = snpResult.Value.AdditionalClaims["x-ms-sevsnpvm-is-debuggable"].ToObjectFromJson<bool>();
+            #endregion
         }
 
         public async Task GetAttestationPolicy()

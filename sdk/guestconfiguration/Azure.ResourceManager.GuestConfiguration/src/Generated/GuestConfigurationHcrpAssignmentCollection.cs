@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationHcrpAssignmentResource>(new GuestConfigurationHCRPAssignmentsGetAllForMachineAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationHcrpAssignmentResource>(new GuestConfigurationAssignmentDataAsync2CollectionResultOfT(
                 _guestConfigurationHCRPAssignmentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationHcrpAssignmentResource>(new GuestConfigurationHCRPAssignmentsGetAllForMachineCollectionResultOfT(
+            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationHcrpAssignmentResource>(new GuestConfigurationAssignmentData2CollectionResultOfT(
                 _guestConfigurationHCRPAssignmentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

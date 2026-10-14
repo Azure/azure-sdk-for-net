@@ -14,6 +14,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using NUnit.Framework;
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text.Json;
@@ -31,7 +32,7 @@ namespace Azure.Generator.Tests
         }
 
         [TestCase(typeof(Guid), ExpectedResult = "writer.WriteStringValue(value);\n")]
-        [TestCase(typeof(IPAddress), ExpectedResult ="writer.WriteStringValue(value.ToString());\n")]
+        [TestCase(typeof(IPAddress), ExpectedResult = "writer.WriteStringValue(value.ToString());\n")]
         [TestCase(typeof(ETag), ExpectedResult = "writer.WriteStringValue(value.ToString());\n")]
         [TestCase(typeof(AzureLocation), ExpectedResult = "writer.WriteStringValue(value);\n")]
         [TestCase(typeof(ResourceIdentifier), ExpectedResult = "writer.WriteStringValue(value);\n")]
@@ -293,24 +294,29 @@ namespace Azure.Generator.Tests
                 $"Expected serialization to use WriteObjectValue pattern for DataFactoryElement, but got: {displayString}");
         }
 
-        [Test]
-        public void DataFactoryElementDeserializationUsesDeserializeMethod()
+        [TestCase(typeof(DataFactoryElement<string>), "string", "options")]
+        [TestCase(typeof(DataFactoryElement<string>), "string", "customOptions")]
+        [TestCase(typeof(DataFactoryElement<int>), "int", "options")]
+        [TestCase(typeof(DataFactoryElement<int>), "int", "customOptions")]
+        [TestCase(typeof(DataFactoryElement<bool>), "bool", "options")]
+        [TestCase(typeof(DataFactoryElement<bool>), "bool", "customOptions")]
+        [TestCase(typeof(DataFactoryElement<IList<string>>), "global::System.Collections.Generic.IList<string>", "options")]
+        [TestCase(typeof(DataFactoryElement<IList<string>>), "global::System.Collections.Generic.IList<string>", "customOptions")]
+        public void DataFactoryElementDeserializationUsesDeserializeMethod(Type type, string typeArgument, string optionsName)
         {
-            // Verify that DataFactoryElement<string> uses its deserialize method
-            var type = typeof(DataFactoryElement<string>);
             var element = new ParameterProvider("element", $"", typeof(JsonElement)).AsVariable().As<JsonElement>();
             var data = new ParameterProvider("data", $"", typeof(BinaryData)).AsVariable().As<BinaryData>();
             var expression = AzureClientGenerator.Instance.TypeFactory.DeserializeJsonValue(
                 type,
                 element,
                 data,
-                new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), "options")),
+                new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), optionsName)),
                 SerializationFormat.Default);
             Assert.IsNotNull(expression);
 
             var displayString = expression.ToDisplayString();
             Assert.AreEqual(
-                "global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.Core.Expressions.DataFactory.DataFactoryElement<string>>(data, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default)",
+                $"global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.Core.Expressions.DataFactory.DataFactoryElement<{typeArgument}>>(data, {optionsName}, global::Samples.SamplesContext.Default)",
                 displayString);
         }
 

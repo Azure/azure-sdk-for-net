@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AgricultureServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AgricultureServiceResource.ResourceType, out string agricultureServiceApiVersion);
             _agriServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AgriculturePlatform", AgricultureServiceResource.ResourceType.Namespace, Diagnostics);
-            _agriServiceRestClient = new AgriService(_agriServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, agricultureServiceApiVersion ?? "2024-06-01-preview");
+            _agriServiceRestClient = new AgriService(_agriServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AgriculturePlatform/agriServices", out string agriServiceApiVersionOverride) ? agriServiceApiVersionOverride : "2024-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetByResourceGroupAsyncCollectionResultOfT(_agriServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgricultureServiceCollection.GetAll"), data => new AgricultureServiceResource(Client, data));
+            return new AsyncPageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgricultureServiceDataAsyncCollectionResultOfT(_agriServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgricultureServiceCollection.GetAll"), data => new AgricultureServiceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetByResourceGroupCollectionResultOfT(_agriServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgricultureServiceCollection.GetAll"), data => new AgricultureServiceResource(Client, data));
+            return new PageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgricultureServiceDataCollectionResultOfT(_agriServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgricultureServiceCollection.GetAll"), data => new AgricultureServiceResource(Client, data));
         }
 
         /// <summary>

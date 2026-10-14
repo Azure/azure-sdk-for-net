@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HostPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HostPoolResource.ResourceType, out string hostPoolApiVersion);
             _hostPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPoolResource.ResourceType.Namespace, Diagnostics);
-            _hostPoolsRestClient = new HostPools(_hostPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostPoolApiVersion ?? "2026-03-01-preview");
+            _hostPoolsRestClient = new HostPools(_hostPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DesktopVirtualization/hostPools", out string hostPoolsApiVersionOverride) ? hostPoolsApiVersionOverride : "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -291,7 +290,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HostPoolData, HostPoolResource>(new HostPoolsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HostPoolData, HostPoolResource>(new HostPoolDataAsyncCollectionResultOfT(
                 _hostPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +329,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HostPoolData, HostPoolResource>(new HostPoolsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<HostPoolData, HostPoolResource>(new HostPoolDataCollectionResultOfT(
                 _hostPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

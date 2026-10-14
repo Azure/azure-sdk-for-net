@@ -46,11 +46,17 @@ namespace Azure.ResourceManager.Cdn.Mocking
 
         private ClientDiagnostics ProfilesClientDiagnostics => _profilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(
+            ProfilesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-09-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics WebAgentsClientDiagnostics => _webAgentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebAgents WebAgentsRestClient => _webAgentsRestClient ??= new WebAgents(WebAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private WebAgents WebAgentsRestClient => _webAgentsRestClient ??= new WebAgents(WebAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Cdn/webAgents", out string apiVersion0) ? apiVersion0 : "2025-09-01-preview");
 
         private ClientDiagnostics CdnClientClientDiagnostics => _cdnClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -89,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProfileData, ProfileResource>(new ProfilesGetAllAsyncCollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetProfiles"), data => new ProfileResource(Client, data));
+            return new AsyncPageableWrapper<ProfileData, ProfileResource>(new ProfileDataAsync0CollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetProfiles"), data => new ProfileResource(Client, data));
         }
 
         /// <summary>
@@ -117,7 +123,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProfileData, ProfileResource>(new ProfilesGetAllCollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetProfiles"), data => new ProfileResource(Client, data));
+            return new PageableWrapper<ProfileData, ProfileResource>(new ProfileData0CollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetProfiles"), data => new ProfileResource(Client, data));
         }
 
         /// <summary>
@@ -145,7 +151,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CdnWebAgentData, CdnWebAgentResource>(new WebAgentsGetBySubscriptionAsyncCollectionResultOfT(WebAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetCdnWebAgents"), data => new CdnWebAgentResource(Client, data));
+            return new AsyncPageableWrapper<CdnWebAgentData, CdnWebAgentResource>(new CdnWebAgentDataAsync0CollectionResultOfT(WebAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetCdnWebAgents"), data => new CdnWebAgentResource(Client, data));
         }
 
         /// <summary>
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CdnWebAgentData, CdnWebAgentResource>(new WebAgentsGetBySubscriptionCollectionResultOfT(WebAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetCdnWebAgents"), data => new CdnWebAgentResource(Client, data));
+            return new PageableWrapper<CdnWebAgentData, CdnWebAgentResource>(new CdnWebAgentData0CollectionResultOfT(WebAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetCdnWebAgents"), data => new CdnWebAgentResource(Client, data));
         }
 
         /// <summary>
@@ -393,7 +399,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceUsageGetResourceUsagesAsyncCollectionResultOfT(ResourceUsageRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetResourceUsages");
+            return new CdnUsageAsync1CollectionResultOfT(ResourceUsageRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetResourceUsages");
         }
 
         /// <summary>
@@ -421,7 +427,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceUsageGetResourceUsagesCollectionResultOfT(ResourceUsageRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetResourceUsages");
+            return new CdnUsage1CollectionResultOfT(ResourceUsageRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetResourceUsages");
         }
 
         /// <summary>
@@ -449,7 +455,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedRuleSetsGetManagedRuleSetsAsyncCollectionResultOfT(ManagedRuleSetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetManagedRuleSets");
+            return new ManagedRuleSetDefinitionAsyncCollectionResultOfT(ManagedRuleSetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetManagedRuleSets");
         }
 
         /// <summary>
@@ -477,7 +483,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedRuleSetsGetManagedRuleSetsCollectionResultOfT(ManagedRuleSetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetManagedRuleSets");
+            return new ManagedRuleSetDefinitionCollectionResultOfT(ManagedRuleSetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetManagedRuleSets");
         }
     }
 }

@@ -20,6 +20,7 @@ internal sealed class TaskRegistration
         Type inputType,
         Type outputType,
         Delegate handler,
+        bool requiresServiceScope,
         bool multiTurn,
         Func<bool> isSteerable,
         TaskRegistrationOptions? options,
@@ -29,6 +30,7 @@ internal sealed class TaskRegistration
         InputType = inputType;
         OutputType = outputType;
         Handler = handler;
+        RequiresServiceScope = requiresServiceScope;
         MultiTurn = multiTurn;
         _isSteerable = isSteerable
             ?? throw new ArgumentNullException(nameof(isSteerable));
@@ -45,8 +47,14 @@ internal sealed class TaskRegistration
     /// <summary>The handler output type.</summary>
     public Type OutputType { get; }
 
-    /// <summary>The handler delegate (<c>Func&lt;TaskContext&lt;TInput&gt;, CancellationToken, Task&lt;TOutput&gt;&gt;</c>).</summary>
+    /// <summary>
+    /// The direct handler delegate, or a scoped handler delegate whose first argument is the
+    /// attempt's service provider.
+    /// </summary>
     public Delegate Handler { get; }
+
+    /// <summary>Whether each handler attempt requires a fresh dependency-injection scope.</summary>
+    public bool RequiresServiceScope { get; }
 
     /// <summary>Whether the task is multi-turn.</summary>
     public bool MultiTurn { get; }

@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EncryptionScopeData, EncryptionScopeResource>(new EncryptionScopesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EncryptionScopeData, EncryptionScopeResource>(new EncryptionScopeDataAsyncCollectionResultOfT(
                 _encryptionScopesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EncryptionScopeData, EncryptionScopeResource>(new EncryptionScopesGetAllCollectionResultOfT(
+            return new PageableWrapper<EncryptionScopeData, EncryptionScopeResource>(new EncryptionScopeDataCollectionResultOfT(
                 _encryptionScopesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

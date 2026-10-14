@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ToolContractData, ToolContractResource>(new ApiToolGetByApiAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ToolContractData, ToolContractResource>(new ToolContractDataAsyncCollectionResultOfT(
                 _apiToolRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ToolContractData, ToolContractResource>(new ApiToolGetByApiCollectionResultOfT(
+            return new PageableWrapper<ToolContractData, ToolContractResource>(new ToolContractDataCollectionResultOfT(
                 _apiToolRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

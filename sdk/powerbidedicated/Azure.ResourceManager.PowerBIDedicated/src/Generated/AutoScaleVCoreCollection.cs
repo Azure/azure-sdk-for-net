@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AutoScaleVCoreCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AutoScaleVCoreResource.ResourceType, out string autoScaleVCoreApiVersion);
             _autoScaleVCoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PowerBIDedicated", AutoScaleVCoreResource.ResourceType.Namespace, Diagnostics);
-            _autoScaleVCoresRestClient = new AutoScaleVCores(_autoScaleVCoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autoScaleVCoreApiVersion ?? "2021-01-01");
+            _autoScaleVCoresRestClient = new AutoScaleVCores(_autoScaleVCoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.PowerBIDedicated/autoScaleVCores", out string autoScaleVCoresApiVersionOverride) ? autoScaleVCoresApiVersionOverride : "2021-01-01");
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutoScaleVCoreData, AutoScaleVCoreResource>(new AutoScaleVCoresGetByResourceGroupAsyncCollectionResultOfT(_autoScaleVCoresRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AutoScaleVCoreCollection.GetAll"), data => new AutoScaleVCoreResource(Client, data));
+            return new AsyncPageableWrapper<AutoScaleVCoreData, AutoScaleVCoreResource>(new AutoScaleVCoreDataAsyncCollectionResultOfT(_autoScaleVCoresRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AutoScaleVCoreCollection.GetAll"), data => new AutoScaleVCoreResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutoScaleVCoreData, AutoScaleVCoreResource>(new AutoScaleVCoresGetByResourceGroupCollectionResultOfT(_autoScaleVCoresRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AutoScaleVCoreCollection.GetAll"), data => new AutoScaleVCoreResource(Client, data));
+            return new PageableWrapper<AutoScaleVCoreData, AutoScaleVCoreResource>(new AutoScaleVCoreDataCollectionResultOfT(_autoScaleVCoresRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AutoScaleVCoreCollection.GetAll"), data => new AutoScaleVCoreResource(Client, data));
         }
 
         /// <summary>

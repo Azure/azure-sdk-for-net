@@ -4896,7 +4896,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.FirewallPolicyRuleCollectionInfo"/> instance for mocking. </returns>
         public static FirewallPolicyRuleCollectionInfo FirewallPolicyRuleCollectionInfo(string ruleCollectionType = default, string name = default, int? priority = default)
         {
-            return new UnknownFirewallPolicyRuleCollectionInfo(default, name, priority, default);
+            return new UnknownFirewallPolicyRuleCollectionInfo(ruleCollectionType is null ? default : new FirewallPolicyRuleCollectionType(ruleCollectionType), name, priority, default);
         }
 
         /// <param name="name"> The name of the rule collection. </param>
@@ -4909,7 +4909,7 @@ namespace Azure.ResourceManager.Network.Models
             rules ??= new ChangeTrackingList<FirewallPolicyRule>();
 
             return new FirewallPolicyNatRuleCollectionInfo(
-                default,
+                FirewallPolicyRuleCollectionType.FirewallPolicyNatRuleCollection,
                 name,
                 priority,
                 default,
@@ -4927,7 +4927,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.FirewallPolicyRule"/> instance for mocking. </returns>
         public static FirewallPolicyRule FirewallPolicyRule(string name = default, string description = default, string ruleType = default)
         {
-            return new UnknownFirewallPolicyRule(name, description, default, default);
+            return new UnknownFirewallPolicyRule(name, description, ruleType is null ? default : new FirewallPolicyRuleType(ruleType), default);
         }
 
         /// <summary> Rule of type application. </summary>
@@ -4961,7 +4961,7 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationRule(
                 name,
                 description,
-                default,
+                FirewallPolicyRuleType.ApplicationRule,
                 default,
                 (sourceAddresses ?? new ChangeTrackingList<string>()).ToList(),
                 (destinationAddresses ?? new ChangeTrackingList<string>()).ToList(),
@@ -5016,7 +5016,7 @@ namespace Azure.ResourceManager.Network.Models
             return new NatRule(
                 name,
                 description,
-                default,
+                FirewallPolicyRuleType.NatRule,
                 default,
                 (ipProtocols ?? new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>()).ToList(),
                 (sourceAddresses ?? new ChangeTrackingList<string>()).ToList(),
@@ -5058,7 +5058,7 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkRule(
                 name,
                 description,
-                default,
+                FirewallPolicyRuleType.NetworkRule,
                 default,
                 (ipProtocols ?? new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>()).ToList(),
                 (sourceAddresses ?? new ChangeTrackingList<string>()).ToList(),
@@ -5082,7 +5082,7 @@ namespace Azure.ResourceManager.Network.Models
             rules ??= new ChangeTrackingList<FirewallPolicyRule>();
 
             return new FirewallPolicyFilterRuleCollectionInfo(
-                default,
+                FirewallPolicyRuleCollectionType.FirewallPolicyFilterRuleCollection,
                 name,
                 priority,
                 default,
@@ -5587,7 +5587,7 @@ namespace Azure.ResourceManager.Network.Models
                 ruleCollectionDescription,
                 (ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>()).ToList(),
                 (ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>()).ToList(),
-                default,
+                kind is null ? default : new EffectiveAdminRuleKind(kind),
                 default);
         }
 
@@ -5631,7 +5631,7 @@ namespace Azure.ResourceManager.Network.Models
                 ruleCollectionDescription,
                 (ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>()).ToList(),
                 (ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>()).ToList(),
-                default,
+                EffectiveAdminRuleKind.Custom,
                 default,
                 description is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null && resourceGuid is null ? default : new AdminPropertiesFormat(
                     description,
@@ -5690,7 +5690,7 @@ namespace Azure.ResourceManager.Network.Models
                 ruleCollectionDescription,
                 (ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>()).ToList(),
                 (ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>()).ToList(),
-                default,
+                EffectiveAdminRuleKind.Default,
                 default,
                 description is null && flag is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null && resourceGuid is null ? default : new DefaultAdminPropertiesFormat(
                     description,
@@ -8388,7 +8388,7 @@ namespace Azure.ResourceManager.Network.Models
                 ruleCollectionDescription,
                 (ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>()).ToList(),
                 (ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>()).ToList(),
-                default,
+                EffectiveAdminRuleKind.Custom,
                 default,
                 description is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null && resourceGuid is null ? default : new AdminPropertiesFormat(
                     description,
@@ -8434,7 +8434,7 @@ namespace Azure.ResourceManager.Network.Models
                 ruleCollectionDescription,
                 (ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>()).ToList(),
                 (ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>()).ToList(),
-                default,
+                EffectiveAdminRuleKind.Default,
                 default,
                 description is null && flag is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null && resourceGuid is null ? default : new DefaultAdminPropertiesFormat(
                     description,
@@ -11795,7 +11795,7 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new AdminRuleKind(kind),
                 etag,
                 default);
         }
@@ -11824,7 +11824,7 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AdminRuleKind.Custom,
                 etag,
                 default,
                 description is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null && resourceGuid is null ? default : new AdminPropertiesFormat(
@@ -11867,7 +11867,7 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AdminRuleKind.Default,
                 etag,
                 default,
                 description is null && flag is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null && resourceGuid is null ? default : new DefaultAdminPropertiesFormat(
@@ -13675,7 +13675,7 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkRule(
                 name,
                 description,
-                default,
+                FirewallPolicyRuleType.NetworkRule,
                 default,
                 (ipProtocols ?? new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>()).ToList(),
                 (sourceAddresses ?? new ChangeTrackingList<string>()).ToList(),
@@ -14292,7 +14292,7 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 default,
                 systemData,
-                default,
+                kind is null ? default : new AdminRuleKind(kind),
                 default,
                 default);
         }
@@ -14320,7 +14320,7 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 default,
                 systemData,
-                default,
+                AdminRuleKind.Custom,
                 default,
                 default,
                 description is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null && resourceGuid is null ? default : new AdminPropertiesFormat(
@@ -14362,7 +14362,7 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 default,
                 systemData,
-                default,
+                AdminRuleKind.Default,
                 default,
                 default,
                 description is null && flag is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null && resourceGuid is null ? default : new DefaultAdminPropertiesFormat(
@@ -15079,7 +15079,7 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationRule(
                 name,
                 description,
-                default,
+                FirewallPolicyRuleType.ApplicationRule,
                 default,
                 (sourceAddresses ?? new ChangeTrackingList<string>()).ToList(),
                 (destinationAddresses ?? new ChangeTrackingList<string>()).ToList(),
@@ -15111,7 +15111,7 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkRule(
                 name,
                 description,
-                default,
+                FirewallPolicyRuleType.NetworkRule,
                 default,
                 (ipProtocols ?? new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>()).ToList(),
                 (sourceAddresses ?? new ChangeTrackingList<string>()).ToList(),

@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             return new DurableTaskSchedulerProperties(
                 provisioningState,
                 endpoint,
-                ipAllowlist,
+                ipAllowlist ?? new ChangeTrackingList<string>(),
                 sku,
                 publicNetworkAccess,
                 privateEndpointConnections ?? new ChangeTrackingList<DurableTaskPrivateEndpointConnectionData>(),

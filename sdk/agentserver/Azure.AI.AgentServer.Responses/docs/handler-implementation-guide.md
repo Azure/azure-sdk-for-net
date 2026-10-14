@@ -207,6 +207,15 @@ ResponsesServer.Run<MyHandler>(args);
 
 This creates a Kestrel host with OpenTelemetry, health checks, identity headers, and the Responses protocol endpoints — all in one line.
 
+In hosted Foundry environments, this path binds the Foundry credential, project endpoint, and
+response options from the `ResponsesServer` configuration section. The same bound identity and
+endpoint are used for response storage and resilient-task storage. Values the section does not
+provide default to the platform: `FOUNDRY_PROJECT_ENDPOINT` for the endpoint and a
+`DefaultAzureCredential` limited by default to the production credentials (environment, workload
+identity and managed identity; `AZURE_TOKEN_CREDENTIALS` overrides the selection) when there is
+no `Credential` section. A `Credential` section that does not
+resolve fails startup instead of falling back.
+
 ### With Options / Builder Pattern
 
 For agents that need to configure services or host options before startup, use the builder pattern:
@@ -1472,8 +1481,13 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 | `DefaultModel` | `string?` | `null` | Default model when `model` is omitted from `CreateResponse`. Falls back to `""` if null |
 | `DefaultFetchHistoryCount` | `int` | `-1` | Maximum number of history items to resolve when `GetHistoryAsync()` is called; `-1` fetches all history. Controls the `limit` parameter passed to `ResponsesProvider.GetHistoryItemIdsAsync` |
 | `ResilientBackground` | `bool` | `false` | Opts background responses into crash-recoverable re-invocation when `store=true` and `background=true` |
-| `SteerableConversations` | `bool` | `false` | Allows a new turn to queue behind an active conversation and drain as a steered turn |
+| `SteerableConversations` | `bool` | `false` | Allows a new turn to queue behind an active conversation and drain as a steered turn. Requires `ResilientBackground=true` or explicit `SetResilientTasksEnabled()` |
 | `ResponseAcceptor` | delegate | `null` | Optional hook for customizing the `queued` response returned to a POST that was queued behind an active steerable conversation |
+
+The Core resilient-task runtime is disabled by default. `ResilientBackground=true`
+enables it automatically. Without either `ResilientBackground` or an explicit
+`SetResilientTasksEnabled()` call, `store=true` requests run in-process and are not
+recovered after an ungraceful crash.
 
 **Platform environment variables** (read once at startup via `FoundryEnvironment`):
 
@@ -1481,7 +1495,6 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 |---|---|---|
 | `SSE_KEEPALIVE_INTERVAL` | Disabled | Interval (in seconds) between SSE keep-alive comments. See [SSE Keep-Alive](#sse-keep-alive) |
 | `PORT` | `8088` | HTTP listen port for the Kestrel server |
-| `DEFAULT_FETCH_HISTORY_ITEM_COUNT` | `-1` | Override for `DefaultFetchHistoryCount`; accepts `-1` or a positive integer |
 
 **In-memory provider options** (`InMemoryProviderOptions` — separate from `ResponsesServerOptions`):
 

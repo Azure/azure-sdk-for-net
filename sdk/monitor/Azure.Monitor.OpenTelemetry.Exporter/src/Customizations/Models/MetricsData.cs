@@ -55,6 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         private static bool IsRoutingDimension(string key)
             => key == SemanticConventions.AttributeMicrosoftInstrumentationKey
                 || key == SemanticConventions.AttributeMicrosoftIngestionEndpoint
+                || key == SemanticConventions.AttributeMicrosoftIngestionAuth
                 || key == SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole;
 
         /// <summary>

@@ -44,7 +44,13 @@ namespace Azure.ResourceManager.Cdn.Mocking
 
         private ClientDiagnostics ProfilesClientDiagnostics => _profilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(
+            ProfilesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-09-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary> Gets a collection of Profiles in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of Profiles and their operations over a ProfileResource. </returns>

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CognitiveServicesAccountDeploymentData, CognitiveServicesAccountDeploymentResource>(new DeploymentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CognitiveServicesAccountDeploymentData, CognitiveServicesAccountDeploymentResource>(new CognitiveServicesAccountDeploymentDataAsyncCollectionResultOfT(
                 _deploymentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CognitiveServicesAccountDeploymentData, CognitiveServicesAccountDeploymentResource>(new DeploymentsGetAllCollectionResultOfT(
+            return new PageableWrapper<CognitiveServicesAccountDeploymentData, CognitiveServicesAccountDeploymentResource>(new CognitiveServicesAccountDeploymentDataCollectionResultOfT(
                 _deploymentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

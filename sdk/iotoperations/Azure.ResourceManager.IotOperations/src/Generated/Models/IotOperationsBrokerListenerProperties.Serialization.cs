@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             return new IotOperationsBrokerListenerProperties(
                 serviceName,
-                ports,
+                ports ?? new ChangeTrackingList<BrokerListenerPort>(),
                 listenerServiceType,
                 provisioningState,
                 healthState,

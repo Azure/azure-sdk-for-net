@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new DataBoxEdgeRoleType(kind),
                 default);
         }
 
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataBoxEdgeRoleType.CloudEdgeManagement,
                 default,
                 localManagementStatus is null && edgeSubscription is null && roleStatus is null ? default : new CloudEdgeManagementRoleProperties(localManagementStatus, edgeSubscription is null ? default : new EdgeProfile(edgeSubscription, default), roleStatus, default));
         }
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataBoxEdgeRoleType.IoT,
                 default,
                 hostPlatform is null && iotDeviceDetails is null && iotEdgeDeviceDetails is null && shareMappings is null && iotEdgeAgentInfo is null && hostPlatformType is null && computeResource is null && roleStatus is null ? default : new IoTRoleProperties(
                     hostPlatform,
@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataBoxEdgeRoleType.Kubernetes,
                 default,
                 hostPlatform is null && provisioningState is null && hostPlatformType is null && kubernetesClusterInfo is null && kubernetesRoleResources is null && roleStatus is null ? default : new KubernetesRoleProperties(
                     hostPlatform,
@@ -1057,7 +1057,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataBoxEdgeRoleType.Mec,
                 default,
                 connectionString is null && controllerEndpoint is null && resourceUniqueId is null && roleStatus is null ? default : new MECRoleProperties(connectionString, controllerEndpoint, resourceUniqueId, roleStatus, default));
         }
@@ -1079,7 +1079,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new AddonType(kind),
                 default);
         }
 
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AddonType.IotEdge,
                 default,
                 iotDeviceDetails is null && iotEdgeDeviceDetails is null && version is null && hostPlatform is null && hostPlatformType is null && provisioningState is null ? default : new IoTAddonProperties(
                     iotDeviceDetails,
@@ -1169,7 +1169,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new TriggerEventType(kind),
                 default);
         }
 
@@ -1188,7 +1188,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                TriggerEventType.FileEvent,
                 default,
                 sourceInfoShareId is null && sinkInfoRoleId is null && customContextTag is null ? default : new FileTriggerProperties(new EdgeFileSourceInfo(sourceInfoShareId, default), new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), customContextTag, default));
         }
@@ -1224,7 +1224,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                TriggerEventType.PeriodicTimerEvent,
                 default,
                 sourceInfo is null && sinkInfoRoleId is null && customContextTag is null ? default : new PeriodicTimerProperties(sourceInfo, new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), customContextTag, default));
         }
@@ -1784,7 +1784,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataBoxEdgeRoleType.CloudEdgeManagement,
                 default,
                 localManagementStatus is null && edgeSubscription is null && roleStatus is null ? default : new CloudEdgeManagementRoleProperties(localManagementStatus, edgeSubscription is null ? default : new EdgeProfile(edgeSubscription, default), roleStatus, default));
         }
@@ -1806,7 +1806,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                TriggerEventType.FileEvent,
                 default,
                 sourceInfoShareId is null && sinkInfoRoleId is null && customContextTag is null ? default : new FileTriggerProperties(new EdgeFileSourceInfo(sourceInfoShareId, default), new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), customContextTag, default));
         }
@@ -1838,7 +1838,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                TriggerEventType.PeriodicTimerEvent,
                 default,
                 sourceInfo is null && sinkInfoRoleId is null && customContextTag is null ? default : new PeriodicTimerProperties(sourceInfo, new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), customContextTag, default));
         }

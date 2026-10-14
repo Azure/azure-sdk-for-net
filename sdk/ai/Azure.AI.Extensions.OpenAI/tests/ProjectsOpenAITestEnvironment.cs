@@ -37,6 +37,7 @@ namespace Azure.AI.Extensions.OpenAI.Tests
         public string BING_CUSTOM_SEARCH_INSTANCE_NAME => GetRecordedVariable(nameof(BING_CUSTOM_SEARCH_INSTANCE_NAME));
         public string MCP_PROJECT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(MCP_PROJECT_CONNECTION_NAME));
         public string PLAYWRIGHT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(PLAYWRIGHT_CONNECTION_NAME));
+        public string PLAYWRIGHT_MCP_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(PLAYWRIGHT_MCP_CONNECTION_NAME));
         public string SHAREPOINT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(SHAREPOINT_CONNECTION_NAME));
         public string FABRIC_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(FABRIC_CONNECTION_NAME));
         public string FABRIC_IQ_PROJECT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(FABRIC_IQ_PROJECT_CONNECTION_NAME));

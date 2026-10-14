@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ComplianceResultData, ComplianceResultResource>(new ComplianceResultsGetAllAsyncCollectionResultOfT(_complianceResultsRestClient, Id.ToString(), context, "ComplianceResultCollection.GetAll"), data => new ComplianceResultResource(Client, data));
+            return new AsyncPageableWrapper<ComplianceResultData, ComplianceResultResource>(new ComplianceResultDataAsyncCollectionResultOfT(_complianceResultsRestClient, Id.ToString(), context, "ComplianceResultCollection.GetAll"), data => new ComplianceResultResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ComplianceResultData, ComplianceResultResource>(new ComplianceResultsGetAllCollectionResultOfT(_complianceResultsRestClient, Id.ToString(), context, "ComplianceResultCollection.GetAll"), data => new ComplianceResultResource(Client, data));
+            return new PageableWrapper<ComplianceResultData, ComplianceResultResource>(new ComplianceResultDataCollectionResultOfT(_complianceResultsRestClient, Id.ToString(), context, "ComplianceResultCollection.GetAll"), data => new ComplianceResultResource(Client, data));
         }
 
         /// <summary>

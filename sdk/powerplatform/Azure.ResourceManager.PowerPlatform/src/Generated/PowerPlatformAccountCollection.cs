@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.PowerPlatform
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PowerPlatformAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PowerPlatformAccountResource.ResourceType, out string powerPlatformAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PowerPlatform", PowerPlatformAccountResource.ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, powerPlatformAccountApiVersion ?? "2020-10-30-preview");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.PowerPlatform/accounts", out string accountsApiVersionOverride) ? accountsApiVersionOverride : "2020-10-30-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.PowerPlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PowerPlatformAccountData, PowerPlatformAccountResource>(new AccountsGetByResourceGroupAsyncCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PowerPlatformAccountCollection.GetAll"), data => new PowerPlatformAccountResource(Client, data));
+            return new AsyncPageableWrapper<PowerPlatformAccountData, PowerPlatformAccountResource>(new PowerPlatformAccountDataAsyncCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PowerPlatformAccountCollection.GetAll"), data => new PowerPlatformAccountResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.PowerPlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PowerPlatformAccountData, PowerPlatformAccountResource>(new AccountsGetByResourceGroupCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PowerPlatformAccountCollection.GetAll"), data => new PowerPlatformAccountResource(Client, data));
+            return new PageableWrapper<PowerPlatformAccountData, PowerPlatformAccountResource>(new PowerPlatformAccountDataCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PowerPlatformAccountCollection.GetAll"), data => new PowerPlatformAccountResource(Client, data));
         }
 
         /// <summary>

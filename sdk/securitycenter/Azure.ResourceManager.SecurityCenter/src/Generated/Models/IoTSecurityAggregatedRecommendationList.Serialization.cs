@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IoTSecurityAggregatedRecommendationList(value, nextLink, additionalBinaryDataProperties);
+            return new IoTSecurityAggregatedRecommendationList(value ?? new ChangeTrackingList<IotSecurityAggregatedRecommendationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

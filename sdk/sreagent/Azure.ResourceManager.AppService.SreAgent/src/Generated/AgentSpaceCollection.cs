@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AppService.SreAgent
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AgentSpaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AgentSpaceResource.ResourceType, out string agentSpaceApiVersion);
             _agentSpacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService.SreAgent", AgentSpaceResource.ResourceType.Namespace, Diagnostics);
-            _agentSpacesRestClient = new AgentSpaces(_agentSpacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, agentSpaceApiVersion ?? "2026-01-01");
+            _agentSpacesRestClient = new AgentSpaces(_agentSpacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.App/agentSpaces", out string agentSpacesApiVersionOverride) ? agentSpacesApiVersionOverride : "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgentSpaceData, AgentSpaceResource>(new AgentSpacesGetByResourceGroupAsyncCollectionResultOfT(_agentSpacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgentSpaceCollection.GetAll"), data => new AgentSpaceResource(Client, data));
+            return new AsyncPageableWrapper<AgentSpaceData, AgentSpaceResource>(new AgentSpaceDataAsyncCollectionResultOfT(_agentSpacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgentSpaceCollection.GetAll"), data => new AgentSpaceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgentSpaceData, AgentSpaceResource>(new AgentSpacesGetByResourceGroupCollectionResultOfT(_agentSpacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgentSpaceCollection.GetAll"), data => new AgentSpaceResource(Client, data));
+            return new PageableWrapper<AgentSpaceData, AgentSpaceResource>(new AgentSpaceDataCollectionResultOfT(_agentSpacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgentSpaceCollection.GetAll"), data => new AgentSpaceResource(Client, data));
         }
 
         /// <summary>

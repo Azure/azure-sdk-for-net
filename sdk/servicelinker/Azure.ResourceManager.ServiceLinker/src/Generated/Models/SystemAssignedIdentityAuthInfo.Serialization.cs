@@ -75,10 +75,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 throw new FormatException($"The model {nameof(SystemAssignedIdentityAuthInfo)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(UserName))
+            if (_userNameIsDefined || Optional.IsDefined(UserName))
             {
-                writer.WritePropertyName("userName"u8);
-                writer.WriteStringValue(UserName);
+                if (UserName != null)
+                {
+                    writer.WritePropertyName("userName"u8);
+                    writer.WriteStringValue(UserName);
+                }
+                else
+                {
+                    writer.WriteNull("userName"u8);
+                }
             }
             if (Optional.IsDefined(DeleteOrUpdateBehavior))
             {
@@ -130,6 +137,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             LinkerAuthType authType = default;
             LinkerAuthMode? authMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool userNameIsDefined = false;
             string userName = default;
             LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
             IList<string> roles = default;
@@ -151,6 +159,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("userName"u8))
                 {
+                    userNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         userName = null;
@@ -200,7 +209,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 additionalBinaryDataProperties,
                 userName,
                 deleteOrUpdateBehavior,
-                roles ?? new ChangeTrackingList<string>());
+                roles ?? new ChangeTrackingList<string>())
+            {
+                _userNameIsDefined = userNameIsDefined
+            };
         }
     }
 }

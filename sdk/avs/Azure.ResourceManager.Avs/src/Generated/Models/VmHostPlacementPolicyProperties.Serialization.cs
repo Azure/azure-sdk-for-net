@@ -252,8 +252,8 @@ namespace Azure.ResourceManager.Avs.Models
                 displayName,
                 provisioningState,
                 additionalBinaryDataProperties,
-                vmMembers,
-                hostMembers,
+                vmMembers ?? new ChangeTrackingList<ResourceIdentifier>(),
+                hostMembers ?? new ChangeTrackingList<string>(),
                 affinityType,
                 affinityStrength,
                 azureHybridBenefitType);

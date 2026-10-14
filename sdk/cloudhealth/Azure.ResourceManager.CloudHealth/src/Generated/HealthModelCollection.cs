@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HealthModelCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HealthModelResource.ResourceType, out string healthModelApiVersion);
             _healthModelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", HealthModelResource.ResourceType.Namespace, Diagnostics);
-            _healthModelsRestClient = new HealthModels(_healthModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthModelApiVersion ?? "2026-09-01-preview");
+            _healthModelsRestClient = new HealthModels(_healthModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.CloudHealth/healthmodels", out string healthModelsApiVersionOverride) ? healthModelsApiVersionOverride : "2026-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.CloudHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthModelData, HealthModelResource>(new HealthModelsGetByResourceGroupAsyncCollectionResultOfT(_healthModelsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HealthModelCollection.GetAll"), data => new HealthModelResource(Client, data));
+            return new AsyncPageableWrapper<HealthModelData, HealthModelResource>(new HealthModelDataAsyncCollectionResultOfT(_healthModelsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HealthModelCollection.GetAll"), data => new HealthModelResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.CloudHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthModelData, HealthModelResource>(new HealthModelsGetByResourceGroupCollectionResultOfT(_healthModelsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HealthModelCollection.GetAll"), data => new HealthModelResource(Client, data));
+            return new PageableWrapper<HealthModelData, HealthModelResource>(new HealthModelDataCollectionResultOfT(_healthModelsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HealthModelCollection.GetAll"), data => new HealthModelResource(Client, data));
         }
 
         /// <summary>

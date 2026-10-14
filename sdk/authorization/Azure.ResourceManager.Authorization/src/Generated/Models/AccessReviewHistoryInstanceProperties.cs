@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _runOn;
+        internal bool _runOnIsDefined;
+        private DateTimeOffset? _fulfilledOn;
+        internal bool _fulfilledOnIsDefined;
+        private DateTimeOffset? _expiration;
+        internal bool _expirationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewHistoryInstanceProperties"/>. </summary>
         public AccessReviewHistoryInstanceProperties()
@@ -38,10 +44,10 @@ namespace Azure.ResourceManager.Authorization.Models
             ReviewHistoryPeriodEndsOn = reviewHistoryPeriodEndsOn;
             DisplayName = displayName;
             Status = status;
-            RunOn = runOn;
-            FulfilledOn = fulfilledOn;
+            _runOn = runOn;
+            _fulfilledOn = fulfilledOn;
             DownloadUri = downloadUri;
-            Expiration = expiration;
+            _expiration = expiration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -63,11 +69,33 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Date time when the history data report is scheduled to be generated. </summary>
         [WirePath("runDateTime")]
-        public DateTimeOffset? RunOn { get; set; }
+        public DateTimeOffset? RunOn
+        {
+            get
+            {
+                return _runOn;
+            }
+            set
+            {
+                _runOn = value;
+                _runOnIsDefined = true;
+            }
+        }
 
         /// <summary> Date time when the history data report is scheduled to be generated. </summary>
         [WirePath("fulfilledDateTime")]
-        public DateTimeOffset? FulfilledOn { get; set; }
+        public DateTimeOffset? FulfilledOn
+        {
+            get
+            {
+                return _fulfilledOn;
+            }
+            set
+            {
+                _fulfilledOn = value;
+                _fulfilledOnIsDefined = true;
+            }
+        }
 
         /// <summary> Uri which can be used to retrieve review history data. To generate this Uri, generateDownloadUri() must be called for a specific accessReviewHistoryDefinitionInstance. The link expires after a 24 hour period. Callers can see the expiration date time by looking at the 'se' parameter in the generated uri. </summary>
         [WirePath("downloadUri")]
@@ -75,6 +103,17 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Date time when history data report expires and the associated data is deleted. </summary>
         [WirePath("expiration")]
-        public DateTimeOffset? Expiration { get; set; }
+        public DateTimeOffset? Expiration
+        {
+            get
+            {
+                return _expiration;
+            }
+            set
+            {
+                _expiration = value;
+                _expirationIsDefined = true;
+            }
+        }
     }
 }

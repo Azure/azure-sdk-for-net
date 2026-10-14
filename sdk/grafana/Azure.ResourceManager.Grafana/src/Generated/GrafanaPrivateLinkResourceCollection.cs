@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GrafanaPrivateLinkResourceData, GrafanaPrivateLinkResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GrafanaPrivateLinkResourceData, GrafanaPrivateLinkResource>(new GrafanaPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GrafanaPrivateLinkResourceData, GrafanaPrivateLinkResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<GrafanaPrivateLinkResourceData, GrafanaPrivateLinkResource>(new GrafanaPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

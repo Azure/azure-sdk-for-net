@@ -104,23 +104,17 @@ public sealed class ResilienceStartupValidationTests
     [Test]
     public void ResilientOptions_Enabled_Via_Separate_Configure_Path_ComposesTaskSubsystem()
     {
-        // Issue-4 regression (CR-FINAL), now resolved by construction: the Core task subsystem
-        // (exposed as keyed TaskDefinition<TInput,TOutput> singletons) is composed for EVERY local
-        // (non-hosted) host, independent of how options are set — matching Python, whose task
-        // subsystem is not option-gated. Enabling steering through a configuration path OTHER than
-        // the AddResponsesServer(configure) delegate therefore can no longer desync into a missing
-        // task subsystem: the host starts and the resilient task definitions are present.
+        // ResilientBackground enables Core tasks during options post-configuration, so a separate
+        // Configure call must compose the same runtime as AddResponsesServer(configure).
         using var host = BuildHost(services =>
         {
             services.AddSingleton<ResponseHandler>(new TestHandler());
             services.AddResponsesServer();
-            // Enable steering through a separate configuration path — previously a desync source.
-            services.Configure<ResponsesServerOptions>(o => o.SteerableConversations = true);
+            services.Configure<ResponsesServerOptions>(o => o.ResilientBackground = true);
         });
 
         host.Start();
 
-        // The task subsystem is composed regardless of the configuration path.
         Assert.That(
             host.Services.GetRequiredKeyedService<Core.Tasks.TaskDefinition<ResponseTaskInput, ResponseTaskOutput>>(
                 ResponsesResilientTaskHandler.OneShotTaskName),

@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MarketplaceAdminApprovalRequestData, MarketplaceAdminApprovalRequestResource>(new PrivateStoreAdminRequestApprovalsListAsyncCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "MarketplaceAdminApprovalRequestCollection.GetAll"), data => new MarketplaceAdminApprovalRequestResource(Client, data));
+            return new AsyncPageableWrapper<MarketplaceAdminApprovalRequestData, MarketplaceAdminApprovalRequestResource>(new MarketplaceAdminApprovalRequestDataAsyncCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "MarketplaceAdminApprovalRequestCollection.GetAll"), data => new MarketplaceAdminApprovalRequestResource(Client, data));
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MarketplaceAdminApprovalRequestData, MarketplaceAdminApprovalRequestResource>(new PrivateStoreAdminRequestApprovalsListCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "MarketplaceAdminApprovalRequestCollection.GetAll"), data => new MarketplaceAdminApprovalRequestResource(Client, data));
+            return new PageableWrapper<MarketplaceAdminApprovalRequestData, MarketplaceAdminApprovalRequestResource>(new MarketplaceAdminApprovalRequestDataCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "MarketplaceAdminApprovalRequestCollection.GetAll"), data => new MarketplaceAdminApprovalRequestResource(Client, data));
         }
 
         /// <summary>

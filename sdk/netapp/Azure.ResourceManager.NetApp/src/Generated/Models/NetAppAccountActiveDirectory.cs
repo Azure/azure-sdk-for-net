@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _activeDirectoryId;
+        internal bool _activeDirectoryIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="NetAppAccountActiveDirectory"/>. </summary>
         public NetAppAccountActiveDirectory()
@@ -53,7 +55,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NetAppAccountActiveDirectory(string activeDirectoryId, string username, string password, string domain, string dns, NetAppAccountActiveDirectoryStatus? status, string statusDetails, string smbServerName, string organizationalUnit, string site, IList<string> backupOperators, IList<string> administrators, IPAddress kdcIP, string adName, string serverRootCACertificate, bool? isAesEncryptionEnabled, bool? isLdapSigningEnabled, IList<string> securityOperators, bool? isLdapOverTlsEnabled, bool? allowLocalNfsUsersWithLdap, bool? encryptDCConnections, NetAppLdapSearchScopeConfiguration ldapSearchScope, string preferredServersForLdapClient, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ActiveDirectoryId = activeDirectoryId;
+            _activeDirectoryId = activeDirectoryId;
             Username = username;
             Password = password;
             Domain = domain;
@@ -80,7 +82,18 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Id of the Active Directory. </summary>
-        public string ActiveDirectoryId { get; set; }
+        public string ActiveDirectoryId
+        {
+            get
+            {
+                return _activeDirectoryId;
+            }
+            set
+            {
+                _activeDirectoryId = value;
+                _activeDirectoryIdIsDefined = true;
+            }
+        }
 
         /// <summary> A domain user account with permission to create machine accounts. </summary>
         public string Username { get; set; }

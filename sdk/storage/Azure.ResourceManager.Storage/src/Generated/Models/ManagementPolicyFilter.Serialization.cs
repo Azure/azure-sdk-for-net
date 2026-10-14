@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagementPolicyFilter(prefixMatch ?? new ChangeTrackingList<string>(), blobTypes, blobIndexMatch ?? new ChangeTrackingList<ManagementPolicyTagFilter>(), additionalBinaryDataProperties);
+            return new ManagementPolicyFilter(prefixMatch ?? new ChangeTrackingList<string>(), blobTypes ?? new ChangeTrackingList<string>(), blobIndexMatch ?? new ChangeTrackingList<ManagementPolicyTagFilter>(), additionalBinaryDataProperties);
         }
     }
 }

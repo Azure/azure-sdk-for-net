@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiskImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiskImageResource.ResourceType, out string diskImageApiVersion);
             _imagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DiskImageResource.ResourceType.Namespace, Diagnostics);
-            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, diskImageApiVersion ?? "2026-04-01");
+            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiskImageData, DiskImageResource>(new ImagesGetByResourceGroupAsyncCollectionResultOfT(_imagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DiskImageCollection.GetAll"), data => new DiskImageResource(Client, data));
+            return new AsyncPageableWrapper<DiskImageData, DiskImageResource>(new DiskImageDataAsyncCollectionResultOfT(_imagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DiskImageCollection.GetAll"), data => new DiskImageResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiskImageData, DiskImageResource>(new ImagesGetByResourceGroupCollectionResultOfT(_imagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DiskImageCollection.GetAll"), data => new DiskImageResource(Client, data));
+            return new PageableWrapper<DiskImageData, DiskImageResource>(new DiskImageDataCollectionResultOfT(_imagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DiskImageCollection.GetAll"), data => new DiskImageResource(Client, data));
         }
 
         /// <summary>

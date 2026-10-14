@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ComputeFleet
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ComputeFleetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ComputeFleetResource.ResourceType, out string computeFleetApiVersion);
             _fleetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeFleet", ComputeFleetResource.ResourceType.Namespace, Diagnostics);
-            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, computeFleetApiVersion ?? "2026-06-01-preview");
+            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureFleet/fleets", out string fleetsApiVersionOverride) ? fleetsApiVersionOverride : "2026-08-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.ComputeFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ComputeFleetData, ComputeFleetResource>(new FleetsGetByResourceGroupAsyncCollectionResultOfT(_fleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ComputeFleetCollection.GetAll"), data => new ComputeFleetResource(Client, data));
+            return new AsyncPageableWrapper<ComputeFleetData, ComputeFleetResource>(new ComputeFleetDataAsyncCollectionResultOfT(_fleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ComputeFleetCollection.GetAll"), data => new ComputeFleetResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ComputeFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ComputeFleetData, ComputeFleetResource>(new FleetsGetByResourceGroupCollectionResultOfT(_fleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ComputeFleetCollection.GetAll"), data => new ComputeFleetResource(Client, data));
+            return new PageableWrapper<ComputeFleetData, ComputeFleetResource>(new ComputeFleetDataCollectionResultOfT(_fleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ComputeFleetCollection.GetAll"), data => new ComputeFleetResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>

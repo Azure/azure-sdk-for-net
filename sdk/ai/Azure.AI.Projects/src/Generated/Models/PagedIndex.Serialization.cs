@@ -168,7 +168,7 @@ namespace Azure.Core
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedIndex(value, nextLink, additionalBinaryDataProperties);
+            return new PagedIndex(value ?? new ChangeTrackingList<AIProjectIndex>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SecureScoreControlDefinitionsGetSecureScoreControlDefinitionsAsyncCollectionResultOfT(SecureScoreControlDefinitionsRestClient, context, "MockableSecurityCenterTenantResource.GetSecureScoreControlDefinitions");
+            return new SecureScoreControlDefinitionItemAsyncCollectionResultOfT(SecureScoreControlDefinitionsRestClient, context, "MockableSecurityCenterTenantResource.GetSecureScoreControlDefinitions");
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SecureScoreControlDefinitionsGetSecureScoreControlDefinitionsCollectionResultOfT(SecureScoreControlDefinitionsRestClient, context, "MockableSecurityCenterTenantResource.GetSecureScoreControlDefinitions");
+            return new SecureScoreControlDefinitionItemCollectionResultOfT(SecureScoreControlDefinitionsRestClient, context, "MockableSecurityCenterTenantResource.GetSecureScoreControlDefinitions");
         }
 
         /// <summary>

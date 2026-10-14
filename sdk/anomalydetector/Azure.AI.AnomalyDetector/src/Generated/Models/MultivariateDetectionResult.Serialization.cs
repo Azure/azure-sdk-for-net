@@ -170,7 +170,7 @@ namespace Azure.AI.AnomalyDetector
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MultivariateDetectionResult(resultId, summary, results, additionalBinaryDataProperties);
+            return new MultivariateDetectionResult(resultId, summary, results ?? new ChangeTrackingList<AnomalyState>(), additionalBinaryDataProperties);
         }
     }
 }

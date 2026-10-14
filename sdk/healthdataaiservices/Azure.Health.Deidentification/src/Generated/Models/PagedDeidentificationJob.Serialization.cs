@@ -170,7 +170,7 @@ namespace Azure.Health.Deidentification
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedDeidentificationJob(value, nextLink, clientRequestId, additionalBinaryDataProperties);
+            return new PagedDeidentificationJob(value ?? new ChangeTrackingList<DeidentificationJob>(), nextLink, clientRequestId, additionalBinaryDataProperties);
         }
     }
 }

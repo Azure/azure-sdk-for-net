@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceAlertData, ServiceAlertTenantResource>(new AlertsGetAllTenantAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServiceAlertData, ServiceAlertTenantResource>(new ServiceAlertDataAsyncCollectionResultOfT(
                 _alertsRestClient,
                 targetResource,
                 targetResourceType,
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceAlertData, ServiceAlertTenantResource>(new AlertsGetAllTenantCollectionResultOfT(
+            return new PageableWrapper<ServiceAlertData, ServiceAlertTenantResource>(new ServiceAlertDataCollectionResultOfT(
                 _alertsRestClient,
                 targetResource,
                 targetResourceType,

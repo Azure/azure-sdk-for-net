@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AppComplianceOnboardContent(subscriptionIds, additionalBinaryDataProperties);
+            return new AppComplianceOnboardContent(subscriptionIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }
