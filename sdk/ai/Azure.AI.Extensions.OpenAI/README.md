@@ -76,7 +76,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
 
 ### Prerequisites
 
-To use Azure AI Agents capabilities, you must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). This will allow you to create an Azure AI resource and get a connection URL.
+To use Azure AI Agents capabilities, you must have an [Azure subscription](https://azure.microsoft.com/pricing/purchase-options/azure-account). This will allow you to create an Azure AI resource and get a connection URL.
 
 ### Install the package
 
@@ -86,7 +86,7 @@ Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 dotnet add package Azure.AI.Extensions.OpenAI --prerelease
 ```
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
+> You must have an [Azure subscription](https://azure.microsoft.com/pricing/purchase-options/azure-account) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
 
 ### Authenticate the client
 
@@ -1533,7 +1533,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
-Stream browser automation responses using the exact agent version created above. Leave tool choice at its default, and ask the browser to read `https://example.com`. Print complete text messages once, not token-by-token, and log GA remote function action names, call IDs, and arguments without `browserSessionId`. The [browser automation sample](samples/Sample23_BrowserAutomationTool.md) includes the `ParseResponse` helper and synchronous equivalent.
+Stream browser automation responses using the exact agent version created above. Leave tool choice at its default, and ask the browser to read `https://example.com`. Print complete text messages once, not token-by-token, and log GA remote function action names, call IDs, and arguments without `browserSessionId`. The [browser automation sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/samples/Sample23_BrowserAutomationTool.md) includes the `ParseResponse` helper and synchronous equivalent.
 
 **Warning:** Complete messages may contain sensitive browser live-view URLs. Use these only in a trusted local terminal and redact them from saved logs or shared output.
 
