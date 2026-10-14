@@ -35,8 +35,9 @@ already green, skip the engine and report `skipped_already_green`.
 
 In the Actions workflow, use [invoke-repair-baseline.ps1](invoke-repair-baseline.ps1)
 to capture the build, exit code, package identity, and checkout SHA in
-`$AZSDK_REPAIR_RESULTS_DIR`. The workflow installs the exact SDK from `global.json`
-in a job-isolated `DOTNET_ROOT`. Prepend that root to PATH for the engine so its
+`$AZSDK_REPAIR_RESULTS_DIR`. After checking out the PR head, the workflow installs
+the exact SDK from that checkout's `global.json` in a job-isolated `DOTNET_ROOT`.
+Prepend that root to PATH for the engine so its
 nested validation inherits the same SDK. Do not change `global.json` or NuGet feeds.
 Baseline infrastructure failures go straight to the failure report without an
 engine invocation.
@@ -152,7 +153,9 @@ secret-redacted evidence, rechecks any captured process response, removes all
 push requests, and supplies the existing native `add-comment` handler with the
 deterministic report. The original artifact is not changed; independent output
 validation still fails incomplete runs. Oversized recovered reports are saved
-losslessly in the `repair-report` artifact.
+losslessly in the `repair-report` artifact. Successful reporting exits with zero
+even when the reporting checkout lacks the captured pre-repair SHA; invalid
+evidence and other reporting errors still fail visibly.
 
 ## Existing workflow environment
 

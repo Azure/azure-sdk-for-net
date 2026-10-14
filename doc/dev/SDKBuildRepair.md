@@ -63,8 +63,10 @@ The existing workflow eligibility, network/authentication, and native safe-outpu
 
 ## SDK selection and infrastructure failures
 
-`actions/setup-dotnet` installs the exact `sdk.version` from `global.json`, not a
-floating `10.0.x` release. Its job-unique installation directory is mounted in the
+After gh-aw checks out the PR head, `actions/setup-dotnet` installs the exact
+`sdk.version` from that checkout's `global.json`, not the initial base/merge
+checkout or a floating `10.0.x` release. An older open PR therefore retains its
+approved SDK when `main` advances. Its job-unique installation directory is mounted in the
 agent sandbox and exported as `DOTNET_ROOT` and `DOTNET_HOST_PATH`. Only the
 approved SDK is installed there; the repository's `rollForward: feature` setting
 cannot choose a newer hosted SDK. The baseline helper verifies `dotnet --version`
@@ -79,7 +81,10 @@ baseline infrastructure failures skip the engine. If the agent aborts or emits
 only `report_incomplete`, the existing safe-output job renders a failure comment
 from this evidence and passes it to the native `add-comment` handler. Missing
 engine responses remain `failed` / `NoEngineResult`; no response is invented and
-all push requests are removed on recovery. Capability and process failures use
+all push requests are removed on recovery. Successful reporting returns a zero
+exit code even if the reporting checkout lacks the captured pre-repair SHA, so
+the Actions PowerShell wrapper does not skip comment publication because of a
+stale Git exit code. Reporting errors still fail visibly. Capability and process failures use
 the same fallback. Complete successful output is left unchanged, and a captured
 green baseline without an engine attempt retains `skipped_already_green`.
 

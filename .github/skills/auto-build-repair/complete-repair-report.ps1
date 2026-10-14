@@ -38,7 +38,7 @@ $complete = $AgentOutcome -eq 'success' -and $output.errors.Count -eq 0 -and
     $incomplete.Count -eq 0 -and @($output.items | Where-Object { $_.type -eq 'add_comment' }).Count -gt 0
 $pushRequested = @($output.items | Where-Object { $_.type -eq 'push_to_pull_request_branch' }).Count -gt 0
 if ($complete -and -not $pushRequested) {
-    return
+    exit 0
 }
 
 $identity = $null
@@ -70,7 +70,7 @@ if ($hasProcessEvidence) {
     & pwsh -NoProfile -File (Join-Path $PSScriptRoot 'capture-engine-result.ps1') `
         -ResultsDir $ResultsDir -MaxIterations $maxIterations
     $captureExit = $LASTEXITCODE
-    if ($complete -and $pushRequested -and $captureExit -eq 0) { return }
+    if ($complete -and $pushRequested -and $captureExit -eq 0) { exit 0 }
 }
 
 $errorsFile = Join-Path $ResultsDir 'reporting-errors.txt'
@@ -133,3 +133,6 @@ $body = Get-Content -Raw -LiteralPath $arguments.OutFile
     items = @(@{ type = 'add_comment'; body = $body })
     errors = @()
 } | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath $AgentOutputFile
+
+# Optional Git evidence may be unavailable in the reporting checkout.
+exit 0

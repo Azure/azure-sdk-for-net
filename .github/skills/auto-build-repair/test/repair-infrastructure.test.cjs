@@ -14,6 +14,7 @@ const repoRoot = path.resolve(__dirname, "../../../..");
 const workflow = fs.readFileSync(path.join(repoRoot, ".github/workflows/sdk-build-repair.md"), "utf8");
 const source = yaml.parse(/^---\r?\n([\s\S]*?)\r?\n---/.exec(workflow)[1]);
 const lock = yaml.parse(fs.readFileSync(path.join(repoRoot, ".github/workflows/sdk-build-repair.lock.yml"), "utf8"));
+const toolSetup = source["pre-agent-steps"];
 const success = { success: true, attemptsUsed: 1, operation_status: "Succeeded" };
 const failed = { success: false, attemptsUsed: 2, errorCode: "BuildAfterPatchesFailed",
   buildResult: "error CS1061: CustomCode member missing", operation_status: "Failed" };
@@ -37,11 +38,19 @@ function fixture(t) {
     PackagePath: "sdk/contoso/Azure.Contoso.Widgets", PreRepairSha: "a".repeat(40),
   }));
   const write = (name, value) => fs.writeFileSync(path.join(results, name), value);
-  function recover(agentOutcome = "success") {
-    return run("pwsh", ["-NoProfile", "-File", path.join(skillRoot, "complete-repair-report.ps1"),
+  function recover(agentOutcome = "success", initialExitCode = 0) {
+    const args = [
       "-AgentOutputFile", outputFile, "-ResultsDir", results, "-Pr", "123",
       "-HeadSha", "a".repeat(40), "-Repo", "Azure/azure-sdk-for-net",
-      "-RepoRoot", root, "-AgentOutcome", agentOutcome], {
+      "-RepoRoot", root, "-AgentOutcome", agentOutcome];
+    const wrapper = path.join(root, "recover-actions-step.ps1");
+    fs.writeFileSync(wrapper, `
+$ErrorActionPreference = 'Stop'
+$global:LASTEXITCODE = ${initialExitCode}
+& ${quote(path.join(skillRoot, "complete-repair-report.ps1"))} ${args.map((value, index) => index % 2 ? quote(value) : value).join(" ")}
+if ((Test-Path -LiteralPath variable:\\LASTEXITCODE)) { exit $LASTEXITCODE }
+`);
+    return run("pwsh", ["-NoProfile", "-File", wrapper], {
       env: { ...process.env, AZSDK_REPAIR_RESULTS_DIR: results },
     });
   }
@@ -67,11 +76,11 @@ function fixture(t) {
 
 test("install and selection are exact, isolated and inherited by the sandbox", (t) => {
   assert.equal(source.runtimes?.dotnet, undefined);
-  const install = source.steps.find((step) => step.name === "Install approved .NET SDK");
+  const install = toolSetup.find((step) => step.name === "Install approved .NET SDK");
   assert.equal(install.with["global-json-file"], "global.json");
   assert.equal(install.with["dotnet-version"], undefined);
   const f = fixture(t);
-  const setup = source.steps.find((step) => step.name === "Configure isolated .NET installation");
+  const setup = toolSetup.find((step) => step.name === "Configure isolated .NET installation");
   const setupFile = path.join(f.root, "setup.ps1");
   fs.writeFileSync(setupFile, setup.run);
   const envFile = path.join(f.root, "environment");
@@ -89,6 +98,48 @@ test("install and selection are exact, isolated and inherited by the sandbox", (
   const lockedInstall = lock.jobs.agent.steps.find((step) => step.name === install.name);
   assert.equal(lockedInstall.with["global-json-file"], "global.json");
   assert.equal(lock.jobs.agent.steps.filter((step) => /setup-dotnet@/.test(step.uses || "")).length, 1);
+});
+
+test("tool setup follows PR checkout and precedes agent execution", () => {
+  assert(source["pre-agent-steps"]);
+  const steps = lock.jobs.agent.steps;
+  const checkout = steps.findIndex((step) => step.id === "checkout-pr");
+  const configure = steps.findIndex((step) => step.name === "Configure isolated .NET installation");
+  const install = steps.findIndex((step) => step.name === "Install approved .NET SDK");
+  const azsdk = steps.findIndex((step) => step.name === "Install azsdk CLI");
+  const execution = steps.findIndex((step) => step.id === "agentic_execution");
+  assert(checkout >= 0 && configure > checkout && install > configure && azsdk > install);
+  assert(execution > azsdk);
+});
+
+test("installation reads the PR-head global.json when the base SDK has advanced", (t) => {
+  const f = fixture(t);
+  function git(...args) {
+    const result = run("git", ["-C", f.root, ...args]);
+    assert.equal(result.status, 0, result.stderr);
+    return result.stdout.trim();
+  }
+  function commitVersion(version) {
+    fs.writeFileSync(path.join(f.root, "global.json"), JSON.stringify({ sdk: { version, rollForward: "feature" } }));
+    git("add", "global.json");
+    git("-c", "user.name=Repair Test", "-c", "user.email=repair-test@example.invalid",
+      "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", version);
+    return git("rev-parse", "HEAD");
+  }
+  git("init", "--quiet");
+  const head = commitVersion("10.0.401");
+  const base = commitVersion("10.0.402");
+  let installed;
+  for (const step of lock.jobs.agent.steps) {
+    if (step.name === "Checkout repository") git("checkout", "--quiet", "--detach", base);
+    if (step.id === "checkout-pr") git("checkout", "--quiet", "--detach", head);
+    if (step.name === "Install approved .NET SDK") {
+      installed = JSON.parse(fs.readFileSync(path.join(f.root, step.with["global-json-file"]), "utf8")).sdk.version;
+    }
+  }
+  const expected = JSON.parse(fs.readFileSync(path.join(f.root, "global.json"), "utf8")).sdk.version;
+  assert.equal(expected, "10.0.401");
+  assert.equal(installed, expected);
 });
 
 test("recovery runs before the existing native handler without weakening original validation", () => {
@@ -221,6 +272,50 @@ test("baseline restore401 produces deterministic failed/NoEngineResult add_comme
   assert.equal(fs.existsSync(path.join(f.results, "engine-command.txt")), false);
   // The validator downloads the original artifact, not the mutated local copy.
   assert.deepEqual(JSON.parse(originalBytes), f.original);
+});
+for (const [name, setup, status] of [
+  ["baseline failure", (f) => { f.write("baseline-exit-code.txt", "1"); f.write("pre-repair-errors.txt", "error NU1301: HTTP401"); }, "failed"],
+  ["failed engine", (f) => f.engine(failed), "failed"],
+  ["aborted successful engine", (f) => f.engine(success), "failed"],
+  ["green baseline", (f) => f.write("baseline-exit-code.txt", "0"), "skipped_already_green"],
+]) {
+  test(`Actions wrapper delivers ${name} report when the captured SHA is absent`, (t) => {
+    const f = fixture(t);
+    for (const args of [
+      ["init", "--quiet"],
+      ["-c", "user.name=Repair Test", "-c", "user.email=repair-test@example.invalid",
+        "-c", "commit.gpgsign=false", "commit", "--quiet", "--allow-empty", "-m", "reporting checkout"],
+    ]) {
+      const result = run("git", ["-C", f.root, ...args]);
+      assert.equal(result.status, 0, result.stderr);
+    }
+    const unavailable = run("git", ["-C", f.root, "diff", "--name-only", "a".repeat(40),
+      "--", "sdk/contoso/Azure.Contoso.Widgets"]);
+    assert.equal(unavailable.status, 128);
+    setup(f);
+    const originalBytes = fs.readFileSync(f.outputFile, "utf8");
+    const { telemetry } = f.complete(name === "aborted successful engine" ? "failure" : "success");
+    assert.equal(telemetry.status, status);
+    assert.deepEqual(JSON.parse(originalBytes), f.original);
+  });
+}
+test("Actions wrapper preserves a completed comment and clears inherited native failure", (t) => {
+  const f = fixture(t);
+  const bytes = JSON.stringify({ items: [{ type: "add_comment", body: "original report" }], errors: [] });
+  fs.writeFileSync(f.outputFile, bytes);
+  const result = f.recover("success", 128);
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(fs.readFileSync(f.outputFile, "utf8"), bytes);
+  assert.equal(fs.existsSync(path.join(f.results, "repair-comment.md")), false);
+});
+test("Actions wrapper still fails when recovered report cannot be written", (t) => {
+  const f = fixture(t);
+  fs.mkdirSync(path.join(f.results, "repair-comment.md"));
+  const bytes = fs.readFileSync(f.outputFile, "utf8");
+  const result = f.recover("failure", 128);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /repair-comment\.md/);
+  assert.equal(fs.readFileSync(f.outputFile, "utf8"), bytes);
 });
 for (const outcome of ["failure", "success"]) {
   test(`generated empty fallback without errors recovers baseline failure after agent ${outcome}`, (t) => {
@@ -371,9 +466,7 @@ test("complete green repair output is byte-for-byte unchanged", (t) => {
     items: [{ type: "add_comment", body: "original deterministic report" }, { type: "push_to_pull_request_branch" }], errors: [],
   }));
   const bytes = fs.readFileSync(f.outputFile, "utf8");
-  const result = run("pwsh", ["-NoProfile", "-File", path.join(skillRoot, "complete-repair-report.ps1"),
-    "-AgentOutputFile", f.outputFile, "-ResultsDir", f.results, "-Pr", "123", "-HeadSha", "a".repeat(40),
-    "-RepoRoot", f.root, "-AgentOutcome", "success"]);
+  const result = f.recover("success", 128);
   assert.equal(result.status, 0, result.stderr);
   assert.equal(fs.readFileSync(f.outputFile, "utf8"), bytes);
 });
@@ -400,8 +493,7 @@ test("malformed original envelope fails visibly rather than fabricating a termin
   const f = fixture(t);
   const bytes = JSON.stringify({ items: "invalid", errors: [] });
   fs.writeFileSync(f.outputFile, bytes);
-  const result = run("pwsh", ["-NoProfile", "-File", path.join(skillRoot, "complete-repair-report.ps1"),
-    "-AgentOutputFile", f.outputFile, "-ResultsDir", f.results, "-Pr", "123", "-HeadSha", "a".repeat(40)]);
+  const result = f.recover("success", 128);
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /Invalid agent output envelope/);
   assert.equal(fs.readFileSync(f.outputFile, "utf8"), bytes);

@@ -103,10 +103,12 @@ network:
     # The nested azsdk Copilot client calls this API directly, unlike the outer managed-proxy agent.
     - api.githubcopilot.com
 
+# Install tools after gh-aw checks out the PR head, so SDK selection and the
+# baseline build read the same global.json.
 # Install the shared azsdk CLI (the engine) onto PATH before the agent runs. The agent
 # then invokes `azsdk tsp client customized-update` from bash. (gh-aw cannot host the
 # stdio azsdk MCP server directly; see header.)
-steps:
+pre-agent-steps:
   - name: Configure isolated .NET installation
     shell: pwsh
     run: |
