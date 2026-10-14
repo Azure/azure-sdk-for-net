@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -837,15 +836,13 @@ namespace Azure.Security.KeyVault.Secrets
 
         private static KeyVaultSecret DeserializeKeyVaultSecret(Response raw)
         {
-            SecretBundle bundle = ModelReaderWriter.Read<SecretBundle>(
-                raw.Content, ModelReaderWriterOptions.Json, AzureSecurityKeyVaultSecretsContext.Default);
+            SecretBundle bundle = (SecretBundle)raw;
             return SecretMapper.ToKeyVaultSecret(bundle);
         }
 
         private static SecretProperties DeserializeSecretProperties(Response raw)
         {
-            SecretBundle bundle = ModelReaderWriter.Read<SecretBundle>(
-                raw.Content, ModelReaderWriterOptions.Json, AzureSecurityKeyVaultSecretsContext.Default);
+            SecretBundle bundle = (SecretBundle)raw;
             return SecretMapper.ToKeyVaultSecret(bundle).Properties;
         }
 

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IotSecuritySolutionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(IotSecuritySolutionResource.ResourceType, out string iotSecuritySolutionApiVersion);
             _iotSecuritySolutionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", IotSecuritySolutionResource.ResourceType.Namespace, Diagnostics);
-            _iotSecuritySolutionRestClient = new IotSecuritySolution(_iotSecuritySolutionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotSecuritySolutionApiVersion ?? "2019-08-01");
+            _iotSecuritySolutionRestClient = new IotSecuritySolution(_iotSecuritySolutionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -289,7 +288,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotSecuritySolutionData, IotSecuritySolutionResource>(new IotSecuritySolutionGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<IotSecuritySolutionData, IotSecuritySolutionResource>(new IotSecuritySolutionDataAsyncCollectionResultOfT(
                 _iotSecuritySolutionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotSecuritySolutionData, IotSecuritySolutionResource>(new IotSecuritySolutionGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<IotSecuritySolutionData, IotSecuritySolutionResource>(new IotSecuritySolutionDataCollectionResultOfT(
                 _iotSecuritySolutionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

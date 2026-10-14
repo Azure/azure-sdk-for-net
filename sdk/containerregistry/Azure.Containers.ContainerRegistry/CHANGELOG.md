@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+- Fixed streaming blob downloads to enforce the declared content length and disallow seeking, ensuring SHA-256 validation
+  covers the complete sequential content stream.
+
 ### Other Changes
 
 ## 1.3.0 (2026-01-09)

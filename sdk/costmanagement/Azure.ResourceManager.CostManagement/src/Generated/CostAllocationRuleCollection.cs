@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CostAllocationRuleData, CostAllocationRuleResource>(new CostAllocationRulesGetAllAsyncCollectionResultOfT(_costAllocationRulesRestClient, Id.Name, context, "CostAllocationRuleCollection.GetAll"), data => new CostAllocationRuleResource(Client, data));
+            return new AsyncPageableWrapper<CostAllocationRuleData, CostAllocationRuleResource>(new CostAllocationRuleDataAsyncCollectionResultOfT(_costAllocationRulesRestClient, Id.Name, context, "CostAllocationRuleCollection.GetAll"), data => new CostAllocationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CostAllocationRuleData, CostAllocationRuleResource>(new CostAllocationRulesGetAllCollectionResultOfT(_costAllocationRulesRestClient, Id.Name, context, "CostAllocationRuleCollection.GetAll"), data => new CostAllocationRuleResource(Client, data));
+            return new PageableWrapper<CostAllocationRuleData, CostAllocationRuleResource>(new CostAllocationRuleDataCollectionResultOfT(_costAllocationRulesRestClient, Id.Name, context, "CostAllocationRuleCollection.GetAll"), data => new CostAllocationRuleResource(Client, data));
         }
 
         /// <summary>

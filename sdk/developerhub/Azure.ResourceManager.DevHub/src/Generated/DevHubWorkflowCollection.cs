@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DevHubWorkflowCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DevHubWorkflowResource.ResourceType, out string devHubWorkflowApiVersion);
             _workflowClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevHub", DevHubWorkflowResource.ResourceType.Namespace, Diagnostics);
-            _workflowRestClient = new Workflow(_workflowClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devHubWorkflowApiVersion ?? "2025-03-01-preview");
+            _workflowRestClient = new Workflow(_workflowClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DevHub/workflows", out string workflowApiVersionOverride) ? workflowApiVersionOverride : "2025-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -289,7 +288,7 @@ namespace Azure.ResourceManager.DevHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevHubWorkflowData, DevHubWorkflowResource>(new WorkflowGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevHubWorkflowData, DevHubWorkflowResource>(new DevHubWorkflowDataAsyncCollectionResultOfT(
                 _workflowRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.DevHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevHubWorkflowData, DevHubWorkflowResource>(new WorkflowGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DevHubWorkflowData, DevHubWorkflowResource>(new DevHubWorkflowDataCollectionResultOfT(
                 _workflowRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

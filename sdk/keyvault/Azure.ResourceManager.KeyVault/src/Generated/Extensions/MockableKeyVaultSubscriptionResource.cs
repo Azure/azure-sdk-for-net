@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.KeyVault.Mocking
 
         private ClientDiagnostics VaultsClientDiagnostics => _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(VaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-15");
+        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(VaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.KeyVault/vaults", out string apiVersion) ? apiVersion : "2026-05-15");
 
         private ClientDiagnostics ManagedHsmsClientDiagnostics => _managedHsmsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedHsms ManagedHsmsRestClient => _managedHsmsRestClient ??= new ManagedHsms(ManagedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-15");
+        private ManagedHsms ManagedHsmsRestClient => _managedHsmsRestClient ??= new ManagedHsms(ManagedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.KeyVault/managedHSMs", out string apiVersion0) ? apiVersion0 : "2026-05-15");
 
         private ClientDiagnostics VaultsOperationGroupClientDiagnostics => _vaultsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KeyVaultData, KeyVaultResource>(new VaultsGetBySubscriptionAsyncCollectionResultOfT(VaultsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableKeyVaultSubscriptionResource.GetKeyVaults"), data => new KeyVaultResource(Client, data));
+            return new AsyncPageableWrapper<KeyVaultData, KeyVaultResource>(new KeyVaultDataAsync0CollectionResultOfT(VaultsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableKeyVaultSubscriptionResource.GetKeyVaults"), data => new KeyVaultResource(Client, data));
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KeyVaultData, KeyVaultResource>(new VaultsGetBySubscriptionCollectionResultOfT(VaultsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableKeyVaultSubscriptionResource.GetKeyVaults"), data => new KeyVaultResource(Client, data));
+            return new PageableWrapper<KeyVaultData, KeyVaultResource>(new KeyVaultData0CollectionResultOfT(VaultsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableKeyVaultSubscriptionResource.GetKeyVaults"), data => new KeyVaultResource(Client, data));
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedHsmData, ManagedHsmResource>(new ManagedHsmsGetBySubscriptionAsyncCollectionResultOfT(ManagedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableKeyVaultSubscriptionResource.GetManagedHsms"), data => new ManagedHsmResource(Client, data));
+            return new AsyncPageableWrapper<ManagedHsmData, ManagedHsmResource>(new ManagedHsmDataAsync0CollectionResultOfT(ManagedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableKeyVaultSubscriptionResource.GetManagedHsms"), data => new ManagedHsmResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedHsmData, ManagedHsmResource>(new ManagedHsmsGetBySubscriptionCollectionResultOfT(ManagedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableKeyVaultSubscriptionResource.GetManagedHsms"), data => new ManagedHsmResource(Client, data));
+            return new PageableWrapper<ManagedHsmData, ManagedHsmResource>(new ManagedHsmData0CollectionResultOfT(ManagedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableKeyVaultSubscriptionResource.GetManagedHsms"), data => new ManagedHsmResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedKeyVaultData, DeletedKeyVaultResource>(new VaultsOperationGroupGetDeletedKeyVaultsAsyncCollectionResultOfT(VaultsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults"), data => new DeletedKeyVaultResource(Client, data));
+            return new AsyncPageableWrapper<DeletedKeyVaultData, DeletedKeyVaultResource>(new DeletedKeyVaultDataAsyncCollectionResultOfT(VaultsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults"), data => new DeletedKeyVaultResource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedKeyVaultData, DeletedKeyVaultResource>(new VaultsOperationGroupGetDeletedKeyVaultsCollectionResultOfT(VaultsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults"), data => new DeletedKeyVaultResource(Client, data));
+            return new PageableWrapper<DeletedKeyVaultData, DeletedKeyVaultResource>(new DeletedKeyVaultDataCollectionResultOfT(VaultsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults"), data => new DeletedKeyVaultResource(Client, data));
         }
 
         /// <summary>
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedManagedHsmData, DeletedManagedHsmResource>(new ManagedHsmsOperationGroupGetDeletedManagedHsmsAsyncCollectionResultOfT(ManagedHsmsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableKeyVaultSubscriptionResource.GetDeletedManagedHsms"), data => new DeletedManagedHsmResource(Client, data));
+            return new AsyncPageableWrapper<DeletedManagedHsmData, DeletedManagedHsmResource>(new DeletedManagedHsmDataAsyncCollectionResultOfT(ManagedHsmsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableKeyVaultSubscriptionResource.GetDeletedManagedHsms"), data => new DeletedManagedHsmResource(Client, data));
         }
 
         /// <summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedManagedHsmData, DeletedManagedHsmResource>(new ManagedHsmsOperationGroupGetDeletedManagedHsmsCollectionResultOfT(ManagedHsmsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableKeyVaultSubscriptionResource.GetDeletedManagedHsms"), data => new DeletedManagedHsmResource(Client, data));
+            return new PageableWrapper<DeletedManagedHsmData, DeletedManagedHsmResource>(new DeletedManagedHsmDataCollectionResultOfT(ManagedHsmsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableKeyVaultSubscriptionResource.GetDeletedManagedHsms"), data => new DeletedManagedHsmResource(Client, data));
         }
 
         /// <summary>

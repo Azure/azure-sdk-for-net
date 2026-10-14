@@ -76,14 +76,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </summary>
         private readonly string? _statsHost;
         private readonly string? _storageDirectory;
+
+        /// <summary>Set only for a routed partition.</summary>
+        private readonly string? _route;
         private TaskCompletionSource<bool>? _inFlightDrain;
         private bool _disposed;
 
-        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled, NetworkSdkStatsManager? networkSdkStatsManager = null, string? storageDirectory = null, Uri? trackUri = null)
+        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled, NetworkSdkStatsManager? networkSdkStatsManager = null, string? storageDirectory = null, Uri? trackUri = null, string? route = null)
         {
             _applicationInsightsRestClient = applicationInsightsRestClient;
             _connectionVars = connectionVars;
             _trackUri = trackUri;
+            _route = route;
             _isAadEnabled = isAadEnabled;
             _blobProvider = blobProvider;
             _transmissionStateManager = transmissionStateManager;
@@ -335,6 +339,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
+
+            if (_route != null && (statusCode == ResponseStatusCodes.Unauthorized || statusCode == ResponseStatusCodes.Forbidden))
+            {
+                AzureMonitorExporterEventSource.Log.RoutedAuthenticationFailed(_route, statusCode, _isAadEnabled);
+            }
 
             // No blob is passed because this batch may span many of them: a partial success
             // re-persists the retryable subset as a single new blob, after which every blob in the

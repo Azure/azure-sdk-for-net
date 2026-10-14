@@ -26,6 +26,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             #region Snippet:Core_TasksGuide_OneShotHelloWorld
 
             var builder = AgentHost.CreateBuilder();
+            builder.SetResilientTasksEnabled();
 
             TaskDefinition<string, string> echo = builder.Services.AddResilientTask<string, string>(
                 "echo", async (ctx, ct) =>
@@ -51,6 +52,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         // of capturing the handle returned at registration time.
         public static async Task<string> ResolveRegisteredTaskLater(IServiceCollection services)
         {
+            services.SetResilientTasksEnabled();
             services.AddResilientTask<string, string>("echo", async (ctx, ct) =>
             {
                 await Task.Yield();

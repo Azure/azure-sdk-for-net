@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebAppBackupData, SiteSlotBackupResource>(new BackupItemOperationGroupGetBackupsSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebAppBackupData, SiteSlotBackupResource>(new WebAppBackupDataAsync0CollectionResultOfT(
                 _backupItemOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebAppBackupData, SiteSlotBackupResource>(new BackupItemOperationGroupGetBackupsSlotCollectionResultOfT(
+            return new PageableWrapper<WebAppBackupData, SiteSlotBackupResource>(new WebAppBackupData0CollectionResultOfT(
                 _backupItemOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

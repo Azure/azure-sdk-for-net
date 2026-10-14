@@ -42,11 +42,17 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
 
         private ClientDiagnostics ApplicationsClientDiagnostics => _applicationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedApplications.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Applications ApplicationsRestClient => _applicationsRestClient ??= new Applications(ApplicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
+        private Applications ApplicationsRestClient => _applicationsRestClient ??= new Applications(
+            ApplicationsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2023-12-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ApplicationDefinitionsClientDiagnostics => _applicationDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedApplications.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApplicationDefinitions ApplicationDefinitionsRestClient => _applicationDefinitionsRestClient ??= new ApplicationDefinitions(ApplicationDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
+        private ApplicationDefinitions ApplicationDefinitionsRestClient => _applicationDefinitionsRestClient ??= new ApplicationDefinitions(ApplicationDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Solutions/applicationDefinitions", out string apiVersion0) ? apiVersion0 : "2023-12-01-preview");
 
         private ClientDiagnostics JitRequestsClientDiagnostics => _jitRequestsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedApplications.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -77,7 +83,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedApplicationData, ManagedApplicationResource>(new ApplicationsGetBySubscriptionAsyncCollectionResultOfT(ApplicationsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetManagedApplications"), data => new ManagedApplicationResource(Client, data));
+            return new AsyncPageableWrapper<ManagedApplicationData, ManagedApplicationResource>(new ManagedApplicationDataAsync0CollectionResultOfT(ApplicationsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetManagedApplications"), data => new ManagedApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +111,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedApplicationData, ManagedApplicationResource>(new ApplicationsGetBySubscriptionCollectionResultOfT(ApplicationsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetManagedApplications"), data => new ManagedApplicationResource(Client, data));
+            return new PageableWrapper<ManagedApplicationData, ManagedApplicationResource>(new ManagedApplicationData0CollectionResultOfT(ApplicationsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetManagedApplications"), data => new ManagedApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -133,7 +139,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationDefinitionData, ApplicationDefinitionResource>(new ApplicationDefinitionsGetBySubscriptionAsyncCollectionResultOfT(ApplicationDefinitionsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetApplicationDefinitions"), data => new ApplicationDefinitionResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationDefinitionData, ApplicationDefinitionResource>(new ApplicationDefinitionDataAsync0CollectionResultOfT(ApplicationDefinitionsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetApplicationDefinitions"), data => new ApplicationDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationDefinitionData, ApplicationDefinitionResource>(new ApplicationDefinitionsGetBySubscriptionCollectionResultOfT(ApplicationDefinitionsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetApplicationDefinitions"), data => new ApplicationDefinitionResource(Client, data));
+            return new PageableWrapper<ApplicationDefinitionData, ApplicationDefinitionResource>(new ApplicationDefinitionData0CollectionResultOfT(ApplicationDefinitionsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetApplicationDefinitions"), data => new ApplicationDefinitionResource(Client, data));
         }
 
         /// <summary>

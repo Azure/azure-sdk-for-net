@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResourceSkuLocationInfo(location, zones, zoneDetails, additionalBinaryDataProperties);
+            return new ResourceSkuLocationInfo(location, zones ?? new ChangeTrackingList<string>(), zoneDetails ?? new ChangeTrackingList<ResourceSkuZoneDetails>(), additionalBinaryDataProperties);
         }
     }
 }

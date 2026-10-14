@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
 
         private ClientDiagnostics FleetsClientDiagnostics => _fleetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DatabaseFleetManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Fleets FleetsRestClient => _fleetsRestClient ??= new Fleets(FleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-02-01-preview");
+        private Fleets FleetsRestClient => _fleetsRestClient ??= new Fleets(FleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DatabaseFleetManager/fleets", out string apiVersion) ? apiVersion : "2025-02-01-preview");
 
         /// <summary>
         /// Gets all fleets in a subscription.
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseFleetData, DatabaseFleetResource>(new FleetsGetAllAsyncCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabaseFleetManagerSubscriptionResource.GetDatabaseFleets"), data => new DatabaseFleetResource(Client, data));
+            return new AsyncPageableWrapper<DatabaseFleetData, DatabaseFleetResource>(new DatabaseFleetDataAsync0CollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabaseFleetManagerSubscriptionResource.GetDatabaseFleets"), data => new DatabaseFleetResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseFleetData, DatabaseFleetResource>(new FleetsGetAllCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabaseFleetManagerSubscriptionResource.GetDatabaseFleets"), data => new DatabaseFleetResource(Client, data));
+            return new PageableWrapper<DatabaseFleetData, DatabaseFleetResource>(new DatabaseFleetData0CollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabaseFleetManagerSubscriptionResource.GetDatabaseFleets"), data => new DatabaseFleetResource(Client, data));
         }
     }
 }

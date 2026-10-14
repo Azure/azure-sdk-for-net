@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Redis.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RedisPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new RedisPrivateLinkResourceListResult(value ?? new ChangeTrackingList<RedisPrivateLinkResource>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

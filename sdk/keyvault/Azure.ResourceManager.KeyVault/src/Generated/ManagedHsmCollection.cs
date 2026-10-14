@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagedHsmCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ManagedHsmResource.ResourceType, out string managedHsmApiVersion);
             _managedHsmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ManagedHsmResource.ResourceType.Namespace, Diagnostics);
-            _managedHsmsRestClient = new ManagedHsms(_managedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedHsmApiVersion ?? "2026-05-15");
+            _managedHsmsRestClient = new ManagedHsms(_managedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.KeyVault/managedHSMs", out string managedHsmsApiVersionOverride) ? managedHsmsApiVersionOverride : "2026-05-15");
             ValidateResourceId(id);
         }
 
@@ -295,7 +294,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedHsmData, ManagedHsmResource>(new ManagedHsmsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedHsmData, ManagedHsmResource>(new ManagedHsmDataAsyncCollectionResultOfT(
                 _managedHsmsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +329,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedHsmData, ManagedHsmResource>(new ManagedHsmsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<ManagedHsmData, ManagedHsmResource>(new ManagedHsmDataCollectionResultOfT(
                 _managedHsmsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

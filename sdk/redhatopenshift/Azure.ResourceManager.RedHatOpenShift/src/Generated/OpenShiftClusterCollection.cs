@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OpenShiftClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(OpenShiftClusterResource.ResourceType, out string openShiftClusterApiVersion);
             _openShiftClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", OpenShiftClusterResource.ResourceType.Namespace, Diagnostics);
-            _openShiftClustersRestClient = new OpenShiftClusters(_openShiftClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, openShiftClusterApiVersion ?? "2025-07-25");
+            _openShiftClustersRestClient = new OpenShiftClusters(_openShiftClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.RedHatOpenShift/openShiftClusters", out string openShiftClustersApiVersionOverride) ? openShiftClustersApiVersionOverride : "2025-07-25");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OpenShiftClusterData, OpenShiftClusterResource>(new OpenShiftClustersGetByResourceGroupAsyncCollectionResultOfT(_openShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OpenShiftClusterCollection.GetAll"), data => new OpenShiftClusterResource(Client, data));
+            return new AsyncPageableWrapper<OpenShiftClusterData, OpenShiftClusterResource>(new OpenShiftClusterDataAsyncCollectionResultOfT(_openShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OpenShiftClusterCollection.GetAll"), data => new OpenShiftClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OpenShiftClusterData, OpenShiftClusterResource>(new OpenShiftClustersGetByResourceGroupCollectionResultOfT(_openShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OpenShiftClusterCollection.GetAll"), data => new OpenShiftClusterResource(Client, data));
+            return new PageableWrapper<OpenShiftClusterData, OpenShiftClusterResource>(new OpenShiftClusterDataCollectionResultOfT(_openShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OpenShiftClusterCollection.GetAll"), data => new OpenShiftClusterResource(Client, data));
         }
 
         /// <summary>

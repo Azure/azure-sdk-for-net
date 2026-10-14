@@ -15,10 +15,12 @@ using static Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions;
 namespace Azure.Security.ConfidentialLedger.Tests
 {
     /// <summary>
-    /// Unit tests covering the "2026-07-31-preview" service version: that it is now the client
-    /// default, that leaving the version unspecified sends "api-version=2026-07-31-preview" while
-    /// explicitly selecting "2026-02-23" still sends "api-version=2026-02-23" on the wire for
-    /// transaction writes and receipt reads, and that
+    /// Unit tests covering service-version selection: that the latest GA "2026-02-23" is the client
+    /// default for the public parameterless constructor (leaving the version unspecified sends
+    /// "api-version=2026-02-23"), that the experimental configuration constructor defaults to the
+    /// newest "2026-07-31-preview" api-version, that explicitly
+    /// selecting the "2026-07-31-preview" version sends "api-version=2026-07-31-preview" on the wire
+    /// for transaction writes and receipt reads, and that
     /// <see cref="TransactionReceipt.ApplicationClaims"/> (and the claim kinds it can contain)
     /// deserialize correctly.
     /// </summary>
@@ -54,9 +56,10 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [Test]
-        public async Task DefaultServiceVersionIs_2026_07_31_Preview()
+        public async Task DefaultServiceVersionIs_2026_02_23()
         {
-            // The parameterless constructor must resolve to the new "2026-07-31-preview" version.
+            // The parameterless constructor must resolve to the latest GA "2026-02-23" version;
+            // preview features (e.g. waitForCommit) require explicitly opting in to a preview version.
             string capturedQuery = null;
             var transport = new MockTransport(req =>
             {
@@ -70,10 +73,13 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var client = CreateClient(transport);
             await client.GetReceiptAsync("1.1", new RequestContext());
 
-            Assert.AreEqual("?api-version=2026-07-31-preview", capturedQuery);
+            Assert.AreEqual("?api-version=2026-02-23", capturedQuery);
         }
 
         [Test]
+        // The experimental IConfigurationSection constructor is emitter-generated and always
+        // defaults to the newest api-version ("2026-07-31-preview"); unlike the public
+        // parameterless default, this internal DI/config path is not pinned to GA.
         public async Task ConfigurationDefault_SendsExactApiVersionQueryParameter()
         {
             string capturedQuery = null;
@@ -97,8 +103,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
         private static string ExpectedApiVersion(ServiceVersion? version) =>
             version switch
             {
-                ServiceVersion.V2026_02_23 => "2026-02-23",
-                _ => "2026-07-31-preview",
+                ServiceVersion.V2026_07_31_Preview => "2026-07-31-preview",
+                _ => "2026-02-23",
             };
 
         [TestCase(null)]

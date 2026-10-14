@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkVirtualApplianceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkVirtualApplianceResource.ResourceType, out string networkVirtualApplianceApiVersion);
             _networkVirtualAppliancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkVirtualApplianceResource.ResourceType.Namespace, Diagnostics);
-            _networkVirtualAppliancesRestClient = new NetworkVirtualAppliances(_networkVirtualAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkVirtualApplianceApiVersion ?? "2026-01-01");
+            _networkVirtualAppliancesRestClient = new NetworkVirtualAppliances(_networkVirtualAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkVirtualApplianceData, NetworkVirtualApplianceResource>(new NetworkVirtualAppliancesGetByResourceGroupAsyncCollectionResultOfT(_networkVirtualAppliancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkVirtualApplianceCollection.GetAll"), data => new NetworkVirtualApplianceResource(Client, data));
+            return new AsyncPageableWrapper<NetworkVirtualApplianceData, NetworkVirtualApplianceResource>(new NetworkVirtualApplianceDataAsyncCollectionResultOfT(_networkVirtualAppliancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkVirtualApplianceCollection.GetAll"), data => new NetworkVirtualApplianceResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkVirtualApplianceData, NetworkVirtualApplianceResource>(new NetworkVirtualAppliancesGetByResourceGroupCollectionResultOfT(_networkVirtualAppliancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkVirtualApplianceCollection.GetAll"), data => new NetworkVirtualApplianceResource(Client, data));
+            return new PageableWrapper<NetworkVirtualApplianceData, NetworkVirtualApplianceResource>(new NetworkVirtualApplianceDataCollectionResultOfT(_networkVirtualAppliancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkVirtualApplianceCollection.GetAll"), data => new NetworkVirtualApplianceResource(Client, data));
         }
 
         /// <summary>

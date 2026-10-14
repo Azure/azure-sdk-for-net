@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.Network.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FlowLogProperties"/>. </summary>
+        public FlowLogProperties() : this(default, default)
+        {
+        }
+
         /// <summary> ID of the storage account which is used to store the flow log. </summary>
         [WirePath("storageId")]
         public ResourceIdentifier StorageId { get; set; }

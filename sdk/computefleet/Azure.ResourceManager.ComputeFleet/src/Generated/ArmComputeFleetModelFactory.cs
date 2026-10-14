@@ -67,9 +67,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// capacityType is an immutable property. Once set during Fleet creation, it cannot be updated.
         /// Specifying different capacity type for Fleet Regular and Spot priority profiles is not allowed.
         /// </param>
-        /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for Fleet. </param>
         /// <returns> A new <see cref="Models.ComputeFleetProperties"/> instance for mocking. </returns>
-        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, IEnumerable<LocationProfile> additionalLocationsLocationProfiles, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, ComputeFleetMode? mode, string vmNamePrefix = default, ComputeFleetCapacityType? capacityType = default, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy = default)
+        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, IEnumerable<LocationProfile> additionalLocationsLocationProfiles, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, ComputeFleetMode? mode, string vmNamePrefix = default, ComputeFleetCapacityType? capacityType = default)
         {
             vmSizesProfile ??= new ChangeTrackingList<ComputeFleetVmSizeProfile>();
 
@@ -86,7 +85,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 mode,
                 vmNamePrefix,
                 capacityType,
-                zoneAllocationPolicy,
                 default);
         }
 
@@ -1492,30 +1490,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new AdditionalCapabilities(isUltraSSDEnabled, isHibernationEnabled, default);
         }
 
-        /// <summary> ZoneAllocationPolicy for Compute Fleet. </summary>
-        /// <param name="distributionStrategy"> Distribution strategy used for zone allocation policy. </param>
-        /// <param name="zonePreferences"> Zone preferences, required when zone distribution strategy is Prioritized. </param>
-        /// <returns> A new <see cref="Models.ComputeFleetZoneAllocationPolicy"/> instance for mocking. </returns>
-        public static ComputeFleetZoneAllocationPolicy ComputeFleetZoneAllocationPolicy(ComputeFleetZoneDistributionStrategy distributionStrategy = default, IEnumerable<ZonePreference> zonePreferences = default)
-        {
-            zonePreferences ??= new ChangeTrackingList<ZonePreference>();
-
-            return new ComputeFleetZoneAllocationPolicy(distributionStrategy, (zonePreferences ?? new ChangeTrackingList<ZonePreference>()).ToList(), default);
-        }
-
-        /// <summary> Zone preferences for Compute Fleet zone allocation policy. </summary>
-        /// <param name="zone"> Name of the zone. </param>
-        /// <param name="rank">
-        /// The rank of the zone. This is used with 'Prioritized' ZoneDistributionStrategy.
-        /// The lower the number, the higher the priority, starting with 0.
-        /// 0 is the highest rank. If not specified, defaults to lowest rank.
-        /// </param>
-        /// <returns> A new <see cref="Models.ZonePreference"/> instance for mocking. </returns>
-        public static ZonePreference ZonePreference(string zone = default, int? rank = default)
-        {
-            return new ZonePreference(zone, rank, default);
-        }
-
         /// <summary> Fleet Update Model. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Updatable managed service identity. </param>
@@ -1638,7 +1612,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 computeProfile,
                 createdOn,
                 uniqueId,
-                default,
                 default,
                 default,
                 default,

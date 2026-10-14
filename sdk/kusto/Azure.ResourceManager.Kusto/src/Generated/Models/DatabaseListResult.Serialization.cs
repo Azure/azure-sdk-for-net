@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DatabaseListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DatabaseListResult(value ?? new ChangeTrackingList<KustoDatabaseData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

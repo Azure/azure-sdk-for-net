@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
 
         private ClientDiagnostics HealthModelsClientDiagnostics => _healthModelsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CloudHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HealthModels HealthModelsRestClient => _healthModelsRestClient ??= new HealthModels(HealthModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01-preview");
+        private HealthModels HealthModelsRestClient => _healthModelsRestClient ??= new HealthModels(HealthModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.CloudHealth/healthmodels", out string apiVersion) ? apiVersion : "2026-09-01-preview");
 
         /// <summary>
         /// List HealthModel resources by subscription ID
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthModelData, HealthModelResource>(new HealthModelsGetBySubscriptionAsyncCollectionResultOfT(HealthModelsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCloudHealthSubscriptionResource.GetHealthModels"), data => new HealthModelResource(Client, data));
+            return new AsyncPageableWrapper<HealthModelData, HealthModelResource>(new HealthModelDataAsync0CollectionResultOfT(HealthModelsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCloudHealthSubscriptionResource.GetHealthModels"), data => new HealthModelResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthModelData, HealthModelResource>(new HealthModelsGetBySubscriptionCollectionResultOfT(HealthModelsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCloudHealthSubscriptionResource.GetHealthModels"), data => new HealthModelResource(Client, data));
+            return new PageableWrapper<HealthModelData, HealthModelResource>(new HealthModelData0CollectionResultOfT(HealthModelsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCloudHealthSubscriptionResource.GetHealthModels"), data => new HealthModelResource(Client, data));
         }
     }
 }

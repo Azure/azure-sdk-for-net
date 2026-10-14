@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MonitorIncidentReceiver(name, connection, incidentManagementService, mappings, additionalBinaryDataProperties);
+            return new MonitorIncidentReceiver(name, connection, incidentManagementService, mappings ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

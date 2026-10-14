@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
 
         private ClientDiagnostics FirewallsClientDiagnostics => _firewallsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Firewalls FirewallsRestClient => _firewallsRestClient ??= new Firewalls(FirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-29-preview");
+        private Firewalls FirewallsRestClient => _firewallsRestClient ??= new Firewalls(FirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("PaloAltoNetworks.Cloudngfw/firewalls", out string apiVersion) ? apiVersion : "2026-07-29-preview");
 
         private ClientDiagnostics LocalRulestacksClientDiagnostics => _localRulestacksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LocalRulestacks LocalRulestacksRestClient => _localRulestacksRestClient ??= new LocalRulestacks(LocalRulestacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-29-preview");
+        private LocalRulestacks LocalRulestacksRestClient => _localRulestacksRestClient ??= new LocalRulestacks(LocalRulestacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("PaloAltoNetworks.Cloudngfw/localRulestacks", out string apiVersion0) ? apiVersion0 : "2026-07-29-preview");
 
         private ClientDiagnostics PaloAltoNetworksCloudngfwOperationsClientDiagnostics => _paloAltoNetworksCloudngfwOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PaloAltoNetworksFirewallData, PaloAltoNetworksFirewallResource>(new FirewallsGetBySubscriptionAsyncCollectionResultOfT(FirewallsRestClient, Id.SubscriptionId, context, "MockablePaloAltoNetworksNgfwSubscriptionResource.GetPaloAltoNetworksFirewalls"), data => new PaloAltoNetworksFirewallResource(Client, data));
+            return new AsyncPageableWrapper<PaloAltoNetworksFirewallData, PaloAltoNetworksFirewallResource>(new PaloAltoNetworksFirewallDataAsync0CollectionResultOfT(FirewallsRestClient, Id.SubscriptionId, context, "MockablePaloAltoNetworksNgfwSubscriptionResource.GetPaloAltoNetworksFirewalls"), data => new PaloAltoNetworksFirewallResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PaloAltoNetworksFirewallData, PaloAltoNetworksFirewallResource>(new FirewallsGetBySubscriptionCollectionResultOfT(FirewallsRestClient, Id.SubscriptionId, context, "MockablePaloAltoNetworksNgfwSubscriptionResource.GetPaloAltoNetworksFirewalls"), data => new PaloAltoNetworksFirewallResource(Client, data));
+            return new PageableWrapper<PaloAltoNetworksFirewallData, PaloAltoNetworksFirewallResource>(new PaloAltoNetworksFirewallData0CollectionResultOfT(FirewallsRestClient, Id.SubscriptionId, context, "MockablePaloAltoNetworksNgfwSubscriptionResource.GetPaloAltoNetworksFirewalls"), data => new PaloAltoNetworksFirewallResource(Client, data));
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LocalRulestackData, LocalRulestackResource>(new LocalRulestacksGetBySubscriptionAsyncCollectionResultOfT(LocalRulestacksRestClient, Id.SubscriptionId, context, "MockablePaloAltoNetworksNgfwSubscriptionResource.GetLocalRulestacks"), data => new LocalRulestackResource(Client, data));
+            return new AsyncPageableWrapper<LocalRulestackData, LocalRulestackResource>(new LocalRulestackDataAsync0CollectionResultOfT(LocalRulestacksRestClient, Id.SubscriptionId, context, "MockablePaloAltoNetworksNgfwSubscriptionResource.GetLocalRulestacks"), data => new LocalRulestackResource(Client, data));
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LocalRulestackData, LocalRulestackResource>(new LocalRulestacksGetBySubscriptionCollectionResultOfT(LocalRulestacksRestClient, Id.SubscriptionId, context, "MockablePaloAltoNetworksNgfwSubscriptionResource.GetLocalRulestacks"), data => new LocalRulestackResource(Client, data));
+            return new PageableWrapper<LocalRulestackData, LocalRulestackResource>(new LocalRulestackData0CollectionResultOfT(LocalRulestacksRestClient, Id.SubscriptionId, context, "MockablePaloAltoNetworksNgfwSubscriptionResource.GetLocalRulestacks"), data => new LocalRulestackResource(Client, data));
         }
 
         /// <summary>

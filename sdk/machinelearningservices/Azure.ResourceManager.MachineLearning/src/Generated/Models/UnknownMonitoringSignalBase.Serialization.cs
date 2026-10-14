@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<MonitoringNotificationType> notificationTypes = default;
-            IDictionary<string, string> properties = default;
+            IList<MonitoringNotificationType> notificationTypes = new ChangeTrackingList<MonitoringNotificationType>();
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -122,6 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        notificationTypes = null;
                         continue;
                     }
                     List<MonitoringNotificationType> array = new List<MonitoringNotificationType>();
@@ -136,6 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -163,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownMonitoringSignalBase(notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(), properties ?? new ChangeTrackingDictionary<string, string>(), signalType, additionalBinaryDataProperties);
+            return new UnknownMonitoringSignalBase(notificationTypes, properties, signalType, additionalBinaryDataProperties);
         }
     }
 }

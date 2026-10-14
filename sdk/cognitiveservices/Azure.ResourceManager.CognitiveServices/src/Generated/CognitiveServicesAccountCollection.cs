@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CognitiveServicesAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(CognitiveServicesAccountResource.ResourceType, out string cognitiveServicesAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesAccountResource.ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesAccountApiVersion ?? "2026-07-01");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.CognitiveServices/accounts", out string accountsApiVersionOverride) ? accountsApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new AccountsGetByResourceGroupAsyncCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CognitiveServicesAccountCollection.GetAll"), data => new CognitiveServicesAccountResource(Client, data));
+            return new AsyncPageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new CognitiveServicesAccountDataAsyncCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CognitiveServicesAccountCollection.GetAll"), data => new CognitiveServicesAccountResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new AccountsGetByResourceGroupCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CognitiveServicesAccountCollection.GetAll"), data => new CognitiveServicesAccountResource(Client, data));
+            return new PageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new CognitiveServicesAccountDataCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CognitiveServicesAccountCollection.GetAll"), data => new CognitiveServicesAccountResource(Client, data));
         }
 
         /// <summary>

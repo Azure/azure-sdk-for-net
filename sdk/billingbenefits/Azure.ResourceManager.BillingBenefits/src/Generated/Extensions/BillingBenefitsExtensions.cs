@@ -1169,7 +1169,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<BenefitValidateResponse>> ValidateAsync(this TenantResource tenantResource, BenefitValidateRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<BenefitValidateResult>> ValidateAsync(this TenantResource tenantResource, BenefitValidateRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -1187,7 +1187,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<BenefitValidateResponse> Validate(this TenantResource tenantResource, BenefitValidateRequest content, CancellationToken cancellationToken = default)
+        public static Response<BenefitValidateResult> Validate(this TenantResource tenantResource, BenefitValidateRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

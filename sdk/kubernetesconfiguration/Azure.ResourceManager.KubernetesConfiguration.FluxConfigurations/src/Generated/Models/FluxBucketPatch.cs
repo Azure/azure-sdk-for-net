@@ -15,6 +15,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _uri;
+        internal bool _uriIsDefined;
+        private string _bucketName;
+        internal bool _bucketNameIsDefined;
+        private bool? _isInsecure;
+        internal bool _isInsecureIsDefined;
+        private long? _timeoutInSeconds;
+        internal bool _timeoutInSecondsIsDefined;
+        private long? _syncIntervalInSeconds;
+        internal bool _syncIntervalInSecondsIsDefined;
+        private string _accessKey;
+        internal bool _accessKeyIsDefined;
+        private string _localAuthRef;
+        internal bool _localAuthRefIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxBucketPatch"/>. </summary>
         public FluxBucketPatch()
@@ -32,35 +46,112 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FluxBucketPatch(string uri, string bucketName, bool? isInsecure, long? timeoutInSeconds, long? syncIntervalInSeconds, string accessKey, string localAuthRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Uri = uri;
-            BucketName = bucketName;
-            IsInsecure = isInsecure;
-            TimeoutInSeconds = timeoutInSeconds;
-            SyncIntervalInSeconds = syncIntervalInSeconds;
-            AccessKey = accessKey;
-            LocalAuthRef = localAuthRef;
+            _uri = uri;
+            _bucketName = bucketName;
+            _isInsecure = isInsecure;
+            _timeoutInSeconds = timeoutInSeconds;
+            _syncIntervalInSeconds = syncIntervalInSeconds;
+            _accessKey = accessKey;
+            _localAuthRef = localAuthRef;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The URL to sync for the flux configuration S3 bucket. </summary>
-        public string Uri { get; set; }
+        public string Uri
+        {
+            get
+            {
+                return _uri;
+            }
+            set
+            {
+                _uri = value;
+                _uriIsDefined = true;
+            }
+        }
 
         /// <summary> The bucket name to sync from the url endpoint for the flux configuration. </summary>
-        public string BucketName { get; set; }
+        public string BucketName
+        {
+            get
+            {
+                return _bucketName;
+            }
+            set
+            {
+                _bucketName = value;
+                _bucketNameIsDefined = true;
+            }
+        }
 
         /// <summary> Specify whether to use insecure communication when puling data from the S3 bucket. </summary>
-        public bool? IsInsecure { get; set; }
+        public bool? IsInsecure
+        {
+            get
+            {
+                return _isInsecure;
+            }
+            set
+            {
+                _isInsecure = value;
+                _isInsecureIsDefined = true;
+            }
+        }
 
         /// <summary> The maximum time to attempt to reconcile the cluster bucket source with the remote. </summary>
-        public long? TimeoutInSeconds { get; set; }
+        public long? TimeoutInSeconds
+        {
+            get
+            {
+                return _timeoutInSeconds;
+            }
+            set
+            {
+                _timeoutInSeconds = value;
+                _timeoutInSecondsIsDefined = true;
+            }
+        }
 
         /// <summary> The interval at which to re-reconcile the cluster bucket source with the remote. </summary>
-        public long? SyncIntervalInSeconds { get; set; }
+        public long? SyncIntervalInSeconds
+        {
+            get
+            {
+                return _syncIntervalInSeconds;
+            }
+            set
+            {
+                _syncIntervalInSeconds = value;
+                _syncIntervalInSecondsIsDefined = true;
+            }
+        }
 
         /// <summary> Plaintext access key used to securely access the S3 bucket. </summary>
-        public string AccessKey { get; set; }
+        public string AccessKey
+        {
+            get
+            {
+                return _accessKey;
+            }
+            set
+            {
+                _accessKey = value;
+                _accessKeyIsDefined = true;
+            }
+        }
 
         /// <summary> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </summary>
-        public string LocalAuthRef { get; set; }
+        public string LocalAuthRef
+        {
+            get
+            {
+                return _localAuthRef;
+            }
+            set
+            {
+                _localAuthRef = value;
+                _localAuthRefIsDefined = true;
+            }
+        }
     }
 }

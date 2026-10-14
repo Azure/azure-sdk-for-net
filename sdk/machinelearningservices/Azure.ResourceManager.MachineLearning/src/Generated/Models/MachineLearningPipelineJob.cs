@@ -16,6 +16,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Pipeline Job definition: defines generic to MFE attributes. </summary>
     public partial class MachineLearningPipelineJob : MachineLearningJobProperties
     {
+        private BinaryData _settings;
+        internal bool _settingsIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningPipelineJob"/>. </summary>
         public MachineLearningPipelineJob() : base(JobType.Pipeline)
         {
@@ -55,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Inputs = inputs;
             Jobs = jobs;
             Outputs = outputs;
-            Settings = settings;
+            _settings = settings;
             SourceJobId = sourceJobId;
         }
 
@@ -123,7 +126,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </para>
         /// </summary>
         [WirePath("settings")]
-        public BinaryData Settings { get; set; }
+        public BinaryData Settings
+        {
+            get
+            {
+                return _settings;
+            }
+            set
+            {
+                _settings = value;
+                _settingsIsDefined = true;
+            }
+        }
 
         /// <summary> ARM resource ID of source job. </summary>
         [WirePath("sourceJobId")]

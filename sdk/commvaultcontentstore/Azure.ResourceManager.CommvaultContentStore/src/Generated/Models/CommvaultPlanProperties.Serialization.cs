@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             return new CommvaultPlanProperties(
                 location,
-                storagePlans,
+                storagePlans ?? new ChangeTrackingList<CommvaultStoragePlan>(),
                 schedules ?? new ChangeTrackingList<CommvaultBackupSchedule>(),
                 retention,
                 provisioningState,

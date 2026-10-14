@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private SystemCreatedStorageAccount _systemCreatedStorageAccount;
+        internal bool _systemCreatedStorageAccountIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountDetails"/>. </summary>
         public StorageAccountDetails()
@@ -27,12 +29,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal StorageAccountDetails(SystemCreatedStorageAccount systemCreatedStorageAccount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SystemCreatedStorageAccount = systemCreatedStorageAccount;
+            _systemCreatedStorageAccount = systemCreatedStorageAccount;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Details of system created storage account to be used for the registry. </summary>
         [WirePath("systemCreatedStorageAccount")]
-        public SystemCreatedStorageAccount SystemCreatedStorageAccount { get; set; }
+        public SystemCreatedStorageAccount SystemCreatedStorageAccount
+        {
+            get
+            {
+                return _systemCreatedStorageAccount;
+            }
+            set
+            {
+                _systemCreatedStorageAccount = value;
+                _systemCreatedStorageAccountIsDefined = true;
+            }
+        }
     }
 }

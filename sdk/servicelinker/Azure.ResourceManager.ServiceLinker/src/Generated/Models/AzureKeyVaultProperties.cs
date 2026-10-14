@@ -13,6 +13,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The resource properties when type is Azure Key Vault. </summary>
     public partial class AzureKeyVaultProperties : AzureResourceBaseProperties
     {
+        private bool? _doesConnectAsKubernetesCsiDriver;
+        internal bool _doesConnectAsKubernetesCsiDriverIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="AzureKeyVaultProperties"/>. </summary>
         public AzureKeyVaultProperties() : base(AzureResourceType.KeyVault)
         {
@@ -24,10 +27,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="doesConnectAsKubernetesCsiDriver"> True if connect via Kubernetes CSI Driver. </param>
         internal AzureKeyVaultProperties(AzureResourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? doesConnectAsKubernetesCsiDriver) : base(@type, additionalBinaryDataProperties)
         {
-            DoesConnectAsKubernetesCsiDriver = doesConnectAsKubernetesCsiDriver;
+            _doesConnectAsKubernetesCsiDriver = doesConnectAsKubernetesCsiDriver;
         }
 
         /// <summary> True if connect via Kubernetes CSI Driver. </summary>
-        public bool? DoesConnectAsKubernetesCsiDriver { get; set; }
+        public bool? DoesConnectAsKubernetesCsiDriver
+        {
+            get
+            {
+                return _doesConnectAsKubernetesCsiDriver;
+            }
+            set
+            {
+                _doesConnectAsKubernetesCsiDriver = value;
+                _doesConnectAsKubernetesCsiDriverIsDefined = true;
+            }
+        }
     }
 }

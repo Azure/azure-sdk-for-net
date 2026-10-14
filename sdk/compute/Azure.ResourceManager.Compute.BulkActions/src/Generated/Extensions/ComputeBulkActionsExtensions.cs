@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Lists scheduled actions associated with the specified VM.
+        /// Lists recurring bulk actions associated with the specified VM.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsArmClient.GetByVmsAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Lists scheduled actions associated with the specified VM.
+        /// Lists recurring bulk actions associated with the specified VM.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsArmClient.GetByVms(ResourceIdentifier, CancellationToken)"/> instead. </description>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Lists scheduled action occurrences associated with the specified VM.
+        /// Lists recurring bulk action occurrences associated with the specified VM.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsArmClient.GetOccurrenceByVmsAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Lists scheduled action occurrences associated with the specified VM.
+        /// Lists recurring bulk action occurrences associated with the specified VM.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsArmClient.GetOccurrenceByVms(ResourceIdentifier, CancellationToken)"/> instead. </description>
@@ -321,14 +321,14 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Gets the specified scheduled action.
+        /// Gets the specified recurring bulk action.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.GetScheduledActionAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="scheduledActionName"> The name of the recurring bulk action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
@@ -340,14 +340,14 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Gets the specified scheduled action.
+        /// Gets the specified recurring bulk action.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.GetScheduledAction(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="scheduledActionName"> The name of the recurring bulk action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
@@ -667,6 +667,44 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
+        /// Acknowledge errors for specified operations in a resource group.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkAcknowledgeOperationErrorsAsync(AzureLocation, AcknowledgeBulkOperationErrorsRequestContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The Bulk Action Operation Ids that identify operations for which errors should be acknowledged. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<AcknowledgeBulkOperationErrorsResponseResult>> BulkAcknowledgeOperationErrorsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, AcknowledgeBulkOperationErrorsRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkAcknowledgeOperationErrorsAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Acknowledge errors for specified operations in a resource group.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkAcknowledgeOperationErrors(AzureLocation, AcknowledgeBulkOperationErrorsRequestContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The Bulk Action Operation Ids that identify operations for which errors should be acknowledged. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<AcknowledgeBulkOperationErrorsResponseResult> BulkAcknowledgeOperationErrors(this ResourceGroupResource resourceGroupResource, AzureLocation location, AcknowledgeBulkOperationErrorsRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkAcknowledgeOperationErrors(location, content, cancellationToken);
+        }
+
+        /// <summary>
         /// List BulkCreateCustom resources by subscriptionId.
         /// <item>
         /// <term> Mocking. </term>
@@ -743,7 +781,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Lists scheduled actions in the specified subscription.
+        /// Lists recurring bulk actions in the specified subscription.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetScheduledActionsAsync(CancellationToken)"/> instead. </description>
@@ -761,7 +799,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Lists scheduled actions in the specified subscription.
+        /// Lists recurring bulk actions in the specified subscription.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetScheduledActions(CancellationToken)"/> instead. </description>
@@ -855,7 +893,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Gets the status of the specified scheduled action operation.
+        /// Gets the status of the specified recurring bulk action operation.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
@@ -874,7 +912,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Gets the status of the specified scheduled action operation.
+        /// Gets the status of the specified recurring bulk action operation.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.Get(AzureLocation, string, CancellationToken)"/> instead. </description>

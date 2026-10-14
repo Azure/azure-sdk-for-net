@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InformaticaServerlessRuntimeResourceList(informaticaRuntimeResources, additionalBinaryDataProperties);
+            return new InformaticaServerlessRuntimeResourceList(informaticaRuntimeResources ?? new ChangeTrackingList<InformaticaRuntimeResourceFetchMetadata>(), additionalBinaryDataProperties);
         }
     }
 }
