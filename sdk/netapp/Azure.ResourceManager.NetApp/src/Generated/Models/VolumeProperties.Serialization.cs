@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("smbEncryption"u8);
                 writer.WriteBooleanValue(IsSmbEncryptionEnabled.Value);
             }
-            if (_smbAccessBasedEnumerationIsDefined || Optional.IsDefined(SmbAccessBasedEnumeration))
+            if (Optional.IsDefined(SmbAccessBasedEnumeration, _smbAccessBasedEnumerationIsDefined))
             {
                 if (SmbAccessBasedEnumeration != null)
                 {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("smbContinuouslyAvailable"u8);
                 writer.WriteBooleanValue(IsSmbContinuouslyAvailable.Value);
             }
-            if (_throughputMibpsIsDefined || Optional.IsDefined(ThroughputMibps))
+            if (Optional.IsDefined(ThroughputMibps, _throughputMibpsIsDefined))
             {
                 if (ThroughputMibps != null)
                 {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("coolAccessTieringPolicy"u8);
                 writer.WriteStringValue(CoolAccessTieringPolicy.Value.ToString());
             }
-            if (_unixPermissionsIsDefined || Optional.IsDefined(UnixPermissions))
+            if (Optional.IsDefined(UnixPermissions, _unixPermissionsIsDefined))
             {
                 if (UnixPermissions != null)
                 {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("unixPermissions"u8);
                 }
             }
-            if (options.Format != "W" && (_cloneProgressIsDefined || Optional.IsDefined(CloneProgress)))
+            if (options.Format != "W" && Optional.IsDefined(CloneProgress, _cloneProgressIsDefined))
             {
                 if (CloneProgress != null)
                 {
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("enableSubvolumes"u8);
                 writer.WriteStringValue(EnableSubvolumes.Value.ToString());
             }
-            if (options.Format != "W" && (_provisionedAvailabilityZoneIsDefined || Optional.IsDefined(ProvisionedAvailabilityZone)))
+            if (options.Format != "W" && Optional.IsDefined(ProvisionedAvailabilityZone, _provisionedAvailabilityZoneIsDefined))
             {
                 if (ProvisionedAvailabilityZone != null)
                 {
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("originatingResourceId"u8);
                 writer.WriteStringValue(OriginatingResourceId);
             }
-            if (options.Format != "W" && (_inheritedSizeInBytesIsDefined || Optional.IsDefined(InheritedSizeInBytes)))
+            if (options.Format != "W" && Optional.IsDefined(InheritedSizeInBytes, _inheritedSizeInBytesIsDefined))
             {
                 if (InheritedSizeInBytes != null)
                 {

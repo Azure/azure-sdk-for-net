@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIpAddressName, string expand, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIPAddressName, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/ipconfigurations/", false);
             uri.AppendPath(ipConfigurationName, true);
             uri.AppendPath("/publicipaddresses/", false);
-            uri.AppendPath(publicIpAddressName, true);
+            uri.AppendPath(publicIPAddressName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
