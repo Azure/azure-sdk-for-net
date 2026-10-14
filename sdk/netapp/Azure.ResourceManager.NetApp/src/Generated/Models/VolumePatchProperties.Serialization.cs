@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("defaultGroupQuotaInKiBs"u8);
                 writer.WriteNumberValue(DefaultGroupQuotaInKiBs.Value);
             }
-            if (_unixPermissionsIsDefined || Optional.IsDefined(UnixPermissions))
+            if (Optional.IsDefined(UnixPermissions, _unixPermissionsIsDefined))
             {
                 if (UnixPermissions != null)
                 {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("snapshotDirectoryVisible"u8);
                 writer.WriteBooleanValue(IsSnapshotDirectoryVisible.Value);
             }
-            if (_smbAccessBasedEnumerationIsDefined || Optional.IsDefined(SmbAccessBasedEnumeration))
+            if (Optional.IsDefined(SmbAccessBasedEnumeration, _smbAccessBasedEnumerationIsDefined))
             {
                 if (SmbAccessBasedEnumeration != null)
                 {
