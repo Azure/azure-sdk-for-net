@@ -24,11 +24,14 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-$output = Get-Content -Raw -LiteralPath $AgentOutputFile | ConvertFrom-Json
-if ($null -eq $output -or -not $output.PSObject.Properties['items'] -or
-    $output.items -isnot [array] -or -not $output.PSObject.Properties['errors'] -or
-    $output.errors -isnot [array]) {
+$output = Get-Content -Raw -LiteralPath $AgentOutputFile | ConvertFrom-Json -NoEnumerate
+if ($null -eq $output -or $output.GetType() -ne [System.Management.Automation.PSCustomObject] -or
+    -not $output.PSObject.Properties['items'] -or $output.items -isnot [array] -or
+    ($output.PSObject.Properties['errors'] -and $output.errors -isnot [array])) {
     throw 'Invalid agent output envelope; reporting cannot recover it safely.'
+}
+if (-not $output.PSObject.Properties['errors']) {
+    $output | Add-Member -NotePropertyName errors -NotePropertyValue @()
 }
 $incomplete = @($output.items | Where-Object { $_.type -in @('report_incomplete', 'missing_tool', 'missing_data') })
 $complete = $AgentOutcome -eq 'success' -and $output.errors.Count -eq 0 -and
@@ -36,6 +39,19 @@ $complete = $AgentOutcome -eq 'success' -and $output.errors.Count -eq 0 -and
 $pushRequested = @($output.items | Where-Object { $_.type -eq 'push_to_pull_request_branch' }).Count -gt 0
 if ($complete -and -not $pushRequested) {
     return
+}
+
+$identity = $null
+$contextFile = Join-Path $ResultsDir 'context.json'
+if (Test-Path -LiteralPath $contextFile -PathType Leaf) {
+    $identity = Get-Content -Raw -LiteralPath $contextFile | ConvertFrom-Json -NoEnumerate
+    if ($null -eq $identity -or $identity.GetType() -ne [System.Management.Automation.PSCustomObject] -or
+        -not $identity.PSObject.Properties['PackagePath'] -or $identity.PackagePath -isnot [string] -or
+        $identity.PackagePath -cnotmatch '\Asdk/[A-Za-z0-9][A-Za-z0-9_.-]*/[A-Za-z0-9][A-Za-z0-9_.-]*\z' -or
+        -not $identity.PSObject.Properties['PreRepairSha'] -or $identity.PreRepairSha -isnot [string] -or
+        $identity.PreRepairSha -cnotmatch '\A[0-9a-fA-F]{40}\z') {
+        throw 'Invalid baseline report identity; expected a literal sdk/service/package path and full hexadecimal checkout SHA.'
+    }
 }
 
 New-Item -ItemType Directory -Path $ResultsDir -Force | Out-Null
@@ -83,9 +99,7 @@ $arguments = @{
     CommandArtifactName = 'repair-report'
     MaxIterations = $maxIterations
 }
-$contextFile = Join-Path $ResultsDir 'context.json'
-if (Test-Path -LiteralPath $contextFile -PathType Leaf) {
-    $identity = Get-Content -Raw -LiteralPath $contextFile | ConvertFrom-Json
+if ($null -ne $identity) {
     $arguments.PackagePath = $identity.PackagePath
     $arguments.PreRepairSha = $identity.PreRepairSha
 }

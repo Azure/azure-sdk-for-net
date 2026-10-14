@@ -37,13 +37,16 @@ function fixture(t) {
     PackagePath: "sdk/contoso/Azure.Contoso.Widgets", PreRepairSha: "a".repeat(40),
   }));
   const write = (name, value) => fs.writeFileSync(path.join(results, name), value);
-  function complete(agentOutcome = "success") {
-    const result = run("pwsh", ["-NoProfile", "-File", path.join(skillRoot, "complete-repair-report.ps1"),
+  function recover(agentOutcome = "success") {
+    return run("pwsh", ["-NoProfile", "-File", path.join(skillRoot, "complete-repair-report.ps1"),
       "-AgentOutputFile", outputFile, "-ResultsDir", results, "-Pr", "123",
       "-HeadSha", "a".repeat(40), "-Repo", "Azure/azure-sdk-for-net",
       "-RepoRoot", root, "-AgentOutcome", agentOutcome], {
       env: { ...process.env, AZSDK_REPAIR_RESULTS_DIR: results },
     });
+  }
+  function complete(agentOutcome = "success") {
+    const result = recover(agentOutcome);
     assert.equal(result.status, 0, result.stdout + result.stderr);
     const output = JSON.parse(fs.readFileSync(outputFile, "utf8"));
     assert.deepEqual(output.items.map((item) => item.type), ["add_comment"]);
@@ -59,7 +62,7 @@ function fixture(t) {
     write("engine-stderr.txt", stderr);
     write("engine-exit-code.txt", String(exitCode));
   }
-  return { root, results, outputFile, original, write, complete, engine };
+  return { root, results, outputFile, original, write, recover, complete, engine };
 }
 
 test("install and selection are exact, isolated and inherited by the sandbox", (t) => {
@@ -218,6 +221,105 @@ test("baseline restore401 produces deterministic failed/NoEngineResult add_comme
   assert.equal(fs.existsSync(path.join(f.results, "engine-command.txt")), false);
   // The validator downloads the original artifact, not the mutated local copy.
   assert.deepEqual(JSON.parse(originalBytes), f.original);
+});
+for (const outcome of ["failure", "success"]) {
+  test(`generated empty fallback without errors recovers baseline failure after agent ${outcome}`, (t) => {
+    const f = fixture(t);
+    const placeholder = lock.jobs.agent.steps.find((step) => step.name === "Write agent output placeholder if missing");
+    const fallback = /echo '([^']+)'/.exec(placeholder.run)[1];
+    assert.deepEqual(JSON.parse(fallback), { items: [] });
+    fs.writeFileSync(f.outputFile, fallback);
+    f.write("baseline-exit-code.txt", "1");
+    f.write("pre-repair-errors.txt", "error NU1301: HTTP401 restoring an implicit SDK pack");
+    const { body, telemetry } = f.complete(outcome);
+    assert.equal(telemetry.status, "failed");
+    assert.match(body, /NoEngineResult/);
+    assert.match(body, /NU1301.*HTTP401/);
+    assert.equal(fs.existsSync(path.join(f.results, "result.json")), false);
+    assert.equal(fs.existsSync(path.join(f.results, "engine-command.txt")), false);
+  });
+}
+test("empty fallback without baseline context recovers an agent crash", (t) => {
+  const f = fixture(t);
+  fs.writeFileSync(f.outputFile, JSON.stringify({ items: [] }));
+  fs.rmSync(path.join(f.results, "context.json"));
+  const { body, telemetry } = f.complete("failure");
+  assert.equal(telemetry.status, "failed");
+  assert.match(body, /NoEngineResult/);
+  assert.match(body, /Agent outcome: failure/);
+});
+test("empty fallback without errors preserves a recorded green baseline", (t) => {
+  const f = fixture(t);
+  fs.writeFileSync(f.outputFile, JSON.stringify({ items: [] }));
+  f.write("baseline-exit-code.txt", "0");
+  assert.equal(f.complete().telemetry.status, "skipped_already_green");
+});
+for (const [name, errors] of [["null", null], ["string", ""], ["object", {}], ["number", 0]]) {
+  test(`present non-array errors (${name}) still fails visibly`, (t) => {
+    const f = fixture(t);
+    const bytes = JSON.stringify({ items: [], errors });
+    fs.writeFileSync(f.outputFile, bytes);
+    const result = f.recover();
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /Invalid agent output envelope/);
+    assert.equal(fs.readFileSync(f.outputFile, "utf8"), bytes);
+    assert.equal(fs.existsSync(path.join(f.results, "repair-comment.md")), false);
+  });
+}
+const validIdentity = { PackagePath: "sdk/contoso/Azure.Contoso.Widgets", PreRepairSha: "a".repeat(40) };
+for (const [name, identity] of [
+  ["SHA option injection", { ...validIdentity, PreRepairSha: "--output=unexpected-file" }],
+  ["abbreviated SHA", { ...validIdentity, PreRepairSha: "a".repeat(39) }],
+  ["nonhex SHA", { ...validIdentity, PreRepairSha: "g".repeat(40) }],
+  ["SHA trailing newline", { ...validIdentity, PreRepairSha: "a".repeat(40) + "\n" }],
+  ["array SHA", { ...validIdentity, PreRepairSha: ["a".repeat(40)] }],
+  ["missing SHA", { PackagePath: validIdentity.PackagePath }],
+  ["pathspec magic", { ...validIdentity, PackagePath: ":(top)SDK" }],
+  ["package wildcard", { ...validIdentity, PackagePath: "sdk/contoso/*" }],
+  ["embedded pathspec magic", { ...validIdentity, PackagePath: "sdk/contoso/:(glob)*" }],
+  ["parent traversal", { ...validIdentity, PackagePath: "sdk/../Azure.Contoso.Widgets" }],
+  ["package dot segment", { ...validIdentity, PackagePath: "sdk/contoso/.." }],
+  ["absolute path", { ...validIdentity, PackagePath: "/sdk/contoso/Azure.Contoso.Widgets" }],
+  ["Windows separators", { ...validIdentity, PackagePath: "sdk\\contoso\\Azure.Contoso.Widgets" }],
+  ["nested package path", { ...validIdentity, PackagePath: "sdk/contoso/Azure.Contoso.Widgets/src" }],
+  ["package trailing newline", { ...validIdentity, PackagePath: validIdentity.PackagePath + "\n" }],
+  ["array package", { ...validIdentity, PackagePath: [validIdentity.PackagePath] }],
+  ["missing package", { PreRepairSha: validIdentity.PreRepairSha }],
+  ["array context", [validIdentity]],
+  ["null context", null],
+]) {
+  test(`recovery rejects ${name} before any git invocation or output mutation`, (t) => {
+    const f = fixture(t);
+    f.write("context.json", JSON.stringify(identity));
+    const marker = path.join(f.root, "unexpected-git-call");
+    const wrapper = path.join(f.root, "recover-with-git-guard.ps1");
+    fs.writeFileSync(wrapper, `
+$ErrorActionPreference = 'Stop'
+function global:git {
+  Set-Content -LiteralPath ${quote(marker)} -Value "$args"
+  throw 'Unvalidated identity reached git'
+}
+& ${quote(path.join(skillRoot, "complete-repair-report.ps1"))} -AgentOutputFile ${quote(f.outputFile)} `
+      + `-ResultsDir ${quote(f.results)} -Pr 123 -HeadSha '${"a".repeat(40)}' `
+      + `-RepoRoot ${quote(f.root)} -Repo 'Azure/azure-sdk-for-net' -AgentOutcome failure\n`);
+    const bytes = fs.readFileSync(f.outputFile, "utf8");
+    const result = run("pwsh", ["-NoProfile", "-File", wrapper]);
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /Invalid baseline report identity/);
+    assert.equal(fs.existsSync(marker), false);
+    assert.equal(fs.readFileSync(f.outputFile, "utf8"), bytes);
+    assert.equal(fs.existsSync(path.join(f.results, "repair-comment.md")), false);
+  });
+}
+test("recovery accepts literal package punctuation and a full uppercase hexadecimal SHA", (t) => {
+  const f = fixture(t);
+  f.write("context.json", JSON.stringify({
+    PackagePath: "sdk/service-name_2/Azure.Contoso.Widgets-Preview",
+    PreRepairSha: "AB12".repeat(10),
+  }));
+  const { body, telemetry } = f.complete("failure");
+  assert.equal(telemetry.status, "failed");
+  assert.match(body, /sdk\/service-name_2\/Azure\.Contoso\.Widgets-Preview/);
 });
 test("a verified green baseline without engine execution stays skipped_already_green", (t) => {
   const f = fixture(t);

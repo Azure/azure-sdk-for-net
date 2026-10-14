@@ -83,6 +83,13 @@ all push requests are removed on recovery. Capability and process failures use
 the same fallback. Complete successful output is left unchanged, and a captured
 green baseline without an engine attempt retains `skipped_already_green`.
 
+The compiler's empty `{"items":[]}` placeholder is a recoverable output envelope;
+an absent `errors` member means no ingestion errors, but a present non-array
+member is rejected. Downloaded baseline identity is treated as untrusted:
+package paths must be literal `sdk/service/package` paths and checkout SHAs must
+be exactly 40 hexadecimal characters before reaching the report's Git commands.
+Malformed identity fails visibly without publishing or invoking Git.
+
 The original agent artifact still goes through output validation, so incomplete
 and infrastructure failures remain failed Actions runs even when their failure
 comment is successfully delivered. If the original artifact cannot be downloaded
