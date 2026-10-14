@@ -18,7 +18,7 @@ For multiple targets, load only matching profiles and record coverage per target
 
 ## Plan
 
-1. Inventory new/modified names in the requested scope, including affected references and existing `@clientName`/`@@clientName` customizations. Distinguish service-owned declarations, imported common types, and emitter-synthesized SDK artifacts.
+1. Inventory new/modified names in the requested scope, including affected references and existing `@clientName`/`@@clientName` customizations. When a TypeSpec project is available, read `client.tsp` and the generation entrypoint without editing them to determine existing overrides, customization loading, and target resolution. Distinguish service-owned declarations, imported common types, and emitter-synthesized SDK artifacts.
 2. Record: **TypeSpec target | current SDK name | proposed SDK name | language scope | rule/exception | compatibility evidence**. Names refer to the effective SDK surface, not just TypeSpec spelling.
 3. Confirm semantics before choosing a name: HTTP role, property type, duration units, resource inheritance, and domain context. Ask about unknown units or ambiguous names rather than guessing.
 4. Check the released SDK API or other supplied release evidence before renaming an existing member. A preview API version does not prove an SDK name is unshipped. Preserve shipped names unless an intentional breaking change is explicitly authorized; restore an unintentionally changed shipped name instead of inventing a third name. If release evidence is unavailable, flag that decision as blocked rather than assuming safety.
@@ -33,7 +33,7 @@ For multiple targets, load only matching profiles and record coverage per target
 
 ## Validate
 
-Compare evidence with each naming decision and exception: targets, language scopes, customization loading, collisions, wire names and unaffected languages. Use generated API output and the released baseline when available; distinguish a proposed name from a verified generated name. In review, report findings and missing evidence; do not edit, compile, generate, or call mutating tools.
+Compare evidence with each naming decision and exception: targets, language scopes, customization loading, collisions, wire names and unaffected languages. An existing language-scoped override in a loaded `client.tsp` is evidence that the customization is applied, but not that the emitter produced the expected API. Use generated API output and the released baseline when available; distinguish a proposed name, an applied customization, and a verified generated name. In review, report findings and missing evidence; do not edit, compile, generate, or call mutating tools.
 
 After writes, follow [apply validation](apply.md). [Azure/typespec-azure#4442](https://github.com/Azure/typespec-azure/issues/4442) tracks complementary linters, not prerequisites or proof that any rule is installed. Lint success does not replace contextual naming or SDK compatibility checks.
 
