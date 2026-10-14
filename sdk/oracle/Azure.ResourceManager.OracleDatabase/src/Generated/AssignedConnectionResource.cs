@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AssignedConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string assignedConnectionApiVersion);
             _goldenGateDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _goldenGateDeploymentsRestClient = new GoldenGateDeployments(_goldenGateDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, assignedConnectionApiVersion ?? "2026-06-01");
+            _goldenGateDeploymentsRestClient = new GoldenGateDeployments(_goldenGateDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

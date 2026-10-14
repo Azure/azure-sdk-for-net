@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GoldenGateConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(GoldenGateConnectionResource.ResourceType, out string goldenGateConnectionApiVersion);
             _goldenGateConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", GoldenGateConnectionResource.ResourceType.Namespace, Diagnostics);
-            _goldenGateConnectionsRestClient = new GoldenGateConnections(_goldenGateConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, goldenGateConnectionApiVersion ?? "2026-06-01");
+            _goldenGateConnectionsRestClient = new GoldenGateConnections(_goldenGateConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GoldenGateConnectionData, GoldenGateConnectionResource>(new GoldenGateConnectionsGetByResourceGroupAsyncCollectionResultOfT(_goldenGateConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "GoldenGateConnectionCollection.GetAll"), data => new GoldenGateConnectionResource(Client, data));
+            return new AsyncPageableWrapper<GoldenGateConnectionData, GoldenGateConnectionResource>(new GoldenGateConnectionDataAsync0CollectionResultOfT(_goldenGateConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "GoldenGateConnectionCollection.GetAll"), data => new GoldenGateConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GoldenGateConnectionData, GoldenGateConnectionResource>(new GoldenGateConnectionsGetByResourceGroupCollectionResultOfT(_goldenGateConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "GoldenGateConnectionCollection.GetAll"), data => new GoldenGateConnectionResource(Client, data));
+            return new PageableWrapper<GoldenGateConnectionData, GoldenGateConnectionResource>(new GoldenGateConnectionData0CollectionResultOfT(_goldenGateConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "GoldenGateConnectionCollection.GetAll"), data => new GoldenGateConnectionResource(Client, data));
         }
 
         /// <summary>

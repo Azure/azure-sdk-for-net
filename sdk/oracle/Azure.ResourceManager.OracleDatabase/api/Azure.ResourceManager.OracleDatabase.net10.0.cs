@@ -3433,7 +3433,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static Azure.ResourceManager.OracleDatabase.Models.ConnectionType KafkaSchemaRegistry { get { throw null; } }
         public static Azure.ResourceManager.OracleDatabase.Models.ConnectionType MicrosoftFabric { get { throw null; } }
         public static Azure.ResourceManager.OracleDatabase.Models.ConnectionType MicrosoftSqlServer { get { throw null; } }
-        public static Azure.ResourceManager.OracleDatabase.Models.ConnectionType MongoDbConnection { get { throw null; } }
+        public static Azure.ResourceManager.OracleDatabase.Models.ConnectionType MongoDBConnection { get { throw null; } }
         public static Azure.ResourceManager.OracleDatabase.Models.ConnectionType MySQL { get { throw null; } }
         public static Azure.ResourceManager.OracleDatabase.Models.ConnectionType OciObjectStorage { get { throw null; } }
         public static Azure.ResourceManager.OracleDatabase.Models.ConnectionType Oracle { get { throw null; } }

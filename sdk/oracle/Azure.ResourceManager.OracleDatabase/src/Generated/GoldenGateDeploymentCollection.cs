@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GoldenGateDeploymentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(GoldenGateDeploymentResource.ResourceType, out string goldenGateDeploymentApiVersion);
             _goldenGateDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", GoldenGateDeploymentResource.ResourceType.Namespace, Diagnostics);
-            _goldenGateDeploymentsRestClient = new GoldenGateDeployments(_goldenGateDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, goldenGateDeploymentApiVersion ?? "2026-06-01");
+            _goldenGateDeploymentsRestClient = new GoldenGateDeployments(_goldenGateDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GoldenGateDeploymentData, GoldenGateDeploymentResource>(new GoldenGateDeploymentsGetByResourceGroupAsyncCollectionResultOfT(_goldenGateDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "GoldenGateDeploymentCollection.GetAll"), data => new GoldenGateDeploymentResource(Client, data));
+            return new AsyncPageableWrapper<GoldenGateDeploymentData, GoldenGateDeploymentResource>(new GoldenGateDeploymentDataAsync0CollectionResultOfT(_goldenGateDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "GoldenGateDeploymentCollection.GetAll"), data => new GoldenGateDeploymentResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GoldenGateDeploymentData, GoldenGateDeploymentResource>(new GoldenGateDeploymentsGetByResourceGroupCollectionResultOfT(_goldenGateDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "GoldenGateDeploymentCollection.GetAll"), data => new GoldenGateDeploymentResource(Client, data));
+            return new PageableWrapper<GoldenGateDeploymentData, GoldenGateDeploymentResource>(new GoldenGateDeploymentData0CollectionResultOfT(_goldenGateDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "GoldenGateDeploymentCollection.GetAll"), data => new GoldenGateDeploymentResource(Client, data));
         }
 
         /// <summary>

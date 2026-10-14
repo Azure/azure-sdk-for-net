@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CloudExadataInfrastructureCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(CloudExadataInfrastructureResource.ResourceType, out string cloudExadataInfrastructureApiVersion);
             _cloudExadataInfrastructuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudExadataInfrastructureResource.ResourceType.Namespace, Diagnostics);
-            _cloudExadataInfrastructuresRestClient = new CloudExadataInfrastructures(_cloudExadataInfrastructuresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudExadataInfrastructureApiVersion ?? "2026-06-01");
+            _cloudExadataInfrastructuresRestClient = new CloudExadataInfrastructures(_cloudExadataInfrastructuresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Oracle.Database/cloudExadataInfrastructures", out string cloudExadataInfrastructuresApiVersionOverride) ? cloudExadataInfrastructuresApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 

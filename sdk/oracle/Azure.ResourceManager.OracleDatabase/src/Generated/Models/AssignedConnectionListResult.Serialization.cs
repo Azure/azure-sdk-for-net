@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AssignedConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AssignedConnectionListResult(value ?? new ChangeTrackingList<AssignedConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

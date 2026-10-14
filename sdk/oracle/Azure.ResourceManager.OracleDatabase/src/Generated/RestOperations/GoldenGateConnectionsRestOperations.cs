@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.OracleDatabase
     internal partial class GoldenGateConnections
     {
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of GoldenGateConnections for mocking. </summary>
         protected GoldenGateConnections()
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal GoldenGateConnections(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal GoldenGateConnections(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
-            _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(GoldenGateConnections).Assembly, applicationId);
         }
 
@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Oracle.Database/goldenGateConnections", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/goldenGateConnections") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -75,10 +72,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/goldenGateConnections") ?? "2026-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -98,10 +92,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Oracle.Database/goldenGateConnections/", false);
             uri.AppendPath(goldenGateConnectionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/goldenGateConnections") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -123,10 +114,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Oracle.Database/goldenGateConnections/", false);
             uri.AppendPath(goldenGateConnectionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/goldenGateConnections") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -146,10 +134,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Oracle.Database/goldenGateConnections/", false);
             uri.AppendPath(goldenGateConnectionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/goldenGateConnections") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -171,10 +156,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Oracle.Database/goldenGateConnections/", false);
             uri.AppendPath(goldenGateConnectionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/goldenGateConnections") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -192,10 +174,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Oracle.Database/goldenGateConnections", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/goldenGateConnections") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,10 +195,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/goldenGateConnections") ?? "2026-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -240,10 +216,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/goldenGateConnections/", false);
             uri.AppendPath(goldenGateConnectionName, true);
             uri.AppendPath("/assignDeployment", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/goldenGateConnections") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -266,10 +239,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/goldenGateConnections/", false);
             uri.AppendPath(goldenGateConnectionName, true);
             uri.AppendPath("/unassignDeployment", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/goldenGateConnections") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -292,10 +262,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/goldenGateConnections/", false);
             uri.AppendPath(goldenGateConnectionName, true);
             uri.AppendPath("/assignedDeployments", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/goldenGateConnections/assignedDeployments") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -316,10 +283,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/goldenGateConnections/assignedDeployments") ?? "2026-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -341,10 +305,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(goldenGateConnectionName, true);
             uri.AppendPath("/assignedDeployments/", false);
             uri.AppendPath(assignmentId, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Oracle.Database/goldenGateConnections/assignedDeployments") ?? "2026-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

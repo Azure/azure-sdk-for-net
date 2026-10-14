@@ -38,9 +38,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AssignedDeploymentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AssignedDeploymentResource.ResourceType, out string assignedDeploymentApiVersion);
             _goldenGateConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", AssignedDeploymentResource.ResourceType.Namespace, Diagnostics);
-            _goldenGateConnectionsRestClient = new GoldenGateConnections(_goldenGateConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, assignedDeploymentApiVersion ?? "2026-06-01");
+            _goldenGateConnectionsRestClient = new GoldenGateConnections(_goldenGateConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AssignedDeploymentData, AssignedDeploymentResource>(new GoldenGateConnectionsGetAssignedDeploymentsByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AssignedDeploymentData, AssignedDeploymentResource>(new AssignedDeploymentDataAsyncCollectionResultOfT(
                 _goldenGateConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AssignedDeploymentData, AssignedDeploymentResource>(new GoldenGateConnectionsGetAssignedDeploymentsByParentCollectionResultOfT(
+            return new PageableWrapper<AssignedDeploymentData, AssignedDeploymentResource>(new AssignedDeploymentDataCollectionResultOfT(
                 _goldenGateConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OracleNetworkAnchorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(OracleNetworkAnchorResource.ResourceType, out string oracleNetworkAnchorApiVersion);
             _networkAnchorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleNetworkAnchorResource.ResourceType.Namespace, Diagnostics);
-            _networkAnchorsRestClient = new NetworkAnchors(_networkAnchorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleNetworkAnchorApiVersion ?? "2026-06-01");
+            _networkAnchorsRestClient = new NetworkAnchors(_networkAnchorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Oracle.Database/networkAnchors", out string networkAnchorsApiVersionOverride) ? networkAnchorsApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 

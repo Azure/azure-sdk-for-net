@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseEditionData, DatabaseEditionResource>(new DatabaseEditionsGetByLocationAsyncCollectionResultOfT(_databaseEditionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "DatabaseEditionCollection.GetAll"), data => new DatabaseEditionResource(Client, data));
+            return new AsyncPageableWrapper<DatabaseEditionData, DatabaseEditionResource>(new DatabaseEditionDataAsyncCollectionResultOfT(_databaseEditionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "DatabaseEditionCollection.GetAll"), data => new DatabaseEditionResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseEditionData, DatabaseEditionResource>(new DatabaseEditionsGetByLocationCollectionResultOfT(_databaseEditionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "DatabaseEditionCollection.GetAll"), data => new DatabaseEditionResource(Client, data));
+            return new PageableWrapper<DatabaseEditionData, DatabaseEditionResource>(new DatabaseEditionDataCollectionResultOfT(_databaseEditionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "DatabaseEditionCollection.GetAll"), data => new DatabaseEditionResource(Client, data));
         }
 
         /// <summary>

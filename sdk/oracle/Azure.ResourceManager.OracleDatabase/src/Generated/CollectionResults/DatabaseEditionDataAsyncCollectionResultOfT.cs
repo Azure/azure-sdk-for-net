@@ -15,7 +15,7 @@ using Azure.ResourceManager.OracleDatabase.Models;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    internal partial class DatabaseEditionsGetByLocationAsyncCollectionResultOfT : AsyncPageable<DatabaseEditionData>
+    internal partial class DatabaseEditionDataAsyncCollectionResultOfT : AsyncPageable<DatabaseEditionData>
     {
         private readonly DatabaseEditions _client;
         private readonly Guid _subscriptionId;
@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.OracleDatabase
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DatabaseEditionsGetByLocationAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of DatabaseEditionDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DatabaseEditions client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DatabaseEditionsGetByLocationAsyncCollectionResultOfT(DatabaseEditions client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DatabaseEditionDataAsyncCollectionResultOfT(DatabaseEditions client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.OracleDatabase
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DatabaseEditionsGetByLocationAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DatabaseEditionDataAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DatabaseEditionsGetByLocationAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of DatabaseEditionDataAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<DatabaseEditionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);

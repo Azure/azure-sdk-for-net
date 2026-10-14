@@ -14,7 +14,7 @@ using Azure.ResourceManager.OracleDatabase.Models;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    internal partial class DatabaseSystemShapeResourcesGetByLocationCollectionResultOfT : Pageable<DatabaseSystemShapeData>
+    internal partial class DatabaseSystemShapeDataCollectionResultOfT : Pageable<DatabaseSystemShapeData>
     {
         private readonly DatabaseSystemShapeResources _client;
         private readonly Guid _subscriptionId;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.OracleDatabase
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DatabaseSystemShapeResourcesGetByLocationCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of DatabaseSystemShapeDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DatabaseSystemShapeResources client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="databaseEdition"> If provided, filters the result by database edition. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DatabaseSystemShapeResourcesGetByLocationCollectionResultOfT(DatabaseSystemShapeResources client, Guid subscriptionId, AzureLocation location, string shapeAttribute, string zone, string availabilityDomain, string databaseShapeFamily, string databaseEdition, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DatabaseSystemShapeDataCollectionResultOfT(DatabaseSystemShapeResources client, Guid subscriptionId, AzureLocation location, string shapeAttribute, string zone, string availabilityDomain, string databaseShapeFamily, string databaseEdition, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.OracleDatabase
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DatabaseSystemShapeResourcesGetByLocationCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DatabaseSystemShapeDataCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DatabaseSystemShapeResourcesGetByLocationCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of DatabaseSystemShapeDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<DatabaseSystemShapeData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

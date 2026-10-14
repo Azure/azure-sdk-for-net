@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.OracleDatabase
     public partial class OracleDBSystemResource : ArmResource
     {
         private readonly ClientDiagnostics _dbSystemsClientDiagnostics;
-        private readonly DbSystems _dbSystemsRestClient;
+        private readonly DBSystems _dbSystemsRestClient;
         private readonly OracleDBSystemData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Oracle.Database/dbSystems";
@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OracleDBSystemResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string oracleDBSystemApiVersion);
             _dbSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _dbSystemsRestClient = new DbSystems(_dbSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBSystemApiVersion ?? "2026-06-01");
+            _dbSystemsRestClient = new DBSystems(_dbSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Oracle.Database/dbSystems", out string dbSystemsApiVersionOverride) ? dbSystemsApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 

@@ -496,7 +496,20 @@ namespace Azure.ResourceManager.OracleDatabase
 
         /// <summary>
         /// List GiMinorVersion resources by GiVersion
-        ///             Request Path./subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions.Operation Id.GiMinorVersions_ListByParent.Default Api Version.2025-09-01.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GiMinorVersions_ListByParent. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="shapeFamily"> If provided, filters the results to the set of database versions which are supported for the given shape family. </param>
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
@@ -513,7 +526,20 @@ namespace Azure.ResourceManager.OracleDatabase
 
         /// <summary>
         /// List GiMinorVersion resources by GiVersion
-        ///             Request Path./subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions.Operation Id.GiMinorVersions_ListByParent.Default Api Version.2025-09-01.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GiMinorVersions_ListByParent. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="shapeFamily"> If provided, filters the results to the set of database versions which are supported for the given shape family. </param>
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>

@@ -15,36 +15,33 @@ using Azure.ResourceManager.OracleDatabase.Models;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    internal partial class GoldenGateConnectionsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<GoldenGateConnectionData>
+    internal partial class GoldenGateDeploymentDataAsyncCollectionResultOfT : AsyncPageable<GoldenGateDeploymentData>
     {
-        private readonly GoldenGateConnections _client;
+        private readonly GoldenGateDeployments _client;
         private readonly Guid _subscriptionId;
-        private readonly string _resourceGroupName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of GoldenGateConnectionsGetByResourceGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The GoldenGateConnections client used to send requests. </param>
+        /// <summary> Initializes a new instance of GoldenGateDeploymentDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The GoldenGateDeployments client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public GoldenGateConnectionsGetByResourceGroupAsyncCollectionResultOfT(GoldenGateConnections client, Guid subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public GoldenGateDeploymentDataAsyncCollectionResultOfT(GoldenGateDeployments client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _resourceGroupName = resourceGroupName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of GoldenGateConnectionsGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of GoldenGateDeploymentDataAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of GoldenGateConnectionsGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<GoldenGateConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of GoldenGateDeploymentDataAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<GoldenGateDeploymentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -52,9 +49,9 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     yield break;
                 }
-                GoldenGateConnectionListResult result = GoldenGateConnectionListResult.FromResponse(response);
+                GoldenGateDeploymentListResult result = GoldenGateDeploymentListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<GoldenGateConnectionData>.FromValues((IReadOnlyList<GoldenGateConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<GoldenGateDeploymentData>.FromValues((IReadOnlyList<GoldenGateDeploymentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -67,7 +64,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

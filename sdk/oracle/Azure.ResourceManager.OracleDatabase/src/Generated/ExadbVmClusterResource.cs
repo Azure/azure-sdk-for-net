@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExadbVmClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string exadbVmClusterApiVersion);
             _exadbVmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _exadbVmClustersRestClient = new ExadbVmClusters(_exadbVmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, exadbVmClusterApiVersion ?? "2026-06-01");
+            _exadbVmClustersRestClient = new ExadbVmClusters(_exadbVmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Oracle.Database/exadbVmClusters", out string exadbVmClustersApiVersionOverride) ? exadbVmClustersApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 

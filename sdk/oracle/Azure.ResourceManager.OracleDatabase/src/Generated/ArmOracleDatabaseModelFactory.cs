@@ -3289,7 +3289,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static ConnectionBaseProperties ConnectionBaseProperties(string connectionType = default, string displayName = default, ResourceIdentifier resourceAnchorId = default, ResourceIdentifier networkAnchorId = default, string compartmentId = default, string ocid = default, RoutingMethod? routingMethod = default, string vaultId = default, string keyId = default, bool? doesUseSecretIds = default, OracleDatabaseProvisioningState? provisioningState = default, ConnectionLifecycleState? lifecycleState = default, string lifecycleDetails = default, string timeCreated = default, string timeUpdated = default)
         {
             return new UnknownConnectionBaseProperties(
-                default,
+                connectionType is null ? default : new ConnectionType(connectionType),
                 displayName,
                 resourceAnchorId,
                 networkAnchorId,
@@ -3343,7 +3343,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             bootstrapServers ??= new ChangeTrackingList<KafkaBootstrapServer>();
 
             return new KafkaConnectionDetails(
-                default,
+                ConnectionType.Kafka,
                 displayName,
                 resourceAnchorId,
                 networkAnchorId,
@@ -3409,7 +3409,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static MicrosoftFabricConnectionDetails MicrosoftFabricConnectionDetails(string displayName = default, ResourceIdentifier resourceAnchorId = default, ResourceIdentifier networkAnchorId = default, string compartmentId = default, string ocid = default, RoutingMethod? routingMethod = default, string vaultId = default, string keyId = default, bool? doesUseSecretIds = default, OracleDatabaseProvisioningState? provisioningState = default, ConnectionLifecycleState? lifecycleState = default, string lifecycleDetails = default, string timeCreated = default, string timeUpdated = default, MicrosoftFabricConnectionTechnologyType technologyType = default, string tenantId = default, string clientId = default, string clientSecretSecretId = default, Uri endpoint = default)
         {
             return new MicrosoftFabricConnectionDetails(
-                default,
+                ConnectionType.MicrosoftFabric,
                 displayName,
                 resourceAnchorId,
                 networkAnchorId,
@@ -3460,7 +3460,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static OracleConnectionDetails OracleConnectionDetails(string displayName = default, ResourceIdentifier resourceAnchorId = default, ResourceIdentifier networkAnchorId = default, string compartmentId = default, string ocid = default, RoutingMethod? routingMethod = default, string vaultId = default, string keyId = default, bool? doesUseSecretIds = default, OracleDatabaseProvisioningState? provisioningState = default, ConnectionLifecycleState? lifecycleState = default, string lifecycleDetails = default, string timeCreated = default, string timeUpdated = default, OracleConnectionTechnologyType technologyType = default, SessionMode? sessionMode = default, string username = default, string connectionString = default, string authenticationMode = default, string passwordSecretId = default, string walletSecretId = default, string databaseId = default, string privateIP = default)
         {
             return new OracleConnectionDetails(
-                default,
+                ConnectionType.Oracle,
                 displayName,
                 resourceAnchorId,
                 networkAnchorId,
@@ -4134,7 +4134,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             return new AutonomousDatabaseProperties(
                 adminPassword,
-                default,
+                OracleDataBaseType.Regular,
                 autonomousMaintenanceScheduleType,
                 characterSet,
                 computeCount,
@@ -4310,7 +4310,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             return new AutonomousDatabaseCloneProperties(
                 adminPassword,
-                default,
+                OracleDataBaseType.Clone,
                 autonomousMaintenanceScheduleType,
                 characterSet,
                 computeCount,
@@ -4491,7 +4491,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             return new AutonomousDatabaseCrossRegionDisasterRecoveryProperties(
                 adminPassword,
-                default,
+                OracleDataBaseType.CrossRegionDisasterRecovery,
                 autonomousMaintenanceScheduleType,
                 characterSet,
                 computeCount,
@@ -4669,7 +4669,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             return new AutonomousDatabaseFromBackupTimestampProperties(
                 adminPassword,
-                default,
+                OracleDataBaseType.CloneFromBackupTimestamp,
                 autonomousMaintenanceScheduleType,
                 characterSet,
                 computeCount,
@@ -4888,7 +4888,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static OracleDBSystemProperties OracleDBSystemProperties(OracleDatabaseProvisioningState? provisioningState = default, Uri ociUri = default, ResourceIdentifier resourceAnchorId = default, ResourceIdentifier networkAnchorId = default, string clusterName = default, string displayName = default, int? initialDataStorageSizeInGb = default, int? dataStorageSizeInGbs = default, StorageManagementType? dbSystemOptionsStorageManagement = default, DBSystemDiskRedundancyType? diskRedundancy = default, string domainV2 = default, string gridImageOcid = default, string hostname = default, string ocid = default, OracleLicenseModel? licenseModelV2 = default, string lifecycleDetails = default, DBSystemLifecycleState? lifecycleState = default, int? listenerPort = default, int? memorySizeInGbs = default, int? nodeCount = default, string scanDnsName = default, IEnumerable<string> scanIPs = default, string shape = default, IEnumerable<string> sshPublicKeys = default, StorageVolumePerformanceMode? storageVolumePerformanceMode = default, string timeZone = default, string version = default, OracleDatabaseComputeModel? computeModel = default, int? computeCount = default, DBSystemDatabaseEditionType databaseEdition = default, string adminPassword = default, string dbVersion = default, string pluggableDatabaseName = default)
         {
             return new OracleDBSystemProperties(
-                default,
+                DBSystemSourceType.None,
                 provisioningState,
                 ociUri,
                 resourceAnchorId,

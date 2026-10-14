@@ -14,33 +14,36 @@ using Azure.ResourceManager.OracleDatabase.Models;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    internal partial class GoldenGateDeploymentsGetBySubscriptionCollectionResultOfT : Pageable<GoldenGateDeploymentData>
+    internal partial class DatabaseEditionDataCollectionResultOfT : Pageable<DatabaseEditionData>
     {
-        private readonly GoldenGateDeployments _client;
+        private readonly DatabaseEditions _client;
         private readonly Guid _subscriptionId;
+        private readonly AzureLocation _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of GoldenGateDeploymentsGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The GoldenGateDeployments client used to send requests. </param>
+        /// <summary> Initializes a new instance of DatabaseEditionDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The DatabaseEditions client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public GoldenGateDeploymentsGetBySubscriptionCollectionResultOfT(GoldenGateDeployments client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DatabaseEditionDataCollectionResultOfT(DatabaseEditions client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
+            _location = location;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of GoldenGateDeploymentsGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DatabaseEditionDataCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of GoldenGateDeploymentsGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<GoldenGateDeploymentData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of DatabaseEditionDataCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<DatabaseEditionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -48,9 +51,9 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     yield break;
                 }
-                GoldenGateDeploymentListResult result = GoldenGateDeploymentListResult.FromResponse(response);
+                DatabaseEditionListResult result = DatabaseEditionListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<GoldenGateDeploymentData>.FromValues((IReadOnlyList<GoldenGateDeploymentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DatabaseEditionData>.FromValues((IReadOnlyList<DatabaseEditionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -63,7 +66,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByLocationRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetByLocationRequest(_subscriptionId, _location, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
