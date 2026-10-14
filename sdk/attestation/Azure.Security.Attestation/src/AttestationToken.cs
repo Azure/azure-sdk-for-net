@@ -461,7 +461,8 @@ namespace Azure.Security.Attestation
                 bool signatureValidated = asymmetricAlgorithm switch
                 {
                     RSA rsaKey => rsaKey.VerifyData(signedData, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1),
-                    ECDsa ecdsa => ecdsa.VerifyData(signedData, signature, HashAlgorithmName.SHA256),
+                    // The hash comes from the trusted certificate's curve, never from the token's alg header.
+                    ECDsa ecdsa => GetEcdsaHashAlgorithm(ecdsa) is HashAlgorithmName hash && ecdsa.VerifyData(signedData, signature, hash),
                     _ => false,
                 };
                 if (signatureValidated)
@@ -482,6 +483,57 @@ namespace Azure.Security.Attestation
         // Returns the certificate's RSA or ECDsa public key, or null if it has neither.
         internal static AsymmetricAlgorithm GetPublicKey(X509Certificate2 certificate)
             => (AsymmetricAlgorithm)certificate.GetRSAPublicKey() ?? certificate.GetECDsaPublicKey();
+
+        // Each ECDSA JWS algorithm pairs one curve with one hash (RFC 7518 section 3.4): ES256 is P-256 with SHA-256,
+        // ES384 is P-384 with SHA-384, and ES512 is P-521 with SHA-512. Returns null for any other curve.
+        internal static HashAlgorithmName? GetEcdsaHashAlgorithm(ECDsa key)
+        {
+#if NET8_0_OR_GREATER
+            string curve = null;
+            try
+            {
+                Oid oid = key.ExportParameters(false).Curve.Oid;
+                curve = oid?.Value ?? oid?.FriendlyName;
+            }
+            catch (Exception ex) when (ex is CryptographicException || ex is NotSupportedException || ex is PlatformNotSupportedException)
+            {
+                // Fall back to the key size below.
+            }
+
+            switch (curve)
+            {
+                case null:
+                    break;
+                case "1.2.840.10045.3.1.7":
+                case "nistP256":
+                case "ECDSA_P256":
+                case "secp256r1":
+                case "prime256v1":
+                    return HashAlgorithmName.SHA256;
+                case "1.3.132.0.34":
+                case "nistP384":
+                case "ECDSA_P384":
+                case "secp384r1":
+                    return HashAlgorithmName.SHA384;
+                case "1.3.132.0.35":
+                case "nistP521":
+                case "ECDSA_P521":
+                case "secp521r1":
+                    return HashAlgorithmName.SHA512;
+                default:
+                    return null;
+            }
+#endif
+            // The curve can't be read from this key, or, in the netstandard2.0 build, can't be read on every .NET Framework
+            // version (ECParameters may not load), so identify it by its size, which matches only one of the three curves.
+            return key.KeySize switch
+            {
+                256 => HashAlgorithmName.SHA256,
+                384 => HashAlgorithmName.SHA384,
+                521 => HashAlgorithmName.SHA512,
+                _ => null,
+            };
+        }
 
         /// <summary>
         /// Validate the common properties of the attestation token - ensure that the expiration time for the token is "reasonable", if present.
@@ -658,7 +710,8 @@ namespace Azure.Security.Attestation
 
             JsonWebTokenHeader header = new JsonWebTokenHeader
             {
-                Algorithm = signingKey.Signer is RSA ? "RSA256" : (signingKey.Signer is ECDsa ? "ECDH256" : null),
+                // AttestationTokenSigningKey only accepts RSA keys and ECDsa keys on the P-256 curve, both signed with SHA-256.
+                Algorithm = signingKey.Signer is RSA ? "RS256" : (signingKey.Signer is ECDsa ? "ES256" : null),
                 X509CertificateChain = new string[] { Convert.ToBase64String(signingKey.Certificate.Export(X509ContentType.Cert)) },
             };
             var serializationOptions = new JsonSerializerOptions

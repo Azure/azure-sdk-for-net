@@ -23,8 +23,9 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Creates a new instance of a <see cref="AttestationTokenSigningKey"/>
         /// </summary>
-        /// <param name="signer">The Signing Key which will be used to sign the generated token.</param>
+        /// <param name="signer">The Signing Key which will be used to sign the generated token: an RSA key, or an ECDsa key on the P-256 curve.</param>
         /// <param name="certificate">An X.509 Certificate which wraps the public key part of the <paramref name="signer"/>.</param>
+        /// <exception cref="ArgumentException"><paramref name="signer"/> does not match <paramref name="certificate"/>, or is an ECDsa key on a curve other than P-256.</exception>
         public AttestationTokenSigningKey(AsymmetricAlgorithm signer, X509Certificate2 certificate)
         {
             Argument.AssertNotNull(signer, nameof(signer));
@@ -37,8 +38,8 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Creates a new instance of a <see cref="AttestationTokenSigningKey"/>
         /// </summary>
-        /// <param name="certificate">An X.509 Certificate with an RSA or ECDsa private key.</param>
-        /// <exception cref="ArgumentException"><paramref name="certificate"/> does not have an RSA or ECDsa private key.</exception>
+        /// <param name="certificate">An X.509 Certificate with an RSA private key, or an ECDsa private key on the P-256 curve.</param>
+        /// <exception cref="ArgumentException"><paramref name="certificate"/> does not have an RSA or ECDsa private key, or its ECDsa key is on a curve other than P-256.</exception>
         public AttestationTokenSigningKey(X509Certificate2 certificate)
         {
             Argument.AssertNotNull(certificate, nameof(certificate));
@@ -74,6 +75,12 @@ namespace Azure.Security.Attestation
             if ((signer is RSA) != (publicKey is RSA) || (signer is ECDsa) != (publicKey is ECDsa))
             {
                 throw new ArgumentException($"Signer key algorithm {signer.SignatureAlgorithm} does not match certificate key algorithm {publicKey.SignatureAlgorithm}");
+            }
+
+            // Tokens are signed with ES256, which requires the P-256 curve.
+            if (publicKey is ECDsa ecdsa && AttestationToken.GetEcdsaHashAlgorithm(ecdsa) != HashAlgorithmName.SHA256)
+            {
+                throw new ArgumentException("ECDsa signing keys must use the P-256 curve; tokens are signed with ES256 (ECDSA using P-256 and SHA-256).", nameof(certificate));
             }
 
             // Try to match the public key in the certificate and the signer. If the platform
