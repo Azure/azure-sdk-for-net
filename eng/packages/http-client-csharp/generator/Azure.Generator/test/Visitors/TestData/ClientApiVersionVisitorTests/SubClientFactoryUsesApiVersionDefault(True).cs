@@ -1,0 +1,4 @@
+public virtual global::Samples.LegacyClient GetLegacyClient()
+{
+    return (global::System.Threading.Volatile.Read(ref _cachedLegacyClient) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedLegacyClient, new global::Samples.LegacyClient(Pipeline, _endpoint, "2022-10-01"), null) ?? _cachedLegacyClient));
+}

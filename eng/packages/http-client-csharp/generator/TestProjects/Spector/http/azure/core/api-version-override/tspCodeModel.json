@@ -254,7 +254,14 @@
             }
           ],
           "initializedBy": 0,
-          "decorators": [],
+          "decorators": [
+            {
+              "name": "Azure.Core.Legacy.@overrideApiVersion",
+              "arguments": {
+                "version": "2022-10-01"
+              }
+            }
+          ],
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.ApiVersionOverride.LegacyClient",
           "apiVersions": [
             "2025-01-01"

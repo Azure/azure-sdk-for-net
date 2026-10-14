@@ -1,0 +1,4 @@
+public virtual global::Samples.ChildClient GetChildClient()
+{
+    return (global::System.Threading.Volatile.Read(ref _cachedChildClient) ?? (global::System.Threading.Interlocked.CompareExchange(ref _cachedChildClient, new global::Samples.ChildClient(Pipeline, _endpoint, _apiVersion), null) ?? _cachedChildClient));
+}
