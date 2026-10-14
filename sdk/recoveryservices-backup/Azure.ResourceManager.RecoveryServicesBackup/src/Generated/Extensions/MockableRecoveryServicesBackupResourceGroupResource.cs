@@ -716,15 +716,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="fabricName"> Fabric name associated with the backed up items. </param>
-        /// <param name="getRPExtendedInfoRequestResource"> Request payload containing the ARM id of the recovery point whose additional details are to be fetched. </param>
+        /// <param name="content"> Request payload containing the ARM id of the recovery point whose additional details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="getRPExtendedInfoRequestResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> GetRPExtendedInfoAsync(WaitUntil waitUntil, string vaultName, string fabricName, GetRPExtendedInfoRequestResource getRPExtendedInfoRequestResource, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RPExtendedInfoResourceList>> GetRPExtendedInfoAsync(WaitUntil waitUntil, string vaultName, string fabricName, RecoveryPointExtendedInfoContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNull(getRPExtendedInfoRequestResource, nameof(getRPExtendedInfoRequestResource));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = RecoveryPointsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.GetRPExtendedInfo");
             scope.Start();
@@ -734,12 +734,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecoveryPointsRestClient.CreateGetRPExtendedInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, GetRPExtendedInfoRequestResource.ToRequestContent(getRPExtendedInfoRequestResource), context);
+                HttpMessage message = RecoveryPointsRestClient.CreateGetRPExtendedInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, RecoveryPointExtendedInfoContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(RecoveryPointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                RecoveryServicesBackupArmOperation<RPExtendedInfoResourceList> operation = new RecoveryServicesBackupArmOperation<RPExtendedInfoResourceList>(
+                    new RPExtendedInfoResourceListOperationSource(),
+                    RecoveryPointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -772,15 +778,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="fabricName"> Fabric name associated with the backed up items. </param>
-        /// <param name="getRPExtendedInfoRequestResource"> Request payload containing the ARM id of the recovery point whose additional details are to be fetched. </param>
+        /// <param name="content"> Request payload containing the ARM id of the recovery point whose additional details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="getRPExtendedInfoRequestResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation GetRPExtendedInfo(WaitUntil waitUntil, string vaultName, string fabricName, GetRPExtendedInfoRequestResource getRPExtendedInfoRequestResource, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RPExtendedInfoResourceList> GetRPExtendedInfo(WaitUntil waitUntil, string vaultName, string fabricName, RecoveryPointExtendedInfoContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNull(getRPExtendedInfoRequestResource, nameof(getRPExtendedInfoRequestResource));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = RecoveryPointsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.GetRPExtendedInfo");
             scope.Start();
@@ -790,12 +796,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecoveryPointsRestClient.CreateGetRPExtendedInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, GetRPExtendedInfoRequestResource.ToRequestContent(getRPExtendedInfoRequestResource), context);
+                HttpMessage message = RecoveryPointsRestClient.CreateGetRPExtendedInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, RecoveryPointExtendedInfoContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(RecoveryPointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                RecoveryServicesBackupArmOperation<RPExtendedInfoResourceList> operation = new RecoveryServicesBackupArmOperation<RPExtendedInfoResourceList>(
+                    new RPExtendedInfoResourceListOperationSource(),
+                    RecoveryPointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }
@@ -824,14 +836,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="fabricName"> Fabric name associated with the backed up items. </param>
         /// <param name="operationId"> OperationID which represents the prior getRPExtendedInfo operation whose result needs to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> GetRPExtendedInfoOperationResultAsync(WaitUntil waitUntil, string vaultName, string fabricName, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RPExtendedInfoResourceList>> GetRPExtendedInfoOperationResultAsync(string vaultName, string fabricName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
@@ -846,13 +857,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = RecoveryPointsRestClient.CreateGetRPExtendedInfoOperationResultRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, operationId, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(RecoveryPointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RPExtendedInfoResourceList> response = Response.FromValue(RPExtendedInfoResourceList.FromResponse(result), result);
+                if (response.Value == null)
                 {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
-                return operation;
+                return response;
             }
             catch (Exception e)
             {
@@ -879,14 +890,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="fabricName"> Fabric name associated with the backed up items. </param>
         /// <param name="operationId"> OperationID which represents the prior getRPExtendedInfo operation whose result needs to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation GetRPExtendedInfoOperationResult(WaitUntil waitUntil, string vaultName, string fabricName, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<RPExtendedInfoResourceList> GetRPExtendedInfoOperationResult(string vaultName, string fabricName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
@@ -901,13 +911,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = RecoveryPointsRestClient.CreateGetRPExtendedInfoOperationResultRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, operationId, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(RecoveryPointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RPExtendedInfoResourceList> response = Response.FromValue(RPExtendedInfoResourceList.FromResponse(result), result);
+                if (response.Value == null)
                 {
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
-                return operation;
+                return response;
             }
             catch (Exception e)
             {
@@ -2048,7 +2058,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OperationStatus>> GetAsync(string vaultName, string fabricName, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupOperationStatus>> GetAsync(string vaultName, string fabricName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
@@ -2064,7 +2074,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 };
                 HttpMessage message = ProtectionContainerRefreshOperationStatusesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OperationStatus> response = Response.FromValue(OperationStatus.FromResponse(result), result);
+                Response<BackupOperationStatus> response = Response.FromValue(BackupOperationStatus.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -2104,7 +2114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OperationStatus> Get(string vaultName, string fabricName, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<BackupOperationStatus> Get(string vaultName, string fabricName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
@@ -2120,7 +2130,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 };
                 HttpMessage message = ProtectionContainerRefreshOperationStatusesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<OperationStatus> response = Response.FromValue(OperationStatus.FromResponse(result), result);
+                Response<BackupOperationStatus> response = Response.FromValue(BackupOperationStatus.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

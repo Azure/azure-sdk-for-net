@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Identifiers for a Windows Storage Spaces pool and its virtual disk. </summary>
-    public partial class StorageSpaceInfo
+    public partial class RecoveryPointStorageSpaceInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageSpaceInfo"/>. </summary>
-        public StorageSpaceInfo()
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointStorageSpaceInfo"/>. </summary>
+        public RecoveryPointStorageSpaceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageSpaceInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointStorageSpaceInfo"/>. </summary>
         /// <param name="storagePoolUniqueId"> Unique ID of the storage pool. </param>
         /// <param name="storagePoolFriendlyName"> Friendly name of the storage pool. </param>
         /// <param name="virtualDiskUniqueId"> Unique ID of the virtual disk. </param>
         /// <param name="virtualDiskFriendlyName"> Friendly name of the virtual disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSpaceInfo(string storagePoolUniqueId, string storagePoolFriendlyName, string virtualDiskUniqueId, string virtualDiskFriendlyName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryPointStorageSpaceInfo(string storagePoolUniqueId, string storagePoolFriendlyName, string virtualDiskUniqueId, string virtualDiskFriendlyName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StoragePoolUniqueId = storagePoolUniqueId;
             StoragePoolFriendlyName = storagePoolFriendlyName;

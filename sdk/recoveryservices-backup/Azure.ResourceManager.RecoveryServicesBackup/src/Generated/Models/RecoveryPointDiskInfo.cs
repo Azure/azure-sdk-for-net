@@ -14,17 +14,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Metadata for a physical disk that backs a filesystem volume or Storage Spaces pool.
     /// Unlike DiskInformation, this model describes storage topology; DiskInformation only identifies disks included in or excluded from a virtual machine recovery point.
     /// </summary>
-    public partial class DiskInfo
+    public partial class RecoveryPointDiskInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiskInfo"/>. </summary>
-        public DiskInfo()
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointDiskInfo"/>. </summary>
+        public RecoveryPointDiskInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiskInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointDiskInfo"/>. </summary>
         /// <param name="diskNumber"> Disk number. </param>
         /// <param name="diskUniqueId"> Unique ID of the disk. </param>
         /// <param name="diskGuid"> GUID of the disk. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="lun"> LUN of the disk. </param>
         /// <param name="managedDiskId"> ARM ID of the managed disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskInfo(int? diskNumber, string diskUniqueId, string diskGuid, string diskLocation, long? sizeInBytes, string friendlyName, int? lun, string managedDiskId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryPointDiskInfo(int? diskNumber, string diskUniqueId, string diskGuid, string diskLocation, long? sizeInBytes, string friendlyName, int? lun, string managedDiskId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskNumber = diskNumber;
             DiskUniqueId = diskUniqueId;

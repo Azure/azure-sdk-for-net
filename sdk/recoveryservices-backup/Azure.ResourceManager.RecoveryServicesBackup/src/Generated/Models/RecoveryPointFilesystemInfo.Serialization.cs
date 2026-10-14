@@ -14,51 +14,51 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Per volume filesystem metadata captured on the VM. </summary>
-    public partial class FilesystemInfo : IJsonModel<FilesystemInfo>
+    public partial class RecoveryPointFilesystemInfo : IJsonModel<RecoveryPointFilesystemInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FilesystemInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RecoveryPointFilesystemInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FilesystemInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointFilesystemInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFilesystemInfo(document.RootElement, options);
+                        return DeserializeRecoveryPointFilesystemInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FilesystemInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointFilesystemInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FilesystemInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointFilesystemInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FilesystemInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointFilesystemInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FilesystemInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RecoveryPointFilesystemInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FilesystemInfo IPersistableModel<FilesystemInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RecoveryPointFilesystemInfo IPersistableModel<RecoveryPointFilesystemInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FilesystemInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RecoveryPointFilesystemInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FilesystemInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RecoveryPointFilesystemInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FilesystemInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointFilesystemInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilesystemInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointFilesystemInfo)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(VolumeGuid))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("diskInfoList"u8);
                 writer.WriteStartArray();
-                foreach (DiskInfo item in DiskInfoList)
+                foreach (RecoveryPointDiskInfo item in DiskInfoList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,24 +143,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FilesystemInfo IJsonModel<FilesystemInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RecoveryPointFilesystemInfo IJsonModel<RecoveryPointFilesystemInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FilesystemInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RecoveryPointFilesystemInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FilesystemInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointFilesystemInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilesystemInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointFilesystemInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFilesystemInfo(document.RootElement, options);
+            return DeserializeRecoveryPointFilesystemInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FilesystemInfo DeserializeFilesystemInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static RecoveryPointFilesystemInfo DeserializeRecoveryPointFilesystemInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string label = default;
             IList<string> accessPaths = default;
             bool? isOnStorageSpace = default;
-            StorageSpaceInfo storageSpaceInfo = default;
-            IList<DiskInfo> diskInfoList = default;
+            RecoveryPointStorageSpaceInfo storageSpaceInfo = default;
+            IList<RecoveryPointDiskInfo> diskInfoList = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    storageSpaceInfo = StorageSpaceInfo.DeserializeStorageSpaceInfo(prop.Value, options);
+                    storageSpaceInfo = RecoveryPointStorageSpaceInfo.DeserializeRecoveryPointStorageSpaceInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diskInfoList"u8))
@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<DiskInfo> array = new List<DiskInfo>();
+                    List<RecoveryPointDiskInfo> array = new List<RecoveryPointDiskInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DiskInfo.DeserializeDiskInfo(item, options));
+                        array.Add(RecoveryPointDiskInfo.DeserializeRecoveryPointDiskInfo(item, options));
                     }
                     diskInfoList = array;
                     continue;
@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FilesystemInfo(
+            return new RecoveryPointFilesystemInfo(
                 volumeGuid,
                 fileSystemType,
                 label,
                 accessPaths ?? new ChangeTrackingList<string>(),
                 isOnStorageSpace,
                 storageSpaceInfo,
-                diskInfoList ?? new ChangeTrackingList<DiskInfo>(),
+                diskInfoList ?? new ChangeTrackingList<RecoveryPointDiskInfo>(),
                 additionalBinaryDataProperties);
         }
     }

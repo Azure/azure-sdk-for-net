@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Operation status extended info for ValidateOperation action. </summary>
-    public partial class OperationStatusValidateOperationExtendedInfo : OperationStatusExtendedInfo
+    public partial class BackupOperationStatusValidateOperationExtendedInfo : BackupOperationStatusExtendedInfo
     {
-        /// <summary> Initializes a new instance of <see cref="OperationStatusValidateOperationExtendedInfo"/>. </summary>
-        internal OperationStatusValidateOperationExtendedInfo() : base("OperationStatusValidateOperationExtendedInfo")
+        /// <summary> Initializes a new instance of <see cref="BackupOperationStatusValidateOperationExtendedInfo"/>. </summary>
+        internal BackupOperationStatusValidateOperationExtendedInfo() : base("OperationStatusValidateOperationExtendedInfo")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatusValidateOperationExtendedInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupOperationStatusValidateOperationExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="validateOperationResponse"> Gets the validation operation response. </param>
-        internal OperationStatusValidateOperationExtendedInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ValidateOperationResponse validateOperationResponse) : base(objectType, additionalBinaryDataProperties)
+        internal BackupOperationStatusValidateOperationExtendedInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ValidateOperationResponse validateOperationResponse) : base(objectType, additionalBinaryDataProperties)
         {
             ValidateOperationResponse = validateOperationResponse;
         }

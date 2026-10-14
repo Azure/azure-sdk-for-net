@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Operation status extended info for ILR provision action. </summary>
-    public partial class OperationStatusProvisionILRExtendedInfo : OperationStatusExtendedInfo
+    public partial class BackupOperationStatusProvisionIlrExtendedInfo : BackupOperationStatusExtendedInfo
     {
-        /// <summary> Initializes a new instance of <see cref="OperationStatusProvisionILRExtendedInfo"/>. </summary>
-        internal OperationStatusProvisionILRExtendedInfo() : base("OperationStatusProvisionILRExtendedInfo")
+        /// <summary> Initializes a new instance of <see cref="BackupOperationStatusProvisionIlrExtendedInfo"/>. </summary>
+        internal BackupOperationStatusProvisionIlrExtendedInfo() : base("OperationStatusProvisionILRExtendedInfo")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatusProvisionILRExtendedInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupOperationStatusProvisionIlrExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryTarget"> Target details for file / folder restore. </param>
-        internal OperationStatusProvisionILRExtendedInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, InstantItemRecoveryTarget recoveryTarget) : base(objectType, additionalBinaryDataProperties)
+        internal BackupOperationStatusProvisionIlrExtendedInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, InstantItemRecoveryTarget recoveryTarget) : base(objectType, additionalBinaryDataProperties)
         {
             RecoveryTarget = recoveryTarget;
         }

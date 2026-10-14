@@ -14,51 +14,51 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Identifiers for a Windows Storage Spaces pool and its virtual disk. </summary>
-    public partial class StorageSpaceInfo : IJsonModel<StorageSpaceInfo>
+    public partial class RecoveryPointStorageSpaceInfo : IJsonModel<RecoveryPointStorageSpaceInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageSpaceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RecoveryPointStorageSpaceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageSpaceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointStorageSpaceInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStorageSpaceInfo(document.RootElement, options);
+                        return DeserializeRecoveryPointStorageSpaceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageSpaceInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointStorageSpaceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageSpaceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointStorageSpaceInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StorageSpaceInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointStorageSpaceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageSpaceInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RecoveryPointStorageSpaceInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageSpaceInfo IPersistableModel<StorageSpaceInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RecoveryPointStorageSpaceInfo IPersistableModel<RecoveryPointStorageSpaceInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageSpaceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RecoveryPointStorageSpaceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StorageSpaceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RecoveryPointStorageSpaceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageSpaceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointStorageSpaceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSpaceInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointStorageSpaceInfo)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(StoragePoolUniqueId))
             {
@@ -113,24 +113,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageSpaceInfo IJsonModel<StorageSpaceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RecoveryPointStorageSpaceInfo IJsonModel<RecoveryPointStorageSpaceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageSpaceInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RecoveryPointStorageSpaceInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageSpaceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointStorageSpaceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSpaceInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointStorageSpaceInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStorageSpaceInfo(document.RootElement, options);
+            return DeserializeRecoveryPointStorageSpaceInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StorageSpaceInfo DeserializeStorageSpaceInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static RecoveryPointStorageSpaceInfo DeserializeRecoveryPointStorageSpaceInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StorageSpaceInfo(storagePoolUniqueId, storagePoolFriendlyName, virtualDiskUniqueId, virtualDiskFriendlyName, additionalBinaryDataProperties);
+            return new RecoveryPointStorageSpaceInfo(storagePoolUniqueId, storagePoolFriendlyName, virtualDiskUniqueId, virtualDiskFriendlyName, additionalBinaryDataProperties);
         }
     }
 }

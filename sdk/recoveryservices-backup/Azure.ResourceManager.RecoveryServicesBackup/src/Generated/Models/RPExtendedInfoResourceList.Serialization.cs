@@ -15,7 +15,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> List of the additional details of recovery points. </summary>
-    internal partial class RPExtendedInfoResourceList : ResourceList, IJsonModel<RPExtendedInfoResourceList>
+    public partial class RPExtendedInfoResourceList : ResourceList, IJsonModel<RPExtendedInfoResourceList>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

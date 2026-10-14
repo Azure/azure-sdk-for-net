@@ -12,7 +12,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Additional details of an IaaS VM recovery point. </summary>
-    internal partial class IaasVMRPExtendedInfo : RPExtendedInfo
+    public partial class IaasVMRPExtendedInfo : RPExtendedInfo
     {
         /// <summary> Initializes a new instance of <see cref="IaasVMRPExtendedInfo"/>. </summary>
         internal IaasVMRPExtendedInfo() : base("IaasVMRPExtendedInfo")

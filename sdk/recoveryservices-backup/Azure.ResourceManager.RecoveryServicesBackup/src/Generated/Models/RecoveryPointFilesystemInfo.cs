@@ -12,19 +12,19 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Per volume filesystem metadata captured on the VM. </summary>
-    public partial class FilesystemInfo
+    public partial class RecoveryPointFilesystemInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FilesystemInfo"/>. </summary>
-        public FilesystemInfo()
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointFilesystemInfo"/>. </summary>
+        public RecoveryPointFilesystemInfo()
         {
             AccessPaths = new ChangeTrackingList<string>();
-            DiskInfoList = new ChangeTrackingList<DiskInfo>();
+            DiskInfoList = new ChangeTrackingList<RecoveryPointDiskInfo>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FilesystemInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointFilesystemInfo"/>. </summary>
         /// <param name="volumeGuid"> Volume GUID path. </param>
         /// <param name="fileSystemType"> Filesystem type (NTFS / ReFS / etc.). </param>
         /// <param name="label"> Volume label. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="storageSpaceInfo"> Storage Spaces pool / virtual-disk identifiers. </param>
         /// <param name="diskInfoList"> Physical disks that back this volume (or the storage pool). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FilesystemInfo(string volumeGuid, string fileSystemType, string label, IList<string> accessPaths, bool? isOnStorageSpace, StorageSpaceInfo storageSpaceInfo, IList<DiskInfo> diskInfoList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryPointFilesystemInfo(string volumeGuid, string fileSystemType, string label, IList<string> accessPaths, bool? isOnStorageSpace, RecoveryPointStorageSpaceInfo storageSpaceInfo, IList<RecoveryPointDiskInfo> diskInfoList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VolumeGuid = volumeGuid;
             FileSystemType = fileSystemType;
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public bool? IsOnStorageSpace { get; set; }
 
         /// <summary> Storage Spaces pool / virtual-disk identifiers. </summary>
-        public StorageSpaceInfo StorageSpaceInfo { get; set; }
+        public RecoveryPointStorageSpaceInfo StorageSpaceInfo { get; set; }
 
         /// <summary> Physical disks that back this volume (or the storage pool). </summary>
-        public IList<DiskInfo> DiskInfoList { get; }
+        public IList<RecoveryPointDiskInfo> DiskInfoList { get; }
     }
 }

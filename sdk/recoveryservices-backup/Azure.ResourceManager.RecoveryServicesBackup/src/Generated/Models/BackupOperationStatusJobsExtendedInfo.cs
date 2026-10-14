@@ -12,21 +12,21 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Operation status extended info for list of jobs. </summary>
-    public partial class OperationStatusJobsExtendedInfo : OperationStatusExtendedInfo
+    public partial class BackupOperationStatusJobsExtendedInfo : BackupOperationStatusExtendedInfo
     {
-        /// <summary> Initializes a new instance of <see cref="OperationStatusJobsExtendedInfo"/>. </summary>
-        internal OperationStatusJobsExtendedInfo() : base("OperationStatusJobsExtendedInfo")
+        /// <summary> Initializes a new instance of <see cref="BackupOperationStatusJobsExtendedInfo"/>. </summary>
+        internal BackupOperationStatusJobsExtendedInfo() : base("OperationStatusJobsExtendedInfo")
         {
             JobIds = new ChangeTrackingList<string>();
             FailedJobsError = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatusJobsExtendedInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupOperationStatusJobsExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="jobIds"> IDs of the jobs created for the protected item. </param>
         /// <param name="failedJobsError"> Stores all the failed jobs along with the corresponding error codes. </param>
-        internal OperationStatusJobsExtendedInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> jobIds, IDictionary<string, string> failedJobsError) : base(objectType, additionalBinaryDataProperties)
+        internal BackupOperationStatusJobsExtendedInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> jobIds, IDictionary<string, string> failedJobsError) : base(objectType, additionalBinaryDataProperties)
         {
             JobIds = jobIds;
             FailedJobsError = failedJobsError;

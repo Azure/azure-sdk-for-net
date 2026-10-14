@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("sourceFilesystemInfo"u8);
                 writer.WriteStartArray();
-                foreach (FilesystemInfo item in SourceFilesystemInfo)
+                foreach (RecoveryPointFilesystemInfo item in SourceFilesystemInfo)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             string snapshotResourceGroup = default;
-            IList<FilesystemInfo> sourceFilesystemInfo = default;
+            IList<RecoveryPointFilesystemInfo> sourceFilesystemInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<FilesystemInfo> array = new List<FilesystemInfo>();
+                    List<RecoveryPointFilesystemInfo> array = new List<RecoveryPointFilesystemInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FilesystemInfo.DeserializeFilesystemInfo(item, options));
+                        array.Add(RecoveryPointFilesystemInfo.DeserializeRecoveryPointFilesystemInfo(item, options));
                     }
                     sourceFilesystemInfo = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SnapshotRecoveryPointInfo(snapshotResourceGroup, sourceFilesystemInfo ?? new ChangeTrackingList<FilesystemInfo>(), additionalBinaryDataProperties);
+            return new SnapshotRecoveryPointInfo(snapshotResourceGroup, sourceFilesystemInfo ?? new ChangeTrackingList<RecoveryPointFilesystemInfo>(), additionalBinaryDataProperties);
         }
     }
 }

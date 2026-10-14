@@ -15,18 +15,18 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Request for fetching the additional details of a recovery point, wrapped in a resource envelope. </summary>
-    public partial class GetRPExtendedInfoRequestResource : ResourceData
+    public partial class RecoveryPointExtendedInfoContent : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GetRPExtendedInfoRequestResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointExtendedInfoContent"/>. </summary>
         /// <param name="getRPExtendedInfoContentRecoveryPointIds">
         /// ARM id of the recovery point whose additional details are to be fetched. Exactly one recovery point id can be
         /// specified.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="getRPExtendedInfoContentRecoveryPointIds"/> is null. </exception>
-        public GetRPExtendedInfoRequestResource(IList<string> getRPExtendedInfoContentRecoveryPointIds)
+        public RecoveryPointExtendedInfoContent(IList<string> getRPExtendedInfoContentRecoveryPointIds)
         {
             Argument.AssertNotNull(getRPExtendedInfoContentRecoveryPointIds, nameof(getRPExtendedInfoContentRecoveryPointIds));
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Properties = new GetRPExtendedInfoContent(getRPExtendedInfoContentRecoveryPointIds);
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetRPExtendedInfoRequestResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointExtendedInfoContent"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="eTag"> Optional ETag. </param>
         /// <param name="properties"> GetRPExtendedInfoRequestResource properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetRPExtendedInfoRequestResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, ETag? eTag, GetRPExtendedInfoContent properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal RecoveryPointExtendedInfoContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, ETag? eTag, GetRPExtendedInfoContent properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;

@@ -1505,15 +1505,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="extendedInfo"> Additional information for this backup item. </param>
         /// <param name="kpisHealths"> Health details of different KPIs. </param>
         /// <param name="nodesList"> List of the nodes in case of distributed container. </param>
-        /// <param name="childDBNames"> Name of Child Dbs protected under this parent. </param>
+        /// <param name="childDatabaseNameList"> Name of Child Dbs protected under this parent. </param>
         /// <param name="instanceProtectionReadiness"> The state of instance protection. </param>
         /// <returns> A new <see cref="Models.VmWorkloadSqlInstanceProtectedItem"/> instance for mocking. </returns>
-        public static VmWorkloadSqlInstanceProtectedItem VmWorkloadSqlInstanceProtectedItem(BackupManagementType? backupManagementType = default, BackupDataSourceType? workloadType = default, string containerName = default, ResourceIdentifier sourceResourceId = default, ResourceIdentifier policyId = default, DateTimeOffset? lastRecoverOn = default, string backupSetName = default, BackupCreateMode? createMode = default, DateTimeOffset? deferredDeletedOn = default, bool? isScheduledForDeferredDelete = default, string deferredDeleteTimeRemaining = default, bool? isDeferredDeleteScheduleUpcoming = default, bool? isRehydrate = default, IEnumerable<string> resourceGuardOperationRequests = default, bool? isArchiveEnabled = default, string policyName = default, int? softDeleteRetentionPeriodInDays = default, AzureLocation? sourceLocation = default, string vaultId = default, BackupSourceSideScanInfo sourceSideScanInfo = default, string friendlyName = default, string serverName = default, string parentName = default, string parentType = default, string protectionStatus = default, BackupProtectionState? protectionState = default, LastBackupStatus? lastBackupStatus = default, DateTimeOffset? lastBackupOn = default, BackupErrorDetail lastBackupErrorDetail = default, string protectedItemDataSourceId = default, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus = default, VmWorkloadProtectedItemExtendedInfo extendedInfo = default, IDictionary<string, KpiResourceHealthDetails> kpisHealths = default, IEnumerable<DistributedNodesInfo> nodesList = default, IEnumerable<string> childDBNames = default, BackupInstanceProtectionReadiness? instanceProtectionReadiness = default)
+        public static VmWorkloadSqlInstanceProtectedItem VmWorkloadSqlInstanceProtectedItem(BackupManagementType? backupManagementType = default, BackupDataSourceType? workloadType = default, string containerName = default, ResourceIdentifier sourceResourceId = default, ResourceIdentifier policyId = default, DateTimeOffset? lastRecoverOn = default, string backupSetName = default, BackupCreateMode? createMode = default, DateTimeOffset? deferredDeletedOn = default, bool? isScheduledForDeferredDelete = default, string deferredDeleteTimeRemaining = default, bool? isDeferredDeleteScheduleUpcoming = default, bool? isRehydrate = default, IEnumerable<string> resourceGuardOperationRequests = default, bool? isArchiveEnabled = default, string policyName = default, int? softDeleteRetentionPeriodInDays = default, AzureLocation? sourceLocation = default, string vaultId = default, BackupSourceSideScanInfo sourceSideScanInfo = default, string friendlyName = default, string serverName = default, string parentName = default, string parentType = default, string protectionStatus = default, BackupProtectionState? protectionState = default, LastBackupStatus? lastBackupStatus = default, DateTimeOffset? lastBackupOn = default, BackupErrorDetail lastBackupErrorDetail = default, string protectedItemDataSourceId = default, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus = default, VmWorkloadProtectedItemExtendedInfo extendedInfo = default, IDictionary<string, KpiResourceHealthDetails> kpisHealths = default, IEnumerable<DistributedNodesInfo> nodesList = default, IEnumerable<string> childDatabaseNameList = default, BackupInstanceProtectionReadiness? instanceProtectionReadiness = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             kpisHealths ??= new ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
             nodesList ??= new ChangeTrackingList<DistributedNodesInfo>();
-            childDBNames ??= new ChangeTrackingList<string>();
+            childDatabaseNameList ??= new ChangeTrackingList<string>();
 
             return new VmWorkloadSqlInstanceProtectedItem(
                 default,
@@ -1552,7 +1552,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 extendedInfo,
                 kpisHealths ?? new ChangeTrackingDictionary<string, KpiResourceHealthDetails>(),
                 (nodesList ?? new ChangeTrackingList<DistributedNodesInfo>()).ToList(),
-                (childDBNames ?? new ChangeTrackingList<string>()).ToList(),
+                (childDatabaseNameList ?? new ChangeTrackingList<string>()).ToList(),
                 instanceProtectionReadiness);
         }
 
@@ -1871,10 +1871,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="endsOn"> Operation end time. Format: ISO-8601. </param>
         /// <param name="error"> Error information related to this operation. </param>
         /// <param name="properties"> Additional information associated with this operation. </param>
-        /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
-        public static OperationStatus OperationStatus(string id = default, string name = default, OperationStatusValues? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, OperationStatusError error = default, OperationStatusExtendedInfo properties = default)
+        /// <returns> A new <see cref="Models.BackupOperationStatus"/> instance for mocking. </returns>
+        public static BackupOperationStatus BackupOperationStatus(string id = default, string name = default, BackupOperationStatusValue? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, BackupOperationStatusError error = default, BackupOperationStatusExtendedInfo properties = default)
         {
-            return new OperationStatus(
+            return new BackupOperationStatus(
                 id,
                 name,
                 status,
@@ -1888,48 +1888,48 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Error information associated with operation status call. </summary>
         /// <param name="code"> Error code of the operation failure. </param>
         /// <param name="message"> Error message displayed if the operation failure. </param>
-        /// <returns> A new <see cref="Models.OperationStatusError"/> instance for mocking. </returns>
-        public static OperationStatusError OperationStatusError(string code = default, string message = default)
+        /// <returns> A new <see cref="Models.BackupOperationStatusError"/> instance for mocking. </returns>
+        public static BackupOperationStatusError BackupOperationStatusError(string code = default, string message = default)
         {
-            return new OperationStatusError(code, message, default);
+            return new BackupOperationStatusError(code, message, default);
         }
 
         /// <summary>
         /// Base class for additional information of operation status.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.OperationStatusJobExtendedInfo"/>, <see cref="Models.OperationStatusJobsExtendedInfo"/>, <see cref="Models.OperationStatusProvisionILRExtendedInfo"/>, and <see cref="Models.OperationStatusValidateOperationExtendedInfo"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BackupOperationStatusJobExtendedInfo"/>, <see cref="Models.BackupOperationStatusJobsExtendedInfo"/>, <see cref="Models.BackupOperationStatusProvisionIlrExtendedInfo"/>, and <see cref="Models.BackupOperationStatusValidateOperationExtendedInfo"/>.
         /// </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <returns> A new <see cref="Models.OperationStatusExtendedInfo"/> instance for mocking. </returns>
-        public static OperationStatusExtendedInfo OperationStatusExtendedInfo(string objectType = default)
+        /// <returns> A new <see cref="Models.BackupOperationStatusExtendedInfo"/> instance for mocking. </returns>
+        public static BackupOperationStatusExtendedInfo BackupOperationStatusExtendedInfo(string objectType = default)
         {
-            return new UnknownOperationStatusExtendedInfo(objectType, default);
+            return new UnknownBackupOperationStatusExtendedInfo(objectType, default);
         }
 
         /// <summary> Operation status job extended info. </summary>
         /// <param name="jobId"> ID of the job created for this protected item. </param>
-        /// <returns> A new <see cref="Models.OperationStatusJobExtendedInfo"/> instance for mocking. </returns>
-        public static OperationStatusJobExtendedInfo OperationStatusJobExtendedInfo(string jobId = default)
+        /// <returns> A new <see cref="Models.BackupOperationStatusJobExtendedInfo"/> instance for mocking. </returns>
+        public static BackupOperationStatusJobExtendedInfo BackupOperationStatusJobExtendedInfo(string jobId = default)
         {
-            return new OperationStatusJobExtendedInfo(default, default, jobId);
+            return new BackupOperationStatusJobExtendedInfo(default, default, jobId);
         }
 
         /// <summary> Operation status extended info for list of jobs. </summary>
         /// <param name="jobIds"> IDs of the jobs created for the protected item. </param>
         /// <param name="failedJobsError"> Stores all the failed jobs along with the corresponding error codes. </param>
-        /// <returns> A new <see cref="Models.OperationStatusJobsExtendedInfo"/> instance for mocking. </returns>
-        public static OperationStatusJobsExtendedInfo OperationStatusJobsExtendedInfo(IEnumerable<string> jobIds = default, IDictionary<string, string> failedJobsError = default)
+        /// <returns> A new <see cref="Models.BackupOperationStatusJobsExtendedInfo"/> instance for mocking. </returns>
+        public static BackupOperationStatusJobsExtendedInfo BackupOperationStatusJobsExtendedInfo(IEnumerable<string> jobIds = default, IDictionary<string, string> failedJobsError = default)
         {
             jobIds ??= new ChangeTrackingList<string>();
             failedJobsError ??= new ChangeTrackingDictionary<string, string>();
 
-            return new OperationStatusJobsExtendedInfo(default, default, (jobIds ?? new ChangeTrackingList<string>()).ToList(), failedJobsError ?? new ChangeTrackingDictionary<string, string>());
+            return new BackupOperationStatusJobsExtendedInfo(default, default, (jobIds ?? new ChangeTrackingList<string>()).ToList(), failedJobsError ?? new ChangeTrackingDictionary<string, string>());
         }
 
         /// <param name="recoveryTargetClientScripts"> List of client scripts. </param>
-        /// <returns> A new <see cref="Models.OperationStatusProvisionILRExtendedInfo"/> instance for mocking. </returns>
-        public static OperationStatusProvisionILRExtendedInfo OperationStatusProvisionILRExtendedInfo(IEnumerable<ClientScriptForConnect> recoveryTargetClientScripts = default)
+        /// <returns> A new <see cref="Models.BackupOperationStatusProvisionIlrExtendedInfo"/> instance for mocking. </returns>
+        public static BackupOperationStatusProvisionIlrExtendedInfo BackupOperationStatusProvisionIlrExtendedInfo(IEnumerable<ClientScriptForConnect> recoveryTargetClientScripts = default)
         {
-            return new OperationStatusProvisionILRExtendedInfo(default, default, recoveryTargetClientScripts is null ? default : new InstantItemRecoveryTarget((recoveryTargetClientScripts ?? new ChangeTrackingList<ClientScriptForConnect>()).ToList(), default));
+            return new BackupOperationStatusProvisionIlrExtendedInfo(default, default, recoveryTargetClientScripts is null ? default : new InstantItemRecoveryTarget((recoveryTargetClientScripts ?? new ChangeTrackingList<ClientScriptForConnect>()).ToList(), default));
         }
 
         /// <summary> Target details for file / folder restore. </summary>
@@ -1964,10 +1964,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <param name="validateOperationResponseValidationResults"> Gets the validation result. </param>
-        /// <returns> A new <see cref="Models.OperationStatusValidateOperationExtendedInfo"/> instance for mocking. </returns>
-        public static OperationStatusValidateOperationExtendedInfo OperationStatusValidateOperationExtendedInfo(IEnumerable<BackupErrorDetail> validateOperationResponseValidationResults = default)
+        /// <returns> A new <see cref="Models.BackupOperationStatusValidateOperationExtendedInfo"/> instance for mocking. </returns>
+        public static BackupOperationStatusValidateOperationExtendedInfo BackupOperationStatusValidateOperationExtendedInfo(IEnumerable<BackupErrorDetail> validateOperationResponseValidationResults = default)
         {
-            return new OperationStatusValidateOperationExtendedInfo(default, default, validateOperationResponseValidationResults is null ? default : new ValidateOperationResponse((validateOperationResponseValidationResults ?? new ChangeTrackingList<BackupErrorDetail>()).ToList(), default));
+            return new BackupOperationStatusValidateOperationExtendedInfo(default, default, validateOperationResponseValidationResults is null ? default : new ValidateOperationResponse((validateOperationResponseValidationResults ?? new ChangeTrackingList<BackupErrorDetail>()).ToList(), default));
         }
 
         /// <summary> ListRecoveryPointsRecommendedForMoveRequest Request. </summary>
@@ -2414,11 +2414,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="snapshotResourceGroup"> Resource Group of snapshot restore point. </param>
         /// <param name="sourceFilesystemInfo"> Per volume filesystem metadata captured on the VM. </param>
         /// <returns> A new <see cref="Models.SnapshotRecoveryPointInfo"/> instance for mocking. </returns>
-        public static SnapshotRecoveryPointInfo SnapshotRecoveryPointInfo(string snapshotResourceGroup = default, IEnumerable<FilesystemInfo> sourceFilesystemInfo = default)
+        public static SnapshotRecoveryPointInfo SnapshotRecoveryPointInfo(string snapshotResourceGroup = default, IEnumerable<RecoveryPointFilesystemInfo> sourceFilesystemInfo = default)
         {
-            sourceFilesystemInfo ??= new ChangeTrackingList<FilesystemInfo>();
+            sourceFilesystemInfo ??= new ChangeTrackingList<RecoveryPointFilesystemInfo>();
 
-            return new SnapshotRecoveryPointInfo(snapshotResourceGroup, (sourceFilesystemInfo ?? new ChangeTrackingList<FilesystemInfo>()).ToList(), default);
+            return new SnapshotRecoveryPointInfo(snapshotResourceGroup, (sourceFilesystemInfo ?? new ChangeTrackingList<RecoveryPointFilesystemInfo>()).ToList(), default);
         }
 
         /// <summary> Per volume filesystem metadata captured on the VM. </summary>
@@ -2429,20 +2429,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isOnStorageSpace"> True when this volume sits on a Windows Storage Spaces virtual disk. </param>
         /// <param name="storageSpaceInfo"> Storage Spaces pool / virtual-disk identifiers. </param>
         /// <param name="diskInfoList"> Physical disks that back this volume (or the storage pool). </param>
-        /// <returns> A new <see cref="Models.FilesystemInfo"/> instance for mocking. </returns>
-        public static FilesystemInfo FilesystemInfo(string volumeGuid = default, string fileSystemType = default, string label = default, IEnumerable<string> accessPaths = default, bool? isOnStorageSpace = default, StorageSpaceInfo storageSpaceInfo = default, IEnumerable<DiskInfo> diskInfoList = default)
+        /// <returns> A new <see cref="Models.RecoveryPointFilesystemInfo"/> instance for mocking. </returns>
+        public static RecoveryPointFilesystemInfo RecoveryPointFilesystemInfo(string volumeGuid = default, string fileSystemType = default, string label = default, IEnumerable<string> accessPaths = default, bool? isOnStorageSpace = default, RecoveryPointStorageSpaceInfo storageSpaceInfo = default, IEnumerable<RecoveryPointDiskInfo> diskInfoList = default)
         {
             accessPaths ??= new ChangeTrackingList<string>();
-            diskInfoList ??= new ChangeTrackingList<DiskInfo>();
+            diskInfoList ??= new ChangeTrackingList<RecoveryPointDiskInfo>();
 
-            return new FilesystemInfo(
+            return new RecoveryPointFilesystemInfo(
                 volumeGuid,
                 fileSystemType,
                 label,
                 (accessPaths ?? new ChangeTrackingList<string>()).ToList(),
                 isOnStorageSpace,
                 storageSpaceInfo,
-                (diskInfoList ?? new ChangeTrackingList<DiskInfo>()).ToList(),
+                (diskInfoList ?? new ChangeTrackingList<RecoveryPointDiskInfo>()).ToList(),
                 default);
         }
 
@@ -2451,10 +2451,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="storagePoolFriendlyName"> Friendly name of the storage pool. </param>
         /// <param name="virtualDiskUniqueId"> Unique ID of the virtual disk. </param>
         /// <param name="virtualDiskFriendlyName"> Friendly name of the virtual disk. </param>
-        /// <returns> A new <see cref="Models.StorageSpaceInfo"/> instance for mocking. </returns>
-        public static StorageSpaceInfo StorageSpaceInfo(string storagePoolUniqueId = default, string storagePoolFriendlyName = default, string virtualDiskUniqueId = default, string virtualDiskFriendlyName = default)
+        /// <returns> A new <see cref="Models.RecoveryPointStorageSpaceInfo"/> instance for mocking. </returns>
+        public static RecoveryPointStorageSpaceInfo RecoveryPointStorageSpaceInfo(string storagePoolUniqueId = default, string storagePoolFriendlyName = default, string virtualDiskUniqueId = default, string virtualDiskFriendlyName = default)
         {
-            return new StorageSpaceInfo(storagePoolUniqueId, storagePoolFriendlyName, virtualDiskUniqueId, virtualDiskFriendlyName, default);
+            return new RecoveryPointStorageSpaceInfo(storagePoolUniqueId, storagePoolFriendlyName, virtualDiskUniqueId, virtualDiskFriendlyName, default);
         }
 
         /// <summary>
@@ -2469,10 +2469,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="friendlyName"> Friendly name of the disk. </param>
         /// <param name="lun"> LUN of the disk. </param>
         /// <param name="managedDiskId"> ARM ID of the managed disk. </param>
-        /// <returns> A new <see cref="Models.DiskInfo"/> instance for mocking. </returns>
-        public static DiskInfo DiskInfo(int? diskNumber = default, string diskUniqueId = default, string diskGuid = default, string diskLocation = default, long? sizeInBytes = default, string friendlyName = default, int? lun = default, string managedDiskId = default)
+        /// <returns> A new <see cref="Models.RecoveryPointDiskInfo"/> instance for mocking. </returns>
+        public static RecoveryPointDiskInfo RecoveryPointDiskInfo(int? diskNumber = default, string diskUniqueId = default, string diskGuid = default, string diskLocation = default, long? sizeInBytes = default, string friendlyName = default, int? lun = default, string managedDiskId = default)
         {
-            return new DiskInfo(
+            return new RecoveryPointDiskInfo(
                 diskNumber,
                 diskUniqueId,
                 diskGuid,
@@ -2637,6 +2637,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static DiskDetails DiskDetails(int? lun = default, string diskName = default)
         {
             return new DiskDetails(lun, diskName, default);
+        }
+
+        /// <summary> Base for all lists of resources. </summary>
+        /// <param name="nextLink"> The URI to fetch the next page of resources, with each API call returning up to 200 resources per page. Use ListNext() to fetch the next page if the total number of resources exceeds 200. </param>
+        /// <returns> A new <see cref="Models.ResourceList"/> instance for mocking. </returns>
+        public static ResourceList ResourceList(string nextLink = default)
+        {
+            return new ResourceList(nextLink, default);
         }
 
         /// <summary> Base class for container with backup items. Containers with specific workloads are derived from this class. </summary>
@@ -3449,12 +3457,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// ARM id of the recovery point whose additional details are to be fetched. Exactly one recovery point id can be
         /// specified.
         /// </param>
-        /// <returns> A new <see cref="Models.GetRPExtendedInfoRequestResource"/> instance for mocking. </returns>
-        public static GetRPExtendedInfoRequestResource GetRPExtendedInfoRequestResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ETag? eTag = default, IEnumerable<string> getRPExtendedInfoContentRecoveryPointIds = default)
+        /// <returns> A new <see cref="Models.RecoveryPointExtendedInfoContent"/> instance for mocking. </returns>
+        public static RecoveryPointExtendedInfoContent RecoveryPointExtendedInfoContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ETag? eTag = default, IEnumerable<string> getRPExtendedInfoContentRecoveryPointIds = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new GetRPExtendedInfoRequestResource(
+            return new RecoveryPointExtendedInfoContent(
                 id,
                 name,
                 resourceType,
@@ -3464,6 +3472,69 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 eTag,
                 getRPExtendedInfoContentRecoveryPointIds is null ? default : new GetRPExtendedInfoContent((getRPExtendedInfoContentRecoveryPointIds ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
+        }
+
+        /// <summary> List of the additional details of recovery points. </summary>
+        /// <param name="nextLink"> The URI to fetch the next page of resources, with each API call returning up to 200 resources per page. Use ListNext() to fetch the next page if the total number of resources exceeds 200. </param>
+        /// <param name="value"> List of resources. </param>
+        /// <returns> A new <see cref="Models.RPExtendedInfoResourceList"/> instance for mocking. </returns>
+        public static RPExtendedInfoResourceList RPExtendedInfoResourceList(string nextLink = default, IEnumerable<RPExtendedInfoResource> value = default)
+        {
+            value ??= new ChangeTrackingList<RPExtendedInfoResource>();
+
+            return new RPExtendedInfoResourceList(nextLink, default, (value ?? new ChangeTrackingList<RPExtendedInfoResource>()).ToList());
+        }
+
+        /// <summary> Additional details of a recovery point, wrapped in a resource envelope. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <param name="properties"> RPExtendedInfoResource properties. </param>
+        /// <returns> A new <see cref="Models.RPExtendedInfoResource"/> instance for mocking. </returns>
+        public static RPExtendedInfoResource RPExtendedInfoResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ETag? eTag = default, RPExtendedInfo properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RPExtendedInfoResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                eTag,
+                properties,
+                default);
+        }
+
+        /// <summary>
+        /// Base class for additional details of a recovery point. Workload-specific additional details are derived from
+        /// this class.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.IaasVMRPExtendedInfo"/>.
+        /// </summary>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <returns> A new <see cref="Models.RPExtendedInfo"/> instance for mocking. </returns>
+        public static RPExtendedInfo RPExtendedInfo(string objectType = default)
+        {
+            return new UnknownRPExtendedInfo(objectType, default);
+        }
+
+        /// <summary> Additional details of an IaaS VM recovery point. </summary>
+        /// <param name="osDisk">
+        /// OS disk of the backed up virtual machine. The lun of the OS disk is always -1, since a logical unit number is
+        /// only assigned to data disks.
+        /// </param>
+        /// <param name="dataDisks"> Data disks of the backed up virtual machine. </param>
+        /// <returns> A new <see cref="Models.IaasVMRPExtendedInfo"/> instance for mocking. </returns>
+        public static IaasVMRPExtendedInfo IaasVMRPExtendedInfo(DiskInformation osDisk = default, IEnumerable<DiskInformation> dataDisks = default)
+        {
+            dataDisks ??= new ChangeTrackingList<DiskInformation>();
+
+            return new IaasVMRPExtendedInfo(default, default, osDisk, (dataDisks ?? new ChangeTrackingList<DiskInformation>()).ToList());
         }
 
         /// <summary> Base class for restore request. Workload-specific restore requests are derived from this class. </summary>

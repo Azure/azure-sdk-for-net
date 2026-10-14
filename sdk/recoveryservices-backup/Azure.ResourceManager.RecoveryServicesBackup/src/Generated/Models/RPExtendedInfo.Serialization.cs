@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.RecoveryServicesBackup;
 
@@ -16,8 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary>
     /// Base class for additional details of a recovery point. Workload-specific additional details are derived from
     /// this class.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="IaasVMRPExtendedInfo"/>.
     /// </summary>
-    internal partial class RPExtendedInfo : IJsonModel<RPExtendedInfo>
+    [PersistableModelProxy(typeof(UnknownRPExtendedInfo))]
+    public abstract partial class RPExtendedInfo : IJsonModel<RPExtendedInfo>
     {
         /// <summary> Initializes a new instance of <see cref="RPExtendedInfo"/> for deserialization. </summary>
         internal RPExtendedInfo()
@@ -126,21 +127,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            string objectType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            if (element.TryGetProperty("objectType"u8, out JsonElement discriminator))
             {
-                if (prop.NameEquals("objectType"u8))
+                switch (discriminator.GetString())
                 {
-                    objectType = prop.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    case "IaasVMRPExtendedInfo":
+                        return IaasVMRPExtendedInfo.DeserializeIaasVMRPExtendedInfo(element, options);
                 }
             }
-            return new RPExtendedInfo(objectType, additionalBinaryDataProperties);
+            return UnknownRPExtendedInfo.DeserializeUnknownRPExtendedInfo(element, options);
         }
     }
 }

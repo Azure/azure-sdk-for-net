@@ -13,15 +13,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary>
     /// Base class for additional details of a recovery point. Workload-specific additional details are derived from
     /// this class.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="IaasVMRPExtendedInfo"/>.
     /// </summary>
-    internal partial class RPExtendedInfo
+    public abstract partial class RPExtendedInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RPExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        internal RPExtendedInfo(string objectType)
+        private protected RPExtendedInfo(string objectType)
         {
             ObjectType = objectType;
         }

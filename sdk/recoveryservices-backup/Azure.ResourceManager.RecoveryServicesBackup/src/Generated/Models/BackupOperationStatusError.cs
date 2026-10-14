@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Error information associated with operation status call. </summary>
-    public partial class OperationStatusError
+    public partial class BackupOperationStatusError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatusError"/>. </summary>
-        internal OperationStatusError()
+        /// <summary> Initializes a new instance of <see cref="BackupOperationStatusError"/>. </summary>
+        internal BackupOperationStatusError()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatusError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupOperationStatusError"/>. </summary>
         /// <param name="code"> Error code of the operation failure. </param>
         /// <param name="message"> Error message displayed if the operation failure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationStatusError(string code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupOperationStatusError(string code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;

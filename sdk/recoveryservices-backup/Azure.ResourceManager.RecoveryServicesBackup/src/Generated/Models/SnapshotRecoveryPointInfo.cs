@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="SnapshotRecoveryPointInfo"/>. </summary>
         public SnapshotRecoveryPointInfo()
         {
-            SourceFilesystemInfo = new ChangeTrackingList<FilesystemInfo>();
+            SourceFilesystemInfo = new ChangeTrackingList<RecoveryPointFilesystemInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotRecoveryPointInfo"/>. </summary>
         /// <param name="snapshotResourceGroup"> Resource Group of snapshot restore point. </param>
         /// <param name="sourceFilesystemInfo"> Per volume filesystem metadata captured on the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotRecoveryPointInfo(string snapshotResourceGroup, IList<FilesystemInfo> sourceFilesystemInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotRecoveryPointInfo(string snapshotResourceGroup, IList<RecoveryPointFilesystemInfo> sourceFilesystemInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SnapshotResourceGroup = snapshotResourceGroup;
             SourceFilesystemInfo = sourceFilesystemInfo;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string SnapshotResourceGroup { get; set; }
 
         /// <summary> Per volume filesystem metadata captured on the VM. </summary>
-        public IList<FilesystemInfo> SourceFilesystemInfo { get; }
+        public IList<RecoveryPointFilesystemInfo> SourceFilesystemInfo { get; }
     }
 }

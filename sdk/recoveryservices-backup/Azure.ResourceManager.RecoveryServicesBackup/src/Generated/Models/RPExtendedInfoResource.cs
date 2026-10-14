@@ -15,7 +15,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Additional details of a recovery point, wrapped in a resource envelope. </summary>
-    internal partial class RPExtendedInfoResource : ResourceData
+    public partial class RPExtendedInfoResource : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -14,59 +14,59 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for additional information of operation status.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OperationStatusJobExtendedInfo"/>, <see cref="OperationStatusJobsExtendedInfo"/>, <see cref="OperationStatusProvisionILRExtendedInfo"/>, and <see cref="OperationStatusValidateOperationExtendedInfo"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupOperationStatusJobExtendedInfo"/>, <see cref="BackupOperationStatusJobsExtendedInfo"/>, <see cref="BackupOperationStatusProvisionIlrExtendedInfo"/>, and <see cref="BackupOperationStatusValidateOperationExtendedInfo"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownOperationStatusExtendedInfo))]
-    public abstract partial class OperationStatusExtendedInfo : IJsonModel<OperationStatusExtendedInfo>
+    [PersistableModelProxy(typeof(UnknownBackupOperationStatusExtendedInfo))]
+    public abstract partial class BackupOperationStatusExtendedInfo : IJsonModel<BackupOperationStatusExtendedInfo>
     {
-        /// <summary> Initializes a new instance of <see cref="OperationStatusExtendedInfo"/> for deserialization. </summary>
-        internal OperationStatusExtendedInfo()
+        /// <summary> Initializes a new instance of <see cref="BackupOperationStatusExtendedInfo"/> for deserialization. </summary>
+        internal BackupOperationStatusExtendedInfo()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OperationStatusExtendedInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BackupOperationStatusExtendedInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationStatusExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupOperationStatusExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOperationStatusExtendedInfo(document.RootElement, options);
+                        return DeserializeBackupOperationStatusExtendedInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationStatusExtendedInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupOperationStatusExtendedInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationStatusExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupOperationStatusExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OperationStatusExtendedInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupOperationStatusExtendedInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OperationStatusExtendedInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BackupOperationStatusExtendedInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OperationStatusExtendedInfo IPersistableModel<OperationStatusExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BackupOperationStatusExtendedInfo IPersistableModel<BackupOperationStatusExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OperationStatusExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BackupOperationStatusExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OperationStatusExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BackupOperationStatusExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationStatusExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupOperationStatusExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationStatusExtendedInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupOperationStatusExtendedInfo)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OperationStatusExtendedInfo IJsonModel<OperationStatusExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BackupOperationStatusExtendedInfo IJsonModel<BackupOperationStatusExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OperationStatusExtendedInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BackupOperationStatusExtendedInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationStatusExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupOperationStatusExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationStatusExtendedInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupOperationStatusExtendedInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOperationStatusExtendedInfo(document.RootElement, options);
+            return DeserializeBackupOperationStatusExtendedInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OperationStatusExtendedInfo DeserializeOperationStatusExtendedInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static BackupOperationStatusExtendedInfo DeserializeBackupOperationStatusExtendedInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,16 +131,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 switch (discriminator.GetString())
                 {
                     case "OperationStatusJobExtendedInfo":
-                        return OperationStatusJobExtendedInfo.DeserializeOperationStatusJobExtendedInfo(element, options);
+                        return BackupOperationStatusJobExtendedInfo.DeserializeBackupOperationStatusJobExtendedInfo(element, options);
                     case "OperationStatusJobsExtendedInfo":
-                        return OperationStatusJobsExtendedInfo.DeserializeOperationStatusJobsExtendedInfo(element, options);
+                        return BackupOperationStatusJobsExtendedInfo.DeserializeBackupOperationStatusJobsExtendedInfo(element, options);
                     case "OperationStatusProvisionILRExtendedInfo":
-                        return OperationStatusProvisionILRExtendedInfo.DeserializeOperationStatusProvisionILRExtendedInfo(element, options);
+                        return BackupOperationStatusProvisionIlrExtendedInfo.DeserializeBackupOperationStatusProvisionIlrExtendedInfo(element, options);
                     case "OperationStatusValidateOperationExtendedInfo":
-                        return OperationStatusValidateOperationExtendedInfo.DeserializeOperationStatusValidateOperationExtendedInfo(element, options);
+                        return BackupOperationStatusValidateOperationExtendedInfo.DeserializeBackupOperationStatusValidateOperationExtendedInfo(element, options);
                 }
             }
-            return UnknownOperationStatusExtendedInfo.DeserializeUnknownOperationStatusExtendedInfo(element, options);
+            return UnknownBackupOperationStatusExtendedInfo.DeserializeUnknownBackupOperationStatusExtendedInfo(element, options);
         }
     }
 }

@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Operation status job extended info. </summary>
-    public partial class OperationStatusJobExtendedInfo : OperationStatusExtendedInfo
+    public partial class BackupOperationStatusJobExtendedInfo : BackupOperationStatusExtendedInfo
     {
-        /// <summary> Initializes a new instance of <see cref="OperationStatusJobExtendedInfo"/>. </summary>
-        internal OperationStatusJobExtendedInfo() : base("OperationStatusJobExtendedInfo")
+        /// <summary> Initializes a new instance of <see cref="BackupOperationStatusJobExtendedInfo"/>. </summary>
+        internal BackupOperationStatusJobExtendedInfo() : base("OperationStatusJobExtendedInfo")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatusJobExtendedInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupOperationStatusJobExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="jobId"> ID of the job created for this protected item. </param>
-        internal OperationStatusJobExtendedInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string jobId) : base(objectType, additionalBinaryDataProperties)
+        internal BackupOperationStatusJobExtendedInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string jobId) : base(objectType, additionalBinaryDataProperties)
         {
             JobId = jobId;
         }

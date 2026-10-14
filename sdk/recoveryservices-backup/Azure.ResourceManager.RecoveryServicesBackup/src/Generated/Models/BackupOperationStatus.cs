@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Operation status. </summary>
-    public partial class OperationStatus
+    public partial class BackupOperationStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
-        internal OperationStatus()
+        /// <summary> Initializes a new instance of <see cref="BackupOperationStatus"/>. </summary>
+        internal BackupOperationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupOperationStatus"/>. </summary>
         /// <param name="id"> ID of the operation. </param>
         /// <param name="name"> Name of the operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="error"> Error information related to this operation. </param>
         /// <param name="properties"> Additional information associated with this operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationStatus(string id, string name, OperationStatusValues? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, OperationStatusError error, OperationStatusExtendedInfo properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupOperationStatus(string id, string name, BackupOperationStatusValue? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, BackupOperationStatusError error, BackupOperationStatusExtendedInfo properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string Name { get; }
 
         /// <summary> Operation status. </summary>
-        public OperationStatusValues? Status { get; }
+        public BackupOperationStatusValue? Status { get; }
 
         /// <summary> Operation start time. Format: ISO-8601. </summary>
         public DateTimeOffset? StartsOn { get; }
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Error information related to this operation. </summary>
-        public OperationStatusError Error { get; }
+        public BackupOperationStatusError Error { get; }
 
         /// <summary> Additional information associated with this operation. </summary>
-        public OperationStatusExtendedInfo Properties { get; }
+        public BackupOperationStatusExtendedInfo Properties { get; }
     }
 }

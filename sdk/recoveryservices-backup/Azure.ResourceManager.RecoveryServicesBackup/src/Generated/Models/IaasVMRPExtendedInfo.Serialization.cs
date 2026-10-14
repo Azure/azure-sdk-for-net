@@ -14,7 +14,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Additional details of an IaaS VM recovery point. </summary>
-    internal partial class IaasVMRPExtendedInfo : RPExtendedInfo, IJsonModel<IaasVMRPExtendedInfo>
+    public partial class IaasVMRPExtendedInfo : RPExtendedInfo, IJsonModel<IaasVMRPExtendedInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

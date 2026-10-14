@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    internal partial class UnknownOperationStatusExtendedInfo : OperationStatusExtendedInfo
+    internal partial class UnknownBackupOperationStatusExtendedInfo : BackupOperationStatusExtendedInfo
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownOperationStatusExtendedInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownBackupOperationStatusExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownOperationStatusExtendedInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownBackupOperationStatusExtendedInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

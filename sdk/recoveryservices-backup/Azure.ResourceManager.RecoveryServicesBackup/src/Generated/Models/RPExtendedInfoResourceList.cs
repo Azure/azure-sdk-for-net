@@ -12,7 +12,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> List of the additional details of recovery points. </summary>
-    internal partial class RPExtendedInfoResourceList : ResourceList
+    public partial class RPExtendedInfoResourceList : ResourceList
     {
         /// <summary> Initializes a new instance of <see cref="RPExtendedInfoResourceList"/>. </summary>
         internal RPExtendedInfoResourceList()
