@@ -274,7 +274,7 @@ namespace BasicTypeSpec
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResourceIdentifierModel(id, optionalId, nullableId, ids, additionalBinaryDataProperties);
+            return new ResourceIdentifierModel(id, optionalId, nullableId, ids ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
 
         /// <param name="writer"> The XML writer. </param>
@@ -374,7 +374,7 @@ namespace BasicTypeSpec
                     continue;
                 }
             }
-            return new ResourceIdentifierModel(id, optionalId, nullableId, ids, additionalBinaryDataProperties);
+            return new ResourceIdentifierModel(id, optionalId, nullableId, ids ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
 
         /// <param name="writer"> The XML writer. </param>

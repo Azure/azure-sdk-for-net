@@ -39,6 +39,31 @@ namespace TestProjects.Local.Tests
             AssertModel(result!, includeOptionalIds);
         }
 
+        [TestCase("J", false)]
+        [TestCase("J", true)]
+        [TestCase("X", false)]
+        [TestCase("X", true)]
+        public void MissingOrEmptyIdsDeserializeAsMutableEmptyCollection(string format, bool includeIds)
+        {
+            var body = format == "X"
+                ? $"<ResourceIdentifierModel><id>{ResourceId}</id>{(includeIds ? "<ids />" : "")}</ResourceIdentifierModel>"
+                : $"{{\"id\":\"{ResourceId}\"{(includeIds ? ",\"ids\":[]" : "")}}}";
+            var options = new ModelReaderWriterOptions(format);
+            var model = ModelReaderWriter.Read<ResourceIdentifierModel>(new BinaryData(body), options, BasicTypeSpecContext.Default)!;
+
+            Assert.IsNotNull(model);
+            Assert.IsNotNull(model.Ids);
+            Assert.IsEmpty(model.Ids);
+
+            model.Ids.Add(new ResourceIdentifier(ResourceId));
+            AssertModel(model, false);
+
+            var data = ModelReaderWriter.Write(model, options, BasicTypeSpecContext.Default);
+            AssertWireValue(data.ToString(), format == "X", false);
+            var result = ModelReaderWriter.Read<ResourceIdentifierModel>(data, options, BasicTypeSpecContext.Default);
+            AssertModel(result!, false);
+        }
+
         [TestCase(false)]
         [TestCase(true)]
         public async Task OperationUsesResourceIdentifiers(bool xml)
