@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- Added `JsonPatch.ContainsValue` to check whether a value can be read at a JSON path, including values supplied by getter propagators. Existing `Contains` behavior is unchanged for compatibility with model serializers.
 - Added `ClientPipeline.Send` and `SendAsync` overloads accepting a `CancellationToken` to override cancellation for a send while preserving applied request options.
 
 ### Breaking Changes
