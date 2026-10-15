@@ -110,6 +110,23 @@ extends:
 
         - ${{ parameters.InitializationSteps }}
 
+        - ${{ if in(parameters.EmitterPackagePath, 'eng/packages/http-client-csharp', 'eng/packages/http-client-csharp-mgmt') }}:
+          - pwsh: |
+              git fetch --no-tags origin main:refs/remotes/origin/main
+              if ($LASTEXITCODE -ne 0) {
+                throw "Unable to fetch canonical main approval history; emitter dependency approval cannot be established."
+              }
+              & "$(Build.SourcesDirectory)/eng/scripts/typespec/Validate-EmitterDependencies.ps1" `
+                -RepoRoot "$(Build.SourcesDirectory)" `
+                -EmitterPackagePath "${{ parameters.EmitterPackagePath }}"
+            displayName: Validate official emitter dependencies
+
+          - pwsh: |
+              . "$(Build.SourcesDirectory)/eng/common/scripts/Helpers/PSModule-Helpers.ps1"
+              Install-ModuleIfNotInstalled "Pester" "5.3.3" | Import-Module
+              Invoke-Pester -Path "$(Build.SourcesDirectory)/eng/scripts/tests/Validate-EmitterDependencies.tests.ps1" -CI
+            displayName: Test emitter dependency validation
+
         - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
           parameters:
             npmrcPath: $(emitterNpmrcPath)
