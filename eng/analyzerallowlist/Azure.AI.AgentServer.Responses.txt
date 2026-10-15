@@ -17,20 +17,14 @@ nowarn:AZC0100
 # Same exemption as the parent Azure.AI.AgentServer.Core (and AMQP-based SDKs).
 nowarn:AZC0004
 
-# AAIP002 is stamped by the OpenAIExperimentalVisitor in the codegen plugin (sdk/ai/codegen)
-# onto generated surface that exposes OpenAI-experimental types. This package no longer adds
-# its own experimental attributes; the diagnostic only fires on internal use of those
-# upstream-tagged generated types. File-scoped pragmas would be wiped on every codegen regen.
-nowarn:AAIP002
-
-# OPENAI001 marks the OpenAI.Responses surface this package is built on. It cannot be
-# suppressed with attributes alone: the System.ClientModel model-reader source generator
-# emits a reference to OpenAI.OpenAIContext into AzureAIAgentServerResponsesContext.g.cs,
-# which we cannot annotate and which is regenerated on every build. The public surface
-# is owned upstream; this package adds no experimental markers of its own.
+# OPENAI001 marks the entire OpenAI.Responses surface this package is built on as
+# experimental in the OpenAI SDK (1400+ use sites), and the System.ClientModel model-reader
+# source generator emits an OpenAI.OpenAIContext reference into a regenerated .g.cs file
+# that cannot be annotated. Removable only once OpenAI drops the tag upstream.
 nowarn:OPENAI001
 
-# OPENAICUA001 marks the OpenAI computer-use surface (ComputerCallAction and friends).
-# The spec models the computer-use tool, so these types appear in generated serialization
-# code for the same source-generated reasons described for OPENAI001 above.
-nowarn:OPENAICUA001
+# AAIP002 fires on two generated constructors that assign an experimental-tagged property of
+# their own type (CreateResponseRequest.Tools, ItemFieldComputerToolCall.Actions) and on a few
+# hand-written uses of Azure.AI.Extensions.OpenAI items still tagged upstream. Generated files
+# cannot carry pragmas (wiped on regen). This package adds no experimental markers itself.
+nowarn:AAIP002
