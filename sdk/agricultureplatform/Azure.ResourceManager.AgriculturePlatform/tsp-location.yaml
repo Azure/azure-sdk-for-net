@@ -1,4 +1,4 @@
 directory: specification/agricultureplatform/AgriculturePlatform.Management
-commit: 222294a50bda9c0543f10c562ac31299e07eb67c
-repo: cxznmhdcxz/azure-rest-api-specs
+commit: bbe60ce6aa8b8332df55cae6c7ee8183ab48539e
+repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
