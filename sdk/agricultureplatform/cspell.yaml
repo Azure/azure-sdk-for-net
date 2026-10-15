@@ -1,8 +1,7 @@
 import:
   - ../../.vscode/cspell.json
 overrides:
-  - filename: '**/sdk/agricultureplatform/Azure.Provisioning.AgriculturePlatform/**/*.{cs,md}'
+  - filename: '**/sdk/agricultureplatform/Azure.Provisioning.AgriculturePlatform/**/*.cs'
     words:
       - Agri
       - AZPROVISION
-      - Trycep
