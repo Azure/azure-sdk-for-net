@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.AgentServer.Core;
 
 /// <summary>
@@ -10,6 +12,7 @@ namespace Azure.AI.AgentServer.Core;
 /// Implementations are registered as singletons and must be thread-safe. The library serializes callback
 /// execution and handles platform retries, but implementations should keep their completed work idempotent.
 /// </remarks>
+[Experimental("AAAS002")]
 public interface IAgentSnapshotLifecycle
 {
     /// <summary>

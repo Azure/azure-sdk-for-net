@@ -9,6 +9,7 @@
   `POST /_before_snapshot` and `POST /_after_restore` as aliases. Applications can register
   an `IAgentSnapshotLifecycle` singleton to release and rebuild process state; Core applies
   session environment overrides first and provides serialized, idempotent retry handling.
+  Consumers acknowledge this experimental contract with the `AAAS002` diagnostic.
 - Added `FoundryEnvironment.SessionInstanceId`, sourced from `FOUNDRY_AGENT_SESSION_GUID`, and
   validation of the hosted platform's 32-character lowercase hexadecimal session-incarnation ID.
 - Added `TaskDefinition<TInput, TOutput>.GetStatusAsync()` for task-ID migration and compatibility

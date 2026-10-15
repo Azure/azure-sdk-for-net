@@ -81,6 +81,7 @@ namespace Azure.AI.AgentServer.Core
         public static System.TimeSpan SseKeepAliveInterval { get { throw null; } }
         public static System.TimeSpan WebSocketKeepAliveInterval { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS002")]
     public partial interface IAgentSnapshotLifecycle
     {
         System.Threading.Tasks.Task AfterRestoreAsync(Azure.AI.AgentServer.Core.AgentRestoreContext context, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));

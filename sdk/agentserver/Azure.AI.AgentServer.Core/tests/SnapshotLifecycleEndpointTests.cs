@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
@@ -21,6 +22,16 @@ public class SnapshotLifecycleEndpointTests
     private const string SessionIdEnvironmentVariable = "FOUNDRY_AGENT_SESSION_ID";
 
     private readonly Dictionary<string, string?> _originalEnvironment = new(StringComparer.Ordinal);
+
+    [Test]
+    public void LifecycleContract_IsExperimental()
+    {
+        var attribute = Attribute.GetCustomAttribute(
+            typeof(IAgentSnapshotLifecycle),
+            typeof(ExperimentalAttribute)) as ExperimentalAttribute;
+
+        Assert.That(attribute?.DiagnosticId, Is.EqualTo("AAAS002"));
+    }
 
     [SetUp]
     public void SetUp()

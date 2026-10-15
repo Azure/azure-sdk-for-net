@@ -3,6 +3,7 @@
 
 namespace Azure.AI.AgentServer.Core.Internal;
 
+#pragma warning disable AAAS002 // Internal implementation of the experimental snapshot lifecycle contract.
 internal sealed class NoOpAgentSnapshotLifecycle : IAgentSnapshotLifecycle
 {
     public Task BeforeSnapshotAsync(CancellationToken cancellationToken = default) =>
@@ -13,3 +14,4 @@ internal sealed class NoOpAgentSnapshotLifecycle : IAgentSnapshotLifecycle
         CancellationToken cancellationToken = default) =>
         Task.CompletedTask;
 }
+#pragma warning restore AAAS002

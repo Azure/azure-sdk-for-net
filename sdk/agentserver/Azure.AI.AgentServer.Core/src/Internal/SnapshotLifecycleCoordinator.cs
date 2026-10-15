@@ -13,6 +13,7 @@ internal enum AfterRestoreResult
     SessionMismatch,
 }
 
+#pragma warning disable AAAS002 // Internal orchestration of the experimental snapshot lifecycle contract.
 internal sealed class SnapshotLifecycleCoordinator
 {
     private const string SessionIdEnvironmentVariable = "FOUNDRY_AGENT_SESSION_ID";
@@ -62,6 +63,7 @@ internal sealed class SnapshotLifecycleCoordinator
             _gate.Release();
         }
     }
+#pragma warning restore AAAS002
 
     public async Task<AfterRestoreResult> AfterRestoreAsync(AgentRestoreContext context)
     {

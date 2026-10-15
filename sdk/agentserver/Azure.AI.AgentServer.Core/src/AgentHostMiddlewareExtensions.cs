@@ -47,7 +47,9 @@ public static class AgentHostMiddlewareExtensions
         services.TryAddSingleton<RequestIdBaggagePropagator>();
         services.TryAddSingleton<W3CBaggagePropagator>();
         services.TryAddSingleton<InboundRequestLoggingMiddleware>();
+#pragma warning disable AAAS002 // Register the SDK's default implementation of the experimental lifecycle contract.
         services.TryAddSingleton<IAgentSnapshotLifecycle, NoOpAgentSnapshotLifecycle>();
+#pragma warning restore AAAS002
         services.TryAddSingleton<SnapshotLifecycleCoordinator>();
         services.TryAddSingleton<SnapshotLifecycleMiddleware>();
         // Transient so it can be added to any HttpClient via AddHttpMessageHandler.
