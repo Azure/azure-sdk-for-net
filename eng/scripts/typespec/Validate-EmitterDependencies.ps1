@@ -20,16 +20,19 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-function Get-EmitterApprovalHistory([string]$RepoRoot, [string]$DescriptorPath, [string]$Dependency) {
+function Get-EmitterApprovalHistory([string]$RepoRoot, [string]$DescriptorPath, [string]$Dependency, [string]$Version) {
     # Only first-parent main approvals count, never pins in PR/feature history.
-    $history = git -C $RepoRoot log --first-parent --format= --no-ext-diff -p refs/remotes/origin/main -- $DescriptorPath 2>&1
+    # Stop at the most recent matching approval change, or at the descriptor's creation.
+    $pin = '"' + [regex]::Escape($Dependency) + '"[[:space:]]*:[[:space:]]*"' + [regex]::Escape($Version) + '"'
+    $history = git -C $RepoRoot log --first-parent --follow --max-count=1 --format= --no-ext-diff -p -G $pin refs/remotes/origin/main -- $DescriptorPath 2>&1
     if ($LASTEXITCODE -ne 0) {
         throw "Unable to establish approval history from canonical origin/main: $($history | Out-String). Fetch main history and retry."
     }
-    $pattern = '^\+\s*"' + [regex]::Escape($Dependency) + '"\s*:\s*"([^"]+)"'
+    # Either side of a first-parent diff is a descriptor state that existed on main.
+    $pattern = '^[+-]\s*"' + [regex]::Escape($Dependency) + '"\s*:\s*"' + [regex]::Escape($Version) + '"'
     foreach ($line in $history) {
         if ($line -cmatch $pattern) {
-            $Matches[1]
+            return $Version
         }
     }
 }
@@ -83,7 +86,7 @@ function Assert-EmitterDependencies([string]$RepoRoot, [string]$EmitterPackagePa
         if (-not [System.Management.Automation.SemanticVersion]::TryParse($approved, [ref]$approvedVersion)) {
             throw "${context}: unable to establish approval; '$descriptorPath' has no exact approved version for '$dependency'. $guidance"
         }
-        $historicalApprovals = $null
+        $historicalApprovals = @{}
         $resolutionPattern = '(^|/)node_modules/' + [regex]::Escape($dependency) + '$'
         foreach ($entry in $lock.packages.GetEnumerator() | Where-Object { $_.Key -cmatch $resolutionPattern }) {
             $resolved = $entry.Value.version
@@ -96,15 +99,15 @@ function Assert-EmitterDependencies([string]$RepoRoot, [string]$EmitterPackagePa
             if ($resolved -ceq $approved) {
                 continue
             }
-            if ($null -eq $historicalApprovals) {
+            if (-not $historicalApprovals.ContainsKey($resolved)) {
                 try {
-                    $historicalApprovals = @(Get-EmitterApprovalHistory $RepoRoot $descriptorPath $dependency)
+                    $historicalApprovals[$resolved] = $resolved -cin @(Get-EmitterApprovalHistory $RepoRoot $descriptorPath $dependency $resolved)
                 }
                 catch {
                     throw "${resolutionContext}: unable to establish approval/provenance. $($_.Exception.Message) $guidance"
                 }
             }
-            if ($resolved -cnotin $historicalApprovals) {
+            if (-not $historicalApprovals[$resolved]) {
                 throw "${resolutionContext}: no recorded official main approval in '$descriptorPath'; current approval is '$approved'. Being published or numerically older is not proof of origin. PR/feature/regeneration-preview packages are not approved. If history is shallow, fetch complete canonical main history and retry. $guidance"
             }
         }
