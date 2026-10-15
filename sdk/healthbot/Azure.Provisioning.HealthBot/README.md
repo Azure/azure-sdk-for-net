@@ -16,6 +16,8 @@ dotnet add package Azure.Provisioning.HealthBot --prerelease
 
 You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
+### Authenticate the client
+
 ## Key concepts
 
 This library lets you define Azure Health Bot resources declaratively in .NET.
