@@ -12,7 +12,7 @@
   - `ShareClient.GenerateUserDelegationSasUri(...)`
   - `ShareDirectoryClient.GenerateSasUri(...)`
   - `ShareFileClient.GenerateSasUri(...)`
-  - `ShareServiceClient.GenerateUserDelegationSasUri(...)`
+  - `ShareFileClient.GenerateUserDelegationSasUri(...)`
   - `ShareServiceClient.GenerateAccountSasUri(...)`
   - `ShareSasBuilder`
 

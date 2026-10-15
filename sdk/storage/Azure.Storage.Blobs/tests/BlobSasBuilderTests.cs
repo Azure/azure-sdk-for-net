@@ -100,6 +100,81 @@ namespace Azure.Storage.Blobs.Test
             StringAssert.Contains($"se={expectedExpiry}", query);
         }
 
+        [Test]
+        public void ToSasQueryParameters_SharedKey_EquivalentUtcAndNonUtcInstantsProduceSameSas()
+        {
+            DateTimeOffset startsOnNonUtc = new DateTimeOffset(2026, 01, 01, 10, 00, 00, TimeSpan.FromHours(-7));
+            DateTimeOffset expiresOnNonUtc = new DateTimeOffset(2026, 01, 01, 11, 00, 00, TimeSpan.FromHours(-7));
+            DateTimeOffset startsOnUtc = startsOnNonUtc.ToUniversalTime();
+            DateTimeOffset expiresOnUtc = expiresOnNonUtc.ToUniversalTime();
+
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential("account", Convert.ToBase64String(new byte[32]));
+
+            BlobSasBuilder nonUtcBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, expiresOnNonUtc)
+            {
+                StartsOn = startsOnNonUtc,
+                BlobContainerName = "container",
+                BlobName = "blob"
+            };
+
+            BlobSasBuilder utcBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, expiresOnUtc)
+            {
+                StartsOn = startsOnUtc,
+                BlobContainerName = "container",
+                BlobName = "blob"
+            };
+
+            string nonUtcSas = nonUtcBuilder.ToSasQueryParameters(credential).ToString();
+            string utcSas = utcBuilder.ToSasQueryParameters(credential).ToString();
+
+            Assert.AreEqual(utcSas, nonUtcSas);
+        }
+
+        [Test]
+        public void ToSasQueryParameters_UserDelegation_EquivalentUtcAndNonUtcKeyInstantsProduceSameSas()
+        {
+            DateTimeOffset keyStartsOnNonUtc = new DateTimeOffset(2026, 01, 01, 09, 00, 00, TimeSpan.FromHours(9));
+            DateTimeOffset keyExpiresOnNonUtc = new DateTimeOffset(2026, 01, 01, 10, 00, 00, TimeSpan.FromHours(9));
+            DateTimeOffset keyStartsOnUtc = keyStartsOnNonUtc.ToUniversalTime();
+            DateTimeOffset keyExpiresOnUtc = keyExpiresOnNonUtc.ToUniversalTime();
+
+            BlobSasBuilder builder = new BlobSasBuilder(BlobContainerSasPermissions.Read, new DateTimeOffset(2026, 01, 02, 00, 00, 00, TimeSpan.Zero))
+            {
+                StartsOn = new DateTimeOffset(2026, 01, 01, 00, 00, 00, TimeSpan.Zero),
+                BlobContainerName = "container",
+                BlobName = "blob"
+            };
+
+            UserDelegationKey nonUtcKey = new UserDelegationKey
+            {
+                SignedObjectId = "oid",
+                SignedTenantId = "tid",
+                SignedStartsOn = keyStartsOnNonUtc,
+                SignedExpiresOn = keyExpiresOnNonUtc,
+                SignedService = "b",
+                SignedVersion = "2022-11-02",
+                SignedDelegatedUserTenantId = "dtid",
+                Value = Convert.ToBase64String(new byte[32])
+            };
+
+            UserDelegationKey utcKey = new UserDelegationKey
+            {
+                SignedObjectId = nonUtcKey.SignedObjectId,
+                SignedTenantId = nonUtcKey.SignedTenantId,
+                SignedStartsOn = keyStartsOnUtc,
+                SignedExpiresOn = keyExpiresOnUtc,
+                SignedService = nonUtcKey.SignedService,
+                SignedVersion = nonUtcKey.SignedVersion,
+                SignedDelegatedUserTenantId = nonUtcKey.SignedDelegatedUserTenantId,
+                Value = nonUtcKey.Value
+            };
+
+            string nonUtcSas = builder.ToSasQueryParameters(nonUtcKey, "account").ToString();
+            string utcSas = builder.ToSasQueryParameters(utcKey, "account").ToString();
+
+            Assert.AreEqual(utcSas, nonUtcSas);
+        }
+
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_04_06)]
         public void ToSasQueryParameters_ContainerIdentityTest()
