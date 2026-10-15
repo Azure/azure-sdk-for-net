@@ -435,7 +435,9 @@ function Protect-CiAnalysisOutput {
         }
     }
     if ($AgentOutput.items.Where({ $_.type -ceq 'report_incomplete' }).Count -gt 0) {
-        return @{ disposition = 'incomplete'; agentOutput = $AgentOutput }
+        $copy = Copy-CiObject $AgentOutput
+        $copy['items'] = @($AgentOutput.items | Where-Object { $_.type -cne 'add_comment' })
+        return @{ disposition = 'incomplete'; agentOutput = $copy }
     }
     $copy = Copy-CiObject $AgentOutput
     if (!(Test-CiStillCurrent $Context $Prepared)) {

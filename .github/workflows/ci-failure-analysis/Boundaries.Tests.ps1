@@ -251,14 +251,23 @@ Describe 'PowerShell runtime boundaries' -Tag 'Boundary' {
         }
     }
 
-    It 'preserves report_incomplete even if the PR is stale or the output also contains a comment' {
+    It 'preserves report_incomplete output as-is when it is the only item' {
+        $prepared = New-CiPrepared $Fixture
+        $output = @{ items = @(@{ type = 'report_incomplete'; reason = 'Required logs unavailable' }) }
+        $result = Protect-CiAnalysisOutput -Context $Fixture.Context -Prepared $prepared -AgentOutput $output
+        $result.disposition | Should -BeExactly 'incomplete'
+        ConvertTo-CiJson $result.agentOutput | Should -BeExactly (ConvertTo-CiJson $output)
+    }
+
+    It 'strips an accompanying comment instead of bypassing validation when output also reports incomplete' {
         $prepared = New-CiPrepared $Fixture
         $Fixture.State.prs[0].state = 'closed'
         $output = New-CiAgentOutput
         $output.items += @{ type = 'report_incomplete'; reason = 'Required logs unavailable' }
         $result = Protect-CiAnalysisOutput -Context $Fixture.Context -Prepared $prepared -AgentOutput $output
         $result.disposition | Should -BeExactly 'incomplete'
-        ConvertTo-CiJson $result.agentOutput | Should -BeExactly (ConvertTo-CiJson $output)
+        $result.agentOutput.items.Count | Should -Be 1
+        $result.agentOutput.items[0].type | Should -BeExactly 'report_incomplete'
     }
 
     It 'marks cancellation as a failure even if a report exists' {
