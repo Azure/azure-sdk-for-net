@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 throw new FormatException($"The model {nameof(CognitiveServicesVersionedAgentReference)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_agentVersionIsDefined || Optional.IsDefined(AgentVersion))
+            if (Optional.IsDefined(AgentVersion, _agentVersionIsDefined))
             {
                 if (AgentVersion != null)
                 {

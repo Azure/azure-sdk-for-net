@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _scopeId;
-        internal bool _scopeIdIsDefined;
+        private bool _scopeIdIsDefined;
         private CognitiveServicesQuotaScopeType? _scopeType;
-        internal bool _scopeTypeIsDefined;
+        private bool _scopeTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ModelSkuCapacityProperties"/>. </summary>
         public ModelSkuCapacityProperties()
