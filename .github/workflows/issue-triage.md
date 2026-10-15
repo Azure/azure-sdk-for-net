@@ -271,7 +271,6 @@ safe-outputs:
 tools:
   bash: ["gh:*"]
   cli-proxy: false
-  web-fetch:
   github:
     mode: gh-proxy
     toolsets: [issues, orgs, repos]
