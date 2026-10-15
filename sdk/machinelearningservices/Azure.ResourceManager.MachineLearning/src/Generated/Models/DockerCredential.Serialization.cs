@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(DockerCredential)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_passwordIsDefined || Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password, _passwordIsDefined))
             {
                 if (Password != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("password"u8);
                 }
             }
-            if (_userNameIsDefined || Optional.IsDefined(UserName))
+            if (Optional.IsDefined(UserName, _userNameIsDefined))
             {
                 if (UserName != null)
                 {

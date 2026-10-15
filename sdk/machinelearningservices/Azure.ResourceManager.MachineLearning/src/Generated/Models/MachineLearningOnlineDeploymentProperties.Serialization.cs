@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("appInsightsEnabled"u8);
                 writer.WriteBooleanValue(AppInsightsEnabled.Value);
             }
-            if (_dataCollectorIsDefined || Optional.IsDefined(DataCollector))
+            if (Optional.IsDefined(DataCollector, _dataCollectorIsDefined))
             {
                 if (DataCollector != null)
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("endpointComputeType"u8);
             writer.WriteStringValue(EndpointComputeType.ToString());
-            if (_instanceTypeIsDefined || Optional.IsDefined(InstanceType))
+            if (Optional.IsDefined(InstanceType, _instanceTypeIsDefined))
             {
                 if (InstanceType != null)
                 {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("instanceType"u8);
                 }
             }
-            if (_livenessProbeIsDefined || Optional.IsDefined(LivenessProbe))
+            if (Optional.IsDefined(LivenessProbe, _livenessProbeIsDefined))
             {
                 if (LivenessProbe != null)
                 {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("livenessProbe"u8);
                 }
             }
-            if (_modelIsDefined || Optional.IsDefined(Model))
+            if (Optional.IsDefined(Model, _modelIsDefined))
             {
                 if (Model != null)
                 {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("model"u8);
                 }
             }
-            if (_modelMountPathIsDefined || Optional.IsDefined(ModelMountPath))
+            if (Optional.IsDefined(ModelMountPath, _modelMountPathIsDefined))
             {
                 if (ModelMountPath != null)
                 {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (_readinessProbeIsDefined || Optional.IsDefined(ReadinessProbe))
+            if (Optional.IsDefined(ReadinessProbe, _readinessProbeIsDefined))
             {
                 if (ReadinessProbe != null)
                 {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("readinessProbe"u8);
                 }
             }
-            if (_requestSettingsIsDefined || Optional.IsDefined(RequestSettings))
+            if (Optional.IsDefined(RequestSettings, _requestSettingsIsDefined))
             {
                 if (RequestSettings != null)
                 {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("requestSettings"u8);
                 }
             }
-            if (_scaleSettingsIsDefined || Optional.IsDefined(ScaleSettings))
+            if (Optional.IsDefined(ScaleSettings, _scaleSettingsIsDefined))
             {
                 if (ScaleSettings != null)
                 {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("scaleSettings"u8);
                 }
             }
-            if (_startupProbeIsDefined || Optional.IsDefined(StartupProbe))
+            if (Optional.IsDefined(StartupProbe, _startupProbeIsDefined))
             {
                 if (StartupProbe != null)
                 {

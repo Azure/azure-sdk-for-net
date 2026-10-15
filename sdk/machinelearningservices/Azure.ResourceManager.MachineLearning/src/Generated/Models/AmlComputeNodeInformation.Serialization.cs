@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("nodeState"u8);
                 writer.WriteStringValue(NodeState.Value.ToString());
             }
-            if (options.Format != "W" && (_runIdIsDefined || Optional.IsDefined(RunId)))
+            if (options.Format != "W" && Optional.IsDefined(RunId, _runIdIsDefined))
             {
                 if (RunId != null)
                 {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class BatchPipelineComponentDeploymentConfiguration : BatchDeploymentConfiguration
     {
         private string _description;
-        internal bool _descriptionIsDefined;
+        private bool _descriptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BatchPipelineComponentDeploymentConfiguration"/>. </summary>
         public BatchPipelineComponentDeploymentConfiguration() : base(BatchDeploymentConfigurationType.PipelineComponent)

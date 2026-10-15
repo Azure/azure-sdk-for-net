@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _endpoint;
-        internal bool _endpointIsDefined;
+        private bool _endpointIsDefined;
         private string _errorMessage;
-        internal bool _errorMessageIsDefined;
+        private bool _errorMessageIsDefined;
         private string _jobServiceType;
-        internal bool _jobServiceTypeIsDefined;
+        private bool _jobServiceTypeIsDefined;
         private JobNodes _nodes;
-        internal bool _nodesIsDefined;
+        private bool _nodesIsDefined;
         private int? _port;
-        internal bool _portIsDefined;
+        private bool _portIsDefined;
         private string _status;
-        internal bool _statusIsDefined;
+        private bool _statusIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobService"/>. </summary>
         public MachineLearningJobService()

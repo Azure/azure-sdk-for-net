@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _cpu;
-        internal bool _cpuIsDefined;
+        private bool _cpuIsDefined;
         private string _gpu;
-        internal bool _gpuIsDefined;
+        private bool _gpuIsDefined;
         private string _memory;
-        internal bool _memoryIsDefined;
+        private bool _memoryIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningContainerResourceSettings"/>. </summary>
         public MachineLearningContainerResourceSettings()
