@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private AlertsManagementBaseDetails _details;
-        internal bool _detailsIsDefined;
+        private bool _detailsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAlertModificationItemInfo"/>. </summary>
         public ServiceAlertModificationItemInfo()

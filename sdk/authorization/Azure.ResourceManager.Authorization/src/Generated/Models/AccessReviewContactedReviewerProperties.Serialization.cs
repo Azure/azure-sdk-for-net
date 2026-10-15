@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("userPrincipalName"u8);
                 writer.WriteStringValue(UserPrincipalName);
             }
-            if (options.Format != "W" && (_createdOnIsDefined || Optional.IsDefined(CreatedOn)))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn, _createdOnIsDefined))
             {
                 if (CreatedOn != null)
                 {

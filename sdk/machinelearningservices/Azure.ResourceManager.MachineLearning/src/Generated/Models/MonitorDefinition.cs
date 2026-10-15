@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private MonitorNotificationSettings _alertNotificationSettings;
-        internal bool _alertNotificationSettingsIsDefined;
+        private bool _alertNotificationSettingsIsDefined;
         private MonitoringTarget _monitoringTarget;
-        internal bool _monitoringTargetIsDefined;
+        private bool _monitoringTargetIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MonitorDefinition"/>. </summary>
         /// <param name="computeConfiguration"> [Required] The ARM resource ID of the compute resource to run the monitoring job on. </param>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _clientId;
-        internal bool _clientIdIsDefined;
+        private bool _clientIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ManagedIdentityPatchDefinition"/>. </summary>
         public ManagedIdentityPatchDefinition()

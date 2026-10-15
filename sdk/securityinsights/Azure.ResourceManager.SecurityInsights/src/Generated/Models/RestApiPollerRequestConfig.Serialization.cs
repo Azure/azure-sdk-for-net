@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             writer.WritePropertyName("apiEndpoint"u8);
             writer.WriteStringValue(ApiEndpoint);
-            if (_rateLimitQPSIsDefined || Optional.IsDefined(RateLimitQPS))
+            if (Optional.IsDefined(RateLimitQPS, _rateLimitQPSIsDefined))
             {
                 if (RateLimitQPS != null)
                 {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     writer.WriteNull("rateLimitQPS"u8);
                 }
             }
-            if (_queryWindowInMinIsDefined || Optional.IsDefined(QueryWindowInMin))
+            if (Optional.IsDefined(QueryWindowInMin, _queryWindowInMinIsDefined))
             {
                 if (QueryWindowInMin != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("queryTimeFormat"u8);
                 writer.WriteStringValue(QueryTimeFormat);
             }
-            if (_retryCountIsDefined || Optional.IsDefined(RetryCount))
+            if (Optional.IsDefined(RetryCount, _retryCountIsDefined))
             {
                 if (RetryCount != null)
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     writer.WriteNull("retryCount"u8);
                 }
             }
-            if (_timeoutInSecondsIsDefined || Optional.IsDefined(TimeoutInSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds, _timeoutInSecondsIsDefined))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     writer.WriteNull("timeoutInSeconds"u8);
                 }
             }
-            if (_isPostPayloadJsonIsDefined || Optional.IsDefined(IsPostPayloadJson))
+            if (Optional.IsDefined(IsPostPayloadJson, _isPostPayloadJsonIsDefined))
             {
                 if (IsPostPayloadJson != null)
                 {

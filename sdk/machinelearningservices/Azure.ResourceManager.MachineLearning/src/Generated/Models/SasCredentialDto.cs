@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class SasCredentialDto : PendingUploadCredentialDto
     {
         private Uri _sasUri;
-        internal bool _sasUriIsDefined;
+        private bool _sasUriIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SasCredentialDto"/>. </summary>
         internal SasCredentialDto() : base(PendingUploadCredentialType.SAS)

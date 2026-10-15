@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DateTimeOffset? _featureWindowEnd;
-        internal bool _featureWindowEndIsDefined;
+        private bool _featureWindowEndIsDefined;
         private DateTimeOffset? _featureWindowStart;
-        internal bool _featureWindowStartIsDefined;
+        private bool _featureWindowStartIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FeatureWindow"/>. </summary>
         public FeatureWindow()

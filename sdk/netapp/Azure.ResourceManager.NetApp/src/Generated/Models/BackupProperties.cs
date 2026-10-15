@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DateTimeOffset? _snapshotCreatedOn;
-        internal bool _snapshotCreatedOnIsDefined;
+        private bool _snapshotCreatedOnIsDefined;
         private DateTimeOffset? _completionOn;
-        internal bool _completionOnIsDefined;
+        private bool _completionOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BackupProperties"/>. </summary>
         /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>

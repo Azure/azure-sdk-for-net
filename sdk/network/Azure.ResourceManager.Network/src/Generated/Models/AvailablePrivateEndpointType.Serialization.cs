@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AvailablePrivateEndpointType PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AvailablePrivateEndpointType>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvailablePrivateEndpointType IPersistableModel<AvailablePrivateEndpointType>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvailablePrivateEndpointType)PersistableModelCreateCore(data, options);
+        AvailablePrivateEndpointType IPersistableModel<AvailablePrivateEndpointType>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvailablePrivateEndpointType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvailablePrivateEndpointType IJsonModel<AvailablePrivateEndpointType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AvailablePrivateEndpointType)JsonModelCreateCore(ref reader, options);
+        AvailablePrivateEndpointType IJsonModel<AvailablePrivateEndpointType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AvailablePrivateEndpointType JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AvailablePrivateEndpointType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
