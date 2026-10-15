@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.0.0-beta.7 (2026-10-15)
 
 ### Features Added
 
@@ -17,8 +17,6 @@
 ### Bugs Fixed
 
 - Corrected `ManagedClusterDelegatedIdentity.ResourceId` and `ReferralResource` to be optional.
-
-### Other Changes
 
 ## 1.0.0-beta.6 (2026-04-02)
 
