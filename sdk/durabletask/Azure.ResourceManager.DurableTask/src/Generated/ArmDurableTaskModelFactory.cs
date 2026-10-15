@@ -19,6 +19,117 @@ namespace Azure.ResourceManager.DurableTask.Models
     public static partial class ArmDurableTaskModelFactory
     {
 
+        /// <summary> A diagnostic detector resource belonging to the scheduler. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DurableTask.DetectorData"/> instance for mocking. </returns>
+        public static DetectorData DetectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DetectorProperties properties = default)
+        {
+            return new DetectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> The diagnostic response returned for a detector. </summary>
+        /// <param name="provisioningState"> The provisioning state of the detector. </param>
+        /// <param name="metadata"> Metadata that identifies and describes the detector. </param>
+        /// <param name="dataset"> The datasets produced when the detector runs. </param>
+        /// <param name="status"> The overall result of the detector. </param>
+        /// <returns> A new <see cref="Models.DetectorProperties"/> instance for mocking. </returns>
+        public static DetectorProperties DetectorProperties(DurableTaskProvisioningState? provisioningState = default, DetectorMetadata metadata = default, IEnumerable<DetectorDataset> dataset = default, DetectorStatus status = default)
+        {
+            dataset ??= new ChangeTrackingList<DetectorDataset>();
+
+            return new DetectorProperties(provisioningState, metadata, (dataset ?? new ChangeTrackingList<DetectorDataset>()).ToList(), status, default);
+        }
+
+        /// <summary> Metadata that identifies and describes a detector. </summary>
+        /// <param name="id"> The unique identifier of the detector. </param>
+        /// <param name="name"> The display name of the detector. </param>
+        /// <param name="description"> A description of the detector. </param>
+        /// <param name="author"> The author of the detector when available for the caller. </param>
+        /// <param name="category"> The category of the detector. </param>
+        /// <param name="supportTopicList"> The case-submission support topic identifiers for which the detector is enabled. </param>
+        /// <param name="analysisTypes"> The analysis identifiers for which the detector is enabled. </param>
+        /// <param name="type"> The kind of diagnostic response. </param>
+        /// <param name="score"> The match score when the detector is returned from a search. </param>
+        /// <returns> A new <see cref="Models.DetectorMetadata"/> instance for mocking. </returns>
+        public static DetectorMetadata DetectorMetadata(string id = default, string name = default, string description = default, string author = default, string category = default, IEnumerable<string> supportTopicList = default, IEnumerable<string> analysisTypes = default, DetectorType? @type = default, double? score = default)
+        {
+            supportTopicList ??= new ChangeTrackingList<string>();
+            analysisTypes ??= new ChangeTrackingList<string>();
+
+            return new DetectorMetadata(
+                id,
+                name,
+                description,
+                author,
+                category,
+                (supportTopicList ?? new ChangeTrackingList<string>()).ToList(),
+                (analysisTypes ?? new ChangeTrackingList<string>()).ToList(),
+                @type,
+                score,
+                default);
+        }
+
+        /// <summary> A dataset produced by a detector. </summary>
+        /// <param name="table"> The tabular data produced by the detector. </param>
+        /// <param name="renderingProperties"> The rendering information for the tabular data. </param>
+        /// <returns> A new <see cref="Models.DetectorDataset"/> instance for mocking. </returns>
+        public static DetectorDataset DetectorDataset(DetectorTable table = default, DetectorRenderingProperties renderingProperties = default)
+        {
+            return new DetectorDataset(table, renderingProperties, default);
+        }
+
+        /// <summary> A table included in a detector dataset. </summary>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="columns"> The column definitions for the table. </param>
+        /// <param name="rows"> The rows in the table. Values use the types specified by their columns. </param>
+        /// <returns> A new <see cref="Models.DetectorTable"/> instance for mocking. </returns>
+        public static DetectorTable DetectorTable(string tableName = default, IEnumerable<DetectorTableColumn> columns = default, IEnumerable<IList<BinaryData>> rows = default)
+        {
+            columns ??= new ChangeTrackingList<DetectorTableColumn>();
+            rows ??= new ChangeTrackingList<IList<BinaryData>>();
+
+            return new DetectorTable(tableName, (columns ?? new ChangeTrackingList<DetectorTableColumn>()).ToList(), (rows ?? new ChangeTrackingList<IList<BinaryData>>()).ToList(), default);
+        }
+
+        /// <summary> A column definition in a detector table. </summary>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="dataType"> The data type of values in the column. </param>
+        /// <param name="columnType"> The optional semantic classification of the column. </param>
+        /// <returns> A new <see cref="Models.DetectorTableColumn"/> instance for mocking. </returns>
+        public static DetectorTableColumn DetectorTableColumn(string columnName = default, string dataType = default, string columnType = default)
+        {
+            return new DetectorTableColumn(columnName, dataType, columnType, default);
+        }
+
+        /// <summary> The rendering information for a detector dataset. </summary>
+        /// <param name="type"> The rendering type for the dataset. </param>
+        /// <param name="title"> The optional title of the rendering block. </param>
+        /// <param name="description"> The optional description of the rendering block. </param>
+        /// <returns> A new <see cref="Models.DetectorRenderingProperties"/> instance for mocking. </returns>
+        public static DetectorRenderingProperties DetectorRenderingProperties(DetectorRenderingType? @type = default, string title = default, string description = default)
+        {
+            return new DetectorRenderingProperties(@type, title, description, default);
+        }
+
+        /// <summary> The overall result of a detector. </summary>
+        /// <param name="message"> The optional message describing the detector result. </param>
+        /// <param name="statusId"> The status of the detector result. </param>
+        /// <returns> A new <see cref="Models.DetectorStatus"/> instance for mocking. </returns>
+        public static DetectorStatus DetectorStatus(string message = default, DetectorStatusId? statusId = default)
+        {
+            return new DetectorStatus(message, statusId, default);
+        }
+
         /// <summary> A Durable Task Scheduler resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -27,8 +138,9 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="DurableTask.DurableTaskSchedulerData"/> instance for mocking. </returns>
-        public static DurableTaskSchedulerData DurableTaskSchedulerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DurableTaskSchedulerProperties properties = default)
+        public static DurableTaskSchedulerData DurableTaskSchedulerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DurableTaskSchedulerProperties properties, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -40,6 +152,7 @@ namespace Azure.ResourceManager.DurableTask.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                identity,
                 default);
         }
 
@@ -119,12 +232,13 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <summary> The update request model for the Scheduler resource. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.DurableTaskSchedulerPatch"/> instance for mocking. </returns>
-        public static DurableTaskSchedulerPatch DurableTaskSchedulerPatch(DurableTaskSchedulerPatchProperties properties = default, IDictionary<string, string> tags = default)
+        public static DurableTaskSchedulerPatch DurableTaskSchedulerPatch(DurableTaskSchedulerPatchProperties properties, IDictionary<string, string> tags, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DurableTaskSchedulerPatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new DurableTaskSchedulerPatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
         /// <summary> The Scheduler resource properties to be updated. </summary>
@@ -225,10 +339,47 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <summary> The properties of Task Hub. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="dashboardUri"> URL of the durable task scheduler dashboard. </param>
+        /// <param name="capabilities"> A set of Task Hub capabilities that can be enabled or disabled for a Task Hub. </param>
         /// <returns> A new <see cref="Models.DurableTaskHubProperties"/> instance for mocking. </returns>
-        public static DurableTaskHubProperties DurableTaskHubProperties(DurableTaskProvisioningState? provisioningState = default, Uri dashboardUri = default)
+        public static DurableTaskHubProperties DurableTaskHubProperties(DurableTaskProvisioningState? provisioningState, Uri dashboardUri, IEnumerable<string> capabilities)
         {
-            return new DurableTaskHubProperties(provisioningState, dashboardUri, default);
+            capabilities ??= new ChangeTrackingList<string>();
+
+            return new DurableTaskHubProperties(provisioningState, dashboardUri, (capabilities ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> A Task Queue resource belonging to a Task Hub. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DurableTask.TaskQueueData"/> instance for mocking. </returns>
+        public static TaskQueueData TaskQueueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TaskQueueProperties properties = default)
+        {
+            return new TaskQueueData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="throughputActionsPerSecond"> The rate of work-item handouts per second. </param>
+        /// <returns> A new <see cref="Models.TaskQueueProperties"/> instance for mocking. </returns>
+        public static TaskQueueProperties TaskQueueProperties(DurableTaskProvisioningState? provisioningState = default, int? throughputActionsPerSecond = default)
+        {
+            return new TaskQueueProperties(provisioningState, throughputActionsPerSecond is null ? default : new TaskQueueThroughput(throughputActionsPerSecond, default), default);
+        }
+
+        /// <summary> The update request model for a Task Queue. </summary>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.TaskQueuePatch"/> instance for mocking. </returns>
+        public static TaskQueuePatch TaskQueuePatch(TaskQueueProperties properties = default)
+        {
+            return new TaskQueuePatch(properties, default);
         }
 
         /// <summary> A retention policy resource belonging to the scheduler. </summary>
@@ -267,6 +418,115 @@ namespace Azure.ResourceManager.DurableTask.Models
         public static DurableTaskRetentionPolicyDetails DurableTaskRetentionPolicyDetails(int retentionPeriodInDays = default, DurableTaskPurgeableOrchestrationState? orchestrationState = default)
         {
             return new DurableTaskRetentionPolicyDetails(retentionPeriodInDays, orchestrationState, default);
+        }
+
+        /// <summary> A transparent data encryption resource belonging to the scheduler. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DurableTask.TransparentDataEncryptionData"/> instance for mocking. </returns>
+        public static TransparentDataEncryptionData TransparentDataEncryptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TransparentDataEncryptionProperties properties = default)
+        {
+            return new TransparentDataEncryptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> The transparent data encryption settings for the resource. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="keySource"> The key source for the transparent data encryption. </param>
+        /// <param name="keyVaultKeyUri"> The URI of the key in Key Vault to be used for transparent data encryption. </param>
+        /// <param name="autoRotationEnabled"> Indicates whether auto-rotation of the customer-managed keys is enabled for transparent data encryption. </param>
+        /// <returns> A new <see cref="Models.TransparentDataEncryptionProperties"/> instance for mocking. </returns>
+        public static TransparentDataEncryptionProperties TransparentDataEncryptionProperties(DurableTaskProvisioningState? provisioningState = default, TransparentDataEncryptionKeySource keySource = default, Uri keyVaultKeyUri = default, bool? autoRotationEnabled = default)
+        {
+            return new TransparentDataEncryptionProperties(provisioningState, keySource, keyVaultKeyUri, autoRotationEnabled, default);
+        }
+
+        /// <summary> A failover instance belonging to the scheduler. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DurableTask.FailoverInstanceData"/> instance for mocking. </returns>
+        public static FailoverInstanceData FailoverInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FailoverInstanceProperties properties = default)
+        {
+            return new FailoverInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> The failover instance settings for the resource. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="replicationRole"> The replication role of the parent scheduler. </param>
+        /// <param name="failoverState"> The current state of the failover operation. </param>
+        /// <param name="partnerSchedulerResourceId"> The resource ID of the partner scheduler in the failover configuration. </param>
+        /// <param name="partnerSchedulerLocation"> The location of the partner scheduler in the failover configuration. </param>
+        /// <returns> A new <see cref="Models.FailoverInstanceProperties"/> instance for mocking. </returns>
+        public static FailoverInstanceProperties FailoverInstanceProperties(DurableTaskProvisioningState? provisioningState = default, ReplicationRole? replicationRole = default, FailoverState? failoverState = default, ResourceIdentifier partnerSchedulerResourceId = default, string partnerSchedulerLocation = default)
+        {
+            return new FailoverInstanceProperties(
+                provisioningState,
+                replicationRole,
+                failoverState,
+                partnerSchedulerResourceId,
+                partnerSchedulerLocation,
+                default);
+        }
+
+        /// <summary> A Durable Task Scheduler resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DurableTask.DurableTaskSchedulerData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DurableTaskSchedulerData DurableTaskSchedulerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DurableTaskSchedulerProperties properties = default)
+        {
+            return new DurableTaskSchedulerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default,
+                default);
+        }
+
+        /// <summary> The update request model for the Scheduler resource. </summary>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.DurableTaskSchedulerPatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DurableTaskSchedulerPatch DurableTaskSchedulerPatch(DurableTaskSchedulerPatchProperties properties = default, IDictionary<string, string> tags = default)
+        {
+            return new DurableTaskSchedulerPatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), default, default);
+        }
+
+        /// <summary> The properties of Task Hub. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="dashboardUri"> URL of the durable task scheduler dashboard. </param>
+        /// <returns> A new <see cref="Models.DurableTaskHubProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DurableTaskHubProperties DurableTaskHubProperties(DurableTaskProvisioningState? provisioningState = default, Uri dashboardUri = default)
+        {
+            return new DurableTaskHubProperties(provisioningState, dashboardUri, default, default);
         }
 
         /// <summary> Details of the Scheduler. </summary>
