@@ -89,15 +89,14 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             new AgentReference(agentVersion.Name, agentVersion.Version));
         CreateResponseOptions responseOptions = new()
         {
+            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
             StreamingEnabled = true,
             InputItems =
             {
-                ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
-                    "To do that, go to the website finance.yahoo.com.\n" +
-                    "At the top of the page, you will find a search bar.\n" +
-                    "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
-                    "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
-                    "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
+                ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit " +
+                    "https://learn.microsoft.com/azure/app-testing/playwright-workspaces/overview-what-is-microsoft-playwright-workspaces. " +
+                    "Read the overview and summarize three benefits of Playwright Workspaces for a team running browser tests. " +
+                    "Base your answer on the page, not on prior knowledge.")
             }
         };
         await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
@@ -150,15 +149,14 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             new AgentReference(agentVersion.Name, agentVersion.Version));
         CreateResponseOptions responseOptions = new()
         {
+            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
             StreamingEnabled = true,
             InputItems =
             {
-                ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
-                    "To do that, go to the website finance.yahoo.com.\n" +
-                    "At the top of the page, you will find a search bar.\n" +
-                    "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
-                    "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
-                    "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
+                ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit " +
+                    "https://learn.microsoft.com/azure/app-testing/playwright-workspaces/overview-what-is-microsoft-playwright-workspaces. " +
+                    "Read the overview and summarize three benefits of Playwright Workspaces for a team running browser tests. " +
+                    "Base your answer on the page, not on prior knowledge.")
             }
         };
         foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(responseOptions))

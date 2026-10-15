@@ -1533,7 +1533,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
-Stream browser automation responses using the exact agent version created above. Ask the agent to navigate Yahoo Finance and report the percent of Microsoft year-to-date stock price change. Print complete text messages once, not token-by-token. The [browser automation sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/samples/Sample23_BrowserAutomationTool.md) includes the `ParseResponse` helper and synchronous equivalent.
+Stream browser automation responses using the exact agent version created above. Require tool use with `ResponseToolChoice.CreateRequiredChoice()`, and ask the agent to read the Playwright Workspaces overview and summarize three benefits for a team running browser tests. Print complete text messages once, not token-by-token. The [browser automation sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/samples/Sample23_BrowserAutomationTool.md) includes the `ParseResponse` helper and synchronous equivalent.
 
 **Warning:** Complete messages may contain sensitive browser live-view URLs. Use these only in a trusted local terminal and redact them from saved logs or shared output.
 
@@ -1542,15 +1542,14 @@ ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetPro
     new AgentReference(agentVersion.Name, agentVersion.Version));
 CreateResponseOptions responseOptions = new()
 {
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
     StreamingEnabled = true,
     InputItems =
     {
-        ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
-            "To do that, go to the website finance.yahoo.com.\n" +
-            "At the top of the page, you will find a search bar.\n" +
-            "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
-            "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
-            "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
+        ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit " +
+            "https://learn.microsoft.com/azure/app-testing/playwright-workspaces/overview-what-is-microsoft-playwright-workspaces. " +
+            "Read the overview and summarize three benefits of Playwright Workspaces for a team running browser tests. " +
+            "Base your answer on the page, not on prior knowledge.")
     }
 };
 await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
