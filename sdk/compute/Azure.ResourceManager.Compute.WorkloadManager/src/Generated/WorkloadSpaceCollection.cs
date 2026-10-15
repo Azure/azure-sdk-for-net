@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WorkloadSpaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(WorkloadSpaceResource.ResourceType, out string workloadSpaceApiVersion);
             _workloadSpacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.WorkloadManager", WorkloadSpaceResource.ResourceType.Namespace, Diagnostics);
-            _workloadSpacesRestClient = new WorkloadSpaces(_workloadSpacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadSpaceApiVersion ?? "2026-11-01-preview");
+            _workloadSpacesRestClient = new WorkloadSpaces(_workloadSpacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Compute/workloadSpaces", out string workloadSpacesApiVersionOverride) ? workloadSpacesApiVersionOverride : "2026-11-01-preview");
             ValidateResourceId(id);
         }
 
