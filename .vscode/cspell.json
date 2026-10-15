@@ -1118,12 +1118,6 @@
       ]
     },
     {
-      "filename": "**/sdk/platformvalidation/**/*.cs",
-      "words": [
-        "mobo"
-      ]
-    },
-    {
       "filename": "**/sdk/policyinsights/**/*.cs",
       "words": [
         "remediations"
