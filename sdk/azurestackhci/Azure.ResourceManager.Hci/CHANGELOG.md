@@ -1,8 +1,11 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0 (Unreleased)
 
 ### Features Added
+
+- Upgraded API version to `2026-10-01` (stable).
+- Added support for cluster jobs and edge-machine management, including deployment settings, disks, network adapters, security settings, volumes, and associated job operations.
 
 ### Breaking Changes
 
