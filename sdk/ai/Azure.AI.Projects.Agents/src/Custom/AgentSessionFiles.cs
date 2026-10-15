@@ -18,8 +18,6 @@ public partial class AgentSessionFiles
 {
     private readonly string _agentName;
     private readonly string _sessionId;
-    /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-    public virtual ClientPipeline Pipeline { get; }
     /// <summary> Initializes a new instance of AgentSessionFiles. </summary>
     /// <param name="clientDiagnostics"> The client diagnostics instance. </param>
     /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

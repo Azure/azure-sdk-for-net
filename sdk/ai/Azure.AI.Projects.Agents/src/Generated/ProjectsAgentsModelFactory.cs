@@ -251,10 +251,10 @@ namespace Azure.AI.Projects.Agents
         /// <summary> An OTLP (OpenTelemetry Protocol) telemetry export endpoint. </summary>
         /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
         /// <param name="authentication"> Optional authentication configuration. </param>
-        /// <param name="internalEndpoint"> The OTLP collector endpoint URL. </param>
+        /// <param name="endpoint"> The OTLP collector endpoint URL. </param>
         /// <param name="protocol"> The transport protocol for the OTLP endpoint. </param>
         /// <returns> A new <see cref="Agents.OtlpTelemetryEndpoint"/> instance for mocking. </returns>
-        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<ExportedDataTypes> exportedDataTypes = default, TelemetryEndpointAuthentication authentication = default, string internalEndpoint = default, TelemetryTransportProtocol protocol = default)
+        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<ExportedDataTypes> exportedDataTypes = default, TelemetryEndpointAuthentication authentication = default, Uri endpoint = default, TelemetryTransportProtocol protocol = default)
         {
             exportedDataTypes ??= new ChangeTrackingList<ExportedDataTypes>();
 
@@ -263,7 +263,7 @@ namespace Azure.AI.Projects.Agents
                 exportedDataTypes.ToList(),
                 authentication,
                 additionalBinaryDataProperties: null,
-                internalEndpoint,
+                endpoint,
                 protocol);
         }
 

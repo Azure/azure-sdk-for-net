@@ -14,8 +14,6 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetAllAsync", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 public partial class AgentOptimizationJobs
 {
-    /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-    public virtual ClientPipeline Pipeline { get; }
     /// <summary> List optimization jobs. Supports cursor pagination and optional status / agent_name filters. </summary>
     /// <param name="limit">
     /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
