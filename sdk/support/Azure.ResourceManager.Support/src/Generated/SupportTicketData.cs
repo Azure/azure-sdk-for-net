@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Support
         {
             get
             {
-                return Properties is null ? default : Properties.ProblemStartOn;
+                return Properties is null ? default : Properties.ProblemStartsOn;
             }
             set
             {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Support
                 {
                     Properties = new SupportTicketDetailsProperties();
                 }
-                Properties.ProblemStartOn = value;
+                Properties.ProblemStartsOn = value;
             }
         }
 
@@ -450,6 +450,24 @@ namespace Azure.ResourceManager.Support
                     Properties = new SupportTicketDetailsProperties();
                 }
                 Properties.CommunityForumPost = value;
+            }
+        }
+
+        /// <summary> Support channel type for the support ticket. </summary>
+        public SupportChannel? SupportChannel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SupportChannel;
+            }
+        }
+
+        /// <summary> Status of the chat conversation associated with the support ticket. </summary>
+        public ChatConversationStatus? ChatConversationStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ChatConversationStatus;
             }
         }
 

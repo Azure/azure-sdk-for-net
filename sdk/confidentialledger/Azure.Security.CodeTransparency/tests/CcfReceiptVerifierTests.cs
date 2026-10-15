@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -60,16 +60,16 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
             byte[] receiptBytes = readFileBytes("receipt.cose");
             byte[] inputSignedPayloadBytes = readFileBytes("input_signed_claims");
 
-            Response<JwksDocument> key = client.GetPublicKeys();
+            Response<CodeTransparencyVerificationKeySet> key = client.GetPublicKeys();
 
-            var exception = Assert.Throws<InvalidOperationException>(() => CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes, inputSignedPayloadBytes));
+            var exception = Assert.Throws<InvalidOperationException>(() => CcfReceiptVerifier.Verify(receiptBytes, inputSignedPayloadBytes, key.Value.Keys[0]));
             StringAssert.Contains(expected: "KID mismatch", exception.Message);
 #endif
         }
@@ -93,16 +93,16 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
             byte[] receiptBytes = readFileBytes("receipt.cose");
             byte[] inputSignedPayloadBytes = readFileBytes("input_signed_claims");
 
-            Response<JwksDocument> key = client.GetPublicKeys();
+            Response<CodeTransparencyVerificationKeySet> key = client.GetPublicKeys();
 
-            var exception = Assert.Throws<InvalidOperationException>(() => CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes, inputSignedPayloadBytes));
+            var exception = Assert.Throws<InvalidOperationException>(() => CcfReceiptVerifier.Verify(receiptBytes, inputSignedPayloadBytes, key.Value.Keys[0]));
             StringAssert.Contains(expected: "Claim digest mismatch", exception.Message);
 #endif
         }

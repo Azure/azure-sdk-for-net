@@ -4,15 +4,20 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Represents a target specifying an Azure AI agent. </summary>
+    /// <summary>
+    /// A target that identifies an Azure AI agent.
+    /// See [evaluate model or agent targets](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-targets?tabs=python).
+    /// </summary>
     public partial class AzureAIAgentTarget : EvaluationTarget
     {
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
-        /// <param name="name"> The unique identifier of the Azure AI agent. </param>
+        /// <param name="name"> The name of the Azure AI agent to invoke as the evaluation target. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AzureAIAgentTarget(string name) : base("azure_ai_agent")
         {
@@ -20,31 +25,36 @@ namespace Azure.AI.Projects.Evaluation
 
             Name = name;
             ToolDescriptions = new ChangeTrackingList<ToolDescription>();
-            InternalTools = new ChangeTrackingList<InternalTool>();
+            Tools = new ChangeTrackingList<ResponseTool>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
         /// <param name="type"> The type of target. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> The unique identifier of the Azure AI agent. </param>
-        /// <param name="version"> The version of the Azure AI agent. </param>
-        /// <param name="toolDescriptions"> The parameters used to control the sampling behavior of the agent during text generation. </param>
-        /// <param name="internalTools"></param>
-        internal AzureAIAgentTarget(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string version, IList<ToolDescription> toolDescriptions, IList<InternalTool> internalTools) : base(@type, additionalBinaryDataProperties)
+        /// <param name="name"> The name of the Azure AI agent to invoke as the evaluation target. </param>
+        /// <param name="version"> The version of the Azure AI agent. When omitted, the latest version is used. </param>
+        /// <param name="toolDescriptions"> Optional descriptions of tools available to the agent. </param>
+        /// <param name="tools"> Tool definitions made available when invoking the agent. </param>
+        [Experimental("AAIP002")]
+        internal AzureAIAgentTarget(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string version, IList<ToolDescription> toolDescriptions, IList<ResponseTool> tools) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Version = version;
             ToolDescriptions = toolDescriptions;
-            InternalTools = internalTools;
+            Tools = tools;
         }
 
-        /// <summary> The unique identifier of the Azure AI agent. </summary>
+        /// <summary> The name of the Azure AI agent to invoke as the evaluation target. </summary>
         public string Name { get; set; }
 
-        /// <summary> The version of the Azure AI agent. </summary>
+        /// <summary> The version of the Azure AI agent. When omitted, the latest version is used. </summary>
         public string Version { get; set; }
 
-        /// <summary> The parameters used to control the sampling behavior of the agent during text generation. </summary>
+        /// <summary> Optional descriptions of tools available to the agent. </summary>
         public IList<ToolDescription> ToolDescriptions { get; }
+
+        /// <summary> Tool definitions made available when invoking the agent. </summary>
+        [Experimental("AAIP002")]
+        public IList<ResponseTool> Tools { get; }
     }
 }

@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string UserData { get; set; }
 
         /// <summary> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum api-version: 2021-04-01. </summary>
-        internal CapacityReservationProfile CapacityReservation { get; set; }
+        public CapacityReservationProfile CapacityReservation { get; set; }
 
         /// <summary> Specifies information about the Interconnect Block that is used to allocate the Virtual Machine. Minimum api-version: 2026-03-01. </summary>
         internal InterconnectBlockProfile InterconnectBlockProfile { get; set; }
@@ -270,23 +270,6 @@ namespace Azure.ResourceManager.Compute.Models
             set
             {
                 HostGroup = new ComputeWriteableSubResourceData(value);
-            }
-        }
-
-        /// <summary> Resource Id. </summary>
-        public ResourceIdentifier CapacityReservationGroupId
-        {
-            get
-            {
-                return CapacityReservation is null ? default : CapacityReservation.CapacityReservationGroupId;
-            }
-            set
-            {
-                if (CapacityReservation is null)
-                {
-                    CapacityReservation = new CapacityReservationProfile();
-                }
-                CapacityReservation.CapacityReservationGroupId = value;
             }
         }
 

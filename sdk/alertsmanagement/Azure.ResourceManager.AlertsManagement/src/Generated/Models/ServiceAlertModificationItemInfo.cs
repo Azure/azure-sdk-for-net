@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private AlertsManagementBaseDetails _details;
+        internal bool _detailsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAlertModificationItemInfo"/>. </summary>
         public ServiceAlertModificationItemInfo()
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             ModifiedBy = modifiedBy;
             Comments = comments;
             Description = description;
-            Details = details;
+            _details = details;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -66,6 +68,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public string Description { get; set; }
 
         /// <summary> Base details class. </summary>
-        public AlertsManagementBaseDetails Details { get; set; }
+        public AlertsManagementBaseDetails Details
+        {
+            get
+            {
+                return _details;
+            }
+            set
+            {
+                _details = value;
+                _detailsIsDefined = true;
+            }
+        }
     }
 }

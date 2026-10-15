@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppServicePlanCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AppServicePlanResource.ResourceType, out string appServicePlanApiVersion);
             _appServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServicePlanResource.ResourceType.Namespace, Diagnostics);
-            _appServicePlansRestClient = new AppServicePlans(_appServicePlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServicePlanApiVersion ?? "2026-03-15");
+            _appServicePlansRestClient = new AppServicePlans(_appServicePlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Web/serverfarms", out string appServicePlansApiVersionOverride) ? appServicePlansApiVersionOverride : "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServicePlanData, AppServicePlanResource>(new AppServicePlansGetByResourceGroupAsyncCollectionResultOfT(_appServicePlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServicePlanCollection.GetAll"), data => new AppServicePlanResource(Client, data));
+            return new AsyncPageableWrapper<AppServicePlanData, AppServicePlanResource>(new AppServicePlanDataAsync0CollectionResultOfT(_appServicePlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServicePlanCollection.GetAll"), data => new AppServicePlanResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServicePlanData, AppServicePlanResource>(new AppServicePlansGetByResourceGroupCollectionResultOfT(_appServicePlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServicePlanCollection.GetAll"), data => new AppServicePlanResource(Client, data));
+            return new PageableWrapper<AppServicePlanData, AppServicePlanResource>(new AppServicePlanData0CollectionResultOfT(_appServicePlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServicePlanCollection.GetAll"), data => new AppServicePlanResource(Client, data));
         }
 
         /// <summary>

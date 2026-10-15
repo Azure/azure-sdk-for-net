@@ -116,7 +116,7 @@ namespace Azure.Provisioning.Batch
         {
             get
             {
-                return Properties.Value;
+                return Properties is null ? default : Properties.Value;
             }
         }
 

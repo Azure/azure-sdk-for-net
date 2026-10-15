@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EventImpactedResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new EventImpactedResourceListResult(value ?? new ChangeTrackingList<ResourceHealthEventImpactedResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

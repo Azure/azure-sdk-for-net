@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MySqlFlexibleServerFullBackupStoreDetails(objectType, additionalBinaryDataProperties, sasUriList);
+            return new MySqlFlexibleServerFullBackupStoreDetails(objectType, additionalBinaryDataProperties, sasUriList ?? new ChangeTrackingList<string>());
         }
     }
 }

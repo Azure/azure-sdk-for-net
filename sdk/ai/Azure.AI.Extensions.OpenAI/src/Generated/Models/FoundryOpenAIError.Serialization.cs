@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -85,15 +86,27 @@ namespace Azure.AI.Extensions.OpenAI
             }
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsDefined(Param))
+            if (Optional.IsDefined(Param, _paramIsDefined))
             {
-                writer.WritePropertyName("param"u8);
-                writer.WriteStringValue(Param);
+                if (Param != null)
+                {
+                    writer.WritePropertyName("param"u8);
+                    writer.WriteStringValue(Param);
+                }
+                else
+                {
+                    writer.WriteNull("param"u8);
+                }
             }
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type);
+            }
+            if (Optional.IsDefined(Misalignment))
+            {
+                writer.WritePropertyName("misalignment"u8);
+                writer.WriteObjectValue(Misalignment, options);
             }
             if (Optional.IsCollectionDefined(Details))
             {
@@ -195,8 +208,10 @@ namespace Azure.AI.Extensions.OpenAI
             }
             string code = default;
             string message = default;
+            bool paramIsDefined = false;
             string @param = default;
             string @type = default;
+            MisalignmentErrorDetailsResource misalignment = default;
             IList<FoundryOpenAIError> details = default;
             IDictionary<string, BinaryData> additionalInfo = default;
             IDictionary<string, BinaryData> debugInfo = default;
@@ -220,6 +235,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("param"u8))
                 {
+                    paramIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         @param = null;
@@ -231,6 +247,15 @@ namespace Azure.AI.Extensions.OpenAI
                 if (prop.NameEquals("type"u8))
                 {
                     @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("misalignment"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    misalignment = MisalignmentErrorDetailsResource.DeserializeMisalignmentErrorDetailsResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("details"u8))
@@ -262,7 +287,7 @@ namespace Azure.AI.Extensions.OpenAI
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     additionalInfo = dictionary;
@@ -283,7 +308,7 @@ namespace Azure.AI.Extensions.OpenAI
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     debugInfo = dictionary;
@@ -291,7 +316,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FoundryOpenAIError(
@@ -299,10 +324,14 @@ namespace Azure.AI.Extensions.OpenAI
                 message,
                 @param,
                 @type,
+                misalignment,
                 details ?? new ChangeTrackingList<FoundryOpenAIError>(),
                 additionalInfo ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 debugInfo ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _paramIsDefined = paramIsDefined
+            };
         }
     }
 }

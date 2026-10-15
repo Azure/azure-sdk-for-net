@@ -1,0 +1,83 @@
+name: azsdk-common-prepare-release-plan-schedule-risk-eval
+description: Verify the release-plan skill relays past-due schedule guidance
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-prepare-release-plan
+  type: ci-gate
+
+defaults:
+  runs: 1
+  timeout: "120s"
+  model: gpt-5.4
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  - name: project-path-lookup-relays-past-due-guidance
+    environment:
+      skills:
+        - ..
+    prompt: "Get the release plan for TypeSpec project specification/contosowidgetmanager/Contoso.WidgetManager and summarize its status and any required actions. Use the Azure SDK MCP tools."
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-prepare-release-plan]
+      - type: tool-calls
+        config:
+          required:
+            - name: "^azure-sdk-mcp-azsdk_get_release_plan$"
+      - type: output-matches
+        config:
+          pattern: "(?is)(?=.*past[- ]due)(?=.*(?:postpone|update).*(?:target|release month))(?=.*(?:abandon|close).*(?:reason|dashboard))"
+
+  - name: spec-pr-lookup-relays-past-due-guidance
+    environment:
+      skills:
+        - ..
+    prompt: "Get the release plan for spec PR https://github.com/Azure/azure-rest-api-specs/pull/38387 and summarize its status, linked spec PR URL, and any required actions. Use the Azure SDK MCP tools."
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-prepare-release-plan]
+      - type: tool-calls
+        config:
+          required:
+            - name: "^azure-sdk-mcp-azsdk_get_release_plan$"
+      - type: output-matches
+        config:
+          pattern: "(?is)(?=.*past[- ]due)(?=.*(?:postpone|update).*(?:target|release month))(?=.*(?:abandon|close).*(?:reason|dashboard))"
+      - type: output-contains
+        config:
+          substring: "https://github.com/Azure/azure-rest-api-specs/pull/38387"
+      - type: output-not-contains
+        config:
+          substring: "https://github.com/Azure/azure-rest-api-specs/pull/12345"
+
+  - name: create-relays-past-due-guidance
+    environment:
+      skills:
+        - ..
+    prompt: |
+      Create a public preview release plan for TypeSpec project
+      specification/contosowidgetmanager/Contoso.WidgetManager with target
+      release month June 2026, spec PR
+      https://github.com/Azure/azure-rest-api-specs/pull/38387, service tree ID
+      a7f2b8e4-9c1d-4a3e-b6f9-2d8e5a7c3b1f, and product tree ID
+      f1a8c5d2-6e4b-4f7a-9c2d-8b5e1f3a6c9e. Use the Azure SDK MCP tools.
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-prepare-release-plan]
+      - type: tool-calls
+        config:
+          required:
+            - name: "^azure-sdk-mcp-azsdk_get_release_plan$"
+            - name: "^azure-sdk-mcp-azsdk_create_release_plan$"
+      - type: output-matches
+        config:
+          pattern: "(?is)(?=.*past[- ]due)(?=.*(?:postpone|update).*(?:target|release month))(?=.*(?:abandon|close).*(?:reason|dashboard))"

@@ -214,6 +214,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
     {
         public AppLinkConnectivityProfile() { }
         public Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility? EastWestGatewayVisibility { get { throw null; } set { } }
+        public string Network { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateConnectSubnetResourceId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -224,6 +225,21 @@ namespace Azure.ResourceManager.AppNetwork.Models
         Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AppLinkConnectivityProfilePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfilePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfilePatch>
+    {
+        public AppLinkConnectivityProfilePatch() { }
+        public Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility? EastWestGatewayVisibility { get { throw null; } set { } }
+        public string Network { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfilePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfilePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfilePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfilePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfilePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfilePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfilePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfilePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfilePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AppLinkEastWestGatewayVisibility : System.IEquatable<Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility>
@@ -279,9 +295,8 @@ namespace Azure.ResourceManager.AppNetwork.Models
     public partial class AppLinkMemberUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpdateProperties>
     {
         public AppLinkMemberUpdateProperties() { }
-        public Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile ConnectivityProfile { get { throw null; } set { } }
-        public string ObservabilityMetricsEndpoint { get { throw null; } }
-        public Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeProfile UpgradeProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfilePatch ConnectivityProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpgradeProfilePatch UpgradeProfile { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -292,9 +307,26 @@ namespace Azure.ResourceManager.AppNetwork.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AppLinkMemberUpgradeProfilePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpgradeProfilePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpgradeProfilePatch>
+    {
+        public AppLinkMemberUpgradeProfilePatch() { }
+        public Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeReleaseChannel? FullyManagedUpgradeReleaseChannel { get { throw null; } set { } }
+        public Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeMode? Mode { get { throw null; } set { } }
+        public string SelfManagedUpgradeVersion { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpgradeProfilePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpgradeProfilePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpgradeProfilePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpgradeProfilePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpgradeProfilePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpgradeProfilePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpgradeProfilePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpgradeProfilePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpgradeProfilePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class AppLinkPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppNetwork.Models.AppLinkPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkPatch>
     {
         public AppLinkPatch() { }
+        public Azure.ResourceManager.AppNetwork.Models.AppNetworkManagedServiceIdentityPatch Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.AppNetwork.Models.AppLinkPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -360,11 +392,11 @@ namespace Azure.ResourceManager.AppNetwork.Models
     public partial class AppLinkUpgradeHistoryProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistoryProperties>
     {
         internal AppLinkUpgradeHistoryProperties() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } }
         public string FromVersion { get { throw null; } }
         public string InitiatedBy { get { throw null; } }
         public Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState? ProvisioningState { get { throw null; } }
-        public System.DateTimeOffset StartOn { get { throw null; } }
+        public System.DateTimeOffset StartsOn { get { throw null; } }
         public string ToVersion { get { throw null; } }
         protected virtual Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistoryProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -441,21 +473,39 @@ namespace Azure.ResourceManager.AppNetwork.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkVersionInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkVersionInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AppNetworkManagedServiceIdentityPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppNetwork.Models.AppNetworkManagedServiceIdentityPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppNetworkManagedServiceIdentityPatch>
+    {
+        public AppNetworkManagedServiceIdentityPatch() { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentityType? Type { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
+        protected virtual Azure.ResourceManager.AppNetwork.Models.AppNetworkManagedServiceIdentityPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.AppNetwork.Models.AppNetworkManagedServiceIdentityPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.AppNetwork.Models.AppNetworkManagedServiceIdentityPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppNetwork.Models.AppNetworkManagedServiceIdentityPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppNetwork.Models.AppNetworkManagedServiceIdentityPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppNetwork.Models.AppNetworkManagedServiceIdentityPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppNetworkManagedServiceIdentityPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppNetworkManagedServiceIdentityPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppNetworkManagedServiceIdentityPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public static partial class ArmAppNetworkModelFactory
     {
         public static Azure.ResourceManager.AppNetwork.Models.AppLinkAvailableVersion AppLinkAvailableVersion(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppNetwork.Models.AppLinkAvailableVersionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.AppNetwork.Models.AppLinkAvailableVersionProperties AppLinkAvailableVersionProperties(string kubernetesVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppNetwork.Models.AppLinkReleaseChannelInfo> fullyManagedVersionsReleaseChannels = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppNetwork.Models.AppLinkVersionInfo> selfManagedVersionDetailVersions = null, Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState? provisioningState = default(Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile AppLinkConnectivityProfile(Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility? eastWestGatewayVisibility = default(Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility?), Azure.Core.ResourceIdentifier privateConnectSubnetResourceId = null) { throw null; }
+        public static Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile AppLinkConnectivityProfile(Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility? eastWestGatewayVisibility = default(Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility?), Azure.Core.ResourceIdentifier privateConnectSubnetResourceId = null, string network = null) { throw null; }
+        public static Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfilePatch AppLinkConnectivityProfilePatch(Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility? eastWestGatewayVisibility = default(Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility?), string network = null) { throw null; }
         public static Azure.ResourceManager.AppNetwork.AppLinkData AppLinkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState? appLinkProvisioningState = default(Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.AppNetwork.AppLinkMemberData AppLinkMemberData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AppNetwork.Models.AppLinkMemberProperties properties = null) { throw null; }
         public static Azure.ResourceManager.AppNetwork.Models.AppLinkMemberPatch AppLinkMemberPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.AppNetwork.Models.AppLinkMemberProperties AppLinkMemberProperties(Azure.ResourceManager.AppNetwork.Models.AppLinkClusterType? clusterType = default(Azure.ResourceManager.AppNetwork.Models.AppLinkClusterType?), Azure.Core.ResourceIdentifier metadataResourceId = null, Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeProfile upgradeProfile = null, string observabilityMetricsEndpoint = null, Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile connectivityProfile = null, Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState? provisioningState = default(Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpdateProperties AppLinkMemberUpdateProperties(Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeProfile upgradeProfile = null, string observabilityMetricsEndpoint = null, Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile connectivityProfile = null) { throw null; }
-        public static Azure.ResourceManager.AppNetwork.Models.AppLinkPatch AppLinkPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpdateProperties AppLinkMemberUpdateProperties(Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpgradeProfilePatch upgradeProfile = null, Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfilePatch connectivityProfile = null) { throw null; }
+        public static Azure.ResourceManager.AppNetwork.Models.AppLinkMemberUpgradeProfilePatch AppLinkMemberUpgradeProfilePatch(Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeMode? mode = default(Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeMode?), Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeReleaseChannel? fullyManagedUpgradeReleaseChannel = default(Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeReleaseChannel?), string selfManagedUpgradeVersion = null) { throw null; }
+        public static Azure.ResourceManager.AppNetwork.Models.AppLinkPatch AppLinkPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.AppNetwork.Models.AppNetworkManagedServiceIdentityPatch identity = null) { throw null; }
         public static Azure.ResourceManager.AppNetwork.Models.AppLinkReleaseChannelInfo AppLinkReleaseChannelInfo(string releaseChannel = null, string version = null) { throw null; }
         public static Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistory AppLinkUpgradeHistory(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistoryProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistoryProperties AppLinkUpgradeHistoryProperties(System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string initiatedBy = null, string fromVersion = null, string toVersion = null, Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState? provisioningState = default(Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistoryProperties AppLinkUpgradeHistoryProperties(System.DateTimeOffset startsOn = default(System.DateTimeOffset), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), string initiatedBy = null, string fromVersion = null, string toVersion = null, Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState? provisioningState = default(Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeProfile AppLinkUpgradeProfile(Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeMode mode = default(Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeMode), Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeReleaseChannel? fullyManagedUpgradeReleaseChannel = default(Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeReleaseChannel?), string selfManagedUpgradeVersion = null) { throw null; }
         public static Azure.ResourceManager.AppNetwork.Models.AppLinkVersionInfo AppLinkVersionInfo(string version = null, System.Collections.Generic.IEnumerable<string> upgrades = null) { throw null; }
+        public static Azure.ResourceManager.AppNetwork.Models.AppNetworkManagedServiceIdentityPatch AppNetworkManagedServiceIdentityPatch(Azure.ResourceManager.Models.ManagedServiceIdentityType? type = default(Azure.ResourceManager.Models.ManagedServiceIdentityType?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> userAssignedIdentities = null) { throw null; }
     }
 }

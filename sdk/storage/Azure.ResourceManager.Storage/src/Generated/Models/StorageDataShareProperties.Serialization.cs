@@ -210,15 +210,15 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new StorageDataShareProperties(
                 dataShareIdentifier,
                 description,
                 dataShareUri,
-                accessPolicies,
-                assets,
+                accessPolicies ?? new ChangeTrackingList<StorageDataShareAccessPolicy>(),
+                assets ?? new ChangeTrackingList<StorageDataShareAsset>(),
                 provisioningState,
                 additionalBinaryDataProperties);
         }

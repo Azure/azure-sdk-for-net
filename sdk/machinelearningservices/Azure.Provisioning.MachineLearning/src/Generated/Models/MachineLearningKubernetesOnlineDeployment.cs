@@ -15,6 +15,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningKubernetesOnlineDeployment. </summary>
         public MachineLearningKubernetesOnlineDeployment()
         {
+            EndpointComputeType.Assign(MachineLearningEndpointComputeType.Kubernetes);
         }
 
         /// <summary> Gets or sets the ContainerResourceRequirements. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("endpointComputeType", new string[] { "endpointComputeType" }, defaultValue: "Kubernetes");
             _containerResourceRequirements = DefineModelProperty<MachineLearningContainerResourceRequirements>(nameof(ContainerResourceRequirements), new string[] { "containerResourceRequirements" });
             DefineAdditionalProperties();
         }

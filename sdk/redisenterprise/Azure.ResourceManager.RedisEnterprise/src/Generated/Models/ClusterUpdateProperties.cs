@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Properties of Redis Enterprise clusters for update operations. </summary>
     internal partial class ClusterUpdateProperties : ClusterProperties
     {
+        private RedisEnterprisePublicNetworkAccess? _publicNetworkAccess;
+        internal bool _publicNetworkAccessIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ClusterUpdateProperties"/>. </summary>
         public ClusterUpdateProperties()
         {
@@ -35,11 +38,22 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="publicNetworkAccess"> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </param>
         internal ClusterUpdateProperties(RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, ClusterPropertiesEncryption encryption, MaintenanceConfiguration maintenanceConfiguration, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, string migratedEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties, RedisEnterprisePublicNetworkAccess? publicNetworkAccess) : base(highAvailability, minimumTlsVersion, encryption, maintenanceConfiguration, hostName, provisioningState, redundancyMode, resourceState, redisVersion, privateEndpointConnections, migratedEndpoint, additionalBinaryDataProperties)
         {
-            PublicNetworkAccess = publicNetworkAccess;
+            _publicNetworkAccess = publicNetworkAccess;
         }
 
         /// <summary> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </summary>
         [WirePath("publicNetworkAccess")]
-        public RedisEnterprisePublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public RedisEnterprisePublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return _publicNetworkAccess;
+            }
+            set
+            {
+                _publicNetworkAccess = value;
+                _publicNetworkAccessIsDefined = true;
+            }
+        }
     }
 }

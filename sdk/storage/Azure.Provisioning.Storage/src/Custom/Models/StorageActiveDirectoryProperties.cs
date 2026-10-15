@@ -1,0 +1,27 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable enable
+
+using System;
+using System.ComponentModel;
+using Azure.Provisioning.Primitives;
+
+namespace Azure.Provisioning.Storage;
+
+public partial class StorageActiveDirectoryProperties : ProvisionableConstruct
+{
+    // TypeSpec generates ActiveDirectoryDomainGuid; retain the shipped DomainGuid compatibility alias.
+    /// <summary>
+    /// Specifies the domain GUID.
+    ///
+    /// This property is obsoleted and will be removed in future versions. Please use
+    /// <see cref="StorageActiveDirectoryProperties.ActiveDirectoryDomainGuid"/> instead.
+    /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public BicepValue<Guid> DomainGuid
+    {
+        get => ActiveDirectoryDomainGuid;
+        set => ActiveDirectoryDomainGuid = value;
+    }
+}

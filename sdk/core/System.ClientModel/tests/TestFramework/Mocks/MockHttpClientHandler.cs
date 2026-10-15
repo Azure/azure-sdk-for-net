@@ -11,11 +11,11 @@ namespace ClientModel.Tests.Mocks;
 
 public class MockHttpClientHandler : HttpMessageHandler
 {
-    private readonly Func<HttpRequestMessage, Task<HttpResponseMessage>> _onSend;
+    private readonly Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> _onSend;
 
     public MockHttpClientHandler(Action<HttpRequestMessage> onSend)
     {
-        _onSend = req =>
+        _onSend = (req, _) =>
         {
             onSend(req);
             return Task.FromResult<HttpResponseMessage>(null!);
@@ -23,13 +23,18 @@ public class MockHttpClientHandler : HttpMessageHandler
     }
 
     public MockHttpClientHandler(Func<HttpRequestMessage, Task<HttpResponseMessage>> onSend)
+        : this((request, _) => onSend(request))
+    {
+    }
+
+    public MockHttpClientHandler(Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> onSend)
     {
         _onSend = onSend;
     }
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        HttpResponseMessage response = await _onSend(request);
+        HttpResponseMessage response = await _onSend(request, cancellationToken);
 
         return response ?? new HttpResponseMessage((HttpStatusCode)200);
     }
@@ -37,7 +42,7 @@ public class MockHttpClientHandler : HttpMessageHandler
 #if NET5_0_OR_GREATER
     protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        HttpResponseMessage response = _onSend(request).GetAwaiter().GetResult();
+        HttpResponseMessage response = _onSend(request, cancellationToken).GetAwaiter().GetResult();
 
         return response ?? new HttpResponseMessage((HttpStatusCode)200);
     }

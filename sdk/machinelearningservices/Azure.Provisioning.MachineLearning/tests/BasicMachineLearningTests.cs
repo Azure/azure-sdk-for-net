@@ -50,7 +50,7 @@ public class BasicMachineLearningTests
                                     },
                                 KeySource = StorageAccountKeySource.Storage,
                             },
-                        MinimumTlsVersion = StorageMinimumTlsVersion.Tls1_2,
+                        MinimumTlsVersion = StorageMinimumTlsVersion.Tls12,
                         NetworkRuleSet =
                             new StorageAccountNetworkRuleSet
                             {
@@ -127,15 +127,12 @@ public class BasicMachineLearningTests
 
             resource storage 'Microsoft.Storage/storageAccounts@2022-05-01' = {
               name: take('storage${uniqueString(resourceGroup().id)}', 24)
-              kind: 'StorageV2'
               location: location
-              sku: {
-                name: 'Standard_RAGRS'
-              }
+              kind: 'StorageV2'
               properties: {
                 allowBlobPublicAccess: false
-                supportsHttpsTrafficOnly: true
                 encryption: {
+                  keySource: 'Microsoft.Storage'
                   services: {
                     blob: {
                       enabled: true
@@ -144,12 +141,15 @@ public class BasicMachineLearningTests
                       enabled: true
                     }
                   }
-                  keySource: 'Microsoft.Storage'
                 }
                 minimumTlsVersion: 'TLS1_2'
                 networkAcls: {
                   defaultAction: 'Deny'
                 }
+                supportsHttpsTrafficOnly: true
+              }
+              sku: {
+                name: 'Standard_RAGRS'
               }
             }
 
@@ -157,20 +157,20 @@ public class BasicMachineLearningTests
               name: take('vault-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
-                tenantId: tenantId
+                accessPolicies: []
+                enableSoftDelete: true
                 sku: {
                   family: 'A'
                   name: 'standard'
                 }
-                accessPolicies: []
-                enableSoftDelete: true
+                tenantId: tenantId
               }
             }
 
             resource applicationInsight 'Microsoft.Insights/components@2020-02-02' = {
               name: take('applicationInsight-${uniqueString(resourceGroup().id)}', 260)
-              kind: 'web'
               location: location
+              kind: 'web'
               properties: {
                 Application_Type: 'web'
               }
@@ -189,6 +189,10 @@ public class BasicMachineLearningTests
 
             resource workspace 'Microsoft.MachineLearningServices/workspaces@2026-05-01' = {
               name: take('workspace-${uniqueString(resourceGroup().id)}', 24)
+              location: location
+              identity: {
+                type: 'SystemAssigned'
+              }
               properties: {
                 applicationInsights: applicationInsight.id
                 containerRegistry: registry.id
@@ -196,10 +200,6 @@ public class BasicMachineLearningTests
                 keyVault: vault.id
                 storageAccount: storage.id
               }
-              identity: {
-                type: 'SystemAssigned'
-              }
-              location: location
             }
             """);
     }

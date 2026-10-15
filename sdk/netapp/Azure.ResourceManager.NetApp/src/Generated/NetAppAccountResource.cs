@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.NetApp.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -57,11 +58,11 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ResourceType, out string netAppAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppAccountApiVersion ?? "2026-05-15-preview");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetApp/netAppAccounts", out string accountsApiVersionOverride) ? accountsApiVersionOverride : "2026-06-15-preview");
             _volumeGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _volumeGroupsRestClient = new VolumeGroups(_volumeGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppAccountApiVersion ?? "2026-05-15-preview");
+            _volumeGroupsRestClient = new VolumeGroups(_volumeGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppAccountApiVersion ?? "2026-06-15-preview");
             _backupsUnderAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _backupsUnderAccountRestClient = new BackupsUnderAccount(_backupsUnderAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppAccountApiVersion ?? "2026-05-15-preview");
+            _backupsUnderAccountRestClient = new BackupsUnderAccount(_backupsUnderAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppAccountApiVersion ?? "2026-06-15-preview");
             ValidateResourceId(id);
         }
 
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -269,7 +270,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -328,7 +329,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -377,7 +378,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -426,7 +427,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -476,7 +477,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -526,7 +527,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -581,7 +582,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -636,7 +637,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -652,7 +653,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new VolumeGroupsGetVolumeGroupsAsyncCollectionResultOfT(
+            return new NetAppVolumeGroupResultAsyncCollectionResultOfT(
                 _volumeGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -674,7 +675,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -690,7 +691,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new VolumeGroupsGetVolumeGroupsCollectionResultOfT(
+            return new NetAppVolumeGroupResultCollectionResultOfT(
                 _volumeGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -712,7 +713,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -765,7 +766,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -818,7 +819,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -867,7 +868,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -916,7 +917,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -965,7 +966,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1014,7 +1015,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1064,7 +1065,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1211,10 +1212,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1254,10 +1254,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

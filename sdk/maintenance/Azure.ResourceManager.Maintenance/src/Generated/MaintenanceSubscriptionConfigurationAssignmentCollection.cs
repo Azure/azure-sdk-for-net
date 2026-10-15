@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Maintenance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceSubscriptionConfigurationAssignmentResource>(new ConfigurationAssignmentsWithinSubscriptionGetConfigurationAssignmentsBySubscriptionAsyncCollectionResultOfT(_configurationAssignmentsWithinSubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context, "MaintenanceSubscriptionConfigurationAssignmentCollection.GetAll"), data => new MaintenanceSubscriptionConfigurationAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceSubscriptionConfigurationAssignmentResource>(new MaintenanceConfigurationAssignmentDataAsyncCollectionResultOfT(_configurationAssignmentsWithinSubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context, "MaintenanceSubscriptionConfigurationAssignmentCollection.GetAll"), data => new MaintenanceSubscriptionConfigurationAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Maintenance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceSubscriptionConfigurationAssignmentResource>(new ConfigurationAssignmentsWithinSubscriptionGetConfigurationAssignmentsBySubscriptionCollectionResultOfT(_configurationAssignmentsWithinSubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context, "MaintenanceSubscriptionConfigurationAssignmentCollection.GetAll"), data => new MaintenanceSubscriptionConfigurationAssignmentResource(Client, data));
+            return new PageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceSubscriptionConfigurationAssignmentResource>(new MaintenanceConfigurationAssignmentDataCollectionResultOfT(_configurationAssignmentsWithinSubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context, "MaintenanceSubscriptionConfigurationAssignmentCollection.GetAll"), data => new MaintenanceSubscriptionConfigurationAssignmentResource(Client, data));
         }
 
         /// <summary>

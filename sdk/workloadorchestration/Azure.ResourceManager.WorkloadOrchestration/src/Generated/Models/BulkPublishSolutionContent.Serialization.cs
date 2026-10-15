@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BulkPublishSolutionContent(targets, solutionInstanceName, solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>(), additionalBinaryDataProperties);
+            return new BulkPublishSolutionContent(targets ?? new ChangeTrackingList<BulkPublishTargetDetails>(), solutionInstanceName, solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>(), additionalBinaryDataProperties);
         }
     }
 }

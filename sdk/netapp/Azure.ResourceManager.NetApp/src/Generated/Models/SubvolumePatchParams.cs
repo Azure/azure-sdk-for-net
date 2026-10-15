@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private long? _size;
+        internal bool _sizeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SubvolumePatchParams"/>. </summary>
         public SubvolumePatchParams()
@@ -27,13 +29,24 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SubvolumePatchParams(long? size, string path, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Size = size;
+            _size = size;
             Path = path;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Truncate subvolume to the provided size in bytes. </summary>
-        public long? Size { get; set; }
+        public long? Size
+        {
+            get
+            {
+                return _size;
+            }
+            set
+            {
+                _size = value;
+                _sizeIsDefined = true;
+            }
+        }
 
         /// <summary> path to the subvolume. </summary>
         public string Path { get; set; }

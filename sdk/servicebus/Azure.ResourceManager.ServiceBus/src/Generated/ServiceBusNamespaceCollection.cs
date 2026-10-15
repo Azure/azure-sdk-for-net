@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ServiceBus
         {
             TryGetApiVersion(ServiceBusNamespaceResource.ResourceType, out string serviceBusNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusNamespaceApiVersion ?? "2026-01-01");
+            _namespacesRestClient = new Namespaces(
+                _namespacesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                serviceBusNamespaceApiVersion ?? "2026-07-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -68,7 +74,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +132,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +190,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +239,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +288,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new NamespacesGetByResourceGroupAsyncCollectionResultOfT(_namespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceBusNamespaceCollection.GetAll"), data => new ServiceBusNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new ServiceBusNamespaceDataAsyncCollectionResultOfT(_namespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceBusNamespaceCollection.GetAll"), data => new ServiceBusNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +316,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new NamespacesGetByResourceGroupCollectionResultOfT(_namespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceBusNamespaceCollection.GetAll"), data => new ServiceBusNamespaceResource(Client, data));
+            return new PageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new ServiceBusNamespaceDataCollectionResultOfT(_namespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceBusNamespaceCollection.GetAll"), data => new ServiceBusNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +344,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +401,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +458,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +519,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

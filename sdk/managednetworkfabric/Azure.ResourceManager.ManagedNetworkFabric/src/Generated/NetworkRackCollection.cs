@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkRackCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkRackResource.ResourceType, out string networkRackApiVersion);
             _networkRacksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkRackResource.ResourceType.Namespace, Diagnostics);
-            _networkRacksRestClient = new NetworkRacks(_networkRacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkRackApiVersion ?? "2025-07-15");
+            _networkRacksRestClient = new NetworkRacks(_networkRacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkRacks", out string networkRacksApiVersionOverride) ? networkRacksApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkRackData, NetworkRackResource>(new NetworkRacksGetByResourceGroupAsyncCollectionResultOfT(_networkRacksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkRackCollection.GetAll"), data => new NetworkRackResource(Client, data));
+            return new AsyncPageableWrapper<NetworkRackData, NetworkRackResource>(new NetworkRackDataAsyncCollectionResultOfT(_networkRacksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkRackCollection.GetAll"), data => new NetworkRackResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkRackData, NetworkRackResource>(new NetworkRacksGetByResourceGroupCollectionResultOfT(_networkRacksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkRackCollection.GetAll"), data => new NetworkRackResource(Client, data));
+            return new PageableWrapper<NetworkRackData, NetworkRackResource>(new NetworkRackDataCollectionResultOfT(_networkRacksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkRackCollection.GetAll"), data => new NetworkRackResource(Client, data));
         }
 
         /// <summary>

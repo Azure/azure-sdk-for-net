@@ -21,6 +21,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new PostArgsMatchCondition. </summary>
         public PostArgsMatchCondition()
         {
+            TypeName.Assign(DeliveryRuleConditionParametersType.DeliveryRulePostArgsConditionParameters);
         }
 
         /// <summary> Gets or sets the Selector. </summary>
@@ -102,7 +103,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRulePostArgsConditionParameters");
             _selector = DefineProperty<string>(nameof(Selector), new string[] { "selector" });
             _postArgsOperator = DefineProperty<PostArgsOperator>(nameof(PostArgsOperator), new string[] { "operator" }, isRequired: true);
             _negateCondition = DefineProperty<bool>(nameof(NegateCondition), new string[] { "negateCondition" });

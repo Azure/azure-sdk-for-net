@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Threading;
-using Azure.AI.Projects.Agents;
-
 namespace Azure.AI.Projects.Agents;
 
 /// <summary> The ProjectsClient. </summary>
@@ -14,11 +10,18 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetMemoryStoresClient")]
 [CodeGenSuppress("GetProjectAgentSkillsClient")]
 [CodeGenSuppress("GetAgentOptimizationJobsClient")]
+[CodeGenSuppress("GetBetaVoiceAgentsConversationsClient")]
+[CodeGenSuppress("GetBetaVoiceAgentsTelephonyClient")]
+[CodeGenSuppress("GetInternalBetaClient")]
+[CodeGenSuppress("GetAgentOptimizationJobCandidatesClient")]
 [CodeGenSuppress("_cachedAgentClient")]
 [CodeGenSuppress("_cachedConversations")]
 [CodeGenSuppress("_cachedMemoryStores")]
 [CodeGenSuppress("_cachedProjectAgentSkills")]
 [CodeGenSuppress("_cachedAgentOptimizationJobs")]
+[CodeGenSuppress("_cachedBetaVoiceAgentsConversations")]
+[CodeGenSuppress("_cachedBetaVoiceAgentsTelephony")]
+[CodeGenSuppress("_cachedAgentOptimizationJobCandidates")]
 internal partial class InternalProjectsClient
 {
 }

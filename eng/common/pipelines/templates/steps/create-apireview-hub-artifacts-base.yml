@@ -29,16 +29,19 @@ steps:
   - pwsh: |
       $ErrorActionPreference = 'Stop'
 
-      New-Item -ItemType Directory -Force -Path '${{ parameters.outputDir }}' | Out-Null
-      New-Item -ItemType Directory -Force -Path '${{ parameters.workingDir }}' | Out-Null
-      New-Item -ItemType Directory -Force -Path '${{ parameters.workingDir }}/state' | Out-Null
+      New-Item -ItemType Directory -Force -Path $env:OUTPUT_DIR | Out-Null
+      New-Item -ItemType Directory -Force -Path $env:WORKING_DIR | Out-Null
+      New-Item -ItemType Directory -Force -Path (Join-Path $env:WORKING_DIR 'state') | Out-Null
+    env:
+      OUTPUT_DIR: ${{ parameters.outputDir }}
+      WORKING_DIR: ${{ parameters.workingDir }}
     displayName: 'Prepare ${{ parameters.kind }} API review bundle directories'
 
   - bash: |
       set -Eeuo pipefail
 
-      source_repo="${{ parameters.sourceDir }}"
-      ref="${{ parameters.ref }}"
+      source_repo="$SOURCE_DIR"
+      ref="$REF"
 
       if [ ! -d "$source_repo/.git" ]; then
         echo "Expected API review source repository was not cloned at $source_repo" >&2
@@ -52,10 +55,14 @@ steps:
         exit 1
       fi
 
-      echo "Checking out ${{ parameters.kind }} API review source ref $ref in $source_repo"
+      echo "Checking out $KIND API review source ref $ref in $source_repo"
       git -C "$source_repo" fetch --depth=1 origin "$ref"
       git -C "$source_repo" checkout --force FETCH_HEAD
       git -C "$source_repo" clean -ffd
+    env:
+      SOURCE_DIR: ${{ parameters.sourceDir }}
+      REF: ${{ parameters.ref }}
+      KIND: ${{ parameters.kind }}
     displayName: 'Checkout ${{ parameters.kind }} API review source'
 
   - ${{ parameters.generationSteps }}
@@ -63,8 +70,8 @@ steps:
   - pwsh: |
       $ErrorActionPreference = 'Stop'
 
-      $outputDir = '${{ parameters.outputDir }}'
-      $stateDir = '${{ parameters.workingDir }}/state'
+      $outputDir = $env:OUTPUT_DIR
+      $stateDir = Join-Path $env:WORKING_DIR 'state'
       $apiMdPath = Join-Path $outputDir 'api.md'
       $apiMetadataPath = Join-Path $outputDir 'api.metadata.yml'
       $packageRelativePathPath = Join-Path $stateDir 'package-relative-path.txt'
@@ -86,16 +93,26 @@ steps:
       $version = Get-Content -Raw -Path $versionPath
 
       $metadata = [ordered]@{
-        operationId = '${{ parameters.operationId }}'
-        mode = '${{ parameters.requestMode }}'
-        language = '${{ parameters.language }}'
-        repositoryFullName = '${{ parameters.repositoryFullName }}'
-        packageName = '${{ parameters.packageName }}'
+        operationId = $env:OPERATION_ID
+        mode = $env:REQUEST_MODE
+        language = $env:LANGUAGE
+        repositoryFullName = $env:REPOSITORY_FULL_NAME
+        packageName = $env:PACKAGE_NAME
         packageRelativePath = $packageRelativePath.Trim()
-        ref = '${{ parameters.ref }}'
+        ref = $env:REF
         version = $version.Trim()
-        kind = '${{ parameters.kind }}'
+        kind = $env:KIND
       }
       $metadata | ConvertTo-Json -Depth 10 | Set-Content -Path (Join-Path $outputDir 'artifact-metadata.json') -Encoding utf8
       Get-Content -Path (Join-Path $outputDir 'artifact-metadata.json')
+    env:
+      OUTPUT_DIR: ${{ parameters.outputDir }}
+      WORKING_DIR: ${{ parameters.workingDir }}
+      OPERATION_ID: ${{ parameters.operationId }}
+      REQUEST_MODE: ${{ parameters.requestMode }}
+      LANGUAGE: ${{ parameters.language }}
+      REPOSITORY_FULL_NAME: ${{ parameters.repositoryFullName }}
+      PACKAGE_NAME: ${{ parameters.packageName }}
+      REF: ${{ parameters.ref }}
+      KIND: ${{ parameters.kind }}
     displayName: 'Validate and write ${{ parameters.kind }} API review bundle metadata'

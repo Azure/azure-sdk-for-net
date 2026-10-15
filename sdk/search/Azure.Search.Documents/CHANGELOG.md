@@ -1,5 +1,15 @@
 # Release History
 
+## 12.1.0-beta.3 (2026-09-14)
+
+### Breaking Changes
+
+- The protocol `KnowledgeBaseRetrievalClient.RetrieveStreamAsync` overload now returns `AsyncStreamingResult<SseItem<BinaryData>>` instead of the experimental `AsyncStreamingClientResult<SseItem<BinaryData>>`.
+
+### Bugs Fixed
+
+- Restored public `SearchIndexerClient` create-or-update parameters for controlling indexer cache reset and reprocessing behavior.
+
 ## 12.1.0-beta.2 (2026-08-27)
 
 ### Features Added

@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new UriRedirectAction. </summary>
         public UriRedirectAction()
         {
+            Name.Assign(DeliveryRuleActionName.UrlRedirect);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("name", new string[] { "name" }, defaultValue: "UrlRedirect");
             _properties = DefineModelProperty<UriRedirectActionProperties>(nameof(Properties), new string[] { "parameters" }, isRequired: true);
             DefineAdditionalProperties();
         }

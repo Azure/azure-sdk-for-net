@@ -2,11 +2,71 @@
 <!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
 <Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.AI.Projects.InputFileContentParam</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.AI.Projects.InputTextContentParam</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Memory.MemorySearchResultOptions</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.AI.Projects.ResponseUsageInputTokensDetails</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.AI.Projects.ResponseUsageOutputTokensDetails</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:OpenAI.AgentObjectType</Target>
+  </Suppression>
+  <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Azure.AI.Projects.AIProjectConnectionsOperations.GetConnection(System.String,System.Boolean,System.String,System.Threading.CancellationToken)</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Azure.AI.Projects.AIProjectConnectionsOperations.GetConnection(System.String,System.Boolean,System.Threading.CancellationToken)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.AzureAIProjectsModelFactory.InputFileContentParam(System.String,System.String,System.String,System.Uri)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.AzureAIProjectsModelFactory.InputTextContentParam(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.AzureAIProjectsModelFactory.MemorySearchResultOptions(System.Nullable{System.Int32})</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.AzureAIProjectsModelFactory.MemoryStoreOperationUsage(System.Int32,System.Int64,Azure.AI.Projects.ResponseUsageInputTokensDetails,System.Int64,Azure.AI.Projects.ResponseUsageOutputTokensDetails,System.Int64)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.AzureAIProjectsModelFactory.ResponseUsageInputTokensDetails(System.Int64)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.AzureAIProjectsModelFactory.ResponseUsageOutputTokensDetails(System.Int64)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Memory.MemorySearchOptions.get_ResultOptions</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Memory.MemoryStoreOperationUsage.get_InputTokensDetails</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Memory.MemoryStoreOperationUsage.get_OutputTokensDetails</Target>
   </Suppression>
 </Suppressions>

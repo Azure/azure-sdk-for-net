@@ -17,6 +17,7 @@ namespace Azure.Provisioning.EventHubs
     public partial class EventHubsApplicationGroupPolicy : ProvisionableConstruct
     {
         private BicepValue<string> _name;
+        private BicepValue<ApplicationGroupPolicyType> _applicationGroupPolicyType;
 
         /// <summary> Creates a new EventHubsApplicationGroupPolicy. </summary>
         public EventHubsApplicationGroupPolicy()
@@ -38,11 +39,22 @@ namespace Azure.Provisioning.EventHubs
             }
         }
 
+        /// <summary> Application Group Policy types. </summary>
+        internal BicepValue<ApplicationGroupPolicyType> ApplicationGroupPolicyType
+        {
+            get
+            {
+                Initialize();
+                return _applicationGroupPolicyType;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for EventHubsApplicationGroupPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _applicationGroupPolicyType = DefineProperty<ApplicationGroupPolicyType>(nameof(ApplicationGroupPolicyType), new string[] { "type" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

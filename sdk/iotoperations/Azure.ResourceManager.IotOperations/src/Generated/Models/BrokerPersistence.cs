@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         {
             get
             {
-                return Encryption is null ? default : Encryption.Mode;
+                return Encryption is null ? (IotOperationsOperationalMode?)default : Encryption.Mode;
             }
             set
             {

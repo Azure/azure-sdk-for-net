@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PartnerNamespaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PartnerNamespaceResource.ResourceType, out string partnerNamespaceApiVersion);
             _partnerNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _partnerNamespacesRestClient = new PartnerNamespaces(_partnerNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, partnerNamespaceApiVersion ?? "2025-07-15-preview");
+            _partnerNamespacesRestClient = new PartnerNamespaces(_partnerNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/partnerNamespaces", out string partnerNamespacesApiVersionOverride) ? partnerNamespacesApiVersionOverride : "2025-07-15-preview");
             ValidateResourceId(id);
         }
 
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PartnerNamespaceData, PartnerNamespaceResource>(new PartnerNamespacesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PartnerNamespaceData, PartnerNamespaceResource>(new PartnerNamespaceDataAsyncCollectionResultOfT(
                 _partnerNamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +332,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PartnerNamespaceData, PartnerNamespaceResource>(new PartnerNamespacesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<PartnerNamespaceData, PartnerNamespaceResource>(new PartnerNamespaceDataCollectionResultOfT(
                 _partnerNamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

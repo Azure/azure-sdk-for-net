@@ -4,8 +4,8 @@
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Feature opt-in keys for agent definition operations supporting hosted or workflow agents. </summary>
-    public enum AgentDefinitionOptInKeys
+    /// <summary> Feature opt-in keys for agent definition operations supporting conditional preview features. </summary>
+    internal enum AgentDefinitionOptInKeys
     {
         /// <summary> WorkflowAgentsV1Preview. </summary>
         WorkflowAgentsV1Preview,
@@ -14,6 +14,12 @@ namespace Azure.AI.Projects.Agents
         /// <summary> DraftAgentsV1Preview. </summary>
         DraftAgentsV1Preview,
         /// <summary> VoiceAgentsV1Preview. </summary>
-        VoiceAgentsV1Preview
+        VoiceAgentsV1Preview,
+        /// <summary> DigitalWorkerV1Preview. </summary>
+        DigitalWorkerV1Preview,
+        /// <summary> GithubCopilotV1Preview. </summary>
+        GithubCopilotV1Preview,
+        /// <summary> SkillsV1Preview. </summary>
+        SkillsV1Preview
     }
 }

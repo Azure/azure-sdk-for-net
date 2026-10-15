@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppContainers
             request.Uri = uri;
             request.Method = RequestMethod.Post;
             _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "text/plain");
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

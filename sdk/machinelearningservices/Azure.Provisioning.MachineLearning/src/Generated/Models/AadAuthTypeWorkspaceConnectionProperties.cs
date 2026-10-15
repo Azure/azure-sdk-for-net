@@ -13,13 +13,13 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new AadAuthTypeWorkspaceConnectionProperties. </summary>
         public AadAuthTypeWorkspaceConnectionProperties()
         {
+            AuthType.Assign(ConnectionAuthType.AAD);
         }
 
         /// <summary> Define all the provisionable properties for AadAuthTypeWorkspaceConnectionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "AAD");
             DefineAdditionalProperties();
         }
 

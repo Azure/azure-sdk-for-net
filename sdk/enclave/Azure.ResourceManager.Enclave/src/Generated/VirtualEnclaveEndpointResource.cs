@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Enclave.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Enclave
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualEnclaveEndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string virtualEnclaveEndpointApiVersion);
             _enclaveEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Enclave", ResourceType.Namespace, Diagnostics);
-            _enclaveEndpointsRestClient = new EnclaveEndpoints(_enclaveEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEnclaveEndpointApiVersion ?? "2026-03-01-preview");
+            _enclaveEndpointsRestClient = new EnclaveEndpoints(_enclaveEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Mission/virtualEnclaves/enclaveEndpoints", out string enclaveEndpointsApiVersionOverride) ? enclaveEndpointsApiVersionOverride : "2026-04-01");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -752,10 +752,9 @@ namespace Azure.ResourceManager.Enclave
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -795,10 +794,9 @@ namespace Azure.ResourceManager.Enclave
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

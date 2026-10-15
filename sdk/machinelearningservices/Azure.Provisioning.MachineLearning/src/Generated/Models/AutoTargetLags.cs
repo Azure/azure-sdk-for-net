@@ -13,13 +13,13 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new AutoTargetLags. </summary>
         public AutoTargetLags()
         {
+            Mode.Assign(TargetLagsMode.Auto);
         }
 
         /// <summary> Define all the provisionable properties for AutoTargetLags. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("mode", new string[] { "mode" }, defaultValue: "Auto");
             DefineAdditionalProperties();
         }
 

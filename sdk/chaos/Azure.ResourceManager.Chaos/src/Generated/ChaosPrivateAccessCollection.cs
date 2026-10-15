@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ChaosPrivateAccessCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ChaosPrivateAccessResource.ResourceType, out string chaosPrivateAccessApiVersion);
             _privateAccessesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosPrivateAccessResource.ResourceType.Namespace, Diagnostics);
-            _privateAccessesRestClient = new PrivateAccesses(_privateAccessesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosPrivateAccessApiVersion ?? "2026-05-01-preview");
+            _privateAccessesRestClient = new PrivateAccesses(_privateAccessesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Chaos/privateAccesses", out string privateAccessesApiVersionOverride) ? privateAccessesApiVersionOverride : "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,7 +294,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosPrivateAccessData, ChaosPrivateAccessResource>(new PrivateAccessesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ChaosPrivateAccessData, ChaosPrivateAccessResource>(new ChaosPrivateAccessDataAsyncCollectionResultOfT(
                 _privateAccessesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -317,7 +316,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,7 +329,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosPrivateAccessData, ChaosPrivateAccessResource>(new PrivateAccessesGetAllCollectionResultOfT(
+            return new PageableWrapper<ChaosPrivateAccessData, ChaosPrivateAccessResource>(new ChaosPrivateAccessDataCollectionResultOfT(
                 _privateAccessesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -352,7 +351,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -409,7 +408,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,7 +465,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -527,7 +526,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

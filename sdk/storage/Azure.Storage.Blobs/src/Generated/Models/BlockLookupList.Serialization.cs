@@ -112,7 +112,7 @@ namespace Azure.Storage.Blobs.Models
                 throw new FormatException($"The model {nameof(BlockLookupList)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Committed))
+            if (Committed != null && Optional.IsCollectionDefined(Committed))
             {
                 foreach (string item in Committed)
                 {
@@ -121,7 +121,7 @@ namespace Azure.Storage.Blobs.Models
                     writer.WriteEndElement();
                 }
             }
-            if (Optional.IsCollectionDefined(Uncommitted))
+            if (Uncommitted != null && Optional.IsCollectionDefined(Uncommitted))
             {
                 foreach (string item in Uncommitted)
                 {
@@ -130,7 +130,7 @@ namespace Azure.Storage.Blobs.Models
                     writer.WriteEndElement();
                 }
             }
-            if (Optional.IsCollectionDefined(Latest))
+            if (Latest != null && Optional.IsCollectionDefined(Latest))
             {
                 foreach (string item in Latest)
                 {

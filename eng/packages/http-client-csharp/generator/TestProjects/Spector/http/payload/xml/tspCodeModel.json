@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "Status",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Payload.Xml.Status",
       "valueType": {
         "$id": "2",
@@ -1811,6 +1812,7 @@
       "$id": "210",
       "kind": "model",
       "name": "SimpleModel",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.SimpleModel",
       "usage": "Input,Output,Xml",
@@ -1829,6 +1831,7 @@
           "$id": "211",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "212",
@@ -1857,6 +1860,7 @@
           "$id": "213",
           "kind": "property",
           "name": "age",
+          "apiVersions": [],
           "serializedName": "age",
           "type": {
             "$id": "214",
@@ -1887,6 +1891,7 @@
       "$id": "215",
       "kind": "model",
       "name": "ModelWithRenamedProperty",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedProperty",
       "usage": "Input,Output,Xml",
@@ -1905,6 +1910,7 @@
           "$id": "216",
           "kind": "property",
           "name": "title",
+          "apiVersions": [],
           "serializedName": "renamedTitle",
           "type": {
             "$id": "217",
@@ -1940,6 +1946,7 @@
           "$id": "218",
           "kind": "property",
           "name": "author",
+          "apiVersions": [],
           "serializedName": "author",
           "type": {
             "$id": "219",
@@ -1970,6 +1977,7 @@
       "$id": "220",
       "kind": "model",
       "name": "ModelWithRenamedFields",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedFields",
       "usage": "Input,Output,Xml",
@@ -1995,6 +2003,7 @@
           "$id": "221",
           "kind": "property",
           "name": "inputData",
+          "apiVersions": [],
           "serializedName": "InputData",
           "type": {
             "$ref": "210"
@@ -2026,6 +2035,7 @@
           "$id": "222",
           "kind": "property",
           "name": "outputData",
+          "apiVersions": [],
           "serializedName": "OutputData",
           "type": {
             "$ref": "210"
@@ -2059,6 +2069,7 @@
       "$id": "223",
       "kind": "model",
       "name": "ModelWithNestedModel",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithNestedModel",
       "usage": "Input,Output,Xml",
@@ -2077,6 +2088,7 @@
           "$id": "224",
           "kind": "property",
           "name": "nested",
+          "apiVersions": [],
           "serializedName": "nested",
           "type": {
             "$ref": "210"
@@ -2103,6 +2115,7 @@
       "$id": "225",
       "kind": "model",
       "name": "ModelWithRenamedNestedModel",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedNestedModel",
       "usage": "Input,Output,Xml",
@@ -2121,11 +2134,13 @@
           "$id": "226",
           "kind": "property",
           "name": "author",
+          "apiVersions": [],
           "serializedName": "author",
           "type": {
             "$id": "227",
             "kind": "model",
             "name": "Author",
+            "apiVersions": [],
             "namespace": "Payload.Xml",
             "crossLanguageDefinitionId": "Payload.Xml.Author",
             "usage": "Input,Output,Xml",
@@ -2151,6 +2166,7 @@
                 "$id": "228",
                 "kind": "property",
                 "name": "name",
+                "apiVersions": [],
                 "serializedName": "name",
                 "type": {
                   "$id": "229",
@@ -2202,6 +2218,7 @@
       "$id": "230",
       "kind": "model",
       "name": "ModelWithSimpleArrays",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithSimpleArrays",
       "usage": "Input,Output,Xml",
@@ -2220,6 +2237,7 @@
           "$id": "231",
           "kind": "property",
           "name": "colors",
+          "apiVersions": [],
           "serializedName": "colors",
           "type": {
             "$id": "232",
@@ -2256,6 +2274,7 @@
           "$id": "234",
           "kind": "property",
           "name": "counts",
+          "apiVersions": [],
           "serializedName": "counts",
           "type": {
             "$id": "235",
@@ -2294,6 +2313,7 @@
       "$id": "237",
       "kind": "model",
       "name": "ModelWithUnwrappedArray",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedArray",
       "usage": "Input,Output,Xml",
@@ -2312,6 +2332,7 @@
           "$id": "238",
           "kind": "property",
           "name": "colors",
+          "apiVersions": [],
           "serializedName": "colors",
           "type": {
             "$ref": "232"
@@ -2342,6 +2363,7 @@
           "$id": "239",
           "kind": "property",
           "name": "counts",
+          "apiVersions": [],
           "serializedName": "counts",
           "type": {
             "$ref": "235"
@@ -2369,6 +2391,7 @@
       "$id": "240",
       "kind": "model",
       "name": "ModelWithRenamedArrays",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedArrays",
       "usage": "Input,Output,Xml",
@@ -2387,6 +2410,7 @@
           "$id": "241",
           "kind": "property",
           "name": "colors",
+          "apiVersions": [],
           "serializedName": "Colors",
           "type": {
             "$ref": "232"
@@ -2423,6 +2447,7 @@
           "$id": "242",
           "kind": "property",
           "name": "counts",
+          "apiVersions": [],
           "serializedName": "Counts",
           "type": {
             "$ref": "235"
@@ -2457,6 +2482,7 @@
       "$id": "243",
       "kind": "model",
       "name": "ModelWithWrappedPrimitiveCustomItemNames",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithWrappedPrimitiveCustomItemNames",
       "usage": "Input,Output,Xml",
@@ -2475,6 +2501,7 @@
           "$id": "244",
           "kind": "property",
           "name": "tags",
+          "apiVersions": [],
           "serializedName": "ItemsTags",
           "type": {
             "$id": "245",
@@ -2534,6 +2561,7 @@
       "$id": "248",
       "kind": "model",
       "name": "ModelWithArrayOfModel",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithArrayOfModel",
       "usage": "Input,Output,Xml",
@@ -2552,6 +2580,7 @@
           "$id": "249",
           "kind": "property",
           "name": "items",
+          "apiVersions": [],
           "serializedName": "items",
           "type": {
             "$id": "250",
@@ -2586,6 +2615,7 @@
       "$id": "251",
       "kind": "model",
       "name": "ModelWithUnwrappedModelArray",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedModelArray",
       "usage": "Input,Output,Xml",
@@ -2604,6 +2634,7 @@
           "$id": "252",
           "kind": "property",
           "name": "items",
+          "apiVersions": [],
           "serializedName": "items",
           "type": {
             "$ref": "250"
@@ -2636,6 +2667,7 @@
       "$id": "253",
       "kind": "model",
       "name": "ModelWithRenamedWrappedModelArray",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedModelArray",
       "usage": "Input,Output,Xml",
@@ -2654,6 +2686,7 @@
           "$id": "254",
           "kind": "property",
           "name": "items",
+          "apiVersions": [],
           "serializedName": "AllItems",
           "type": {
             "$ref": "250"
@@ -2688,6 +2721,7 @@
       "$id": "255",
       "kind": "model",
       "name": "ModelWithRenamedUnwrappedModelArray",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedUnwrappedModelArray",
       "usage": "Input,Output,Xml",
@@ -2706,6 +2740,7 @@
           "$id": "256",
           "kind": "property",
           "name": "items",
+          "apiVersions": [],
           "serializedName": "ModelItem",
           "type": {
             "$ref": "250"
@@ -2744,6 +2779,7 @@
       "$id": "257",
       "kind": "model",
       "name": "ModelWithRenamedWrappedAndItemModelArray",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedAndItemModelArray",
       "usage": "Input,Output,Xml",
@@ -2762,6 +2798,7 @@
           "$id": "258",
           "kind": "property",
           "name": "books",
+          "apiVersions": [],
           "serializedName": "AllBooks",
           "type": {
             "$id": "259",
@@ -2771,6 +2808,7 @@
               "$id": "260",
               "kind": "model",
               "name": "Book",
+              "apiVersions": [],
               "namespace": "Payload.Xml",
               "crossLanguageDefinitionId": "Payload.Xml.Book",
               "usage": "Input,Output,Xml",
@@ -2796,6 +2834,7 @@
                   "$id": "261",
                   "kind": "property",
                   "name": "title",
+                  "apiVersions": [],
                   "serializedName": "title",
                   "type": {
                     "$id": "262",
@@ -2858,6 +2897,7 @@
       "$id": "263",
       "kind": "model",
       "name": "ModelWithAttributes",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithAttributes",
       "usage": "Input,Output,Xml",
@@ -2876,6 +2916,7 @@
           "$id": "264",
           "kind": "property",
           "name": "id1",
+          "apiVersions": [],
           "serializedName": "id1",
           "type": {
             "$id": "265",
@@ -2909,6 +2950,7 @@
           "$id": "266",
           "kind": "property",
           "name": "id2",
+          "apiVersions": [],
           "serializedName": "id2",
           "type": {
             "$id": "267",
@@ -2942,6 +2984,7 @@
           "$id": "268",
           "kind": "property",
           "name": "enabled",
+          "apiVersions": [],
           "serializedName": "enabled",
           "type": {
             "$id": "269",
@@ -2972,6 +3015,7 @@
       "$id": "270",
       "kind": "model",
       "name": "ModelWithRenamedAttribute",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedAttribute",
       "usage": "Input,Output,Xml",
@@ -2990,6 +3034,7 @@
           "$id": "271",
           "kind": "property",
           "name": "id",
+          "apiVersions": [],
           "serializedName": "xml-id",
           "type": {
             "$id": "272",
@@ -3029,6 +3074,7 @@
           "$id": "273",
           "kind": "property",
           "name": "title",
+          "apiVersions": [],
           "serializedName": "title",
           "type": {
             "$id": "274",
@@ -3057,6 +3103,7 @@
           "$id": "275",
           "kind": "property",
           "name": "author",
+          "apiVersions": [],
           "serializedName": "author",
           "type": {
             "$id": "276",
@@ -3087,6 +3134,7 @@
       "$id": "277",
       "kind": "model",
       "name": "ModelWithNamespace",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespace",
       "usage": "Input,Output,Xml",
@@ -3189,6 +3237,7 @@
           "$id": "283",
           "kind": "property",
           "name": "id",
+          "apiVersions": [],
           "serializedName": "id",
           "type": {
             "$id": "284",
@@ -3217,6 +3266,7 @@
           "$id": "285",
           "kind": "property",
           "name": "title",
+          "apiVersions": [],
           "serializedName": "title",
           "type": {
             "$id": "286",
@@ -3247,6 +3297,7 @@
       "$id": "287",
       "kind": "model",
       "name": "ModelWithNamespaceOnProperties",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceOnProperties",
       "usage": "Input,Output,Xml",
@@ -3290,6 +3341,7 @@
           "$id": "289",
           "kind": "property",
           "name": "id",
+          "apiVersions": [],
           "serializedName": "id",
           "type": {
             "$id": "290",
@@ -3318,6 +3370,7 @@
           "$id": "291",
           "kind": "property",
           "name": "title",
+          "apiVersions": [],
           "serializedName": "title",
           "type": {
             "$id": "292",
@@ -3371,6 +3424,7 @@
           "$id": "294",
           "kind": "property",
           "name": "author",
+          "apiVersions": [],
           "serializedName": "author",
           "type": {
             "$id": "295",
@@ -3426,6 +3480,7 @@
       "$id": "297",
       "kind": "model",
       "name": "ModelWithText",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithText",
       "usage": "Input,Output,Xml",
@@ -3444,6 +3499,7 @@
           "$id": "298",
           "kind": "property",
           "name": "language",
+          "apiVersions": [],
           "serializedName": "language",
           "type": {
             "$id": "299",
@@ -3477,6 +3533,7 @@
           "$id": "300",
           "kind": "property",
           "name": "content",
+          "apiVersions": [],
           "serializedName": "content",
           "type": {
             "$id": "301",
@@ -3512,6 +3569,7 @@
       "$id": "302",
       "kind": "model",
       "name": "ModelWithOptionalField",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithOptionalField",
       "usage": "Input,Output,Xml",
@@ -3530,6 +3588,7 @@
           "$id": "303",
           "kind": "property",
           "name": "item",
+          "apiVersions": [],
           "serializedName": "item",
           "type": {
             "$id": "304",
@@ -3558,6 +3617,7 @@
           "$id": "305",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "306",
@@ -3588,6 +3648,7 @@
       "$id": "307",
       "kind": "model",
       "name": "ModelWithEmptyArray",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithEmptyArray",
       "usage": "Input,Output,Xml",
@@ -3606,6 +3667,7 @@
           "$id": "308",
           "kind": "property",
           "name": "items",
+          "apiVersions": [],
           "serializedName": "items",
           "type": {
             "$ref": "250"
@@ -3633,6 +3695,7 @@
       "$id": "309",
       "kind": "model",
       "name": "ModelWithDictionary",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithDictionary",
       "usage": "Input,Output,Xml",
@@ -3651,6 +3714,7 @@
           "$id": "310",
           "kind": "property",
           "name": "metadata",
+          "apiVersions": [],
           "serializedName": "metadata",
           "type": {
             "$id": "311",
@@ -3693,6 +3757,7 @@
       "$id": "314",
       "kind": "model",
       "name": "ModelWithEncodedNames",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithEncodedNames",
       "usage": "Input,Output,Xml",
@@ -3711,6 +3776,7 @@
           "$id": "315",
           "kind": "property",
           "name": "modelData",
+          "apiVersions": [],
           "serializedName": "SimpleModelData",
           "type": {
             "$ref": "210"
@@ -3735,6 +3801,7 @@
           "$id": "316",
           "kind": "property",
           "name": "colors",
+          "apiVersions": [],
           "serializedName": "PossibleColors",
           "type": {
             "$ref": "232"
@@ -3762,6 +3829,7 @@
       "$id": "317",
       "kind": "model",
       "name": "ModelWithEnum",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithEnum",
       "usage": "Input,Output,Xml",
@@ -3780,6 +3848,7 @@
           "$id": "318",
           "kind": "property",
           "name": "status",
+          "apiVersions": [],
           "serializedName": "status",
           "type": {
             "$ref": "1"
@@ -3806,6 +3875,7 @@
       "$id": "319",
       "kind": "model",
       "name": "ModelWithDatetime",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.ModelWithDatetime",
       "usage": "Input,Output,Xml",
@@ -3824,6 +3894,7 @@
           "$id": "320",
           "kind": "property",
           "name": "rfc3339",
+          "apiVersions": [],
           "serializedName": "rfc3339",
           "doc": "DateTime value with rfc3339 encoding.",
           "type": {
@@ -3861,6 +3932,7 @@
           "$id": "323",
           "kind": "property",
           "name": "rfc7231",
+          "apiVersions": [],
           "serializedName": "rfc7231",
           "doc": "DateTime value with rfc7231 encoding.",
           "type": {
@@ -3900,6 +3972,7 @@
       "$id": "326",
       "kind": "model",
       "name": "XmlErrorBody",
+      "apiVersions": [],
       "namespace": "Payload.Xml",
       "crossLanguageDefinitionId": "Payload.Xml.XmlErrorBody",
       "usage": "Output,Xml",
@@ -3918,6 +3991,7 @@
           "$id": "327",
           "kind": "property",
           "name": "message",
+          "apiVersions": [],
           "serializedName": "message",
           "type": {
             "$id": "328",
@@ -3946,6 +4020,7 @@
           "$id": "329",
           "kind": "property",
           "name": "code",
+          "apiVersions": [],
           "serializedName": "code",
           "type": {
             "$id": "330",

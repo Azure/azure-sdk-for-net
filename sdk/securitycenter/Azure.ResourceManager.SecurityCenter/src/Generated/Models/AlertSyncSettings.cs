@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? (bool?)default : Properties.Enabled;
             }
             set
             {

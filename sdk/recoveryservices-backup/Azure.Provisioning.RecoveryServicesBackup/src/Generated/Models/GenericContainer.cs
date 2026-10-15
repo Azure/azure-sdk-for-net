@@ -18,6 +18,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new GenericContainer. </summary>
         public GenericContainer()
         {
+            ContainerType.Assign(ProtectableContainerType.GenericContainer);
         }
 
         /// <summary> Gets or sets the FabricName. </summary>
@@ -54,7 +55,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("containerType", new string[] { "containerType" }, defaultValue: "GenericContainer");
             _fabricName = DefineProperty<string>(nameof(FabricName), new string[] { "fabricName" });
             _extendedInformation = DefineModelProperty<GenericContainerExtendedInfo>(nameof(ExtendedInformation), new string[] { "extendedInformation" });
             DefineAdditionalProperties();

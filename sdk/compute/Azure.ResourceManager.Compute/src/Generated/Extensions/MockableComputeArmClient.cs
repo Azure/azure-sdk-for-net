@@ -224,6 +224,24 @@ namespace Azure.ResourceManager.Compute.Mocking
             return new VirtualMachineScaleSetVmRunCommandResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="VirtualMachineDiagnosticRunCommandResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineDiagnosticRunCommandResource"/> object. </returns>
+        public virtual VirtualMachineDiagnosticRunCommandResource GetVirtualMachineDiagnosticRunCommandResource(ResourceIdentifier id)
+        {
+            VirtualMachineDiagnosticRunCommandResource.ValidateResourceId(id);
+            return new VirtualMachineDiagnosticRunCommandResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetVMDiagnosticRunCommandResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetVMDiagnosticRunCommandResource"/> object. </returns>
+        public virtual VirtualMachineScaleSetVMDiagnosticRunCommandResource GetVirtualMachineScaleSetVMDiagnosticRunCommandResource(ResourceIdentifier id)
+        {
+            VirtualMachineScaleSetVMDiagnosticRunCommandResource.ValidateResourceId(id);
+            return new VirtualMachineScaleSetVMDiagnosticRunCommandResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ManagedDiskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedDiskResource"/> object. </returns>

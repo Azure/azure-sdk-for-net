@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BlobInventoryPolicyDefinition(
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Storage.Models
                 format,
                 schedule,
                 objectType,
-                schemaFields,
+                schemaFields ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

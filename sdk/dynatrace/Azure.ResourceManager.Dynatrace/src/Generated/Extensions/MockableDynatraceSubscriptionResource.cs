@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
 
         private ClientDiagnostics MonitorsClientDiagnostics => _monitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Dynatrace.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Monitors MonitorsRestClient => _monitorsRestClient ??= new Monitors(MonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-24");
+        private Monitors MonitorsRestClient => _monitorsRestClient ??= new Monitors(
+            MonitorsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-04-24",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// List all MonitorResource by subscriptionId
@@ -65,7 +71,7 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new MonitorsGetBySubscriptionIdAsyncCollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDynatraceSubscriptionResource.GetDynatraceMonitors"), data => new DynatraceMonitorResource(Client, data));
+            return new AsyncPageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new DynatraceMonitorDataAsync0CollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDynatraceSubscriptionResource.GetDynatraceMonitors"), data => new DynatraceMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +99,7 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new MonitorsGetBySubscriptionIdCollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDynatraceSubscriptionResource.GetDynatraceMonitors"), data => new DynatraceMonitorResource(Client, data));
+            return new PageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new DynatraceMonitorData0CollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDynatraceSubscriptionResource.GetDynatraceMonitors"), data => new DynatraceMonitorResource(Client, data));
         }
 
         /// <summary>

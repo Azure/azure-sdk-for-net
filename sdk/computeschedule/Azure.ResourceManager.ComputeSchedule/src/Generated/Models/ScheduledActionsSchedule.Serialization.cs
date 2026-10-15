@@ -226,15 +226,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ScheduledActionsSchedule(
                 scheduledTime,
                 timeZone,
-                requestedWeekDays,
-                requestedMonths,
-                requestedDaysOfTheMonth,
+                requestedWeekDays ?? new ChangeTrackingList<ScheduledActionsScheduleWeekDay>(),
+                requestedMonths ?? new ChangeTrackingList<ScheduledActionsScheduleMonth>(),
+                requestedDaysOfTheMonth ?? new ChangeTrackingList<int>(),
                 executionParameters,
                 deadlineType,
                 additionalBinaryDataProperties);

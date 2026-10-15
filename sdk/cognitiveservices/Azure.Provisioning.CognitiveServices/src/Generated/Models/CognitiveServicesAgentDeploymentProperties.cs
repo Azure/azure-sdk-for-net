@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary>
     /// Type representing an agent deployment as a management construct.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CognitiveServicesManagedAgentDeployment"/> and <see cref="CognitiveServicesHostedAgentDeployment"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CognitiveServicesHostedAgentDeployment"/> and <see cref="CognitiveServicesManagedAgentDeployment"/>.
     /// </summary>
     public partial class CognitiveServicesAgentDeploymentProperties : CognitiveServicesResourceBase
     {
@@ -20,6 +20,7 @@ namespace Azure.Provisioning.CognitiveServices
         private BicepValue<CognitiveServicesAgentDeploymentState> _state;
         private BicepList<CognitiveServicesAgentProtocolVersion> _protocols;
         private BicepList<CognitiveServicesVersionedAgentReference> _agents;
+        private BicepValue<AgentDeploymentType> _deploymentType;
         private BicepValue<CognitiveServicesAgentDeploymentProvisioningState> _provisioningState;
 
         /// <summary> Creates a new CognitiveServicesAgentDeploymentProperties. </summary>
@@ -102,6 +103,16 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
+        /// <summary> Gets or sets the type of deployment for the agent. </summary>
+        internal BicepValue<AgentDeploymentType> DeploymentType
+        {
+            get
+            {
+                Initialize();
+                return _deploymentType;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<CognitiveServicesAgentDeploymentProvisioningState> ProvisioningState
         {
@@ -121,6 +132,7 @@ namespace Azure.Provisioning.CognitiveServices
             _state = DefineProperty<CognitiveServicesAgentDeploymentState>(nameof(State), new string[] { "state" });
             _protocols = DefineListProperty<CognitiveServicesAgentProtocolVersion>(nameof(Protocols), new string[] { "protocols" });
             _agents = DefineListProperty<CognitiveServicesVersionedAgentReference>(nameof(Agents), new string[] { "agents" });
+            _deploymentType = DefineProperty<AgentDeploymentType>(nameof(DeploymentType), new string[] { "deploymentType" }, isRequired: true);
             _provisioningState = DefineProperty<CognitiveServicesAgentDeploymentProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

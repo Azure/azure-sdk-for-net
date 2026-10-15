@@ -17,6 +17,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class MachineLearningOnlineDeploymentProperties : MachineLearningEndpointDeploymentProperties
     {
+        private DataCollector _dataCollector;
+        internal bool _dataCollectorIsDefined;
+        private string _instanceType;
+        internal bool _instanceTypeIsDefined;
+        private MachineLearningProbeSettings _livenessProbe;
+        internal bool _livenessProbeIsDefined;
+        private string _model;
+        internal bool _modelIsDefined;
+        private string _modelMountPath;
+        internal bool _modelMountPathIsDefined;
+        private MachineLearningProbeSettings _readinessProbe;
+        internal bool _readinessProbeIsDefined;
+        private MachineLearningOnlineRequestSettings _requestSettings;
+        internal bool _requestSettingsIsDefined;
+        private MachineLearningOnlineScaleSettings _scaleSettings;
+        internal bool _scaleSettingsIsDefined;
+        private MachineLearningProbeSettings _startupProbe;
+        internal bool _startupProbeIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineDeploymentProperties"/>. </summary>
         /// <param name="endpointComputeType"> [Required] The compute type of the endpoint. </param>
         public MachineLearningOnlineDeploymentProperties(MachineLearningEndpointComputeType endpointComputeType)
@@ -52,18 +71,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal MachineLearningOnlineDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? appInsightsEnabled, DataCollector dataCollector, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess, MachineLearningEndpointComputeType endpointComputeType, string instanceType, MachineLearningProbeSettings livenessProbe, string model, string modelMountPath, MachineLearningDeploymentProvisioningState? provisioningState, MachineLearningProbeSettings readinessProbe, MachineLearningOnlineRequestSettings requestSettings, MachineLearningOnlineScaleSettings scaleSettings, MachineLearningProbeSettings startupProbe) : base(codeConfiguration, description, environmentId, environmentVariables, properties, additionalBinaryDataProperties)
         {
             AppInsightsEnabled = appInsightsEnabled;
-            DataCollector = dataCollector;
+            _dataCollector = dataCollector;
             EgressPublicNetworkAccess = egressPublicNetworkAccess;
             EndpointComputeType = endpointComputeType;
-            InstanceType = instanceType;
-            LivenessProbe = livenessProbe;
-            Model = model;
-            ModelMountPath = modelMountPath;
+            _instanceType = instanceType;
+            _livenessProbe = livenessProbe;
+            _model = model;
+            _modelMountPath = modelMountPath;
             ProvisioningState = provisioningState;
-            ReadinessProbe = readinessProbe;
-            RequestSettings = requestSettings;
-            ScaleSettings = scaleSettings;
-            StartupProbe = startupProbe;
+            _readinessProbe = readinessProbe;
+            _requestSettings = requestSettings;
+            _scaleSettings = scaleSettings;
+            _startupProbe = startupProbe;
         }
 
         /// <summary> If true, enables Application Insights logging. </summary>
@@ -72,7 +91,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The mdc configuration, we disable mdc when it's null. </summary>
         [WirePath("dataCollector")]
-        public DataCollector DataCollector { get; set; }
+        public DataCollector DataCollector
+        {
+            get
+            {
+                return _dataCollector;
+            }
+            set
+            {
+                _dataCollector = value;
+                _dataCollectorIsDefined = true;
+            }
+        }
 
         /// <summary> Enum to determine whether PublicNetworkAccess is Enabled or Disabled for egress of a deployment. </summary>
         [WirePath("egressPublicNetworkAccess")]
@@ -84,19 +114,63 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Compute instance type. Default: Standard_F4s_v2. </summary>
         [WirePath("instanceType")]
-        public string InstanceType { get; set; }
+        public string InstanceType
+        {
+            get
+            {
+                return _instanceType;
+            }
+            set
+            {
+                _instanceType = value;
+                _instanceTypeIsDefined = true;
+            }
+        }
 
         /// <summary> Liveness probe monitors the health of the container regularly. </summary>
         [WirePath("livenessProbe")]
-        public MachineLearningProbeSettings LivenessProbe { get; set; }
+        public MachineLearningProbeSettings LivenessProbe
+        {
+            get
+            {
+                return _livenessProbe;
+            }
+            set
+            {
+                _livenessProbe = value;
+                _livenessProbeIsDefined = true;
+            }
+        }
 
         /// <summary> The URI path to the model. </summary>
         [WirePath("model")]
-        public string Model { get; set; }
+        public string Model
+        {
+            get
+            {
+                return _model;
+            }
+            set
+            {
+                _model = value;
+                _modelIsDefined = true;
+            }
+        }
 
         /// <summary> The path to mount the model in custom container. </summary>
         [WirePath("modelMountPath")]
-        public string ModelMountPath { get; set; }
+        public string ModelMountPath
+        {
+            get
+            {
+                return _modelMountPath;
+            }
+            set
+            {
+                _modelMountPath = value;
+                _modelMountPathIsDefined = true;
+            }
+        }
 
         /// <summary> Provisioning state for the endpoint deployment. </summary>
         [WirePath("provisioningState")]
@@ -104,11 +178,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Readiness probe validates if the container is ready to serve traffic. The properties and defaults are the same as liveness probe. </summary>
         [WirePath("readinessProbe")]
-        public MachineLearningProbeSettings ReadinessProbe { get; set; }
+        public MachineLearningProbeSettings ReadinessProbe
+        {
+            get
+            {
+                return _readinessProbe;
+            }
+            set
+            {
+                _readinessProbe = value;
+                _readinessProbeIsDefined = true;
+            }
+        }
 
         /// <summary> Request settings for the deployment. </summary>
         [WirePath("requestSettings")]
-        public MachineLearningOnlineRequestSettings RequestSettings { get; set; }
+        public MachineLearningOnlineRequestSettings RequestSettings
+        {
+            get
+            {
+                return _requestSettings;
+            }
+            set
+            {
+                _requestSettings = value;
+                _requestSettingsIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Scale settings for the deployment.
@@ -117,10 +213,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// and to DefaultScaleSettings for ManagedOnlineDeployment.
         /// </summary>
         [WirePath("scaleSettings")]
-        public MachineLearningOnlineScaleSettings ScaleSettings { get; set; }
+        public MachineLearningOnlineScaleSettings ScaleSettings
+        {
+            get
+            {
+                return _scaleSettings;
+            }
+            set
+            {
+                _scaleSettings = value;
+                _scaleSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> Startup probe verify whether an application within a container has started successfully. </summary>
         [WirePath("startupProbe")]
-        public MachineLearningProbeSettings StartupProbe { get; set; }
+        public MachineLearningProbeSettings StartupProbe
+        {
+            get
+            {
+                return _startupProbe;
+            }
+            set
+            {
+                _startupProbe = value;
+                _startupProbeIsDefined = true;
+            }
+        }
     }
 }

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HealthcareApisWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HealthcareApisWorkspaceResource.ResourceType, out string healthcareApisWorkspaceApiVersion);
             _healthcareApisWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _healthcareApisWorkspacesRestClient = new HealthcareApisWorkspaces(_healthcareApisWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisWorkspaceApiVersion ?? "2025-04-01-preview");
+            _healthcareApisWorkspacesRestClient = new HealthcareApisWorkspaces(_healthcareApisWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HealthcareApis/workspaces", out string healthcareApisWorkspacesApiVersionOverride) ? healthcareApisWorkspacesApiVersionOverride : "2025-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthcareApisWorkspaceData, HealthcareApisWorkspaceResource>(new HealthcareApisWorkspacesGetByResourceGroupAsyncCollectionResultOfT(_healthcareApisWorkspacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthcareApisWorkspaceCollection.GetAll"), data => new HealthcareApisWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<HealthcareApisWorkspaceData, HealthcareApisWorkspaceResource>(new HealthcareApisWorkspaceDataAsyncCollectionResultOfT(_healthcareApisWorkspacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthcareApisWorkspaceCollection.GetAll"), data => new HealthcareApisWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthcareApisWorkspaceData, HealthcareApisWorkspaceResource>(new HealthcareApisWorkspacesGetByResourceGroupCollectionResultOfT(_healthcareApisWorkspacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthcareApisWorkspaceCollection.GetAll"), data => new HealthcareApisWorkspaceResource(Client, data));
+            return new PageableWrapper<HealthcareApisWorkspaceData, HealthcareApisWorkspaceResource>(new HealthcareApisWorkspaceDataCollectionResultOfT(_healthcareApisWorkspacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthcareApisWorkspaceCollection.GetAll"), data => new HealthcareApisWorkspaceResource(Client, data));
         }
 
         /// <summary>

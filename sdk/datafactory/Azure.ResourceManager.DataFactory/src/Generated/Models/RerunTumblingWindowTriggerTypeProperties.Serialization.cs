@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 #endif
             writer.WritePropertyName("requestedStartTime"u8);
-            writer.WriteStringValue(RequestedStartOn, "O");
+            writer.WriteStringValue(RequestedStartsOn, "O");
             writer.WritePropertyName("requestedEndTime"u8);
-            writer.WriteStringValue(RequestedEndOn, "O");
+            writer.WriteStringValue(RequestedEndsOn, "O");
             writer.WritePropertyName("rerunConcurrency"u8);
             writer.WriteNumberValue(RerunConcurrency);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -137,25 +137,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             BinaryData parentTrigger = default;
-            DateTimeOffset requestedStartOn = default;
-            DateTimeOffset requestedEndOn = default;
+            DateTimeOffset requestedStartsOn = default;
+            DateTimeOffset requestedEndsOn = default;
             int rerunConcurrency = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("parentTrigger"u8))
                 {
-                    parentTrigger = BinaryData.FromString(prop.Value.GetRawText());
+                    parentTrigger = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("requestedStartTime"u8))
                 {
-                    requestedStartOn = prop.Value.GetDateTimeOffset("O");
+                    requestedStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("requestedEndTime"u8))
                 {
-                    requestedEndOn = prop.Value.GetDateTimeOffset("O");
+                    requestedEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("rerunConcurrency"u8))
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RerunTumblingWindowTriggerTypeProperties(parentTrigger, requestedStartOn, requestedEndOn, rerunConcurrency, additionalBinaryDataProperties);
+            return new RerunTumblingWindowTriggerTypeProperties(parentTrigger, requestedStartsOn, requestedEndsOn, rerunConcurrency, additionalBinaryDataProperties);
         }
     }
 }

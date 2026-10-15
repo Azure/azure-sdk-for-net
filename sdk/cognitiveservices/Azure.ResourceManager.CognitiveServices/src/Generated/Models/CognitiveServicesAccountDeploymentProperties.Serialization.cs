@@ -84,11 +84,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("model"u8);
                 writer.WriteObjectValue(Model, options);
             }
-            if (Optional.IsDefined(SpeculativeDecoding))
-            {
-                writer.WritePropertyName("speculativeDecoding"u8);
-                writer.WriteObjectValue(SpeculativeDecoding, options);
-            }
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
@@ -160,15 +155,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("spilloverDeploymentName"u8);
                 writer.WriteStringValue(SpilloverDeploymentName);
             }
-            if (Optional.IsDefined(ServiceTier))
+            if (_serviceTierIsDefined || Optional.IsDefined(ServiceTier))
             {
-                writer.WritePropertyName("serviceTier"u8);
-                writer.WriteStringValue(ServiceTier.Value.ToString());
+                if (ServiceTier != null)
+                {
+                    writer.WritePropertyName("serviceTier"u8);
+                    writer.WriteStringValue(ServiceTier.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("serviceTier"u8);
+                }
             }
-            if (Optional.IsDefined(DeploymentState))
+            if (_deploymentStateIsDefined || Optional.IsDefined(DeploymentState))
             {
-                writer.WritePropertyName("deploymentState"u8);
-                writer.WriteStringValue(DeploymentState.Value.ToString());
+                if (DeploymentState != null)
+                {
+                    writer.WritePropertyName("deploymentState"u8);
+                    writer.WriteStringValue(DeploymentState.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("deploymentState"u8);
+                }
             }
             if (Optional.IsDefined(Routing))
             {
@@ -219,7 +228,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default;
             CognitiveServicesAccountDeploymentModel model = default;
-            DeploymentSpeculativeDecoding speculativeDecoding = default;
             CognitiveServicesAccountDeploymentScaleSettings scaleSettings = default;
             IReadOnlyDictionary<string, string> capabilities = default;
             string raiPolicyName = default;
@@ -231,7 +239,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             DeploymentCapacitySettings capacitySettings = default;
             string parentDeploymentName = default;
             string spilloverDeploymentName = default;
+            bool serviceTierIsDefined = false;
             CognitiveServicesDeploymentServiceTier? serviceTier = default;
+            bool deploymentStateIsDefined = false;
             CognitiveServicesDeploymentState? deploymentState = default;
             CognitiveServicesDeploymentRouting routing = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -253,15 +263,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         continue;
                     }
                     model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("speculativeDecoding"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    speculativeDecoding = DeploymentSpeculativeDecoding.DeserializeDeploymentSpeculativeDecoding(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scaleSettings"u8))
@@ -370,6 +371,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("serviceTier"u8))
                 {
+                    serviceTierIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         serviceTier = null;
@@ -380,6 +382,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("deploymentState"u8))
                 {
+                    deploymentStateIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         deploymentState = null;
@@ -399,13 +402,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CognitiveServicesAccountDeploymentProperties(
                 provisioningState,
                 model,
-                speculativeDecoding,
                 scaleSettings,
                 capabilities ?? new ChangeTrackingDictionary<string, string>(),
                 raiPolicyName,
@@ -420,7 +422,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 serviceTier,
                 deploymentState,
                 routing,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _serviceTierIsDefined = serviceTierIsDefined,
+                _deploymentStateIsDefined = deploymentStateIsDefined
+            };
         }
     }
 }

@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspaceNotificationRecipientUserGetWorkspaceNotificationRecipientUsersByNotificationAsyncCollectionResultOfT(
+            return new RecipientUserContractAsyncCollectionResultOfT(
                 _workspaceNotificationRecipientUserRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspaceNotificationRecipientUserGetWorkspaceNotificationRecipientUsersByNotificationCollectionResultOfT(
+            return new RecipientUserContractCollectionResultOfT(
                 _workspaceNotificationRecipientUserRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspaceNotificationRecipientEmailGetWorkspaceNotificationRecipientEmailsByNotificationAsyncCollectionResultOfT(
+            return new RecipientEmailContractAsyncCollectionResultOfT(
                 _workspaceNotificationRecipientEmailRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspaceNotificationRecipientEmailGetWorkspaceNotificationRecipientEmailsByNotificationCollectionResultOfT(
+            return new RecipientEmailContractCollectionResultOfT(
                 _workspaceNotificationRecipientEmailRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

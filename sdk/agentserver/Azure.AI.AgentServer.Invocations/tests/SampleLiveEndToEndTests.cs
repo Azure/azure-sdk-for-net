@@ -306,23 +306,19 @@ public class SampleLiveEndToEndTests
         builder.Services.AddScoped<InvocationHandler,
             SampleResilientResearchSnippets.ResilientResearchHandler>();
 
+        builder.Services.SetResilientTasksEnabled();
         builder.Services.AddAgentEventStreams(o => o.UseInMemoryReplay(
             ttl: TimeSpan.FromMinutes(5)));
 
-        ResilientTaskBuilder tasks = builder.Services.AddResilientTasks();
-
-        var app = builder.Build();
-
-        // Provider-aware overloads were removed: resolve the singleton AgentEventStreamRegistry from the
-        // built container and capture it in the plain delegate (registry is read lazily at invoke).
-        AgentEventStreamRegistry streams = app.Services.GetRequiredService<AgentEventStreamRegistry>();
-        tasks.AddMultiTurnTask<SampleResilientResearchSnippets.ResearchRequest,
+        builder.Services.AddResilientMultiTurnTask<SampleResilientResearchSnippets.ResearchRequest,
                  SampleResilientResearchSnippets.ResearchResult>(
             "research",
             (ctx, ct) => SampleResilientResearchSnippets.RunResearchAsync(
-                streams, model, _model, ctx,
+                model, _model, ctx,
                 numPhases: 2, callsPerPhase: 2, ct: ct),
             steerable: true);
+
+        var app = builder.Build();
 
         app.MapInvocationsServer();
         await app.StartAsync();
@@ -338,8 +334,8 @@ public class SampleLiveEndToEndTests
         builder.Services.AddScoped<InvocationHandler,
             SampleResilientMultiturnSnippets.ResilientMultiturnHandler>();
 
-        builder.Services.AddResilientTasks()
-            .AddMultiTurnTask<SampleResilientMultiturnSnippets.ConversationInput,
+        builder.Services.SetResilientTasksEnabled();
+        builder.Services.AddResilientMultiTurnTask<SampleResilientMultiturnSnippets.ConversationInput,
                               SampleResilientMultiturnSnippets.ConversationOutput>(
                 "conversation",
                 (ctx, ct) => SampleResilientMultiturnSnippets.RunConversationTurnAsync(

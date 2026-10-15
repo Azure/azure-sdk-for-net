@@ -13,13 +13,13 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningUserIdentity. </summary>
         public MachineLearningUserIdentity()
         {
+            IdentityType.Assign(IdentityConfigurationType.UserIdentity);
         }
 
         /// <summary> Define all the provisionable properties for MachineLearningUserIdentity. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("identityType", new string[] { "identityType" }, defaultValue: "UserIdentity");
             DefineAdditionalProperties();
         }
 

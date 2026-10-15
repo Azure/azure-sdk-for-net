@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ArmDeploymentListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ArmDeploymentListResult(value ?? new ChangeTrackingList<ArmDeploymentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

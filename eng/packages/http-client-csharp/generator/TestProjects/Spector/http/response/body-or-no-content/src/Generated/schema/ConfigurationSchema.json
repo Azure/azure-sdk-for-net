@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "BodyOrNoContentClient": {
+          "type": "object",
+          "description": "Configuration for BodyOrNoContentClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/bodyOrNoContentClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "bodyOrNoContentClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    }
+  }
+}

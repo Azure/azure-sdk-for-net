@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("userToken"u8))
                 {
-                    userToken = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    userToken = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new QuickbaseLinkedServiceTypeProperties(uri, userToken, encryptedCredential, additionalBinaryDataProperties);

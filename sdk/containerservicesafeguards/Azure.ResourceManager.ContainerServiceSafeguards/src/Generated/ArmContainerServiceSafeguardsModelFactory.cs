@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards.Models
     public static partial class ArmContainerServiceSafeguardsModelFactory
     {
 
+        /// <summary> Deployment Safeguards. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards.Models
                 default);
         }
 
+        /// <summary> DeploymentSafeguards Properties. </summary>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="level"> The deployment safeguards level. Possible values are Warn and Enforce. </param>
         /// <param name="excludedNamespaces"> User defined list of namespaces to exclude from Deployment Safeguards. Deployments in these namespaces will not be checked against any safeguards. </param>

@@ -324,7 +324,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ProjectsSchedule(
@@ -337,7 +337,7 @@ namespace Azure.AI.Projects.Evaluation
                 task,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
-                systemData,
+                systemData ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }
     }

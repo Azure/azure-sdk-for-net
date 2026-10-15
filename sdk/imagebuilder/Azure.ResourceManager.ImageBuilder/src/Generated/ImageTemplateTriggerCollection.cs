@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ImageBuilder
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImageTemplateTriggerData, ImageTemplateTriggerResource>(new TriggersGetByImageTemplateAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ImageTemplateTriggerData, ImageTemplateTriggerResource>(new ImageTemplateTriggerDataAsyncCollectionResultOfT(
                 _triggersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ImageBuilder
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImageTemplateTriggerData, ImageTemplateTriggerResource>(new TriggersGetByImageTemplateCollectionResultOfT(
+            return new PageableWrapper<ImageTemplateTriggerData, ImageTemplateTriggerResource>(new ImageTemplateTriggerDataCollectionResultOfT(
                 _triggersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

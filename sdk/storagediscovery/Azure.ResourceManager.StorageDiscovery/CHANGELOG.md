@@ -1,14 +1,9 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2026-10-14)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+ - Added support for configuring Azure Blob Storage capabilities on Storage Discovery workspaces with the 2026-10-01-preview API, including capacity-details status and prefix configurations.
 
 ## 1.0.1 (2026-06-30)
 

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

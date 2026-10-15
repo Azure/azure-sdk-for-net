@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    tableName = BinaryData.FromString(prop.Value.GetRawText());
+                    tableName = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("table"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    table = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    table = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("schema"u8))
@@ -169,12 +169,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schemaTypePropertiesSchema = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    schemaTypePropertiesSchema = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PhoenixDatasetTypeProperties(tableName, table, schemaTypePropertiesSchema, additionalBinaryDataProperties);

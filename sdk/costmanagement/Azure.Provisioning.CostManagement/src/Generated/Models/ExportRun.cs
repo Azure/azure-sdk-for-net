@@ -94,7 +94,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.ExecutionType;
+                return Properties is null ? default : Properties.ExecutionType;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.SubmittedBy;
+                return Properties is null ? default : Properties.SubmittedBy;
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.SubmittedOn;
+                return Properties is null ? default : Properties.SubmittedOn;
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.ProcessingStartsOn;
+                return Properties is null ? default : Properties.ProcessingStartsOn;
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.ProcessingEndsOn;
+                return Properties is null ? default : Properties.ProcessingEndsOn;
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.StartsOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.EndsOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.FileName;
+                return Properties is null ? default : Properties.FileName;
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.ManifestFile;
+                return Properties is null ? default : Properties.ManifestFile;
             }
         }
 
@@ -184,7 +184,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.RunSettings;
+                return Properties is null ? default : Properties.RunSettings;
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.Error;
+                return Properties is null ? default : Properties.Error;
             }
         }
 

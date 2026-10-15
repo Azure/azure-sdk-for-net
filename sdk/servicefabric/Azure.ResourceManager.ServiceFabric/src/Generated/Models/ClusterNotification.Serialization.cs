@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ClusterNotification(isEnabled, notificationCategory, notificationLevel, notificationTargets, additionalBinaryDataProperties);
+            return new ClusterNotification(isEnabled, notificationCategory, notificationLevel, notificationTargets ?? new ChangeTrackingList<ClusterNotificationTarget>(), additionalBinaryDataProperties);
         }
     }
 }

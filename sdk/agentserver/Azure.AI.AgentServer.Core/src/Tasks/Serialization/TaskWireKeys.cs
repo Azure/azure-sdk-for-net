@@ -49,7 +49,9 @@ internal static class TaskWireKeys
 
     // Payload reserved keys
     public const string PayloadInput = "input";
+    // Accepted order and executing identity diverge while steering inputs are queued.
     public const string PayloadLastInputId = "last_input_id";
+    public const string PayloadActiveInputId = "active_input_id";
     public const string PayloadTurnStartedAt = "turn_started_at";
     public const string PayloadRetryAttempt = "retry_attempt";
     public const string PayloadSteering = "steering";

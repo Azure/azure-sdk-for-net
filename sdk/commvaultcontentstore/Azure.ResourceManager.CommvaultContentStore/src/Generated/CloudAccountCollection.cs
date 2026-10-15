@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CloudAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(CloudAccountResource.ResourceType, out string cloudAccountApiVersion);
             _cloudAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore", CloudAccountResource.ResourceType.Namespace, Diagnostics);
-            _cloudAccountsRestClient = new CloudAccounts(_cloudAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudAccountApiVersion ?? "2026-07-03-preview");
+            _cloudAccountsRestClient = new CloudAccounts(_cloudAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Commvault.ContentStore/cloudAccounts", out string cloudAccountsApiVersionOverride) ? cloudAccountsApiVersionOverride : "2026-07-03-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudAccountData, CloudAccountResource>(new CloudAccountsGetByResourceGroupAsyncCollectionResultOfT(_cloudAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudAccountCollection.GetAll"), data => new CloudAccountResource(Client, data));
+            return new AsyncPageableWrapper<CloudAccountData, CloudAccountResource>(new CloudAccountDataAsyncCollectionResultOfT(_cloudAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudAccountCollection.GetAll"), data => new CloudAccountResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudAccountData, CloudAccountResource>(new CloudAccountsGetByResourceGroupCollectionResultOfT(_cloudAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudAccountCollection.GetAll"), data => new CloudAccountResource(Client, data));
+            return new PageableWrapper<CloudAccountData, CloudAccountResource>(new CloudAccountDataCollectionResultOfT(_cloudAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudAccountCollection.GetAll"), data => new CloudAccountResource(Client, data));
         }
 
         /// <summary>

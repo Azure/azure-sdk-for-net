@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(DnsForwardingRulesetResource.ResourceType, out string dnsForwardingRulesetApiVersion);
             _dnsForwardingRulesetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsForwardingRulesetResource.ResourceType.Namespace, Diagnostics);
-            _dnsForwardingRulesetsRestClient = new DnsForwardingRulesets(_dnsForwardingRulesetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsForwardingRulesetApiVersion ?? "2025-10-01-preview");
+            _dnsForwardingRulesetsRestClient = new DnsForwardingRulesets(
+                _dnsForwardingRulesetsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dnsForwardingRulesetApiVersion ?? "2025-10-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -297,7 +303,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsForwardingRulesetData, DnsForwardingRulesetResource>(new DnsForwardingRulesetsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DnsForwardingRulesetData, DnsForwardingRulesetResource>(new DnsForwardingRulesetDataAsyncCollectionResultOfT(
                 _dnsForwardingRulesetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +338,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsForwardingRulesetData, DnsForwardingRulesetResource>(new DnsForwardingRulesetsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DnsForwardingRulesetData, DnsForwardingRulesetResource>(new DnsForwardingRulesetDataCollectionResultOfT(
                 _dnsForwardingRulesetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

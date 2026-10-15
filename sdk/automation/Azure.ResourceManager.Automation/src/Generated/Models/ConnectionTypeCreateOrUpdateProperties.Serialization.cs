@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConnectionTypeCreateOrUpdateProperties(isGlobal, fieldDefinitions, additionalBinaryDataProperties);
+            return new ConnectionTypeCreateOrUpdateProperties(isGlobal, fieldDefinitions ?? new ChangeTrackingDictionary<string, AutomationConnectionFieldDefinition>(), additionalBinaryDataProperties);
         }
     }
 }

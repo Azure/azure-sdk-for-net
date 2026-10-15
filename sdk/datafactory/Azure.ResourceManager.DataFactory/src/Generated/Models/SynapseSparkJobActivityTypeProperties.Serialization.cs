@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     arguments = array;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    @file = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    @file = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("scanFolder"u8))
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    scanFolder = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    scanFolder = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("className"u8))
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    className = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    className = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("files"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     files = array;
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     pythonCodeReference = array;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     filesV2 = array;
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    executorSize = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    executorSize = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("conf"u8))
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    conf = BinaryData.FromString(prop.Value.GetRawText());
+                    conf = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("driverSize"u8))
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    driverSize = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    driverSize = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("numExecutors"u8))
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    numExecutors = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    numExecutors = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("configurationType"u8))
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     sparkConfig = dictionary;
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SynapseSparkJobActivityTypeProperties(

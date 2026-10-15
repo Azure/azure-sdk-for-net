@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VMSizesResult(value, nextLink, additionalBinaryDataProperties);
+            return new VMSizesResult(value ?? new ChangeTrackingList<ServiceFabricVmSizeResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

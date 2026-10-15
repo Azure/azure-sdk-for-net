@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(UsagePlanEnrollmentResource.ResourceType, out string usagePlanEnrollmentApiVersion);
             _enrollmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", UsagePlanEnrollmentResource.ResourceType.Namespace, Diagnostics);
-            _enrollmentsRestClient = new Enrollments(_enrollmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, usagePlanEnrollmentApiVersion ?? "2026-04-01-preview");
+            _enrollmentsRestClient = new Enrollments(_enrollmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, usagePlanEnrollmentApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<UsagePlanEnrollmentData, UsagePlanEnrollmentResource>(new EnrollmentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<UsagePlanEnrollmentData, UsagePlanEnrollmentResource>(new UsagePlanEnrollmentDataAsyncCollectionResultOfT(
                 _enrollmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<UsagePlanEnrollmentData, UsagePlanEnrollmentResource>(new EnrollmentsGetAllCollectionResultOfT(
+            return new PageableWrapper<UsagePlanEnrollmentData, UsagePlanEnrollmentResource>(new UsagePlanEnrollmentDataCollectionResultOfT(
                 _enrollmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>

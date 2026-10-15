@@ -50,7 +50,13 @@ namespace Azure.ResourceManager.Relay
         {
             TryGetApiVersion(ResourceType, out string relayNetworkRuleSetApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, relayNetworkRuleSetApiVersion ?? "2024-01-01");
+            _namespacesRestClient = new Namespaces(
+                _namespacesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                relayNetworkRuleSetApiVersion ?? "2026-07-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -103,7 +109,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -159,7 +165,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -215,7 +221,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -263,7 +269,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

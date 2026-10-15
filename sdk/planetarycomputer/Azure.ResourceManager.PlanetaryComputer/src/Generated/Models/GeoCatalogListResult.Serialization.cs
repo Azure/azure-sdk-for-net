@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GeoCatalogListResult(value, nextLink, additionalBinaryDataProperties);
+            return new GeoCatalogListResult(value ?? new ChangeTrackingList<PlanetaryComputerGeoCatalogData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

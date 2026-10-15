@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new DeliveryRuleRemoteAddressCondition. </summary>
         public DeliveryRuleRemoteAddressCondition()
         {
+            Name.Assign(DeliveryRuleMatchVariable.RemoteAddress);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("name", new string[] { "name" }, defaultValue: "RemoteAddress");
             _properties = DefineModelProperty<RemoteAddressMatchCondition>(nameof(Properties), new string[] { "parameters" }, isRequired: true);
             DefineAdditionalProperties();
         }

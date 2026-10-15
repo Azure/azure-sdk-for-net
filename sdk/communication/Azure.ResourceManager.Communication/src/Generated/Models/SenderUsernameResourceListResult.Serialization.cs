@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SenderUsernameResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SenderUsernameResourceListResult(value ?? new ChangeTrackingList<SenderUsernameResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

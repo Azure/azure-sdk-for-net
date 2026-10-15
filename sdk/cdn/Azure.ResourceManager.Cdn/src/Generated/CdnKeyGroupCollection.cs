@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CdnKeyGroupData, CdnKeyGroupResource>(new KeyGroupsGetByProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CdnKeyGroupData, CdnKeyGroupResource>(new CdnKeyGroupDataAsyncCollectionResultOfT(
                 _keyGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CdnKeyGroupData, CdnKeyGroupResource>(new KeyGroupsGetByProfileCollectionResultOfT(
+            return new PageableWrapper<CdnKeyGroupData, CdnKeyGroupResource>(new CdnKeyGroupDataCollectionResultOfT(
                 _keyGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,9 +40,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AzureFirewallCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AzureFirewallResource.ResourceType, out string azureFirewallApiVersion);
             _azureFirewallsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", AzureFirewallResource.ResourceType.Namespace, Diagnostics);
-            _azureFirewallsRestClient = new AzureFirewalls(_azureFirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, azureFirewallApiVersion ?? "2025-09-01");
+            _azureFirewallsRestClient = new AzureFirewalls(_azureFirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallsListAsyncCollectionResultOfT(_azureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AzureFirewallCollection.GetAll"), data => new AzureFirewallResource(Client, data));
+            return new AsyncPageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallDataAsyncCollectionResultOfT(_azureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AzureFirewallCollection.GetAll"), data => new AzureFirewallResource(Client, data));
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallsListCollectionResultOfT(_azureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AzureFirewallCollection.GetAll"), data => new AzureFirewallResource(Client, data));
+            return new PageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallDataCollectionResultOfT(_azureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AzureFirewallCollection.GetAll"), data => new AzureFirewallResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -578,5 +578,69 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
+
+        /// <summary>
+        /// Creates or updates the specified Azure Firewall.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AzureFirewalls_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
+        /// <param name="data"> Parameters supplied to the create or update Azure Firewall operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation<AzureFirewallResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string azureFirewallName, AzureFirewallData data, CancellationToken cancellationToken)
+        {
+            return CreateOrUpdateAsync(waitUntil: waitUntil, azureFirewallName: azureFirewallName, data: data, createAfcControlPlane: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Creates or updates the specified Azure Firewall.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AzureFirewalls_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
+        /// <param name="data"> Parameters supplied to the create or update Azure Firewall operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation<AzureFirewallResource> CreateOrUpdate(WaitUntil waitUntil, string azureFirewallName, AzureFirewallData data, CancellationToken cancellationToken)
+        {
+            return CreateOrUpdate(waitUntil: waitUntil, azureFirewallName: azureFirewallName, data: data, createAfcControlPlane: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

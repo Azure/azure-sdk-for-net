@@ -13,13 +13,13 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new ChannelsBuiltInAuthorizationPolicy. </summary>
         public ChannelsBuiltInAuthorizationPolicy()
         {
+            Type.Assign(BuiltInAuthorizationScheme.Channels);
         }
 
         /// <summary> Define all the provisionable properties for ChannelsBuiltInAuthorizationPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "Channels");
             DefineAdditionalProperties();
         }
 

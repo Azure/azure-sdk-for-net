@@ -13,13 +13,13 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new AzureDevOpsWebhook. </summary>
         public AzureDevOpsWebhook()
         {
+            WebhookType.Assign(MachineLearning.WebhookType.AzureDevOps);
         }
 
         /// <summary> Define all the provisionable properties for AzureDevOpsWebhook. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("webhookType", new string[] { "webhookType" }, defaultValue: "AzureDevOps");
             DefineAdditionalProperties();
         }
 

@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +96,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +118,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,10 +136,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -172,10 +157,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2024-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -192,10 +174,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,10 +195,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2024-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -240,10 +216,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
             uri.AppendPath("/reissue", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -265,10 +238,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
             uri.AppendPath("/renew", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -290,10 +260,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
             uri.AppendPath("/resendEmail", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -313,10 +280,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
             uri.AppendPath("/resendRequestEmails", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -338,10 +302,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
             uri.AppendPath("/retrieveSiteSeal", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -364,10 +325,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(certificateOrderName, true);
             uri.AppendPath("/verifyDomainOwnership", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -387,10 +345,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/retrieveCertificateActions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -411,10 +366,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/retrieveEmailHistory", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

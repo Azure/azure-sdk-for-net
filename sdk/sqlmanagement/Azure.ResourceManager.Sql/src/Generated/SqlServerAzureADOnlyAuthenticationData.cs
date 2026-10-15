@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.IsAzureADOnlyAuthenticationEnabled;
+                return Properties is null ? (bool?)default : Properties.IsAzureADOnlyAuthenticationEnabled;
             }
             set
             {

@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Memory
 {
     /// <summary>
     /// A single memory item stored in the memory store, containing content and metadata.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UserProfileMemoryItem"/>, <see cref="ChatSummaryMemoryItem"/>, and <see cref="ProceduralMemoryItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ChatSummaryMemoryItem"/>, <see cref="ProceduralMemoryItem"/>, and <see cref="UserProfileMemoryItem"/>.
     /// </summary>
     [Experimental("AAIP001")]
     public abstract partial class MemoryItem

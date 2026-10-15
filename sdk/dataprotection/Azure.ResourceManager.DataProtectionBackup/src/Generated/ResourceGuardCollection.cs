@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ResourceGuardCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceGuardResource.ResourceType, out string resourceGuardApiVersion);
             _resourceGuardResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceGuardResource.ResourceType.Namespace, Diagnostics);
-            _resourceGuardResourcesRestClient = new ResourceGuardResources(_resourceGuardResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGuardApiVersion ?? "2026-03-01");
+            _resourceGuardResourcesRestClient = new ResourceGuardResources(_resourceGuardResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DataProtection/resourceGuards", out string resourceGuardResourcesApiVersionOverride) ? resourceGuardResourcesApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +177,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +275,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInResourceGroupAsyncCollectionResultOfT(_resourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGuardCollection.GetAll"), data => new ResourceGuardResource(Client, data));
+            return new AsyncPageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardDataAsyncCollectionResultOfT(_resourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGuardCollection.GetAll"), data => new ResourceGuardResource(Client, data));
         }
 
         /// <summary>
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInResourceGroupCollectionResultOfT(_resourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGuardCollection.GetAll"), data => new ResourceGuardResource(Client, data));
+            return new PageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardDataCollectionResultOfT(_resourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGuardCollection.GetAll"), data => new ResourceGuardResource(Client, data));
         }
 
         /// <summary>
@@ -332,7 +331,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +388,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,7 +445,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -507,7 +506,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

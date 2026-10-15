@@ -85,14 +85,14 @@ public class BasicKustoTests
 
             resource kustoCluster 'Microsoft.Kusto/clusters@2025-02-14' = {
               name: kustoClusterName
-              tags: {
-                'Created By': 'GitHub quickstart template'
-              }
               location: location
               sku: {
-                name: 'Standard_E8d_v4'
                 capacity: 2
+                name: 'Standard_E8d_v4'
                 tier: 'Standard'
+              }
+              tags: {
+                'Created By': 'GitHub quickstart template'
               }
             }
 
@@ -102,8 +102,8 @@ public class BasicKustoTests
               parent: kustoCluster
               kind: 'ReadWrite'
               properties: {
-                softDeletePeriod: 'P365D'
                 hotCachePeriod: 'P31D'
+                softDeletePeriod: 'P365D'
               }
             }
             """);
@@ -277,6 +277,7 @@ public class BasicKustoTests
 
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.kusto/kusto-cosmos-db/main.bicep")]
+    [Ignore("Temporarily disabled until a Cosmos DB provisioning package with settable SQL role assignment names is released.")]
     public async Task KustoCosmosDB()
     {
         await using Trycep test = CreateKustoCosmosDBTest();
@@ -311,69 +312,70 @@ public class BasicKustoTests
             resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
               name: cosmosDbAccountName
               location: location
+              kind: 'GlobalDocumentDB'
               properties: {
+                databaseAccountOfferType: 'Standard'
                 locations: [
                   {
-                    locationName: location
                     failoverPriority: 0
+                    locationName: location
                   }
                 ]
-                databaseAccountOfferType: 'Standard'
               }
-              kind: 'GlobalDocumentDB'
             }
 
             resource cosmosDbDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2024-08-15' = {
               name: cosmosDbDatabaseName
               location: location
+              parent: cosmosDbAccount
               properties: {
                 resource: {
                   id: cosmosDbDatabaseName
                 }
               }
-              parent: cosmosDbAccount
             }
 
             resource cosmosDbContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2024-08-15' = {
               name: cosmosDbContainerName
               location: location
+              parent: cosmosDbDatabase
               properties: {
-                resource: {
-                  id: cosmosDbContainerName
-                  partitionKey: {
-                    paths: [
-                      '/part'
-                    ]
-                    kind: 'Hash'
-                  }
-                }
                 options: {
                   throughput: 400
                 }
+                resource: {
+                  id: cosmosDbContainerName
+                  partitionKey: {
+                    kind: 'Hash'
+                    paths: [
+                      '/part'
+                    ]
+                  }
+                }
               }
-              parent: cosmosDbDatabase
             }
 
             resource cluster 'Microsoft.Kusto/clusters@2025-02-14' = {
               name: clusterName
               location: location
-              sku: {
-                name: 'Standard_D12_v2'
-                capacity: skuCapacity
-                tier: 'Standard'
-              }
               identity: {
                 type: 'SystemAssigned'
+              }
+              sku: {
+                capacity: skuCapacity
+                name: 'Standard_D12_v2'
+                tier: 'Standard'
               }
             }
 
             resource clusterCosmosDbDataAuthorization 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2024-08-15' = {
+              name: take('clustercosmosdbdataauthorization${uniqueString(resourceGroup().id)}', 24)
+              parent: cosmosDbAccount
               properties: {
                 principalId: cluster.identity.principalId
                 roleDefinitionId: '/providers/Microsoft.DocumentDB/databaseAccounts/${cosmosDbAccountName}/sqlRoleDefinitions/${cosmosDataReader}'
                 scope: cosmosDbAccount.id
               }
-              parent: cosmosDbAccount
             }
 
             resource kustoDb 'Microsoft.Kusto/clusters/databases@2025-02-14' = {
@@ -385,11 +387,11 @@ public class BasicKustoTests
 
             resource kustoScript 'Microsoft.Kusto/clusters/databases/scripts@2025-02-14' = {
               name: 'db-script'
-              properties: {
-                scriptContent: loadTextContent('script.kql')
-                continueOnErrors: false
-              }
               parent: kustoDb
+              properties: {
+                continueOnErrors: false
+                scriptContent: loadTextContent('script.kql')
+              }
             }
 
             resource cosmosDbConnection 'Microsoft.Kusto/clusters/databases/dataConnections@2025-02-14' = {
@@ -398,12 +400,12 @@ public class BasicKustoTests
               parent: kustoDb
               kind: 'CosmosDb'
               properties: {
-                tableName: 'TestTable'
-                mappingRuleName: 'DocumentMapping'
-                managedIdentityResourceId: cluster.id
                 cosmosDbAccountResourceId: cosmosDbAccount.id
-                cosmosDbDatabase: cosmosDbDatabaseName
                 cosmosDbContainer: cosmosDbContainerName
+                cosmosDbDatabase: cosmosDbDatabaseName
+                managedIdentityResourceId: cluster.id
+                mappingRuleName: 'DocumentMapping'
+                tableName: 'TestTable'
               }
               dependsOn: [
                 kustoScript
@@ -704,13 +706,13 @@ public class BasicKustoTests
 
             resource storage 'Microsoft.Storage/storageAccounts@2024-01-01' = {
               name: storageAccountName
-              kind: 'StorageV2'
               location: location
-              sku: {
-                name: 'Standard_LRS'
-              }
+              kind: 'StorageV2'
               properties: {
                 isHnsEnabled: true
+              }
+              sku: {
+                name: 'Standard_LRS'
               }
             }
 
@@ -721,31 +723,31 @@ public class BasicKustoTests
 
             resource landingContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2024-01-01' = {
               name: storageContainerName
+              parent: blobServices
               properties: {
                 publicAccess: 'None'
               }
-              parent: blobServices
             }
 
             resource eventHubNamespace 'Microsoft.EventHub/namespaces@2024-01-01' = {
               name: eventHubNamespaceName
               location: location
               sku: {
+                capacity: 1
                 name: 'Standard'
                 tier: 'Standard'
-                capacity: 1
               }
             }
 
             resource eventHub 'Microsoft.EventHub/namespaces/eventhubs@2024-01-01' = {
               name: eventHubName
+              parent: eventHubNamespace
               properties: {
                 partitionCount: 2
                 retentionDescription: {
                   retentionTimeInHours: 48
                 }
               }
-              parent: eventHubNamespace
             }
 
             resource kustoConsumerGroup 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2024-01-01' = {
@@ -767,47 +769,47 @@ public class BasicKustoTests
 
             resource newBlobSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@2025-02-15' = {
               name: eventGridSubscriptionName
+              parent: blobTopic
               properties: {
                 deliveryWithResourceIdentity: {
-                  identity: {
-                    type: 'SystemAssigned'
-                  }
                   destination: {
                     endpointType: 'EventHub'
                     properties: {
                       resourceId: eventHub.id
                     }
                   }
+                  identity: {
+                    type: 'SystemAssigned'
+                  }
                 }
                 eventDeliverySchema: 'EventGridSchema'
                 filter: {
-                  subjectBeginsWith: '/blobServices/default/containers/${storageContainerName}'
+                  enableAdvancedFilteringOnArrays: true
                   includedEventTypes: [
                     'Microsoft.Storage.BlobCreated'
                   ]
-                  enableAdvancedFilteringOnArrays: true
+                  subjectBeginsWith: '/blobServices/default/containers/${storageContainerName}'
                 }
                 retryPolicy: {
-                  maxDeliveryAttempts: 30
                   eventTimeToLiveInMinutes: 1440
+                  maxDeliveryAttempts: 30
                 }
               }
-              parent: blobTopic
             }
 
             resource cluster 'Microsoft.Kusto/clusters@2025-02-14' = {
               name: clusterName
               location: location
+              identity: {
+                type: 'SystemAssigned'
+              }
               properties: {
                 enableStreamingIngest: true
               }
               sku: {
-                name: 'Standard_D12_v2'
                 capacity: skuCapacity
+                name: 'Standard_D12_v2'
                 tier: 'Standard'
-              }
-              identity: {
-                type: 'SystemAssigned'
               }
             }
 
@@ -820,11 +822,11 @@ public class BasicKustoTests
 
             resource kustoScript 'Microsoft.Kusto/clusters/databases/scripts@2025-02-14' = {
               name: 'db-script'
-              properties: {
-                scriptContent: loadTextContent('script.kql')
-                continueOnErrors: false
-              }
               parent: kustoDb
+              properties: {
+                continueOnErrors: false
+                scriptContent: loadTextContent('script.kql')
+              }
             }
 
             resource eventConnection 'Microsoft.Kusto/clusters/databases/dataConnections@2025-02-14' = {
@@ -833,15 +835,15 @@ public class BasicKustoTests
               parent: kustoDb
               kind: 'EventGrid'
               properties: {
-                storageAccountResourceId: storage.id
+                blobStorageEventType: 'Microsoft.Storage.BlobCreated'
+                consumerGroup: kustoConsumerGroup.name
+                dataFormat: 'CSV'
                 eventGridResourceId: newBlobSubscription.id
                 eventHubResourceId: eventHub.id
-                consumerGroup: kustoConsumerGroup.name
-                tableName: 'People'
-                dataFormat: 'CSV'
                 ignoreFirstRecord: true
-                blobStorageEventType: 'Microsoft.Storage.BlobCreated'
                 managedIdentityResourceId: cluster.id
+                storageAccountResourceId: storage.id
+                tableName: 'People'
               }
               dependsOn: [
                 kustoScript

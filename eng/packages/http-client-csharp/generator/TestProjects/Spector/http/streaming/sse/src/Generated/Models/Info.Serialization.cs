@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 
 namespace Streaming.Sse._Unnamed
 {
@@ -25,8 +24,6 @@ namespace Streaming.Sse._Unnamed
         Info IPersistableModel<Info>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Info>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        public static explicit operator Info(Response response) => throw null;
 
         void IJsonModel<Info>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
