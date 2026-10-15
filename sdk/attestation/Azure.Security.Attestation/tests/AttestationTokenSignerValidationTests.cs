@@ -28,40 +28,24 @@ namespace Azure.Security.Attestation.Tests
             "MIIBMDCB16ADAgECAgkAv8Zx3o56o10wCgYIKoZIzj0EAwIwHjEcMBoGA1UEAxMTTG9jYWxBdWRpdCBYNWMgVGVzdDAeFw0yNjAxMDEwMDAwMDBaFw0zNjAxMDEwMDAwMDBaMB4xHDAaBgNVBAMTE0xvY2FsQXVkaXQgWDVjIFRlc3QwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARAQ4p8qjRKdJuf72WM3RlSz7SVyHnuJH5wkYgiiHmNztkokfYknqS23cYW3MNg/Luk6w292Roh+tHRrkdHdUYyMAoGCCqGSM49BAMCA0gAMEUCIGw6mPMM98nJH6841GPj7JZmevrDFvHfzpg+z01RvhCXAiEAwZYt7oy+yPuosSUDKwndhUZxmVsRHpWPtADytFcdbY4=";
         private const string EmbeddedCertificateThumbprint = "F81481D46F8E77E37007D70DA7E27A0762A7CA96";
 
-        // A public-only, self-signed ECDSA P-384 certificate.
-        private const string EmbeddedP384Certificate =
-            "MIIBcjCB+qADAgECAgkAvgZuTskAh/UwCgYIKoZIzj0EAwMwITEfMB0GA1UEAxMWQXR0ZXN0YXRpb24gUC0zODQgVGVzdDAeFw0yNjAxMDEwMDAwMDBaFw0zNjAxMDEwMDAwMDBaMCExHzAdBgNVBAMTFkF0dGVzdGF0aW9uIFAtMzg0IFRlc3QwdjAQBgcqhkjOPQIBBgUrgQQAIgNiAAQahajdM6T2iWTygCTJ5PUQeweCmSwOaQ0aUF9yw+PnZE9/oCeoXr2e5DRT18SbzsfosRUM+EBC8LnW33cjgf9ukmVAc9x83/N7AQUkaSlXVKuOFbJyOKpUStknUXFOosYwCgYIKoZIzj0EAwMDZwAwZAIwbd69Qd93t8BkgrS7IkKoQOL60c98wmlqWGR042QnQ5ekoMzRUp27IHYF35CG6jpYAjAUSFMkS4WVMlmu7DeA2IRbNKTsl9Jzy68lrWkXwBORhA5F5KSN0wMkYBxzUfOlgak=";
-
-        // A public-only, self-signed ECDSA secp256k1 certificate: a 256-bit curve that is not P-256.
-        private const string EmbeddedSecp256k1Certificate =
-            "MIIBPDCB4qADAgECAgkA2kApujDJLjkwCgYIKoZIzj0EAwIwJTEjMCEGA1UEAxMaQXR0ZXN0YXRpb24gc2VjcDI1NmsxIFRlc3QwHhcNMjYwMTAxMDAwMDAwWhcNMzYwMTAxMDAwMDAwWjAlMSMwIQYDVQQDExpBdHRlc3RhdGlvbiBzZWNwMjU2azEgVGVzdDBWMBAGByqGSM49AgEGBSuBBAAKA0IABCbqvTKwT67ctAgob9W6QNJfBt8MEfKgXnU3nWyZZ7+SNkhR1VJc/o2oGIjD4Xg16ynsuSZvgjBdK4j7U5hgqC4wCgYIKoZIzj0EAwIDSQAwRgIhAOvljrLmoXdETiHoGOkbUhpSCSoSy9Zj8l+JsjS3ycjMAiEA308KGCf12Sm5iu73GQMtuXEZRBYFfmJul8ed7XE4f1I=";
-
-        // Checks curve detection on every target framework, including .NET Framework: a P-384 key is rejected for its curve,
-        // while a P-256 key passes that check and fails only later, because a public key can't sign.
+        // Only RSA keys are supported, on every target framework, including .NET Framework.
         [Test]
-        public void EcdsaSigningKeyCurveIsCheckedOnAllFrameworks()
+        public void EcdsaSigningKeyIsRejectedOnAllFrameworks()
         {
-            using X509Certificate2 p384 = LoadCertificate(EmbeddedP384Certificate);
-            using X509Certificate2 p256 = LoadCertificate(EmbeddedCertificate);
+            using X509Certificate2 ecdsa = LoadCertificate(EmbeddedCertificate);
 
-            StringAssert.Contains("P-256", Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(p384.GetECDsaPublicKey(), p384)).Message);
-            Exception p256Failure = Assert.Catch(() => new AttestationTokenSigningKey(p256.GetECDsaPublicKey(), p256));
-            Assert.IsFalse(p256Failure.Message.Contains("P-256"), p256Failure.ToString());
+            Assert.AreEqual("signer", Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(ecdsa.GetECDsaPublicKey(), ecdsa)).ParamName);
         }
 
-        // A curve of the same size as P-256 is identified by name, not mistaken for P-256 because of its size. The curve is
-        // checked before the certificate's key is loaded, so this needs no secp256k1 support from the platform.
+        // An ECDSA certificate in the trusted signers is not used to verify a token.
         [Test]
-        public void SameSizeUnsupportedCurveIsRejectedOnAllFrameworks()
+        public void EcdsaSignerIsNotUsedOnAllFrameworks()
         {
-            using X509Certificate2 secp256k1 = LoadCertificate(EmbeddedSecp256k1Certificate);
-            using X509Certificate2 p256 = LoadCertificate(EmbeddedCertificate);
-
-            StringAssert.Contains("P-256", Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(p256.GetECDsaPublicKey(), secp256k1)).Message);
-
+            using X509Certificate2 ecdsa = LoadCertificate(EmbeddedCertificate);
             AttestationToken token = UnsignedToken(new Dictionary<string, object> { ["alg"] = "ES256" }, $"{{\"iss\":\"{Provider}\"}}", new byte[64]);
             var options = new AttestationTokenValidationOptions { ExpectedIssuer = Provider };
-            Exception ex = Assert.Throws<Exception>(() => token.ValidateToken(options, new[] { new AttestationSigner(new[] { secp256k1 }, null) }));
+
+            Exception ex = Assert.Throws<Exception>(() => token.ValidateToken(options, new[] { new AttestationSigner(new[] { ecdsa }, null) }));
             StringAssert.Contains("Could not find a certificate which was used to sign the token", ex.Message);
         }
 
@@ -262,9 +246,11 @@ namespace Azure.Security.Attestation.Tests
             Assert.AreEqual(_trustedCertificate.Thumbprint, token.CertificateThumbprint);
         }
 
+        // A token signed with a trusted ECDSA certificate is not accepted; ECDSA signers are skipped, and an RSA signer after
+        // them is still tried.
         [TestCase(null)]
         [TestCase("ecdsa")]
-        public void EcdsaSignedTokenIsAccepted(string kid)
+        public void EcdsaSignedTokenIsRejected(string kid)
         {
             using ECDsa key = ECDsa.Create(ECCurve.NamedCurves.nistP256);
             using X509Certificate2 certificate = new CertificateRequest("CN=ECDsa", key, HashAlgorithmName.SHA256)
@@ -273,8 +259,14 @@ namespace Azure.Security.Attestation.Tests
             string signedData = Base64Url.Encode(Encoding.UTF8.GetBytes(header)) + "." + Base64Url.Encode(Encoding.UTF8.GetBytes($"{{\"iss\":\"{Provider}\"}}"));
             AttestationToken token = AttestationToken.Deserialize(signedData + "." + Base64Url.Encode(key.SignData(Encoding.UTF8.GetBytes(signedData), HashAlgorithmName.SHA256)));
 
-            Assert.IsTrue(token.ValidateToken(Options(), Signers(certificate, "ecdsa")));
-            Assert.AreEqual(certificate.Thumbprint, token.CertificateThumbprint);
+            Exception ex = Assert.Throws<Exception>(() => token.ValidateToken(Options(), Signers(certificate, "ecdsa")));
+            StringAssert.Contains("Could not find a certificate which was used to sign the token", ex.Message);
+            Assert.IsNull(token.SigningCertificate);
+
+            AttestationToken rsaToken = SignedToken(_trustedKey, "{\"alg\":\"RS256\"}");
+            var mixed = new[] { new AttestationSigner(new[] { certificate }, null), new AttestationSigner(new[] { _trustedCertificate }, null) };
+            Assert.IsTrue(rsaToken.ValidateToken(Options(), mixed));
+            Assert.AreEqual(_trustedCertificate.Thumbprint, rsaToken.CertificateThumbprint);
         }
 
         [Test]
@@ -288,20 +280,14 @@ namespace Azure.Security.Attestation.Tests
         }
 
         [Test]
-        public void EcdsaSigningKeysSignTokens()
+        public void EcdsaSigningKeysAreRejected()
         {
             using ECDsa key = ECDsa.Create(ECCurve.NamedCurves.nistP256);
             using X509Certificate2 certificate = new CertificateRequest("CN=ECDsa", key, HashAlgorithmName.SHA256)
                 .CreateSelfSigned(DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddDays(1));
 
-            foreach (AttestationTokenSigningKey signingKey in new[] { new AttestationTokenSigningKey(key, certificate), new AttestationTokenSigningKey(certificate) })
-            {
-                AttestationToken token = AttestationToken.Deserialize(
-                    new AttestationToken(BinaryData.FromString($"{{\"iss\":\"{Provider}\"}}"), signingKey).Serialize());
-
-                Assert.AreEqual("ES256", token.Algorithm);
-                Assert.IsTrue(token.ValidateToken(Options(), Signers(certificate, null)));
-            }
+            Assert.AreEqual("signer", Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(key, certificate)).ParamName);
+            Assert.AreEqual("certificate", Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(certificate)).ParamName);
         }
 
         [Test]
@@ -313,90 +299,16 @@ namespace Azure.Security.Attestation.Tests
             Assert.AreEqual("RS256", token.Algorithm);
         }
 
-        // Each curve is verified with the hash its JWS algorithm pairs with it (RFC 7518 section 3.4).
-        [TestCase("nistP256", "ES256")]
-        [TestCase("nistP384", "ES384")]
-        [TestCase("nistP521", "ES512")]
-        public void EcdsaTokensAreVerifiedWithTheirCurvesHash(string curveName, string algorithm)
-        {
-            ECCurve curve = ECCurve.CreateFromFriendlyName(curveName);
-            HashAlgorithmName hash = algorithm switch { "ES256" => HashAlgorithmName.SHA256, "ES384" => HashAlgorithmName.SHA384, _ => HashAlgorithmName.SHA512 };
-            using ECDsa key = ECDsa.Create(curve);
-            using X509Certificate2 certificate = new CertificateRequest("CN=ECDsa", key, hash)
-                .CreateSelfSigned(DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddDays(1));
-
-            Assert.IsTrue(EcdsaToken(key, algorithm, hash).ValidateToken(Options(), Signers(certificate, null)));
-        }
-
-        // The trusted certificate's curve decides the hash; a P-384 signature over a SHA-256 digest is not ES384.
-        [TestCase("ES384")]
-        [TestCase("ES256")]
-        public void EcdsaTokenWithMismatchedHashIsRejected(string headerAlgorithm)
-        {
-            using ECDsa key = ECDsa.Create(ECCurve.NamedCurves.nistP384);
-            using X509Certificate2 certificate = new CertificateRequest("CN=ECDsa", key, HashAlgorithmName.SHA384)
-                .CreateSelfSigned(DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddDays(1));
-            AttestationToken token = EcdsaToken(key, headerAlgorithm, HashAlgorithmName.SHA256);
-
-            Exception ex = Assert.Throws<Exception>(() => token.ValidateToken(Options(), Signers(certificate, null)));
-            StringAssert.Contains("Could not find a certificate which was used to sign the token", ex.Message);
-        }
-
-        [TestCase("nistP384")]
-        [TestCase("nistP521")]
-        public void EcdsaSigningKeysMustUseP256(string curveName)
-        {
-            using ECDsa key = ECDsa.Create(ECCurve.CreateFromFriendlyName(curveName));
-            using X509Certificate2 certificate = new CertificateRequest("CN=ECDsa", key, HashAlgorithmName.SHA256)
-                .CreateSelfSigned(DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddDays(1));
-
-            StringAssert.Contains("P-256", Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(key, certificate)).Message);
-            StringAssert.Contains("P-256", Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(certificate)).Message);
-        }
-
-        // secp256k1 has the same key size as P-256, but a token signed with it is not ES256.
-        [Test]
-        public void Secp256k1IsNotTreatedAsP256()
-        {
-            ECDsa key;
-            X509Certificate2 certificate;
-            try
-            {
-                key = ECDsa.Create(ECCurve.CreateFromFriendlyName("secP256k1"));
-                certificate = new CertificateRequest("CN=secp256k1", key, HashAlgorithmName.SHA256)
-                    .CreateSelfSigned(DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddDays(1));
-            }
-            catch (Exception ex) when (ex is PlatformNotSupportedException || ex is CryptographicException)
-            {
-                Assert.Ignore($"secp256k1 is not supported on this platform: {ex.Message}");
-                return;
-            }
-
-            using (key)
-            using (certificate)
-            {
-                Assert.AreEqual(256, key.KeySize);
-                StringAssert.Contains("P-256", Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(key, certificate)).Message);
-                StringAssert.Contains("P-256", Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(certificate)).Message);
-
-                Exception ex = Assert.Throws<Exception>(() => EcdsaToken(key, "ES256", HashAlgorithmName.SHA256).ValidateToken(Options(), Signers(certificate, null)));
-                StringAssert.Contains("Could not find a certificate which was used to sign the token", ex.Message);
-            }
-        }
-
-        private static AttestationToken EcdsaToken(ECDsa key, string algorithm, HashAlgorithmName hash)
-        {
-            string signedData = Base64Url.Encode(Encoding.UTF8.GetBytes($"{{\"alg\":\"{algorithm}\"}}")) + "." + Base64Url.Encode(Encoding.UTF8.GetBytes($"{{\"iss\":\"{Provider}\"}}"));
-            return AttestationToken.Deserialize(signedData + "." + Base64Url.Encode(key.SignData(Encoding.UTF8.GetBytes(signedData), hash)));
-        }
-
         [Test]
         public void SigningKeyMustMatchCertificate()
         {
             using ECDsa key = ECDsa.Create(ECCurve.NamedCurves.nistP256);
+            using X509Certificate2 ecdsaCertificate = new CertificateRequest("CN=ECDsa", key, HashAlgorithmName.SHA256)
+                .CreateSelfSigned(DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddDays(1));
 
             Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(key, _trustedCertificate));
             Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(_untrustedKey, _trustedCertificate));
+            Assert.AreEqual("certificate", Assert.Throws<ArgumentException>(() => new AttestationTokenSigningKey(_trustedKey, ecdsaCertificate)).ParamName);
         }
 
         [Test]

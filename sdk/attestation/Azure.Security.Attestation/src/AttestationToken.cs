@@ -472,66 +472,11 @@ namespace Azure.Security.Attestation
             return actualSigner != null;
         }
 
+        // Only RSA certificates can verify a token; the service signs tokens with RS256. Other certificates are skipped.
         private static bool VerifySignature(X509Certificate2 certificate, byte[] signedData, byte[] signature)
         {
-            if (IsEcdsaCertificate(certificate))
-            {
-                // The hash comes from the trusted certificate's curve, never from the token's alg header. A certificate on
-                // any other curve is skipped before its key is loaded.
-                if (!(GetEcdsaHashAlgorithm(certificate) is HashAlgorithmName hash))
-                {
-                    return false;
-                }
-                using ECDsa ecdsa = certificate.GetECDsaPublicKey();
-                return ecdsa != null && ecdsa.VerifyData(signedData, signature, hash);
-            }
-
             using RSA rsa = certificate.GetRSAPublicKey();
             return rsa != null && rsa.VerifyData(signedData, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
-        }
-
-        // Returns the certificate's RSA or ECDsa public key, or null if it has neither.
-        internal static AsymmetricAlgorithm GetPublicKey(X509Certificate2 certificate)
-            => (AsymmetricAlgorithm)certificate.GetRSAPublicKey() ?? certificate.GetECDsaPublicKey();
-
-        private const string EcPublicKeyOid = "1.2.840.10045.2.1";
-
-        // The DER-encoded namedCurve OIDs in an EC certificate's SubjectPublicKeyInfo parameters (RFC 5480).
-        private static readonly byte[] s_p256Curve = { 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x03, 0x01, 0x07 };
-        private static readonly byte[] s_p384Curve = { 0x06, 0x05, 0x2B, 0x81, 0x04, 0x00, 0x22 };
-        private static readonly byte[] s_p521Curve = { 0x06, 0x05, 0x2B, 0x81, 0x04, 0x00, 0x23 };
-
-        internal static bool IsEcdsaCertificate(X509Certificate2 certificate)
-            => certificate.PublicKey.Oid?.Value == EcPublicKeyOid;
-
-        // Each ECDSA JWS algorithm pairs one curve with one hash (RFC 7518 section 3.4): ES256 is P-256 with SHA-256,
-        // ES384 is P-384 with SHA-384, and ES512 is P-521 with SHA-512. The curve is read from the certificate, the same way
-        // on every target framework. Returns null for any other or unnamed curve, and for certificates without an EC key.
-        internal static HashAlgorithmName? GetEcdsaHashAlgorithm(X509Certificate2 certificate)
-        {
-            if (!IsEcdsaCertificate(certificate))
-            {
-                return null;
-            }
-
-            byte[] curve = certificate.PublicKey.EncodedParameters?.RawData;
-            if (curve == null)
-            {
-                return null;
-            }
-            if (curve.SequenceEqual(s_p256Curve))
-            {
-                return HashAlgorithmName.SHA256;
-            }
-            if (curve.SequenceEqual(s_p384Curve))
-            {
-                return HashAlgorithmName.SHA384;
-            }
-            if (curve.SequenceEqual(s_p521Curve))
-            {
-                return HashAlgorithmName.SHA512;
-            }
-            return null;
         }
 
         /// <summary>
@@ -709,8 +654,8 @@ namespace Azure.Security.Attestation
 
             JsonWebTokenHeader header = new JsonWebTokenHeader
             {
-                // AttestationTokenSigningKey only accepts RSA keys and ECDsa keys on the P-256 curve, both signed with SHA-256.
-                Algorithm = signingKey.Signer is RSA ? "RS256" : (signingKey.Signer is ECDsa ? "ES256" : null),
+                // AttestationTokenSigningKey only accepts RSA keys.
+                Algorithm = "RS256",
                 X509CertificateChain = new string[] { Convert.ToBase64String(signingKey.Certificate.Export(X509ContentType.Cert)) },
             };
             var serializationOptions = new JsonSerializerOptions
@@ -730,19 +675,11 @@ namespace Azure.Security.Attestation
 
             string signedData = encodedHeader + '.' + encodedBody;
 
-            byte[] signature;
-            if (signingKey.Signer is RSA rsaKey)
+            if (!(signingKey.Signer is RSA rsaKey))
             {
-                signature = rsaKey.SignData(Encoding.UTF8.GetBytes(signedData), HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+                throw new ArgumentException("The signing key must be an RSA key.", nameof(signingKey));
             }
-            else if (signingKey.Signer is ECDsa ecdh)
-            {
-                signature = ecdh.SignData(Encoding.UTF8.GetBytes(signedData), HashAlgorithmName.SHA256);
-            }
-            else
-            {
-                throw new ArgumentException("Signing Key must be either RSA or ECDsa. Unknown signing key found");
-            }
+            byte[] signature = rsaKey.SignData(Encoding.UTF8.GetBytes(signedData), HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
             string jwt = signedData + '.' + Base64Url.Encode(signature);
 
             return jwt;
