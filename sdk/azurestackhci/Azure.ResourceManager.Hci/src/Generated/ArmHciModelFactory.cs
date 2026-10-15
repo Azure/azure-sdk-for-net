@@ -4112,7 +4112,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> A scale unit containing deployment data. </summary>
         /// <param name="deploymentData"> Deployment data to configure the edge machine. </param>
         /// <returns> A new <see cref="Models.EdgeMachineScaleUnits"/> instance for mocking. </returns>
-        public static EdgeMachineScaleUnits EdgeMachineScaleUnits(EdgeMachineDeploymentData deploymentData = default)
+        public static EdgeMachineScaleUnits EdgeMachineScaleUnits(EdgeMachineDeployment deploymentData = default)
         {
             return new EdgeMachineScaleUnits(deploymentData, default);
         }
@@ -4121,12 +4121,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="storageType"> Storage type for the edge machine node. </param>
         /// <param name="iScsiConfig"> iSCSI configuration for the edge machine. </param>
         /// <param name="secrets"> Protected parameters stored in Key Vault and applied during edge machine node preparation. </param>
-        /// <returns> A new <see cref="Models.EdgeMachineDeploymentData"/> instance for mocking. </returns>
-        public static EdgeMachineDeploymentData EdgeMachineDeploymentData(NodeStorageType storageType = default, IscsiConfig iScsiConfig = default, IEnumerable<EceDeploymentSecrets> secrets = default)
+        /// <returns> A new <see cref="Models.EdgeMachineDeployment"/> instance for mocking. </returns>
+        public static EdgeMachineDeployment EdgeMachineDeployment(NodeStorageType storageType = default, IscsiConfig iScsiConfig = default, IEnumerable<EceDeploymentSecrets> secrets = default)
         {
             secrets ??= new ChangeTrackingList<EceDeploymentSecrets>();
 
-            return new EdgeMachineDeploymentData(storageType, iScsiConfig, (secrets ?? new ChangeTrackingList<EceDeploymentSecrets>()).ToList(), default);
+            return new EdgeMachineDeployment(storageType, iScsiConfig, (secrets ?? new ChangeTrackingList<EceDeploymentSecrets>()).ToList(), default);
         }
 
         /// <param name="iScsiNetworkConfig"> iSCSI network configuration. </param>

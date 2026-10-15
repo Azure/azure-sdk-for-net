@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="EdgeMachineScaleUnits"/>. </summary>
         /// <param name="deploymentData"> Deployment data to configure the edge machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentData"/> is null. </exception>
-        public EdgeMachineScaleUnits(EdgeMachineDeploymentData deploymentData)
+        public EdgeMachineScaleUnits(EdgeMachineDeployment deploymentData)
         {
             Argument.AssertNotNull(deploymentData, nameof(deploymentData));
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="EdgeMachineScaleUnits"/>. </summary>
         /// <param name="deploymentData"> Deployment data to configure the edge machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineScaleUnits(EdgeMachineDeploymentData deploymentData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineScaleUnits(EdgeMachineDeployment deploymentData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeploymentData = deploymentData;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Deployment data to configure the edge machine. </summary>
         [WirePath("deploymentData")]
-        public EdgeMachineDeploymentData DeploymentData { get; set; }
+        public EdgeMachineDeployment DeploymentData { get; set; }
     }
 }

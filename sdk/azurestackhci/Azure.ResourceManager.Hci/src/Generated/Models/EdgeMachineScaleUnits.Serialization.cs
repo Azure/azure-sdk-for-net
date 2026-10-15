@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            EdgeMachineDeploymentData deploymentData = default;
+            EdgeMachineDeployment deploymentData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("deploymentData"u8))
                 {
-                    deploymentData = EdgeMachineDeploymentData.DeserializeEdgeMachineDeploymentData(prop.Value, options);
+                    deploymentData = EdgeMachineDeployment.DeserializeEdgeMachineDeployment(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

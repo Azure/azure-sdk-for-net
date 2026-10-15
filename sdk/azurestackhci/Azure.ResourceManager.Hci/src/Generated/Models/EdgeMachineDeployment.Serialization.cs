@@ -14,56 +14,56 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The deployment data of an edge machine. </summary>
-    public partial class EdgeMachineDeploymentData : IJsonModel<EdgeMachineDeploymentData>
+    public partial class EdgeMachineDeployment : IJsonModel<EdgeMachineDeployment>
     {
-        /// <summary> Initializes a new instance of <see cref="EdgeMachineDeploymentData"/> for deserialization. </summary>
-        internal EdgeMachineDeploymentData()
+        /// <summary> Initializes a new instance of <see cref="EdgeMachineDeployment"/> for deserialization. </summary>
+        internal EdgeMachineDeployment()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeMachineDeploymentData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EdgeMachineDeployment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineDeploymentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineDeployment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEdgeMachineDeploymentData(document.RootElement, options);
+                        return DeserializeEdgeMachineDeployment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeMachineDeploymentData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeMachineDeployment)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineDeploymentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineDeployment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeMachineDeploymentData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeMachineDeployment)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EdgeMachineDeploymentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EdgeMachineDeployment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeMachineDeploymentData IPersistableModel<EdgeMachineDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EdgeMachineDeployment IPersistableModel<EdgeMachineDeployment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EdgeMachineDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EdgeMachineDeployment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EdgeMachineDeploymentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EdgeMachineDeployment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineDeploymentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeMachineDeploymentData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeMachineDeployment)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("storageType"u8);
             writer.WriteStringValue(StorageType.ToString());
@@ -115,24 +115,24 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeMachineDeploymentData IJsonModel<EdgeMachineDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EdgeMachineDeployment IJsonModel<EdgeMachineDeployment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeMachineDeploymentData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EdgeMachineDeployment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineDeploymentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeMachineDeploymentData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeMachineDeployment)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEdgeMachineDeploymentData(document.RootElement, options);
+            return DeserializeEdgeMachineDeployment(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EdgeMachineDeploymentData DeserializeEdgeMachineDeploymentData(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeMachineDeployment DeserializeEdgeMachineDeployment(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EdgeMachineDeploymentData(storageType, iScsiConfig, secrets ?? new ChangeTrackingList<EceDeploymentSecrets>(), additionalBinaryDataProperties);
+            return new EdgeMachineDeployment(storageType, iScsiConfig, secrets ?? new ChangeTrackingList<EceDeploymentSecrets>(), additionalBinaryDataProperties);
         }
     }
 }

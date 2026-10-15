@@ -12,25 +12,25 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The deployment data of an edge machine. </summary>
-    public partial class EdgeMachineDeploymentData
+    public partial class EdgeMachineDeployment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EdgeMachineDeploymentData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeMachineDeployment"/>. </summary>
         /// <param name="storageType"> Storage type for the edge machine node. </param>
-        public EdgeMachineDeploymentData(NodeStorageType storageType)
+        public EdgeMachineDeployment(NodeStorageType storageType)
         {
             StorageType = storageType;
             Secrets = new ChangeTrackingList<EceDeploymentSecrets>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EdgeMachineDeploymentData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeMachineDeployment"/>. </summary>
         /// <param name="storageType"> Storage type for the edge machine node. </param>
         /// <param name="iScsiConfig"> iSCSI configuration for the edge machine. </param>
         /// <param name="secrets"> Protected parameters stored in Key Vault and applied during edge machine node preparation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineDeploymentData(NodeStorageType storageType, IscsiConfig iScsiConfig, IList<EceDeploymentSecrets> secrets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineDeployment(NodeStorageType storageType, IscsiConfig iScsiConfig, IList<EceDeploymentSecrets> secrets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageType = storageType;
             IScsiConfig = iScsiConfig;
