@@ -1,9 +1,14 @@
 import readline from "node:readline";
 import { pathToFileURL } from "node:url";
 
-const toolName = "azsdk_customized_code_update";
+const customizationToolName = "azsdk_customized_code_update";
+const validationToolName = "azsdk_run_typespec_validation";
 
-export function handleRequest(request, failCustomization = false) {
+export function handleRequest(
+  request,
+  failCustomization = false,
+  state = { customizationApplied: false },
+) {
   if (request.id === undefined) return null;
   const reply = (result) => ({ jsonrpc: "2.0", id: request.id, result });
   const error = (code, message) => ({
@@ -25,7 +30,7 @@ export function handleRequest(request, failCustomization = false) {
       return reply({
         tools: [
           {
-            name: toolName,
+            name: customizationToolName,
             description:
               "Apply TypeSpec or SDK customizations. SpecInputs requires tspProjectPath but no packagePath and skips SDK generation/build.",
             inputSchema: {
@@ -44,12 +49,63 @@ export function handleRequest(request, failCustomization = false) {
               additionalProperties: false,
             },
           },
+          {
+            name: validationToolName,
+            description:
+              "Run TypeSpec validation after an applied customization. Requires the absolute TypeSpec project root.",
+            inputSchema: {
+              type: "object",
+              properties: {
+                typeSpecProjectRootPath: { type: "string" },
+              },
+              required: ["typeSpecProjectRootPath"],
+              additionalProperties: false,
+            },
+          },
         ],
       });
     case "tools/call": {
-      if (request.params.name !== toolName)
-        return error(-32602, "Unknown fixture tool");
       const args = request.params.arguments ?? {};
+      if (request.params.name === validationToolName) {
+        if (!args.typeSpecProjectRootPath) {
+          return reply({
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text: "Fixture validation requires typeSpecProjectRootPath.",
+              },
+            ],
+          });
+        }
+        if (!state.customizationApplied) {
+          return reply({
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text: "Customization must succeed before TypeSpec validation.",
+              },
+            ],
+          });
+        }
+        return reply({
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify({
+                Success: true,
+                TypeSpecProject: args.typeSpecProjectRootPath,
+                Message:
+                  "TypeSpec validation passed (mock). Run the project compile command next.",
+              }),
+            },
+          ],
+        });
+      }
+      if (request.params.name !== customizationToolName) {
+        return error(-32602, "Unknown fixture tool");
+      }
       if (
         args.editScope !== "SpecInputs" ||
         !args.tspProjectPath ||
@@ -81,6 +137,7 @@ export function handleRequest(request, failCustomization = false) {
             Message:
               "SpecInputs completed (mock). SDK generation/build and TypeSpec validation were not run; the caller must validate.",
           };
+      state.customizationApplied = result.Success;
       return reply({
         content: [{ type: "text", text: JSON.stringify(result) }],
       });
@@ -95,11 +152,13 @@ if (
   import.meta.url === pathToFileURL(process.argv[1]).href
 ) {
   const input = readline.createInterface({ input: process.stdin });
+  const state = { customizationApplied: false };
   input.on("line", (line) => {
     try {
       const result = handleRequest(
         JSON.parse(line),
         process.env.NAMING_EVAL_FAIL === "true",
+        state,
       );
       if (result) process.stdout.write(`${JSON.stringify(result)}\n`);
     } catch (error) {
