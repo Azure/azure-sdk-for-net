@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _acsEndpoint;
-        internal bool _acsEndpointIsDefined;
+        private bool _acsEndpointIsDefined;
         private string _acsSecret;
-        internal bool _acsSecretIsDefined;
+        private bool _acsSecretIsDefined;
         private string _cognitiveServiceSubscriptionKey;
-        internal bool _cognitiveServiceSubscriptionKeyIsDefined;
+        private bool _cognitiveServiceSubscriptionKeyIsDefined;
         private string _cognitiveServiceRegion;
-        internal bool _cognitiveServiceRegionIsDefined;
+        private bool _cognitiveServiceRegionIsDefined;
         private string _defaultLocale;
-        internal bool _defaultLocaleIsDefined;
+        private bool _defaultLocaleIsDefined;
         private string _offerType;
-        internal bool _offerTypeIsDefined;
+        private bool _offerTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="TelephonyPhoneNumbers"/>. </summary>
         public TelephonyPhoneNumbers()
