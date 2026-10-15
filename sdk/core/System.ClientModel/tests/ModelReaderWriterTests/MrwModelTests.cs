@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
+using System.ClientModel.Primitives;
 using System.Reflection;
 using System.Text.Json;
-using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
 {

@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
 using BenchmarkDotNet.Attributes;
+using System.ClientModel.Primitives;
 
 namespace System.ClientModel.Tests.Internal.Perf
 {
@@ -12,24 +12,21 @@ namespace System.ClientModel.Tests.Internal.Perf
         public void Read_DotNotation()
         {
             var reader = new JsonPathReader("$.foo.bar[2].baz"u8);
-            while (reader.Read())
-            { }
+            while (reader.Read()) { }
         }
 
         [Benchmark]
         public void Read_SingleQuote()
         {
             var reader = new JsonPathReader("$['foo']['bar'][2]['baz']"u8);
-            while (reader.Read())
-            { }
+            while (reader.Read()) { }
         }
 
         [Benchmark]
         public void Read_DoubleQuote()
         {
             var reader = new JsonPathReader("$[\"foo\"].bar[2].baz"u8);
-            while (reader.Read())
-            { }
+            while (reader.Read()) { }
         }
 
         [Benchmark]
