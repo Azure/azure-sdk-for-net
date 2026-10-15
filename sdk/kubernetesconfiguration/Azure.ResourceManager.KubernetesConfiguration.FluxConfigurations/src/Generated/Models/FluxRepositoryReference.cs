@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _branch;
-        internal bool _branchIsDefined;
+        private bool _branchIsDefined;
         private string _tag;
-        internal bool _tagIsDefined;
+        private bool _tagIsDefined;
         private string _semver;
-        internal bool _semverIsDefined;
+        private bool _semverIsDefined;
         private string _commit;
-        internal bool _commitIsDefined;
+        private bool _commitIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxRepositoryReference"/>. </summary>
         public FluxRepositoryReference()

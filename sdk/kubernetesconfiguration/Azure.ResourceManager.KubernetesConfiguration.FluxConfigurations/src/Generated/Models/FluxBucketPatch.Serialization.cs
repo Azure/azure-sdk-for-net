@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(FluxBucketPatch)} does not support writing '{format}' format.");
             }
-            if (_uriIsDefined || Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Uri, _uriIsDefined))
             {
                 if (Uri != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("url"u8);
                 }
             }
-            if (_bucketNameIsDefined || Optional.IsDefined(BucketName))
+            if (Optional.IsDefined(BucketName, _bucketNameIsDefined))
             {
                 if (BucketName != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("bucketName"u8);
                 }
             }
-            if (_isInsecureIsDefined || Optional.IsDefined(IsInsecure))
+            if (Optional.IsDefined(IsInsecure, _isInsecureIsDefined))
             {
                 if (IsInsecure != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("insecure"u8);
                 }
             }
-            if (_timeoutInSecondsIsDefined || Optional.IsDefined(TimeoutInSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds, _timeoutInSecondsIsDefined))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("timeoutInSeconds"u8);
                 }
             }
-            if (_syncIntervalInSecondsIsDefined || Optional.IsDefined(SyncIntervalInSeconds))
+            if (Optional.IsDefined(SyncIntervalInSeconds, _syncIntervalInSecondsIsDefined))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("syncIntervalInSeconds"u8);
                 }
             }
-            if (_accessKeyIsDefined || Optional.IsDefined(AccessKey))
+            if (Optional.IsDefined(AccessKey, _accessKeyIsDefined))
             {
                 if (AccessKey != null)
                 {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("accessKey"u8);
                 }
             }
-            if (_localAuthRefIsDefined || Optional.IsDefined(LocalAuthRef))
+            if (Optional.IsDefined(LocalAuthRef, _localAuthRefIsDefined))
             {
                 if (LocalAuthRef != null)
                 {
