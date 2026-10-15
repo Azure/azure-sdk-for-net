@@ -3279,14 +3279,7 @@
             }
           ],
           "initializedBy": 0,
-          "decorators": [
-            {
-              "name": "Azure.Core.Legacy.@overrideApiVersion",
-              "arguments": {
-                "version": "opaque-read&channel=legacy%2Fplus+#hash"
-              }
-            }
-          ],
+          "decorators": [],
           "crossLanguageDefinitionId": "MgmtTypeSpec.EscapedWireVersionReads",
           "apiVersions": [
             "2024-04-01",
@@ -5937,14 +5930,7 @@
             }
           ],
           "initializedBy": 0,
-          "decorators": [
-            {
-              "name": "Azure.Core.Legacy.@overrideApiVersion",
-              "arguments": {
-                "version": "opaque-read"
-              }
-            }
-          ],
+          "decorators": [],
           "crossLanguageDefinitionId": "MgmtTypeSpec",
           "apiVersions": [
             "2024-04-01",
