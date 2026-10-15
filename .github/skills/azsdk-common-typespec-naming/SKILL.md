@@ -5,7 +5,7 @@ license: MIT
 metadata:
   version: "1.0.0"
   distribution: shared
-compatibility: "Guidance/review use local references. Apply requires a writable TypeSpec project and its local TypeSpec compiler."
+compatibility: "Guidance/review use local references. Apply requires azure-sdk-mcp:azsdk_customized_code_update and TypeSpec validation tooling."
 ---
 
 # TypeSpec SDK Naming
@@ -17,7 +17,7 @@ One source of naming rules for authoring and assessment. Read the [naming dispat
 1. **Choose intent.** Guidance/planning and review are read-only. Use apply only when the user or calling authoring workflow authorizes edits. Never interpret review feedback alone as permission to fix.
 2. **Select coverage.** Identify language and ARM/data-plane context from supplied evidence. Resolve missing information only for affected naming decisions; do not block unrelated REST work.
 3. **Evaluate.** Use the same referenced rules and exceptions in every mode. Preserve shipped SDK names, wire contracts and other languages. Return targets, proposed names, scopes, rationale, exceptions and blockers. Ordinary declaration authoring remains with the caller.
-4. **Apply only when authorized.** Follow [scoped TypeSpec customization](references/apply.md): make the smallest necessary language-scoped edit directly in the loaded `client.tsp`. Do not change ordinary service declarations, SDK custom code, generated code or dependencies for a TypeSpec naming fix.
+4. **Apply only when authorized.** Follow [tool-based customization](references/apply.md): call `azure-sdk-mcp:azsdk_customized_code_update` with `editScope: SpecInputs`. The tool is the authorized writer for `client.tsp`; “do not directly edit” means the agent must not use file-edit or shell tools to perform the same mutation. Never edit SDK custom code or generated code for a TypeSpec naming fix.
 5. **Report evidence.** Distinguish recommendations, applied changes and verified generated names. Review reports findings without writes or generation; after apply, validate as described in the apply workflow.
 
 ## Consumers
