@@ -15,7 +15,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// Azure-specific unions declared in this package's TypeSpec.
 /// </summary>
 /// <remarks>
-/// The wire fields these cover (<c>tool_choice</c>, <c>input</c>, <c>instructions</c>,
+/// The wire fields these cover (<c>tool_choice</c>, <c>input</c>,
 /// <c>conversation</c> and message <c>content</c>) are unions whose Azure representation
 /// still carries members that the OpenAI library does not model. The OpenAI value is
 /// serialized and re-read as the Azure union so that both representations stay available
@@ -73,15 +73,6 @@ internal static class BinaryDataExpansionHelpers
     }
 
     /// <summary>
-    /// Expands a BinaryData Instructions into a typed list of <see cref="Item"/>.
-    /// Uses <see cref="MessageRole.Developer"/> for string shorthand.
-    /// </summary>
-    internal static List<Item> ExpandInstructions(string? instructions)
-        => string.IsNullOrEmpty(instructions)
-            ? new List<Item>()
-            : new List<Item> { CreateStringInstructionMessage(instructions!) };
-
-    /// <summary>
     /// Expands a BinaryData Conversation into a typed <see cref="ConversationParam"/>.
     /// </summary>
     internal static ConversationParam? ExpandConversation(ResponseConversationOptions? conversation)
@@ -132,9 +123,6 @@ internal static class BinaryDataExpansionHelpers
         };
     }
 
-    private static ItemMessage CreateStringInstructionMessage(string text)
-        => (ItemMessage)ResponseItem.CreateDeveloperMessageItem(text);
-
     private static BinaryData Serialize<T>(T model)
         where T : notnull
         => Internal.ModelJson.Write(model, ModelReaderWriterOptions.Json);
@@ -154,25 +142,6 @@ internal static class BinaryDataExpansionHelpers
         }
 
         return BinaryData.FromBytes(stream.ToArray());
-    }
-
-    private static List<Item> DeserializeItemArray(JsonElement root)
-    {
-        var items = new List<Item>();
-        foreach (var element in root.EnumerateArray())
-        {
-            if (element.ValueKind != JsonValueKind.Object)
-            {
-                throw new FormatException(
-                    $"Expected a JSON object in the item array, but got {element.ValueKind}.");
-            }
-
-            var json = BinaryData.FromString(element.GetRawText());
-            items.Add(Internal.ModelJson.Read<Item>(
-                json, ModelReaderWriterOptions.Json)!);
-        }
-
-        return items;
     }
 
     private static List<MessageContent> DeserializeContentArray(JsonElement root)
