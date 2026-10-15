@@ -8,8 +8,4 @@
     <PackageTags>azure;management;network</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
-  <ItemGroup>
-    <!-- TODO: Remove when https://github.com/Azure/azure-sdk-for-net/issues/60023 is fixed. -->
-    <Compile Remove="Generated\LongRunningOperation\IDictionaryOfStringIListOfPeerRouteListOperationSource.cs" />
-  </ItemGroup>
 </Project>

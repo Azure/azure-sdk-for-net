@@ -40,7 +40,6 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("P2SConnectionConfiguration", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(VirtualNetworkAddressSpace), typeof(RoutingConfigurationNfv), typeof(bool?), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<VpnServerConfigurationPolicyGroupData>), typeof(NetworkProvisioningState?), typeof(ETag?))]
     [CodeGenSuppress("P2SConnectionConfiguration", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(ETag?), typeof(IEnumerable<string>), typeof(RoutingConfiguration), typeof(bool?), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<VpnServerConfigurationPolicyGroupData>), typeof(NetworkProvisioningState?))]
     [CodeGenSuppress("EffectiveBaseSecurityAdminRule", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(IEnumerable<NetworkManagerSecurityGroupItem>), typeof(IEnumerable<NetworkConfigurationGroup>), typeof(string))]
-    [CodeGenSuppress("PeerRouteList", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?))]
     [CodeGenSuppress("EffectiveNetworkSecurityGroup", typeof(ResourceIdentifier), typeof(EffectiveNetworkSecurityGroupAssociation), typeof(IEnumerable<EffectiveNetworkSecurityRule>), typeof(string))]
     // TODO: Remove this suppression when https://github.com/microsoft/typespec/issues/11846 is fixed.
     [CodeGenSuppress("EffectiveNetworkSecurityGroup", typeof(NetworkSubResource), typeof(EffectiveNetworkSecurityGroupAssociation), typeof(IEnumerable<EffectiveNetworkSecurityRule>), typeof(string))]
@@ -52,6 +51,22 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(WebApplicationFirewallPolicyTier?), typeof(ETag?))]
     public static partial class ArmNetworkModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.PeerRouteList"/> for mocking. </summary>
+        /// <param name="localAddress"> The peer's local address. </param>
+        /// <param name="network"> The route's network prefix. </param>
+        /// <param name="nextHop"> The route's next hop. </param>
+        /// <param name="sourcePeer"> The peer this route was learned from. </param>
+        /// <param name="origin"> The source this route was learned from. </param>
+        /// <param name="asPath"> The route's AS path sequence. </param>
+        /// <param name="weight"> The route's weight. </param>
+        /// <returns> A new <see cref="Models.PeerRouteList"/> instance for mocking. </returns>
+        [Obsolete("This method is obsolete and will be removed in a future release, please use `ArmNetworkModelFactory.PeerRoute` instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PeerRouteList PeerRouteList(string localAddress = default, string network = default, string nextHop = default, string sourcePeer = default, string origin = default, string asPath = default, int? weight = default)
+        {
+            return new PeerRouteList(localAddress, network, nextHop, sourcePeer, origin, asPath, weight, default);
+        }
+
         /// <summary> Creates inbound NAT pool properties for mocking. </summary>
         /// <param name="frontendIPConfigurationId"> The frontend IP configuration resource ID. </param>
         /// <param name="protocol"> The transport protocol. </param>
@@ -373,12 +388,6 @@ namespace Azure.ResourceManager.Network.Models
             return result;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PeerRoute"/>. </summary>
-        public static PeerRoute PeerRoute(string network = default, string nextHop = default, string sourcePeer = default, string origin = default, string asPath = default, string localAddress = default, int? weight = default)
-        {
-            return new PeerRoute();
-        }
-
         // Adds the model factory method omitted for the custom canonical shared network manager connection model.
         /// <summary> Initializes a new instance of <see cref="Network.NetworkManagerConnectionData"/>. </summary>
         public static NetworkManagerConnectionData NetworkManagerConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier networkManagerId = default, ScopeConnectionState? connectionState = default, string description = default, ETag? etag = default)
@@ -395,21 +404,6 @@ namespace Azure.ResourceManager.Network.Models
         {
             var properties = new NetworkManagerConnectionProperties(networkManagerId, connectionState, description, default);
             return new SubscriptionNetworkManagerConnectionData(id, name, type, eTag, default, properties, systemData);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PeerRouteList"/>. </summary>
-        /// <param name="localAddress"> The peer's local address. </param>
-        /// <param name="network"> The route's network prefix. </param>
-        /// <param name="nextHop"> The route's next hop. </param>
-        /// <param name="sourcePeer"> The peer this route was learned from. </param>
-        /// <param name="origin"> The source this route was learned from. </param>
-        /// <param name="asPath"> The route's AS path sequence. </param>
-        /// <param name="weight"> The route's weight. </param>
-        /// <returns> A new <see cref="Models.PeerRouteList"/> instance for mocking. </returns>
-        [Obsolete("This method is obsolete and will be removed in a future release, please use `ArmNetworkModelFactory.PeerRoute` instead.", false)]
-        public static PeerRouteList PeerRouteList(string localAddress = default, string network = default, string nextHop = default, string sourcePeer = default, string origin = default, string asPath = default, int? weight = default)
-        {
-            return new PeerRouteList(localAddress, network, nextHop, sourcePeer, origin, asPath, weight, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EffectiveNetworkSecurityGroup"/>. </summary>

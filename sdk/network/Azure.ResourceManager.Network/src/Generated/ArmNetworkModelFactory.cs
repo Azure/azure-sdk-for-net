@@ -12520,6 +12520,28 @@ namespace Azure.ResourceManager.Network.Models
                 eTag);
         }
 
+        /// <summary> Peer routing details. </summary>
+        /// <param name="network"> The route's network prefix. </param>
+        /// <param name="nextHop"> The route's next hop. </param>
+        /// <param name="sourcePeer"> The peer this route was learned from. </param>
+        /// <param name="origin"> The source this route was learned from. </param>
+        /// <param name="asPath"> The route's AS path sequence. </param>
+        /// <param name="localAddress"> The peer's local address. </param>
+        /// <param name="weight"> The route's weight. </param>
+        /// <returns> A new <see cref="Models.PeerRoute"/> instance for mocking. </returns>
+        public static PeerRoute PeerRoute(string network = default, string nextHop = default, string sourcePeer = default, string origin = default, string asPath = default, string localAddress = default, int? weight = default)
+        {
+            return new PeerRoute(
+                localAddress,
+                network,
+                nextHop,
+                sourcePeer,
+                origin,
+                asPath,
+                weight,
+                default);
+        }
+
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
