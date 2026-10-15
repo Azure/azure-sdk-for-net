@@ -739,9 +739,9 @@ namespace Azure.Storage.Blobs
 
             return new BlobLayoutInfo
             {
-                Ranges = layout?.Ranges,
-                Endpoints = layout?.Endpoints,
-                LastModified = rawResponse.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                Ranges = layout?.Ranges?.Range.Select(r => r.ToBlobLayoutRange()).ToList(),
+                Endpoints = layout?.Endpoints?.Endpoint.Select(e => e.ToBlobLayoutEndpoint()).ToList(),
+                LastModifiedOn = rawResponse.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
                 CreatedOn = rawResponse.Headers.TryGetValue("x-ms-creation-time", out DateTimeOffset? creationTime) ? creationTime.GetValueOrDefault() : default,
                 Metadata = rawResponse.Headers.TryGetValue(Constants.Blob.MetadataHeaderPrefix, out IDictionary<string, string> metadataValue) ? metadataValue : null,
                 ObjectReplicationDestinationPolicyId = rawResponse.Headers.TryGetValue("x-ms-or-policy-id", out string orPolicyId) ? orPolicyId : null,
@@ -786,7 +786,7 @@ namespace Azure.Storage.Blobs
                 ExpiresOn = rawResponse.Headers.TryGetValue("x-ms-expiry-time", out DateTimeOffset? expiresOn) ? expiresOn.GetValueOrDefault() : default,
                 IsSealed = rawResponse.Headers.TryGetValue("x-ms-blob-sealed", out bool? isSealed) && isSealed.GetValueOrDefault(),
                 RehydratePriority = rawResponse.Headers.TryGetValue("x-ms-rehydrate-priority", out string rehydratePriority) ? rehydratePriority : null,
-                LastAccessed = rawResponse.Headers.TryGetValue("x-ms-last-access-time", out DateTimeOffset? lastAccessed) ? lastAccessed.GetValueOrDefault() : default,
+                LastAccessedOn = rawResponse.Headers.TryGetValue("x-ms-last-access-time", out DateTimeOffset? lastAccessed) ? lastAccessed.GetValueOrDefault() : default,
                 ImmutabilityPolicy = immutabilityPolicy,
                 HasLegalHold = rawResponse.Headers.TryGetValue("x-ms-legal-hold", out bool? legalHold) && legalHold.GetValueOrDefault(),
                 BlobContentLength = rawResponse.Headers.TryGetValue("x-ms-blob-content-length", out long? blobContentLength) ? blobContentLength.GetValueOrDefault() : default,
@@ -797,6 +797,21 @@ namespace Azure.Storage.Blobs
             };
         }
 
+        internal static BlobLayoutRange ToBlobLayoutRange(this BlobLayoutRangeInternal range)
+            => new BlobLayoutRange
+            {
+                Start = range.Start,
+                End = range.End,
+                EndpointIndex = range.EndpointIndex,
+            };
+
+        internal static BlobLayoutEndpoint ToBlobLayoutEndpoint(this BlobLayoutEndpointInternal endpoint)
+            => new BlobLayoutEndpoint
+            {
+                Index = endpoint.Index,
+                Value = string.IsNullOrEmpty(endpoint.Value) ? null : new Uri(endpoint.Value),
+            };
+
         internal static BlobLayoutSegment[] ToBlobLayoutSegments(this BlobLayoutInfo blobLayoutInfo)
         {
             if (blobLayoutInfo == null)
@@ -804,17 +819,17 @@ namespace Azure.Storage.Blobs
                 return null;
             }
 
-            IList<BlobLayoutRange> ranges = blobLayoutInfo.Ranges?.Range;
+            IReadOnlyList<BlobLayoutRange> ranges = blobLayoutInfo.Ranges;
             if (ranges == null || ranges.Count == 0)
             {
                 return Array.Empty<BlobLayoutSegment>();
             }
 
             // Build Dictionary for index → endpoint
-            Dictionary<int, string> indexToEndpoint = new Dictionary<int, string>();
-            if (blobLayoutInfo.Endpoints?.Endpoint != null)
+            Dictionary<int, Uri> indexToEndpoint = new Dictionary<int, Uri>();
+            if (blobLayoutInfo.Endpoints != null)
             {
-                foreach (BlobLayoutEndpoint endpoint in blobLayoutInfo.Endpoints.Endpoint)
+                foreach (BlobLayoutEndpoint endpoint in blobLayoutInfo.Endpoints)
                 {
                     indexToEndpoint[endpoint.Index] = endpoint.Value;
                 }
@@ -824,7 +839,7 @@ namespace Azure.Storage.Blobs
             for (int i = 0; i < ranges.Count; i++)
             {
                 BlobLayoutRange range = ranges[i];
-                indexToEndpoint.TryGetValue(range.EndpointIndex, out string endpointValue);
+                indexToEndpoint.TryGetValue(range.EndpointIndex, out Uri endpointValue);
                 segments[i] = new BlobLayoutSegment
                 {
                     Start = range.Start,
@@ -851,7 +866,7 @@ namespace Azure.Storage.Blobs
         /// The optimal endpoint for this chunk based on the blob layout, or null if no
         /// segment covers the chunk's start offset.
         /// </returns>
-        internal static string GetLayoutEndpoint(
+        internal static Uri GetLayoutEndpoint(
             HttpRange chunkRange,
             IReadOnlyList<BlobLayoutSegment> layoutSegments)
         {

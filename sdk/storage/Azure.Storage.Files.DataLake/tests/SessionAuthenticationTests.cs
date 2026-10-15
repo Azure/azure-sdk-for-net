@@ -1043,16 +1043,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         /// <summary>
-        /// Extracts the host from a layout endpoint value. The service returns a full
-        /// URL (for example <c>https://blob.example.store.core.windows.net:443</c>), so
-        /// naively splitting on ':' would yield the scheme rather than the host.
-        /// </summary>
-        private static string GetHost(string layoutEndpoint) =>
-            Uri.TryCreate(layoutEndpoint, UriKind.Absolute, out Uri parsed)
-                ? parsed.Host
-                : layoutEndpoint.Split(':')[0];
-
-        /// <summary>
         /// Layout-aware routing and session authentication both hook the read path: the
         /// layout cache chooses the endpoint for each chunk and the session policy signs
         /// it. This asserts the two compose rather than one disabling the other.
@@ -1217,7 +1207,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileLayoutInfo layoutInfo = await oauthFileClient
                 .GetLayoutAsync(new DataLakeFileGetLayoutOptions { Range = new HttpRange(downloadOffset, 1) })
                 .FirstAsync();
-            string layoutEndpoint = layoutInfo.Endpoints.Endpoint[0].Value;
+            Uri layoutEndpoint = layoutInfo.Endpoints[0].Value;
 
             Response<DataLakeFileReadResult> response = await oauthFileClient.ReadContentAsync(
                 new DataLakeFileReadOptions
@@ -1238,7 +1228,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 "Expected exactly one Get Blob Layout request, issued explicitly by the caller");
             Assert.AreEqual(1, countingPolicy.RoutedRequestCount,
                 "Expected the read to be routed to the caller-supplied layout endpoint");
-            CollectionAssert.Contains(countingPolicy.RoutedHosts, GetHost(layoutEndpoint),
+            CollectionAssert.Contains(countingPolicy.RoutedHosts, layoutEndpoint.Host,
                 "Expected the request to be routed to the exact endpoint supplied by the caller");
 
             // Assert — session authentication still applied to the routed read

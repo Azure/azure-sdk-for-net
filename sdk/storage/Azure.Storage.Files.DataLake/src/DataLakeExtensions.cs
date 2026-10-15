@@ -643,29 +643,6 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
-        internal static DataLakeFileLayoutEndpoints ToDataLakeFileLayoutEndpoints(this BlobLayoutEndpoints endpoints)
-        {
-            if (endpoints == null)
-            {
-                return null;
-            }
-
-            List<DataLakeFileLayoutEndpoint> mapped = null;
-            if (endpoints.Endpoint != null)
-            {
-                mapped = new List<DataLakeFileLayoutEndpoint>(endpoints.Endpoint.Count);
-                foreach (BlobLayoutEndpoint item in endpoints.Endpoint)
-                {
-                    mapped.Add(item.ToDataLakeFileLayoutEndpoint());
-                }
-            }
-
-            return new DataLakeFileLayoutEndpoints
-            {
-                Endpoint = mapped
-            };
-        }
-
         internal static DataLakeFileLayoutRange ToDataLakeFileLayoutRange(this BlobLayoutRange item)
         {
             if (item == null)
@@ -681,29 +658,6 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
-        internal static DataLakeFileLayoutRanges ToDataLakeFileLayoutRanges(this BlobLayoutRanges ranges)
-        {
-            if (ranges == null)
-            {
-                return null;
-            }
-
-            List<DataLakeFileLayoutRange> mapped = null;
-            if (ranges.Range != null)
-            {
-                mapped = new List<DataLakeFileLayoutRange>(ranges.Range.Count);
-                foreach (BlobLayoutRange item in ranges.Range)
-                {
-                    mapped.Add(item.ToDataLakeFileLayoutRange());
-                }
-            }
-
-            return new DataLakeFileLayoutRanges
-            {
-                Range = mapped
-            };
-        }
-
         internal static DataLakeFileLayoutInfo ToDataLakeFileLayoutInfo(this BlobLayoutInfo blobLayoutInfo)
         {
             if (blobLayoutInfo == null)
@@ -713,9 +667,9 @@ namespace Azure.Storage.Files.DataLake
 
             return new DataLakeFileLayoutInfo
             {
-                Endpoints = blobLayoutInfo.Endpoints.ToDataLakeFileLayoutEndpoints(),
-                Ranges = blobLayoutInfo.Ranges.ToDataLakeFileLayoutRanges(),
-                LastModified = blobLayoutInfo.LastModified,
+                Endpoints = blobLayoutInfo.Endpoints?.Select(e => e.ToDataLakeFileLayoutEndpoint()).ToList(),
+                Ranges = blobLayoutInfo.Ranges?.Select(r => r.ToDataLakeFileLayoutRange()).ToList(),
+                LastModifiedOn = blobLayoutInfo.LastModifiedOn,
                 CreatedOn = blobLayoutInfo.CreatedOn,
                 Metadata = blobLayoutInfo.Metadata,
                 CopyCompletedOn = blobLayoutInfo.CopyCompletedOn,

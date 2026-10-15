@@ -4413,7 +4413,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.AreNotEqual(default(ETag), blobLayoutInfo.ETag);
                 Assert.AreEqual(size, blobLayoutInfo.BlobContentLength);
                 Assert.AreEqual(BlobType.Block, blobLayoutInfo.BlobType);
-                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.LastModified);
+                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.LastModifiedOn);
                 Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.CreatedOn);
                 Assert.IsTrue(blobLayoutInfo.IsServerEncrypted);
                 Assert.AreEqual(LeaseStatus.Unlocked, blobLayoutInfo.LeaseStatus);
@@ -4451,7 +4451,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.AreNotEqual(default(ETag), blobLayoutInfo.ETag);
                 Assert.AreEqual(size, blobLayoutInfo.BlobContentLength);
                 Assert.AreEqual(BlobType.Block, blobLayoutInfo.BlobType);
-                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.LastModified);
+                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.LastModifiedOn);
                 Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.CreatedOn);
                 Assert.IsTrue(blobLayoutInfo.IsServerEncrypted);
                 Assert.AreEqual(LeaseStatus.Unlocked, blobLayoutInfo.LeaseStatus);
@@ -4511,31 +4511,31 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsNotNull(blobLayoutInfo.Endpoints);
 
                 // Verify ranges have valid start/end byte offsets
-                Assert.IsNotEmpty(blobLayoutInfo.Ranges.Range);
-                foreach (BlobLayoutRange rangeItem in blobLayoutInfo.Ranges.Range)
+                Assert.IsNotEmpty(blobLayoutInfo.Ranges);
+                foreach (BlobLayoutRange rangeItem in blobLayoutInfo.Ranges)
                 {
                     Assert.GreaterOrEqual(rangeItem.Start, 0);
                     Assert.Greater(rangeItem.End, rangeItem.Start);
                 }
 
                 // Verify ranges are contiguous and cover byte 0 through size-1
-                Assert.AreEqual(0, blobLayoutInfo.Ranges.Range[0].Start);
-                for (int i = 1; i < blobLayoutInfo.Ranges.Range.Count; i++)
+                Assert.AreEqual(0, blobLayoutInfo.Ranges[0].Start);
+                for (int i = 1; i < blobLayoutInfo.Ranges.Count; i++)
                 {
-                    Assert.AreEqual(blobLayoutInfo.Ranges.Range[i - 1].End + 1, blobLayoutInfo.Ranges.Range[i].Start);
+                    Assert.AreEqual(blobLayoutInfo.Ranges[i - 1].End + 1, blobLayoutInfo.Ranges[i].Start);
                 }
-                Assert.AreEqual(size - 1, blobLayoutInfo.Ranges.Range[blobLayoutInfo.Ranges.Range.Count - 1].End);
+                Assert.AreEqual(size - 1, blobLayoutInfo.Ranges[blobLayoutInfo.Ranges.Count - 1].End);
 
                 // Verify endpoints are present and each range's EndpointIndex resolves
-                Assert.IsNotEmpty(blobLayoutInfo.Endpoints.Endpoint);
-                Dictionary<int, string> endpointMap = new Dictionary<int, string>();
-                foreach (BlobLayoutEndpoint ep in blobLayoutInfo.Endpoints.Endpoint)
+                Assert.IsNotEmpty(blobLayoutInfo.Endpoints);
+                Dictionary<int, Uri> endpointMap = new Dictionary<int, Uri>();
+                foreach (BlobLayoutEndpoint ep in blobLayoutInfo.Endpoints)
                 {
                     Assert.IsNotNull(ep.Value);
-                    Assert.IsNotEmpty(ep.Value);
+                    Assert.IsTrue(ep.Value.IsAbsoluteUri);
                     endpointMap[ep.Index] = ep.Value;
                 }
-                foreach (BlobLayoutRange rangeItem in blobLayoutInfo.Ranges.Range)
+                foreach (BlobLayoutRange rangeItem in blobLayoutInfo.Ranges)
                 {
                     Assert.IsTrue(endpointMap.ContainsKey(rangeItem.EndpointIndex),
                         $"Range [{rangeItem.Start}-{rangeItem.End}] references EndpointIndex {rangeItem.EndpointIndex} not found in endpoints");
@@ -4572,8 +4572,8 @@ namespace Azure.Storage.Blobs.Test
                 foreach (BlobLayoutInfo blobLayoutInfo in page.Values)
                 {
                     // Assert
-                    Assert.AreEqual(maxPageSize, blobLayoutInfo.Ranges.Range.Count);
-                    Assert.AreEqual(maxPageSize, blobLayoutInfo.Endpoints.Endpoint.Count);
+                    Assert.AreEqual(maxPageSize, blobLayoutInfo.Ranges.Count);
+                    Assert.AreEqual(maxPageSize, blobLayoutInfo.Endpoints.Count);
                 }
             }
         }
@@ -4603,7 +4603,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             Page<BlobLayoutInfo> page1 = blob.GetLayoutAsync().AsPages(pageSizeHint: 1).FirstAsync().GetAwaiter().GetResult();
             BlobLayoutInfo blobLayoutInfo1 = page1.Values.First();
-            Assert.AreEqual(1, blobLayoutInfo1.Ranges.Range.Count);
+            Assert.AreEqual(1, blobLayoutInfo1.Ranges.Count);
 
             string continuationToken = page1.ContinuationToken;
             Assert.IsNotNull(continuationToken);
@@ -4694,17 +4694,17 @@ namespace Azure.Storage.Blobs.Test
             {
                 // Assert
                 Assert.IsNotNull(blobLayoutInfo.Ranges);
-                Assert.IsNotEmpty(blobLayoutInfo.Ranges.Range);
+                Assert.IsNotEmpty(blobLayoutInfo.Ranges);
 
-                allRanges.AddRange(blobLayoutInfo.Ranges.Range);
+                allRanges.AddRange(blobLayoutInfo.Ranges);
 
                 // Verify endpoints are returned and resolvable
                 Assert.IsNotNull(blobLayoutInfo.Endpoints);
-                Assert.IsNotEmpty(blobLayoutInfo.Endpoints.Endpoint);
-                foreach (BlobLayoutEndpoint ep in blobLayoutInfo.Endpoints.Endpoint)
+                Assert.IsNotEmpty(blobLayoutInfo.Endpoints);
+                foreach (BlobLayoutEndpoint ep in blobLayoutInfo.Endpoints)
                 {
                     Assert.IsNotNull(ep.Value);
-                    Assert.IsNotEmpty(ep.Value);
+                    Assert.IsTrue(ep.Value.IsAbsoluteUri);
                 }
             }
 
@@ -4935,7 +4935,7 @@ namespace Azure.Storage.Blobs.Test
             await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
             {
                 // Assert
-                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.LastModified);
+                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.LastModifiedOn);
                 Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.CreatedOn);
                 Assert.AreEqual(BlobType.Block, blobLayoutInfo.BlobType);
                 Assert.AreEqual(size, blobLayoutInfo.BlobContentLength);

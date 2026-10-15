@@ -7861,14 +7861,14 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{ShareFileLinks}"/> describing the hard links
+        /// A <see cref="Response{GetFileLinksResult}"/> describing the hard links
         /// of the file.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<ShareFileLinks> GetFileLinks(
+        public virtual Response<GetFileLinksResult> GetFileLinks(
             ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
             => GetFileLinksInternal(
@@ -7895,14 +7895,14 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{ShareFileLinks}"/> describing the hard links
+        /// A <see cref="Response{GetFileLinksResult}"/> describing the hard links
         /// of the file.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async virtual Task<Response<ShareFileLinks>> GetFileLinksAsync(
+        public async virtual Task<Response<GetFileLinksResult>> GetFileLinksAsync(
             ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
             => await GetFileLinksInternal(
@@ -7927,14 +7927,14 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{ShareFileLinks}"/> describing the hard links
+        /// A <see cref="Response{GetFileLinksResult}"/> describing the hard links
         /// of the file.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<ShareFileLinks>> GetFileLinksInternal(
+        private async Task<Response<GetFileLinksResult>> GetFileLinksInternal(
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -7969,7 +7969,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(
-                        response.ToShareFileLinks(),
+                        response.ToGetFileLinksResult(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)

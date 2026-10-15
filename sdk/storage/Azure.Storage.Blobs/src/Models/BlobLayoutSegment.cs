@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.Models
         public long Start { get; internal set; }
         /// <summary> The end byte offset of the range. </summary>
         public long End { get; internal set; }
-        /// <summary> The host:port of the endpoint. </summary>
-        public string Endpoint { get; internal set; }
+        /// <summary> The endpoint that serves the range. </summary>
+        public Uri Endpoint { get; internal set; }
     }
 }

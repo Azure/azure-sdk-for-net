@@ -10,23 +10,22 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The endpoints that serve the ranges of a blob. </summary>
-    public partial class BlobLayoutEndpoints
+    internal partial class BlobLayoutEndpoints
     {
         /// <summary> Initializes a new instance of <see cref="BlobLayoutEndpoints"/>. </summary>
         internal BlobLayoutEndpoints()
         {
-            Endpoint = new ChangeTrackingList<BlobLayoutEndpoint>();
+            Endpoint = new ChangeTrackingList<BlobLayoutEndpointInternal>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobLayoutEndpoints"/>. </summary>
         /// <param name="endpoint"> The list of endpoints. </param>
-        internal BlobLayoutEndpoints(IList<BlobLayoutEndpoint> endpoint)
+        internal BlobLayoutEndpoints(IList<BlobLayoutEndpointInternal> endpoint)
         {
             Endpoint = endpoint;
         }
 
         /// <summary> The list of endpoints. </summary>
-        public IList<BlobLayoutEndpoint> Endpoint { get; }
+        public IList<BlobLayoutEndpointInternal> Endpoint { get; }
     }
 }

@@ -4931,7 +4931,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Assert
                 Assert.AreNotEqual(default(ETag), layoutInfo.ETag);
                 Assert.AreEqual(size, layoutInfo.FileContentLength);
-                Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.LastModified);
+                Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.LastModifiedOn);
                 Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.CreatedOn);
                 Assert.IsTrue(layoutInfo.IsServerEncrypted);
                 Assert.AreEqual(DataLakeLeaseStatus.Unlocked, layoutInfo.LeaseStatus);
@@ -4989,31 +4989,31 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Assert.IsNotNull(layoutInfo.Endpoints);
 
                 // Verify ranges have valid start/end byte offsets
-                Assert.IsNotEmpty(layoutInfo.Ranges.Range);
-                foreach (DataLakeFileLayoutRange rangeItem in layoutInfo.Ranges.Range)
+                Assert.IsNotEmpty(layoutInfo.Ranges);
+                foreach (DataLakeFileLayoutRange rangeItem in layoutInfo.Ranges)
                 {
                     Assert.GreaterOrEqual(rangeItem.Start, 0);
                     Assert.Greater(rangeItem.End, rangeItem.Start);
                 }
 
                 // Verify ranges are contiguous and cover byte 0 through size-1
-                Assert.AreEqual(0, layoutInfo.Ranges.Range[0].Start);
-                for (int i = 1; i < layoutInfo.Ranges.Range.Count; i++)
+                Assert.AreEqual(0, layoutInfo.Ranges[0].Start);
+                for (int i = 1; i < layoutInfo.Ranges.Count; i++)
                 {
-                    Assert.AreEqual(layoutInfo.Ranges.Range[i - 1].End + 1, layoutInfo.Ranges.Range[i].Start);
+                    Assert.AreEqual(layoutInfo.Ranges[i - 1].End + 1, layoutInfo.Ranges[i].Start);
                 }
-                Assert.AreEqual(size - 1, layoutInfo.Ranges.Range[layoutInfo.Ranges.Range.Count - 1].End);
+                Assert.AreEqual(size - 1, layoutInfo.Ranges[layoutInfo.Ranges.Count - 1].End);
 
                 // Verify endpoints are present and each range's EndpointIndex resolves
-                Assert.IsNotEmpty(layoutInfo.Endpoints.Endpoint);
-                Dictionary<int, string> endpointMap = new Dictionary<int, string>();
-                foreach (DataLakeFileLayoutEndpoint ep in layoutInfo.Endpoints.Endpoint)
+                Assert.IsNotEmpty(layoutInfo.Endpoints);
+                Dictionary<int, Uri> endpointMap = new Dictionary<int, Uri>();
+                foreach (DataLakeFileLayoutEndpoint ep in layoutInfo.Endpoints)
                 {
                     Assert.IsNotNull(ep.Value);
-                    Assert.IsNotEmpty(ep.Value);
+                    Assert.IsTrue(ep.Value.IsAbsoluteUri);
                     endpointMap[ep.Index] = ep.Value;
                 }
-                foreach (DataLakeFileLayoutRange rangeItem in layoutInfo.Ranges.Range)
+                foreach (DataLakeFileLayoutRange rangeItem in layoutInfo.Ranges)
                 {
                     Assert.IsTrue(endpointMap.ContainsKey(rangeItem.EndpointIndex),
                         $"Range [{rangeItem.Start}-{rangeItem.End}] references EndpointIndex {rangeItem.EndpointIndex} not found in endpoints");
@@ -5048,8 +5048,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 foreach (DataLakeFileLayoutInfo layoutInfo in page.Values)
                 {
                     // Assert
-                    Assert.AreEqual(maxPageSize, layoutInfo.Ranges.Range.Count);
-                    Assert.AreEqual(maxPageSize, layoutInfo.Endpoints.Endpoint.Count);
+                    Assert.AreEqual(maxPageSize, layoutInfo.Ranges.Count);
+                    Assert.AreEqual(maxPageSize, layoutInfo.Endpoints.Count);
                 }
             }
         }
@@ -5077,7 +5077,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             Page<DataLakeFileLayoutInfo> page1 = file.GetLayoutAsync().AsPages(pageSizeHint: 1).FirstAsync().GetAwaiter().GetResult();
             DataLakeFileLayoutInfo layoutInfo1 = page1.Values.First();
-            Assert.AreEqual(1, layoutInfo1.Ranges.Range.Count);
+            Assert.AreEqual(1, layoutInfo1.Ranges.Count);
 
             string continuationToken = page1.ContinuationToken;
             Assert.IsNotNull(continuationToken);
@@ -5090,8 +5090,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Verify the continuation token actually advanced the cursor:
             // page 2's first range must start strictly after page 1's first range.
             Assert.Greater(
-                layoutInfo2.Ranges.Range[0].Start,
-                layoutInfo1.Ranges.Range[0].Start);
+                layoutInfo2.Ranges[0].Start,
+                layoutInfo1.Ranges[0].Start);
         }
 
         [RecordedTest]
@@ -5123,20 +5123,20 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 // Assert
                 Assert.IsNotNull(layoutInfo.Ranges);
-                Assert.IsNotEmpty(layoutInfo.Ranges.Range);
+                Assert.IsNotEmpty(layoutInfo.Ranges);
 
                 // Verify range coverage is scoped to the requested range
-                Assert.AreEqual(layoutInfo.Ranges.Range[0].Start, rangeOffset);
+                Assert.AreEqual(layoutInfo.Ranges[0].Start, rangeOffset);
                 long rangeEnd = rangeOffset + rangeCount - 1;
-                Assert.AreEqual(layoutInfo.Ranges.Range[layoutInfo.Ranges.Range.Count - 1].End, rangeEnd);
+                Assert.AreEqual(layoutInfo.Ranges[layoutInfo.Ranges.Count - 1].End, rangeEnd);
 
                 // Verify endpoints are returned and resolvable
                 Assert.IsNotNull(layoutInfo.Endpoints);
-                Assert.IsNotEmpty(layoutInfo.Endpoints.Endpoint);
-                foreach (DataLakeFileLayoutEndpoint ep in layoutInfo.Endpoints.Endpoint)
+                Assert.IsNotEmpty(layoutInfo.Endpoints);
+                foreach (DataLakeFileLayoutEndpoint ep in layoutInfo.Endpoints)
                 {
                     Assert.IsNotNull(ep.Value);
-                    Assert.IsNotEmpty(ep.Value);
+                    Assert.IsTrue(ep.Value.IsAbsoluteUri);
                 }
             }
         }
@@ -5310,7 +5310,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync())
             {
                 // Assert
-                Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.LastModified);
+                Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.LastModifiedOn);
                 Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.CreatedOn);
                 Assert.AreEqual(size, layoutInfo.FileContentLength);
                 Assert.IsTrue(layoutInfo.IsServerEncrypted);
@@ -5380,7 +5380,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Assert
                 Assert.AreNotEqual(default(ETag), layoutInfo.ETag);
                 Assert.AreEqual(size, layoutInfo.FileContentLength);
-                Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.LastModified);
+                Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.LastModifiedOn);
                 Assert.NotNull(layoutInfo.Ranges);
                 Assert.NotNull(layoutInfo.Endpoints);
             }

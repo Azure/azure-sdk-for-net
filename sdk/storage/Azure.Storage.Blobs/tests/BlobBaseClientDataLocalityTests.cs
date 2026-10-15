@@ -616,7 +616,7 @@ namespace Azure.Storage.Blobs.Test
                 .FirstAsync();
 
             // Single-entry layout means exactly one endpoint - just grab it.
-            string layoutEndpoint = layoutInfo.Endpoints.Endpoint[0].Value;
+            Uri layoutEndpoint = layoutInfo.Endpoints[0].Value;
 
             BlobDownloadOptions downloadOptions = new()
             {
@@ -653,7 +653,7 @@ namespace Azure.Storage.Blobs.Test
 
             DataLocalityTrackingPolicy.RequestInfo rewritten = rewrittenRequests[0];
 
-            string expectedHost = layoutEndpoint.Split(':')[0];
+            string expectedHost = layoutEndpoint.Host;
 
             Assert.Greater(
                 rewritten.RequestPort,
@@ -724,7 +724,7 @@ namespace Azure.Storage.Blobs.Test
                 .FirstAsync();
 
             // Single-entry layout means exactly one endpoint - just grab it.
-            string layoutEndpoint = layoutInfo.Endpoints.Endpoint[0].Value;
+            Uri layoutEndpoint = layoutInfo.Endpoints[0].Value;
 
             BlobDownloadOptions downloadOptions = new()
             {
@@ -843,7 +843,7 @@ namespace Azure.Storage.Blobs.Test
                 .FirstAsync();
 
             // Single-entry layout means exactly one endpoint - just grab it.
-            string layoutEndpoint = layoutInfo.Endpoints.Endpoint[0].Value;
+            Uri layoutEndpoint = layoutInfo.Endpoints[0].Value;
 
             BlobDownloadOptions downloadOptions = new()
             {
@@ -877,7 +877,7 @@ namespace Azure.Storage.Blobs.Test
 
             DataLocalityTrackingPolicy.RequestInfo rewritten = rewrittenRequests[0];
 
-            string expectedHost = layoutEndpoint.Split(':')[0];
+            string expectedHost = layoutEndpoint.Host;
 
             Assert.Greater(
                 rewritten.RequestPort,
@@ -948,7 +948,7 @@ namespace Azure.Storage.Blobs.Test
                 .FirstAsync();
 
             // Single-entry layout means exactly one endpoint - just grab it.
-            string layoutEndpoint = layoutInfo.Endpoints.Endpoint[0].Value;
+            Uri layoutEndpoint = layoutInfo.Endpoints[0].Value;
 
             BlobDownloadOptions downloadOptions = new()
             {
@@ -1024,8 +1024,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobLayoutInfo info3 = new BlobLayoutInfo
             {
-                Ranges = BlobsModelFactory.BlobLayoutRanges(Array.Empty<BlobLayoutRange>()),
-                Endpoints = BlobsModelFactory.BlobLayoutEndpoints(Array.Empty<BlobLayoutEndpoint>()),
+                Ranges = Array.Empty<BlobLayoutRange>(),
+                Endpoints = Array.Empty<BlobLayoutEndpoint>(),
             };
             BlobLayoutSegment[] result3 = info3.ToBlobLayoutSegments();
             Assert.IsEmpty(result3);
@@ -1036,18 +1036,18 @@ namespace Azure.Storage.Blobs.Test
         {
             BlobLayoutInfo info = new BlobLayoutInfo
             {
-                Ranges = BlobsModelFactory.BlobLayoutRanges(new[]
+                Ranges = new[]
                 {
                     BlobsModelFactory.BlobLayoutRange(start: 0, end: 299, endpointIndex: 0),
                     BlobsModelFactory.BlobLayoutRange(start: 300, end: 499, endpointIndex: 1),
                     BlobsModelFactory.BlobLayoutRange(start: 500, end: 799, endpointIndex: 2),
-                }),
-                Endpoints = BlobsModelFactory.BlobLayoutEndpoints(new[]
+                },
+                Endpoints = new[]
                 {
-                    BlobsModelFactory.BlobLayoutEndpoint(index: 2, value: "https://host-c:443"),
-                    BlobsModelFactory.BlobLayoutEndpoint(index: 0, value: "https://host-a:443"),
-                    BlobsModelFactory.BlobLayoutEndpoint(index: 1, value: "https://host-b:443")
-                }),
+                    BlobsModelFactory.BlobLayoutEndpoint(index: 2, value: new Uri("https://host-c:443")),
+                    BlobsModelFactory.BlobLayoutEndpoint(index: 0, value: new Uri("https://host-a:443")),
+                    BlobsModelFactory.BlobLayoutEndpoint(index: 1, value: new Uri("https://host-b:443"))
+                },
             };
 
             BlobLayoutSegment[] result = info.ToBlobLayoutSegments();
@@ -1056,15 +1056,15 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(0, result[0].Start);
             Assert.AreEqual(299, result[0].End);
-            Assert.AreEqual("https://host-a:443", result[0].Endpoint);
+            Assert.AreEqual(new Uri("https://host-a:443"), result[0].Endpoint);
 
             Assert.AreEqual(300, result[1].Start);
             Assert.AreEqual(499, result[1].End);
-            Assert.AreEqual("https://host-b:443", result[1].Endpoint);
+            Assert.AreEqual(new Uri("https://host-b:443"), result[1].Endpoint);
 
             Assert.AreEqual(500, result[2].Start);
             Assert.AreEqual(799, result[2].End);
-            Assert.AreEqual("https://host-c:443", result[2].Endpoint);
+            Assert.AreEqual(new Uri("https://host-c:443"), result[2].Endpoint);
         }
 
         [Test]
@@ -1072,17 +1072,17 @@ namespace Azure.Storage.Blobs.Test
         {
             BlobLayoutInfo info = new BlobLayoutInfo
             {
-                Ranges = BlobsModelFactory.BlobLayoutRanges(new[]
+                Ranges = new[]
                 {
                     BlobsModelFactory.BlobLayoutRange(start: 0, end: 999, endpointIndex: 0),
                     BlobsModelFactory.BlobLayoutRange(start: 1000, end: 1999, endpointIndex: 1),
                     BlobsModelFactory.BlobLayoutRange(start: 2000, end: 2999, endpointIndex: 0),
-                }),
-                Endpoints = BlobsModelFactory.BlobLayoutEndpoints(new[]
+                },
+                Endpoints = new[]
                 {
-                    BlobsModelFactory.BlobLayoutEndpoint(index: 0, value: "https://host-a:443"),
-                    BlobsModelFactory.BlobLayoutEndpoint(index: 1, value: "https://host-b:443"),
-                }),
+                    BlobsModelFactory.BlobLayoutEndpoint(index: 0, value: new Uri("https://host-a:443")),
+                    BlobsModelFactory.BlobLayoutEndpoint(index: 1, value: new Uri("https://host-b:443")),
+                },
             };
 
             BlobLayoutSegment[] result = info.ToBlobLayoutSegments();
@@ -1091,23 +1091,23 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(0, result[0].Start);
             Assert.AreEqual(999, result[0].End);
-            Assert.AreEqual("https://host-a:443", result[0].Endpoint);
+            Assert.AreEqual(new Uri("https://host-a:443"), result[0].Endpoint);
 
             Assert.AreEqual(1000, result[1].Start);
             Assert.AreEqual(1999, result[1].End);
-            Assert.AreEqual("https://host-b:443", result[1].Endpoint);
+            Assert.AreEqual(new Uri("https://host-b:443"), result[1].Endpoint);
 
             Assert.AreEqual(2000, result[2].Start);
             Assert.AreEqual(2999, result[2].End);
-            Assert.AreEqual("https://host-a:443", result[2].Endpoint);
+            Assert.AreEqual(new Uri("https://host-a:443"), result[2].Endpoint);
         }
 
         [Test]
         public void GetLayoutEndpoint_ReturnsNull()
         {
             // Act
-            string result1 = BlobExtensions.GetLayoutEndpoint(new HttpRange(0, 100), layoutSegments: null);
-            string result2 = BlobExtensions.GetLayoutEndpoint(new HttpRange(0, 100), layoutSegments: Array.Empty<BlobLayoutSegment>());
+            Uri result1 = BlobExtensions.GetLayoutEndpoint(new HttpRange(0, 100), layoutSegments: null);
+            Uri result2 = BlobExtensions.GetLayoutEndpoint(new HttpRange(0, 100), layoutSegments: Array.Empty<BlobLayoutSegment>());
 
             // Assert
             Assert.IsNull(result1);
@@ -1120,18 +1120,18 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var segments = new[]
             {
-                new BlobLayoutSegment { Start = 0, End = 999, Endpoint = "https://host-a:443" },
-                new BlobLayoutSegment { Start = 1000, End = 1999, Endpoint = "https://host-b:443" },
-                new BlobLayoutSegment { Start = 2000, End = 2999, Endpoint = "https://host-c:443" }
+                new BlobLayoutSegment { Start = 0, End = 999, Endpoint = new Uri("https://host-a:443") },
+                new BlobLayoutSegment { Start = 1000, End = 1999, Endpoint = new Uri("https://host-b:443") },
+                new BlobLayoutSegment { Start = 2000, End = 2999, Endpoint = new Uri("https://host-c:443") }
             };
 
             // Act
-            string result1 = BlobExtensions.GetLayoutEndpoint(new HttpRange(2000, 1000), segments);
-            string result2 = BlobExtensions.GetLayoutEndpoint(new HttpRange(0, 1000), segments);
+            Uri result1 = BlobExtensions.GetLayoutEndpoint(new HttpRange(2000, 1000), segments);
+            Uri result2 = BlobExtensions.GetLayoutEndpoint(new HttpRange(0, 1000), segments);
 
             // Assert
-            Assert.AreEqual("https://host-c:443", result1);
-            Assert.AreEqual("https://host-a:443", result2);
+            Assert.AreEqual(new Uri("https://host-c:443"), result1);
+            Assert.AreEqual(new Uri("https://host-a:443"), result2);
         }
 
         [Test]
@@ -1140,17 +1140,17 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var segments = new[]
             {
-                new BlobLayoutSegment { Start = 0, End = 999, Endpoint = "https://host-a:443" },
-                new BlobLayoutSegment { Start = 1000, End = 1999, Endpoint = "https://host-b:443" }
+                new BlobLayoutSegment { Start = 0, End = 999, Endpoint = new Uri("https://host-a:443") },
+                new BlobLayoutSegment { Start = 1000, End = 1999, Endpoint = new Uri("https://host-b:443") }
             };
 
             // Act
-            string result1 = BlobExtensions.GetLayoutEndpoint(new HttpRange(500, 200), segments);
-            string result2 = BlobExtensions.GetLayoutEndpoint(new HttpRange(1200, 300), segments);
+            Uri result1 = BlobExtensions.GetLayoutEndpoint(new HttpRange(500, 200), segments);
+            Uri result2 = BlobExtensions.GetLayoutEndpoint(new HttpRange(1200, 300), segments);
 
             // Assert
-            Assert.AreEqual("https://host-a:443", result1);
-            Assert.AreEqual("https://host-b:443", result2);
+            Assert.AreEqual(new Uri("https://host-a:443"), result1);
+            Assert.AreEqual(new Uri("https://host-b:443"), result2);
         }
 
         [Test]
@@ -1159,20 +1159,20 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var segments = new[]
             {
-                new BlobLayoutSegment { Start = 0, End = 999, Endpoint = "https://host-a:443" },
-                new BlobLayoutSegment { Start = 1000, End = 1999, Endpoint = "https://host-b:443" },
-                new BlobLayoutSegment { Start = 2000, End = 2999, Endpoint = "https://host-c:443" }
+                new BlobLayoutSegment { Start = 0, End = 999, Endpoint = new Uri("https://host-a:443") },
+                new BlobLayoutSegment { Start = 1000, End = 1999, Endpoint = new Uri("https://host-b:443") },
+                new BlobLayoutSegment { Start = 2000, End = 2999, Endpoint = new Uri("https://host-c:443") }
             };
 
             // Act
-            string result1 = BlobExtensions.GetLayoutEndpoint(new HttpRange(1500, 1000), segments);
-            string result2 = BlobExtensions.GetLayoutEndpoint(new HttpRange(500, 2000), segments);
-            string result3 = BlobExtensions.GetLayoutEndpoint(new HttpRange(1999, 200), segments);
+            Uri result1 = BlobExtensions.GetLayoutEndpoint(new HttpRange(1500, 1000), segments);
+            Uri result2 = BlobExtensions.GetLayoutEndpoint(new HttpRange(500, 2000), segments);
+            Uri result3 = BlobExtensions.GetLayoutEndpoint(new HttpRange(1999, 200), segments);
 
             // Assert
-            Assert.AreEqual("https://host-b:443", result1);
-            Assert.AreEqual("https://host-a:443", result2);
-            Assert.AreEqual("https://host-b:443", result3);
+            Assert.AreEqual(new Uri("https://host-b:443"), result1);
+            Assert.AreEqual(new Uri("https://host-a:443"), result2);
+            Assert.AreEqual(new Uri("https://host-b:443"), result3);
         }
 
         [Test]
@@ -1183,7 +1183,7 @@ namespace Azure.Storage.Blobs.Test
             var pipeline = new HttpPipeline(transport, new HttpPipelinePolicy[] { DataLocalityPolicy.Shared });
 
             // Set the LayoutEndpoint property on this message only
-            string LayoutEndpoint = "https://layout-host.blob.core.windows.net:443";
+            Uri LayoutEndpoint = new Uri("https://layout-host.blob.core.windows.net:443");
 
             HttpMessage message = pipeline.CreateMessage();
             message.Request.Uri.Reset(new Uri("https://original-host.blob.core.windows.net/container/blob"));
@@ -1227,7 +1227,7 @@ namespace Azure.Storage.Blobs.Test
             // initial download, then a clean stream on the retry. The Factory closure passes
             // the layout endpoint back down so it is set on the retry's own HttpMessage and
             // DataLocalityPolicy rewrites the retry request to the layout endpoint as well.
-            const string layoutEndpoint = "https://layout-host.blob.core.windows.net:443";
+            Uri layoutEndpoint = new Uri("https://layout-host.blob.core.windows.net:443");
             Uri originalUri = new Uri("https://original-host.blob.core.windows.net/container/blob");
 
             byte[] payload = new byte[16];
@@ -1479,8 +1479,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobLayoutSegment[] expectedSegments = new[]
             {
-                new BlobLayoutSegment { Start = 0, End = 49, Endpoint = "https://host-a:443" },
-                new BlobLayoutSegment { Start = 50, End = 99, Endpoint = "https://host-b:443" },
+                new BlobLayoutSegment { Start = 0, End = 49, Endpoint = new Uri("https://host-a:443") },
+                new BlobLayoutSegment { Start = 50, End = 99, Endpoint = new Uri("https://host-b:443") },
             };
             SetupGetLayout(blockClient, expectedSegments, blobContentLength: blobLength);
 
@@ -1511,18 +1511,18 @@ namespace Azure.Storage.Blobs.Test
                 BlobLayoutSegment[] segments = cached.Segments;
                 Assert.IsNotNull(segments, $"Chunk {i} at offset {range.Offset} should have layout segments");
 
-                string layoutEndpoint = BlobExtensions.GetLayoutEndpoint(range, segments);
+                Uri layoutEndpoint = BlobExtensions.GetLayoutEndpoint(range, segments);
                 Assert.IsNotNull(layoutEndpoint, $"Chunk at offset {range.Offset} should resolve to a layout endpoint");
 
                 if (range.Offset < 50)
                 {
-                    Assert.AreEqual("https://host-a:443", layoutEndpoint,
+                    Assert.AreEqual(new Uri("https://host-a:443"), layoutEndpoint,
                         $"Chunk at offset {range.Offset} should route to host-a");
                     hostACount++;
                 }
                 else
                 {
-                    Assert.AreEqual("https://host-b:443", layoutEndpoint,
+                    Assert.AreEqual(new Uri("https://host-b:443"), layoutEndpoint,
                         $"Chunk at offset {range.Offset} should route to host-b");
                     hostBCount++;
                 }
@@ -1561,8 +1561,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobLayoutSegment[] segments = new[]
             {
-                new BlobLayoutSegment { Start = 0, End = 49, Endpoint = "https://host-a:443" },
-                new BlobLayoutSegment { Start = 50, End = 99, Endpoint = "https://host-b:443" },
+                new BlobLayoutSegment { Start = 0, End = 49, Endpoint = new Uri("https://host-a:443") },
+                new BlobLayoutSegment { Start = 50, End = 99, Endpoint = new Uri("https://host-b:443") },
             };
             SetupGetLayout(blockClient, segments, blobContentLength: blobLength);
 
@@ -1838,7 +1838,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobLayoutSegment[] segments = new[]
             {
-                new BlobLayoutSegment { Start = 0, End = 99, Endpoint = "https://host-a:443" },
+                new BlobLayoutSegment { Start = 0, End = 99, Endpoint = new Uri("https://host-a:443") },
             };
             SetupGetLayout(blockClient, segments, blobContentLength: blobLength);
 
@@ -1895,7 +1895,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobLayoutSegment[] segments = new[]
             {
-                new BlobLayoutSegment { Start = 0, End = 199, Endpoint = "https://host-a:443" },
+                new BlobLayoutSegment { Start = 0, End = 199, Endpoint = new Uri("https://host-a:443") },
             };
             SetupGetLayout(blockClient, segments, blobContentLength: blobLength);
 
@@ -1981,10 +1981,10 @@ namespace Azure.Storage.Blobs.Test
                 It.IsAny<IProgress<long>>(),
                 It.IsAny<string>(),
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
-                It.IsAny<string>(),
+                It.IsAny<Uri>(),
                 IsAsync,
                 It.IsAny<CancellationToken>())
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string, bool, CancellationToken>(
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, Uri, bool, CancellationToken>(
                 (range, conditions, validation, progress, operationName, layoutCache, layoutEndpoint, async, cancellation) =>
                 {
                     lock (capturedCalls)
@@ -2001,7 +2001,7 @@ namespace Azure.Storage.Blobs.Test
         {
             var rangeItems = new List<BlobLayoutRange>();
             var endpointItems = new List<BlobLayoutEndpoint>();
-            var endpointMap = new Dictionary<string, int>();
+            var endpointMap = new Dictionary<Uri, int>();
 
             foreach (var seg in segments)
             {
@@ -2019,8 +2019,8 @@ namespace Azure.Storage.Blobs.Test
             // GetProperties (BlobContentLength, ETag, Metadata).
             BlobLayoutInfo layoutInfo = new BlobLayoutInfo
             {
-                Ranges = BlobsModelFactory.BlobLayoutRanges(rangeItems),
-                Endpoints = BlobsModelFactory.BlobLayoutEndpoints(endpointItems),
+                Ranges = rangeItems,
+                Endpoints = endpointItems,
                 BlobContentLength = blobContentLength,
                 ETag = s_openReadETag,
                 Metadata = new Dictionary<string, string>(),

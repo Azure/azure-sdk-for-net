@@ -533,7 +533,7 @@ namespace Azure.Storage.Files.Shares
             return shareFileProperties;
         }
 
-        internal static ShareFileLinks ToShareFileLinks(this Response<HardLinkList> response)
+        internal static GetFileLinksResult ToGetFileLinksResult(this Response<HardLinkList> response)
         {
             if (response == null)
             {
@@ -553,7 +553,7 @@ namespace Azure.Storage.Files.Shares
                 }
             }
 
-            return new ShareFileLinks
+            return new GetFileLinksResult
             {
                 Properties = response.GetRawResponse().ToShareFileLinksProperties(),
                 Links = links

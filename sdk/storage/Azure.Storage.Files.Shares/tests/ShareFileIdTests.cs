@@ -299,7 +299,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient fileIdClient = InstrumentClient(test.Share.GetFileClientByFileId(fileId));
 
             // Act
-            Response<ShareFileLinks> response = await fileIdClient.GetFileLinksAsync();
+            Response<GetFileLinksResult> response = await fileIdClient.GetFileLinksAsync();
 
             // Assert
             Assert.IsNotNull(response.Value.Properties);
@@ -336,7 +336,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient fileIdClient = InstrumentClient(test.Share.GetFileClientByFileId(fileId));
 
             // Act
-            Response<ShareFileLinks> response = await fileIdClient.GetFileLinksAsync();
+            Response<GetFileLinksResult> response = await fileIdClient.GetFileLinksAsync();
 
             // Assert
             Assert.AreEqual(1, response.Value.Links.Count);
@@ -375,7 +375,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient fileIdClient = InstrumentClient(test.Share.GetFileClientByFileId(fileId));
 
             // Act
-            Response<ShareFileLinks> response = await fileIdClient.GetFileLinksAsync();
+            Response<GetFileLinksResult> response = await fileIdClient.GetFileLinksAsync();
 
             // Assert
             Assert.AreEqual(constants.CacheControl, response.Value.Properties.CacheControl);
@@ -414,7 +414,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient fileIdClient = InstrumentClient(test.Share.GetFileClientByFileId(fileId));
 
             // Act
-            Response<ShareFileLinks> response = await fileIdClient.GetFileLinksAsync();
+            Response<GetFileLinksResult> response = await fileIdClient.GetFileLinksAsync();
 
             // Assert
             Assert.AreEqual(1, response.Value.Links.Count);
@@ -441,7 +441,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient fileIdClient = InstrumentClient(snapshotShare.GetFileClientByFileId(fileId));
 
             // Act
-            Response<ShareFileLinks> response = await fileIdClient.GetFileLinksAsync();
+            Response<GetFileLinksResult> response = await fileIdClient.GetFileLinksAsync();
 
             // Assert
             Assert.IsNotNull(response.Value.Properties);
@@ -470,7 +470,7 @@ namespace Azure.Storage.Files.Shares.Tests
             try
             {
                 // Act
-                Response<ShareFileLinks> response = await fileIdClient.GetFileLinksAsync(
+                Response<GetFileLinksResult> response = await fileIdClient.GetFileLinksAsync(
                     conditions: new ShareFileRequestConditions { LeaseId = lease.LeaseId });
 
                 // Assert
@@ -531,7 +531,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient fileIdClient = InstrumentClient(test.Share.GetFileClientByFileId(fileId));
 
             // Act
-            Response<ShareFileLinks> response = await fileIdClient.GetFileLinksAsync();
+            Response<GetFileLinksResult> response = await fileIdClient.GetFileLinksAsync();
 
             // Assert
             Assert.AreEqual(1, response.Value.Links.Count);

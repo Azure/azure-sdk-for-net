@@ -45,7 +45,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 throw ShareChangeFeedErrors.ArgumentNull(nameof(connectionString));
             if (string.IsNullOrEmpty(shareName))
                 throw ShareChangeFeedErrors.ArgumentNull(nameof(shareName));
-            _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
+            _maxTransferSize = changeFeedOptions?.MaximumTransferSizeInBytes;
             _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
             _resetPolicy = changeFeedOptions?.ResetPolicy;
 
@@ -68,7 +68,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 throw ShareChangeFeedErrors.ArgumentNull(nameof(fileServiceUri));
             if (string.IsNullOrEmpty(shareName))
                 throw ShareChangeFeedErrors.ArgumentNull(nameof(shareName));
-            _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
+            _maxTransferSize = changeFeedOptions?.MaximumTransferSizeInBytes;
             _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
             _resetPolicy = changeFeedOptions?.ResetPolicy;
 
@@ -94,7 +94,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             if (string.IsNullOrEmpty(shareName))
                 throw ShareChangeFeedErrors.ArgumentNull(nameof(shareName));
 
-            _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
+            _maxTransferSize = changeFeedOptions?.MaximumTransferSizeInBytes;
             _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
             _resetPolicy = changeFeedOptions?.ResetPolicy;
 
@@ -119,7 +119,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             if (string.IsNullOrEmpty(shareName))
                 throw ShareChangeFeedErrors.ArgumentNull(nameof(shareName));
 
-            _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
+            _maxTransferSize = changeFeedOptions?.MaximumTransferSizeInBytes;
             _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
             _resetPolicy = changeFeedOptions?.ResetPolicy;
 
@@ -147,7 +147,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         {
             _blobServiceClient = blobServiceClient;
             _shareClient = shareClient;
-            _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
+            _maxTransferSize = changeFeedOptions?.MaximumTransferSizeInBytes;
             _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
             _resetPolicy = changeFeedOptions?.ResetPolicy;
         }

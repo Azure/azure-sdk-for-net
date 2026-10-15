@@ -17,18 +17,18 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The blob layout ranges.
         /// </summary>
-        public BlobLayoutRanges Ranges { get; internal set; }
+        public IReadOnlyList<BlobLayoutRange> Ranges { get; internal set; }
 
         /// <summary>
         /// The blob layout endpoints.
         /// </summary>
-        public BlobLayoutEndpoints Endpoints { get; internal set; }
+        public IReadOnlyList<BlobLayoutEndpoint> Endpoints { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the blob was last modified. Any operation that modifies the blob,
         /// including an update of the blob's metadata or properties, changes the last-modified time of the blob.
         /// </summary>
-        public DateTimeOffset LastModified { get; internal set; }
+        public DateTimeOffset LastModifiedOn { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the blob was created.
@@ -249,7 +249,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Returns the date and time the blob was read or written to.
         /// </summary>
-        public DateTimeOffset LastAccessed { get; internal set; }
+        public DateTimeOffset LastAccessedOn { get; internal set; }
 
         /// <summary>
         /// The <see cref="BlobImmutabilityPolicy"/> associated with the blob.

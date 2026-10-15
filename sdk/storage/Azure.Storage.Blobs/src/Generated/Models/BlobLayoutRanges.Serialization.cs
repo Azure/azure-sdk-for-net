@@ -16,8 +16,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The ranges that make up a blob. </summary>
-    public partial class BlobLayoutRanges : IPersistableModel<BlobLayoutRanges>, IXmlSerializable
+    internal partial class BlobLayoutRanges : IPersistableModel<BlobLayoutRanges>, IXmlSerializable
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -103,7 +102,7 @@ namespace Azure.Storage.Blobs.Models
 
             if (Range != null && Optional.IsCollectionDefined(Range))
             {
-                foreach (BlobLayoutRange item in Range)
+                foreach (BlobLayoutRangeInternal item in Range)
                 {
                     writer.WriteStartElement("Range");
                     writer.WriteObjectValue(item, options);
@@ -121,7 +120,7 @@ namespace Azure.Storage.Blobs.Models
                 return null;
             }
 
-            IList<BlobLayoutRange> range = default;
+            IList<BlobLayoutRangeInternal> range = default;
 
             foreach (var child in element.Elements())
             {
@@ -130,13 +129,13 @@ namespace Azure.Storage.Blobs.Models
                 {
                     if (range == null)
                     {
-                        range = new List<BlobLayoutRange>();
+                        range = new List<BlobLayoutRangeInternal>();
                     }
-                    range.Add(BlobLayoutRange.DeserializeBlobLayoutRange(child, options));
+                    range.Add(BlobLayoutRangeInternal.DeserializeBlobLayoutRangeInternal(child, options));
                     continue;
                 }
             }
-            return new BlobLayoutRanges(range ?? new ChangeTrackingList<BlobLayoutRange>());
+            return new BlobLayoutRanges(range ?? new ChangeTrackingList<BlobLayoutRangeInternal>());
         }
 
         /// <param name="writer"> The XML writer. </param>

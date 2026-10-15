@@ -1291,16 +1291,6 @@ namespace Azure.Storage.Blobs.Test
             return blob;
         }
 
-        /// <summary>
-        /// Extracts the host from a layout endpoint value. The service returns a full
-        /// URL (for example <c>https://blob.example.store.core.windows.net:443</c>), so
-        /// naively splitting on ':' would yield the scheme rather than the host.
-        /// </summary>
-        private static string GetHost(string layoutEndpoint) =>
-            Uri.TryCreate(layoutEndpoint, UriKind.Absolute, out Uri parsed)
-                ? parsed.Host
-                : layoutEndpoint.Split(':')[0];
-
         [RecordedTest]
         [LiveOnly(Reason = "Cannot record tests caching Session authentication or data locality routing")]
         public async Task DownloadToAsync_LayoutAwareRouting_Sessions()
@@ -1457,7 +1447,7 @@ namespace Azure.Storage.Blobs.Test
             BlobLayoutInfo layoutInfo = await blob
                 .GetLayoutAsync(new BlobGetLayoutOptions { Range = new HttpRange(downloadOffset, 1) })
                 .FirstAsync();
-            string layoutEndpoint = layoutInfo.Endpoints.Endpoint[0].Value;
+            Uri layoutEndpoint = layoutInfo.Endpoints[0].Value;
 
             Response<BlobDownloadResult> response = await blob.DownloadContentAsync(new BlobDownloadOptions
             {
@@ -1477,7 +1467,7 @@ namespace Azure.Storage.Blobs.Test
                 "Expected exactly one Get Blob Layout request, issued explicitly by the caller");
             Assert.AreEqual(1, countingPolicy.RoutedRequestCount,
                 "Expected the download to be routed to the caller-supplied layout endpoint");
-            CollectionAssert.Contains(countingPolicy.RoutedHosts, GetHost(layoutEndpoint),
+            CollectionAssert.Contains(countingPolicy.RoutedHosts, layoutEndpoint.Host,
                 "Expected the request to be routed to the exact endpoint supplied by the caller");
 
             // Assert — session authentication still applied to the routed download

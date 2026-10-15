@@ -1112,25 +1112,13 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         public static DataLakeFileLayoutEndpoint DataLakeFileLayoutEndpoint(
             int index,
-            string value)
+            Uri value)
             => new DataLakeFileLayoutEndpoint()
             {
                 Index = index,
                 Value = value
             };
         #endregion DataLakeFileLayoutEndpoint
-
-        #region DataLakeFileLayoutEndpoints
-        /// <summary>
-        /// Creates a new <see cref="Models.DataLakeFileLayoutEndpoints"/> instance for mocking.
-        /// </summary>
-        public static DataLakeFileLayoutEndpoints DataLakeFileLayoutEndpoints(
-            IEnumerable<DataLakeFileLayoutEndpoint> endpoint)
-            => new DataLakeFileLayoutEndpoints()
-            {
-                Endpoint = endpoint == null ? null : new List<DataLakeFileLayoutEndpoint>(endpoint)
-            };
-        #endregion DataLakeFileLayoutEndpoints
 
         #region DataLakeFileLayoutRange
         /// <summary>
@@ -1148,26 +1136,14 @@ namespace Azure.Storage.Files.DataLake.Models
             };
         #endregion DataLakeFileLayoutRange
 
-        #region DataLakeFileLayoutRanges
-        /// <summary>
-        /// Creates a new <see cref="Models.DataLakeFileLayoutRanges"/> instance for mocking.
-        /// </summary>
-        public static DataLakeFileLayoutRanges DataLakeFileLayoutRanges(
-            IEnumerable<DataLakeFileLayoutRange> range)
-            => new DataLakeFileLayoutRanges()
-            {
-                Range = range == null ? null : new List<DataLakeFileLayoutRange>(range)
-            };
-        #endregion DataLakeFileLayoutRanges
-
         #region DataLakeFileLayoutInfo
         /// <summary>
         /// Creates a new <see cref="Models.DataLakeFileLayoutInfo"/> instance for mocking.
         /// </summary>
         public static DataLakeFileLayoutInfo DataLakeFileLayoutInfo(
-            DataLakeFileLayoutRanges ranges,
-            DataLakeFileLayoutEndpoints endpoints,
-            DateTimeOffset lastModified,
+            IEnumerable<DataLakeFileLayoutRange> ranges,
+            IEnumerable<DataLakeFileLayoutEndpoint> endpoints,
+            DateTimeOffset lastModifiedOn,
             DateTimeOffset createdOn,
             IDictionary<string, string> metadata,
             DateTimeOffset copyCompletedOn,
@@ -1205,9 +1181,9 @@ namespace Azure.Storage.Files.DataLake.Models
             DateTimeOffset fileCreatedOn)
             => new DataLakeFileLayoutInfo()
             {
-                Ranges = ranges,
-                Endpoints = endpoints,
-                LastModified = lastModified,
+                Ranges = ranges == null ? null : new List<DataLakeFileLayoutRange>(ranges),
+                Endpoints = endpoints == null ? null : new List<DataLakeFileLayoutEndpoint>(endpoints),
+                LastModifiedOn = lastModifiedOn,
                 CreatedOn = createdOn,
                 Metadata = metadata,
                 CopyCompletedOn = copyCompletedOn,

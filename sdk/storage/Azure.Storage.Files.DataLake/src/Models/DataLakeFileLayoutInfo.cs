@@ -19,20 +19,20 @@ namespace Azure.Storage.Files.DataLake.Models
     public class DataLakeFileLayoutInfo
     {
         /// <summary>
-        /// The file layout ranges.
+        /// The byte ranges that make up the file.
         /// </summary>
-        public DataLakeFileLayoutRanges Ranges { get; internal set; }
+        public IReadOnlyList<DataLakeFileLayoutRange> Ranges { get; internal set; }
 
         /// <summary>
-        /// The file layout endpoints.
+        /// The endpoints that serve the <see cref="Ranges"/>.
         /// </summary>
-        public DataLakeFileLayoutEndpoints Endpoints { get; internal set; }
+        public IReadOnlyList<DataLakeFileLayoutEndpoint> Endpoints { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the file was last modified. Any operation that modifies the file,
         /// including an update of the file's metadata or properties, changes the last-modified time of the file.
         /// </summary>
-        public DateTimeOffset LastModified { get; internal set; }
+        public DateTimeOffset LastModifiedOn { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the file was created.

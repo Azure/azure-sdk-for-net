@@ -71,7 +71,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 return "A Files Change Feed reset marker was discovered.";
             }
 
-            return $"A Files Change Feed reset marker was discovered at {resetEvent.EventTime:O} " +
+            return $"A Files Change Feed reset marker was discovered at {resetEvent.EventOccurredOn:O} " +
                 $"(resetId: {resetEvent.ResetId}, reason: {resetEvent.ResetReason ?? "Unknown"}). " +
                 "Log-sequence continuity has been broken; the caller must re-baseline before " +
                 "resuming change feed consumption.";

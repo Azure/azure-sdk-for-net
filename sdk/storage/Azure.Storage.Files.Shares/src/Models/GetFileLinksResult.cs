@@ -10,7 +10,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary>
     /// The hard links of a file, along with the properties of the file.
     /// </summary>
-    public class ShareFileLinks
+    public class GetFileLinksResult
     {
         /// <summary>
         /// The properties of the file.
@@ -25,7 +25,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Constructor.
         /// </summary>
-        internal ShareFileLinks() { }
+        internal GetFileLinksResult() { }
     }
 
     /// <summary>
@@ -34,12 +34,12 @@ namespace Azure.Storage.Files.Shares.Models
     public static partial class FilesModelFactory
     {
         /// <summary>
-        /// Creates a new ShareFileLinks instance for mocking.
+        /// Creates a new GetFileLinksResult instance for mocking.
         /// </summary>
-        public static ShareFileLinks ShareFileLinks(
+        public static GetFileLinksResult GetFileLinksResult(
             ShareFileProperties properties,
             IReadOnlyList<ShareFileLink> links)
-            => new ShareFileLinks
+            => new GetFileLinksResult
             {
                 Properties = properties,
                 Links = links
