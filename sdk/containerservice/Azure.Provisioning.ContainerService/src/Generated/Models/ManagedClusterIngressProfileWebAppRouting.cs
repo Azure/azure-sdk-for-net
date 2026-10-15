@@ -15,6 +15,7 @@ namespace Azure.Provisioning.ContainerService
     public partial class ManagedClusterIngressProfileWebAppRouting : ProvisionableConstruct
     {
         private BicepValue<bool> _isEnabled;
+        private ManagedClusterWebAppRoutingGatewayApiImplementations _gatewayApiImplementations;
         private BicepList<ResourceIdentifier> _dnsZoneResourceIds;
         private ManagedClusterIngressProfileNginx _nginx;
         private ContainerServiceUserAssignedIdentity _identity;
@@ -36,6 +37,21 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 _isEnabled.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the GatewayApiImplementations. </summary>
+        internal ManagedClusterWebAppRoutingGatewayApiImplementations GatewayApiImplementations
+        {
+            get
+            {
+                Initialize();
+                return _gatewayApiImplementations;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _gatewayApiImplementations, value);
             }
         }
 
@@ -79,6 +95,23 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the IstioMode. </summary>
+        public BicepValue<GatewayApiIstioMode> GatewayApiImplementationsIstioMode
+        {
+            get
+            {
+                return GatewayApiImplementations is null ? default : GatewayApiImplementations.IstioMode;
+            }
+            set
+            {
+                if (GatewayApiImplementations is null)
+                {
+                    GatewayApiImplementations = new ManagedClusterWebAppRoutingGatewayApiImplementations();
+                }
+                GatewayApiImplementations.IstioMode = value;
+            }
+        }
+
         /// <summary> Gets or sets the DefaultIngressControllerType. </summary>
         public BicepValue<NginxIngressControllerType> NginxDefaultIngressControllerType
         {
@@ -101,6 +134,7 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "enabled" });
+            _gatewayApiImplementations = DefineModelProperty<ManagedClusterWebAppRoutingGatewayApiImplementations>(nameof(GatewayApiImplementations), new string[] { "gatewayAPIImplementations" });
             _dnsZoneResourceIds = DefineListProperty<ResourceIdentifier>(nameof(DnsZoneResourceIds), new string[] { "dnsZoneResourceIds" });
             _nginx = DefineModelProperty<ManagedClusterIngressProfileNginx>(nameof(Nginx), new string[] { "nginx" });
             _identity = DefineModelProperty<ContainerServiceUserAssignedIdentity>(nameof(Identity), new string[] { "identity" }, isOutput: true);
