@@ -8,11 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.HorizonDB;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
@@ -106,7 +104,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -156,7 +154,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            ManagedServiceIdentity identity = default;
+            HorizonDBClusterManagedServiceIdentity identity = default;
             HorizonDBClusterPatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -188,7 +186,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerHorizonDBContext.Default);
+                    identity = HorizonDBClusterManagedServiceIdentity.DeserializeHorizonDBClusterManagedServiceIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

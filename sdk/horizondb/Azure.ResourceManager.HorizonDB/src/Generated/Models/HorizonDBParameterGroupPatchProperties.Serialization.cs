@@ -89,11 +89,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ShouldApplyImmediately))
-            {
-                writer.WritePropertyName("applyImmediately"u8);
-                writer.WriteBooleanValue(ShouldApplyImmediately.Value);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -138,7 +133,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             IList<HorizonDBParameterProperties> parameters = default;
             string description = default;
-            bool? shouldApplyImmediately = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,21 +155,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("applyImmediately"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    shouldApplyImmediately = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HorizonDBParameterGroupPatchProperties(parameters ?? new ChangeTrackingList<HorizonDBParameterProperties>(), description, shouldApplyImmediately, additionalBinaryDataProperties);
+            return new HorizonDBParameterGroupPatchProperties(parameters ?? new ChangeTrackingList<HorizonDBParameterProperties>(), description, additionalBinaryDataProperties);
         }
     }
 }

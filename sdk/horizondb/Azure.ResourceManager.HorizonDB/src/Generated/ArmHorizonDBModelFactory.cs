@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HorizonDB;
 using Azure.ResourceManager.Models;
@@ -18,6 +19,141 @@ namespace Azure.ResourceManager.HorizonDB.Models
     public static partial class ArmHorizonDBModelFactory
     {
 
+        /// <summary> The singleton HorizonDB capability catalog entry available to a subscription in a location. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="HorizonDB.CapabilityData"/> instance for mocking. </returns>
+        public static CapabilityData CapabilityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CapabilityProperties properties = default)
+        {
+            return new CapabilityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties of the HorizonDB capabilities available to a subscription in a location. </summary>
+        /// <param name="provisioningState"> The provisioning state of the capability catalog entry. </param>
+        /// <param name="clusterCapabilities"> The Cluster capabilities available in the region. </param>
+        /// <param name="poolCapabilities"> The Pool capabilities available in the region, including processor, generation, and compute-model details. </param>
+        /// <returns> A new <see cref="Models.CapabilityProperties"/> instance for mocking. </returns>
+        public static CapabilityProperties CapabilityProperties(HorizonDBProvisioningState? provisioningState = default, ClusterCapability clusterCapabilities = default, PoolCapability poolCapabilities = default)
+        {
+            return new CapabilityProperties(provisioningState, clusterCapabilities, poolCapabilities, default);
+        }
+
+        /// <summary> The HorizonDB Cluster capabilities available in a location. </summary>
+        /// <param name="recommendedPostgreSqlVersion"> The PostgreSQL major version recommended for clients to select for HorizonDB Clusters in the region. This recommendation does not describe backend behavior when the PostgreSQL version is omitted from a request. </param>
+        /// <param name="supportedPostgreSqlVersions"> The PostgreSQL major versions supported by Clusters in the region. </param>
+        /// <param name="supportedFeatures"> Additional Cluster features supported in the region. </param>
+        /// <returns> A new <see cref="Models.ClusterCapability"/> instance for mocking. </returns>
+        public static ClusterCapability ClusterCapability(PostgreSqlCapabilityVersion recommendedPostgreSqlVersion = default, IEnumerable<PostgreSqlVersionCapability> supportedPostgreSqlVersions = default, IEnumerable<ClusterFeatureCapability> supportedFeatures = default)
+        {
+            supportedPostgreSqlVersions ??= new ChangeTrackingList<PostgreSqlVersionCapability>();
+            supportedFeatures ??= new ChangeTrackingList<ClusterFeatureCapability>();
+
+            return new ClusterCapability(recommendedPostgreSqlVersion, (supportedPostgreSqlVersions ?? new ChangeTrackingList<PostgreSqlVersionCapability>()).ToList(), (supportedFeatures ?? new ChangeTrackingList<ClusterFeatureCapability>()).ToList(), default);
+        }
+
+        /// <summary> The capabilities of a PostgreSQL major version supported by HorizonDB. </summary>
+        /// <param name="name"> The PostgreSQL major version. </param>
+        /// <param name="supportedVersionsToUpgrade"> The PostgreSQL major versions to which this version can be upgraded in place. API version 2026-10-01-preview does not support in-place PostgreSQL major-version upgrades, so this array is always empty. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlVersionCapability"/> instance for mocking. </returns>
+        public static PostgreSqlVersionCapability PostgreSqlVersionCapability(PostgreSqlCapabilityVersion name = default, IEnumerable<PostgreSqlCapabilityVersion> supportedVersionsToUpgrade = default)
+        {
+            supportedVersionsToUpgrade ??= new ChangeTrackingList<PostgreSqlCapabilityVersion>();
+
+            return new PostgreSqlVersionCapability(name, (supportedVersionsToUpgrade ?? new ChangeTrackingList<PostgreSqlCapabilityVersion>()).ToList(), default);
+        }
+
+        /// <summary> A HorizonDB Cluster feature supported in a location. </summary>
+        /// <param name="name"> The name of the Cluster feature. </param>
+        /// <returns> A new <see cref="Models.ClusterFeatureCapability"/> instance for mocking. </returns>
+        public static ClusterFeatureCapability ClusterFeatureCapability(string name = default)
+        {
+            return new ClusterFeatureCapability(name, default);
+        }
+
+        /// <summary> The HorizonDB Pool capabilities available in a location. </summary>
+        /// <param name="recommendedComputeProcessor"> The compute processor recommended for clients to select for HorizonDB Pools in the region. This recommendation does not describe backend behavior when the compute processor is omitted from a request. </param>
+        /// <param name="supportedProcessors"> The processor families and their compute capabilities supported by Pools in the region. </param>
+        /// <param name="supportedFeatures"> Additional Pool features supported in the region independently of a processor, generation, or compute model. </param>
+        /// <returns> A new <see cref="Models.PoolCapability"/> instance for mocking. </returns>
+        public static PoolCapability PoolCapability(ComputeProcessorType recommendedComputeProcessor = default, IEnumerable<ComputeProcessorCapability> supportedProcessors = default, IEnumerable<PoolFeatureCapability> supportedFeatures = default)
+        {
+            supportedProcessors ??= new ChangeTrackingList<ComputeProcessorCapability>();
+            supportedFeatures ??= new ChangeTrackingList<PoolFeatureCapability>();
+
+            return new PoolCapability(recommendedComputeProcessor, (supportedProcessors ?? new ChangeTrackingList<ComputeProcessorCapability>()).ToList(), (supportedFeatures ?? new ChangeTrackingList<PoolFeatureCapability>()).ToList(), default);
+        }
+
+        /// <summary> The capabilities of a processor family supported by HorizonDB. </summary>
+        /// <param name="name"> The name of the processor family. </param>
+        /// <param name="supportedGenerations"> The compute generations supported by the processor family. </param>
+        /// <returns> A new <see cref="Models.ComputeProcessorCapability"/> instance for mocking. </returns>
+        public static ComputeProcessorCapability ComputeProcessorCapability(ComputeProcessorType name = default, IEnumerable<ComputeGenerationCapability> supportedGenerations = default)
+        {
+            supportedGenerations ??= new ChangeTrackingList<ComputeGenerationCapability>();
+
+            return new ComputeProcessorCapability(name, (supportedGenerations ?? new ChangeTrackingList<ComputeGenerationCapability>()).ToList(), default);
+        }
+
+        /// <summary> The capabilities of a HorizonDB compute generation. </summary>
+        /// <param name="computeGeneration"> The numeric compute generation used when configuring a HorizonDB pool. </param>
+        /// <param name="recommendedComputeModelType"> The compute model type recommended for clients to select for this compute generation. This recommendation does not describe backend behavior when the compute model type is omitted from a request. </param>
+        /// <param name="supportedComputeModels"> The compute models supported by the compute generation. </param>
+        /// <returns> A new <see cref="Models.ComputeGenerationCapability"/> instance for mocking. </returns>
+        public static ComputeGenerationCapability ComputeGenerationCapability(int computeGeneration = default, PoolComputeModelType recommendedComputeModelType = default, IEnumerable<ComputeModelCapability> supportedComputeModels = default)
+        {
+            supportedComputeModels ??= new ChangeTrackingList<ComputeModelCapability>();
+
+            return new ComputeGenerationCapability(computeGeneration, recommendedComputeModelType, (supportedComputeModels ?? new ChangeTrackingList<ComputeModelCapability>()).ToList(), default);
+        }
+
+        /// <summary>
+        /// The capabilities of a HorizonDB compute model.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ProvisionedComputeModelCapability"/>.
+        /// </summary>
+        /// <param name="type"> The compute model represented by these capabilities. </param>
+        /// <returns> A new <see cref="Models.ComputeModelCapability"/> instance for mocking. </returns>
+        public static ComputeModelCapability ComputeModelCapability(string @type = default)
+        {
+            return new UnknownComputeModelCapability(@type is null ? default : new PoolComputeModelType(@type), default);
+        }
+
+        /// <summary> The capabilities of the Provisioned compute model. </summary>
+        /// <param name="recommendedVCoreCount"> The provisioned vCore count recommended for clients to select. This recommendation does not describe backend behavior when vCores is omitted from a request. </param>
+        /// <param name="supportedComputeSizes"> The supported provisioned compute sizes. </param>
+        /// <returns> A new <see cref="Models.ProvisionedComputeModelCapability"/> instance for mocking. </returns>
+        public static ProvisionedComputeModelCapability ProvisionedComputeModelCapability(int recommendedVCoreCount = default, IEnumerable<ComputeSizeCapability> supportedComputeSizes = default)
+        {
+            supportedComputeSizes ??= new ChangeTrackingList<ComputeSizeCapability>();
+
+            return new ProvisionedComputeModelCapability(PoolComputeModelType.Provisioned, default, recommendedVCoreCount, (supportedComputeSizes ?? new ChangeTrackingList<ComputeSizeCapability>()).ToList());
+        }
+
+        /// <summary> A vCore configuration supported by a HorizonDB processor generation. </summary>
+        /// <param name="vCores"> The number of vCores in the configuration. </param>
+        /// <param name="memoryPerVCoreInMb"> The memory in megabytes available for each vCore. </param>
+        /// <returns> A new <see cref="Models.ComputeSizeCapability"/> instance for mocking. </returns>
+        public static ComputeSizeCapability ComputeSizeCapability(int vCores = default, long memoryPerVCoreInMb = default)
+        {
+            return new ComputeSizeCapability(vCores, memoryPerVCoreInMb, default);
+        }
+
+        /// <summary> A HorizonDB Pool feature supported in a location. </summary>
+        /// <param name="name"> The name of the Pool feature. </param>
+        /// <returns> A new <see cref="Models.PoolFeatureCapability"/> instance for mocking. </returns>
+        public static PoolFeatureCapability PoolFeatureCapability(string name = default)
+        {
+            return new PoolFeatureCapability(name, default);
+        }
+
         /// <summary> Represents the HorizonDB cluster. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -26,9 +162,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. Omitting the entire identity property from PUT or PATCH preserves all current assignments. When provided, PUT replaces the user-assigned identity set and PATCH merges it; null PATCH dictionary entries remove individual identities. Setting type to None clears all assignments. </param>
         /// <returns> A new <see cref="HorizonDB.HorizonDBClusterData"/> instance for mocking. </returns>
-        public static HorizonDBClusterData HorizonDBClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HorizonDBClusterProperties properties = default, ManagedServiceIdentity identity = default)
+        public static HorizonDBClusterData HorizonDBClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HorizonDBClusterProperties properties = default, HorizonDBClusterManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -44,125 +180,106 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
-        /// <param name="administratorLogin"> The administrator login name. </param>
-        /// <param name="administratorLoginPassword"> The administrator login password. </param>
-        /// <param name="version"> The version of the HorizonDB cluster. </param>
-        /// <param name="createMode"> The mode to create a new HorizonDB cluster. </param>
-        /// <param name="pointInTimeUtcOn"> Restore point creation time specifying the time to restore from. </param>
-        /// <param name="sourceClusterResourceId"> The source cluster resource ID for restore or replica creation. </param>
-        /// <param name="poolName"> The pool name for restore or replica operations. </param>
-        /// <param name="replicaCount"> Number of replicas. </param>
-        /// <param name="vCores"> Number of vCores. </param>
-        /// <param name="processorType"> The processor type for the HorizonDB cluster. </param>
-        /// <param name="publicNetworkAccess"> The flag indicating whether public ip is requested. </param>
+        /// <param name="postgreSqlVersion"> The PostgreSQL major version used by the HorizonDB cluster. API version 2026-10-01-preview supports versions 17 and 18. For ordinary cluster creation, the version is supplied in the request and is immutable after creation. For point-in-time restore, the service obtains the version from the source backup metadata and the request must omit this property. This API version does not support in-place PostgreSQL major-version upgrades. </param>
+        /// <param name="creationMode"> The mode used to create the cluster. When this property is omitted while creating a new cluster, the service records Create. PointInTimeRestore creates a new cluster from an available backup; pointInTimeUtc and creationSourceClusterResourceId are then required, postgreSqlVersion must be omitted because it is obtained from the backup metadata, and creationSourceClusterLocation is required when the source and target cluster locations differ. This property is immutable and is returned as creation provenance. On replacement, omission preserves the recorded value, resubmitting the same value is accepted, and changing it is rejected. </param>
+        /// <param name="pointInTimeUtc"> The requested point in time, in UTC. This property is required in every PointInTimeRestore request. For a same-location restore, the service restores the latest backup available at or before this value. For a cross-location restore, the service requires but ignores this value and restores the latest available backup; cross-location responses omit this property. This property must be absent for other creation modes or when creationMode is omitted and can only be specified during resource creation. </param>
+        /// <param name="creationSourceClusterResourceId"> The Azure resource ID of the source HorizonDB cluster used by the selected creation mode. This property is required for PointInTimeRestore and other source-based creation modes, and must be absent when creationMode is Create or omitted. A source cluster does not need to have a pool to be restored, provided an available backup exists. This immutable creation-provenance value does not change after creation. </param>
+        /// <param name="creationSourceClusterLocation"> The Azure location of the source HorizonDB cluster used for point-in-time restore. This property is optional when the source and target cluster locations are the same. It is required when the source cluster location differs from the target cluster location and must identify the source cluster's location. This property must be absent for creation modes other than PointInTimeRestore or when creationMode is omitted. This immutable creation-provenance value does not change after creation. </param>
+        /// <param name="networkPublicAccess"> Specifies whether public access is enabled for the cluster. The service defaults to Disabled when this property is omitted. </param>
+        /// <param name="backup"> The backup configuration for the cluster. </param>
+        /// <param name="dataEncryption"> The data encryption configuration for the cluster. When omitted during initial cluster creation, the service uses SystemManaged encryption. When supplied during initial cluster creation, type is required. For PUT updates of an existing cluster, type may be omitted; if provided, it must match the existing encryption type. The encryption type is selected at cluster creation; switching between SystemManaged and AzureKeyVault after creation is not supported. </param>
+        /// <param name="aiModelManagement"> Specifies whether AI Model Management is enabled for the cluster. </param>
         /// <param name="state"> Current state of the cluster. </param>
-        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the cluster. </param>
-        /// <param name="readOnlyEndpoint"> The fully qualified domain name used for readonly endpoint for the cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
-        /// <param name="zonePlacementPolicy"> Defines how replicas are placed across availability zones. </param>
-        /// <param name="parameterGroup"> Defines connection to a parameter group. </param>
-        /// <param name="authConfig"> Authentication configuration for the HorizonDB cluster. </param>
-        /// <param name="computeModel"> The compute model for the cluster. </param>
-        /// <param name="mirroring"> Mirroring configuration for the HorizonDB cluster. </param>
+        /// <param name="designatedPoolResourceId"> The Azure resource ID of the pool designated to host the cluster's read-write node. The pool is a child resource of this cluster. When a pool is created while the cluster currently has no pools, the service automatically sets this property to the new pool's resource ID, including when all pools that existed earlier in the cluster's lifetime were deleted. This property is absent when no pool is designated, such as after clearReadWritePool succeeds. </param>
         /// <returns> A new <see cref="Models.HorizonDBClusterProperties"/> instance for mocking. </returns>
-        public static HorizonDBClusterProperties HorizonDBClusterProperties(string administratorLogin = default, string administratorLoginPassword = default, string version = default, HorizonDBClusterCreateMode? createMode = default, DateTimeOffset? pointInTimeUtcOn = default, ResourceIdentifier sourceClusterResourceId = default, string poolName = default, int? replicaCount = default, int? vCores = default, string processorType = default, HorizonDBPublicNetworkAccessState? publicNetworkAccess = default, HorizonDBClusterState? state = default, string fullyQualifiedDomainName = default, string readOnlyEndpoint = default, HorizonDBProvisioningState? provisioningState = default, HorizonDBZonePlacementPolicy? zonePlacementPolicy = default, HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default, HorizonDBClusterAuthConfig authConfig = default, HorizonDBComputeModel computeModel = default, HorizonDBClusterMirroring mirroring = default)
+        public static HorizonDBClusterProperties HorizonDBClusterProperties(PostgreSqlVersion? postgreSqlVersion = default, ClusterCreateMode? creationMode = default, DateTimeOffset? pointInTimeUtc = default, ResourceIdentifier creationSourceClusterResourceId = default, string creationSourceClusterLocation = default, HorizonDBPublicNetworkAccessState? networkPublicAccess = default, BackupProperties backup = default, HorizonDBClusterDataEncryption dataEncryption = default, AiModelManagementStatus? aiModelManagement = default, ClusterState state = default, HorizonDBProvisioningState provisioningState = default, ResourceIdentifier designatedPoolResourceId = default)
         {
             return new HorizonDBClusterProperties(
-                administratorLogin,
-                administratorLoginPassword,
-                version,
-                createMode,
-                pointInTimeUtcOn,
-                sourceClusterResourceId,
-                poolName,
-                replicaCount,
-                vCores,
-                processorType,
-                publicNetworkAccess is null ? default : new Network(publicNetworkAccess, default),
+                postgreSqlVersion,
+                creationMode,
+                pointInTimeUtc,
+                creationSourceClusterResourceId,
+                creationSourceClusterLocation,
+                networkPublicAccess is null ? default : new Network(networkPublicAccess, default),
+                backup,
+                dataEncryption,
+                aiModelManagement,
                 state,
-                fullyQualifiedDomainName,
-                readOnlyEndpoint,
                 provisioningState,
-                zonePlacementPolicy,
-                parameterGroup,
-                authConfig,
-                computeModel,
-                mirroring,
+                designatedPoolResourceId is null ? default : new ReadWritePoolProperties(designatedPoolResourceId, default),
                 default);
         }
 
-        /// <summary> Connection information for HorizonDB parameter group. </summary>
-        /// <param name="id"> The resource ID of the connected parameter group. </param>
-        /// <param name="syncStatus"> Indication of if parameter group is applied on HorizonDB resource. </param>
-        /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
-        /// <returns> A new <see cref="Models.HorizonDBClusterParameterGroupConnectionProperties"/> instance for mocking. </returns>
-        public static HorizonDBClusterParameterGroupConnectionProperties HorizonDBClusterParameterGroupConnectionProperties(ResourceIdentifier id = default, string syncStatus = default, bool? shouldApplyImmediately = default)
+        /// <summary> Backup configuration properties for a HorizonDB cluster. </summary>
+        /// <param name="geoRedundancy"> The geo-redundancy state. Geo-redundant backup is not supported when dataEncryption.type is AzureKeyVault. </param>
+        /// <param name="retentionDays"> The number of days that automatic backups are retained. The service defaults to 7 days when this property is omitted. </param>
+        /// <param name="earliestRestorePointUtc"> The earliest point in time, in UTC, to which the cluster can currently be restored. </param>
+        /// <returns> A new <see cref="Models.BackupProperties"/> instance for mocking. </returns>
+        public static BackupProperties BackupProperties(GeoRedundancyState geoRedundancy = default, int? retentionDays = default, DateTimeOffset? earliestRestorePointUtc = default)
         {
-            return new HorizonDBClusterParameterGroupConnectionProperties(id, syncStatus, shouldApplyImmediately, default);
+            return new BackupProperties(geoRedundancy, retentionDays, earliestRestorePointUtc, default);
         }
 
-        /// <summary> Authentication configuration for a HorizonDB cluster. </summary>
-        /// <param name="entraIdAuth"> Indicates whether Microsoft Entra ID authentication is enabled or disabled. </param>
-        /// <param name="tenantId"> The Microsoft Entra tenant ID. </param>
-        /// <param name="passwordAuth"> Indicates whether password authentication is enabled or disabled. </param>
-        /// <returns> A new <see cref="Models.HorizonDBClusterAuthConfig"/> instance for mocking. </returns>
-        public static HorizonDBClusterAuthConfig HorizonDBClusterAuthConfig(HorizonDBAuthenticationState? entraIdAuth = default, string tenantId = default, HorizonDBAuthenticationState? passwordAuth = default)
+        /// <summary> The Cluster-level data encryption configuration. The encryption type is selected at cluster creation; switching between SystemManaged and AzureKeyVault after creation is not supported. For AzureKeyVault encryption, primaryKeyUri and primaryUserAssignedIdentityId are required, and backup.geoRedundancy must be Disabled. Both primaryKeyUri and primaryUserAssignedIdentityId can be provided during initial cluster creation. For updates to an existing cluster through PUT or PATCH, only one of these properties can change per request, and that update must complete before submitting a separate update to change the other property. Customer-managed key identities must also be assigned to the Cluster through its top-level identity property. Only versionless Azure Key Vault key URIs are supported; key version paths are rejected. For SystemManaged encryption, key and identity properties must be omitted. </summary>
+        /// <param name="type"> The type of data encryption used by the cluster. When the data encryption configuration is supplied during initial cluster creation, this property is required. For PUT updates of an existing cluster, this property may be omitted; if provided, it must match the existing encryption type. This value is selected at cluster creation and cannot later be changed from SystemManaged to AzureKeyVault or from AzureKeyVault to SystemManaged. </param>
+        /// <param name="primaryKeyUri"> The versionless Azure Key Vault key URI used to encrypt the cluster's primary storage. Key version paths are not supported. During initial cluster creation, this property can be provided together with primaryUserAssignedIdentityId. For updates to an existing cluster through PUT or PATCH, this property and primaryUserAssignedIdentityId cannot both change in the same request; the first update must complete before submitting a separate update for the other property. </param>
+        /// <param name="primaryUserAssignedIdentityId"> The Azure resource ID of the user-assigned managed identity used to access the primary encryption key. The identity must also be assigned to the Cluster through its top-level identity property. During initial cluster creation, this property can be provided together with primaryKeyUri. For updates to an existing cluster through PUT or PATCH, this property and primaryKeyUri cannot both change in the same request; the first update must complete before submitting a separate update for the other property. </param>
+        /// <param name="primaryEncryptionKeyStatus"> The validation status of the primary encryption key. This property is returned for AzureKeyVault encryption and is absent for SystemManaged encryption. </param>
+        /// <param name="primaryEncryptionKeyCurrentVersion"> The current version of the primary encryption key used by the cluster. This property is returned for AzureKeyVault encryption and is absent for SystemManaged encryption. </param>
+        /// <returns> A new <see cref="Models.HorizonDBClusterDataEncryption"/> instance for mocking. </returns>
+        public static HorizonDBClusterDataEncryption HorizonDBClusterDataEncryption(HorizonDBClusterDataEncryptionType? @type = default, Uri primaryKeyUri = default, ResourceIdentifier primaryUserAssignedIdentityId = default, HorizonDBClusterEncryptionKeyStatus? primaryEncryptionKeyStatus = default, string primaryEncryptionKeyCurrentVersion = default)
         {
-            return new HorizonDBClusterAuthConfig(entraIdAuth, tenantId, passwordAuth, default);
+            return new HorizonDBClusterDataEncryption(
+                @type,
+                primaryKeyUri,
+                primaryUserAssignedIdentityId,
+                primaryEncryptionKeyStatus,
+                primaryEncryptionKeyCurrentVersion,
+                default);
         }
 
-        /// <summary> The compute model for a HorizonDB cluster. </summary>
-        /// <param name="type"> The compute model type. Supported values: 'Provisioned', 'Serverless'. </param>
-        /// <param name="vCores"> The fixed vCore count for Provisioned compute. </param>
-        /// <param name="minvCores"> The minimum vCores for Serverless compute. Defines the lower autoscaling bound. </param>
-        /// <param name="maxvCores"> The maximum vCores for Serverless compute. Defines the upper autoscaling bound. </param>
-        /// <returns> A new <see cref="Models.HorizonDBComputeModel"/> instance for mocking. </returns>
-        public static HorizonDBComputeModel HorizonDBComputeModel(HorizonDBComputeModelType? @type = default, int? vCores = default, double? minvCores = default, double? maxvCores = default)
+        /// <summary> The user-assigned managed identities assigned to a HorizonDB cluster. Omitting the entire top-level identity property from PUT or PATCH preserves all current assignments. When userAssignedIdentities is supplied, PUT replaces the complete set and PATCH merges the supplied entries with the existing set; a null PATCH entry removes that individual identity. Setting type to None clears all assignments. Removing an identity referenced by a change data capture identity assignment is rejected until the referencing assignment is deleted. </summary>
+        /// <param name="type"> The managed identity type assigned to the cluster. Setting this property to None clears all managed identity assignments. </param>
+        /// <param name="userAssignedIdentities"> The user-assigned managed identities associated with the cluster. When supplied on PUT, this dictionary replaces the complete set of assignments. When supplied on PATCH, entries are merged with the existing set and a null value removes the corresponding identity. Each dictionary key must be the full Azure resource ID of a Microsoft.ManagedIdentity/userAssignedIdentities resource. Non-null request values can be empty objects; response values contain the service-populated clientId and principalId. Assigning an identity does not grant it access to destination resources; required role assignments must be configured separately. </param>
+        /// <returns> A new <see cref="Models.HorizonDBClusterManagedServiceIdentity"/> instance for mocking. </returns>
+        public static HorizonDBClusterManagedServiceIdentity HorizonDBClusterManagedServiceIdentity(HorizonDBClusterIdentityType @type = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
         {
-            return new HorizonDBComputeModel(@type, vCores, minvCores, maxvCores, default);
-        }
+            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
 
-        /// <summary> Mirroring configuration for a HorizonDB cluster. </summary>
-        /// <param name="databaseNames"> The names of the databases to mirror. </param>
-        /// <param name="userAssignedIdentityId"> The resource ID of the user-assigned managed identity used for mirroring. </param>
-        /// <returns> A new <see cref="Models.HorizonDBClusterMirroring"/> instance for mocking. </returns>
-        public static HorizonDBClusterMirroring HorizonDBClusterMirroring(IEnumerable<string> databaseNames = default, ResourceIdentifier userAssignedIdentityId = default)
-        {
-            databaseNames ??= new ChangeTrackingList<string>();
-
-            return new HorizonDBClusterMirroring((databaseNames ?? new ChangeTrackingList<string>()).ToList(), userAssignedIdentityId, default);
+            return new HorizonDBClusterManagedServiceIdentity(@type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), default);
         }
 
         /// <summary> HorizonDB cluster for update operations. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. Omitting the entire identity property from PUT or PATCH preserves all current assignments. When provided, PUT replaces the user-assigned identity set and PATCH merges it; null PATCH dictionary entries remove individual identities. Setting type to None clears all assignments. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDB cluster. </param>
         /// <returns> A new <see cref="Models.HorizonDBClusterPatch"/> instance for mocking. </returns>
-        public static HorizonDBClusterPatch HorizonDBClusterPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, HorizonDBClusterPatchProperties properties = default)
+        public static HorizonDBClusterPatch HorizonDBClusterPatch(IDictionary<string, string> tags = default, HorizonDBClusterManagedServiceIdentity identity = default, HorizonDBClusterPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HorizonDBClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, default);
         }
 
-        /// <summary> Properties of a HorizonDB cluster for update operations. </summary>
-        /// <param name="administratorLoginPassword"> The administrator login password. </param>
-        /// <param name="vCores"> Number of vCores. </param>
-        /// <param name="parameterGroup"> Defines connection to a parameter group. </param>
-        /// <param name="authConfig"> Authentication configuration for the HorizonDB cluster. </param>
-        /// <param name="computeModel"> The compute model for the cluster. </param>
-        /// <param name="mirroring"> Mirroring configuration for the HorizonDB cluster. </param>
+        /// <param name="networkPublicAccess"> Specifies whether public access is enabled for the cluster. Omission preserves the current value. </param>
+        /// <param name="backupRetentionDays"> The number of days that automatic backups are retained. </param>
+        /// <param name="dataEncryption"> The data encryption configuration to update for the cluster. Omitted properties preserve their current values. Updates can modify settings within the existing encryption type, but switching between SystemManaged and AzureKeyVault after cluster creation is not supported. </param>
+        /// <param name="aiModelManagement"> Specifies whether AI Model Management is enabled for the cluster. </param>
         /// <returns> A new <see cref="Models.HorizonDBClusterPatchProperties"/> instance for mocking. </returns>
-        public static HorizonDBClusterPatchProperties HorizonDBClusterPatchProperties(string administratorLoginPassword = default, int? vCores = default, HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default, HorizonDBClusterAuthConfig authConfig = default, HorizonDBComputeModel computeModel = default, HorizonDBClusterMirroring mirroring = default)
+        public static HorizonDBClusterPatchProperties HorizonDBClusterPatchProperties(HorizonDBPublicNetworkAccessState? networkPublicAccess = default, int? backupRetentionDays = default, HorizonDBClusterDataEncryptionForPatchUpdate dataEncryption = default, AiModelManagementStatus? aiModelManagement = default)
         {
-            return new HorizonDBClusterPatchProperties(
-                administratorLoginPassword,
-                vCores,
-                parameterGroup,
-                authConfig,
-                computeModel,
-                mirroring,
-                default);
+            return new HorizonDBClusterPatchProperties(networkPublicAccess is null ? default : new NetworkForPatchUpdate(networkPublicAccess, default), backupRetentionDays is null ? default : new BackupPropertiesForPatchUpdate(backupRetentionDays, default), dataEncryption, aiModelManagement, default);
+        }
+
+        /// <summary> Properties for sparsely updating Cluster-level data encryption. Omitted properties preserve their current values. Updates can modify settings within the existing encryption type, such as the primary Azure Key Vault key URI, but switching between SystemManaged and AzureKeyVault after cluster creation is not supported. AzureKeyVault encryption is not supported when backup.geoRedundancy is Enabled. An update can change only one of primaryKeyUri or primaryUserAssignedIdentityId; that update must complete before submitting a separate update to change the other property. </summary>
+        /// <param name="type"> The existing data encryption type used by the cluster. PATCH is a sparse update, so this property may be omitted. If provided, it must match the existing encryption type. This value cannot be changed from SystemManaged to AzureKeyVault or from AzureKeyVault to SystemManaged after cluster creation. </param>
+        /// <param name="primaryKeyUri"> The versionless Azure Key Vault key URI used to encrypt the cluster's primary storage. Key version paths are not supported. This property and primaryUserAssignedIdentityId cannot both change in the same update; the first update must complete before submitting a separate update for the other property. </param>
+        /// <param name="primaryUserAssignedIdentityId"> The Azure resource ID of the user-assigned managed identity used to access the primary encryption key. The identity must also be assigned to the Cluster through its top-level identity property. This property and primaryKeyUri cannot both change in the same update; the first update must complete before submitting a separate update for the other property. </param>
+        /// <returns> A new <see cref="Models.HorizonDBClusterDataEncryptionForPatchUpdate"/> instance for mocking. </returns>
+        public static HorizonDBClusterDataEncryptionForPatchUpdate HorizonDBClusterDataEncryptionForPatchUpdate(HorizonDBClusterDataEncryptionType? @type = default, Uri primaryKeyUri = default, ResourceIdentifier primaryUserAssignedIdentityId = default)
+        {
+            return new HorizonDBClusterDataEncryptionForPatchUpdate(@type, primaryKeyUri, primaryUserAssignedIdentityId, default);
         }
 
         /// <summary> Represents the HorizonDB pool. </summary>
@@ -187,79 +304,124 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
-        /// <summary> Properties of a HorizonDB pool. </summary>
-        /// <param name="location"> The location of the HorizonDB pool. </param>
         /// <param name="state"> Current state of the pool. </param>
-        /// <param name="replicaCount"> Number of replicas in the pool. </param>
-        /// <param name="version"> The version of the HorizonDB pool. </param>
-        /// <param name="createMode"> The create mode for the pool. </param>
+        /// <param name="computeModel"> The required compute model for the HorizonDB pool. </param>
+        /// <param name="nodeCount"> The required number of nodes to allocate and assign to the pool. Allowed values are 1 through 16. To deallocate runtime compute without changing the configured node count, stop the pool. </param>
+        /// <param name="highAvailabilityMode"> The high-availability mode. Disabled is required when nodeCount is 1. AnyZone or ZoneRedundant is required when nodeCount is 2 through 16. </param>
+        /// <param name="parameterGroup"> The required parameter group associated with the pool. When creating a new pool in this API version, the caller must supply the corresponding default parameter group; customer-created parameter groups are not accepted during creation. For an existing pool, PUT or PATCH can associate either the corresponding default parameter group or a customer-created parameter group. The create-visible shape intentionally supports both resource ID forms so a future API version can allow customer-created parameter groups during creation without a breaking schema change. </param>
+        /// <param name="scheduledMaintenance"> The scheduled maintenance configuration for the pool. The properties available depend on the selected maintenance management type. </param>
         /// <param name="provisioningState"> The provisioning state of the pool. </param>
         /// <returns> A new <see cref="Models.HorizonDBPoolProperties"/> instance for mocking. </returns>
-        public static HorizonDBPoolProperties HorizonDBPoolProperties(AzureLocation? location = default, HorizonDBClusterState? state = default, int? replicaCount = default, string version = default, HorizonDBPoolCreateMode? createMode = default, HorizonDBProvisioningState? provisioningState = default)
+        public static HorizonDBPoolProperties HorizonDBPoolProperties(PoolState? state = default, PoolComputeModel computeModel = default, int nodeCount = default, PoolHighAvailabilityMode highAvailabilityMode = default, PoolParameterGroupReference parameterGroup = default, ScheduledMaintenanceProperties scheduledMaintenance = default, HorizonDBProvisioningState? provisioningState = default)
         {
             return new HorizonDBPoolProperties(
-                location,
                 state,
-                replicaCount,
-                version,
-                createMode,
+                computeModel,
+                nodeCount,
+                new PoolHighAvailability(highAvailabilityMode, default),
+                parameterGroup,
+                scheduledMaintenance,
                 provisioningState,
                 default);
         }
 
-        /// <summary> Represents the HorizonDB replica. </summary>
+        /// <summary> The compute model for a HorizonDB pool. </summary>
+        /// <param name="type"> The type of compute model. </param>
+        /// <param name="computeProcessor"> The processor type for the compute model. </param>
+        /// <param name="computeGeneration"> The compute generation for the compute model. </param>
+        /// <param name="vCores"> The number of vCores. Allowed values are 1 through 192. </param>
+        /// <returns> A new <see cref="Models.PoolComputeModel"/> instance for mocking. </returns>
+        public static PoolComputeModel PoolComputeModel(PoolComputeModelType @type = default, ComputeProcessorType computeProcessor = default, int computeGeneration = default, int vCores = default)
+        {
+            return new PoolComputeModel(@type, computeProcessor, computeGeneration, vCores, default);
+        }
+
+        /// <summary> A reference to the parameter group associated with a HorizonDB pool. The schema represents both default and customer-created parameter groups for create and update compatibility. In this API version, initial pool creation accepts only the corresponding default parameter group; PUT updates to an existing pool can associate either group type. </summary>
+        /// <param name="parameterGroupResourceId"> The Azure resource ID of the associated parameter group. Initial pool creation in this API version requires the corresponding Microsoft.HorizonDb/locations/parameterGroups resource. For an existing pool, PUT can specify either the corresponding default group or a customer-created Microsoft.HorizonDb/parameterGroups resource. </param>
+        /// <param name="applyMethod"> Determines when dynamic parameter changes from the associated parameter group become effective. Static parameter changes always require a customer-initiated pool Restart, regardless of this value. Stop followed by Start and scheduled maintenance do not apply pending parameter changes. </param>
+        /// <param name="syncStatus"> The synchronization status between the pool and its parameter group. PendingReboot changes remain pending across Stop, Start, and scheduled maintenance and become effective only after a customer-initiated Restart. </param>
+        /// <returns> A new <see cref="Models.PoolParameterGroupReference"/> instance for mocking. </returns>
+        public static PoolParameterGroupReference PoolParameterGroupReference(ResourceIdentifier parameterGroupResourceId = default, ParameterApplyMethod applyMethod = default, ParameterGroupSyncStatus? syncStatus = default)
+        {
+            return new PoolParameterGroupReference(parameterGroupResourceId, applyMethod, syncStatus, default);
+        }
+
+        /// <summary>
+        /// The scheduled maintenance configuration for a HorizonDB pool.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SystemScheduledMaintenanceProperties"/>.
+        /// </summary>
+        /// <param name="maintenanceManagementType"> Specifies whether scheduled maintenance is managed by the system or by the user. </param>
+        /// <returns> A new <see cref="Models.ScheduledMaintenanceProperties"/> instance for mocking. </returns>
+        public static ScheduledMaintenanceProperties ScheduledMaintenanceProperties(string maintenanceManagementType = default)
+        {
+            return new UnknownScheduledMaintenanceProperties(maintenanceManagementType is null ? default : new ScheduledMaintenanceManagementType(maintenanceManagementType), default);
+        }
+
+        /// <summary> The system-managed scheduled maintenance configuration for a HorizonDB pool. User-managed schedule properties must be absent. </summary>
+        /// <returns> A new <see cref="Models.SystemScheduledMaintenanceProperties"/> instance for mocking. </returns>
+        public static SystemScheduledMaintenanceProperties SystemScheduledMaintenanceProperties()
+        {
+            return new SystemScheduledMaintenanceProperties(ScheduledMaintenanceManagementType.System, default);
+        }
+
+        /// <summary> HorizonDB pool for update operations. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The properties that can be updated for a HorizonDB pool. </param>
+        /// <returns> A new <see cref="Models.HorizonDBPoolPatch"/> instance for mocking. </returns>
+        public static HorizonDBPoolPatch HorizonDBPoolPatch(IDictionary<string, string> tags = default, PoolPropertiesForPatchUpdate properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HorizonDBPoolPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <param name="computeModel"> The compute model properties to update. Omitted properties preserve their current values. To change the compute model type, supply the complete target compute model, including type, computeProcessor, computeGeneration, and all properties required by the target type. </param>
+        /// <param name="nodeCount"> The number of nodes to allocate and assign to the pool. Allowed values are 1 through 16. Omission preserves the current configured value. To deallocate runtime compute without changing the configured node count, stop the pool. </param>
+        /// <param name="highAvailabilityMode"> The high-availability mode. Omission preserves the current mode before the service validates it with the effective nodeCount. </param>
+        /// <param name="parameterGroup"> The corresponding default or a customer-created parameter group to associate with the existing pool. Customers can switch in either direction between these group types. Omission preserves the current association. </param>
+        /// <param name="maintenanceManagementType"> Specifies whether scheduled maintenance is managed by the system or by the user. When scheduledMaintenance is supplied, this property is required by the service. </param>
+        /// <returns> A new <see cref="Models.PoolPropertiesForPatchUpdate"/> instance for mocking. </returns>
+        public static PoolPropertiesForPatchUpdate PoolPropertiesForPatchUpdate(PoolComputeModelForPatchUpdate computeModel = default, int? nodeCount = default, PoolHighAvailabilityMode? highAvailabilityMode = default, PoolParameterGroupReferenceForPatchUpdate parameterGroup = default, ScheduledMaintenanceManagementType? maintenanceManagementType = default)
+        {
+            return new PoolPropertiesForPatchUpdate(
+                computeModel,
+                nodeCount,
+                highAvailabilityMode is null ? default : new PoolHighAvailabilityPatch(highAvailabilityMode, default),
+                parameterGroup,
+                maintenanceManagementType is null ? default : new ScheduledMaintenancePropertiesForPatchUpdate(maintenanceManagementType, default),
+                default);
+        }
+
+        /// <summary> The compute model properties of a HorizonDB pool that can be updated. The object is recursively mergeable: omitted properties preserve their current values. Properties that do not apply to the current or target compute model type are rejected. When type changes, the request must include the complete target compute model. Subtype-specific constraints are validated against the effective merged configuration; invalid requests are rejected without changing the resource. </summary>
+        /// <param name="type"> The compute model type. Omit this property to retain the current type. Resubmitting the current type succeeds as an idempotent no-op. To change the type, supply all common properties and all properties required by the target type. </param>
+        /// <param name="computeProcessor"> The processor type for the compute model. Omission preserves the current processor type. </param>
+        /// <param name="computeGeneration"> The compute generation for the compute model. Omission preserves the current compute generation. </param>
+        /// <param name="vCores"> The number of provisioned vCores. Allowed values are 1 through 192. This property applies only to a Provisioned compute model. Omission preserves the current value. </param>
+        /// <returns> A new <see cref="Models.PoolComputeModelForPatchUpdate"/> instance for mocking. </returns>
+        public static PoolComputeModelForPatchUpdate PoolComputeModelForPatchUpdate(PoolComputeModelType? @type = default, ComputeProcessorType? computeProcessor = default, int? computeGeneration = default, int? vCores = default)
+        {
+            return new PoolComputeModelForPatchUpdate(@type, computeProcessor, computeGeneration, vCores, default);
+        }
+
+        /// <summary> A parameter group reference for updating an existing HorizonDB pool. The pool can switch in either direction between its corresponding default parameter group and a customer-created parameter group. </summary>
+        /// <param name="parameterGroupResourceId"> The Azure resource ID of the corresponding default or customer-created parameter group to associate with the existing pool. </param>
+        /// <param name="applyMethod"> Determines when dynamic parameter changes from the associated parameter group become effective. Static parameter changes always require a customer-initiated pool Restart, regardless of this value. Stop followed by Start and scheduled maintenance do not apply pending parameter changes. </param>
+        /// <returns> A new <see cref="Models.PoolParameterGroupReferenceForPatchUpdate"/> instance for mocking. </returns>
+        public static PoolParameterGroupReferenceForPatchUpdate PoolParameterGroupReferenceForPatchUpdate(ResourceIdentifier parameterGroupResourceId = default, ParameterApplyMethod? applyMethod = default)
+        {
+            return new PoolParameterGroupReferenceForPatchUpdate(parameterGroupResourceId, applyMethod, default);
+        }
+
+        /// <summary> Represents a customer-managed firewall rule for a HorizonDB pool. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="HorizonDB.HorizonDBReplicaData"/> instance for mocking. </returns>
-        public static HorizonDBReplicaData HorizonDBReplicaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBReplicaProperties properties = default)
+        /// <returns> A new <see cref="HorizonDB.FirewallRuleData"/> instance for mocking. </returns>
+        public static FirewallRuleData FirewallRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBFirewallRuleProperties properties = default)
         {
-            return new HorizonDBReplicaData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> Properties of a HorizonDB replica. </summary>
-        /// <param name="role"> Role of the replica. </param>
-        /// <param name="status"> Current status of the replica. </param>
-        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the replica. </param>
-        /// <param name="availabilityZone"> The availability zone of the replica. </param>
-        /// <param name="provisioningState"> The provisioning state of the replica. </param>
-        /// <returns> A new <see cref="Models.HorizonDBReplicaProperties"/> instance for mocking. </returns>
-        public static HorizonDBReplicaProperties HorizonDBReplicaProperties(HorizonDBReplicaRole? role = default, HorizonDBClusterState? status = default, string fullyQualifiedDomainName = default, string availabilityZone = default, HorizonDBProvisioningState? provisioningState = default)
-        {
-            return new HorizonDBReplicaProperties(
-                role,
-                status,
-                fullyQualifiedDomainName,
-                availabilityZone,
-                provisioningState,
-                default);
-        }
-
-        /// <param name="horizonDBReplicaPropertiesForPatchUpdateRole"> Role of the replica. </param>
-        /// <returns> A new <see cref="Models.HorizonDBReplicaPatch"/> instance for mocking. </returns>
-        public static HorizonDBReplicaPatch HorizonDBReplicaPatch(HorizonDBReplicaRole? horizonDBReplicaPropertiesForPatchUpdateRole = default)
-        {
-            return new HorizonDBReplicaPatch(horizonDBReplicaPropertiesForPatchUpdateRole is null ? default : new HorizonDBReplicaPropertiesForPatchUpdate(horizonDBReplicaPropertiesForPatchUpdateRole, default), default);
-        }
-
-        /// <summary> Represents the HorizonDB firewall rule. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="HorizonDB.HorizonDBFirewallRuleData"/> instance for mocking. </returns>
-        public static HorizonDBFirewallRuleData HorizonDBFirewallRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBFirewallRuleProperties properties = default)
-        {
-            return new HorizonDBFirewallRuleData(
+            return new FirewallRuleData(
                 id,
                 name,
                 resourceType,
@@ -269,9 +431,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Properties of a HorizonDB firewall rule. </summary>
-        /// <param name="startIPAddress"> The start IP address of the firewall rule (IPv4). </param>
-        /// <param name="endIPAddress"> The end IP address of the firewall rule (IPv4). </param>
-        /// <param name="description"> The description of the HorizonDB firewall rule. </param>
+        /// <param name="startIPAddress"> The start IPv4 address of the firewall rule in dotted-decimal notation. </param>
+        /// <param name="endIPAddress"> The end IPv4 address of the firewall rule in dotted-decimal notation. This address must be numerically greater than or equal to startIpAddress. </param>
+        /// <param name="description"> The description of the HorizonDB firewall rule. The maximum length is 1024 characters. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
         /// <returns> A new <see cref="Models.HorizonDBFirewallRuleProperties"/> instance for mocking. </returns>
         public static HorizonDBFirewallRuleProperties HorizonDBFirewallRuleProperties(string startIPAddress = default, string endIPAddress = default, string description = default, HorizonDBProvisioningState? provisioningState = default)
@@ -376,43 +538,38 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Properties of a HorizonDB parameter group. </summary>
         /// <param name="parameters"> Parameters in the parameter group. </param>
-        /// <param name="description"> Description of the parameter group. </param>
-        /// <param name="postgreSqlVersion"> PostgreSQL version for the parameter group. </param>
-        /// <param name="version"> Current version of the parameter group. </param>
-        /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
+        /// <param name="description"> Description of the parameter group. The maximum length is 1024 characters. </param>
+        /// <param name="postgreSqlVersion"> The PostgreSQL major version for the parameter group. This property is required during creation and is immutable thereafter. The service selects the unique location-scoped default parameter group for this version in the resource location. The DefaultParameterGroups APIs return at most one default parameter group for each PostgreSQL version in a location, so this selection is unambiguous. </param>
         /// <param name="provisioningState"> The provisioning state of the parameter group. </param>
         /// <returns> A new <see cref="Models.HorizonDBParameterGroupProperties"/> instance for mocking. </returns>
-        public static HorizonDBParameterGroupProperties HorizonDBParameterGroupProperties(IEnumerable<HorizonDBParameterProperties> parameters = default, string description = default, int? postgreSqlVersion = default, int? version = default, bool? shouldApplyImmediately = default, HorizonDBProvisioningState? provisioningState = default)
+        public static HorizonDBParameterGroupProperties HorizonDBParameterGroupProperties(IEnumerable<HorizonDBParameterProperties> parameters = default, string description = default, PostgreSqlVersion postgreSqlVersion = default, HorizonDBProvisioningState? provisioningState = default)
         {
             parameters ??= new ChangeTrackingList<HorizonDBParameterProperties>();
 
-            return new HorizonDBParameterGroupProperties(
-                (parameters ?? new ChangeTrackingList<HorizonDBParameterProperties>()).ToList(),
-                description,
-                postgreSqlVersion,
-                version,
-                shouldApplyImmediately,
-                provisioningState,
-                default);
+            return new HorizonDBParameterGroupProperties((parameters ?? new ChangeTrackingList<HorizonDBParameterProperties>()).ToList(), description, postgreSqlVersion, provisioningState, default);
         }
 
-        /// <summary> Properties of a HorizonDB parameters. </summary>
+        /// <summary> Properties of a HorizonDB parameter. </summary>
         /// <param name="name"> The name of the parameter. </param>
         /// <param name="description"> The description of the parameter. </param>
         /// <param name="value"> The value of the configuration. </param>
+        /// <param name="defaultValue"> The system-defined default value of the parameter, independent of the effective value. </param>
+        /// <param name="valueSource"> The source of the effective parameter value. UserOverride means that the value was explicitly supplied by the user, even when it equals defaultValue. </param>
         /// <param name="dataType"> The data type of the parameter. </param>
         /// <param name="allowedValues"> The allowed values for the parameter. </param>
         /// <param name="isDynamic"> Whether the parameter can be changed dynamically. </param>
-        /// <param name="isReadOnly"> Whether the parameter is a read-only parameter. </param>
+        /// <param name="isReadOnly"> Whether the parameter is read-only. Read-only parameters cannot be overridden. </param>
         /// <param name="documentationLink"> Link to parameter documentation. </param>
         /// <param name="unit"> The unit of measurement for the parameter. </param>
         /// <returns> A new <see cref="Models.HorizonDBParameterProperties"/> instance for mocking. </returns>
-        public static HorizonDBParameterProperties HorizonDBParameterProperties(string name = default, string description = default, string value = default, string dataType = default, string allowedValues = default, bool? isDynamic = default, bool? isReadOnly = default, Uri documentationLink = default, string unit = default)
+        public static HorizonDBParameterProperties HorizonDBParameterProperties(string name = default, string description = default, string value = default, string defaultValue = default, ParameterValueSource? valueSource = default, string dataType = default, string allowedValues = default, bool? isDynamic = default, bool? isReadOnly = default, Uri documentationLink = default, string unit = default)
         {
             return new HorizonDBParameterProperties(
                 name,
                 description,
                 value,
+                defaultValue,
+                valueSource,
                 dataType,
                 allowedValues,
                 isDynamic,
@@ -435,36 +592,33 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Properties of a HorizonDB parameter group for update operations. </summary>
         /// <param name="parameters"> Parameters in the parameter group. </param>
-        /// <param name="description"> Description of the parameter group. </param>
-        /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
+        /// <param name="description"> Description of the parameter group. The maximum length is 1024 characters. </param>
         /// <returns> A new <see cref="Models.HorizonDBParameterGroupPatchProperties"/> instance for mocking. </returns>
-        public static HorizonDBParameterGroupPatchProperties HorizonDBParameterGroupPatchProperties(IEnumerable<HorizonDBParameterProperties> parameters = default, string description = default, bool? shouldApplyImmediately = default)
+        public static HorizonDBParameterGroupPatchProperties HorizonDBParameterGroupPatchProperties(IEnumerable<HorizonDBParameterProperties> parameters = default, string description = default)
         {
             parameters ??= new ChangeTrackingList<HorizonDBParameterProperties>();
 
-            return new HorizonDBParameterGroupPatchProperties((parameters ?? new ChangeTrackingList<HorizonDBParameterProperties>()).ToList(), description, shouldApplyImmediately, default);
+            return new HorizonDBParameterGroupPatchProperties((parameters ?? new ChangeTrackingList<HorizonDBParameterProperties>()).ToList(), description, default);
         }
 
         /// <summary> Connection information for HorizonDB parameter group. </summary>
-        /// <param name="name"> The name of the connected resource. </param>
-        /// <param name="id"> The resource ID of the connected resource. </param>
-        /// <param name="type"> The type of the resource. </param>
+        /// <param name="poolResourceId"> The Azure resource ID of the connected HorizonDB pool. </param>
         /// <returns> A new <see cref="Models.HorizonDBParameterGroupConnectionProperties"/> instance for mocking. </returns>
-        public static HorizonDBParameterGroupConnectionProperties HorizonDBParameterGroupConnectionProperties(string name = default, ResourceIdentifier id = default, string @type = default)
+        public static HorizonDBParameterGroupConnectionProperties HorizonDBParameterGroupConnectionProperties(ResourceIdentifier poolResourceId = default)
         {
-            return new HorizonDBParameterGroupConnectionProperties(name, id, @type, default);
+            return new HorizonDBParameterGroupConnectionProperties(poolResourceId, default);
         }
 
-        /// <summary> Represents an Entra ID administrator configured on a HorizonDB cluster. </summary>
+        /// <summary> A default parameter group available in a specific region. It contains engine-defined parameters and excludes service and other non-engine entries. For each PostgreSQL version, the DefaultParameterGroups APIs return at most one default parameter group in a location. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="HorizonDB.HorizonDBAdministratorData"/> instance for mocking. </returns>
-        public static HorizonDBAdministratorData HorizonDBAdministratorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBAdministratorProperties properties = default)
+        /// <returns> A new <see cref="HorizonDB.DefaultParameterGroupData"/> instance for mocking. </returns>
+        public static DefaultParameterGroupData DefaultParameterGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DefaultParameterGroupProperties properties = default)
         {
-            return new HorizonDBAdministratorData(
+            return new DefaultParameterGroupData(
                 id,
                 name,
                 resourceType,
@@ -473,16 +627,47 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
-        /// <summary> Properties of a HorizonDB administrator. </summary>
-        /// <param name="principalName"> The display name or UPN of the Entra ID principal. For users, typically the User Principal Name (e.g., admin@contoso.com). For groups, the group display name. For service principals, the application display name. </param>
-        /// <param name="principalType"> The type of the Entra ID principal. </param>
-        /// <param name="objectId"> The Entra ID object identifier of the principal (an RFC 4122 GUID). On PUT requests, this value comes from the URI path parameter. </param>
-        /// <param name="tenantId"> The Entra ID tenant identifier (an RFC 4122 GUID). If omitted, defaults to the tenant of the subscription. </param>
-        /// <param name="provisioningState"> The provisioning state of the administrator. </param>
-        /// <returns> A new <see cref="Models.HorizonDBAdministratorProperties"/> instance for mocking. </returns>
-        public static HorizonDBAdministratorProperties HorizonDBAdministratorProperties(string principalName = default, HorizonDBPrincipalType principalType = default, string objectId = default, string tenantId = default, HorizonDBProvisioningState? provisioningState = default)
+        /// <summary> Properties of a default parameter group. </summary>
+        /// <param name="provisioningState"> The provisioning state of the default parameter group. </param>
+        /// <param name="parameters"> Engine-defined parameters in the default parameter group. Service and other non-engine entries are excluded. </param>
+        /// <param name="description"> Description of the default parameter group. </param>
+        /// <param name="postgreSqlVersion"> PostgreSQL version for which this default parameter group is valid. </param>
+        /// <returns> A new <see cref="Models.DefaultParameterGroupProperties"/> instance for mocking. </returns>
+        public static DefaultParameterGroupProperties DefaultParameterGroupProperties(HorizonDBProvisioningState? provisioningState = default, IEnumerable<HorizonDBParameterProperties> parameters = default, string description = default, PostgreSqlVersion postgreSqlVersion = default)
         {
-            return new HorizonDBAdministratorProperties(
+            parameters ??= new ChangeTrackingList<HorizonDBParameterProperties>();
+
+            return new DefaultParameterGroupProperties(provisioningState, (parameters ?? new ChangeTrackingList<HorizonDBParameterProperties>()).ToList(), description, postgreSqlVersion, default);
+        }
+
+        /// <summary> Represents a PostgreSQL role that is a member of the azure_pg_admin role and is mapped to a Microsoft Entra principal. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="HorizonDB.MicrosoftEntraAdministratorData"/> instance for mocking. </returns>
+        public static MicrosoftEntraAdministratorData MicrosoftEntraAdministratorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MicrosoftEntraAdministratorProperties properties = default)
+        {
+            return new MicrosoftEntraAdministratorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties of a PostgreSQL role that is a member of azure_pg_admin and mapped to a Microsoft Entra principal. </summary>
+        /// <param name="principalName"> The display name or user principal name of the Microsoft Entra principal mapped to the PostgreSQL role. For users, this is typically the user principal name, such as admin@contoso.com. For groups, this is the group display name. For service principals, this is the application display name. </param>
+        /// <param name="principalType"> The type of Microsoft Entra principal mapped to the PostgreSQL role. </param>
+        /// <param name="objectId"> The Microsoft Entra object identifier of the principal mapped to the PostgreSQL role, represented as an RFC 4122 GUID. On PUT requests, this value comes from the URI path parameter. </param>
+        /// <param name="tenantId"> The identifier of the Microsoft Entra tenant containing the mapped principal, represented as an RFC 4122 GUID. If omitted, this value defaults to the tenant of the subscription. </param>
+        /// <param name="provisioningState"> The provisioning state of the PostgreSQL role and Microsoft Entra principal mapping. </param>
+        /// <returns> A new <see cref="Models.MicrosoftEntraAdministratorProperties"/> instance for mocking. </returns>
+        public static MicrosoftEntraAdministratorProperties MicrosoftEntraAdministratorProperties(string principalName = default, HorizonDBPrincipalType principalType = default, string objectId = default, string tenantId = default, HorizonDBProvisioningState? provisioningState = default)
+        {
+            return new MicrosoftEntraAdministratorProperties(
                 principalName,
                 principalType,
                 objectId,
@@ -491,22 +676,676 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
-        /// <summary> The request body for adding a HorizonDB administrator. </summary>
-        /// <param name="properties"> The properties for adding a HorizonDB administrator. </param>
-        /// <returns> A new <see cref="Models.HorizonDBAdministratorContent"/> instance for mocking. </returns>
-        public static HorizonDBAdministratorContent HorizonDBAdministratorContent(HorizonDBAdministratorContentProperties properties = default)
+        /// <summary> The request body for creating or updating a PostgreSQL role that is a member of azure_pg_admin and mapped to a Microsoft Entra principal. </summary>
+        /// <param name="properties"> The PostgreSQL role and Microsoft Entra principal mapping properties. </param>
+        /// <returns> A new <see cref="Models.MicrosoftEntraAdministratorAdd"/> instance for mocking. </returns>
+        public static MicrosoftEntraAdministratorAdd MicrosoftEntraAdministratorAdd(MicrosoftEntraAdministratorPropertiesForAdd properties = default)
         {
-            return new HorizonDBAdministratorContent(properties, default);
+            return new MicrosoftEntraAdministratorAdd(properties, default);
         }
 
-        /// <summary> The properties for adding a HorizonDB administrator. </summary>
-        /// <param name="principalName"> The display name or UPN of the Entra ID principal. For users, typically the User Principal Name (e.g., admin@contoso.com). For groups, the group display name. For service principals, the application display name. </param>
-        /// <param name="principalType"> The type of the Entra ID principal. </param>
-        /// <param name="tenantId"> The Entra ID tenant identifier (an RFC 4122 GUID). If omitted, defaults to the tenant of the subscription. </param>
-        /// <returns> A new <see cref="Models.HorizonDBAdministratorContentProperties"/> instance for mocking. </returns>
-        public static HorizonDBAdministratorContentProperties HorizonDBAdministratorContentProperties(string principalName = default, HorizonDBPrincipalType principalType = default, string tenantId = default)
+        /// <summary> Properties for creating or updating a PostgreSQL role that is a member of azure_pg_admin and mapped to a Microsoft Entra principal. </summary>
+        /// <param name="principalName"> The display name or user principal name of the Microsoft Entra principal to map to the PostgreSQL role. For users, this is typically the user principal name, such as admin@contoso.com. For groups, this is the group display name. For service principals, this is the application display name. </param>
+        /// <param name="principalType"> The type of Microsoft Entra principal to map to the PostgreSQL role. </param>
+        /// <param name="tenantId"> The identifier of the Microsoft Entra tenant containing the principal to map, represented as an RFC 4122 GUID. If omitted, this value defaults to the tenant of the subscription. </param>
+        /// <returns> A new <see cref="Models.MicrosoftEntraAdministratorPropertiesForAdd"/> instance for mocking. </returns>
+        public static MicrosoftEntraAdministratorPropertiesForAdd MicrosoftEntraAdministratorPropertiesForAdd(string principalName = default, HorizonDBPrincipalType principalType = default, string tenantId = default)
         {
-            return new HorizonDBAdministratorContentProperties(principalName, principalType, tenantId, default);
+            return new MicrosoftEntraAdministratorPropertiesForAdd(principalName, principalType, tenantId, default);
+        }
+
+        /// <summary> A service-created authentication configuration returned by the authentications collection. The resource name is passwordMethod or microsoftEntra. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.Authentication"/> instance for mocking. </returns>
+        public static Authentication Authentication(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AuthenticationProperties properties = default)
+        {
+            return new Authentication(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Common read-only properties of a service-created authentication configuration. </summary>
+        /// <param name="state"> The state of the authentication configuration. </param>
+        /// <param name="provisioningState"> The provisioning state of the authentication configuration. </param>
+        /// <returns> A new <see cref="Models.AuthenticationProperties"/> instance for mocking. </returns>
+        public static AuthenticationProperties AuthenticationProperties(HorizonDBAuthenticationState state = default, HorizonDBProvisioningState? provisioningState = default)
+        {
+            return new AuthenticationProperties(state, provisioningState, default);
+        }
+
+        /// <summary> The service-created PostgreSQL username-and-password authentication method for a HorizonDB cluster. This resource configures the authentication mechanism, including its enabled state and administrator login credentials; it is not a password-only resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="HorizonDB.PasswordAuthenticationData"/> instance for mocking. </returns>
+        public static PasswordAuthenticationData PasswordAuthenticationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PasswordAuthenticationProperties properties = default)
+        {
+            return new PasswordAuthenticationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties of the service-created PostgreSQL username-and-password authentication method. </summary>
+        /// <param name="state"> The state of PostgreSQL username-and-password authentication. </param>
+        /// <param name="administratorLogin"> The PostgreSQL administrator login name. This value is not returned in responses. After it is set, renaming is not supported. Setting the login requires password authentication state to be Enabled in the same request. </param>
+        /// <param name="administratorLoginPassword"> The PostgreSQL administrator password. Setting the password requires password authentication state to be Enabled in the same request. </param>
+        /// <param name="provisioningState"> The provisioning state of the PostgreSQL username-and-password authentication method. </param>
+        /// <returns> A new <see cref="Models.PasswordAuthenticationProperties"/> instance for mocking. </returns>
+        public static PasswordAuthenticationProperties PasswordAuthenticationProperties(HorizonDBAuthenticationState state = default, string administratorLogin = default, string administratorLoginPassword = default, HorizonDBProvisioningState? provisioningState = default)
+        {
+            return new PasswordAuthenticationProperties(state, administratorLogin, administratorLoginPassword, provisioningState, default);
+        }
+
+        /// <summary> A sparse update request for PostgreSQL username-and-password authentication. </summary>
+        /// <param name="properties"> The PostgreSQL username-and-password authentication properties to update. </param>
+        /// <returns> A new <see cref="Models.PasswordAuthenticationPatch"/> instance for mocking. </returns>
+        public static PasswordAuthenticationPatch PasswordAuthenticationPatch(PasswordAuthenticationPropertiesForPatchUpdate properties = default)
+        {
+            return new PasswordAuthenticationPatch(properties, default);
+        }
+
+        /// <summary> Properties for updating PostgreSQL username-and-password authentication. Omitted properties preserve their current values. This API version supports enabling or disabling the authentication method, and resetting its password. Supported changes can be combined. </summary>
+        /// <param name="state"> The target password-authentication state. Enabled can be combined with administratorLoginPassword to re-enable password authentication and reset the password for a cluster that already has an administrator. Disabling password authentication does not remove or modify existing database users or roles. Disabled cannot be combined with administratorLoginPassword. </param>
+        /// <param name="administratorLoginPassword"> The PostgreSQL administrator password. Supplying this property resets the configured administrator's password. When password authentication is currently disabled for a cluster that already has an administrator, this property can be combined with state Enabled to re-enable password authentication and reset the password. </param>
+        /// <returns> A new <see cref="Models.PasswordAuthenticationPropertiesForPatchUpdate"/> instance for mocking. </returns>
+        public static PasswordAuthenticationPropertiesForPatchUpdate PasswordAuthenticationPropertiesForPatchUpdate(HorizonDBAuthenticationState? state = default, string administratorLoginPassword = default)
+        {
+            return new PasswordAuthenticationPropertiesForPatchUpdate(state, administratorLoginPassword, default);
+        }
+
+        /// <summary> The service-created Microsoft Entra authentication method for a HorizonDB cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="HorizonDB.MicrosoftEntraAuthenticationData"/> instance for mocking. </returns>
+        public static MicrosoftEntraAuthenticationData MicrosoftEntraAuthenticationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MicrosoftEntraAuthenticationProperties properties = default)
+        {
+            return new MicrosoftEntraAuthenticationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties of the service-created Microsoft Entra authentication method. </summary>
+        /// <param name="state"> The state of Microsoft Entra authentication. </param>
+        /// <param name="provisioningState"> The provisioning state of the Microsoft Entra authentication method. </param>
+        /// <returns> A new <see cref="Models.MicrosoftEntraAuthenticationProperties"/> instance for mocking. </returns>
+        public static MicrosoftEntraAuthenticationProperties MicrosoftEntraAuthenticationProperties(HorizonDBAuthenticationState state = default, HorizonDBProvisioningState? provisioningState = default)
+        {
+            return new MicrosoftEntraAuthenticationProperties(state, provisioningState, default);
+        }
+
+        /// <param name="microsoftEntraAuthenticationPropertiesForPatchUpdateState"> The target Microsoft Entra authentication state. Omission preserves the current state. </param>
+        /// <returns> A new <see cref="Models.MicrosoftEntraAuthenticationPatch"/> instance for mocking. </returns>
+        public static MicrosoftEntraAuthenticationPatch MicrosoftEntraAuthenticationPatch(HorizonDBAuthenticationState? microsoftEntraAuthenticationPropertiesForPatchUpdateState = default)
+        {
+            return new MicrosoftEntraAuthenticationPatch(microsoftEntraAuthenticationPropertiesForPatchUpdateState is null ? default : new MicrosoftEntraAuthenticationPropertiesForPatchUpdate(microsoftEntraAuthenticationPropertiesForPatchUpdateState, default), default);
+        }
+
+        /// <summary> The singleton change data capture capability for a HorizonDB cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="HorizonDB.ChangeDataCaptureCapabilityData"/> instance for mocking. </returns>
+        public static ChangeDataCaptureCapabilityData ChangeDataCaptureCapabilityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ChangeDataCaptureCapabilityProperties properties = default, string eTag = default)
+        {
+            return new ChangeDataCaptureCapabilityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                default);
+        }
+
+        /// <summary> The properties of the singleton change data capture capability. </summary>
+        /// <param name="desiredState"> The requested capability state. </param>
+        /// <param name="effectiveState"> The current effective capability state. </param>
+        /// <param name="provisioningState"> The provisioning state of the latest capability mutation. </param>
+        /// <param name="autoUpgradeExtension"> Whether HorizonDB may automatically upgrade the service-owned change data capture extension within the supported compatibility policy. </param>
+        /// <param name="replicationArchitecture"> The implementation architecture currently used for change capture. </param>
+        /// <param name="extension"> The installed change data capture extension and its current lifecycle state. </param>
+        /// <param name="prerequisites"> The current readiness of change data capture engine and read-write endpoint prerequisites. </param>
+        /// <param name="destinationCount"> The number of change data capture destinations under this cluster. </param>
+        /// <param name="configurationCount"> The number of change data capture configurations under this cluster. </param>
+        /// <param name="status"> Customer-safe health information for the capability. </param>
+        /// <returns> A new <see cref="Models.ChangeDataCaptureCapabilityProperties"/> instance for mocking. </returns>
+        public static ChangeDataCaptureCapabilityProperties ChangeDataCaptureCapabilityProperties(ChangeDataCaptureDesiredState desiredState = default, ChangeDataCaptureEffectiveState effectiveState = default, HorizonDBProvisioningState? provisioningState = default, bool? autoUpgradeExtension = default, ChangeDataCaptureReplicationArchitecture replicationArchitecture = default, ChangeDataCaptureExtensionStatus extension = default, ChangeDataCapturePrerequisiteStatus prerequisites = default, int destinationCount = default, int configurationCount = default, ChangeDataCaptureStatus status = default)
+        {
+            return new ChangeDataCaptureCapabilityProperties(
+                desiredState,
+                effectiveState,
+                provisioningState,
+                autoUpgradeExtension,
+                replicationArchitecture,
+                extension,
+                prerequisites,
+                destinationCount,
+                configurationCount,
+                status,
+                default);
+        }
+
+        /// <summary> The installed HorizonDB change data capture extension and its current state. </summary>
+        /// <param name="name"> The extension name. </param>
+        /// <param name="version"> The installed extension version. </param>
+        /// <param name="state"> The current extension lifecycle state. </param>
+        /// <returns> A new <see cref="Models.ChangeDataCaptureExtensionStatus"/> instance for mocking. </returns>
+        public static ChangeDataCaptureExtensionStatus ChangeDataCaptureExtensionStatus(string name = default, string version = default, ChangeDataCaptureExtensionState state = default)
+        {
+            return new ChangeDataCaptureExtensionStatus(name, version, state, default);
+        }
+
+        /// <summary> The current readiness of prerequisites shared by change data capture configurations. </summary>
+        /// <param name="engineConfigurationState"> The readiness of the required engine configuration. </param>
+        /// <param name="readWriteEndpointState"> The availability of the read-write endpoint required for engine mutations. </param>
+        /// <returns> A new <see cref="Models.ChangeDataCapturePrerequisiteStatus"/> instance for mocking. </returns>
+        public static ChangeDataCapturePrerequisiteStatus ChangeDataCapturePrerequisiteStatus(ChangeDataCaptureEngineConfigurationState engineConfigurationState = default, ChangeDataCaptureReadWriteEndpointState readWriteEndpointState = default)
+        {
+            return new ChangeDataCapturePrerequisiteStatus(engineConfigurationState, readWriteEndpointState, default);
+        }
+
+        /// <summary> Customer-safe health information for a HorizonDB change data capture resource. </summary>
+        /// <param name="code"> A stable machine-readable status code. </param>
+        /// <param name="message"> A localized customer-safe description of the current status. </param>
+        /// <returns> A new <see cref="Models.ChangeDataCaptureStatus"/> instance for mocking. </returns>
+        public static ChangeDataCaptureStatus ChangeDataCaptureStatus(string code = default, string message = default)
+        {
+            return new ChangeDataCaptureStatus(code, message, default);
+        }
+
+        /// <summary> A sparse update request for the singleton change data capture capability. </summary>
+        /// <param name="properties"> The capability properties to update. </param>
+        /// <returns> A new <see cref="Models.ChangeDataCaptureCapabilityPatch"/> instance for mocking. </returns>
+        public static ChangeDataCaptureCapabilityPatch ChangeDataCaptureCapabilityPatch(ChangeDataCaptureCapabilityPropertiesForPatchUpdate properties = default)
+        {
+            return new ChangeDataCaptureCapabilityPatch(properties, default);
+        }
+
+        /// <summary> Properties for updating the singleton change data capture capability. Omitted properties preserve their current values. </summary>
+        /// <param name="desiredState"> The requested capability state. </param>
+        /// <param name="autoUpgradeExtension"> Whether HorizonDB may automatically upgrade the service-owned change data capture extension within the supported compatibility policy. </param>
+        /// <returns> A new <see cref="Models.ChangeDataCaptureCapabilityPropertiesForPatchUpdate"/> instance for mocking. </returns>
+        public static ChangeDataCaptureCapabilityPropertiesForPatchUpdate ChangeDataCaptureCapabilityPropertiesForPatchUpdate(ChangeDataCaptureDesiredState? desiredState = default, bool? autoUpgradeExtension = default)
+        {
+            return new ChangeDataCaptureCapabilityPropertiesForPatchUpdate(desiredState, autoUpgradeExtension, default);
+        }
+
+        /// <summary> A reusable Microsoft Fabric destination for HorizonDB change data capture configurations. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="HorizonDB.ChangeDataCaptureDestinationData"/> instance for mocking. </returns>
+        public static ChangeDataCaptureDestinationData ChangeDataCaptureDestinationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ChangeDataCaptureDestinationProperties properties = default, string eTag = default)
+        {
+            return new ChangeDataCaptureDestinationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                default);
+        }
+
+        /// <summary> The properties of a Microsoft Fabric change data capture destination. </summary>
+        /// <param name="destination"> The immutable Microsoft Fabric destination settings. Resubmitting the same values is accepted; changing them requires deleting and recreating the destination. </param>
+        /// <param name="desiredState"> The requested destination state. </param>
+        /// <param name="effectiveState"> The current effective destination state. </param>
+        /// <param name="provisioningState"> The provisioning state of the latest destination mutation. </param>
+        /// <param name="activeIdentityAssignmentResourceId"> The resource ID of the currently active identity assignment, if one is active. </param>
+        /// <param name="configurationCount"> The number of change data capture configurations that reference this destination. </param>
+        /// <param name="status"> Customer-safe health information for the destination. </param>
+        /// <returns> A new <see cref="Models.ChangeDataCaptureDestinationProperties"/> instance for mocking. </returns>
+        public static ChangeDataCaptureDestinationProperties ChangeDataCaptureDestinationProperties(ChangeDataCaptureDestinationDetails destination = default, ChangeDataCaptureDesiredState desiredState = default, ChangeDataCaptureDestinationEffectiveState effectiveState = default, HorizonDBProvisioningState? provisioningState = default, ResourceIdentifier activeIdentityAssignmentResourceId = default, int configurationCount = default, ChangeDataCaptureStatus status = default)
+        {
+            return new ChangeDataCaptureDestinationProperties(
+                destination,
+                desiredState,
+                effectiveState,
+                provisioningState,
+                activeIdentityAssignmentResourceId,
+                configurationCount,
+                status,
+                default);
+        }
+
+        /// <summary>
+        /// Destination-specific settings discriminated by destinationType.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FabricDestinationDetails"/>.
+        /// </summary>
+        /// <param name="destinationType"> The destination family. </param>
+        /// <param name="protocol"> The protocol used to communicate with the destination. </param>
+        /// <returns> A new <see cref="Models.ChangeDataCaptureDestinationDetails"/> instance for mocking. </returns>
+        public static ChangeDataCaptureDestinationDetails ChangeDataCaptureDestinationDetails(string destinationType = default, ChangeDataCaptureProtocol protocol = default)
+        {
+            return new UnknownChangeDataCaptureDestinationDetails(destinationType is null ? default : new ChangeDataCaptureDestinationType(destinationType), protocol, default);
+        }
+
+        /// <summary> Settings for a Microsoft Fabric destination. </summary>
+        /// <param name="protocol"> The protocol used to communicate with the destination. </param>
+        /// <param name="workspaceId"> The opaque identifier of the Microsoft Fabric workspace that owns the destination artifact. </param>
+        /// <returns> A new <see cref="Models.FabricDestinationDetails"/> instance for mocking. </returns>
+        public static FabricDestinationDetails FabricDestinationDetails(ChangeDataCaptureProtocol protocol = default, string workspaceId = default)
+        {
+            return new FabricDestinationDetails(ChangeDataCaptureDestinationType.Fabric, protocol, default, workspaceId);
+        }
+
+        /// <param name="changeDataCaptureDestinationPropertiesForPatchUpdateDesiredState"> The requested destination state. </param>
+        /// <returns> A new <see cref="Models.ChangeDataCaptureDestinationPatch"/> instance for mocking. </returns>
+        public static ChangeDataCaptureDestinationPatch ChangeDataCaptureDestinationPatch(ChangeDataCaptureDesiredState? changeDataCaptureDestinationPropertiesForPatchUpdateDesiredState = default)
+        {
+            return new ChangeDataCaptureDestinationPatch(changeDataCaptureDestinationPropertiesForPatchUpdateDesiredState is null ? default : new ChangeDataCaptureDestinationPropertiesForPatchUpdate(changeDataCaptureDestinationPropertiesForPatchUpdateDesiredState, default), default);
+        }
+
+        /// <summary> The request to activate an identity assignment for a change data capture destination. </summary>
+        /// <param name="identityAssignmentResourceId"> The resource ID of an inactive, successfully validated identity assignment under the destination receiving the action. </param>
+        /// <param name="drainExistingSessions"> Whether existing destination sessions should drain before the identity cutover. The default is false. </param>
+        /// <returns> A new <see cref="Models.HorizonDBActivateChangeDataCaptureIdentityContent"/> instance for mocking. </returns>
+        public static HorizonDBActivateChangeDataCaptureIdentityContent HorizonDBActivateChangeDataCaptureIdentityContent(ResourceIdentifier identityAssignmentResourceId = default, bool? drainExistingSessions = default)
+        {
+            return new HorizonDBActivateChangeDataCaptureIdentityContent(identityAssignmentResourceId, drainExistingSessions, default);
+        }
+
+        /// <summary> The completed result of activating a change data capture destination identity. </summary>
+        /// <param name="targetIdentityAssignmentResourceId"> The resource ID of the newly active identity assignment. </param>
+        /// <param name="previousIdentityAssignmentResourceId"> The resource ID of the previously active identity assignment, when one existed. </param>
+        /// <returns> A new <see cref="Models.ActivateChangeDataCaptureIdentityResult"/> instance for mocking. </returns>
+        public static ActivateChangeDataCaptureIdentityResult ActivateChangeDataCaptureIdentityResult(ResourceIdentifier targetIdentityAssignmentResourceId = default, ResourceIdentifier previousIdentityAssignmentResourceId = default)
+        {
+            return new ActivateChangeDataCaptureIdentityResult(default, targetIdentityAssignmentResourceId, previousIdentityAssignmentResourceId, default);
+        }
+
+        /// <summary> A user-assigned managed identity authorized for a HorizonDB change data capture destination. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="HorizonDB.IdentityAssignmentData"/> instance for mocking. </returns>
+        public static IdentityAssignmentData IdentityAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ChangeDataCaptureIdentityAssignmentProperties properties = default, string eTag = default)
+        {
+            return new IdentityAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                default);
+        }
+
+        /// <summary> The properties of a change data capture identity assignment. </summary>
+        /// <param name="identityResourceId"> The immutable resource ID of the user-assigned managed identity selected for this destination. The ID must exactly match a key in the parent cluster's top-level identity.userAssignedIdentities dictionary; otherwise creation is rejected. Attaching the identity to the cluster does not grant destination access, so required role assignments must be configured separately. Resubmitting the same value is accepted; changing it requires deleting and recreating the assignment. </param>
+        /// <param name="effectiveState"> The current assignment lifecycle state. </param>
+        /// <param name="activationState"> The current activation state within the parent destination. </param>
+        /// <param name="principalId"> The Microsoft Entra principal ID resolved from the user-assigned managed identity, represented as an RFC 4122 GUID. </param>
+        /// <param name="tenantId"> The Microsoft Entra tenant ID resolved from the user-assigned managed identity, represented as an RFC 4122 GUID. </param>
+        /// <param name="provisioningState"> The provisioning state of the latest identity-assignment mutation. </param>
+        /// <param name="validation"> The latest validation result for this identity assignment. </param>
+        /// <param name="status"> Customer-safe health information for the identity assignment. </param>
+        /// <returns> A new <see cref="Models.ChangeDataCaptureIdentityAssignmentProperties"/> instance for mocking. </returns>
+        public static ChangeDataCaptureIdentityAssignmentProperties ChangeDataCaptureIdentityAssignmentProperties(ResourceIdentifier identityResourceId = default, ChangeDataCaptureIdentityAssignmentState effectiveState = default, ChangeDataCaptureIdentityActivationState activationState = default, string principalId = default, string tenantId = default, HorizonDBProvisioningState? provisioningState = default, IdentityValidationStatus validation = default, ChangeDataCaptureStatus status = default)
+        {
+            return new ChangeDataCaptureIdentityAssignmentProperties(
+                identityResourceId,
+                effectiveState,
+                activationState,
+                principalId,
+                tenantId,
+                provisioningState,
+                validation,
+                status,
+                default);
+        }
+
+        /// <summary> The current validation result for a change data capture identity assignment. </summary>
+        /// <param name="state"> The current validation state. </param>
+        /// <param name="validatedAtUtc"> The date and time, in UTC, when validation most recently completed. </param>
+        /// <param name="error"> The customer-safe validation error when validation failed. </param>
+        /// <returns> A new <see cref="Models.IdentityValidationStatus"/> instance for mocking. </returns>
+        public static IdentityValidationStatus IdentityValidationStatus(ChangeDataCaptureIdentityValidationState state = default, DateTimeOffset? validatedAtUtc = default, ResponseError error = default)
+        {
+            return new IdentityValidationStatus(state, validatedAtUtc, error, default);
+        }
+
+        /// <summary> A HorizonDB database enrollment for Microsoft Fabric Mirroring. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="HorizonDB.ChangeDataCaptureConfigurationData"/> instance for mocking. </returns>
+        public static ChangeDataCaptureConfigurationData ChangeDataCaptureConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ChangeDataCaptureConfigurationProperties properties = default, string eTag = default)
+        {
+            return new ChangeDataCaptureConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                default);
+        }
+
+        /// <summary> The properties of a Microsoft Fabric Mirroring configuration. </summary>
+        /// <param name="databaseName"> The exact PostgreSQL database name enrolled in this logical stream. This value is immutable. </param>
+        /// <param name="usageProfile"> The immutable usage profile. API version 2026-10-01-preview accepts Mirroring only. </param>
+        /// <param name="destinationResourceId"> The immutable resource ID of an enabled change data capture destination under the same cluster. </param>
+        /// <param name="logicalStreamId"> A service-generated identifier for the logical stream, represented as an RFC 4122 GUID. This value remains stable when a writer role moves and the service materializes a replacement ARM resource under the new writer cluster. </param>
+        /// <param name="desiredState"> The requested configuration state. </param>
+        /// <param name="effectiveState"> The current effective configuration state. </param>
+        /// <param name="provisioningState"> The provisioning state of the latest configuration mutation. </param>
+        /// <param name="extension"> The change data capture extension state for the enrolled database. </param>
+        /// <param name="replication"> The known status of the destination-owned replication session. </param>
+        /// <param name="topology"> The current writer-topology binding for this logical stream. </param>
+        /// <param name="status"> Customer-safe health information for the configuration. </param>
+        /// <returns> A new <see cref="Models.ChangeDataCaptureConfigurationProperties"/> instance for mocking. </returns>
+        public static ChangeDataCaptureConfigurationProperties ChangeDataCaptureConfigurationProperties(string databaseName = default, ChangeDataCaptureUsageProfile usageProfile = default, ResourceIdentifier destinationResourceId = default, string logicalStreamId = default, ChangeDataCaptureDesiredState desiredState = default, ChangeDataCaptureEffectiveState effectiveState = default, HorizonDBProvisioningState? provisioningState = default, ChangeDataCaptureExtensionStatus extension = default, ChangeDataCaptureReplicationStatus replication = default, ChangeDataCaptureTopologyBindingStatus topology = default, ChangeDataCaptureStatus status = default)
+        {
+            return new ChangeDataCaptureConfigurationProperties(
+                databaseName,
+                usageProfile,
+                destinationResourceId,
+                logicalStreamId,
+                desiredState,
+                effectiveState,
+                provisioningState,
+                extension,
+                replication,
+                topology,
+                status,
+                default);
+        }
+
+        /// <summary> The destination-owned replication-session status known to HorizonDB. </summary>
+        /// <param name="state"> The current replication-session state. </param>
+        /// <param name="externalArtifactId"> An opaque identifier of a destination-owned artifact, such as a Microsoft Fabric mirrored-database item. HorizonDB does not create, update, or delete the identified artifact. </param>
+        /// <param name="lastConnectedAtUtc"> The date and time, in UTC, when a destination session most recently connected. </param>
+        /// <returns> A new <see cref="Models.ChangeDataCaptureReplicationStatus"/> instance for mocking. </returns>
+        public static ChangeDataCaptureReplicationStatus ChangeDataCaptureReplicationStatus(ChangeDataCaptureReplicationState state = default, string externalArtifactId = default, DateTimeOffset? lastConnectedAtUtc = default)
+        {
+            return new ChangeDataCaptureReplicationStatus(state, externalArtifactId, lastConnectedAtUtc, default);
+        }
+
+        /// <summary> The current writer-topology binding of a change data capture configuration. </summary>
+        /// <param name="state"> The configuration's relationship to the current writer topology. </param>
+        /// <param name="generation"> A monotonically increasing topology generation for this logical stream. </param>
+        /// <param name="activeClusterResourceId"> The Azure resource ID of the cluster that currently owns the active configuration projection. </param>
+        /// <param name="replacementConfigurationResourceId"> The replacement configuration resource ID when this projection has been superseded or requires rebinding. </param>
+        /// <returns> A new <see cref="Models.ChangeDataCaptureTopologyBindingStatus"/> instance for mocking. </returns>
+        public static ChangeDataCaptureTopologyBindingStatus ChangeDataCaptureTopologyBindingStatus(ChangeDataCaptureTopologyBindingState state = default, long generation = default, ResourceIdentifier activeClusterResourceId = default, ResourceIdentifier replacementConfigurationResourceId = default)
+        {
+            return new ChangeDataCaptureTopologyBindingStatus(state, generation, activeClusterResourceId, replacementConfigurationResourceId, default);
+        }
+
+        /// <param name="changeDataCaptureConfigurationPropertiesForPatchUpdateDesiredState"> The requested configuration state. </param>
+        /// <returns> A new <see cref="Models.ChangeDataCaptureConfigurationPatch"/> instance for mocking. </returns>
+        public static ChangeDataCaptureConfigurationPatch ChangeDataCaptureConfigurationPatch(ChangeDataCaptureDesiredState? changeDataCaptureConfigurationPropertiesForPatchUpdateDesiredState = default)
+        {
+            return new ChangeDataCaptureConfigurationPatch(changeDataCaptureConfigurationPropertiesForPatchUpdateDesiredState is null ? default : new ChangeDataCaptureConfigurationPropertiesForPatchUpdate(changeDataCaptureConfigurationPropertiesForPatchUpdateDesiredState, default), default);
+        }
+
+        /// <summary> Represents a service-generated, service-managed HorizonDB endpoint. The Cluster-scoped Endpoint is created and deleted with its parent Cluster. A Pool-scoped Endpoint is created and deleted with the Pool identified by associatedResourceId. Endpoints cannot be created or deleted independently from their lifecycle owner. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="HorizonDB.EndpointData"/> instance for mocking. </returns>
+        public static EndpointData EndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EndpointProperties properties = default)
+        {
+            return new EndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties of a service-generated HorizonDB endpoint. </summary>
+        /// <param name="scope"> The scope of the endpoint. Cluster-scoped Endpoints provide the cluster connection, and Pool-scoped Endpoints provide read-only connections to eligible nodes in one pool. </param>
+        /// <param name="associatedResourceId"> The Azure resource ID of the Endpoint's lifecycle owner. For Cluster scope, this identifies the parent Cluster with which the Endpoint is created and deleted. For Pool scope, this identifies the Pool with which the Endpoint is created and deleted; the Pool must be a child of the Endpoint's parent Cluster. </param>
+        /// <param name="fullyQualifiedDomainName"> The service-generated fully qualified domain name of the endpoint. A Cluster-scoped Endpoint uses &lt;cluster&gt;.&lt;clusterid&gt;.&lt;region&gt;.horizondb.azure.com. A Pool-scoped Endpoint uses &lt;poolid&gt;.&lt;cluster&gt;.&lt;clusterid&gt;.&lt;region&gt;.horizondb.azure.com. </param>
+        /// <param name="role"> The routing role of the endpoint. A Cluster-scoped Endpoint normally has the ReadWrite role. Pool-scoped Endpoints have the ReadOnly role and route only to allocated nodes in the associated Pool that are not currently playing the read-write role. A Pool-scoped ReadOnly Endpoint has no routing destination unless at least one such node exists, including when the Pool is Stopped, has zero allocated nodes, or has only one allocated node and that node is playing the read-write role. </param>
+        /// <returns> A new <see cref="Models.EndpointProperties"/> instance for mocking. </returns>
+        public static EndpointProperties EndpointProperties(EndpointScope scope = default, ResourceIdentifier associatedResourceId = default, string fullyQualifiedDomainName = default, EndpointRole role = default)
+        {
+            return new EndpointProperties(scope, associatedResourceId, fullyQualifiedDomainName, role, default);
+        }
+
+        /// <summary> Represents a maintenance event for a HorizonDB pool. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="HorizonDB.MaintenanceEventData"/> instance for mocking. </returns>
+        public static MaintenanceEventData MaintenanceEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MaintenanceEventProperties properties = default)
+        {
+            return new MaintenanceEventData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties of a maintenance event resource. </summary>
+        /// <param name="maintenanceEventId"> A service-generated identifier for this maintenance event, assigned by the platform. The format is not contractual, and clients should not attempt to parse or construct this value. </param>
+        /// <param name="maintenanceType"> The maintenance type. </param>
+        /// <param name="description"> The human-readable description of the maintenance event. </param>
+        /// <param name="status"> The customer-facing status of the maintenance event. </param>
+        /// <param name="startTimeUtc"> The scheduled start time of the maintenance event in UTC. </param>
+        /// <param name="endTimeUtc"> The scheduled end time of the maintenance event in UTC. </param>
+        /// <param name="estimatedDowntime"> The estimated downtime as an ISO 8601 duration string, for example, 'PT60S' for 60 seconds. </param>
+        /// <param name="deferrable"> Indicates whether the customer can reschedule this maintenance event. </param>
+        /// <param name="deferralDeadlineUtc"> The latest date and time to which this maintenance event can be postponed, in UTC. This property is present only when deferrable is true. </param>
+        /// <param name="rescheduledFromUtc"> The scheduled start time before the most recent reschedule, in UTC. This property is absent if the event has never been rescheduled. </param>
+        /// <param name="lastUpdatedTimeUtc"> The time when this maintenance event record was last updated, in UTC. </param>
+        /// <param name="originalStartTimeUtc"> The initially scheduled start time before any reschedule, in UTC. This value equals startTimeUtc when the event has never been rescheduled. </param>
+        /// <returns> A new <see cref="Models.MaintenanceEventProperties"/> instance for mocking. </returns>
+        public static MaintenanceEventProperties MaintenanceEventProperties(string maintenanceEventId = default, MaintenanceType maintenanceType = default, string description = default, MaintenanceEventStatus status = default, DateTimeOffset startTimeUtc = default, DateTimeOffset endTimeUtc = default, TimeSpan? estimatedDowntime = default, bool deferrable = default, DateTimeOffset? deferralDeadlineUtc = default, DateTimeOffset? rescheduledFromUtc = default, DateTimeOffset? lastUpdatedTimeUtc = default, DateTimeOffset originalStartTimeUtc = default)
+        {
+            return new MaintenanceEventProperties(
+                maintenanceEventId,
+                maintenanceType,
+                description,
+                status,
+                startTimeUtc,
+                endTimeUtc,
+                estimatedDowntime,
+                deferrable,
+                deferralDeadlineUtc,
+                rescheduledFromUtc,
+                lastUpdatedTimeUtc,
+                originalStartTimeUtc,
+                default);
+        }
+
+        /// <summary> Parameters for rescheduling a maintenance event. </summary>
+        /// <param name="postponeToDateTimeUtc"> The new start time in RFC 3339 format. </param>
+        /// <returns> A new <see cref="Models.HorizonDBMaintenanceEventRescheduleContent"/> instance for mocking. </returns>
+        public static HorizonDBMaintenanceEventRescheduleContent HorizonDBMaintenanceEventRescheduleContent(DateTimeOffset postponeToDateTimeUtc = default)
+        {
+            return new HorizonDBMaintenanceEventRescheduleContent(postponeToDateTimeUtc, default);
+        }
+
+        /// <summary> The response from a maintenance event reschedule or apply-now action. </summary>
+        /// <param name="maintenanceEventId"> The maintenance event identifier. </param>
+        /// <param name="poolResourceId"> The full Azure resource ID of the HorizonDB pool. </param>
+        /// <param name="status"> The status of the maintenance event. </param>
+        /// <param name="plannedStartTimeUtc"> The planned start time of the maintenance event in UTC. </param>
+        /// <param name="plannedEndTimeUtc"> The planned end time of the maintenance event in UTC. </param>
+        /// <param name="appliedNow"> Indicates whether the maintenance event was requested to be applied immediately. The value is true for apply-now and false for reschedule. </param>
+        /// <param name="lastUpdatedTimeUtc"> The time when this maintenance event record was last updated, in UTC. </param>
+        /// <returns> A new <see cref="Models.HorizonDBMaintenanceEventActionResult"/> instance for mocking. </returns>
+        public static HorizonDBMaintenanceEventActionResult HorizonDBMaintenanceEventActionResult(string maintenanceEventId = default, ResourceIdentifier poolResourceId = default, MaintenanceEventStatus? status = default, DateTimeOffset? plannedStartTimeUtc = default, DateTimeOffset? plannedEndTimeUtc = default, bool? appliedNow = default, DateTimeOffset? lastUpdatedTimeUtc = default)
+        {
+            return new HorizonDBMaintenanceEventActionResult(
+                maintenanceEventId,
+                poolResourceId,
+                status,
+                plannedStartTimeUtc,
+                plannedEndTimeUtc,
+                appliedNow,
+                lastUpdatedTimeUtc,
+                default);
+        }
+
+        /// <summary> A service-managed node allocated to a HorizonDB pool. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="HorizonDB.NodeData"/> instance for mocking. </returns>
+        public static NodeData NodeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NodeProperties properties = default)
+        {
+            return new NodeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties of a service-managed HorizonDB node. </summary>
+        /// <param name="role"> The current role performed by the node within its pool. </param>
+        /// <param name="availabilityZone"> The availability zone in which the node is deployed. </param>
+        /// <returns> A new <see cref="Models.NodeProperties"/> instance for mocking. </returns>
+        public static NodeProperties NodeProperties(NodeRole role = default, string availabilityZone = default)
+        {
+            return new NodeProperties(role, availabilityZone, default);
+        }
+
+        /// <summary> A predefined log capture configuration created by the service for a HorizonDB cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="HorizonDB.LogCaptureConfigurationData"/> instance for mocking. </returns>
+        public static LogCaptureConfigurationData LogCaptureConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LogCaptureConfigurationProperties properties = default)
+        {
+            return new LogCaptureConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> The settings for capturing a specific type of HorizonDB log. </summary>
+        /// <param name="state"> Specifies whether HorizonDB captures this type of log. Disabling capture stops the production of new log files; existing files remain available until their retention period expires. </param>
+        /// <param name="retentionDays"> The number of days captured log files are retained. </param>
+        /// <param name="provisioningState"> The provisioning state of the log capture configuration. </param>
+        /// <returns> A new <see cref="Models.LogCaptureConfigurationProperties"/> instance for mocking. </returns>
+        public static LogCaptureConfigurationProperties LogCaptureConfigurationProperties(LogCaptureState state = default, int retentionDays = default, HorizonDBProvisioningState? provisioningState = default)
+        {
+            return new LogCaptureConfigurationProperties(state, retentionDays, provisioningState, default);
+        }
+
+        /// <summary> A sparse update request for a log capture configuration. </summary>
+        /// <param name="properties"> The log capture properties to update. </param>
+        /// <returns> A new <see cref="Models.LogCaptureConfigurationPatch"/> instance for mocking. </returns>
+        public static LogCaptureConfigurationPatch LogCaptureConfigurationPatch(LogCaptureConfigurationPropertiesForPatchUpdate properties = default)
+        {
+            return new LogCaptureConfigurationPatch(properties, default);
+        }
+
+        /// <summary> Properties for updating the log capture configuration. Omitted properties preserve their current values. </summary>
+        /// <param name="state"> Specifies whether HorizonDB captures this type of log. Disabling capture stops the production of new log files; existing files remain available until their retention period expires. </param>
+        /// <param name="retentionDays"> The number of days captured log files are retained. </param>
+        /// <returns> A new <see cref="Models.LogCaptureConfigurationPropertiesForPatchUpdate"/> instance for mocking. </returns>
+        public static LogCaptureConfigurationPropertiesForPatchUpdate LogCaptureConfigurationPropertiesForPatchUpdate(LogCaptureState? state = default, int? retentionDays = default)
+        {
+            return new LogCaptureConfigurationPropertiesForPatchUpdate(state, retentionDays, default);
+        }
+
+        /// <summary> A service-generated log file captured for a HorizonDB cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="HorizonDB.LogFileData"/> instance for mocking. </returns>
+        public static LogFileData LogFileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LogFileProperties properties = default)
+        {
+            return new LogFileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Metadata for a service-generated HorizonDB log file. </summary>
+        /// <param name="logType"> The type of the captured log file. </param>
+        /// <param name="createdAtUtc"> The date and time when the log file was created, in UTC. </param>
+        /// <param name="lastModifiedAtUtc"> The date and time when the log file was last modified, in UTC. </param>
+        /// <param name="retentionExpiresAtUtc"> The date and time when the log file expires according to its retention period, in UTC. </param>
+        /// <param name="isMutable"> Whether the platform can still append to or otherwise modify the log file. </param>
+        /// <param name="sizeInKilobytes"> The size of the log file in kilobytes, where one kilobyte is 1024 bytes. </param>
+        /// <param name="pool"> The name of the HorizonDB pool that the node generating the log file belongs to. </param>
+        /// <param name="node"> The node that generated the log file in the HorizonDB cluster. </param>
+        /// <param name="role"> The role performed by the node that generated the log file. </param>
+        /// <returns> A new <see cref="Models.LogFileProperties"/> instance for mocking. </returns>
+        public static LogFileProperties LogFileProperties(LogFileType logType = default, DateTimeOffset createdAtUtc = default, DateTimeOffset lastModifiedAtUtc = default, DateTimeOffset retentionExpiresAtUtc = default, bool isMutable = default, long sizeInKilobytes = default, string pool = default, string node = default, NodeRole role = default)
+        {
+            return new LogFileProperties(
+                logType,
+                createdAtUtc,
+                lastModifiedAtUtc,
+                retentionExpiresAtUtc,
+                isMutable,
+                sizeInKilobytes,
+                pool,
+                node,
+                role,
+                default);
+        }
+
+        /// <summary> A short-lived signed URL for downloading a captured log file. </summary>
+        /// <param name="downloadUri"> A short-lived signed URL from which the original log file can be downloaded. </param>
+        /// <param name="expiresAtUtc"> The date and time when the signed download URL expires, in UTC. </param>
+        /// <returns> A new <see cref="Models.LogFileDownloadUri"/> instance for mocking. </returns>
+        public static LogFileDownloadUri LogFileDownloadUri(Uri downloadUri = default, DateTimeOffset expiresAtUtc = default)
+        {
+            return new LogFileDownloadUri(downloadUri, expiresAtUtc, default);
         }
     }
 }

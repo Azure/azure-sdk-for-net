@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> Properties of a HorizonDB parameters. </summary>
+    /// <summary> Properties of a HorizonDB parameter. </summary>
     public partial class HorizonDBParameterProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -25,18 +25,22 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="name"> The name of the parameter. </param>
         /// <param name="description"> The description of the parameter. </param>
         /// <param name="value"> The value of the configuration. </param>
+        /// <param name="defaultValue"> The system-defined default value of the parameter, independent of the effective value. </param>
+        /// <param name="valueSource"> The source of the effective parameter value. UserOverride means that the value was explicitly supplied by the user, even when it equals defaultValue. </param>
         /// <param name="dataType"> The data type of the parameter. </param>
         /// <param name="allowedValues"> The allowed values for the parameter. </param>
         /// <param name="isDynamic"> Whether the parameter can be changed dynamically. </param>
-        /// <param name="isReadOnly"> Whether the parameter is a read-only parameter. </param>
+        /// <param name="isReadOnly"> Whether the parameter is read-only. Read-only parameters cannot be overridden. </param>
         /// <param name="documentationLink"> Link to parameter documentation. </param>
         /// <param name="unit"> The unit of measurement for the parameter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBParameterProperties(string name, string description, string value, string dataType, string allowedValues, bool? isDynamic, bool? isReadOnly, Uri documentationLink, string unit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBParameterProperties(string name, string description, string value, string defaultValue, ParameterValueSource? valueSource, string dataType, string allowedValues, bool? isDynamic, bool? isReadOnly, Uri documentationLink, string unit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             Value = value;
+            DefaultValue = defaultValue;
+            ValueSource = valueSource;
             DataType = dataType;
             AllowedValues = allowedValues;
             IsDynamic = isDynamic;
@@ -55,6 +59,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> The value of the configuration. </summary>
         public string Value { get; set; }
 
+        /// <summary> The system-defined default value of the parameter, independent of the effective value. </summary>
+        public string DefaultValue { get; }
+
+        /// <summary> The source of the effective parameter value. UserOverride means that the value was explicitly supplied by the user, even when it equals defaultValue. </summary>
+        public ParameterValueSource? ValueSource { get; }
+
         /// <summary> The data type of the parameter. </summary>
         public string DataType { get; }
 
@@ -64,7 +74,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Whether the parameter can be changed dynamically. </summary>
         public bool? IsDynamic { get; }
 
-        /// <summary> Whether the parameter is a read-only parameter. </summary>
+        /// <summary> Whether the parameter is read-only. Read-only parameters cannot be overridden. </summary>
         public bool? IsReadOnly { get; }
 
         /// <summary> Link to parameter documentation. </summary>
