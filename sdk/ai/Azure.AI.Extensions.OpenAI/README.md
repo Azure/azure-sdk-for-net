@@ -44,7 +44,8 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Browser automation](#browser-automation)
     - [Create Azure Playwright workspace](#create-azure-playwright-workspace)
     - [Configure Microsoft Foundry](#configure-microsoft-foundry)
-    - [Using Browser automation tool](#using-browser-automation-tool)
+    - [Browser automation tool](#browser-automation-tool)
+    - [Browser automation preview tool](#browser-automation-preview-tool)
   - [SharePoint tool](#sharepoint)
   - [Fabric Data Agent tool](#fabric)
     - [Create a Fabric Capacity](#create-a-fabric-capacity)
@@ -61,6 +62,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Memory search tool](#memory-search-tool)
   - [Azure Function tool](#azure-function-tool)
   - [Work IQ preview tool](#work-iq-preview-tool)
+  - [Web IQ preview tool](#web-iq-preview-tool)
 - [Tracing](#tracing)
   - [Enabling GenAI Tracing](#enabling-genai-tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
@@ -1316,7 +1318,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Tools = { ResponseTool.CreateMcpTool(
         serverLabel: "api-specs",
         serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
     )) }
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
@@ -1324,7 +1326,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
-Note that in this scenario we are using `GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval`, which means that any calls to the MCP server need to be approved.
+Note that in this scenario we are using `DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval`, which means that any calls to the MCP server need to be approved.
 Because of this setup we will need to get the response and check if we need to approve the call. If no calls were made, we are safe to output the Agent result.
 
 ```C# Snippet:Sample_CreateResponse_MCPTool_Async
@@ -1377,7 +1379,7 @@ When the connection is created, we can set it on the MCPTool and use it in `Decl
 McpTool tool = ResponseTool.CreateMcpTool(
         serverLabel: "api-specs",
         serverUri: new Uri("https://api.githubcopilot.com/mcp"),
-        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
     ));
 tool.ProjectConnectionId = mcpProjectConnectionName;
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -1485,26 +1487,33 @@ Playwright is a Node.js library for browser automation. Microsoft provides the [
 
 #### Create Azure Playwright workspace
 
-1. Deploy an Azure Playwright workspace.
-2. In the **Get started** section, open **2. Set up authentication**.
-3. **Select Service Access Token**, then choose **Generate Token**. **Save the token immediately-once you close the page, it cannot be viewed again.**
+1. Deploy an Azure Playwright workspace and open the resource.
+2. In left panel select **Access management** and check the box **Playwright Service Access Token**.
+3. Click **Generate Token**.
+4. **Save the token immediately-once you close the page, it cannot be viewed again.**
 
 #### Configure Microsoft Foundry
 
-1. Open the left navigation and select **Management center**.
-2. Choose **Connected resources**.
-3. Create a new connection of type **Serverless Model**.
-4. Provide a name, then paste your Access Token into the **Key** field.
-5. Set the Playwright Workspace Browser endpoint as the **Target URI**. You can find this endpoint on the Workspace **Overview page**. It begins with `wss://`.
+See the [Playwright Workspaces remote MCP quickstart](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/quickstart-automate-browser-tasks-remote-mcp) to configure the connection. Microsoft Entra ID is the preferred authentication method. For instructions to create a project connection, see [Automate browsers with the Playwright Workspaces remote MCP server](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/how-to-playwright-workspaces-remote-mcp). You can also use a workspace access token as described in the following steps.
+1. In the Microsoft foundry portal select **Build**.
+2. On the left panel select **Tools** sectrion and click **Connect a tool**.
+3. In the opened window select **Custom** tab, choose **Model Context Protocol (MCP)** and click **Create**.
+4. Name the connection.
+5. Open the Playwright workspace in the Azure portal and copy the Mcp endpoint address to `Remote MCP Server endpoint` (Mcp endpoint can be found on the **Overview** section).
+6. Paste the token generagted in the previous section to "Credential" section and name this key `x-api-k`.
+7. Click **Connect**.
 
 #### Using Browser automation tool
 
 Please note that Browser automation operations may take longer than typical calls to process. Using background mode for Responses or applying a network timeout of at least five minutes for non-background calls is highly recommended.
+The `BrowserAutomationTool` is using MCP connection as opposed to `BrowserAutomationPreviewTool`, which uses the serverless connection.
+Please refer to the playwright [quickstart document](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/quickstart-automate-browser-tasks-remote-mcp) to configure playwright mcp connection.
+The preferred way to access MCP server is  by using EntraID; see this [document](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/how-to-playwright-workspaces-remote-mcp) on how to create a project connection.
 
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_CONNECTION_NAME");
+var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_MCP_CONNECTION_NAME");
 AIProjectClientOptions options = new()
 {
     NetworkTimeout = TimeSpan.FromMinutes(5)
@@ -1515,10 +1524,9 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 To use Azure Playwright workspace we need to create agent with `BrowserAutomationAgentTool`.
 
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
-AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
-BrowserAutomationPreviewTool playwrightTool = new(
+BrowserAutomationTool playwrightTool = new(
     new BrowserAutomationToolOptions(
-        new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
+        new BrowserAutomationToolConnectionOptions(playwrightConnectionName)
     ));
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -1556,6 +1564,20 @@ await foreach (StreamingResponseUpdate update in responseClient.CreateResponseSt
     ParseResponse(update);
 }
 ```
+
+#### Browser automation preview tool
+
+Along with `BrowserAutomationTool`, Azure.AI.Extensions.OpenAI contain `BrowserAutomationPreviewTool`, which has the same functionality as `BrowserAutomationTool`.
+This tool was released to preview the functionality, please use the stable version of the tool.
+
+`BrowserAutomationPreviewTool` is using Serverless Model connection as opposed to MCP connection, used by `BrowserAutomationTool`. Please follow the steps below to create it.
+
+1. On the left panel select **Management center**.
+2. Choose **Connected resources**.
+3. Create a new connection of type **Serverless Model**.
+4. Provide a name, then paste your Access Token into the **Key** field.
+5. Set the Playwright Workspace Browser endpoint as the **Target URI**. You can find this endpoint on the Workspace **Overview page**. It begins with `wss://`.
+
 
 ### SharePoint tool (preview)<a id="sharepoint"></a>
 `SharepointPreviewTool` allows Agent to access SharePoint pages to get the data context. Use the SharePoint connection name as it is shown in the connections section of Microsoft Foundry to get the connection. Get the connection ID to initialize the `SharePointGroundingToolOptions`, which will be used to create `SharepointPreviewTool`.
@@ -1688,7 +1710,7 @@ the Fabric IQ connection in Microsoft Foundry and use `FabricIQPreviewTool` in t
 ```C# Snippet:Sample_CreateAgent_FabricIQ_Async
 FabricIQPreviewTool fabricIQTool = new(projectConnectionId: fabricIQProjectConnectionId)
 {
-    RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+    RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -1945,6 +1967,25 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+### Web IQ preview tool
+Web IQ allows returning responses, grounded by web data. By operating on Pareto curve efficiency it allows to minimize the token usage. The Agent, using WebIQ may be created using code below:
+
+```C# Snippet:Sample_CreateAgent_WebIQ_Async
+string WebIQProjectConnectionId = (await projectClient.Connections.GetConnectionAsync(WebIQProjectConnectionName)).Value.Id;
+WebIQPreviewTool WebIQTool = new(projectConnectionId: WebIQProjectConnectionId)
+{
+    RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
+};
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "Use the available Web IQ tools to answer questions and perform tasks.",
+    Tools = { WebIQTool },
+};
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+    agentName: "myWebIQAgent",
     options: new(agentDefinition));
 ```
 

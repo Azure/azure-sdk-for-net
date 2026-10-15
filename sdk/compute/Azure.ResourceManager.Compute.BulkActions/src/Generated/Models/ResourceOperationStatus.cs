@@ -11,13 +11,13 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The state the resource is on after the resource operation is applied. </summary>
+    /// <summary> Current status of an operation for the specific occurrence and resource. </summary>
     public readonly partial struct ResourceOperationStatus : IEquatable<ResourceOperationStatus>
     {
         private readonly string _value;
-        /// <summary> The resource operation was successful. </summary>
+        /// <summary> The operation completed successfully for the resource. </summary>
         private const string SucceededValue = "Succeeded";
-        /// <summary> The resource operation has failed. </summary>
+        /// <summary> The operation failed for the resource. </summary>
         private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="ResourceOperationStatus"/>. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> The resource operation was successful. </summary>
+        /// <summary> The operation completed successfully for the resource. </summary>
         public static ResourceOperationStatus Succeeded { get; } = new ResourceOperationStatus(SucceededValue);
 
-        /// <summary> The resource operation has failed. </summary>
+        /// <summary> The operation failed for the resource. </summary>
         public static ResourceOperationStatus Failed { get; } = new ResourceOperationStatus(FailedValue);
 
         /// <summary> Determines if two <see cref="ResourceOperationStatus"/> values are the same. </summary>

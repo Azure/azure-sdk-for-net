@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             get
             {
-                return SourceTrigger is null ? default : SourceTrigger.Status;
+                return SourceTrigger is null ? (ContainerRegistryTriggerStatus?)default : SourceTrigger.Status;
             }
             set
             {

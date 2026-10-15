@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownValidationRequest(validationCategory, individualRequestDetails, additionalBinaryDataProperties);
+            return new UnknownValidationRequest(validationCategory, individualRequestDetails ?? new ChangeTrackingList<DataBoxValidationInputContent>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GraphQueryListResult(value, nextLink, additionalBinaryDataProperties);
+            return new GraphQueryListResult(value ?? new ChangeTrackingList<ResourceGraphQueryData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

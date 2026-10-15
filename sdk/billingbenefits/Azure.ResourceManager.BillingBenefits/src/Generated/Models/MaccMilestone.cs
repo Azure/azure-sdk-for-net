@@ -24,17 +24,17 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of <see cref="MaccMilestone"/>. </summary>
         /// <param name="milestoneId"> Globally unique identifier for the milestone. Format: {guid}. </param>
         /// <param name="commitment"> Commitment associated with this milestone. </param>
-        /// <param name="endOn"> End date time for the milestone. Timestamp must be in the ISO date format YYYY-MM-DDT23:59:59Z. </param>
+        /// <param name="endsOn"> End date time for the milestone. Timestamp must be in the ISO date format YYYY-MM-DDT23:59:59Z. </param>
         /// <param name="automaticShortfall"> Setting this to 'Enable' enables automatic shortfall invoicing when milestone commitment is not met. </param>
         /// <param name="automaticShortfallSuppressReason"> Optional field to record suppression reason for automatic shortfall. </param>
         /// <param name="status"> Represents the current status of the Milestone. </param>
         /// <param name="shortfall"> Details of the shortfall associated with this milestone. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaccMilestone(string milestoneId, BillingBenefitsPrice commitment, DateTimeOffset? endOn, EnablementMode? automaticShortfall, AutomaticShortfallSuppressReason automaticShortfallSuppressReason, MaccMilestoneStatus? status, Shortfall shortfall, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaccMilestone(string milestoneId, BillingBenefitsPrice commitment, DateTimeOffset? endsOn, EnablementMode? automaticShortfall, AutomaticShortfallSuppressReason automaticShortfallSuppressReason, MaccMilestoneStatus? status, Shortfall shortfall, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MilestoneId = milestoneId;
             Commitment = commitment;
-            EndOn = endOn;
+            EndsOn = endsOn;
             AutomaticShortfall = automaticShortfall;
             AutomaticShortfallSuppressReason = automaticShortfallSuppressReason;
             Status = status;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public BillingBenefitsPrice Commitment { get; set; }
 
         /// <summary> End date time for the milestone. Timestamp must be in the ISO date format YYYY-MM-DDT23:59:59Z. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Setting this to 'Enable' enables automatic shortfall invoicing when milestone commitment is not met. </summary>
         public EnablementMode? AutomaticShortfall { get; set; }

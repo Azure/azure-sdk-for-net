@@ -25,6 +25,18 @@ public static class MockSyncAsyncExtensions
         }
     }
 
+    public static async Task SendSyncOrAsync(this ClientPipeline pipeline, PipelineMessage message, CancellationToken cancellationToken, bool isAsync)
+    {
+        if (isAsync)
+        {
+            await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+        }
+        else
+        {
+            pipeline.Send(message, cancellationToken);
+        }
+    }
+
     public static async Task WriteToSyncOrAsync(this BinaryContent content, Stream stream, CancellationToken cancellationToken, bool isAsync)
     {
         if (isAsync)

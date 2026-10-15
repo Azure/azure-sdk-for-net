@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The scheduled action extension. </summary>
+    /// <summary> A recurring bulk action occurrence associated with a specific compute resource. </summary>
     public partial class OccurrenceExtension : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(HealthState))
             {
                 writer.WritePropertyName("healthState"u8);
@@ -138,6 +143,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             IotOperationsProvisioningState? provisioningState = default;
             IReadOnlyList<AkriConnectorAllocatedDevice> allocatedDevices = default;
+            AkriConnectorStatus status = default;
             ResourceHealthState? healthState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -165,6 +171,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                     allocatedDevices = array;
                     continue;
                 }
+                if (prop.NameEquals("status"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = AkriConnectorStatus.DeserializeAkriConnectorStatus(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("healthState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -176,10 +191,10 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IotOperationsAkriConnectorProperties(provisioningState, allocatedDevices ?? new ChangeTrackingList<AkriConnectorAllocatedDevice>(), healthState, additionalBinaryDataProperties);
+            return new IotOperationsAkriConnectorProperties(provisioningState, allocatedDevices ?? new ChangeTrackingList<AkriConnectorAllocatedDevice>(), status, healthState, additionalBinaryDataProperties);
         }
     }
 }

@@ -22,6 +22,15 @@ internal static class MessageItemFactory
 {
     public static MessageResponseItem Message(MessageRole role, IEnumerable<ResponseContentPart> content)
     {
+        // OpenAI factories reject empty content; tests need empty messages, so seed then clear.
+        var parts = new List<ResponseContentPart>(content);
+        bool empty = parts.Count == 0;
+        if (empty)
+        {
+            parts.Add(ResponseContentPart.CreateInputTextPart(string.Empty));
+        }
+
+        content = parts;
         MessageResponseItem item = role switch
         {
             MessageRole.User => ResponseItem.CreateUserMessageItem(content),
@@ -30,6 +39,11 @@ internal static class MessageItemFactory
             MessageRole.Assistant => ResponseItem.CreateAssistantMessageItem(content),
             _ => throw new ArgumentOutOfRangeException(nameof(role), role, "Unsupported message role."),
         };
+
+        if (empty)
+        {
+            item.Content.Clear();
+        }
 
         return item;
     }

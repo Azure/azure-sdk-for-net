@@ -17,6 +17,7 @@ namespace Azure.Provisioning.SignalR
         /// <summary> Creates a new SignalRThrottleByUserIdRule. </summary>
         public SignalRThrottleByUserIdRule()
         {
+            Type.Assign(ClientConnectionCountRuleDiscriminator.ThrottleByUserIdRule);
         }
 
         /// <summary> Gets or sets the MaxCount. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.SignalR
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "ThrottleByUserIdRule");
             _maxCount = DefineProperty<int>(nameof(MaxCount), new string[] { "maxCount" });
             DefineAdditionalProperties();
         }

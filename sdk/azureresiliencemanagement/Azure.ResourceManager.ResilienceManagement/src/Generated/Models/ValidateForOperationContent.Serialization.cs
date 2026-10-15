@@ -134,18 +134,18 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            RecoveryOperationNames operationName = default;
+            RecoveryOperationName operationName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("operationName"u8))
                 {
-                    operationName = new RecoveryOperationNames(prop.Value.GetString());
+                    operationName = new RecoveryOperationName(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ValidateForOperationContent(operationName, additionalBinaryDataProperties);

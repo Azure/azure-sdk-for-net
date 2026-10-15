@@ -442,23 +442,23 @@ public class BicepValueTests
                 resource formatTokens 'Test.Provider/formatTokens@2024-01-01' = {
                   name: 'format-tokens'
                   properties: {
-                    rfcDateTime: 'Wed, 29 Jul 2026 09:30:00 GMT'
+                    constantDuration: '1.02:03:04'
                     isoDateTime: '2026-07-29T09:30:00.0000000Z'
-                    unixDateTime: 1785317400
+                    isoDuration: 'P1DT2H3M4S'
+                    millisecondsDoubleDuration: 1500
+                    millisecondsDuration: 1500
+                    millisecondsFloatDuration: 1500
+                    millisecondsInt64Duration: 1500
                     plainDate: '2026-07-29'
                     plainTime: '02:03:04.0050000'
-                    isoDuration: 'P1DT2H3M4S'
-                    constantDuration: '1.02:03:04'
-                    secondsDuration: 2
-                    secondsInt64Duration: 2
-                    secondsFloatDuration: json('1.5')
+                    rfcDateTime: 'Wed, 29 Jul 2026 09:30:00 GMT'
                     secondsDoubleDuration: json('1.5')
-                    millisecondsDuration: 1500
-                    millisecondsInt64Duration: 1500
-                    millisecondsFloatDuration: 1500
-                    millisecondsDoubleDuration: 1500
+                    secondsDuration: 2
+                    secondsFloatDuration: json('1.5')
+                    secondsInt64Duration: 2
                     stringInt: '42'
                     stringLong: '9007199254740991'
+                    unixDateTime: 1785317400
                   }
                 }
                 """);

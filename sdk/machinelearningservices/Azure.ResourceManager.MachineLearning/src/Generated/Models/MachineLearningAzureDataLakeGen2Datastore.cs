@@ -14,6 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Azure Data Lake Gen2 datastore configuration. </summary>
     public partial class MachineLearningAzureDataLakeGen2Datastore : MachineLearningDatastoreProperties
     {
+        private string _resourceGroup;
+        internal bool _resourceGroupIsDefined;
+        private string _subscriptionId;
+        internal bool _subscriptionIdIsDefined;
+        private string _endpoint;
+        internal bool _endpointIsDefined;
+        private string _protocol;
+        internal bool _protocolIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningAzureDataLakeGen2Datastore"/>. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>
         /// <param name="filesystem"> [Required] The name of the Data Lake Gen2 filesystem. </param>
@@ -46,22 +55,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
         internal MachineLearningAzureDataLakeGen2Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string resourceGroup, string subscriptionId, string accountName, string endpoint, string filesystem, string protocol, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, additionalBinaryDataProperties, credentials, datastoreType, isDefault)
         {
-            ResourceGroup = resourceGroup;
-            SubscriptionId = subscriptionId;
+            _resourceGroup = resourceGroup;
+            _subscriptionId = subscriptionId;
             AccountName = accountName;
-            Endpoint = endpoint;
+            _endpoint = endpoint;
             Filesystem = filesystem;
-            Protocol = protocol;
+            _protocol = protocol;
             ServiceDataAccessAuthIdentity = serviceDataAccessAuthIdentity;
         }
 
         /// <summary> Azure Resource Group name. </summary>
         [WirePath("resourceGroup")]
-        public string ResourceGroup { get; set; }
+        public string ResourceGroup
+        {
+            get
+            {
+                return _resourceGroup;
+            }
+            set
+            {
+                _resourceGroup = value;
+                _resourceGroupIsDefined = true;
+            }
+        }
 
         /// <summary> Azure Subscription Id. </summary>
         [WirePath("subscriptionId")]
-        public string SubscriptionId { get; set; }
+        public string SubscriptionId
+        {
+            get
+            {
+                return _subscriptionId;
+            }
+            set
+            {
+                _subscriptionId = value;
+                _subscriptionIdIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] Storage account name. </summary>
         [WirePath("accountName")]
@@ -69,7 +100,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Azure cloud endpoint for the storage account. </summary>
         [WirePath("endpoint")]
-        public string Endpoint { get; set; }
+        public string Endpoint
+        {
+            get
+            {
+                return _endpoint;
+            }
+            set
+            {
+                _endpoint = value;
+                _endpointIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] The name of the Data Lake Gen2 filesystem. </summary>
         [WirePath("filesystem")]
@@ -77,7 +119,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Protocol used to communicate with the storage account. </summary>
         [WirePath("protocol")]
-        public string Protocol { get; set; }
+        public string Protocol
+        {
+            get
+            {
+                return _protocol;
+            }
+            set
+            {
+                _protocol = value;
+                _protocolIsDefined = true;
+            }
+        }
 
         /// <summary> Indicates which identity to use to authenticate service data access to customer's storage. </summary>
         [WirePath("serviceDataAccessAuthIdentity")]

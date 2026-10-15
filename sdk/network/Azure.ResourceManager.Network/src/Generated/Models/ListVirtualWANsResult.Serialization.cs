@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListVirtualWANsResult(value, nextLink, additionalBinaryDataProperties);
+            return new ListVirtualWANsResult(value ?? new ChangeTrackingList<VirtualWanData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

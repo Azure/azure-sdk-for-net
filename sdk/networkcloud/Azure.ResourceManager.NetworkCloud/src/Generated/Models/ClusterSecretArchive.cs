@@ -38,11 +38,5 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             UseKeyVault = useKeyVault;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The resource ID of the key vault to archive the secrets of the cluster. </summary>
-        public ResourceIdentifier KeyVaultId { get; set; }
-
-        /// <summary> The indicator if the specified key vault should be used to archive the secrets of the cluster. </summary>
-        public ClusterSecretArchiveEnabled? UseKeyVault { get; set; }
     }
 }

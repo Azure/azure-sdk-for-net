@@ -17,6 +17,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new NumericalDataDriftMetricThreshold. </summary>
         public NumericalDataDriftMetricThreshold()
         {
+            DataType.Assign(MonitoringFeatureDataType.Numerical);
         }
 
         /// <summary> Gets or sets the Metric. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("dataType", new string[] { "dataType" }, defaultValue: "Numerical");
             _metric = DefineProperty<NumericalDataDriftMetric>(nameof(Metric), new string[] { "metric" }, isRequired: true);
             DefineAdditionalProperties();
         }

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _description;
+        internal bool _descriptionIsDefined;
+        private string _revision;
+        internal bool _revisionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="WorkbookPropertiesUpdateParameters"/>. </summary>
         public WorkbookPropertiesUpdateParameters()
@@ -37,8 +41,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             SerializedData = serializedData;
             Category = category;
             TagsPropertiesTags = tagsPropertiesTags;
-            Description = description;
-            Revision = revision;
+            _description = description;
+            _revision = revision;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,10 +64,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> The description of the workbook. </summary>
         [WirePath("description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+                _descriptionIsDefined = true;
+            }
+        }
 
         /// <summary> The unique revision id for this workbook definition. </summary>
         [WirePath("revision")]
-        public string Revision { get; set; }
+        public string Revision
+        {
+            get
+            {
+                return _revision;
+            }
+            set
+            {
+                _revision = value;
+                _revisionIsDefined = true;
+            }
+        }
     }
 }

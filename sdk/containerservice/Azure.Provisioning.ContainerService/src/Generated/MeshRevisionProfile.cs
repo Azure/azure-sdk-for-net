@@ -78,7 +78,7 @@ namespace Azure.Provisioning.ContainerService
         {
             get
             {
-                return Properties.MeshRevisions;
+                return Properties is null ? default : Properties.MeshRevisions;
             }
         }
 

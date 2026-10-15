@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ForecastDataset(granularity, configuration, aggregation, filter, additionalBinaryDataProperties);
+            return new ForecastDataset(granularity, configuration, aggregation ?? new ChangeTrackingDictionary<string, ForecastAggregation>(), filter, additionalBinaryDataProperties);
         }
     }
 }

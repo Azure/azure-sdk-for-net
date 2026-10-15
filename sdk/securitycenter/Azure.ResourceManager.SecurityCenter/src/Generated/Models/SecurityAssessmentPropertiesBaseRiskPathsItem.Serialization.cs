@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SecurityAssessmentPropertiesBaseRiskPathsItem(id, nodes ?? new ChangeTrackingList<SecurityAssessmentPropertiesBaseRiskPathsItemNodesItem>(), edges ?? new ChangeTrackingList<SecurityAssessmentPropertiesBaseRiskPathsItemEdgeItem>(), additionalBinaryDataProperties);

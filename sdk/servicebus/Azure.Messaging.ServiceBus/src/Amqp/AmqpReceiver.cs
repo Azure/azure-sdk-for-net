@@ -41,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <value>
         /// <c>true</c> if the receiver is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed => _closed;
+        public override bool IsClosed => Volatile.Read(ref _closed) != 0;
 
         static AmqpReceiver()
         {
@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 () => new AmqpNonExclusiveSessionFilterCodec());
         }
 
-        private volatile bool _closed;
+        private int _closed;
 
         /// <summary>
         /// Indicates whether or not the session link has been closed.
@@ -109,6 +109,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly ServiceBusReceiveMode _receiveMode;
         private readonly FaultTolerantAmqpObject<ReceivingAmqpLink> _receiveLink;
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
+        private readonly Func<RequestResponseAmqpLink, AmqpMessage, TimeSpan, Task<AmqpMessage>> _requestAsync;
 
         private const int SizeOfGuidInBytes = 16;
 
@@ -187,6 +188,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="sessionLockToken">The session lock token to present when cooperatively taking over a non-exclusive session. Only applicable for session receivers.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the
         /// open link operation. Only applicable for session receivers.</param>
+        /// <param name="requestAsync">The operation used to send a request over the management link.</param>
         ///
         /// <remarks>
         /// As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -208,7 +210,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             AmqpMessageConverter messageConverter,
             bool isSessionExclusive = true,
             Guid? sessionLockToken = null,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            Func<RequestResponseAmqpLink, AmqpMessage, TimeSpan, Task<AmqpMessage>> requestAsync = null)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
@@ -244,6 +247,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 timeout => OpenManagementLinkAsync(timeout),
                 link => _connectionScope.CloseLink(link, Identifier));
             _messageConverter = messageConverter;
+            _requestAsync = requestAsync ?? ((link, request, timeout) => link.RequestAsync(request, timeout));
         }
 
         private async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(
@@ -1191,7 +1195,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 .ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            using AmqpMessage responseAmqpMessage = await link.RequestAsync(
+            using AmqpMessage responseAmqpMessage = await _requestAsync(
+                link,
                 amqpRequestMessage.AmqpMessage,
                 timeout.CalculateRemaining(stopWatch.GetElapsedTime()))
                 .ConfigureAwait(false);
@@ -1564,24 +1569,39 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override async Task<int> DeleteMessagesAsync(
             int messageCount,
             DateTimeOffset beforeEnqueueTimeUtc,
-            CancellationToken cancellationToken = default) => await _retryPolicy.RunOperation(
-                static async (value, timeout, token) =>
+            CancellationToken cancellationToken = default)
+        {
+            (RequestResponseAmqpLink link, TimeSpan remainingTimeout) = await _retryPolicy.RunOperation(
+                static async (receiver, timeout, token) =>
                 {
-                    var (receiver, innerMessageCount, innerBeforeEnqueueTimeUtc) = value;
-                    return await receiver.DeleteMessagesInternalAsync(
-                            innerMessageCount,
-                            innerBeforeEnqueueTimeUtc,
-                            timeout,
-                            token)
-                        .ConfigureAwait(false);
+                    var stopWatch = ValueStopwatch.StartNew();
+                    RequestResponseAmqpLink link = await receiver._managementLink.GetOrCreateAsync(timeout, token).ConfigureAwait(false);
+                    return (link, timeout.CalculateRemaining(stopWatch.GetElapsedTime()));
                 },
-                (this, messageCount, beforeEnqueueTimeUtc),
+                this,
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
+
+            try
+            {
+                return await DeleteMessagesInternalAsync(
+                    messageCount,
+                    beforeEnqueueTimeUtc,
+                    link,
+                    remainingTimeout,
+                    cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(exception)).Throw();
+                throw;
+            }
+        }
 
         private async Task<int> DeleteMessagesInternalAsync(
             int messageCount,
             DateTimeOffset beforeEnqueueTimeUtc,
+            RequestResponseAmqpLink link,
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
@@ -1605,14 +1625,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = SessionId;
             }
 
-            RequestResponseAmqpLink link = await _managementLink.GetOrCreateAsync(
-                timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
-                cancellationToken)
-                .ConfigureAwait(false);
-
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            using AmqpMessage responseAmqpMessage = await link.RequestAsync(
+            using AmqpMessage responseAmqpMessage = await _requestAsync(
+                link,
                 amqpRequestMessage.AmqpMessage,
                 timeout.CalculateRemaining(stopWatch.GetElapsedTime()))
                 .ConfigureAwait(false);
@@ -1621,16 +1637,38 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
             {
-                return amqpResponseMessage.GetValue<int>(ManagementConstants.Properties.MessageCount);
+                return ValidateDeletedCount(
+                    amqpResponseMessage.GetValue<int>(ManagementConstants.Properties.MessageCount),
+                    messageCount);
             }
 
-            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
-                (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
+            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent)
             {
                 return 0;
             }
 
+            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound &&
+                Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition()))
+            {
+                if (amqpResponseMessage.Map?.TryGetValue<int>(ManagementConstants.Properties.MessageCount, out var deletedCount) != true)
+                {
+                    throw new InvalidOperationException("Batch delete response did not contain a valid message-count.");
+                }
+
+                return ValidateDeletedCount(deletedCount, messageCount);
+            }
+
             throw amqpResponseMessage.ToMessagingContractException();
+        }
+
+        private static int ValidateDeletedCount(int deletedCount, int requestedCount)
+        {
+            if (deletedCount < 0 || deletedCount > requestedCount)
+            {
+                throw new InvalidOperationException("Batch delete response did not contain a valid message-count.");
+            }
+
+            return deletedCount;
         }
 
         /// <summary>
@@ -1640,37 +1678,49 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public override async Task CloseAsync(CancellationToken cancellationToken)
         {
-            if (_closed)
+            // Claiming the close atomically makes the caller its sole owner, so only that caller may restore the flag below.
+
+            if (Interlocked.CompareExchange(ref _closed, 1, 0) != 0)
             {
                 return;
             }
 
-            _closed = true;
-
-            RequestResponseLockedMessages.Dispose();
-
-            if (_receiveLink?.TryGetOpenedObject(out var link) == true)
+            try
             {
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                // Allow in-flight messages to drain so that they do not remain locked by the service after closing the link.
-
-                if (!_isSessionReceiver && link.LinkCredit > 0)
+                if (_receiveLink?.TryGetOpenedObject(out var link) == true)
                 {
-                    await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                    // Allow in-flight messages to drain so that they do not remain locked by the service after closing the link.
+
+                    if (!_isSessionReceiver && link.LinkCredit > 0)
+                    {
+                        await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
+                    }
+
+                    await _receiveLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
 
-                await _receiveLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
-            }
+                if (_managementLink?.TryGetOpenedObject(out var _) == true)
+                {
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    await _managementLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                }
 
-            if (_managementLink?.TryGetOpenedObject(out var _) == true)
+                // Disposed only on a completed close; unlike the closed flag, this cannot be undone if the close is canceled.
+
+                RequestResponseLockedMessages.Dispose();
+
+                _receiveLink?.Dispose();
+                _managementLink?.Dispose();
+            }
+            catch (Exception)
             {
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                await _managementLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
-            }
+                // The close did not complete; leaving the flag set would short-circuit the guard above, so the links could never be closed.
 
-            _receiveLink?.Dispose();
-            _managementLink?.Dispose();
+                Volatile.Write(ref _closed, 0);
+                throw;
+            }
         }
 
         private void OnReceiverLinkClosed(object receiver, EventArgs e)
@@ -1725,7 +1775,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         private bool HasLinkCommunicationError(ReceivingAmqpLink link) =>
-            !_closed && (link?.IsClosing() ?? false);
+            !IsClosed && (link?.IsClosing() ?? false);
 
         private void ThrowIfSessionLockLost()
         {

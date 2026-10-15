@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains information about the soft deletion policy of the gallery. </summary>
-    internal partial class SoftDeletePolicy : IJsonModel<SoftDeletePolicy>
+    public partial class SoftDeletePolicy : IJsonModel<SoftDeletePolicy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("isSoftDeleteEnabled"u8);
                 writer.WriteBooleanValue(IsSoftDeleteEnabled.Value);
             }
+            if (Optional.IsDefined(RetentionPeriodInDays))
+            {
+                writer.WritePropertyName("retentionPeriodInDays"u8);
+                writer.WriteNumberValue(RetentionPeriodInDays.Value);
+            }
+            if (Optional.IsDefined(GracePeriodInDays))
+            {
+                writer.WritePropertyName("gracePeriodInDays"u8);
+                writer.WriteNumberValue(GracePeriodInDays.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +132,8 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             bool? isSoftDeleteEnabled = default;
+            int? retentionPeriodInDays = default;
+            int? gracePeriodInDays = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +146,30 @@ namespace Azure.ResourceManager.Compute.Models
                     isSoftDeleteEnabled = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("retentionPeriodInDays"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    retentionPeriodInDays = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("gracePeriodInDays"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gracePeriodInDays = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SoftDeletePolicy(isSoftDeleteEnabled, additionalBinaryDataProperties);
+            return new SoftDeletePolicy(isSoftDeleteEnabled, retentionPeriodInDays, gracePeriodInDays, additionalBinaryDataProperties);
         }
     }
 }

@@ -31,23 +31,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> The default ClusterResourcePlacement policy configuration. </summary>
-        internal ClusterResourcePlacementSpec DefaultClusterResourcePlacement { get; set; }
-
-        /// <summary> Policy defines how to select member clusters to place the selected resources. If unspecified, all the joined member clusters are selected. </summary>
-        public ContainerServiceFleetPlacementPolicy DefaultClusterResourcePlacementPolicy
-        {
-            get
-            {
-                return DefaultClusterResourcePlacement is null ? default : DefaultClusterResourcePlacement.Policy;
-            }
-            set
-            {
-                if (DefaultClusterResourcePlacement is null)
-                {
-                    DefaultClusterResourcePlacement = new ClusterResourcePlacementSpec();
-                }
-                DefaultClusterResourcePlacement.Policy = value;
-            }
-        }
+        public ClusterResourcePlacementSpec DefaultClusterResourcePlacement { get; set; }
     }
 }

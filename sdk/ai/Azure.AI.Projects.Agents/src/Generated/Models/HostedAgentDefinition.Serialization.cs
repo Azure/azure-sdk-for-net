@@ -126,6 +126,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("session_configuration"u8);
                 writer.WriteObjectValue(SessionConfiguration, options);
             }
+            if (Optional.IsDefined(EnableMemorySnapshot))
+            {
+                writer.WritePropertyName("enable_memory_snapshot"u8);
+                writer.WriteBooleanValue(EnableMemorySnapshot.Value);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -164,6 +169,7 @@ namespace Azure.AI.Projects.Agents
             CodeConfiguration codeConfiguration = default;
             TelemetryConfig telemetryConfig = default;
             SessionConfiguration sessionConfiguration = default;
+            bool? enableMemorySnapshot = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -261,9 +267,18 @@ namespace Azure.AI.Projects.Agents
                     sessionConfiguration = SessionConfiguration.DeserializeSessionConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("enable_memory_snapshot"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableMemorySnapshot = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HostedAgentDefinition(
@@ -277,7 +292,8 @@ namespace Azure.AI.Projects.Agents
                 versions ?? new ChangeTrackingList<ProtocolVersionRecord>(),
                 codeConfiguration,
                 telemetryConfig,
-                sessionConfiguration);
+                sessionConfiguration,
+                enableMemorySnapshot);
         }
     }
 }

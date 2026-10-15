@@ -34,8 +34,8 @@ public class BasicAppContainersTests
                     };
                 infra.Add(logAnalytics);
 
-                ContainerAppManagedEnvironment env =
-                    new(nameof(env), ContainerAppManagedEnvironment.ResourceVersions.V2024_03_01)
+                ContainerAppManagedEnvironment env1 =
+                    new(nameof(env1), ContainerAppManagedEnvironment.ResourceVersions.V2024_03_01)
                     {
                         AppLogsConfiguration =
                             new ContainerAppLogsConfiguration
@@ -48,12 +48,12 @@ public class BasicAppContainersTests
                                 }
                             },
                     };
-                infra.Add(env);
+                infra.Add(env1);
 
                 ContainerApp app =
                     new(nameof(app), ContainerApp.ResourceVersions.V2024_03_01)
                     {
-                        ManagedEnvironmentId = env.Id,
+                        ManagedEnvironmentId = env1.Id,
                         Configuration =
                             new ContainerAppConfiguration
                             {
@@ -124,8 +124,8 @@ public class BasicAppContainersTests
               }
             }
 
-            resource env 'Microsoft.App/managedEnvironments@2024-03-01' = {
-              name: take('env${uniqueString(resourceGroup().id)}', 24)
+            resource env1 'Microsoft.App/managedEnvironments@2024-03-01' = {
+              name: take('env1-${uniqueString(resourceGroup().id)}', 60)
               location: location
               properties: {
                 appLogsConfiguration: {
@@ -144,20 +144,19 @@ public class BasicAppContainersTests
               properties: {
                 configuration: {
                   ingress: {
+                    allowInsecure: false
                     external: true
                     targetPort: 80
                     traffic: [
                       {
-                        weight: 100
                         latestRevision: true
+                        weight: 100
                       }
                     ]
-                    allowInsecure: false
                   }
                 }
-                managedEnvironmentId: env.id
+                managedEnvironmentId: env1.id
                 template: {
-                  revisionSuffix: 'firstrevision'
                   containers: [
                     {
                       image: containerImage
@@ -168,9 +167,10 @@ public class BasicAppContainersTests
                       }
                     }
                   ]
+                  revisionSuffix: 'firstrevision'
                   scale: {
-                    minReplicas: 1
                     maxReplicas: 3
+                    minReplicas: 1
                   }
                 }
               }

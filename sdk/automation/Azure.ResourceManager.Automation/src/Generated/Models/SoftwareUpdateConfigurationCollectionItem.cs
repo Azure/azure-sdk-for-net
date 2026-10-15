@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             get
             {
-                return Properties.StartOn;
+                return Properties.StartsOn;
             }
         }
 

@@ -16,6 +16,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _readOnly;
+        internal bool _readOnlyIsDefined;
+        private string _consistency;
+        internal bool _consistencyIsDefined;
+        private MountBindOptions _bind;
+        internal bool _bindIsDefined;
+        private VolumeOptions _volume;
+        internal bool _volumeIsDefined;
+        private TmpfsOptions _tmpfs;
+        internal bool _tmpfsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VolumeDefinition"/>. </summary>
         public VolumeDefinition()
@@ -35,13 +45,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal VolumeDefinition(VolumeDefinitionType? definitionType, bool? readOnly, string source, string target, string consistency, MountBindOptions bind, VolumeOptions volume, TmpfsOptions tmpfs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DefinitionType = definitionType;
-            ReadOnly = readOnly;
+            _readOnly = readOnly;
             Source = source;
             Target = target;
-            Consistency = consistency;
-            Bind = bind;
-            Volume = volume;
-            Tmpfs = tmpfs;
+            _consistency = consistency;
+            _bind = bind;
+            _volume = volume;
+            _tmpfs = tmpfs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,7 +61,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Indicate whether to mount volume as readOnly. Default value for this is false. </summary>
         [WirePath("readOnly")]
-        public bool? ReadOnly { get; set; }
+        public bool? ReadOnly
+        {
+            get
+            {
+                return _readOnly;
+            }
+            set
+            {
+                _readOnly = value;
+                _readOnlyIsDefined = true;
+            }
+        }
 
         /// <summary> Source of the mount. For bind mounts this is the host path. </summary>
         [WirePath("source")]
@@ -63,19 +84,63 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Consistency of the volume. </summary>
         [WirePath("consistency")]
-        public string Consistency { get; set; }
+        public string Consistency
+        {
+            get
+            {
+                return _consistency;
+            }
+            set
+            {
+                _consistency = value;
+                _consistencyIsDefined = true;
+            }
+        }
 
         /// <summary> Bind Options of the mount. </summary>
         [WirePath("bind")]
-        public MountBindOptions Bind { get; set; }
+        public MountBindOptions Bind
+        {
+            get
+            {
+                return _bind;
+            }
+            set
+            {
+                _bind = value;
+                _bindIsDefined = true;
+            }
+        }
 
         /// <summary> Volume Options of the mount. </summary>
         [WirePath("volume")]
-        internal VolumeOptions Volume { get; set; }
+        internal VolumeOptions Volume
+        {
+            get
+            {
+                return _volume;
+            }
+            set
+            {
+                _volume = value;
+                _volumeIsDefined = true;
+            }
+        }
 
         /// <summary> tmpfs option of the mount. </summary>
         [WirePath("tmpfs")]
-        internal TmpfsOptions Tmpfs { get; set; }
+        internal TmpfsOptions Tmpfs
+        {
+            get
+            {
+                return _tmpfs;
+            }
+            set
+            {
+                _tmpfs = value;
+                _tmpfsIsDefined = true;
+            }
+        }
 
         /// <summary> Indicate whether volume is nocopy. </summary>
         [WirePath("volume.nocopy")]

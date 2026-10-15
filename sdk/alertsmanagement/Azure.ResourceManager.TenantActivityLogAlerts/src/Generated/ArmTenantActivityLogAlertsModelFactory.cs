@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
     public static partial class ArmTenantActivityLogAlertsModelFactory
     {
 
+        /// <summary>
+        /// An Activity Log Alert rule condition that is met when all its member conditions are met.
+        /// Each condition can be of one of the following types:
+        /// __Important__: Each type has its unique subset of properties. Properties from different types CANNOT exist in one condition.
+        /// * __Leaf Condition -__ must contain 'field' and either 'equals' or 'containsAny'.
+        /// _Please note, 'anyOf' should __not__ be set in a Leaf Condition._
+        /// * __AnyOf Condition -__ must contain __only__ 'anyOf' (which is an array of Leaf Conditions).
+        /// _Please note, 'field', 'equals' and 'containsAny' should __not__ be set in an AnyOf Condition._
+        /// </summary>
         /// <param name="field">
         /// The name of the Activity Log event's field that this condition will examine.
         /// The possible values for this field are (case-insensitive): 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties'.
@@ -33,6 +42,10 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
             return new TenantActivityLogAlertAnyOfOrLeafCondition(@field, equalTo, (containsAny ?? new ChangeTrackingList<string>()).ToList(), default, (anyOf ?? new ChangeTrackingList<TenantActivityLogAlertLeafCondition>()).ToList());
         }
 
+        /// <summary>
+        /// An Activity Log Alert rule condition that is met by comparing the field and value of an Activity Log event.
+        /// This condition must contain 'field' and either 'equals' or 'containsAny'.
+        /// </summary>
         /// <param name="field">
         /// The name of the Activity Log event's field that this condition will examine.
         /// The possible values for this field are (case-insensitive): 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties'.
@@ -47,6 +60,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
             return new TenantActivityLogAlertLeafCondition(@field, equalTo, (containsAny ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> A pointer to an Azure Action Group. </summary>
         /// <param name="actionGroupId"> The resource ID of the Action Group. This cannot be null or empty. </param>
         /// <param name="webhookProperties"> the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload. </param>
         /// <param name="actionProperties"> Predefined list of properties and configuration items for the action group. </param>

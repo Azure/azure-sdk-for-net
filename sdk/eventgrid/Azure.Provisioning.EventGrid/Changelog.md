@@ -1,14 +1,14 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2026-09-09)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added support for Event Grid resources and models from API version `2025-11-15-preview`.
 
 ### Other Changes
+
+- Migrated generation to the TypeSpec-based provisioning generator.
 
 ## 1.1.0 (2025-06-16)
 

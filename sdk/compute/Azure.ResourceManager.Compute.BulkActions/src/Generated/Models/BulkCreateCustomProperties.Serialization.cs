@@ -96,16 +96,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("capacityType"u8);
                 writer.WriteStringValue(CapacityType.Value.ToString());
             }
-            if (Optional.IsDefined(MinCapacity))
-            {
-                writer.WritePropertyName("minCapacity"u8);
-                writer.WriteNumberValue(MinCapacity.Value);
-            }
-            if (Optional.IsDefined(PartialFulfillmentPolicy))
-            {
-                writer.WritePropertyName("partialFulfillmentPolicy"u8);
-                writer.WriteObjectValue(PartialFulfillmentPolicy, options);
-            }
             if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
@@ -116,25 +106,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("priorityProfile"u8);
-            writer.WriteObjectValue(PriorityProfile, options);
-            if (Optional.IsCollectionDefined(VmSizesProfile))
-            {
-                writer.WritePropertyName("vmSizesProfile"u8);
-                writer.WriteStartArray();
-                foreach (BulkCreateCustomVmSizeProfile item in VmSizesProfile)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             writer.WritePropertyName("computeProfile"u8);
             writer.WriteObjectValue(ComputeProfile, options);
-            if (Optional.IsDefined(ZoneAllocationPolicy))
-            {
-                writer.WritePropertyName("zoneAllocationPolicy"u8);
-                writer.WriteObjectValue(ZoneAllocationPolicy, options);
-            }
             if (Optional.IsDefined(OverridesProfile))
             {
                 writer.WritePropertyName("overridesProfile"u8);
@@ -191,13 +164,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             BulkInstancesOperationProvisioningState? provisioningState = default;
             int capacity = default;
             CapacityType? capacityType = default;
-            int? minCapacity = default;
-            PartialFulfillmentPolicy partialFulfillmentPolicy = default;
             IReadOnlyList<BulkCreateCustomResolvedItem> resources = default;
-            BulkCreateCustomPriorityProfile priorityProfile = default;
-            IList<BulkCreateCustomVmSizeProfile> vmSizesProfile = default;
             ComputeProfile computeProfile = default;
-            BulkCreateCustomZoneAllocationPolicy zoneAllocationPolicy = default;
             BulkCreateCustomOverridesProfile overridesProfile = default;
             BulkActionExecutionParameterDetail executionParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -235,24 +203,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     capacityType = new CapacityType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("minCapacity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    minCapacity = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("partialFulfillmentPolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    partialFulfillmentPolicy = PartialFulfillmentPolicy.DeserializePartialFulfillmentPolicy(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("resources"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -267,37 +217,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     resources = array;
                     continue;
                 }
-                if (prop.NameEquals("priorityProfile"u8))
-                {
-                    priorityProfile = BulkCreateCustomPriorityProfile.DeserializeBulkCreateCustomPriorityProfile(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("vmSizesProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BulkCreateCustomVmSizeProfile> array = new List<BulkCreateCustomVmSizeProfile>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(BulkCreateCustomVmSizeProfile.DeserializeBulkCreateCustomVmSizeProfile(item, options));
-                    }
-                    vmSizesProfile = array;
-                    continue;
-                }
                 if (prop.NameEquals("computeProfile"u8))
                 {
                     computeProfile = ComputeProfile.DeserializeComputeProfile(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("zoneAllocationPolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    zoneAllocationPolicy = BulkCreateCustomZoneAllocationPolicy.DeserializeBulkCreateCustomZoneAllocationPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("overridesProfile"u8))
@@ -320,7 +242,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BulkCreateCustomProperties(
@@ -328,13 +250,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 provisioningState,
                 capacity,
                 capacityType,
-                minCapacity,
-                partialFulfillmentPolicy,
                 resources ?? new ChangeTrackingList<BulkCreateCustomResolvedItem>(),
-                priorityProfile,
-                vmSizesProfile ?? new ChangeTrackingList<BulkCreateCustomVmSizeProfile>(),
                 computeProfile,
-                zoneAllocationPolicy,
                 overridesProfile,
                 executionParameters,
                 additionalBinaryDataProperties);

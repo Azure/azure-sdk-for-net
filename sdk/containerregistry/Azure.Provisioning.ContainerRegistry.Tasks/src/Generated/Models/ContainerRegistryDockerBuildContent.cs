@@ -27,6 +27,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         /// <summary> Creates a new ContainerRegistryDockerBuildContent. </summary>
         public ContainerRegistryDockerBuildContent()
         {
+            Type.Assign("DockerBuildRequest");
         }
 
         /// <summary> Gets or sets the ImageNames. </summary>
@@ -215,7 +216,6 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "DockerBuildRequest");
             _imageNames = DefineListProperty<string>(nameof(ImageNames), new string[] { "imageNames" });
             _isPushEnabled = DefineProperty<bool>(nameof(IsPushEnabled), new string[] { "isPushEnabled" });
             _isCacheDisabled = DefineProperty<bool>(nameof(IsCacheDisabled), new string[] { "noCache" });

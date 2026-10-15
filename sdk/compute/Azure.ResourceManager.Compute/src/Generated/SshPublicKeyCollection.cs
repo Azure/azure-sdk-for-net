@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SshPublicKeyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SshPublicKeyResource.ResourceType, out string sshPublicKeyApiVersion);
             _sshPublicKeyResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SshPublicKeyResource.ResourceType.Namespace, Diagnostics);
-            _sshPublicKeyResourcesRestClient = new SshPublicKeyResources(_sshPublicKeyResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sshPublicKeyApiVersion ?? "2026-03-01");
+            _sshPublicKeyResourcesRestClient = new SshPublicKeyResources(_sshPublicKeyResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +177,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +275,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SshPublicKeyData, SshPublicKeyResource>(new SshPublicKeyResourcesGetByResourceGroupAsyncCollectionResultOfT(_sshPublicKeyResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SshPublicKeyCollection.GetAll"), data => new SshPublicKeyResource(Client, data));
+            return new AsyncPageableWrapper<SshPublicKeyData, SshPublicKeyResource>(new SshPublicKeyDataAsyncCollectionResultOfT(_sshPublicKeyResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SshPublicKeyCollection.GetAll"), data => new SshPublicKeyResource(Client, data));
         }
 
         /// <summary>
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SshPublicKeyData, SshPublicKeyResource>(new SshPublicKeyResourcesGetByResourceGroupCollectionResultOfT(_sshPublicKeyResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SshPublicKeyCollection.GetAll"), data => new SshPublicKeyResource(Client, data));
+            return new PageableWrapper<SshPublicKeyData, SshPublicKeyResource>(new SshPublicKeyDataCollectionResultOfT(_sshPublicKeyResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SshPublicKeyCollection.GetAll"), data => new SshPublicKeyResource(Client, data));
         }
 
         /// <summary>
@@ -332,7 +331,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +388,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,7 +445,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -507,7 +506,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>

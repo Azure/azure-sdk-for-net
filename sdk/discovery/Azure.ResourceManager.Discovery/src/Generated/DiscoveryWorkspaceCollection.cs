@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiscoveryWorkspaceResource.ResourceType, out string discoveryWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoveryWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryWorkspaceApiVersion ?? "2026-06-01");
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Discovery/workspaces", out string workspacesApiVersionOverride) ? workspacesApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscoveryWorkspaceData, DiscoveryWorkspaceResource>(new WorkspacesGetByResourceGroupAsyncCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryWorkspaceCollection.GetAll"), data => new DiscoveryWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<DiscoveryWorkspaceData, DiscoveryWorkspaceResource>(new DiscoveryWorkspaceDataAsyncCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryWorkspaceCollection.GetAll"), data => new DiscoveryWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscoveryWorkspaceData, DiscoveryWorkspaceResource>(new WorkspacesGetByResourceGroupCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryWorkspaceCollection.GetAll"), data => new DiscoveryWorkspaceResource(Client, data));
+            return new PageableWrapper<DiscoveryWorkspaceData, DiscoveryWorkspaceResource>(new DiscoveryWorkspaceDataCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryWorkspaceCollection.GetAll"), data => new DiscoveryWorkspaceResource(Client, data));
         }
 
         /// <summary>

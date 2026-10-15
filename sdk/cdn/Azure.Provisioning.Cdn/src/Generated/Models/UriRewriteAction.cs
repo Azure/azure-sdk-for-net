@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new UriRewriteAction. </summary>
         public UriRewriteAction()
         {
+            Name.Assign(DeliveryRuleActionName.UrlRewrite);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("name", new string[] { "name" }, defaultValue: "UrlRewrite");
             _properties = DefineModelProperty<UriRewriteActionProperties>(nameof(Properties), new string[] { "parameters" }, isRequired: true);
             DefineAdditionalProperties();
         }

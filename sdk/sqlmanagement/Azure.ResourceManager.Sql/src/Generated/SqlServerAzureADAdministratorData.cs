@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.Sid;
+                return Properties is null ? (Guid?)default : Properties.Sid;
             }
             set
             {

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,7 +47,8 @@ namespace Azure.Search.Documents
         public virtual Response<long> GetDocumentCount(CancellationToken cancellationToken = default)
         {
             Response result = GetDocumentCount(cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content.ToObjectFromJson<long>(), result);
+            long value = long.Parse(result.Content.ToString(), CultureInfo.InvariantCulture);
+            return Response.FromValue(value, result);
         }
 
         /// <summary> Queries the number of documents in the index. </summary>
@@ -55,7 +57,8 @@ namespace Azure.Search.Documents
         public virtual async Task<Response<long>> GetDocumentCountAsync(CancellationToken cancellationToken = default)
         {
             Response result = await GetDocumentCountAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content.ToObjectFromJson<long>(), result);
+            long value = long.Parse(result.Content.ToString(), CultureInfo.InvariantCulture);
+            return Response.FromValue(value, result);
         }
 
         /// <summary>

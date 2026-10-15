@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(EventGridTopicResource.ResourceType, out string eventGridTopicApiVersion);
             _topicsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventGridTopicResource.ResourceType.Namespace, Diagnostics);
-            _topicsRestClient = new Topics(_topicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventGridTopicApiVersion ?? "2025-07-15-preview");
+            _topicsRestClient = new Topics(
+                _topicsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                eventGridTopicApiVersion ?? "2025-07-15-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -296,7 +302,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventGridTopicData, EventGridTopicResource>(new TopicsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventGridTopicData, EventGridTopicResource>(new EventGridTopicDataAsyncCollectionResultOfT(
                 _topicsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +339,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventGridTopicData, EventGridTopicResource>(new TopicsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<EventGridTopicData, EventGridTopicResource>(new EventGridTopicDataCollectionResultOfT(
                 _topicsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

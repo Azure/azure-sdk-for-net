@@ -66,7 +66,7 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
     /// <returns>A <see cref="ResponseCustomToolCallInputDeltaEvent"/> with the delta.</returns>
     public virtual ResponseCustomToolCallInputDeltaEvent EmitInputDelta(string delta)
     {
-        return OpenAIModelFactory.CreateStreamingUpdate(
+        return (ResponseCustomToolCallInputDeltaEvent)OpenAIModelFactory.CreateStreamingUpdate(
             "response.custom_tool_call_input.delta",
             (int)_stream.NextSequenceNumber(),
             writer =>
@@ -85,7 +85,7 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
     public virtual ResponseCustomToolCallInputDoneEvent EmitInputDone(string input)
     {
         _finalInput = input;
-        return OpenAIModelFactory.CreateStreamingUpdate(
+        return (ResponseCustomToolCallInputDoneEvent)OpenAIModelFactory.CreateStreamingUpdate(
             "response.custom_tool_call_input.done",
             (int)_stream.NextSequenceNumber(),
             writer =>

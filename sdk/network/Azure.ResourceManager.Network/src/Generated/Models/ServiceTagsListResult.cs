@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network;
 
@@ -25,29 +26,23 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceTagsListResult"/>. </summary>
-        /// <param name="name"> The name of the cloud. </param>
-        /// <param name="id"> The ID of the cloud. </param>
-        /// <param name="type"> The azure resource type. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="changeNumber"> The iteration number. </param>
         /// <param name="cloud"> The name of the cloud. </param>
         /// <param name="values"> The list of service tag information resources. </param>
         /// <param name="nextLink"> The URL to get next page of service tag information resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceTagsListResult(string name, string id, string @type, string changeNumber, string cloud, IReadOnlyList<ServiceTagInformation> values, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceTagsListResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string changeNumber, string cloud, IReadOnlyList<ServiceTagInformation> values, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Name = name;
-            Id = id;
-            Type = @type;
             ChangeNumber = changeNumber;
             Cloud = cloud;
             Values = values;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The azure resource type. </summary>
-        [WirePath("type")]
-        public string Type { get; }
 
         /// <summary> The iteration number. </summary>
         [WirePath("changeNumber")]

@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ReportResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ReportResourceListResult(value ?? new ChangeTrackingList<AppComplianceReportData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

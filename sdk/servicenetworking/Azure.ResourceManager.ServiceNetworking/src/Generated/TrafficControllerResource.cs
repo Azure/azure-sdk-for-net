@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TrafficControllerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string trafficControllerApiVersion);
             _trafficControllerInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", ResourceType.Namespace, Diagnostics);
-            _trafficControllerInterfaceRestClient = new TrafficControllerInterface(_trafficControllerInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficControllerApiVersion ?? "2025-03-01-preview");
+            _trafficControllerInterfaceRestClient = new TrafficControllerInterface(_trafficControllerInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ServiceNetworking/trafficControllers", out string trafficControllerInterfaceApiVersionOverride) ? trafficControllerInterfaceApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -501,10 +501,9 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -544,10 +543,9 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -762,6 +760,72 @@ namespace Azure.ResourceManager.ServiceNetworking
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
             return GetApplicationGatewayForContainersSecurityPolicies().Get(securityPolicyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceNetworkingPrivateEndpointConnections in the <see cref="TrafficControllerResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceNetworkingPrivateEndpointConnections and their operations over a ServiceNetworkingPrivateEndpointConnectionResource. </returns>
+        public virtual ServiceNetworkingPrivateEndpointConnectionCollection GetServiceNetworkingPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new ServiceNetworkingPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary> Get a PrivateEndpointConnection. </summary>
+        /// <param name="privateEndpointConnectionName"> Private Endpoint Connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceNetworkingPrivateEndpointConnectionResource>> GetServiceNetworkingPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetServiceNetworkingPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a PrivateEndpointConnection. </summary>
+        /// <param name="privateEndpointConnectionName"> Private Endpoint Connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceNetworkingPrivateEndpointConnectionResource> GetServiceNetworkingPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetServiceNetworkingPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceNetworkingPrivateLinkResources in the <see cref="TrafficControllerResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceNetworkingPrivateLinkResources and their operations over a ServiceNetworkingPrivateLinkResource. </returns>
+        public virtual ServiceNetworkingPrivateLinkResourceCollection GetServiceNetworkingPrivateLinkResources()
+        {
+            return GetCachedClient(client => new ServiceNetworkingPrivateLinkResourceCollection(client, Id));
+        }
+
+        /// <summary> Get a PrivateLinkResource. </summary>
+        /// <param name="privateLinkResourceName"> Private Link Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceNetworkingPrivateLinkResource>> GetServiceNetworkingPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return await GetServiceNetworkingPrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a PrivateLinkResource. </summary>
+        /// <param name="privateLinkResourceName"> Private Link Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceNetworkingPrivateLinkResource> GetServiceNetworkingPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return GetServiceNetworkingPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
         }
     }
 }

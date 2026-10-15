@@ -40,9 +40,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal InterconnectBlockCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(InterconnectBlockResource.ResourceType, out string interconnectBlockApiVersion);
             _interconnectBlocksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", InterconnectBlockResource.ResourceType.Namespace, Diagnostics);
-            _interconnectBlocksRestClient = new InterconnectBlocks(_interconnectBlocksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, interconnectBlockApiVersion ?? "2026-03-01");
+            _interconnectBlocksRestClient = new InterconnectBlocks(_interconnectBlocksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,7 +184,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,7 +234,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,7 +284,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,7 +296,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InterconnectBlockData, InterconnectBlockResource>(new InterconnectBlocksGetByResourceGroupAsyncCollectionResultOfT(_interconnectBlocksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "InterconnectBlockCollection.GetAll"), data => new InterconnectBlockResource(Client, data));
+            return new AsyncPageableWrapper<InterconnectBlockData, InterconnectBlockResource>(new InterconnectBlockDataAsyncCollectionResultOfT(_interconnectBlocksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "InterconnectBlockCollection.GetAll"), data => new InterconnectBlockResource(Client, data));
         }
 
         /// <summary>
@@ -313,7 +312,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,7 +324,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InterconnectBlockData, InterconnectBlockResource>(new InterconnectBlocksGetByResourceGroupCollectionResultOfT(_interconnectBlocksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "InterconnectBlockCollection.GetAll"), data => new InterconnectBlockResource(Client, data));
+            return new PageableWrapper<InterconnectBlockData, InterconnectBlockResource>(new InterconnectBlockDataCollectionResultOfT(_interconnectBlocksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "InterconnectBlockCollection.GetAll"), data => new InterconnectBlockResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +340,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -399,7 +398,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -457,7 +456,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -519,7 +518,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>

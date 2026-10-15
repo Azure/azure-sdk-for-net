@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeletedConfigurationStoreListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DeletedConfigurationStoreListResult(value ?? new ChangeTrackingList<DeletedAppConfigurationStoreData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

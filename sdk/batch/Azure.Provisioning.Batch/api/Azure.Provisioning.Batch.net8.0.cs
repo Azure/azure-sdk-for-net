@@ -255,7 +255,7 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.Batch.BatchApplication Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchApplicationPackageState> State { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Uri> StorageUri { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StorageUriExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StorageUriExpiresOn { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }

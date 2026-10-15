@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             get
             {
-                return Properties is null ? default : Properties.SupportExpireOn;
+                return Properties is null ? default : Properties.SupportExpiresOn;
             }
         }
 

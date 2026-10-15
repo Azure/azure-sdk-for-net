@@ -13,7 +13,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
 {
     /// <summary>
     /// Defines workload agnostic properties for a job.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="IaasVmBackupJob"/>, <see cref="IaasVmBackupJobV2"/>, <see cref="StorageBackupJob"/>, <see cref="WorkloadBackupJob"/>, <see cref="DpmBackupJob"/>, <see cref="MabBackupJob"/>, and <see cref="VaultBackupJob"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DpmBackupJob"/>, <see cref="IaasVmBackupJob"/>, <see cref="IaasVmBackupJobV2"/>, <see cref="MabBackupJob"/>, <see cref="StorageBackupJob"/>, <see cref="VaultBackupJob"/>, and <see cref="WorkloadBackupJob"/>.
     /// </summary>
     public partial class BackupGenericJob : ProvisionableConstruct
     {
@@ -24,6 +24,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         private BicepValue<DateTimeOffset> _startsOn;
         private BicepValue<DateTimeOffset> _endsOn;
         private BicepValue<string> _activityId;
+        private BicepValue<string> _jobType;
 
         /// <summary> Creates a new BackupGenericJob. </summary>
         public BackupGenericJob()
@@ -100,6 +101,16 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             }
         }
 
+        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
+        internal BicepValue<string> JobType
+        {
+            get
+            {
+                Initialize();
+                return _jobType;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for BackupGenericJob. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -111,6 +122,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, format: "O");
             _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "endTime" }, format: "O");
             _activityId = DefineProperty<string>(nameof(ActivityId), new string[] { "activityId" });
+            _jobType = DefineProperty<string>(nameof(JobType), new string[] { "jobType" });
             DefineAdditionalProperties();
         }
 

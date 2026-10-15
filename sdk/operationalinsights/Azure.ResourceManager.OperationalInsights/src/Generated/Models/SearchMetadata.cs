@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="id"> The id of the search results request. </param>
         /// <param name="coreSummaries"> The core summaries. </param>
         /// <param name="status"> The status of the search results. </param>
-        /// <param name="startOn"> The start time for the search. </param>
+        /// <param name="startsOn"> The start time for the search. </param>
         /// <param name="lastUpdated"> The time of last update. </param>
         /// <param name="eTag"> The ETag of the search results. </param>
         /// <param name="sort"> How the results are sorted. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="max"> The max of all aggregates returned in the result set. </param>
         /// <param name="schema"> The schema. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchMetadata(string searchId, string resultType, long? total, long? top, string id, IList<CoreSummary> coreSummaries, string status, DateTimeOffset? startOn, DateTimeOffset? lastUpdated, string eTag, IList<SearchSort> sort, long? requestTime, string aggregatedValueField, string aggregatedGroupingFields, long? sum, long? max, SearchMetadataSchema schema, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchMetadata(string searchId, string resultType, long? total, long? top, string id, IList<CoreSummary> coreSummaries, string status, DateTimeOffset? startsOn, DateTimeOffset? lastUpdated, string eTag, IList<SearchSort> sort, long? requestTime, string aggregatedValueField, string aggregatedGroupingFields, long? sum, long? max, SearchMetadataSchema schema, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SearchId = searchId;
             ResultType = resultType;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Id = id;
             CoreSummaries = coreSummaries;
             Status = status;
-            StartOn = startOn;
+            StartsOn = startsOn;
             LastUpdated = lastUpdated;
             ETag = eTag;
             Sort = sort;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> The start time for the search. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The time of last update. </summary>
         [WirePath("lastUpdated")]

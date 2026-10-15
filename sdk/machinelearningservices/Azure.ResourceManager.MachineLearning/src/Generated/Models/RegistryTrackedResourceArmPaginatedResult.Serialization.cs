@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RegistryTrackedResourceArmPaginatedResult(value, nextLink, additionalBinaryDataProperties);
+            return new RegistryTrackedResourceArmPaginatedResult(value ?? new ChangeTrackingList<MachineLearningRegistryData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

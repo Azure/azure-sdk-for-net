@@ -230,6 +230,7 @@
       "$id": "27",
       "kind": "model",
       "name": "PngImageAsJson",
+      "apiVersions": [],
       "namespace": "Payload.ContentNegotiation.DifferentBody",
       "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.PngImageAsJson",
       "usage": "Output,Json",
@@ -245,6 +246,7 @@
           "$id": "28",
           "kind": "property",
           "name": "contentType",
+          "apiVersions": [],
           "serializedName": "contentType",
           "type": {
             "$ref": "1"
@@ -267,6 +269,7 @@
           "$id": "29",
           "kind": "property",
           "name": "content",
+          "apiVersions": [],
           "serializedName": "content",
           "type": {
             "$id": "30",

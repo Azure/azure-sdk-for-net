@@ -25,12 +25,14 @@ namespace Azure.ResourceManager.ServiceGroups.Models
         /// <summary> Initializes a new instance of <see cref="ServiceGroupProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the serviceGroup. For example, Running. </param>
         /// <param name="displayName"> The display name of the serviceGroup. For example, ServiceGroupTest1. </param>
+        /// <param name="attributes"> The attributes of the serviceGroup. </param>
         /// <param name="parent"> The details of the parent serviceGroup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGroupProperties(ServiceGroupProvisioningState? provisioningState, string displayName, ParentServiceGroupProperties parent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceGroupProperties(ServiceGroupProvisioningState? provisioningState, string displayName, ServiceGroupAttributes attributes, ParentServiceGroupProperties parent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
+            Attributes = attributes;
             Parent = parent;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -41,8 +43,28 @@ namespace Azure.ResourceManager.ServiceGroups.Models
         /// <summary> The display name of the serviceGroup. For example, ServiceGroupTest1. </summary>
         public string DisplayName { get; set; }
 
+        /// <summary> The attributes of the serviceGroup. </summary>
+        internal ServiceGroupAttributes Attributes { get; set; }
+
         /// <summary> The details of the parent serviceGroup. </summary>
         internal ParentServiceGroupProperties Parent { get; set; }
+
+        /// <summary> The criticality designation of the service group. Valid values range from 0 through 4. </summary>
+        public int? AttributesCriticality
+        {
+            get
+            {
+                return Attributes is null ? default : Attributes.Criticality;
+            }
+            set
+            {
+                if (Attributes is null)
+                {
+                    Attributes = new ServiceGroupAttributes();
+                }
+                Attributes.Criticality = value;
+            }
+        }
 
         /// <summary> The fully qualified ID of the parent serviceGroup.  For example, '/providers/Microsoft.Management/serviceGroups/TestServiceGroup'. </summary>
         public ResourceIdentifier ParentResourceId

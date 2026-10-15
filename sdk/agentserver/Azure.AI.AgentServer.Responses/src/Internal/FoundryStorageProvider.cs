@@ -22,6 +22,8 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
     private readonly HttpPipeline _pipeline;
     private readonly Uri _storageBaseUri;
 
+    internal HttpPipeline Pipeline => _pipeline;
+
     /// <summary>
     /// Initializes a new instance of <see cref="FoundryStorageProvider"/>.
     /// </summary>

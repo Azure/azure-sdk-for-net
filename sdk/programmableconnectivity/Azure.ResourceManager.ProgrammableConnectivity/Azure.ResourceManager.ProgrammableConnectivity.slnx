@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.ProgrammableConnectivity.csproj" />
+  <Project Path="tests/Azure.ResourceManager.ProgrammableConnectivity.Tests.csproj" />
+</Solution>

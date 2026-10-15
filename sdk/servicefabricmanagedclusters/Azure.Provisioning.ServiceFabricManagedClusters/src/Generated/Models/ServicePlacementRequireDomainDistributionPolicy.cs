@@ -26,6 +26,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         /// <summary> Creates a new ServicePlacementRequireDomainDistributionPolicy. </summary>
         public ServicePlacementRequireDomainDistributionPolicy()
         {
+            Type.Assign(ServicePlacementPolicyType.RequiredDomainDistribution);
         }
 
         /// <summary> Gets or sets the DomainName. </summary>
@@ -47,7 +48,6 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "RequiredDomainDistribution");
             _domainName = DefineProperty<string>(nameof(DomainName), new string[] { "domainName" }, isRequired: true);
             DefineAdditionalProperties();
         }

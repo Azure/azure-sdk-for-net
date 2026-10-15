@@ -349,12 +349,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.False(started!.IsCompleted);
 
             // A second signal shutting down must not replace the running drain with a no-op that
-            // would let disposal proceed underneath it.
+            // would let disposal proceed underneath it. The composite is rebuilt each call so that
+            // storage partitions created by the later signal are included, so this asserts that the
+            // new composite still tracks the running work rather than that it is the same instance.
             transmitter.DrainStorage(0);
-            Assert.Same(started, transmitter.InFlightDrain);
+            var second = transmitter.InFlightDrain;
+            Assert.NotNull(second);
+            Assert.False(second!.IsCompleted);
 
             gate.Set();
             started.Wait(TimeSpan.FromSeconds(10));
+            second.Wait(TimeSpan.FromSeconds(10));
         }
 
         [Fact]

@@ -26,14 +26,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfile"/>. </summary>
         /// <param name="defender"> Microsoft Defender settings for the security profile. </param>
         /// <param name="azureKeyVaultKms"> Azure Key Vault [key management service](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) settings for the security profile. </param>
+        /// <param name="kubernetesResourceObjectEncryptionProfile"> Encryption at rest of Kubernetes resource objects. More information on this can be found under https://aka.ms/aks/kubernetesResourceObjectEncryption. </param>
         /// <param name="workloadIdentity"> Workload identity settings for the security profile. Workload identity enables Kubernetes applications to access Azure cloud resources securely with Azure AD. See https://aka.ms/aks/wi for more details. </param>
         /// <param name="imageCleaner"> Image Cleaner settings for the security profile. </param>
         /// <param name="customCATrustCertificates"> A list of up to 10 base64 encoded CAs that will be added to the trust store on all nodes in the cluster. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms, ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity, ManagedClusterSecurityProfileImageCleaner imageCleaner, IList<byte[]> customCATrustCertificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms, KubernetesResourceObjectEncryptionProfile kubernetesResourceObjectEncryptionProfile, ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity, ManagedClusterSecurityProfileImageCleaner imageCleaner, IList<byte[]> customCATrustCertificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Defender = defender;
             AzureKeyVaultKms = azureKeyVaultKms;
+            KubernetesResourceObjectEncryptionProfile = kubernetesResourceObjectEncryptionProfile;
             WorkloadIdentity = workloadIdentity;
             ImageCleaner = imageCleaner;
             CustomCATrustCertificates = customCATrustCertificates;
@@ -48,6 +50,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("azureKeyVaultKms")]
         public ManagedClusterSecurityProfileKeyVaultKms AzureKeyVaultKms { get; set; }
 
+        /// <summary> Encryption at rest of Kubernetes resource objects. More information on this can be found under https://aka.ms/aks/kubernetesResourceObjectEncryption. </summary>
+        [WirePath("kubernetesResourceObjectEncryptionProfile")]
+        internal KubernetesResourceObjectEncryptionProfile KubernetesResourceObjectEncryptionProfile { get; set; }
+
         /// <summary> Workload identity settings for the security profile. Workload identity enables Kubernetes applications to access Azure cloud resources securely with Azure AD. See https://aka.ms/aks/wi for more details. </summary>
         [WirePath("workloadIdentity")]
         internal ManagedClusterSecurityProfileWorkloadIdentity WorkloadIdentity { get; set; }
@@ -59,6 +65,24 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> A list of up to 10 base64 encoded CAs that will be added to the trust store on all nodes in the cluster. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority). </summary>
         [WirePath("customCATrustCertificates")]
         public IList<byte[]> CustomCATrustCertificates { get; }
+
+        /// <summary> Whether to enable encryption at rest of Kubernetes resource objects using service-managed keys. More information on this can be found under https://aka.ms/aks/kubernetesResourceObjectEncryption. </summary>
+        [WirePath("kubernetesResourceObjectEncryptionProfile.infrastructureEncryption")]
+        public KubernetesResourceObjectInfrastructureEncryption? InfrastructureEncryption
+        {
+            get
+            {
+                return KubernetesResourceObjectEncryptionProfile is null ? default : KubernetesResourceObjectEncryptionProfile.InfrastructureEncryption;
+            }
+            set
+            {
+                if (KubernetesResourceObjectEncryptionProfile is null)
+                {
+                    KubernetesResourceObjectEncryptionProfile = new KubernetesResourceObjectEncryptionProfile();
+                }
+                KubernetesResourceObjectEncryptionProfile.InfrastructureEncryption = value;
+            }
+        }
 
         /// <summary> Whether to enable workload identity. </summary>
         [WirePath("workloadIdentity.enabled")]

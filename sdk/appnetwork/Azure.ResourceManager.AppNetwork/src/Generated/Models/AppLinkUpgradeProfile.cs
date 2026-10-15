@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         {
             get
             {
-                return FullyManagedUpgradeProfile is null ? default : FullyManagedUpgradeProfile.ReleaseChannel;
+                return FullyManagedUpgradeProfile is null ? (AppLinkUpgradeReleaseChannel?)default : FullyManagedUpgradeProfile.ReleaseChannel;
             }
             set
             {

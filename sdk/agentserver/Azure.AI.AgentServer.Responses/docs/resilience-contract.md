@@ -72,7 +72,7 @@ Three boolean flags on the request select the resilience shape:
 
 The Responses layer **composes** the Core task/streaming primitives; it does
 **not** re-implement recovery, steering, or stream replay. A resilient
-background response runs *inside* a Core task via `ITaskInvoker`:
+background response runs *inside* a Core task via a keyed `TaskDefinition<TInput, TOutput>`:
 
 - **One-shot** (`responses_resilient_one_shot`, a Core `@task`) — a
   non-conversational resilient background turn. Auto-deleted on terminal exit.
@@ -454,7 +454,7 @@ response still exists in the store:
   against an unread snapshot.
 
 This precondition is evaluated **before** dispatch selection so a dropped entry
-never reaches `ITaskInvoker`.
+never reaches Core task dispatch.
 
 ### R6 — Conversation chain identity (`chain id`)
 
@@ -465,6 +465,19 @@ anchors to the conversation root: a `conversation_id` pins the chain
 (`cchain_…`); otherwise the head of a `previous_response_id` chain pins it
 (`rchain_…`); a first turn with neither falls back to its own `response_id`
 verbatim. The digest is cross-language stable with Python.
+
+In hosted environments, the physical durable multi-turn task ID uses the
+system-generated `FOUNDRY_AGENT_SESSION_GUID` together with the resolved public
+session ID as its private session scope. This prevents a recreated same-name
+session from reusing a name-derived ID whose earlier task was deleted and
+tombstoned by the service, which can cause an HTTP 412 precondition failure on
+task creation. `ResponseContext.ConversationChainId` remains unchanged. If the GUID is absent,
+the physical task ID retains the legacy chain ID. During rollout, an existing
+pending, in-progress, or suspended legacy task is reused; completed or missing
+legacy tasks do not block creation under the GUID-scoped ID. Legacy reuse uses
+an existing-only Core start boundary: if deletion wins after the compatibility
+probe, the framework retries with the session-instance-scoped ID and never
+recreates the legacy ID. One-shot physical task IDs remain the response ID.
 
 ### R7 — Metadata (`metadata`)
 

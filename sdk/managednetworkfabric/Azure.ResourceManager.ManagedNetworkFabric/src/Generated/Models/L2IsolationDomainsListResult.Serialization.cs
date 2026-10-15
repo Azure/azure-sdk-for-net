@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new L2IsolationDomainsListResult(value, nextLink, additionalBinaryDataProperties);
+            return new L2IsolationDomainsListResult(value ?? new ChangeTrackingList<NetworkFabricL2IsolationDomainData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

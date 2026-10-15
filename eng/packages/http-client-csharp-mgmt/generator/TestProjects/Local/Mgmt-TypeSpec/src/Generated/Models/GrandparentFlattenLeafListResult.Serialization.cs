@@ -167,10 +167,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GrandparentFlattenLeafListResult(value, nextLink, additionalBinaryDataProperties);
+            return new GrandparentFlattenLeafListResult(value ?? new ChangeTrackingList<GrandparentFlattenLeaf>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

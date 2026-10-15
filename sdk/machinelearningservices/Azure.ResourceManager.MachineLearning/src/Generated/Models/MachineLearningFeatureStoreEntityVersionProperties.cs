@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> DTO object representing feature entity version. </summary>
     public partial class MachineLearningFeatureStoreEntityVersionProperties : MachineLearningAssetBase
     {
+        private string _stage;
+        internal bool _stageIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureStoreEntityVersionProperties"/>. </summary>
         public MachineLearningFeatureStoreEntityVersionProperties()
         {
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             IndexColumns = indexColumns;
             ProvisioningState = provisioningState;
-            Stage = stage;
+            _stage = stage;
         }
 
         /// <summary> Specifies index columns. </summary>
@@ -47,6 +50,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Specifies the asset stage. </summary>
         [WirePath("stage")]
-        public string Stage { get; set; }
+        public string Stage
+        {
+            get
+            {
+                return _stage;
+            }
+            set
+            {
+                _stage = value;
+                _stageIsDefined = true;
+            }
+        }
     }
 }

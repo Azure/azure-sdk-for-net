@@ -88,6 +88,75 @@ public class InMemoryResponsesProviderTests : IDisposable
         await Task.WhenAll(tasks);
     }
 
+    [Test]
+    public async Task GetHistoryItemIdsAsync_UnlimitedReturnsAllUniqueItems()
+    {
+        var historyIds = Enumerable.Range(0, 120).Select(i => $"history_{i}").ToArray();
+        var input = MessageItemFactory.OutputMessage("input_1", MessageStatus.Completed, MessageRole.User, Array.Empty<ResponseContentPart>());
+        var response = new ResponseObject
+        {
+            Id = "resp_history",
+            Model = "gpt-4o",
+            Status = ResponseStatus.Completed,
+            ConversationOptions = new ConversationReference("conv_history"),
+        };
+        response.OutputItems.Add(MessageItemFactory.OutputMessage("output_1", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<ResponseContentPart>()));
+        await _provider.CreateResponseAsync(
+            new CreateResponsePersistRequest(response, new[] { input }, historyIds),
+            PlatformContext.Empty);
+
+        var unlimited = (await _provider.GetHistoryItemIdsAsync(
+            response.Id, response.ConversationOptions.ConversationId, -1, PlatformContext.Empty)).ToList();
+        var limited = (await _provider.GetHistoryItemIdsAsync(
+            response.Id, response.ConversationOptions.ConversationId, 10, PlatformContext.Empty)).ToList();
+        var conversationOnly = (await _provider.GetHistoryItemIdsAsync(
+            null, response.ConversationOptions.ConversationId, -1, PlatformContext.Empty)).ToList();
+
+        Assert.That(unlimited, Has.Count.EqualTo(122));
+        Assert.That(unlimited.Take(120), Is.EqualTo(historyIds));
+        Assert.That(limited, Is.EqualTo(unlimited.TakeLast(10)));
+        Assert.That(conversationOnly, Is.EqualTo(unlimited));
+    }
+
+    [Test]
+    public async Task GetHistoryItemIdsAsync_PreviousResponseIdExcludesLaterConversationResponses()
+    {
+        var first = new ResponseObject
+        {
+            Id = "resp_first",
+            Model = "gpt-4o",
+            Status = ResponseStatus.Completed,
+            ConversationOptions = new ConversationReference("conv_cutoff"),
+        };
+        first.OutputItems.Add(MessageItemFactory.OutputMessage("output_first", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<ResponseContentPart>()));
+        await _provider.CreateResponseAsync(
+            new CreateResponsePersistRequest(
+                first,
+                new[] { MessageItemFactory.OutputMessage("input_first", MessageStatus.Completed, MessageRole.User, Array.Empty<ResponseContentPart>()) },
+                Array.Empty<string>()),
+            PlatformContext.Empty);
+
+        var second = new ResponseObject
+        {
+            Id = "resp_second",
+            Model = "gpt-4o",
+            Status = ResponseStatus.Completed,
+            ConversationOptions = new ConversationReference("conv_cutoff"),
+        };
+        second.OutputItems.Add(MessageItemFactory.OutputMessage("output_second", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<ResponseContentPart>()));
+        await _provider.CreateResponseAsync(
+            new CreateResponsePersistRequest(
+                second,
+                new[] { MessageItemFactory.OutputMessage("input_second", MessageStatus.Completed, MessageRole.User, Array.Empty<ResponseContentPart>()) },
+                new[] { "input_first", "output_first" }),
+            PlatformContext.Empty);
+
+        var ids = (await _provider.GetHistoryItemIdsAsync(
+            first.Id, "conv_cutoff", -1, PlatformContext.Empty)).ToList();
+
+        Assert.That(ids, Is.EqualTo(new[] { "input_first", "output_first" }));
+    }
+
     // ---------------------------------------------------------------
     // T018: Cancellation
     // ---------------------------------------------------------------

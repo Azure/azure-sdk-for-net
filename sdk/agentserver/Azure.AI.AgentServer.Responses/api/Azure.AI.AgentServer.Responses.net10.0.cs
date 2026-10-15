@@ -127,8 +127,8 @@ namespace Azure.AI.AgentServer.Responses
         public string Name { get { throw null; } }
         public virtual OpenAI.Responses.StreamingResponseOutputItemAddedUpdate EmitAdded() { throw null; }
         public virtual OpenAI.Responses.StreamingResponseOutputItemDoneUpdate EmitDone() { throw null; }
-        public virtual OpenAI.Responses.StreamingResponseUpdate EmitInputDelta(string delta) { throw null; }
-        public virtual OpenAI.Responses.StreamingResponseUpdate EmitInputDone(string input) { throw null; }
+        public virtual OpenAI.Responses.StreamingResponseCustomToolCallInputDeltaUpdate EmitInputDelta(string delta) { throw null; }
+        public virtual OpenAI.Responses.StreamingResponseCustomToolCallInputDoneUpdate EmitInputDone(string input) { throw null; }
         public System.Collections.Generic.IAsyncEnumerable<OpenAI.Responses.StreamingResponseUpdate> Input(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Collections.Generic.IEnumerable<OpenAI.Responses.StreamingResponseUpdate> Input(string input) { throw null; }
     }
@@ -266,11 +266,12 @@ namespace Azure.AI.AgentServer.Responses
     public partial class ResponseContext
     {
         public ResponseContext(string responseId) { }
-        public virtual bool ClientCancelled { get { throw null; } }
+        public virtual System.Threading.CancellationToken ClientCancellation { get { throw null; } }
         public virtual System.Collections.Generic.IReadOnlyDictionary<string, string> ClientHeaders { get { throw null; } }
         public virtual string ConversationChainId { get { throw null; } }
+        public virtual bool IsClientCancelled { get { throw null; } }
         public virtual bool IsRecovery { get { throw null; } }
-        public bool IsShutdownRequested { get { throw null; } set { } }
+        public virtual bool IsShutdownRequested { get { throw null; } }
         public virtual bool IsSteeredTurn { get { throw null; } }
         public virtual int PendingInputCount { get { throw null; } }
         public virtual OpenAI.Responses.ResponseResult? PersistedResponse { get { throw null; } }
@@ -320,7 +321,7 @@ namespace Azure.AI.AgentServer.Responses
         protected ResponseEventStream() { }
         public ResponseEventStream(Azure.AI.AgentServer.Responses.ResponseContext context, OpenAI.Responses.CreateResponseOptions request) { }
         public ResponseEventStream(Azure.AI.AgentServer.Responses.ResponseContext context, OpenAI.Responses.ResponseResult persistedResponse) { }
-        public virtual System.Collections.Generic.IDictionary<string, string> InternalMetadata { get { throw null; } }
+        public virtual System.Collections.Generic.IDictionary<string, string> PersistedMetadata { get { throw null; } }
         public OpenAI.Responses.ResponseResult Response { get { throw null; } }
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.ApplyPatchCallItem> AddOutputItemApplyPatchCall() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.ApplyPatchCallOutputItem> AddOutputItemApplyPatchCallOutput() { throw null; }
@@ -341,7 +342,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.Extensions.OpenAI.AgentStructuredOutputsResponseItem> AddOutputItemStructuredOutputs() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemWebSearchCallBuilder AddOutputItemWebSearchCall() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<T> AddOutputItem<T>(string itemId) where T : OpenAI.Responses.ResponseItem { throw null; }
-        public OpenAI.Responses.StreamingResponseUpdate Checkpoint() { throw null; }
+        public virtual OpenAI.Responses.StreamingResponseUpdate CreateCheckpointEvent() { throw null; }
         public virtual OpenAI.Responses.StreamingResponseCompletedUpdate EmitCompleted(OpenAI.Responses.ResponseTokenUsage? usage = null) { throw null; }
         public virtual OpenAI.Responses.StreamingResponseCreatedUpdate EmitCreated(OpenAI.Responses.ResponseStatus status = OpenAI.Responses.ResponseStatus.InProgress) { throw null; }
         public virtual OpenAI.Responses.StreamingResponseFailedUpdate EmitFailed(OpenAI.Responses.ResponseErrorCode code, string message = "An internal server error occurred.", OpenAI.Responses.ResponseTokenUsage? usage = null) { throw null; }
@@ -529,6 +530,12 @@ namespace Azure.AI.AgentServer.Responses
     {
         public static Microsoft.AspNetCore.Routing.RouteGroupBuilder MapResponsesServer(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder endpoints, string? prefix = null) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class ResponsesServerHostExtensions
+    {
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddResponsesServer(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddResponsesServer(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.AgentServer.Responses.ResponsesServerSettings>? configureSettings) { throw null; }
+    }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
     public partial class ResponsesServerOptions
     {
@@ -542,6 +549,18 @@ namespace Azure.AI.AgentServer.Responses
     public static partial class ResponsesServerServiceCollectionExtensions
     {
         public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddResponsesServer(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Action<Azure.AI.AgentServer.Responses.ResponsesServerOptions>? configure = null) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class ResponsesServerSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public ResponsesServerSettings() { }
+        public int DefaultFetchHistoryCount { get { throw null; } set { } }
+        public string? DefaultModel { get { throw null; } set { } }
+        public System.Uri? Endpoint { get { throw null; } set { } }
+        public bool ResilientBackground { get { throw null; } set { } }
+        public System.Func<OpenAI.Responses.CreateResponseOptions, Azure.AI.AgentServer.Responses.ResponseContext, OpenAI.Responses.ResponseResult>? ResponseAcceptor { get { throw null; } set { } }
+        public bool SteerableConversations { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
     public partial class TextContentBuilder

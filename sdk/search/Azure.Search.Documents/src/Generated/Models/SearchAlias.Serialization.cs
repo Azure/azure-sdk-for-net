@@ -194,10 +194,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SearchAlias(name, indexes, etag, additionalBinaryDataProperties);
+            return new SearchAlias(name, indexes ?? new ChangeTrackingList<string>(), etag, additionalBinaryDataProperties);
         }
     }
 }

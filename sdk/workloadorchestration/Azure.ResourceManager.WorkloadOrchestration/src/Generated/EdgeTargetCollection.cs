@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeTargetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EdgeTargetResource.ResourceType, out string edgeTargetApiVersion);
             _targetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeTargetResource.ResourceType.Namespace, Diagnostics);
-            _targetsRestClient = new Targets(_targetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeTargetApiVersion ?? "2025-06-01");
+            _targetsRestClient = new Targets(_targetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Edge/targets", out string targetsApiVersionOverride) ? targetsApiVersionOverride : "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeTargetData, EdgeTargetResource>(new TargetsGetByResourceGroupAsyncCollectionResultOfT(_targetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeTargetCollection.GetAll"), data => new EdgeTargetResource(Client, data));
+            return new AsyncPageableWrapper<EdgeTargetData, EdgeTargetResource>(new EdgeTargetDataAsyncCollectionResultOfT(_targetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeTargetCollection.GetAll"), data => new EdgeTargetResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeTargetData, EdgeTargetResource>(new TargetsGetByResourceGroupCollectionResultOfT(_targetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeTargetCollection.GetAll"), data => new EdgeTargetResource(Client, data));
+            return new PageableWrapper<EdgeTargetData, EdgeTargetResource>(new EdgeTargetDataCollectionResultOfT(_targetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeTargetCollection.GetAll"), data => new EdgeTargetResource(Client, data));
         }
 
         /// <summary>

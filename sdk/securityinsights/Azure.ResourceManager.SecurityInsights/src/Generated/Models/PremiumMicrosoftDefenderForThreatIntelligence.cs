@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.TenantId;
+                return Properties is null ? (Guid?)default : Properties.TenantId;
             }
             set
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.LookbackPeriodOn;
+                return Properties is null ? (DateTimeOffset?)default : Properties.LookbackPeriodOn;
             }
             set
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.DataTypesConnectorState;
+                return Properties is null ? (SecurityInsightsDataTypeConnectionState?)default : Properties.DataTypesConnectorState;
             }
             set
             {

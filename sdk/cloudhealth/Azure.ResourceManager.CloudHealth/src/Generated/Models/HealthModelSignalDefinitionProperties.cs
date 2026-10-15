@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary>
     /// SignalDefinition properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResourceMetricSignalDefinitionProperties"/>, <see cref="LogAnalyticsQuerySignalDefinitionProperties"/>, and <see cref="PrometheusMetricsSignalDefinitionProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LogAnalyticsQuerySignalDefinitionProperties"/>, <see cref="PrometheusMetricsSignalDefinitionProperties"/>, and <see cref="ResourceMetricSignalDefinitionProperties"/>.
     /// </summary>
     public abstract partial class HealthModelSignalDefinitionProperties
     {

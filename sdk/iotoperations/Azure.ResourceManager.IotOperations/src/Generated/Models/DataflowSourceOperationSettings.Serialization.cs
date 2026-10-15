@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DataflowSourceOperationSettings(
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 assetRef,
                 serializationFormat,
                 schemaRef,
-                dataSources,
+                dataSources ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

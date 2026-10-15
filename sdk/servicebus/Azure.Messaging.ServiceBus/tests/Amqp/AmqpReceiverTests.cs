@@ -120,6 +120,65 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         }
 
         /// <summary>
+        ///   Verifies that <see cref="AmqpReceiver.CloseAsync" /> completes normally under an already-canceled
+        ///   token when no links were ever opened. Both cancellation checks deliberately sit inside the link
+        ///   guards, so a receiver with nothing to tear down has no work to cancel and closes.
+        ///
+        ///   This is an intentional asymmetry with <c>AmqpSender.CloseAsync</c>, which checks the token
+        ///   unconditionally before inspecting its links. Hoisting a check to the top of this method to
+        ///   "complete the mirroring" would break this test, which is the point of pinning it.
+        /// </summary>
+        ///
+        [Test]
+        public void CloseWithCanceledTokenCompletesWhenNoLinksAreOpen()
+        {
+            var receiver = CreateReceiver();
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.That(async () => await receiver.CloseAsync(cancellationSource.Token),
+                Throws.Nothing,
+                "A receiver with no opened links has no work to cancel and should close.");
+
+            Assert.That(receiver.IsClosed, Is.True,
+                "The receiver should be marked as closed after a close that ran to completion.");
+
+            Assert.That(receiver.RequestResponseLockedMessages.IsDisposed, Is.True,
+                "A close that ran to completion should dispose the set of locked messages.");
+        }
+
+        /// <summary>
+        ///   Verifies that a later <see cref="AmqpReceiver.CloseAsync" /> cannot resurrect a receiver that is
+        ///   already closed: a caller that does not own the close returns through the guard rather than reaching
+        ///   the restore in the catch, so the flag and the disposed set both survive.
+        ///
+        ///   This pins the invariant, not the race. It closes sequentially, so it would also pass the former
+        ///   non-atomic implementation; the interleaving it describes needs two callers inside the claim window
+        ///   at once, which is why the claim is made with <see cref="Interlocked" />. That interleaving is not
+        ///   deterministically reproducible in a unit test.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CloseWithCanceledTokenDoesNotReopenAnAlreadyClosedReceiver()
+        {
+            var receiver = CreateReceiver();
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            await receiver.CloseAsync(CancellationToken.None);
+
+            Assert.That(async () => await receiver.CloseAsync(cancellationSource.Token),
+                Throws.Nothing,
+                "A close of an already-closed receiver should return through the guard rather than throw.");
+
+            Assert.That(receiver.IsClosed, Is.True,
+                "A canceled close must not clear the closed flag of a receiver that was already closed.");
+
+            Assert.That(receiver.RequestResponseLockedMessages.IsDisposed, Is.True,
+                "The set of locked messages must stay disposed once the close has completed.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpReceiver.ReceiveAsync" />
         ///   method.
         /// </summary>
@@ -197,6 +256,384 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<Guid?>(),
                    It.IsAny<CancellationToken>()),
                 Times.Exactly(1 + retryOptions.MaxRetries));
+        }
+
+        [Test]
+        public void DeleteMessagesAsyncDoesNotRetryAfterDispatchFailure()
+        {
+            var retryPolicy = new BasicRetryPolicy(new ServiceBusRetryOptions
+            {
+                MaxRetries = 3,
+                Delay = TimeSpan.FromMilliseconds(1),
+                MaxDelay = TimeSpan.FromMilliseconds(1)
+            });
+            var dispatchException = new TimeoutException("Test");
+            var mockScope = new Mock<AmqpConnectionScope>();
+            var requestCount = 0;
+
+            mockScope
+                .Setup(scope => scope.OpenManagementLinkAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(AmqpConnectionScopeTests.CreateRequestResponseLink());
+
+            var receiver = new AmqpReceiver(
+                "entityName",
+                ServiceBusReceiveMode.PeekLock,
+                0,
+                mockScope.Object,
+                retryPolicy,
+                "someIdentifier",
+                sessionId: null,
+                isSessionReceiver: false,
+                isProcessor: false,
+                messageConverter: Mock.Of<AmqpMessageConverter>(),
+                cancellationToken: CancellationToken.None,
+                requestAsync: (_, _, _) =>
+                {
+                    requestCount++;
+                    throw dispatchException;
+                });
+
+            Assert.That(
+                async () => await receiver.DeleteMessagesAsync(1, DateTimeOffset.UtcNow),
+                Throws.InstanceOf<ServiceBusException>()
+                    .And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.ServiceTimeout));
+
+            Assert.AreEqual(1, requestCount);
+            mockScope.Verify(scope => scope.OpenManagementLinkAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<CancellationToken>()),
+                Times.Once());
+        }
+
+        [Test]
+        public async Task DeleteMessagesAsyncRetriesManagementLinkBeforeDispatch()
+        {
+            var mockScope = new Mock<AmqpConnectionScope>();
+            mockScope
+                .SetupSequence(scope => scope.OpenManagementLinkAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new ServiceBusException(isTransient: true, "Test"))
+                .ReturnsAsync(AmqpConnectionScopeTests.CreateRequestResponseLink());
+
+            var requestCount = 0;
+            var receiver = new AmqpReceiver(
+                "entityName",
+                ServiceBusReceiveMode.PeekLock,
+                0,
+                mockScope.Object,
+                new BasicRetryPolicy(new ServiceBusRetryOptions
+                {
+                    MaxRetries = 1,
+                    Delay = TimeSpan.FromMilliseconds(1),
+                    MaxDelay = TimeSpan.FromMilliseconds(1)
+                }),
+                "someIdentifier",
+                sessionId: null,
+                isSessionReceiver: false,
+                isProcessor: false,
+                messageConverter: Mock.Of<AmqpMessageConverter>(),
+                cancellationToken: CancellationToken.None,
+                requestAsync: (_, _, _) =>
+                {
+                    requestCount++;
+                    return Task.FromResult(CreateDeleteMessagesResponse(AmqpResponseStatusCode.OK, 1));
+                });
+
+            var result = await receiver.DeleteMessagesAsync(1, DateTimeOffset.UtcNow);
+
+            Assert.That(result, Is.EqualTo(1));
+            Assert.That(requestCount, Is.EqualTo(1));
+            mockScope.Verify(scope => scope.OpenManagementLinkAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<CancellationToken>()),
+                Times.Exactly(2));
+        }
+
+        [Test]
+        public async Task DeleteMessagesAsyncDispatchUsesRemainingTryTimeout()
+        {
+            var tryTimeout = TimeSpan.FromSeconds(5);
+            var mockScope = new Mock<AmqpConnectionScope>();
+            mockScope
+                .Setup(scope => scope.OpenManagementLinkAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(async () =>
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(100));
+                    return AmqpConnectionScopeTests.CreateRequestResponseLink();
+                });
+
+            TimeSpan dispatchTimeout = default;
+            var receiver = new AmqpReceiver(
+                "entityName",
+                ServiceBusReceiveMode.PeekLock,
+                0,
+                mockScope.Object,
+                new BasicRetryPolicy(new ServiceBusRetryOptions { TryTimeout = tryTimeout }),
+                "someIdentifier",
+                sessionId: null,
+                isSessionReceiver: false,
+                isProcessor: false,
+                messageConverter: Mock.Of<AmqpMessageConverter>(),
+                cancellationToken: CancellationToken.None,
+                requestAsync: (_, _, timeout) =>
+                {
+                    dispatchTimeout = timeout;
+                    return Task.FromResult(CreateDeleteMessagesResponse(AmqpResponseStatusCode.OK, 1));
+                });
+
+            var result = await receiver.DeleteMessagesAsync(1, DateTimeOffset.UtcNow);
+
+            Assert.That(result, Is.EqualTo(1));
+            Assert.That(dispatchTimeout, Is.LessThan(tryTimeout - TimeSpan.FromMilliseconds(50)));
+            Assert.That(dispatchTimeout, Is.GreaterThan(TimeSpan.Zero));
+        }
+
+        [Test]
+        public async Task DeleteMessagesAsyncUsesBatchDeleteWireContractAndReturnsActualCount()
+        {
+            var expectedCutoff = new DateTimeOffset(2026, 8, 27, 14, 30, 0, TimeSpan.FromHours(2));
+            var mockScope = new Mock<AmqpConnectionScope>();
+            mockScope
+                .Setup(scope => scope.OpenManagementLinkAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(AmqpConnectionScopeTests.CreateRequestResponseLink());
+
+            var receiver = new AmqpReceiver(
+                "entityName",
+                ServiceBusReceiveMode.PeekLock,
+                0,
+                mockScope.Object,
+                new BasicRetryPolicy(new ServiceBusRetryOptions()),
+                "someIdentifier",
+                sessionId: "sessionId",
+                isSessionReceiver: true,
+                isProcessor: false,
+                messageConverter: Mock.Of<AmqpMessageConverter>(),
+                cancellationToken: CancellationToken.None,
+                requestAsync: (_, request, _) =>
+                {
+                    Assert.That(
+                        request.ApplicationProperties.Map[ManagementConstants.Request.Operation],
+                        Is.EqualTo(ManagementConstants.Operations.DeleteMessagesOperation));
+
+                    var requestMap = (AmqpMap)request.ValueBody.Value;
+                    Assert.That(requestMap[ManagementConstants.Properties.MessageCount], Is.EqualTo(500));
+                    Assert.That(requestMap[ManagementConstants.Properties.EnqueuedTimeUtc], Is.EqualTo(expectedCutoff.UtcDateTime));
+                    Assert.That(requestMap[ManagementConstants.Properties.SessionId], Is.EqualTo("sessionId"));
+
+                    return Task.FromResult(CreateDeleteMessagesResponse(AmqpResponseStatusCode.OK, 2));
+                });
+
+            var result = await receiver.DeleteMessagesAsync(500, expectedCutoff);
+
+            Assert.That(result, Is.EqualTo(2));
+        }
+
+        [Test]
+        public async Task DeleteMessagesAsyncIncludesOpenedReceiverLinkName()
+        {
+            var mockScope = AmqpConnectionScopeTests.CreateMockReceiverScope();
+            mockScope
+                .Setup(scope => scope.OpenManagementLinkAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(AmqpConnectionScopeTests.CreateRequestResponseLink());
+
+            var receiver = new AmqpReceiver(
+                "entityName",
+                ServiceBusReceiveMode.PeekLock,
+                0,
+                mockScope.Object,
+                new BasicRetryPolicy(new ServiceBusRetryOptions()),
+                "someIdentifier",
+                sessionId: null,
+                isSessionReceiver: false,
+                isProcessor: false,
+                messageConverter: Mock.Of<AmqpMessageConverter>(),
+                cancellationToken: CancellationToken.None,
+                requestAsync: (_, request, _) =>
+                {
+                    Assert.That(
+                        request.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName],
+                        Is.TypeOf<string>().And.Not.Empty);
+                    return Task.FromResult(CreateDeleteMessagesResponse(AmqpResponseStatusCode.OK, 1));
+                });
+
+            await receiver.OpenLinkAsync(CancellationToken.None);
+            var result = await receiver.DeleteMessagesAsync(1, DateTimeOffset.UtcNow);
+
+            Assert.That(result, Is.EqualTo(1));
+        }
+
+        [Test]
+        public async Task DeleteMessagesAsyncMapsNoContentToZero()
+        {
+            var mockScope = new Mock<AmqpConnectionScope>();
+            mockScope
+                .Setup(scope => scope.OpenManagementLinkAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(AmqpConnectionScopeTests.CreateRequestResponseLink());
+
+            var receiver = new AmqpReceiver(
+                "entityName",
+                ServiceBusReceiveMode.PeekLock,
+                0,
+                mockScope.Object,
+                new BasicRetryPolicy(new ServiceBusRetryOptions()),
+                "someIdentifier",
+                sessionId: null,
+                isSessionReceiver: false,
+                isProcessor: false,
+                messageConverter: Mock.Of<AmqpMessageConverter>(),
+                cancellationToken: CancellationToken.None,
+                requestAsync: (_, _, _) => Task.FromResult(
+                    CreateDeleteMessagesResponse(AmqpResponseStatusCode.NoContent)));
+
+            var result = await receiver.DeleteMessagesAsync(1, DateTimeOffset.UtcNow);
+
+            Assert.That(result, Is.Zero);
+        }
+
+        [TestCase(-1)]
+        [TestCase(2)]
+        public void DeleteMessagesAsyncRejectsInvalidResponseCount(int deletedCount)
+        {
+            var mockScope = new Mock<AmqpConnectionScope>();
+            mockScope
+                .Setup(scope => scope.OpenManagementLinkAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(AmqpConnectionScopeTests.CreateRequestResponseLink());
+
+            var receiver = new AmqpReceiver(
+                "entityName",
+                ServiceBusReceiveMode.PeekLock,
+                0,
+                mockScope.Object,
+                new BasicRetryPolicy(new ServiceBusRetryOptions()),
+                "someIdentifier",
+                sessionId: null,
+                isSessionReceiver: false,
+                isProcessor: false,
+                messageConverter: Mock.Of<AmqpMessageConverter>(),
+                requestAsync: (_, _, _) => Task.FromResult(
+                    CreateDeleteMessagesResponse(AmqpResponseStatusCode.OK, deletedCount)));
+
+            Assert.That(
+                async () => await receiver.DeleteMessagesAsync(1, DateTimeOffset.UtcNow),
+                Throws.InstanceOf<InvalidOperationException>());
+        }
+
+        [Test]
+        public async Task DeleteMessagesAsyncMapsMessageNotFoundToAggregateCount()
+        {
+            var mockScope = new Mock<AmqpConnectionScope>();
+            mockScope
+                .Setup(scope => scope.OpenManagementLinkAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(AmqpConnectionScopeTests.CreateRequestResponseLink());
+
+            var receiver = new AmqpReceiver(
+                "entityName",
+                ServiceBusReceiveMode.PeekLock,
+                0,
+                mockScope.Object,
+                new BasicRetryPolicy(new ServiceBusRetryOptions()),
+                "someIdentifier",
+                sessionId: null,
+                isSessionReceiver: false,
+                isProcessor: false,
+                messageConverter: Mock.Of<AmqpMessageConverter>(),
+                requestAsync: (_, _, _) => Task.FromResult(CreateDeleteMessagesResponse(
+                    AmqpResponseStatusCode.NotFound,
+                    2,
+                    AmqpClientConstants.MessageNotFoundError)));
+
+            var result = await receiver.DeleteMessagesAsync(10, DateTimeOffset.UtcNow);
+
+            Assert.That(result, Is.EqualTo(2));
+        }
+
+        [TestCase(null)]
+        [TestCase("2")]
+        public void DeleteMessagesAsyncRejectsMessageNotFoundWithoutIntegerCount(object deletedCount)
+        {
+            var mockScope = new Mock<AmqpConnectionScope>();
+            mockScope
+                .Setup(scope => scope.OpenManagementLinkAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(AmqpConnectionScopeTests.CreateRequestResponseLink());
+
+            var receiver = new AmqpReceiver(
+                "entityName",
+                ServiceBusReceiveMode.PeekLock,
+                0,
+                mockScope.Object,
+                new BasicRetryPolicy(new ServiceBusRetryOptions()),
+                "someIdentifier",
+                sessionId: null,
+                isSessionReceiver: false,
+                isProcessor: false,
+                messageConverter: Mock.Of<AmqpMessageConverter>(),
+                requestAsync: (_, _, _) => Task.FromResult(CreateDeleteMessagesResponse(
+                    AmqpResponseStatusCode.NotFound,
+                    deletedCount,
+                    AmqpClientConstants.MessageNotFoundError)));
+
+            Assert.That(
+                async () => await receiver.DeleteMessagesAsync(10, DateTimeOffset.UtcNow),
+                Throws.InstanceOf<InvalidOperationException>());
+        }
+
+        private static AmqpMessage CreateDeleteMessagesResponse(
+            AmqpResponseStatusCode statusCode,
+            object deletedCount = null,
+            AmqpSymbol? errorCondition = null)
+        {
+            var responseMap = new AmqpMap();
+            if (deletedCount != null)
+            {
+                responseMap[ManagementConstants.Properties.MessageCount] = deletedCount;
+            }
+
+            AmqpMessage response = AmqpMessage.Create(new AmqpValue { Value = responseMap });
+            response.ApplicationProperties.Map[ManagementConstants.Response.StatusCode] = (int)statusCode;
+            if (errorCondition.HasValue)
+            {
+                response.ApplicationProperties.Map[ManagementConstants.Response.ErrorCondition] = errorCondition.Value;
+            }
+            return response;
         }
 
         /// <summary>

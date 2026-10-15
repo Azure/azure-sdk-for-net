@@ -21,8 +21,17 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Model factory for models. </summary>
     // Suppress: generated method uses string groupId; prior GA used ResourceIdentifier groupId.
     [CodeGenSuppress("StoragePrivateLinkResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<string>))]
+    [CodeGenSuppress("StorageTableAccessPolicy", typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(string))]
     public static partial class ArmStorageModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="StorageTableAccessPolicy" />. </summary>
+        /// <param name="startOn"> Start time of the access policy. </param>
+        /// <param name="expireOn"> Expiry time of the access policy. </param>
+        /// <param name="permission"> Required. List of abbreviated permissions. Supported permission values include 'r','a','u','d'. </param>
+        /// <returns> A new <see cref="StorageTableAccessPolicy" /> instance for mocking. </returns>
+        public static StorageTableAccessPolicy StorageTableAccessPolicy(DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, string permission = default)
+            => new StorageTableAccessPolicy(startOn, expireOn, permission, default);
+
         /// <summary> Initializes a new instance of StorageTaskAssignmentPatchProperties (backward-compat overload). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageTaskAssignmentPatchProperties StorageTaskAssignmentPatchProperties(string taskId, bool? isEnabled, string description, StorageTaskAssignmentUpdateExecutionContext executionContext, string reportPrefix, StorageProvisioningState? provisioningState, StorageTaskReportProperties runStatus)

@@ -15,6 +15,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _description;
+        internal bool _descriptionIsDefined;
+        private LinkerValidationResultStatus? _result;
+        internal bool _resultIsDefined;
+        private string _errorMessage;
+        internal bool _errorMessageIsDefined;
+        private string _errorCode;
+        internal bool _errorCodeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="LinkerValidationResultItemInfo"/>. </summary>
         internal LinkerValidationResultItemInfo()
@@ -31,10 +39,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         internal LinkerValidationResultItemInfo(string name, string description, LinkerValidationResultStatus? result, string errorMessage, string errorCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Description = description;
-            Result = result;
-            ErrorMessage = errorMessage;
-            ErrorCode = errorCode;
+            _description = description;
+            _result = result;
+            _errorMessage = errorMessage;
+            _errorCode = errorCode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,15 +50,39 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public string Name { get; }
 
         /// <summary> The display name of validation item. </summary>
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+        }
 
         /// <summary> The result of validation. </summary>
-        public LinkerValidationResultStatus? Result { get; }
+        public LinkerValidationResultStatus? Result
+        {
+            get
+            {
+                return _result;
+            }
+        }
 
         /// <summary> The error message of validation result. </summary>
-        public string ErrorMessage { get; }
+        public string ErrorMessage
+        {
+            get
+            {
+                return _errorMessage;
+            }
+        }
 
         /// <summary> The error code of validation result. </summary>
-        public string ErrorCode { get; }
+        public string ErrorCode
+        {
+            get
+            {
+                return _errorCode;
+            }
+        }
     }
 }

@@ -3781,7 +3781,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 else
                 {
-                    value.Add(BinaryData.FromString(item.GetRawText()));
+                    value.Add(item.GetUtf8Bytes());
                 }
             }
             return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
@@ -3808,7 +3808,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 else
                 {
-                    value.Add(BinaryData.FromString(item.GetRawText()));
+                    value.Add(item.GetUtf8Bytes());
                 }
             }
             return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
@@ -3897,7 +3897,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 else
                 {
-                    value.Add(BinaryData.FromString(item.GetRawText()));
+                    value.Add(item.GetUtf8Bytes());
                 }
             }
             return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
@@ -3924,7 +3924,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 else
                 {
-                    value.Add(BinaryData.FromString(item.GetRawText()));
+                    value.Add(item.GetUtf8Bytes());
                 }
             }
             return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
@@ -5485,7 +5485,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 else
                 {
-                    value.Add(BinaryData.FromString(item.GetRawText()));
+                    value.Add(item.GetUtf8Bytes());
                 }
             }
             return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
@@ -5512,7 +5512,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 else
                 {
-                    value.Add(BinaryData.FromString(item.GetRawText()));
+                    value.Add(item.GetUtf8Bytes());
                 }
             }
             return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
@@ -6191,7 +6191,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 else
                 {
-                    value.Add(BinaryData.FromString(item.GetRawText()));
+                    value.Add(item.GetUtf8Bytes());
                 }
             }
             return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
@@ -6218,7 +6218,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 else
                 {
-                    value.Add(BinaryData.FromString(item.GetRawText()));
+                    value.Add(item.GetUtf8Bytes());
                 }
             }
             return Response.FromValue((IReadOnlyList<BinaryData>)value, result);

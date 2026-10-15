@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Dns;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="dnsTlsaRecords"> The list of TLSA records in the record set. </param>
         /// <param name="dnsNaptrRecords"> The list of NAPTR records in the record set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DnsRecordSetProperties(IDictionary<string, string> metadata, long? ttlInSeconds, string fqdn, string provisioningState, WritableSubResource targetResource, WritableSubResource trafficManagementProfile, IList<DnsARecordInfo> dnsARecords, IList<DnsAaaaRecordInfo> dnsAaaaRecords, IList<DnsMXRecordInfo> dnsMXRecords, IList<DnsNSRecordInfo> dnsNSRecords, IList<DnsPtrRecordInfo> dnsPtrRecords, IList<DnsSrvRecordInfo> dnsSrvRecords, IList<DnsTxtRecordInfo> dnsTxtRecords, DnsCnameRecordInfo dnsCnameRecord, DnsSoaRecordInfo dnsSoaRecord, IList<DnsCaaRecordInfo> dnsCaaRecords, IList<DnsDSRecordInfo> dnsDSRecords, IList<DnsTlsaRecordInfo> dnsTlsaRecords, IList<DnsNaptrRecordInfo> dnsNaptrRecords, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DnsRecordSetProperties(IDictionary<string, string> metadata, long? ttlInSeconds, string fqdn, string provisioningState, DnsSubResourceInfo targetResource, DnsSubResourceInfo trafficManagementProfile, IList<DnsARecordInfo> dnsARecords, IList<DnsAaaaRecordInfo> dnsAaaaRecords, IList<DnsMXRecordInfo> dnsMXRecords, IList<DnsNSRecordInfo> dnsNSRecords, IList<DnsPtrRecordInfo> dnsPtrRecords, IList<DnsSrvRecordInfo> dnsSrvRecords, IList<DnsTxtRecordInfo> dnsTxtRecords, DnsCnameRecordInfo dnsCnameRecord, DnsSoaRecordInfo dnsSoaRecord, IList<DnsCaaRecordInfo> dnsCaaRecords, IList<DnsDSRecordInfo> dnsDSRecords, IList<DnsTlsaRecordInfo> dnsTlsaRecords, IList<DnsNaptrRecordInfo> dnsNaptrRecords, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             TtlInSeconds = ttlInSeconds;
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.Dns.Models
         public string ProvisioningState { get; }
 
         /// <summary> A reference to an azure resource from where the dns resource value is taken. </summary>
-        public WritableSubResource TargetResource { get; set; }
+        internal DnsSubResourceInfo TargetResource { get; set; }
 
         /// <summary> A reference to an azure traffic manager profile resource from where the dns resource value is taken. </summary>
-        public WritableSubResource TrafficManagementProfile { get; set; }
+        internal DnsSubResourceInfo TrafficManagementProfile { get; set; }
 
         /// <summary> The list of A records in the record set. </summary>
         public IList<DnsARecordInfo> DnsARecords { get; }
@@ -136,6 +136,40 @@ namespace Azure.ResourceManager.Dns.Models
 
         /// <summary> The list of NAPTR records in the record set. </summary>
         public IList<DnsNaptrRecordInfo> DnsNaptrRecords { get; }
+
+        /// <summary> Resource Id. </summary>
+        public ResourceIdentifier TargetResourceId
+        {
+            get
+            {
+                return TargetResource is null ? default : TargetResource.Id;
+            }
+            set
+            {
+                if (TargetResource is null)
+                {
+                    TargetResource = new DnsSubResourceInfo();
+                }
+                TargetResource.Id = value;
+            }
+        }
+
+        /// <summary> Resource Id. </summary>
+        public ResourceIdentifier TrafficManagementProfileId
+        {
+            get
+            {
+                return TrafficManagementProfile is null ? default : TrafficManagementProfile.Id;
+            }
+            set
+            {
+                if (TrafficManagementProfile is null)
+                {
+                    TrafficManagementProfile = new DnsSubResourceInfo();
+                }
+                TrafficManagementProfile.Id = value;
+            }
+        }
 
         /// <summary> The canonical name for this CNAME record. </summary>
         public string Cname

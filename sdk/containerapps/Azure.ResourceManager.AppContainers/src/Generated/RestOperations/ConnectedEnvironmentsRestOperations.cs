@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.App/connectedEnvironments/", false);
             uri.AppendPath(connectedEnvironmentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.App/connectedEnvironments/", false);
             uri.AppendPath(connectedEnvironmentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,19 +96,13 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.App/connectedEnvironments/", false);
             uri.AppendPath(connectedEnvironmentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
             _userAgent.Apply(message);
-            if (content != null)
-            {
-                request.Headers.SetValue("Content-Type", "application/json");
-            }
+            request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
@@ -130,10 +118,7 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.App/connectedEnvironments/", false);
             uri.AppendPath(connectedEnvironmentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -151,10 +136,7 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.App/connectedEnvironments", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -175,10 +157,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -195,10 +174,7 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.App/connectedEnvironments", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -219,10 +195,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -243,10 +216,7 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendPath("/providers/Microsoft.App/connectedEnvironments/", false);
             uri.AppendPath(connectedEnvironmentName, true);
             uri.AppendPath("/checkNameAvailability", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

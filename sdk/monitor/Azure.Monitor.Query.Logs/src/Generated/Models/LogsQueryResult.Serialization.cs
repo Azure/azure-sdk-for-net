@@ -185,10 +185,10 @@ namespace Azure.Monitor.Query.Logs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LogsQueryResult(allTables, error, statistics, visualization, additionalBinaryDataProperties);
+            return new LogsQueryResult(allTables ?? new ChangeTrackingList<LogsTable>(), error, statistics, visualization, additionalBinaryDataProperties);
         }
     }
 }
