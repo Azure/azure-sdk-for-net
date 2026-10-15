@@ -6,13 +6,15 @@ using System.ClientModel.Primitives;
 using System.IO;
 using System.Text.Json;
 
+// Maps Azure.AI.Extensions.OpenAI tool-call items that are still marked experimental upstream; the tag is owned and removed there.
+#pragma warning disable AAIP001
+
 namespace Azure.AI.AgentServer.Responses.Models;
 
 /// <summary>
 /// Extension methods for <see cref="OutputItem"/> that provide efficient
 /// access to the <c>Id</c> property without reflection.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public static class OutputItemExtensions
 {
     /// <summary>

@@ -18,7 +18,6 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// State persistence is delegated to <see cref="ResponsesProvider"/>; event streaming and
 /// sequence numbering are delegated to the Core event-stream primitive.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class ResponseExecution : IDisposable
 {
     public ResponseExecution(string responseId,

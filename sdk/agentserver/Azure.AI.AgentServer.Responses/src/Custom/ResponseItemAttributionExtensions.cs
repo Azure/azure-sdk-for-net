@@ -31,7 +31,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// this type should be deleted in favour of them.
 /// </para>
 /// </remarks>
-[Experimental("AAIP002")]
 public static class ResponseItemAttributionExtensions
 {
     private static readonly ReadOnlyMemory<byte> ResponseIdPath = "$.response_id"u8.ToArray();

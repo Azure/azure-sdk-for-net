@@ -27,7 +27,6 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// reads are fast and post-restart recovery sees the pre-crash envelopes. Writes are write-through
 /// and use an atomic temp-file + rename so a crash mid-write never corrupts a committed record.
 /// </remarks>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class FileResponsesProvider : ResponsesProvider
 {
     private readonly string _root;

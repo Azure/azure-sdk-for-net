@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 
 using ModelFactory = Azure.AI.AgentServer.Responses.AgentServerResponsesModelFactory;
 
+// Reads System.ClientModel experimental patch/JSON surface of OpenAI error models; no stable alternative.
+#pragma warning disable SCME0001
+
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
@@ -17,7 +20,6 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </list>
 /// All user-facing error messages are sanitized here. Internal details are never exposed.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal static class ApiErrorFactory
 {
     // --- Constants ---

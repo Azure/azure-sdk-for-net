@@ -16,7 +16,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// without null checks.
 /// </para>
 /// </remarks>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public sealed class CreateResponsePersistRequest
 {
     /// <summary>

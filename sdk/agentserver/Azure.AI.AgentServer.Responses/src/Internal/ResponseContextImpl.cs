@@ -16,7 +16,6 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// item references are resolved via <see cref="ResponsesProvider.GetItemsAsync"/>
 /// and converted back to <see cref="Item"/>.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class ResponseContextImpl : ResponseContext
 {
     private readonly ResponsesProvider _provider;

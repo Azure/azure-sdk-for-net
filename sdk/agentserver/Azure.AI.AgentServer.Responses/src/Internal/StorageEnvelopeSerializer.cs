@@ -11,7 +11,6 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <summary>
 /// Static helpers for serializing and deserializing Foundry storage request/response envelopes.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal static class StorageEnvelopeSerializer
 {
     private static readonly ModelReaderWriterOptions JsonOptions = ModelReaderWriterOptions.Json;

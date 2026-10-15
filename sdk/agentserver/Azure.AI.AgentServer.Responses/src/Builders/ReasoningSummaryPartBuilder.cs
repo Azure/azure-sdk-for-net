@@ -9,7 +9,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for a single reasoning summary part. Provides methods
 /// for the summary part lifecycle: added, text delta, text done, and part done events.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class ReasoningSummaryPartBuilder
 {
     private readonly ResponseEventStream _stream;

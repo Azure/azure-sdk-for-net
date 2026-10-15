@@ -9,7 +9,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for an MCP list tools output item. Provides methods
 /// for lifecycle events with success or failure terminal states.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpListTools>
 {
     private readonly string _serverLabel;

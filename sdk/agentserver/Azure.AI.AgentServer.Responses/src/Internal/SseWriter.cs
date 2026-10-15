@@ -17,7 +17,6 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// comments emitted by the session's timer never interleave with event
 /// frames.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class SseWriter
 {
     private readonly SseKeepAliveSession _session;

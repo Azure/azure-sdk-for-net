@@ -29,7 +29,6 @@ namespace Azure.AI.AgentServer.Responses;
 ///     createText: ct =&gt; Task.FromResult("Hello!"));
 /// </code>
 /// </example>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class TextResponse : IAsyncEnumerable<ResponseStreamEvent>
 {
     private readonly ResponseContext _context;

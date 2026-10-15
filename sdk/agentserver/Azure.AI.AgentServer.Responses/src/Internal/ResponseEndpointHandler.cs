@@ -23,7 +23,6 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <summary>
 /// Contains the endpoint handler methods for the Responses API.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class ResponseEndpointHandler
 {
     /// <summary>

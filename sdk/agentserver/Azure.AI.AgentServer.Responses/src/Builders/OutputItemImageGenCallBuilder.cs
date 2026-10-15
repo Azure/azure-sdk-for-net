@@ -17,7 +17,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// base64-encoded image result.
 /// </para>
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemImageGenCallBuilder : OutputItemBuilder<OutputItemImageGenToolCall>
 {
     private long _partialImageIndex;

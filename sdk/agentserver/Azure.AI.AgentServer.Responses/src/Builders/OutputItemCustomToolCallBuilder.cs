@@ -11,7 +11,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for a custom tool call output item. Provides methods
 /// for lifecycle events and streaming input deltas.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCustomToolCall>
 {
     private readonly string _callId;

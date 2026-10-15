@@ -11,7 +11,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// lifecycle: <c>EmitAdded</c> → <c>EmitDelta</c> (0+) → <c>EmitTextDone</c>
 /// → <c>EmitAnnotationAdded</c> (0+) → <c>EmitDone</c>.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class TextContentBuilder
 {
     private readonly ResponseEventStream _stream;

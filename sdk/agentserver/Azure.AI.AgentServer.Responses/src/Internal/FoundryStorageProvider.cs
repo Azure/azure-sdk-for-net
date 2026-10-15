@@ -13,7 +13,6 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// state to the Azure AI Foundry storage API using an Azure.Core
 /// <see cref="HttpPipeline"/> for retry, authentication, telemetry, and tracing.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class FoundryStorageProvider : ResponsesProvider
 {
     private const string ApiVersion = "v1";

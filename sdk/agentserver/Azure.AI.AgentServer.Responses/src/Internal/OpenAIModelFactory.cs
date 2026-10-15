@@ -21,7 +21,6 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// while reading a service response. This server implementation has to produce them, so
 /// they are round-tripped through the public model-reader instead.
 /// </remarks>
-[Experimental("AAIP002")]
 internal static class OpenAIModelFactory
 {
     /// <summary>

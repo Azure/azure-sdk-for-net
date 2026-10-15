@@ -9,7 +9,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for a web search tool call output item. Provides methods
 /// for the web search lifecycle: added, in-progress, searching, completed, done.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemWebSearchCallBuilder : OutputItemBuilder<OutputItemWebSearchToolCall>
 {
     /// <summary>

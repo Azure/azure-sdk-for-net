@@ -17,6 +17,9 @@ using Azure.AI.AgentServer.Responses;
 using Azure.AI.Extensions.OpenAI;
 using OpenAI.Responses;
 
+// ResponseItem.Patch is the only way to carry unknown wire properties on OpenAI response items; it is still marked experimental in System.ClientModel.
+#pragma warning disable SCME0001
+
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> ResponseCustomToolCallItem. </summary>

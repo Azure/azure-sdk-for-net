@@ -4,13 +4,15 @@
 using System.ClientModel.Primitives;
 using Azure.AI.AgentServer.Responses.Models;
 
+// Mutates OpenAI response models through the experimental System.ClientModel Patch surface; no stable alternative.
+#pragma warning disable SCME0001
+
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
 /// Extension methods that centralize all mutations to the <see cref="Response"/> object,
 /// ensuring consistent terminal state regardless of delivery mode.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal static class ResponseMutations
 {
     /// <summary>

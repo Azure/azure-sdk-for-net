@@ -39,7 +39,6 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// completion is a no-op because Core closes the transport after the task's terminal transition.
 /// </para>
 /// </remarks>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class EventStreamObserver : IAsyncObserver<ResponseStreamEvent>
 {
     private readonly Func<SseItem<string>, CancellationToken, ValueTask> _emit;

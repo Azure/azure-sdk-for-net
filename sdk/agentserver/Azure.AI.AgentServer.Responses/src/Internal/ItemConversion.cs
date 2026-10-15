@@ -19,7 +19,6 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// so conversion no longer maps between two parallel hierarchies. What remains is assigning a
 /// type-prefixed ID and stripping server-internal metadata on egress.
 /// </remarks>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal static class ItemConversion
 {
     /// <summary>

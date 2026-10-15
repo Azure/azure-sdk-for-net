@@ -10,7 +10,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for a code interpreter tool call output item. Provides methods
 /// for the lifecycle events and streaming code deltas.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItemCodeInterpreterToolCall>
 {
     private string? _finalCode;

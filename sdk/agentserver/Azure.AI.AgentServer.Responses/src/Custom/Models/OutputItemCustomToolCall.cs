@@ -18,7 +18,6 @@ using OpenAI.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> ResponseCustomToolCallItem. </summary>
-    [Experimental("AAIP002")]
     public partial class OutputItemCustomToolCall : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

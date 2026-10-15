@@ -26,7 +26,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// <c>AddResponsesServer()</c>.
 /// </para>
 /// </remarks>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public abstract class ResponsesProvider
 {
     // --- State ---

@@ -21,7 +21,6 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// serialized and re-read as the Azure union so that both representations stay available
 /// without duplicating the union logic.
 /// </remarks>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal static class BinaryDataExpansionHelpers
 {
     /// <summary>

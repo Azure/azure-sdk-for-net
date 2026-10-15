@@ -19,7 +19,6 @@ using OpenAI.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> ResponseCustomToolCallOutputItem. </summary>
-    [Experimental("AAIP002")]
     public partial class OutputItemCustomToolCallOutput : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

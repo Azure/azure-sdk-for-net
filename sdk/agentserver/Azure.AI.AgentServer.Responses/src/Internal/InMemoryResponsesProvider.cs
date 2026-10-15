@@ -27,7 +27,6 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// window fully elapses since the last event was emitted.
 /// </para>
 /// </remarks>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 {
     private readonly ConcurrentDictionary<ResponseStorePartition, Store> _partitions = new();

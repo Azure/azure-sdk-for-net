@@ -6,7 +6,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// <summary>
 /// Configuration options for the Responses API server SDK.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class ResponsesServerOptions
 {
     private int _defaultFetchHistoryCount = DefaultFetchHistoryCountValue;

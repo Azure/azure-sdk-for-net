@@ -10,7 +10,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for an MCP tool call output item. Provides methods
 /// for lifecycle events and streaming arguments.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
 {
     private readonly string _serverLabel;

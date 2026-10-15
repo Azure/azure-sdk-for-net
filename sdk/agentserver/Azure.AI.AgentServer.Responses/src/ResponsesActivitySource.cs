@@ -17,7 +17,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// conversation_id, streaming, x-request-id) so downstream spans inherit them.
 /// </para>
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal class ResponsesActivitySource
 {
     /// <summary>

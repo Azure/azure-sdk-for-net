@@ -10,7 +10,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// Thrown when code needs to surface a structured API error that serializes directly
 /// to <see cref="ApiErrorResponse"/>. Maps to the specified <see cref="StatusCode"/>.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class ResponsesApiException : Exception
 {
     /// <summary>

@@ -11,7 +11,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for a function call output item. Provides methods
 /// for the function call event lifecycle: added, arguments delta/done, and done events.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctionToolCall>
 {
     private readonly string _name;

@@ -13,7 +13,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// sub-events (no deltas, no status transitions).
 /// </summary>
 /// <typeparam name="T">The concrete <see cref="OutputItem"/> subtype this builder handles.</typeparam>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemBuilder<T> where T : OutputItem
 {
     private protected readonly ResponseEventStream _stream;

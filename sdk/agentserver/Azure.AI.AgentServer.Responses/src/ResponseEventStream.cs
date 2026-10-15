@@ -14,7 +14,6 @@ namespace Azure.AI.AgentServer.Responses;
 /// factory methods for creating child scopes (message builders, function call builders).
 /// Owns a private <see cref="Response"/> object that is embedded in emitted events.
 /// </summary>
-[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class ResponseEventStream
 {
     private readonly ResponseContext _context;

@@ -17,20 +17,17 @@ nowarn:AZC0100
 # Same exemption as the parent Azure.AI.AgentServer.Core (and AMQP-based SDKs).
 nowarn:AZC0004
 
-# AAIP002 is the [Experimental] marker stamped by the OpenAIExperimentalVisitor in the
-# codegen plugin (sdk/ai/codegen) onto surface that exposes OpenAI-experimental types.
-# Now that this package consumes OpenAI.Responses models through Azure.AI.Extensions.OpenAI
-# instead of re-declaring them, that marker covers most of the generated surface and the
-# hand-written hosting code that builds on it. The diagnostic exists so external consumers
-# explicitly acknowledge experimental usage; internal use across the assembly is by design.
-# File-scoped pragmas would be wiped on every codegen regen of the affected generated files.
+# AAIP002 is stamped by the OpenAIExperimentalVisitor in the codegen plugin (sdk/ai/codegen)
+# onto generated surface that exposes OpenAI-experimental types. This package no longer adds
+# its own experimental attributes; the diagnostic only fires on internal use of those
+# upstream-tagged generated types. File-scoped pragmas would be wiped on every codegen regen.
 nowarn:AAIP002
 
 # OPENAI001 marks the OpenAI.Responses surface this package is built on. It cannot be
 # suppressed with attributes alone: the System.ClientModel model-reader source generator
 # emits a reference to OpenAI.OpenAIContext into AzureAIAgentServerResponsesContext.g.cs,
 # which we cannot annotate and which is regenerated on every build. The public surface
-# remains gated behind the package's own AAIP002 experimental marker.
+# is owned upstream; this package adds no experimental markers of its own.
 nowarn:OPENAI001
 
 # OPENAICUA001 marks the OpenAI computer-use surface (ComputerCallAction and friends).
