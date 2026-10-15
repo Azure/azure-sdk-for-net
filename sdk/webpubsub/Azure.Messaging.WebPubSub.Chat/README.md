@@ -265,7 +265,7 @@ catch (RequestFailedException ex)
   changes, and retry with the latest ETag rather than blindly overwriting it.
 - **429 or transient 5xx:** Clients retry eligible transient failures according
   to `WebPubSubChatServiceClientOptions.Retry`. Check service capacity and
-  [service limits](https://learn.microsoft.com/azure/azure-web-pubsub/resource-planning).
+  [performance guidance](https://learn.microsoft.com/azure/azure-web-pubsub/concept-performance).
 
 For diagnostics, see [Azure SDK logging](https://learn.microsoft.com/dotnet/azure/sdk/logging).
 Avoid enabling content logging for sensitive chat messages in production.
