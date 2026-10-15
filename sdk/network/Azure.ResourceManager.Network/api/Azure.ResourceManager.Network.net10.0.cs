@@ -4620,6 +4620,7 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? ResourceGuid { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationData> TapConfigurations { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use VirtualMachineId instead.")]
         public Azure.ResourceManager.Resources.Models.WritableSubResource VirtualMachine { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VirtualMachineId { get { throw null; } }
         public bool? VnetEncryptionSupported { get { throw null; } }
