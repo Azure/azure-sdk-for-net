@@ -13,19 +13,17 @@ namespace System.ClientModel
         public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesFromPageAsync(System.ClientModel.ClientResult page);
     }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0005")]
-    public static partial class AsyncStreamingClientResult
+    public static partial class AsyncStreamingResult
     {
-        public static System.ClientModel.AsyncStreamingClientResult<System.BinaryData> CreateJsonLines(System.ClientModel.Primitives.PipelineResponse response, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.ClientModel.AsyncStreamingClientResult<T> CreateJsonLines<T>(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.BinaryData, T> itemParser, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.ClientModel.AsyncStreamingClientResult<System.Net.ServerSentEvents.SseItem<System.BinaryData>> CreateSse(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.Net.ServerSentEvents.SseItem<System.BinaryData>, bool>? isTerminal = null, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.ClientModel.AsyncStreamingClientResult<System.Net.ServerSentEvents.SseItem<T>> CreateSse<T>(System.ClientModel.Primitives.PipelineResponse response, System.Net.ServerSentEvents.SseItemParser<T> itemParser, System.Func<System.Net.ServerSentEvents.SseItem<System.BinaryData>, bool>? isTerminal = null, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.ClientModel.AsyncStreamingClientResult<T> Create<T>(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.IO.Stream, System.Threading.CancellationToken, System.Collections.Generic.IAsyncEnumerable<T>> producer, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingResult<System.BinaryData> CreateJsonLines(System.ClientModel.Primitives.PipelineResponse response, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingResult<T> CreateJsonLines<T>(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.BinaryData, T> itemParser, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingResult<System.Net.ServerSentEvents.SseItem<System.BinaryData>> CreateSse(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.Net.ServerSentEvents.SseItem<System.BinaryData>, bool>? isTerminal = null, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingResult<System.Net.ServerSentEvents.SseItem<T>> CreateSse<T>(System.ClientModel.Primitives.PipelineResponse response, System.Net.ServerSentEvents.SseItemParser<T> itemParser, System.Func<System.Net.ServerSentEvents.SseItem<System.BinaryData>, bool>? isTerminal = null, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingResult<T> Create<T>(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.IO.Stream, System.Threading.CancellationToken, System.Collections.Generic.IAsyncEnumerable<T>> producer, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0005")]
-    public sealed partial class AsyncStreamingClientResult<T> : System.Collections.Generic.IAsyncEnumerable<T>, System.IAsyncDisposable
+    public sealed partial class AsyncStreamingResult<T> : System.Collections.Generic.IAsyncEnumerable<T>, System.IAsyncDisposable
     {
-        internal AsyncStreamingClientResult() { }
+        internal AsyncStreamingResult() { }
         public System.ClientModel.Primitives.PipelineResponseHeaders Headers { get { throw null; } }
         public string ReasonPhrase { get { throw null; } }
         public int Status { get { throw null; } }
@@ -255,7 +253,9 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.PipelineMessage CreateMessage() { throw null; }
         public System.ClientModel.Primitives.PipelineMessage CreateMessage(System.Uri uri, string method, System.ClientModel.Primitives.PipelineMessageClassifier? classifier = null) { throw null; }
         public void Send(System.ClientModel.Primitives.PipelineMessage message) { }
+        public void Send(System.ClientModel.Primitives.PipelineMessage message, System.Threading.CancellationToken cancellationToken) { }
         public System.Threading.Tasks.ValueTask SendAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        public System.Threading.Tasks.ValueTask SendAsync(System.ClientModel.Primitives.PipelineMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class ClientPipelineOptions
     {

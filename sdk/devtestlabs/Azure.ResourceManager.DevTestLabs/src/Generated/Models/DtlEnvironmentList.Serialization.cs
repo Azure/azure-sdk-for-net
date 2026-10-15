@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DtlEnvironmentList(value, nextLink, additionalBinaryDataProperties);
+            return new DtlEnvironmentList(value ?? new ChangeTrackingList<DevTestLabEnvironmentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

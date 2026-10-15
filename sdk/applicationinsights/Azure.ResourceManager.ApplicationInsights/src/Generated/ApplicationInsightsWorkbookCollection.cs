@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApplicationInsightsWorkbookCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ApplicationInsightsWorkbookResource.ResourceType, out string applicationInsightsWorkbookApiVersion);
             _workbooksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ApplicationInsightsWorkbookResource.ResourceType.Namespace, Diagnostics);
-            _workbooksRestClient = new Workbooks(_workbooksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsWorkbookApiVersion ?? "2023-06-01");
+            _workbooksRestClient = new Workbooks(_workbooksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookResource>(new WorkbooksGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookResource>(new ApplicationInsightsWorkbookDataAsync1CollectionResultOfT(
                 _workbooksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -337,7 +336,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookResource>(new WorkbooksGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookResource>(new ApplicationInsightsWorkbookData1CollectionResultOfT(
                 _workbooksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

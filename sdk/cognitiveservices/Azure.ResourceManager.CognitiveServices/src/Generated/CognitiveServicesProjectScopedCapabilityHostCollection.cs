@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(CognitiveServicesProjectScopedCapabilityHostResource.ResourceType, out string cognitiveServicesProjectScopedCapabilityHostApiVersion);
             _projectCapabilityHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesProjectScopedCapabilityHostResource.ResourceType.Namespace, Diagnostics);
-            _projectCapabilityHostsRestClient = new ProjectCapabilityHosts(_projectCapabilityHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesProjectScopedCapabilityHostApiVersion ?? "2026-07-15-preview");
+            _projectCapabilityHostsRestClient = new ProjectCapabilityHosts(_projectCapabilityHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesProjectScopedCapabilityHostApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CognitiveServicesProjectScopedCapabilityHostData, CognitiveServicesProjectScopedCapabilityHostResource>(new ProjectCapabilityHostsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CognitiveServicesProjectScopedCapabilityHostData, CognitiveServicesProjectScopedCapabilityHostResource>(new CognitiveServicesProjectScopedCapabilityHostDataAsyncCollectionResultOfT(
                 _projectCapabilityHostsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CognitiveServicesProjectScopedCapabilityHostData, CognitiveServicesProjectScopedCapabilityHostResource>(new ProjectCapabilityHostsGetAllCollectionResultOfT(
+            return new PageableWrapper<CognitiveServicesProjectScopedCapabilityHostData, CognitiveServicesProjectScopedCapabilityHostResource>(new CognitiveServicesProjectScopedCapabilityHostDataCollectionResultOfT(
                 _projectCapabilityHostsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

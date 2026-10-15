@@ -204,12 +204,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("rootPath"u8))
                 {
-                    rootPath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    rootPath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("entryFilePath"u8))
                 {
-                    entryFilePath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    entryFilePath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("arguments"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     arguments = array;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sparkJobLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    sparkJobLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("className"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    proxyUser = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    proxyUser = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sparkConfig"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     sparkConfig = dictionary;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HDInsightSparkActivityTypeProperties(

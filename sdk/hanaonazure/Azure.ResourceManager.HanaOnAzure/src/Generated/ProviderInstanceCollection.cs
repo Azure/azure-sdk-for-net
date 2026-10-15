@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HanaOnAzure
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProviderInstanceData, ProviderInstanceResource>(new ProviderInstancesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ProviderInstanceData, ProviderInstanceResource>(new ProviderInstanceDataAsyncCollectionResultOfT(
                 _providerInstancesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HanaOnAzure
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProviderInstanceData, ProviderInstanceResource>(new ProviderInstancesGetAllCollectionResultOfT(
+            return new PageableWrapper<ProviderInstanceData, ProviderInstanceResource>(new ProviderInstanceDataCollectionResultOfT(
                 _providerInstancesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

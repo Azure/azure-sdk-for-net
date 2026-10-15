@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.ServerSentEvents;
 using System.Threading;
 using System.Threading.Tasks;
@@ -72,6 +73,13 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, TokenCredential credential, SearchClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, knowledgeBaseName, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient from a <see cref="KnowledgeBaseRetrievalClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for KnowledgeBaseRetrievalClient. </param>
+        [Experimental("SCME0002")]
+        public KnowledgeBaseRetrievalClient(KnowledgeBaseRetrievalClientSettings settings) : this(string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredentialPolicy(new AzureKeyCredential(settings.Credential.Key), AuthorizationHeader) : new BearerTokenAuthenticationPolicy(settings?.CredentialProvider as TokenCredential, AuthorizationScopes), settings?.Endpoint, settings?.KnowledgeBaseName, settings?.Options)
         {
         }
 
@@ -198,8 +206,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        public virtual async Task<AsyncStreamingClientResult<SseItem<BinaryData>>> RetrieveStreamAsync(RequestContent content, string querySourceAuthorization = default, string queryWorkIQSourceAuthorization = default, RequestContext context = null)
+        public virtual async Task<AsyncStreamingResult<SseItem<BinaryData>>> RetrieveStreamAsync(RequestContent content, string querySourceAuthorization = default, string queryWorkIQSourceAuthorization = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.RetrieveStream");
             scope.Start();
@@ -210,7 +217,7 @@ namespace Azure.Search.Documents.KnowledgeBases
                 using HttpMessage message = CreateRetrieveStreamRequest(content, querySourceAuthorization, queryWorkIQSourceAuthorization, context);
                 message.BufferResponse = false;
                 await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return AsyncStreamingClientResult.CreateSse(new AzurePipelineResponse(message));
+                return AsyncStreamingResult.CreateSse(new AzurePipelineResponse(message), null, context?.CancellationToken ?? default);
             }
             catch (Exception e)
             {
@@ -218,11 +225,50 @@ namespace Azure.Search.Documents.KnowledgeBases
                 throw;
             }
         }
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary>
+        /// [Protocol Method] KnowledgeBase retrieves relevant data from backing stores.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response Retrieve(RequestContent content, RequestContext context)
+        {
+            return Retrieve(content: content, querySourceAuthorization: default, queryWorkIQSourceAuthorization: default, context: context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] KnowledgeBase retrieves relevant data from backing stores.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response> RetrieveAsync(RequestContent content, RequestContext context)
+        {
+            return RetrieveAsync(content: content, querySourceAuthorization: default, queryWorkIQSourceAuthorization: default, context: context);
+        }
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
 #pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken)
@@ -234,6 +280,8 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
 #pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken)

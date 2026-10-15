@@ -296,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventGridTopicData, EventGridTopicResource>(new EventGridTopicsGetByResourceGroupAsyncCollectionResultOfT(_eventGridTopicsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EventGridTopicCollection.GetAll"), data => new EventGridTopicResource(Client, data));
+            return new AsyncPageableWrapper<EventGridTopicData, EventGridTopicResource>(new EventGridTopicDataAsyncCollectionResultOfT(_eventGridTopicsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EventGridTopicCollection.GetAll"), data => new EventGridTopicResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventGridTopicData, EventGridTopicResource>(new EventGridTopicsGetByResourceGroupCollectionResultOfT(_eventGridTopicsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EventGridTopicCollection.GetAll"), data => new EventGridTopicResource(Client, data));
+            return new PageableWrapper<EventGridTopicData, EventGridTopicResource>(new EventGridTopicDataCollectionResultOfT(_eventGridTopicsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EventGridTopicCollection.GetAll"), data => new EventGridTopicResource(Client, data));
         }
 
         /// <summary>

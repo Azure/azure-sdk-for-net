@@ -1,5 +1,25 @@
 # Release History
 
+## 1.19.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.18.0 (2026-10-12)
+
+### Features Added
+
+- Upgraded ComputeGallery API version to `2026-03-03`.
+
+### Bugs Fixed
+
+- Fixed an infinite recursion issue in the `GetVirtualMachineImages` and `GetVirtualMachineImagesAsync` overloads that accept an `AzureLocation`.
+
 ## 1.17.0 (2026-09-14)
 
 ### Features Added

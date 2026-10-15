@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DevTestLabGlobalScheduleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DevTestLabGlobalScheduleResource.ResourceType, out string devTestLabGlobalScheduleApiVersion);
             _devTestLabGlobalSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabGlobalScheduleResource.ResourceType.Namespace, Diagnostics);
-            _devTestLabGlobalSchedulesRestClient = new DevTestLabGlobalSchedules(_devTestLabGlobalSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabGlobalScheduleApiVersion ?? "2018-09-15");
+            _devTestLabGlobalSchedulesRestClient = new DevTestLabGlobalSchedules(_devTestLabGlobalSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DevTestLab/schedules", out string devTestLabGlobalSchedulesApiVersionOverride) ? devTestLabGlobalSchedulesApiVersionOverride : "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabGlobalSchedulesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabScheduleDataAsync0CollectionResultOfT(
                 _devTestLabGlobalSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -335,7 +334,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabGlobalSchedulesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabScheduleData0CollectionResultOfT(
                 _devTestLabGlobalSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlDistributedAvailabilityGroupResource.ResourceType, out string sqlDistributedAvailabilityGroupApiVersion);
             _distributedAvailabilityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDistributedAvailabilityGroupResource.ResourceType.Namespace, Diagnostics);
-            _distributedAvailabilityGroupsRestClient = new DistributedAvailabilityGroups(_distributedAvailabilityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDistributedAvailabilityGroupApiVersion ?? "2025-02-01-preview");
+            _distributedAvailabilityGroupsRestClient = new DistributedAvailabilityGroups(_distributedAvailabilityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDistributedAvailabilityGroupApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlDistributedAvailabilityGroupData, SqlDistributedAvailabilityGroupResource>(new DistributedAvailabilityGroupsGetByInstanceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlDistributedAvailabilityGroupData, SqlDistributedAvailabilityGroupResource>(new SqlDistributedAvailabilityGroupDataAsyncCollectionResultOfT(
                 _distributedAvailabilityGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlDistributedAvailabilityGroupData, SqlDistributedAvailabilityGroupResource>(new DistributedAvailabilityGroupsGetByInstanceCollectionResultOfT(
+            return new PageableWrapper<SqlDistributedAvailabilityGroupData, SqlDistributedAvailabilityGroupResource>(new SqlDistributedAvailabilityGroupDataCollectionResultOfT(
                 _distributedAvailabilityGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

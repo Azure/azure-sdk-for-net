@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BackupVaultsList(value, nextLink, additionalBinaryDataProperties);
+            return new BackupVaultsList(value ?? new ChangeTrackingList<NetAppBackupVaultData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

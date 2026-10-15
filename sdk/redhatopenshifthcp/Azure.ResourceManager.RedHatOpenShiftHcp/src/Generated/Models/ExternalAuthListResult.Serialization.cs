@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExternalAuthListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ExternalAuthListResult(value ?? new ChangeTrackingList<HcpOpenShiftClusterExternalAuthData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

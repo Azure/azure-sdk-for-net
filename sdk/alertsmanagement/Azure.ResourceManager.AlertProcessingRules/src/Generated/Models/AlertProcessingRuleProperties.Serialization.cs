@@ -240,14 +240,14 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AlertProcessingRuleProperties(
-                scopes,
+                scopes ?? new ChangeTrackingList<string>(),
                 conditions ?? new ChangeTrackingList<AlertProcessingRuleCondition>(),
                 schedule,
-                actions,
+                actions ?? new ChangeTrackingList<AlertProcessingRuleAction>(),
                 description,
                 isEnabled,
                 additionalBinaryDataProperties);

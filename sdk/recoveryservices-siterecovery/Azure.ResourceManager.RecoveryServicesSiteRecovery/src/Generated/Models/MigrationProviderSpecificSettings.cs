@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MigrationProviderSpecificSettings"/>. </summary>
+        protected MigrationProviderSpecificSettings() : this(default)
+        {
+        }
+
         /// <summary> Gets the instance type. </summary>
         internal string InstanceType { get; set; }
     }

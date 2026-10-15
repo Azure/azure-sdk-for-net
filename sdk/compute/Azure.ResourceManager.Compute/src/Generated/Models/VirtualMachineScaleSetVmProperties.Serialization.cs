@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Compute.Models
                     capacityReservation = CapacityReservationProfile.DeserializeCapacityReservationProfile(prop.Value, options);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new VirtualMachineScaleSetVmProperties(
                 latestModelApplied,

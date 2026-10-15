@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    metadata = BinaryData.FromString(prop.Value.GetRawText());
+                    metadata = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PolicySetDefinitionVersionProperties(
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 description,
                 metadata,
                 parameters ?? new ChangeTrackingDictionary<string, PolicyParameterMetadata>(),
-                policyDefinitions,
+                policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionReference>(),
                 policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>(),
                 version,
                 additionalBinaryDataProperties);

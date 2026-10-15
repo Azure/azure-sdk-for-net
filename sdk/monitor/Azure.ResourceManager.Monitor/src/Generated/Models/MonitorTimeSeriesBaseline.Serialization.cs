@@ -220,14 +220,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MonitorTimeSeriesBaseline(
                 aggregation,
                 dimensions ?? new ChangeTrackingList<MonitorMetricSingleDimension>(),
-                timestamps,
-                data,
+                timestamps ?? new ChangeTrackingList<DateTimeOffset>(),
+                data ?? new ChangeTrackingList<MonitorSingleBaseline>(),
                 metadataValues ?? new ChangeTrackingList<MonitorBaselineMetadata>(),
                 additionalBinaryDataProperties);
         }

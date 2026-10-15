@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManageAgentInstallationContent(manageAgentInstallationList, action, additionalBinaryDataProperties);
+            return new ManageAgentInstallationContent(manageAgentInstallationList ?? new ChangeTrackingList<DynatraceManageAgentDetails>(), action, additionalBinaryDataProperties);
         }
     }
 }

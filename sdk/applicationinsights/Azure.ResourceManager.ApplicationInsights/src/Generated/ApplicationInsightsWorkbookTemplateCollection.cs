@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationInsightsWorkbookTemplateData, ApplicationInsightsWorkbookTemplateResource>(new WorkbookTemplatesGetByResourceGroupAsyncCollectionResultOfT(_workbookTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationInsightsWorkbookTemplateCollection.GetAll"), data => new ApplicationInsightsWorkbookTemplateResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationInsightsWorkbookTemplateData, ApplicationInsightsWorkbookTemplateResource>(new ApplicationInsightsWorkbookTemplateDataAsyncCollectionResultOfT(_workbookTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationInsightsWorkbookTemplateCollection.GetAll"), data => new ApplicationInsightsWorkbookTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationInsightsWorkbookTemplateData, ApplicationInsightsWorkbookTemplateResource>(new WorkbookTemplatesGetByResourceGroupCollectionResultOfT(_workbookTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationInsightsWorkbookTemplateCollection.GetAll"), data => new ApplicationInsightsWorkbookTemplateResource(Client, data));
+            return new PageableWrapper<ApplicationInsightsWorkbookTemplateData, ApplicationInsightsWorkbookTemplateResource>(new ApplicationInsightsWorkbookTemplateDataCollectionResultOfT(_workbookTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationInsightsWorkbookTemplateCollection.GetAll"), data => new ApplicationInsightsWorkbookTemplateResource(Client, data));
         }
 
         /// <summary>

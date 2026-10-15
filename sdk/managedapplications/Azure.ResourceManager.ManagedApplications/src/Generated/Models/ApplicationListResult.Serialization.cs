@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApplicationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ApplicationListResult(value ?? new ChangeTrackingList<ManagedApplicationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

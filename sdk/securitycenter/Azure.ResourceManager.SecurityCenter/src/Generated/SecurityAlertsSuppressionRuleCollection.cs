@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityAlertsSuppressionRuleData, SecurityAlertsSuppressionRuleResource>(new AlertsSuppressionRulesGetAllAsyncCollectionResultOfT(_alertsSuppressionRulesRestClient, Guid.Parse(Id.SubscriptionId), alertType, context, "SecurityAlertsSuppressionRuleCollection.GetAll"), data => new SecurityAlertsSuppressionRuleResource(Client, data));
+            return new AsyncPageableWrapper<SecurityAlertsSuppressionRuleData, SecurityAlertsSuppressionRuleResource>(new SecurityAlertsSuppressionRuleDataAsyncCollectionResultOfT(_alertsSuppressionRulesRestClient, Guid.Parse(Id.SubscriptionId), alertType, context, "SecurityAlertsSuppressionRuleCollection.GetAll"), data => new SecurityAlertsSuppressionRuleResource(Client, data));
         }
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityAlertsSuppressionRuleData, SecurityAlertsSuppressionRuleResource>(new AlertsSuppressionRulesGetAllCollectionResultOfT(_alertsSuppressionRulesRestClient, Guid.Parse(Id.SubscriptionId), alertType, context, "SecurityAlertsSuppressionRuleCollection.GetAll"), data => new SecurityAlertsSuppressionRuleResource(Client, data));
+            return new PageableWrapper<SecurityAlertsSuppressionRuleData, SecurityAlertsSuppressionRuleResource>(new SecurityAlertsSuppressionRuleDataCollectionResultOfT(_alertsSuppressionRulesRestClient, Guid.Parse(Id.SubscriptionId), alertType, context, "SecurityAlertsSuppressionRuleCollection.GetAll"), data => new SecurityAlertsSuppressionRuleResource(Client, data));
         }
 
         /// <summary>

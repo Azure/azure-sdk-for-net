@@ -26,5 +26,10 @@ namespace Azure.ResourceManager.Network.Models
             ValueInMbps = valueInMbps;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProviderBandwidthsOffered"/>. </summary>
+        public ExpressRouteServiceProviderBandwidthsOffered() : this(default)
+        {
+        }
     }
 }

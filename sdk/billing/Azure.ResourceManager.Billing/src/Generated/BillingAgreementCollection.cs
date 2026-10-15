@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingAgreementData, BillingAgreementResource>(new AgreementsGetByBillingAccountAsyncCollectionResultOfT(_agreementsRestClient, Id.Name, expand, context, "BillingAgreementCollection.GetAll"), data => new BillingAgreementResource(Client, data));
+            return new AsyncPageableWrapper<BillingAgreementData, BillingAgreementResource>(new BillingAgreementDataAsyncCollectionResultOfT(_agreementsRestClient, Id.Name, expand, context, "BillingAgreementCollection.GetAll"), data => new BillingAgreementResource(Client, data));
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingAgreementData, BillingAgreementResource>(new AgreementsGetByBillingAccountCollectionResultOfT(_agreementsRestClient, Id.Name, expand, context, "BillingAgreementCollection.GetAll"), data => new BillingAgreementResource(Client, data));
+            return new PageableWrapper<BillingAgreementData, BillingAgreementResource>(new BillingAgreementDataCollectionResultOfT(_agreementsRestClient, Id.Name, expand, context, "BillingAgreementCollection.GetAll"), data => new BillingAgreementResource(Client, data));
         }
 
         /// <summary>

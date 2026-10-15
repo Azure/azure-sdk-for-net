@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CloudVmClusterProperties(
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 cloudExadataInfrastructureId,
                 isSparseDiskgroupEnabled,
                 systemVersion,
-                sshPublicKeys,
+                sshPublicKeys ?? new ChangeTrackingList<string>(),
                 licenseModel,
                 diskRedundancy,
                 scanIPIds ?? new ChangeTrackingList<string>(),

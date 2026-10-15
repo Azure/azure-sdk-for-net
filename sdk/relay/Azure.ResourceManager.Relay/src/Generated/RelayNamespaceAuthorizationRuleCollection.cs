@@ -40,7 +40,13 @@ namespace Azure.ResourceManager.Relay
         {
             TryGetApiVersion(RelayNamespaceAuthorizationRuleResource.ResourceType, out string relayNamespaceAuthorizationRuleApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", RelayNamespaceAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, relayNamespaceAuthorizationRuleApiVersion ?? "2026-07-01-preview");
+            _namespacesRestClient = new Namespaces(
+                _namespacesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                relayNamespaceAuthorizationRuleApiVersion ?? "2026-07-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -287,7 +293,7 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayAuthorizationRuleData, RelayNamespaceAuthorizationRuleResource>(new NamespacesGetAuthorizationRulesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RelayAuthorizationRuleData, RelayNamespaceAuthorizationRuleResource>(new RelayAuthorizationRuleDataAsync1CollectionResultOfT(
                 _namespacesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +327,7 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayAuthorizationRuleData, RelayNamespaceAuthorizationRuleResource>(new NamespacesGetAuthorizationRulesCollectionResultOfT(
+            return new PageableWrapper<RelayAuthorizationRuleData, RelayNamespaceAuthorizationRuleResource>(new RelayAuthorizationRuleData1CollectionResultOfT(
                 _namespacesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

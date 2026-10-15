@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetAppOriginClusterInformation(peerClusterName, peerAddresses, peerVserverName, peerVolumeName, additionalBinaryDataProperties);
+            return new NetAppOriginClusterInformation(peerClusterName, peerAddresses ?? new ChangeTrackingList<string>(), peerVserverName, peerVolumeName, additionalBinaryDataProperties);
         }
     }
 }

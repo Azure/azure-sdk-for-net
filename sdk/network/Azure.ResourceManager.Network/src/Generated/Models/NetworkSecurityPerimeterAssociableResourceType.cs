@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network;
 
@@ -24,27 +25,21 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociableResourceType"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of the perimeter associable resource. </param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
-        /// <param name="id"> Identifier of the perimeter associable resource. </param>
-        /// <param name="type"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAssociableResourceType(PerimeterAssociableResourceProperties properties, string name, string id, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityPerimeterAssociableResourceType(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PerimeterAssociableResourceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            Name = name;
-            Id = id;
-            Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the perimeter associable resource. </summary>
         [WirePath("properties")]
         internal PerimeterAssociableResourceProperties Properties { get; }
-
-        /// <summary> Resource type. </summary>
-        [WirePath("type")]
-        public string Type { get; }
 
         /// <summary> A friendly name for the properties of perimeter associable resources. </summary>
         [WirePath("properties.displayName")]

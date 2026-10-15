@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             TryGetApiVersion(BackupRecoveryPointResource.ResourceType, out string backupRecoveryPointApiVersion);
             _recoveryPointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupRecoveryPointResource.ResourceType.Namespace, Diagnostics);
-            _recoveryPointsRestClient = new RecoveryPoints(_recoveryPointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupRecoveryPointApiVersion ?? "2026-07-01");
+            _recoveryPointsRestClient = new RecoveryPoints(_recoveryPointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupRecoveryPointApiVersion ?? "2026-08-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BackupRecoveryPointData, BackupRecoveryPointResource>(new RecoveryPointsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupRecoveryPointData, BackupRecoveryPointResource>(new BackupRecoveryPointDataAsync0CollectionResultOfT(
                 _recoveryPointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BackupRecoveryPointData, BackupRecoveryPointResource>(new RecoveryPointsGetAllCollectionResultOfT(
+            return new PageableWrapper<BackupRecoveryPointData, BackupRecoveryPointResource>(new BackupRecoveryPointData0CollectionResultOfT(
                 _recoveryPointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>

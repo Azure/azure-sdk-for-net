@@ -65,11 +65,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 TypeProperties.ServicePrincipalKey = value;
             }
         }
-
-        /// <summary> Initializes a new instance restored as workaround for issues #59298 and #59852. </summary>
-        public Office365LinkedService(DataFactoryElement<string> office365TenantId, DataFactoryElement<string> servicePrincipalTenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey) : base("Office365")
-        {
-            TypeProperties = new Office365LinkedServiceTypeProperties(office365TenantId, servicePrincipalTenantId, servicePrincipalId, servicePrincipalKey);
-        }
     }
 }

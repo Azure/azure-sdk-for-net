@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _id;
+        internal bool _idIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleBase"/>. </summary>
         public MachineLearningScheduleBase()
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningScheduleBase(string id, MachineLearningScheduleProvisioningState? provisioningStatus, MachineLearningScheduleStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
+            _id = id;
             ProvisioningStatus = provisioningStatus;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -37,7 +39,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> A system assigned id for the schedule. </summary>
         [WirePath("id")]
-        public string Id { get; set; }
+        public string Id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                _id = value;
+                _idIsDefined = true;
+            }
+        }
 
         /// <summary> The current deployment state of schedule. </summary>
         [WirePath("provisioningStatus")]

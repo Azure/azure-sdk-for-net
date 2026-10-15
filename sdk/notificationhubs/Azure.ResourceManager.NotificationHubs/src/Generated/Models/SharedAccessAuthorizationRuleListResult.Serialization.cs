@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SharedAccessAuthorizationRuleListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SharedAccessAuthorizationRuleListResult(value ?? new ChangeTrackingList<NotificationHubAuthorizationRuleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

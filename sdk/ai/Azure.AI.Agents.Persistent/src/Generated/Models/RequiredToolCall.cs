@@ -12,7 +12,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a tool invocation needed by the model to continue a run.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequiredFunctionToolCall"/>, <see cref="RequiredMcpToolCall"/>, and <see cref="RequiredComputerUseToolCall"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequiredComputerUseToolCall"/>, <see cref="RequiredFunctionToolCall"/>, and <see cref="RequiredMcpToolCall"/>.
     /// </summary>
     public abstract partial class RequiredToolCall : RequiredAction
     {

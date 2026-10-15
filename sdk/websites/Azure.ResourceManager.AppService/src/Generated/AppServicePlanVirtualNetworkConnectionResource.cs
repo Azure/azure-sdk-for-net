@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebVnetRoutesGetRouteForVnetAsyncCollectionResultOfT(
+            return new AppServicePlanVirtualNetworkConnectionResourceGetRouteForVnetAsyncCollectionResultOfT(
                 _vnetRoutesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebVnetRoutesGetRouteForVnetCollectionResultOfT(
+            return new AppServicePlanVirtualNetworkConnectionResourceGetRouteForVnetCollectionResultOfT(
                 _vnetRoutesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebVnetRoutesListRoutesForVnetAsyncCollectionResultOfT(
+            return new AppServicePlanVirtualNetworkConnectionResourceGetRoutesForVnetAsyncCollectionResultOfT(
                 _vnetRoutesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebVnetRoutesListRoutesForVnetCollectionResultOfT(
+            return new AppServicePlanVirtualNetworkConnectionResourceGetRoutesForVnetCollectionResultOfT(
                 _vnetRoutesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

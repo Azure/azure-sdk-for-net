@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Contains configuration options specific to the algorithm used during indexing or querying.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HnswAlgorithmConfiguration"/> and <see cref="ExhaustiveKnnAlgorithmConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExhaustiveKnnAlgorithmConfiguration"/> and <see cref="HnswAlgorithmConfiguration"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownVectorSearchAlgorithmConfiguration))]
     public abstract partial class VectorSearchAlgorithmConfiguration : IJsonModel<VectorSearchAlgorithmConfiguration>
@@ -127,10 +127,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "hnsw":
-                        return HnswAlgorithmConfiguration.DeserializeHnswAlgorithmConfiguration(element, options);
                     case "exhaustiveKnn":
                         return ExhaustiveKnnAlgorithmConfiguration.DeserializeExhaustiveKnnAlgorithmConfiguration(element, options);
+                    case "hnsw":
+                        return HnswAlgorithmConfiguration.DeserializeHnswAlgorithmConfiguration(element, options);
                 }
             }
             return UnknownVectorSearchAlgorithmConfiguration.DeserializeUnknownVectorSearchAlgorithmConfiguration(element, options);

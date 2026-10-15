@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedEnvironmentsCollection(value, nextLink, additionalBinaryDataProperties);
+            return new ManagedEnvironmentsCollection(value ?? new ChangeTrackingList<ContainerAppManagedEnvironmentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

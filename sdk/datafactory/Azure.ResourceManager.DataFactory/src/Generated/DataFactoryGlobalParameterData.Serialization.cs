@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DataFactoryGlobalParameterData(
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataFactory
                 name,
                 resourceType,
                 systemData,
-                properties,
+                properties ?? new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>(),
                 eTag,
                 additionalBinaryDataProperties);
         }

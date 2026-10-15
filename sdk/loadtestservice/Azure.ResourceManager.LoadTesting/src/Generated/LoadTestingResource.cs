@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.LoadTesting.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.LoadTesting
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LoadTestingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string loadTestingResourceApiVersion);
             _loadTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", ResourceType.Namespace, Diagnostics);
-            _loadTestsRestClient = new LoadTests(_loadTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, loadTestingResourceApiVersion ?? "2024-12-01-preview");
+            _loadTestsRestClient = new LoadTests(_loadTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.LoadTestService/loadTests", out string loadTestsApiVersionOverride) ? loadTestsApiVersionOverride : "2024-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new LoadTestsGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+            return new LoadTestingOutboundEnvironmentEndpointAsyncCollectionResultOfT(
                 _loadTestsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new LoadTestsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+            return new LoadTestingOutboundEnvironmentEndpointCollectionResultOfT(
                 _loadTestsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -591,10 +591,9 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -634,10 +633,9 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

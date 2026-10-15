@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DnsForwardingRulesetProperties(dnsResolverOutboundEndpoints, provisioningState, resourceGuid, additionalBinaryDataProperties);
+            return new DnsForwardingRulesetProperties(dnsResolverOutboundEndpoints ?? new ChangeTrackingList<WritableSubResource>(), provisioningState, resourceGuid, additionalBinaryDataProperties);
         }
     }
 }

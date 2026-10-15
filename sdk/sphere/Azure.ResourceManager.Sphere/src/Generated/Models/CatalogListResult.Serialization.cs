@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CatalogListResult(value, nextLink, additionalBinaryDataProperties);
+            return new CatalogListResult(value ?? new ChangeTrackingList<SphereCatalogData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

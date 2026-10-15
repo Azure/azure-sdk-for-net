@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RedisEnterpriseClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(RedisEnterpriseClusterResource.ResourceType, out string redisEnterpriseClusterApiVersion);
             _redisEnterpriseClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", RedisEnterpriseClusterResource.ResourceType.Namespace, Diagnostics);
-            _redisEnterpriseClusterRestClient = new RedisEnterpriseCluster(_redisEnterpriseClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseClusterApiVersion ?? "2025-08-01-preview");
+            _redisEnterpriseClusterRestClient = new RedisEnterpriseCluster(_redisEnterpriseClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Cache/redisEnterprise", out string redisEnterpriseClusterApiVersionOverride) ? redisEnterpriseClusterApiVersionOverride : "2026-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RedisEnterpriseClusterData, RedisEnterpriseClusterResource>(new RedisEnterpriseClusterGetByResourceGroupAsyncCollectionResultOfT(_redisEnterpriseClusterRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "RedisEnterpriseClusterCollection.GetAll"), data => new RedisEnterpriseClusterResource(Client, data));
+            return new AsyncPageableWrapper<RedisEnterpriseClusterData, RedisEnterpriseClusterResource>(new RedisEnterpriseClusterDataAsyncCollectionResultOfT(_redisEnterpriseClusterRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "RedisEnterpriseClusterCollection.GetAll"), data => new RedisEnterpriseClusterResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RedisEnterpriseClusterData, RedisEnterpriseClusterResource>(new RedisEnterpriseClusterGetByResourceGroupCollectionResultOfT(_redisEnterpriseClusterRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "RedisEnterpriseClusterCollection.GetAll"), data => new RedisEnterpriseClusterResource(Client, data));
+            return new PageableWrapper<RedisEnterpriseClusterData, RedisEnterpriseClusterResource>(new RedisEnterpriseClusterDataCollectionResultOfT(_redisEnterpriseClusterRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "RedisEnterpriseClusterCollection.GetAll"), data => new RedisEnterpriseClusterResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

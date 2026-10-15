@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
@@ -59,9 +60,15 @@ namespace Azure.ResourceManager.HybridCompute
         {
             TryGetApiVersion(ResourceType, out string hybridComputeMachineApiVersion);
             _machinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
-            _machinesRestClient = new Machines(_machinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeMachineApiVersion ?? "2026-07-15");
+            _machinesRestClient = new Machines(_machinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridCompute/machines", out string machinesApiVersionOverride) ? machinesApiVersionOverride : "2026-07-15");
             _privateLinkScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
-            _privateLinkScopesRestClient = new PrivateLinkScopes(_privateLinkScopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeMachineApiVersion ?? "2026-07-15");
+            _privateLinkScopesRestClient = new PrivateLinkScopes(
+                _privateLinkScopesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                hybridComputeMachineApiVersion ?? "2026-07-15",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _networkProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
             _networkProfileRestClient = new NetworkProfile(_networkProfileClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeMachineApiVersion ?? "2026-07-15");
             _hybridComputeClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
@@ -1159,10 +1166,9 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1202,10 +1208,9 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

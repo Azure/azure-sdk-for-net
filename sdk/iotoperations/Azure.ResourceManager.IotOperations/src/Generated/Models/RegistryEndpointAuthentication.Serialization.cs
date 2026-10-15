@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// Model for RegistryEndpointAuthentication
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/>, <see cref="RegistryEndpointUserAssignedIdentityAuthentication"/>, <see cref="RegistryEndpointAnonymousAuthentication"/>, and <see cref="RegistryEndpointArtifactPullSecretAuthentication"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RegistryEndpointAnonymousAuthentication"/>, <see cref="RegistryEndpointArtifactPullSecretAuthentication"/>, <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/>, and <see cref="RegistryEndpointUserAssignedIdentityAuthentication"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRegistryEndpointAuthentication))]
     public abstract partial class RegistryEndpointAuthentication : IJsonModel<RegistryEndpointAuthentication>
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SystemAssignedManagedIdentity":
-                        return RegistryEndpointSystemAssignedIdentityAuthentication.DeserializeRegistryEndpointSystemAssignedIdentityAuthentication(element, options);
-                    case "UserAssignedManagedIdentity":
-                        return RegistryEndpointUserAssignedIdentityAuthentication.DeserializeRegistryEndpointUserAssignedIdentityAuthentication(element, options);
                     case "Anonymous":
                         return RegistryEndpointAnonymousAuthentication.DeserializeRegistryEndpointAnonymousAuthentication(element, options);
                     case "ArtifactPullSecret":
                         return RegistryEndpointArtifactPullSecretAuthentication.DeserializeRegistryEndpointArtifactPullSecretAuthentication(element, options);
+                    case "SystemAssignedManagedIdentity":
+                        return RegistryEndpointSystemAssignedIdentityAuthentication.DeserializeRegistryEndpointSystemAssignedIdentityAuthentication(element, options);
+                    case "UserAssignedManagedIdentity":
+                        return RegistryEndpointUserAssignedIdentityAuthentication.DeserializeRegistryEndpointUserAssignedIdentityAuthentication(element, options);
                 }
             }
             return UnknownRegistryEndpointAuthentication.DeserializeUnknownRegistryEndpointAuthentication(element, options);

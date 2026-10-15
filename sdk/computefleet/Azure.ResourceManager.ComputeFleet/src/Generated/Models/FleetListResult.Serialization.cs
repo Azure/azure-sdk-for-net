@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FleetListResult(value, nextLink, additionalBinaryDataProperties);
+            return new FleetListResult(value ?? new ChangeTrackingList<ComputeFleetData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

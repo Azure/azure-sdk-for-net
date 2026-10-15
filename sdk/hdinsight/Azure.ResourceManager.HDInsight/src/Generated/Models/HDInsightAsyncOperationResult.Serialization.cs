@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             HDInsightAsyncOperationState? status = default;
-            ErrorResponse errorInfo = default;
+            ErrorResult errorInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,12 +154,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    errorInfo = ErrorResponse.DeserializeErrorResponse(prop.Value, options);
+                    errorInfo = ErrorResult.DeserializeErrorResult(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HDInsightAsyncOperationResult(status, errorInfo, additionalBinaryDataProperties);

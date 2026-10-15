@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Versioning.ReturnTypeChangedFrom.V1.csproj" />
+  <Project Path="tests/Versioning.ReturnTypeChangedFrom.V1.Tests.csproj" />
 </Solution>

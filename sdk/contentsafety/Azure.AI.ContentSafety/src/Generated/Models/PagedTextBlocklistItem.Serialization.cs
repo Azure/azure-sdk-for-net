@@ -166,10 +166,10 @@ namespace Azure.AI.ContentSafety
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedTextBlocklistItem(value, nextLink, additionalBinaryDataProperties);
+            return new PagedTextBlocklistItem(value ?? new ChangeTrackingList<TextBlocklistItem>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

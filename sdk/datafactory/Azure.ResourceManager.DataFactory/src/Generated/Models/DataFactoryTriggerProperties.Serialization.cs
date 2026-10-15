@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Azure data factory nested object which contains information about creating pipeline run
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MultiplePipelineTrigger"/>, <see cref="DataFactoryScheduleTrigger"/>, <see cref="DataFactoryBlobTrigger"/>, <see cref="DataFactoryBlobEventsTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="TumblingWindowTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, and <see cref="ChainingTrigger"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="DataFactoryBlobEventsTrigger"/>, <see cref="DataFactoryBlobTrigger"/>, <see cref="DataFactoryScheduleTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, and <see cref="TumblingWindowTrigger"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTrigger))]
     public abstract partial class DataFactoryTriggerProperties : IJsonModel<DataFactoryTriggerProperties>
@@ -154,22 +154,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "MultiplePipelineTrigger":
-                        return MultiplePipelineTrigger.DeserializeMultiplePipelineTrigger(element, options);
-                    case "ScheduleTrigger":
-                        return DataFactoryScheduleTrigger.DeserializeDataFactoryScheduleTrigger(element, options);
-                    case "BlobTrigger":
-                        return DataFactoryBlobTrigger.DeserializeDataFactoryBlobTrigger(element, options);
-                    case "BlobEventsTrigger":
-                        return DataFactoryBlobEventsTrigger.DeserializeDataFactoryBlobEventsTrigger(element, options);
-                    case "CustomEventsTrigger":
-                        return CustomEventsTrigger.DeserializeCustomEventsTrigger(element, options);
-                    case "TumblingWindowTrigger":
-                        return TumblingWindowTrigger.DeserializeTumblingWindowTrigger(element, options);
-                    case "RerunTumblingWindowTrigger":
-                        return RerunTumblingWindowTrigger.DeserializeRerunTumblingWindowTrigger(element, options);
                     case "ChainingTrigger":
                         return ChainingTrigger.DeserializeChainingTrigger(element, options);
+                    case "CustomEventsTrigger":
+                        return CustomEventsTrigger.DeserializeCustomEventsTrigger(element, options);
+                    case "BlobEventsTrigger":
+                        return DataFactoryBlobEventsTrigger.DeserializeDataFactoryBlobEventsTrigger(element, options);
+                    case "BlobTrigger":
+                        return DataFactoryBlobTrigger.DeserializeDataFactoryBlobTrigger(element, options);
+                    case "ScheduleTrigger":
+                        return DataFactoryScheduleTrigger.DeserializeDataFactoryScheduleTrigger(element, options);
+                    case "MultiplePipelineTrigger":
+                        return MultiplePipelineTrigger.DeserializeMultiplePipelineTrigger(element, options);
+                    case "RerunTumblingWindowTrigger":
+                        return RerunTumblingWindowTrigger.DeserializeRerunTumblingWindowTrigger(element, options);
+                    case "TumblingWindowTrigger":
+                        return TumblingWindowTrigger.DeserializeTumblingWindowTrigger(element, options);
                 }
             }
             return UnknownTrigger.DeserializeUnknownTrigger(element, options);

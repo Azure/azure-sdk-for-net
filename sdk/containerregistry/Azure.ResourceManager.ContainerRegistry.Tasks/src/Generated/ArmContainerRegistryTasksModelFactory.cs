@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary>
         /// The request parameters for scheduling a run.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerRegistryDockerBuildContent"/>, <see cref="Models.ContainerRegistryFileTaskRunContent"/>, <see cref="Models.ContainerRegistryTaskRunContent"/>, and <see cref="Models.ContainerRegistryEncodedTaskRunContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerRegistryDockerBuildContent"/>, <see cref="Models.ContainerRegistryEncodedTaskRunContent"/>, <see cref="Models.ContainerRegistryFileTaskRunContent"/>, and <see cref="Models.ContainerRegistryTaskRunContent"/>.
         /// </summary>
         /// <param name="type"> The type of the run request. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             arguments ??= new ChangeTrackingList<ContainerRegistryTaskArgument>();
 
             return new ContainerRegistryDockerBuildContent(
-                default,
+                "DockerBuildRequest",
                 isArchiveEnabled,
                 agentPoolName,
                 logTemplate,
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             values ??= new ChangeTrackingList<ContainerRegistryTaskSetValue>();
 
             return new ContainerRegistryFileTaskRunContent(
-                default,
+                "FileTaskRunRequest",
                 isArchiveEnabled,
                 agentPoolName,
                 logTemplate,
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public static ContainerRegistryTaskRunContent ContainerRegistryTaskRunContent(bool? isArchiveEnabled = default, string agentPoolName = default, string logTemplate = default, string taskId = default, ContainerRegistryTaskOverrideStepProperties overrideTaskStepProperties = default)
         {
             return new ContainerRegistryTaskRunContent(
-                default,
+                "TaskRunRequest",
                 isArchiveEnabled,
                 agentPoolName,
                 logTemplate,
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             values ??= new ChangeTrackingList<ContainerRegistryTaskSetValue>();
 
             return new ContainerRegistryEncodedTaskRunContent(
-                default,
+                "EncodedTaskRunRequest",
                 isArchiveEnabled,
                 agentPoolName,
                 logTemplate,
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary>
         /// Base properties for any task step.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerRegistryDockerBuildStep"/>, <see cref="Models.ContainerRegistryFileTaskStep"/>, and <see cref="Models.ContainerRegistryEncodedTaskStep"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerRegistryDockerBuildStep"/>, <see cref="Models.ContainerRegistryEncodedTaskStep"/>, and <see cref="Models.ContainerRegistryFileTaskStep"/>.
         /// </summary>
         /// <param name="type"> The type of the step. </param>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         {
             baseImageDependencies ??= new ChangeTrackingList<ContainerRegistryTaskBaseImageDependency>();
 
-            return new UnknownContainerRegistryTaskStepProperties(default, (baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryTaskBaseImageDependency>()).ToList(), contextPath, contextAccessToken, default);
+            return new UnknownContainerRegistryTaskStepProperties(@type is null ? default : new StepType(@type), (baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryTaskBaseImageDependency>()).ToList(), contextPath, contextAccessToken, default);
         }
 
         /// <summary> Properties that describe a base image dependency. </summary>
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             arguments ??= new ChangeTrackingList<ContainerRegistryTaskArgument>();
 
             return new ContainerRegistryDockerBuildStep(
-                default,
+                StepType.Docker,
                 (baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryTaskBaseImageDependency>()).ToList(),
                 contextPath,
                 contextAccessToken,
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             values ??= new ChangeTrackingList<ContainerRegistryTaskSetValue>();
 
             return new ContainerRegistryFileTaskStep(
-                default,
+                StepType.FileTask,
                 (baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryTaskBaseImageDependency>()).ToList(),
                 contextPath,
                 contextAccessToken,
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             values ??= new ChangeTrackingList<ContainerRegistryTaskSetValue>();
 
             return new ContainerRegistryEncodedTaskStep(
-                default,
+                StepType.EncodedTask,
                 (baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryTaskBaseImageDependency>()).ToList(),
                 contextPath,
                 contextAccessToken,
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary>
         /// Base properties for updating any task step.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerRegistryDockerBuildStepUpdateContent"/>, <see cref="Models.ContainerRegistryFileTaskStepUpdateContent"/>, and <see cref="Models.ContainerRegistryEncodedTaskStepUpdateContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerRegistryDockerBuildStepUpdateContent"/>, <see cref="Models.ContainerRegistryEncodedTaskStepUpdateContent"/>, and <see cref="Models.ContainerRegistryFileTaskStepUpdateContent"/>.
         /// </summary>
         /// <param name="type"> The type of the step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <returns> A new <see cref="Models.ContainerRegistryTaskStepUpdateContent"/> instance for mocking. </returns>
         public static ContainerRegistryTaskStepUpdateContent ContainerRegistryTaskStepUpdateContent(string @type = default, string contextPath = default, string contextAccessToken = default)
         {
-            return new UnknownContainerRegistryTaskStepUpdateContent(default, contextPath, contextAccessToken, default);
+            return new UnknownContainerRegistryTaskStepUpdateContent(@type is null ? default : new StepType(@type), contextPath, contextAccessToken, default);
         }
 
         /// <summary> The properties for updating a docker build step. </summary>
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             arguments ??= new ChangeTrackingList<ContainerRegistryTaskArgument>();
 
             return new ContainerRegistryDockerBuildStepUpdateContent(
-                default,
+                StepType.Docker,
                 contextPath,
                 contextAccessToken,
                 default,
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             values ??= new ChangeTrackingList<ContainerRegistryTaskSetValue>();
 
             return new ContainerRegistryFileTaskStepUpdateContent(
-                default,
+                StepType.FileTask,
                 contextPath,
                 contextAccessToken,
                 default,
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             values ??= new ChangeTrackingList<ContainerRegistryTaskSetValue>();
 
             return new ContainerRegistryEncodedTaskStepUpdateContent(
-                default,
+                StepType.EncodedTask,
                 contextPath,
                 contextAccessToken,
                 default,

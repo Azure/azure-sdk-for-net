@@ -15,6 +15,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Definition of a component version: defines resources that span component types. </summary>
     public partial class MachineLearningComponentVersionProperties : MachineLearningAssetBase
     {
+        private BinaryData _componentSpec;
+        internal bool _componentSpecIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningComponentVersionProperties"/>. </summary>
         public MachineLearningComponentVersionProperties()
         {
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Provisioning state for the component version. </param>
         internal MachineLearningComponentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isAnonymous, bool? isArchived, BinaryData componentSpec, RegistryAssetProvisioningState? provisioningState) : base(description, properties, tags, additionalBinaryDataProperties, isAnonymous, isArchived)
         {
-            ComponentSpec = componentSpec;
+            _componentSpec = componentSpec;
             ProvisioningState = provisioningState;
         }
 
@@ -66,7 +69,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </para>
         /// </summary>
         [WirePath("componentSpec")]
-        public BinaryData ComponentSpec { get; set; }
+        public BinaryData ComponentSpec
+        {
+            get
+            {
+                return _componentSpec;
+            }
+            set
+            {
+                _componentSpec = value;
+                _componentSpecIsDefined = true;
+            }
+        }
 
         /// <summary> Provisioning state for the component version. </summary>
         [WirePath("provisioningState")]

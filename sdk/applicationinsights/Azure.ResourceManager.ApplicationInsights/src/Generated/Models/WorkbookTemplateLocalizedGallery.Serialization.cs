@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    templateData = BinaryData.FromString(prop.Value.GetRawText());
+                    templateData = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("galleries"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WorkbookTemplateLocalizedGallery(templateData, galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>(), additionalBinaryDataProperties);

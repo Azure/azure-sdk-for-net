@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PreconfiguredEndpointList(value, nextLink, additionalBinaryDataProperties);
+            return new PreconfiguredEndpointList(value ?? new ChangeTrackingList<PreconfiguredEndpoint>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

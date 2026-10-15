@@ -45,7 +45,13 @@ namespace Azure.ResourceManager.Compute.BulkActions
             TryGetApiVersion(LocationBasedBulkCreateResource.ResourceType, out string locationBasedBulkCreateApiVersion);
             _location = location;
             _bulkCreateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions", LocationBasedBulkCreateResource.ResourceType.Namespace, Diagnostics);
-            _bulkCreateRestClient = new BulkCreate(_bulkCreateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, locationBasedBulkCreateApiVersion ?? "2026-09-06-preview");
+            _bulkCreateRestClient = new BulkCreate(
+                _bulkCreateClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                locationBasedBulkCreateApiVersion ?? "2026-10-06-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -72,7 +78,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,7 +136,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,7 +194,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,7 +243,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,7 +292,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,7 +304,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LocationBasedBulkCreateData, LocationBasedBulkCreateResource>(new BulkCreateGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LocationBasedBulkCreateData, LocationBasedBulkCreateResource>(new LocationBasedBulkCreateDataAsyncCollectionResultOfT(
                 _bulkCreateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -320,7 +326,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +338,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LocationBasedBulkCreateData, LocationBasedBulkCreateResource>(new BulkCreateGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<LocationBasedBulkCreateData, LocationBasedBulkCreateResource>(new LocationBasedBulkCreateDataCollectionResultOfT(
                 _bulkCreateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -354,7 +360,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -411,7 +417,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -468,7 +474,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -529,7 +535,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

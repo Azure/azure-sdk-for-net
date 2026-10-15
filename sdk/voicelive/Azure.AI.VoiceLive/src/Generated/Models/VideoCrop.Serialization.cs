@@ -161,10 +161,10 @@ namespace Azure.AI.VoiceLive
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VideoCrop(topLeftInternal, bottomRightInternal, additionalBinaryDataProperties);
+            return new VideoCrop(topLeftInternal ?? new ChangeTrackingList<int>(), bottomRightInternal ?? new ChangeTrackingList<int>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Peering
         {
             TryGetApiVersion(PeeringServiceResource.ResourceType, out string peeringServiceApiVersion);
             _peeringServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", PeeringServiceResource.ResourceType.Namespace, Diagnostics);
-            _peeringServicesRestClient = new PeeringServices(_peeringServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, peeringServiceApiVersion ?? "2025-05-01");
+            _peeringServicesRestClient = new PeeringServices(
+                _peeringServicesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                peeringServiceApiVersion ?? "2025-05-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -288,7 +294,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeeringServiceData, PeeringServiceResource>(new PeeringServicesGetByResourceGroupAsyncCollectionResultOfT(_peeringServicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PeeringServiceCollection.GetAll"), data => new PeeringServiceResource(Client, data));
+            return new AsyncPageableWrapper<PeeringServiceData, PeeringServiceResource>(new PeeringServiceDataAsyncCollectionResultOfT(_peeringServicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PeeringServiceCollection.GetAll"), data => new PeeringServiceResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +322,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeeringServiceData, PeeringServiceResource>(new PeeringServicesGetByResourceGroupCollectionResultOfT(_peeringServicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PeeringServiceCollection.GetAll"), data => new PeeringServiceResource(Client, data));
+            return new PageableWrapper<PeeringServiceData, PeeringServiceResource>(new PeeringServiceDataCollectionResultOfT(_peeringServicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PeeringServiceCollection.GetAll"), data => new PeeringServiceResource(Client, data));
         }
 
         /// <summary>

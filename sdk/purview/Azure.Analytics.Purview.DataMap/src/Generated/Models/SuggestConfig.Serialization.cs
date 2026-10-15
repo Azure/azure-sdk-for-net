@@ -174,12 +174,12 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    filter = BinaryData.FromString(prop.Value.GetRawText());
+                    filter = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SuggestConfig(keywords, limit, filter, additionalBinaryDataProperties);
