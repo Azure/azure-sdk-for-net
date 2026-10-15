@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 writer.WritePropertyName("releaseTrain"u8);
                 writer.WriteStringValue(ReleaseTrain);
             }
-            if (_versionIsDefined || Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version, _versionIsDefined))
             {
                 if (Version != null)
                 {

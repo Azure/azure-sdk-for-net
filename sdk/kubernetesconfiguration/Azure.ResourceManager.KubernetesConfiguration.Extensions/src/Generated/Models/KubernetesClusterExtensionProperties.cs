@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _version;
-        internal bool _versionIsDefined;
+        private bool _versionIsDefined;
         private string _currentVersion;
-        internal bool _currentVersionIsDefined;
+        private bool _currentVersionIsDefined;
         private ResponseError _errorInfo;
-        internal bool _errorInfoIsDefined;
+        private bool _errorInfoIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionProperties"/>. </summary>
         public KubernetesClusterExtensionProperties()
