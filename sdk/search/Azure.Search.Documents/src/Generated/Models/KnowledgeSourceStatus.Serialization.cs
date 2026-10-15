@@ -95,7 +95,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
             writer.WritePropertyName("synchronizationStatus"u8);
             writer.WriteStringValue(SynchronizationStatus.ToString());
-            if (_synchronizationIntervalIsDefined || Optional.IsDefined(SynchronizationInterval))
+            if (Optional.IsDefined(SynchronizationInterval, _synchronizationIntervalIsDefined))
             {
                 if (SynchronizationInterval != null)
                 {
@@ -107,7 +107,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     writer.WriteNull("synchronizationInterval"u8);
                 }
             }
-            if (_currentSynchronizationStateIsDefined || Optional.IsDefined(CurrentSynchronizationState))
+            if (Optional.IsDefined(CurrentSynchronizationState, _currentSynchronizationStateIsDefined))
             {
                 if (CurrentSynchronizationState != null)
                 {
@@ -119,7 +119,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     writer.WriteNull("currentSynchronizationState"u8);
                 }
             }
-            if (_lastSynchronizationStateIsDefined || Optional.IsDefined(LastSynchronizationState))
+            if (Optional.IsDefined(LastSynchronizationState, _lastSynchronizationStateIsDefined))
             {
                 if (LastSynchronizationState != null)
                 {
@@ -131,7 +131,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     writer.WriteNull("lastSynchronizationState"u8);
                 }
             }
-            if (_statisticsIsDefined || Optional.IsDefined(Statistics))
+            if (Optional.IsDefined(Statistics, _statisticsIsDefined))
             {
                 if (Statistics != null)
                 {

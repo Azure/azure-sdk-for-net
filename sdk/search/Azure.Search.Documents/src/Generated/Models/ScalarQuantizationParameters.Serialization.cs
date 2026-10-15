@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(ScalarQuantizationParameters)} does not support writing '{format}' format.");
             }
-            if (_quantizedDataTypeIsDefined || Optional.IsDefined(QuantizedDataType))
+            if (Optional.IsDefined(QuantizedDataType, _quantizedDataTypeIsDefined))
             {
                 if (QuantizedDataType != null)
                 {

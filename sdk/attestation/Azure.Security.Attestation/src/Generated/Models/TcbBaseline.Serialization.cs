@@ -16,7 +16,7 @@ namespace Azure.Security.Attestation
     /// TEE specific Tcb baseline used in attestation, and baseline details including
     /// baseline identifier, release date and minimum required software version
     /// </summary>
-    internal partial class TcbBaseline : IJsonModel<TcbBaseline>
+    public partial class TcbBaseline : IJsonModel<TcbBaseline>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

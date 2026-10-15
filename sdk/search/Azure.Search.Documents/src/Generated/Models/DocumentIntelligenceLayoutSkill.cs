@@ -15,13 +15,13 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class DocumentIntelligenceLayoutSkill : SearchIndexerSkill
     {
         private DocumentIntelligenceLayoutSkillOutputFormat? _outputFormat;
-        internal bool _outputFormatIsDefined;
+        private bool _outputFormatIsDefined;
         private DocumentIntelligenceLayoutSkillOutputMode? _outputMode;
-        internal bool _outputModeIsDefined;
+        private bool _outputModeIsDefined;
         private DocumentIntelligenceLayoutSkillMarkdownHeaderDepth? _markdownHeaderDepth;
-        internal bool _markdownHeaderDepthIsDefined;
+        private bool _markdownHeaderDepthIsDefined;
         private DocumentIntelligenceLayoutSkillChunkingProperties _chunkingProperties;
-        internal bool _chunkingPropertiesIsDefined;
+        private bool _chunkingPropertiesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceLayoutSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

@@ -95,7 +95,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("driftCoefficient"u8);
                 writer.WriteNumberValue(DriftCoefficient.Value);
             }
-            if (_startTimeIsDefined || Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartTime, _startTimeIsDefined))
             {
                 if (StartTime != null)
                 {
@@ -107,7 +107,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     writer.WriteNull("startTime"u8);
                 }
             }
-            if (_endTimeIsDefined || Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndTime, _endTimeIsDefined))
             {
                 if (EndTime != null)
                 {

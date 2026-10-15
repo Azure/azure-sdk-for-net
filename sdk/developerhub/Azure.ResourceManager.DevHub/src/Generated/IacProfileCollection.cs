@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IacProfileCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(IacProfileResource.ResourceType, out string iacProfileApiVersion);
             _iacProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevHub", IacProfileResource.ResourceType.Namespace, Diagnostics);
-            _iacProfilesRestClient = new IacProfiles(_iacProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iacProfileApiVersion ?? "2025-03-01-preview");
+            _iacProfilesRestClient = new IacProfiles(_iacProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DevHub/iacProfiles", out string iacProfilesApiVersionOverride) ? iacProfilesApiVersionOverride : "2025-03-01-preview");
             ValidateResourceId(id);
         }
 

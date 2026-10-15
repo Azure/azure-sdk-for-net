@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkFabricRoutePolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkFabricRoutePolicyResource.ResourceType, out string networkFabricRoutePolicyApiVersion);
             _routePoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricRoutePolicyResource.ResourceType.Namespace, Diagnostics);
-            _routePoliciesRestClient = new RoutePolicies(_routePoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricRoutePolicyApiVersion ?? "2025-07-15");
+            _routePoliciesRestClient = new RoutePolicies(_routePoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/routePolicies", out string routePoliciesApiVersionOverride) ? routePoliciesApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 

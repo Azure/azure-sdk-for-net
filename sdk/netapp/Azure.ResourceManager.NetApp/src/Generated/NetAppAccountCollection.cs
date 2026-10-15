@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetAppAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetAppAccountResource.ResourceType, out string netAppAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppAccountResource.ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppAccountApiVersion ?? "2026-06-15-preview");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetApp/netAppAccounts", out string accountsApiVersionOverride) ? accountsApiVersionOverride : "2026-06-15-preview");
             ValidateResourceId(id);
         }
 

@@ -112,7 +112,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("defaultScoringProfile"u8);
                 writer.WriteStringValue(DefaultScoringProfile);
             }
-            if (_corsOptionsIsDefined || Optional.IsDefined(CorsOptions))
+            if (Optional.IsDefined(CorsOptions, _corsOptionsIsDefined))
             {
                 if (CorsOptions != null)
                 {
@@ -184,7 +184,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (_encryptionKeyIsDefined || Optional.IsDefined(EncryptionKey))
+            if (Optional.IsDefined(EncryptionKey, _encryptionKeyIsDefined))
             {
                 if (EncryptionKey != null)
                 {
@@ -201,7 +201,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("similarity"u8);
                 writer.WriteObjectValue(Similarity, options);
             }
-            if (_semanticSearchIsDefined || Optional.IsDefined(SemanticSearch))
+            if (Optional.IsDefined(SemanticSearch, _semanticSearchIsDefined))
             {
                 if (SemanticSearch != null)
                 {
@@ -213,7 +213,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("semantic"u8);
                 }
             }
-            if (_vectorSearchIsDefined || Optional.IsDefined(VectorSearch))
+            if (Optional.IsDefined(VectorSearch, _vectorSearchIsDefined))
             {
                 if (VectorSearch != null)
                 {
@@ -225,7 +225,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("vectorSearch"u8);
                 }
             }
-            if (_permissionFilterOptionIsDefined || Optional.IsDefined(PermissionFilterOption))
+            if (Optional.IsDefined(PermissionFilterOption, _permissionFilterOptionIsDefined))
             {
                 if (PermissionFilterOption != null)
                 {
@@ -237,7 +237,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("permissionFilterOption"u8);
                 }
             }
-            if (_purviewEnabledIsDefined || Optional.IsDefined(PurviewEnabled))
+            if (Optional.IsDefined(PurviewEnabled, _purviewEnabledIsDefined))
             {
                 if (PurviewEnabled != null)
                 {

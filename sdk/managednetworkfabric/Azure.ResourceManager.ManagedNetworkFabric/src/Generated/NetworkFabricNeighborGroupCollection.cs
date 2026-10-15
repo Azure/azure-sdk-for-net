@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkFabricNeighborGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkFabricNeighborGroupResource.ResourceType, out string networkFabricNeighborGroupApiVersion);
             _neighborGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricNeighborGroupResource.ResourceType.Namespace, Diagnostics);
-            _neighborGroupsRestClient = new NeighborGroups(_neighborGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricNeighborGroupApiVersion ?? "2025-07-15");
+            _neighborGroupsRestClient = new NeighborGroups(_neighborGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/neighborGroups", out string neighborGroupsApiVersionOverride) ? neighborGroupsApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 

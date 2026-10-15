@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal InstancePoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(InstancePoolResource.ResourceType, out string instancePoolApiVersion);
             _instancePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", InstancePoolResource.ResourceType.Namespace, Diagnostics);
-            _instancePoolsRestClient = new InstancePools(_instancePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, instancePoolApiVersion ?? "2025-08-01-preview");
+            _instancePoolsRestClient = new InstancePools(_instancePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Sql/instancePools", out string instancePoolsApiVersionOverride) ? instancePoolsApiVersionOverride : "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

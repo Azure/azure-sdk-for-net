@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Settings that control how the scheduled action operation is executed. </summary>
+    /// <summary> Settings that control how the recurring bulk action operation is executed. </summary>
     internal partial class ScheduledActionsExecutionParametersContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

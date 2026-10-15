@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal UserAssignedIdentityResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string userAssignedIdentityApiVersion);
             _userAssignedIdentitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedServiceIdentities", ResourceType.Namespace, Diagnostics);
-            _userAssignedIdentitiesRestClient = new UserAssignedIdentities(_userAssignedIdentitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, userAssignedIdentityApiVersion ?? "2025-05-31-preview");
+            _userAssignedIdentitiesRestClient = new UserAssignedIdentities(_userAssignedIdentitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedIdentity/userAssignedIdentities", out string userAssignedIdentitiesApiVersionOverride) ? userAssignedIdentitiesApiVersionOverride : "2025-05-31-preview");
             ValidateResourceId(id);
         }
 

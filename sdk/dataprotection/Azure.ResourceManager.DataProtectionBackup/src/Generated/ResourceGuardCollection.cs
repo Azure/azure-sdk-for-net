@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ResourceGuardCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceGuardResource.ResourceType, out string resourceGuardApiVersion);
             _resourceGuardResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceGuardResource.ResourceType.Namespace, Diagnostics);
-            _resourceGuardResourcesRestClient = new ResourceGuardResources(_resourceGuardResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGuardApiVersion ?? "2026-06-01");
+            _resourceGuardResourcesRestClient = new ResourceGuardResources(_resourceGuardResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DataProtection/resourceGuards", out string resourceGuardResourcesApiVersionOverride) ? resourceGuardResourcesApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 

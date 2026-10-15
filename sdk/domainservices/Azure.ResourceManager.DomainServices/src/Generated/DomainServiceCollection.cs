@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DomainServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DomainServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DomainServiceResource.ResourceType, out string domainServiceApiVersion);
             _domainServiceOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DomainServices", DomainServiceResource.ResourceType.Namespace, Diagnostics);
-            _domainServiceOperationGroupRestClient = new DomainServiceOperationGroup(_domainServiceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, domainServiceApiVersion ?? "2025-10-01-preview");
+            _domainServiceOperationGroupRestClient = new DomainServiceOperationGroup(_domainServiceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AAD/domainServices", out string domainServiceOperationGroupApiVersionOverride) ? domainServiceOperationGroupApiVersionOverride : "2025-10-01-preview");
             ValidateResourceId(id);
         }
 

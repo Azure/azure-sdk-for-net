@@ -11,7 +11,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The provisioning state of a scheduled-action resource within an occurrence. </summary>
+    /// <summary> The provisioning state of a recurring bulk action resource within an occurrence. </summary>
     public readonly partial struct OccurrenceResourceProvisioningState : IEquatable<OccurrenceResourceProvisioningState>
     {
         private readonly string _value;

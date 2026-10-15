@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudL2NetworkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkCloudL2NetworkResource.ResourceType, out string networkCloudL2NetworkApiVersion);
             _l2NetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudL2NetworkResource.ResourceType.Namespace, Diagnostics);
-            _l2NetworksRestClient = new L2Networks(_l2NetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudL2NetworkApiVersion ?? "2026-07-01");
+            _l2NetworksRestClient = new L2Networks(_l2NetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkCloud/l2Networks", out string l2NetworksApiVersionOverride) ? l2NetworksApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 

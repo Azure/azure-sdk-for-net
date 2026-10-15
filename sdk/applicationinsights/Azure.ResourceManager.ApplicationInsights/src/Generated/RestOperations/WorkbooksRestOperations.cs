@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ApplicationInsights
     internal partial class Workbooks
     {
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of Workbooks for mocking. </summary>
         protected Workbooks()
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal Workbooks(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal Workbooks(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
-            _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(Workbooks).Assembly, applicationId);
         }
 
@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/workbooks/", false);
             uri.AppendPath(resourceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Insights/workbooks") ?? "2023-06-01", true);
             if (canFetchContent != null)
             {
                 uri.AppendQuery("canFetchContent", TypeFormatters.ConvertToString(canFetchContent), true);
@@ -82,10 +79,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/workbooks/", false);
             uri.AppendPath(resourceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Insights/workbooks") ?? "2023-06-01", true);
             if (sourceId != null)
             {
                 uri.AppendQuery("sourceId", sourceId, true);
@@ -111,10 +105,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/workbooks/", false);
             uri.AppendPath(resourceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Insights/workbooks") ?? "2023-06-01", true);
             if (sourceId != null)
             {
                 uri.AppendQuery("sourceId", sourceId, true);
@@ -143,10 +134,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/workbooks/", false);
             uri.AppendPath(resourceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Insights/workbooks") ?? "2023-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -162,10 +150,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Insights/workbooks", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Insights/workbooks") ?? "2023-06-01", true);
             uri.AppendQuery("category", category, true);
             if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -195,10 +180,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Insights/workbooks") ?? "2023-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -219,10 +201,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath("/providers/Microsoft.Insights/workbooks/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/revisions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Insights/workbooks/revisions") ?? "2023-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -243,10 +222,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Insights/workbooks/revisions") ?? "2023-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -268,10 +244,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/revisions/", false);
             uri.AppendPath(revisionId, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Insights/workbooks/revisions") ?? "2023-06-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -290,10 +263,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/workbooks", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Insights/workbooks") ?? "2023-06-01", true);
             uri.AppendQuery("category", category, true);
             if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -327,10 +297,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Insights/workbooks") ?? "2023-06-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

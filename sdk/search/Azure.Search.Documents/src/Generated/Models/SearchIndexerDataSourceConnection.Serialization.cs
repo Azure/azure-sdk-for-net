@@ -116,7 +116,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteObjectValue(CredentialsInternal, options);
             writer.WritePropertyName("container"u8);
             writer.WriteObjectValue(Container, options);
-            if (_identityIsDefined || Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity, _identityIsDefined))
             {
                 if (Identity != null)
                 {
@@ -145,7 +145,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("indexerPermissionOptions"u8);
                 }
             }
-            if (_dataChangeDetectionPolicyIsDefined || Optional.IsDefined(DataChangeDetectionPolicy))
+            if (Optional.IsDefined(DataChangeDetectionPolicy, _dataChangeDetectionPolicyIsDefined))
             {
                 if (DataChangeDetectionPolicy != null)
                 {
@@ -157,7 +157,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dataChangeDetectionPolicy"u8);
                 }
             }
-            if (_dataDeletionDetectionPolicyIsDefined || Optional.IsDefined(DataDeletionDetectionPolicy))
+            if (Optional.IsDefined(DataDeletionDetectionPolicy, _dataDeletionDetectionPolicyIsDefined))
             {
                 if (DataDeletionDetectionPolicy != null)
                 {
@@ -169,7 +169,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dataDeletionDetectionPolicy"u8);
                 }
             }
-            if (_encryptionKeyIsDefined || Optional.IsDefined(EncryptionKey))
+            if (Optional.IsDefined(EncryptionKey, _encryptionKeyIsDefined))
             {
                 if (EncryptionKey != null)
                 {

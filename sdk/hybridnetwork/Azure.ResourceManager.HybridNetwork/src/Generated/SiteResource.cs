@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string siteApiVersion);
             _sitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
-            _sitesRestClient = new Sites(_sitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteApiVersion ?? "2025-03-30");
+            _sitesRestClient = new Sites(_sitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridNetwork/sites", out string sitesApiVersionOverride) ? sitesApiVersionOverride : "2025-03-30");
             ValidateResourceId(id);
         }
 
