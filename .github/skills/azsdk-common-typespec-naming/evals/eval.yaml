@@ -658,20 +658,19 @@ stimuli:
         config:
           pattern: '(?is)"blockers"\s*:\s*\[[^\]]*(synthesi|emitter|targetable)'
 
-  - name: apply-client-name-through-customization-tool
+  - name: apply-client-name-directly
     tags:
       case: apply-delegated
-    environment: &customization
+    environment: &directApplyProject
       skills:
         - ..
       files:
-        - src: fixtures/customization-mcp.mjs
-          dest: customization-mcp.mjs
-      mcpServers:
-        azure-sdk-mcp:
-          type: stdio
-          command: node
-          args: ["customization-mcp.mjs"]
+        - src: fixtures/standalone-apply/main.tsp
+          dest: main.tsp
+        - src: fixtures/standalone-apply/client.tsp
+          dest: client.tsp
+        - src: fixtures/standalone-apply/tspconfig.yaml
+          dest: tspconfig.yaml
     prompt: &applyPrompt |
       Invoke azsdk-common-typespec-naming in apply mode. The calling authoring workflow
       has authorized the following new, unshipped C# ARM naming customization and will
@@ -679,41 +678,52 @@ stimuli:
       absolute current working directory (resolve it locally); client.tsp is already
       loaded by its generation entrypoint. WidgetProperties.enabled is a boolean.
       Apply its C# SDK name IsEnabled while preserving wire name enabled and existing
-      Java/Python overrides. No SDK package exists. These project facts are confirmed;
-      do not scan for fixtures or create a project. Use the available MCP tool, then
-      return JSON with booleans "applied" and "generatedNamesVerified", plus any blocker.
-      Do not perform the caller's subsequent compilation or SDK generation.
+      Java/Python overrides. No SDK package exists. These project facts are confirmed.
+      Make the smallest direct edit to client.tsp and do not change main.tsp, dependencies
+      or SDK code. Return JSON with booleans "applied" and "generatedNamesVerified",
+      plus any blocker. Do not perform the caller's subsequent compilation or SDK generation.
     constraints: *bounded
     graders:
       - *namingLoaded
       - type: tool-calls
         config:
           required:
-            - name: "^azure-sdk-mcp[-:]azsdk_customized_code_update$"
-              args:
-                editScope: "^SpecInputs$"
-                tspProjectPath: '^(?:[A-Za-z]:[\\/]|/)'
-                customizationRequest: '(?is)(?=.*(?:csharp|C#))(?=.*WidgetProperties\.enabled)(?=.*IsEnabled)(?=.*wire)(?=.*(?:Java|Python)).+'
+            - name: "^(edit|apply_patch)$"
           disallowed:
-            - name: "^(edit|create|apply_patch)$"
-            - name: "azsdk_(?:package_generate_code|package_build_code)"
-            - name: "azsdk_customized_code_update"
-              args:
-                packagePath: ".+"
+            - name: "azsdk_"
+            - name: "^(create|task)$"
+      - &csharpOverride
+        type: file-matches
+        config:
+          path: client.tsp
+          pattern: '@@clientName\(\s*(?:Widget\.)?WidgetProperties\.enabled\s*,\s*"IsEnabled"\s*,\s*"csharp"\s*\)'
+      - &javaPreserved
+        type: file-matches
+        config:
+          path: client.tsp
+          pattern: '@@clientName\(\s*(?:Widget\.)?WidgetProperties\.enabled\s*,\s*"EnabledForJava"\s*,\s*"java"\s*\)'
+      - &pythonPreserved
+        type: file-matches
+        config:
+          path: client.tsp
+          pattern: '@@clientName\(\s*(?:Widget\.)?WidgetProperties\.enabled\s*,\s*"enabled_for_python"\s*,\s*"python"\s*\)'
+      - &sourceUnchanged
+        type: file-not-matches
+        config:
+          path: main.tsp
+          pattern: "clientName"
       - type: output-matches
         config:
           pattern: '"applied"\s*:\s*true'
       - *unverified
 
-  - name: standalone-apply-validates-and-compiles
+  - name: standalone-apply-edits-and-compiles
     tags:
       case: apply
     environment:
       skills:
         - ..
       files:
-        - src: fixtures/customization-mcp.mjs
-          dest: customization-mcp.mjs
         - src: fixtures/standalone-apply/package.json
           dest: package.json
         - src: fixtures/standalone-apply/mock-typespec-compiler/package.json
@@ -722,15 +732,12 @@ stimuli:
           dest: mock-typespec-compiler/tsp.mjs
         - src: fixtures/standalone-apply/main.tsp
           dest: main.tsp
+        - src: fixtures/standalone-apply/client.tsp
+          dest: client.tsp
         - src: fixtures/standalone-apply/tspconfig.yaml
           dest: tspconfig.yaml
       commands:
         - npm install --ignore-scripts --no-audit --no-fund --package-lock=false
-      mcpServers:
-        azure-sdk-mcp:
-          type: stdio
-          command: node
-          args: ["customization-mcp.mjs"]
     prompt: |
       Invoke azsdk-common-typespec-naming for this standalone naming-only fix; do
       not delegate to azure-typespec-author. The current directory is the confirmed
@@ -738,122 +745,48 @@ stimuli:
       WidgetProperties.enabled is a new, unshipped C# ARM boolean whose C# SDK name
       must be IsEnabled. Preserve wire name enabled and all Java/Python overrides.
       client.tsp is already loaded by the generation entrypoint and no SDK package
-      exists. Apply the override only through the available customization tool with
-      SpecInputs. After it succeeds, run the available TypeSpec validation tool and
-      then run the project's hermetic compile command exactly as
-      `npx --no-install tsp compile .`. Do not inspect eval fixtures or edit
-      client.tsp directly. Return JSON booleans "applied", "validationPassed",
-      "compilePassed", and "generatedNamesVerified". SDK generation is not requested.
+      exists. Make the smallest direct edit to client.tsp, then run the project's
+      hermetic compile command exactly as `npx --no-install tsp compile .`.
+      Do not change main.tsp, dependencies or SDK code. Return JSON booleans
+      "applied", "compilePassed", and "generatedNamesVerified". SDK generation is
+      not requested.
     constraints: *bounded
     graders:
       - *namingLoaded
       - type: tool-calls
         config:
           required:
-            - name: "^azure-sdk-mcp[-:]azsdk_customized_code_update$"
-              args:
-                editScope: "^SpecInputs$"
-                tspProjectPath: '^(?:[A-Za-z]:[\\/]|/)'
-                customizationRequest: '(?is)(?=.*(?:csharp|C#))(?=.*WidgetProperties\.enabled)(?=.*IsEnabled)(?=.*wire)(?=.*(?:Java|Python)).+'
-            - name: "^azure-sdk-mcp[-:]azsdk_run_typespec_validation$"
-              args:
-                typeSpecProjectRootPath: '^(?:[A-Za-z]:[\\/]|/)'
+            - name: "^(edit|apply_patch)$"
             - name: "^(powershell|bash)$"
               command: '(?i)npx\s+--no-install\s+tsp\s+compile\s+\.'
           sequence:
-            - name: "^azure-sdk-mcp[-:]azsdk_customized_code_update$"
-            - name: "^azure-sdk-mcp[-:]azsdk_run_typespec_validation$"
+            - name: "^(edit|apply_patch)$"
             - name: "^(powershell|bash)$"
               command: '(?i)npx\s+--no-install\s+tsp\s+compile\s+\.'
           disallowed:
-            - name: "^(edit|create|apply_patch)$"
-            - name: "azsdk_(?:package_generate_code|package_build_code)"
-            - name: "azsdk_customized_code_update"
-              args:
-                packagePath: ".+"
+            - name: "azsdk_"
+            - name: "^(create|task)$"
+      - *csharpOverride
+      - *javaPreserved
+      - *pythonPreserved
+      - *sourceUnchanged
       - type: output-matches
         config:
           pattern: '"applied"\s*:\s*true'
       - type: output-matches
         config:
-          pattern: '"validationPassed"\s*:\s*true'
-      - type: output-matches
-        config:
           pattern: '"compilePassed"\s*:\s*true'
       - *unverified
 
-  - name: customization-failure-does-not-fall-back-to-edits
+  - name: unloaded-client-tsp-is-a-blocker
     tags:
-      case: apply-failure
-    environment:
-      skills:
-        - ..
-      files:
-        - src: fixtures/customization-mcp.mjs
-          dest: customization-mcp.mjs
-      mcpServers:
-        azure-sdk-mcp:
-          type: stdio
-          command: node
-          args: ["customization-mcp.mjs"]
-          env:
-            NAMING_EVAL_FAIL: "true"
-    prompt: *applyPrompt
-    constraints: *bounded
-    graders:
-      - *namingLoaded
-      - type: tool-calls
-        config:
-          required:
-            - name: "^azure-sdk-mcp[-:]azsdk_customized_code_update$"
-              args:
-                editScope: "^SpecInputs$"
-          disallowed:
-            - name: "^(edit|create|apply_patch)$"
-            - name: "azsdk_customized_code_update"
-              args:
-                editScope: "^(All|CustomCode)$"
-            - name: "azsdk_(?:package_generate_code|package_build_code|run_typespec_validation)"
-      - type: output-matches
-        config:
-          pattern: '"applied"\s*:\s*false'
-      - type: output-matches
-        config:
-          pattern: '(?is)(blocker|error|fail)[\s\S]{0,200}(customiz|appl)'
-      - *unverified
-
-  - name: review-never-applies-available-customization
-    tags:
-      case: review
-    environment: *customization
+      case: apply-blocked
     prompt: |
-      Invoke azsdk-common-typespec-naming in read-only review mode for this supplied
-      evidence. This is a C# ARM PR for a new unshipped WidgetProperties model.
-      The boolean property enabled will emit Enabled, and there is no clientName override.
-      Assess only naming; do not edit or apply fixes, even though a customization tool
-      is available. Return JSON with "suggestedName", "applied", and "generatedNamesVerified".
-      Do not scan a repository or run generation.
-    constraints: *bounded
-    graders:
-      - *namingLoaded
-      - *planningTools
-      - type: output-matches
-        config:
-          pattern: '"suggestedName"\s*:\s*"IsEnabled"'
-      - type: output-matches
-        config:
-          pattern: '"applied"\s*:\s*false'
-      - *unverified
-
-  - name: missing-customization-tool-is-a-blocker
-    tags:
-      case: missing-tool
-    prompt: |
-      Invoke azsdk-common-typespec-naming. Apply the approved C# ARM naming-only override
-      WidgetProperties.enabled -> IsEnabled in client.tsp. All names are new/unshipped;
-      the absolute current workspace is the TypeSpec project root. No customization
-      MCP tool is available in this environment and installation is out of scope.
-      Return JSON "applied" and "blocker"; do not create fixtures or run SDK generation.
+      Invoke azsdk-common-typespec-naming in apply mode. The requested C# ARM
+      WidgetProperties.enabled -> IsEnabled override is approved and unshipped,
+      but confirmed project evidence says client.tsp is not loaded by the active
+      generation entrypoint. Return JSON "applied" and "blocker". Do not edit files,
+      change the entrypoint, invoke MCP tools, install dependencies or generate an SDK.
     constraints: *bounded
     graders:
       - *namingLoaded
@@ -867,4 +800,27 @@ stimuli:
           pattern: '"applied"\s*:\s*false'
       - type: output-matches
         config:
-          pattern: '(?is)"blocker"\s*:\s*"[^"]*(tool|MCP)'
+          pattern: '(?is)"blocker"\s*:\s*"[^"]*(?:load|entrypoint)'
+      - *unverified
+
+  - name: review-never-applies-writable-fix
+    tags:
+      case: review
+    prompt: |
+      Invoke azsdk-common-typespec-naming in read-only review mode for this supplied
+      evidence. This is a C# ARM PR for a new unshipped WidgetProperties model.
+      The boolean property enabled will emit Enabled, and there is no clientName override.
+      Assess only naming; do not edit or apply fixes. Return JSON with "suggestedName",
+      "applied", and "generatedNamesVerified". Do not scan a repository, compile or
+      run generation.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - type: output-matches
+        config:
+          pattern: '"suggestedName"\s*:\s*"IsEnabled"'
+      - type: output-matches
+        config:
+          pattern: '"applied"\s*:\s*false'
+      - *unverified
