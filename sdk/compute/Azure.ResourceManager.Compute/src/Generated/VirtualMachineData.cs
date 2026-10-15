@@ -377,6 +377,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// <summary> Specifies the preferred VM size, for example Standard_D4s_v5. Azure may deploy a compatible alternative size based on capacity and placement considerations. Supported VM families for FlexProfile may vary by region. The recommended way to get the list of available sizes is using these APIs: [List all available virtual machine sizes in a region](https://docs.microsoft.com/rest/api/compute/resourceskus/list), [List all available virtual machine sizes for resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes). </summary>
+        public string FlexPreferredVMSize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FlexPreferredVMSize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.FlexPreferredVMSize = value;
+            }
+        }
+
         /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
         public BootDiagnostics BootDiagnostics
         {
