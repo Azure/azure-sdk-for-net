@@ -14,6 +14,9 @@ parameters:
     # Forwarded to the invoke template: true runs the shard under AzureCLI@2.
     type: boolean
     default: false
+  - name: UseGitHubAppAuthentication
+    type: boolean
+    default: false
   - name: threshold
     # Pass-rate gate forwarded to the invoke template (`vally eval --threshold` + shard verdict).
     type: number
@@ -116,6 +119,8 @@ jobs:
         parameters:
           vallyRoot: ${{ parameters.vallyRoot }}
           UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
+          ${{ if parameters.UseGitHubAppAuthentication }}:
+            UseGitHubAppAuthentication: true
           threshold: ${{ parameters.threshold }}
 
       # Optional repo-specific teardown after the eval.

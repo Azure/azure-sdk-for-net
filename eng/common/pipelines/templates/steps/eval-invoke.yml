@@ -1,12 +1,15 @@
 # Invokes `vally eval` for one shard. UseAzSdkAuthentication=false (default) runs the hermetic
 # node script directly. UseAzSdkAuthentication=true wraps the same run in AzureCLI@2 so a live
 # MCP's Azure DevOps calls inherit the service-connection identity.
-# copilot-sdk authenticates the model session via GITHUB_TOKEN (from the linked eval variable group).
+# UseGitHubAppAuthentication opts into a scoped Copilot token; otherwise the eval PAT is used.
 
 parameters:
   - name: vallyRoot
     type: string
   - name: UseAzSdkAuthentication
+    type: boolean
+    default: false
+  - name: UseGitHubAppAuthentication
     type: boolean
     default: false
   - name: threshold
@@ -18,6 +21,19 @@ parameters:
     default: opensource-api-connection
 
 steps:
+  - ${{ if and(parameters.UseGitHubAppAuthentication, ne(variables['Build.Reason'], 'PullRequest')) }}:
+    - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+      parameters:
+        TokenOwners:
+          - ${{ split(variables['Build.Repository.Name'], '/')[0] }}
+        VariableNamePrefix: COPILOT_GITHUB_TOKEN
+        TokenRequest:
+          repositories:
+            - ${{ split(variables['Build.Repository.Name'], '/')[1] }}
+          permissions:
+            organization_copilot_requests: read
+            metadata: read
+
   - ${{ if parameters.UseAzSdkAuthentication }}:
     - task: AzureCLI@2
       displayName: 'vally eval $(shardName) (authenticated)'
@@ -34,7 +50,11 @@ steps:
             --threshold ${{ parameters.threshold }}
       ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
         env:
-          GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
+          ${{ if parameters.UseGitHubAppAuthentication }}:
+            COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
+            GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
+          ${{ else }}:
+            GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
 
   - ${{ else }}:
     - script: |
@@ -47,4 +67,8 @@ steps:
       workingDirectory: ${{ parameters.vallyRoot }}
       ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
         env:
-          GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
+          ${{ if parameters.UseGitHubAppAuthentication }}:
+            COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
+            GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
+          ${{ else }}:
+            GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
