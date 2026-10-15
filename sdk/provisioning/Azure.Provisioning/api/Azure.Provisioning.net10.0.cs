@@ -1184,7 +1184,7 @@ namespace Azure.Provisioning.Primitives
     }
     public static partial class ProvisionableEnumerableExtensions
     {
-        public static System.Collections.Generic.IEnumerable<T> OfType<T>(this System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> source) where T : Azure.Provisioning.Primitives.Provisionable { throw null; }
+        public static System.Collections.Generic.IEnumerable<T> OfResourceType<T>(this System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> source) where T : Azure.Provisioning.Primitives.Provisionable { throw null; }
     }
     public abstract partial class ProvisionableResource : Azure.Provisioning.Primitives.NamedProvisionableConstruct
     {

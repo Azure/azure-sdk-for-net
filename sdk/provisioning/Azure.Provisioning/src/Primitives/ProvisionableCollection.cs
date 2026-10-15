@@ -36,7 +36,7 @@ internal class ProvisionableCollection : IEnumerable<Provisionable>
     /// <c>OfType&lt;T&gt;</c>) will return the upgraded instances.
     /// </summary>
     /// <typeparam name="T">The type to filter for.</typeparam>
-    public IEnumerable<T> OfType<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] T>() where T : Provisionable
+    public IEnumerable<T> OfResourceType<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] T>() where T : Provisionable
     {
         if (!typeof(ProvisionableResource).IsAssignableFrom(typeof(T)))
         {

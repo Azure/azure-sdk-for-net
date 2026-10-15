@@ -350,7 +350,7 @@ public class InfrastructureJsonRoundTripTests
 
         // Upgrade to typed
         var roundTripped = deserialized.GetProvisionableResources()
-            .OfType<StorageAccount>().Single();
+            .OfResourceType<StorageAccount>().Single();
 
         // Validate identity
         Assert.AreEqual("storage", roundTripped.BicepIdentifier);
@@ -371,6 +371,30 @@ public class InfrastructureJsonRoundTripTests
         string mainBicep = bicep["main.bicep"];
         Assert.IsTrue(mainBicep.Contains("'BlobStorage'"),
             $"Expected modified Kind in Bicep output.\n{mainBicep}");
+    }
+
+    [Test]
+    public void Deserialized_Resources_Preserve_ExplicitDependencies_AfterUpgrade()
+    {
+        Infrastructure infra = new();
+        StorageAccount dependency = new("dependency", StorageAccount.ResourceVersions.V2024_01_01);
+        StorageAccount storage = new("storage", StorageAccount.ResourceVersions.V2024_01_01);
+        storage.DependsOn.Add(dependency);
+        infra.Add(dependency);
+        infra.Add(storage);
+
+        string json = SerializationTestHelpers.SerializeToJson(infra);
+        Infrastructure deserialized = SerializationTestHelpers.DeserializeFromJson(json);
+
+        StorageAccount[] resources = deserialized.GetProvisionableResources()
+            .OfResourceType<StorageAccount>().ToArray();
+        Assert.AreEqual(2, resources.Length);
+
+        string mainBicep = deserialized.Build().Compile()["main.bicep"];
+        Assert.IsTrue(mainBicep.Contains("dependsOn"),
+            $"Expected explicit dependency after typed-resource upgrade.\n{mainBicep}");
+        Assert.IsTrue(mainBicep.Contains("dependency"),
+            $"Expected dependency reference after typed-resource upgrade.\n{mainBicep}");
     }
 
     [Test]
@@ -399,7 +423,7 @@ public class InfrastructureJsonRoundTripTests
         Infrastructure deserialized = SerializationTestHelpers.DeserializeFromJson(json);
 
         var roundTripped = deserialized.GetProvisionableResources()
-            .OfType<StorageAccount>().Single();
+            .OfResourceType<StorageAccount>().Single();
 
         // Verify every property we set is preservedvia expression-level comparison
         AssertBicepPropertyEquivalence(storage, roundTripped);
@@ -454,7 +478,7 @@ public class InfrastructureJsonRoundTripTests
         Infrastructure deserialized = SerializationTestHelpers.DeserializeFromJson(json);
 
         var roundTripped = deserialized.GetProvisionableResources()
-            .OfType<StorageAccount>().Single();
+            .OfResourceType<StorageAccount>().Single();
 
         // This must not throw— sub-property mutation must work
         Assert.DoesNotThrow(() => roundTripped.Sku.Name = StorageSkuName.StandardGrs,
@@ -482,7 +506,7 @@ public class InfrastructureJsonRoundTripTests
 
         Infrastructure deserialized = SerializationTestHelpers.DeserializeFromJson(json);
         var roundTripped = deserialized.GetProvisionableResources()
-            .OfType<StorageAccount>().Single();
+            .OfResourceType<StorageAccount>().Single();
 
         Assert.IsTrue(roundTripped.IsExistingResource,
             "IsExistingResource should be true after deserialization");
@@ -518,7 +542,7 @@ public class InfrastructureJsonRoundTripTests
         string json = SerializationTestHelpers.SerializeToJson(infra);
         Infrastructure deserialized = SerializationTestHelpers.DeserializeFromJson(json);
         var roundTripped = deserialized.GetProvisionableResources()
-            .OfType<StorageAccount>().Single();
+            .OfResourceType<StorageAccount>().Single();
 
         Assert.AreEqual("Production storage account", roundTripped.BicepMetadata.Description,
             "Description should survive round-trip");

@@ -465,7 +465,7 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
 /// <summary>
 /// A lightweight resource wrapper used during deserialization.
 /// Holds a pre-compiled ResourceStatement and replays it during compilation.
-/// Can be upgraded to a typed resource via <see cref="ProvisionableCollection.OfType{T}"/>.
+/// Can be upgraded to a typed resource via <see cref="ProvisionableCollection.OfResourceType{T}"/>.
 /// </summary>
 internal class DeserializedResource : NamedProvisionableConstruct
 {

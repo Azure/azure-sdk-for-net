@@ -9,7 +9,7 @@ namespace Azure.Provisioning.Primitives;
 
 /// <summary>
 /// Extension methods for <see cref="IEnumerable{T}"/> of <see cref="Provisionable"/>
-/// that delegate to <see cref="ProvisionableCollection.OfType{T}"/> when the
+/// that delegate to <see cref="ProvisionableCollection.OfResourceType{T}"/> when the
 /// underlying sequence is a <see cref="ProvisionableCollection"/>, enabling
 /// automatic upgrading of deserialized resource wrappers.
 /// </summary>
@@ -24,7 +24,7 @@ public static class ProvisionableEnumerableExtensions
     /// </summary>
     /// <typeparam name="T">The type to filter for.</typeparam>
     /// <param name="source">The sequence to filter.</param>
-    public static IEnumerable<T> OfType<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] T>(
+    public static IEnumerable<T> OfResourceType<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] T>(
         this IEnumerable<Provisionable> source) where T : Provisionable
     {
         if (source == null)
@@ -34,7 +34,7 @@ public static class ProvisionableEnumerableExtensions
 
         if (source is ProvisionableCollection collection)
         {
-            return collection.OfType<T>();
+            return collection.OfResourceType<T>();
         }
 
         return System.Linq.Enumerable.OfType<T>(source);
