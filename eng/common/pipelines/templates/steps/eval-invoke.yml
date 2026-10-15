@@ -34,7 +34,6 @@ steps:
             --threshold ${{ parameters.threshold }}
       env:
         COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
-        GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
 
   - ${{ else }}:
     - script: |
@@ -47,4 +46,3 @@ steps:
       workingDirectory: ${{ parameters.vallyRoot }}
       env:
         COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
-        GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
