@@ -20,6 +20,8 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+. (Join-Path $PSScriptRoot "EmitterVersion-Helpers.ps1")
+
 function Get-EmitterApprovalHistory([string]$RepoRoot, [string]$DescriptorPath, [string]$Dependency, [string]$Version) {
     # Only first-parent main approvals count, never pins in PR/feature history.
     # Stop at the most recent matching approval change, or at the descriptor's creation.
@@ -76,12 +78,11 @@ function Assert-EmitterDependencies([string]$RepoRoot, [string]$EmitterPackagePa
 
         $descriptorPath = $descriptors[$dependency]
         try {
-            $descriptor = Get-Content (Join-Path $RepoRoot $descriptorPath) -Raw | ConvertFrom-Json -AsHashtable
+            $approved = Get-NpmDependencyVersion (Join-Path $RepoRoot $descriptorPath) $dependency -DependenciesOnly
         }
         catch {
             throw "${context}: unable to establish approval from '$descriptorPath': $($_.Exception.Message) $guidance"
         }
-        $approved = if ($descriptor.dependencies) { $descriptor.dependencies[$dependency] } else { "" }
         $approvedVersion = $null
         if (-not [System.Management.Automation.SemanticVersion]::TryParse($approved, [ref]$approvedVersion)) {
             throw "${context}: unable to establish approval; '$descriptorPath' has no exact approved version for '$dependency'. $guidance"

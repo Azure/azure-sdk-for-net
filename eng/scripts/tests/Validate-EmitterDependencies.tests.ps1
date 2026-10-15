@@ -180,6 +180,12 @@ Describe "Official emitter dependency validation" {
             Should -Throw "*unable to establish approval*no exact approved version*"
     }
 
+    It "does not treat peer dependencies as descriptor approvals" {
+        Write-Json (Join-Path $fixture $descriptorPaths[0]) @{ peerDependencies = @{ $base = $current } }
+        { Assert-EmitterDependencies $fixture "eng/packages/http-client-csharp" } |
+            Should -Throw "*unable to establish approval*no exact approved version*"
+    }
+
     It "reads updated approvals dynamically rather than hard-coding versions" {
         $newApproval = "2.0.0-alpha.7"
         Write-Json (Join-Path $fixture $descriptorPaths[0]) @{ dependencies = @{ $base = $newApproval } }
@@ -229,6 +235,45 @@ Describe "Official emitter dependency validation" {
         Write-Json $path $lock
         { Assert-EmitterDependencies $fixture "eng/packages/http-client-csharp" } |
             Should -Throw "*cannot establish an official package resolution*"
+    }
+}
+
+Describe "Shared emitter version helpers" {
+    BeforeAll {
+        Set-StrictMode -Version 3
+    }
+
+    It "reads the package version" {
+        $path = Join-Path $TestDrive "package-version.json"
+        Write-Json $path @{ version = $current }
+        Get-PackageJsonVersion $path | Should -BeExactly $current
+    }
+
+    It "prefers regular dependencies to peer dependencies" {
+        $path = Join-Path $TestDrive "dependency-version.json"
+        Write-Json $path @{
+            dependencies = @{ $base = $current }
+            peerDependencies = @{ $base = $older }
+        }
+        Get-NpmDependencyVersion $path $base | Should -BeExactly $current
+    }
+
+    It "supports the dashboard's peer-dependency fallback" {
+        $path = Join-Path $TestDrive "peer-version.json"
+        Write-Json $path @{ peerDependencies = @{ $base = $older } }
+        Get-NpmDependencyVersion $path $base | Should -BeExactly $older
+        Get-NpmDependencyVersion $path $base -DependenciesOnly | Should -BeNullOrEmpty
+    }
+
+    It "returns no version when a dependency is absent" {
+        $path = Join-Path $TestDrive "missing-version.json"
+        Write-Json $path @{}
+        Get-NpmDependencyVersion $path $base | Should -BeNullOrEmpty
+    }
+
+    It "preserves comparison diagnostics for invalid versions" {
+        { Assert-VersionNotNewerThanApproved "Test dependency" "next" $current "descriptor.json" } |
+            Should -Throw "*Unable to compare Test dependency version 'next'*approved version '$current'*"
     }
 }
 
