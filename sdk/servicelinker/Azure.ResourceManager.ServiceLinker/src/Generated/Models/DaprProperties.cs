@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _version;
-        internal bool _versionIsDefined;
+        private bool _versionIsDefined;
         private string _componentType;
-        internal bool _componentTypeIsDefined;
+        private bool _componentTypeIsDefined;
         private string _secretStoreComponent;
-        internal bool _secretStoreComponentIsDefined;
+        private bool _secretStoreComponentIsDefined;
         private string _runtimeVersion;
-        internal bool _runtimeVersionIsDefined;
+        private bool _runtimeVersionIsDefined;
         private DaprBindingComponentDirection? _bindingComponentDirection;
-        internal bool _bindingComponentDirectionIsDefined;
+        private bool _bindingComponentDirectionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DaprProperties"/>. </summary>
         public DaprProperties()
