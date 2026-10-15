@@ -15,6 +15,7 @@ trigger:
       - eng/common/pipelines/workflow-eval.yml
       - eng/common/pipelines/templates/jobs/**
       - eng/common/pipelines/templates/steps/eval-invoke.yml
+      - eng/common/pipelines/templates/steps/login-to-copilot.yml
       - eng/common/pipelines/templates/steps/login-to-github.yml
       - eng/common/scripts/login-to-github.ps1
       - eng/common/pipelines/templates/steps/eval-mcp-setup.yml
@@ -34,7 +35,6 @@ extends:
     mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
     TestType: mock
     vallyRoot: evals
-    UseGitHubAppAuthentication: true
     # Per-shard job timeout (report-only tier).
     shardTimeoutInMinutes: 20
     # Pass-rate gate for `vally eval`. This tier is report-only (failOnFailedTests defaults false),

@@ -43,10 +43,6 @@ parameters:
     # When true, the invoke step runs under AzureCLI@2 (live MCP inherits the service connection).
     type: boolean
     default: false
-  - name: UseGitHubAppAuthentication
-    # Opt in to a scoped Copilot installation token; other suites retain PAT authentication.
-    type: boolean
-    default: false
   - name: threshold
     # Pass-rate gate forwarded to `vally eval --threshold` and the shard verdict. Repos may override.
     type: number
@@ -95,7 +91,6 @@ extends:
               vallyRoot: ${{ parameters.vallyRoot }}
               evalInvokeTemplate: ${{ parameters.evalInvokeTemplate }}
               UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
-              UseGitHubAppAuthentication: ${{ parameters.UseGitHubAppAuthentication }}
               threshold: ${{ parameters.threshold }}
               preEvalTemplate: ${{ parameters.preEvalTemplate }}
               postEvalTemplate: ${{ parameters.postEvalTemplate }}

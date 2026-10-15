@@ -14,9 +14,6 @@ parameters:
     # Forwarded to the invoke template: true runs the shard under AzureCLI@2.
     type: boolean
     default: false
-  - name: UseGitHubAppAuthentication
-    type: boolean
-    default: false
   - name: threshold
     # Pass-rate gate forwarded to the invoke template (`vally eval --threshold` + shard verdict).
     type: number
@@ -114,13 +111,13 @@ jobs:
         env:
           EVAL_ARGS: $(evalArgs)
 
+      - template: /eng/common/pipelines/templates/steps/login-to-copilot.yml
+
       # Runs the eval via the invoke template (auth-conditional in the common default).
       - template: ${{ parameters.evalInvokeTemplate }}
         parameters:
           vallyRoot: ${{ parameters.vallyRoot }}
           UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
-          ${{ if parameters.UseGitHubAppAuthentication }}:
-            UseGitHubAppAuthentication: true
           threshold: ${{ parameters.threshold }}
 
       # Optional repo-specific teardown after the eval.

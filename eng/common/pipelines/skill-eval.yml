@@ -12,6 +12,7 @@ trigger:
       - eng/common/pipelines/skill-eval.yml
       - eng/common/pipelines/templates/jobs/**
       - eng/common/pipelines/templates/steps/eval-invoke.yml
+      - eng/common/pipelines/templates/steps/login-to-copilot.yml
       - eng/common/pipelines/templates/steps/login-to-github.yml
       - eng/common/scripts/login-to-github.ps1
       - eng/common/pipelines/templates/steps/eval-mcp-setup.yml
@@ -31,7 +32,6 @@ extends:
     mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
     TestType: mock
     vallyRoot: .github/skills
-    UseGitHubAppAuthentication: true
     # Single-level glob excludes azure-typespec-author/evaluate/ (its own benchmark pipeline).
     evalGlobs:
       - '*/evals/*.eval.yaml'
