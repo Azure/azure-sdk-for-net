@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -38,14 +37,5 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies the Virtual Machine Scale Set that the Availability Set is migrated to. </summary>
         internal ComputeWriteableSubResourceData MigrateToVirtualMachineScaleSet { get; }
-
-        /// <summary> Resource Id. </summary>
-        public virtual ResourceIdentifier MigrateToVirtualMachineScaleSetId
-        {
-            get
-            {
-                return MigrateToVirtualMachineScaleSet is null ? default : MigrateToVirtualMachineScaleSet.Id;
-            }
-        }
     }
 }

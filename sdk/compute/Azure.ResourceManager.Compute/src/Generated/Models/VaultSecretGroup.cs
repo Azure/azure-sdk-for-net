@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -40,18 +39,5 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The list of key vault references in SourceVault which contain certificates. </summary>
         public IList<VaultCertificate> VaultCertificates { get; }
-
-        /// <summary> Resource Id. </summary>
-        public virtual ResourceIdentifier SourceVaultId
-        {
-            get
-            {
-                return SourceVault is null ? default : SourceVault.Id;
-            }
-            set
-            {
-                SourceVault = new ComputeWriteableSubResourceData(value);
-            }
-        }
     }
 }

@@ -133,22 +133,5 @@ namespace Azure.ResourceManager.Compute
                 return Properties is null ? default : Properties.VirtualMachineScaleSetMigrationInfo;
             }
         }
-
-        /// <summary> Resource Id. </summary>
-        public virtual ResourceIdentifier ProximityPlacementGroupId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProximityPlacementGroupId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AvailabilitySetProperties();
-                }
-                Properties.ProximityPlacementGroupId = value;
-            }
-        }
     }
 }

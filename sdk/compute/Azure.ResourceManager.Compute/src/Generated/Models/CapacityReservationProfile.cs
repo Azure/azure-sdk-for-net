@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -38,18 +37,5 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies whether the virtual machine is explicitly opted out from being associated with any capacity reservation. When set to true, the virtual machine will not be allowed to implicitly or explicitly associate with any type of capacity reservation and will consume capacity from the publicly available capacity. Minimum api-version: 2026-04-01. </summary>
         public bool? DisableCapacityReservationAssignment { get; set; }
-
-        /// <summary> Resource Id. </summary>
-        public virtual ResourceIdentifier CapacityReservationGroupId
-        {
-            get
-            {
-                return CapacityReservationGroup is null ? default : CapacityReservationGroup.Id;
-            }
-            set
-            {
-                CapacityReservationGroup = new ComputeWriteableSubResourceData(value);
-            }
-        }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -71,23 +70,6 @@ namespace Azure.ResourceManager.Compute.Models
                     Properties = new ImageProperties();
                 }
                 Properties.HyperVGeneration = value;
-            }
-        }
-
-        /// <summary> Resource Id. </summary>
-        public virtual ResourceIdentifier SourceVirtualMachineId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SourceVirtualMachineId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ImageProperties();
-                }
-                Properties.SourceVirtualMachineId = value;
             }
         }
     }

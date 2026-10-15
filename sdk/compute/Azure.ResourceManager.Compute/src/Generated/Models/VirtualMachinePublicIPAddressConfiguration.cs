@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -151,23 +150,6 @@ namespace Azure.ResourceManager.Compute.Models
                     Properties = new VirtualMachinePublicIPAddressConfigurationProperties();
                 }
                 Properties.PublicIPAllocationMethod = value;
-            }
-        }
-
-        /// <summary> Resource Id. </summary>
-        public virtual ResourceIdentifier PublicIPPrefixId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PublicIPPrefixId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachinePublicIPAddressConfigurationProperties();
-                }
-                Properties.PublicIPPrefixId = value;
             }
         }
     }

@@ -91,22 +91,5 @@ namespace Azure.ResourceManager.Compute
                 Properties.HyperVGeneration = value;
             }
         }
-
-        /// <summary> Resource Id. </summary>
-        public virtual ResourceIdentifier SourceVirtualMachineId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SourceVirtualMachineId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ImageProperties();
-                }
-                Properties.SourceVirtualMachineId = value;
-            }
-        }
     }
 }

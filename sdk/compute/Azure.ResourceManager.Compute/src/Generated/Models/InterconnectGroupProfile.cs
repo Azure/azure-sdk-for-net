@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -40,18 +39,5 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The list of subgroup references within the interconnect group. </summary>
         public IList<ComputeWriteableSubResourceData> Subgroups { get; }
-
-        /// <summary> Resource Id. </summary>
-        public virtual ResourceIdentifier InterconnectGroupId
-        {
-            get
-            {
-                return InterconnectGroup is null ? default : InterconnectGroup.Id;
-            }
-            set
-            {
-                InterconnectGroup = new ComputeWriteableSubResourceData(value);
-            }
-        }
     }
 }

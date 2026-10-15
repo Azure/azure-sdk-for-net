@@ -192,23 +192,6 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        /// <summary> Resource Id. </summary>
-        public virtual ResourceIdentifier NetworkSecurityGroupId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NetworkSecurityGroupId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineScaleSetUpdateNetworkConfigurationProperties();
-                }
-                Properties.NetworkSecurityGroupId = value;
-            }
-        }
-
         /// <summary> List of DNS servers IP addresses. </summary>
         public IList<string> DnsServers
         {

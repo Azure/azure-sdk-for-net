@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -44,18 +43,5 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The relative URL of the Key Vault containing the secret. </summary>
         internal ComputeWriteableSubResourceData SourceVault { get; set; }
-
-        /// <summary> Resource Id. </summary>
-        public virtual ResourceIdentifier SourceVaultId
-        {
-            get
-            {
-                return SourceVault is null ? default : SourceVault.Id;
-            }
-            set
-            {
-                SourceVault = new ComputeWriteableSubResourceData(value);
-            }
-        }
     }
 }

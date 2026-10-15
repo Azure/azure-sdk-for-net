@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -64,18 +63,5 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? WriteAcceleratorEnabled { get; set; }
-
-        /// <summary> Resource Id. </summary>
-        public virtual ResourceIdentifier DiskEncryptionSetId
-        {
-            get
-            {
-                return DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
-            }
-            set
-            {
-                DiskEncryptionSet = new DiskEncryptionSetParameters(value);
-            }
-        }
     }
 }

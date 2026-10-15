@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -200,23 +199,6 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        /// <summary> Resource Id. </summary>
-        public virtual ResourceIdentifier NetworkSecurityGroupId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NetworkSecurityGroupId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineNetworkInterfaceConfigurationProperties();
-                }
-                Properties.NetworkSecurityGroupId = value;
-            }
-        }
-
         /// <summary> List of DNS servers IP addresses. </summary>
         public IList<string> DnsServers
         {
@@ -227,23 +209,6 @@ namespace Azure.ResourceManager.Compute.Models
                     Properties = new VirtualMachineNetworkInterfaceConfigurationProperties();
                 }
                 return Properties.DnsServers;
-            }
-        }
-
-        /// <summary> Resource Id. </summary>
-        public virtual ResourceIdentifier DscpConfigurationId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DscpConfigurationId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineNetworkInterfaceConfigurationProperties();
-                }
-                Properties.DscpConfigurationId = value;
             }
         }
     }
