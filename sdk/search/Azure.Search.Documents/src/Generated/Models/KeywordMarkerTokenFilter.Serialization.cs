@@ -172,7 +172,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KeywordMarkerTokenFilter(odataType, name, additionalBinaryDataProperties, keywords, ignoreCase);
+            return new KeywordMarkerTokenFilter(odataType, name, additionalBinaryDataProperties, keywords ?? new ChangeTrackingList<string>(), ignoreCase);
         }
     }
 }

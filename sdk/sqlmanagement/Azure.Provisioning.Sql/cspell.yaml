@@ -1,0 +1,4 @@
+import:
+  - ../cspell.yaml
+words:
+  - azprovision

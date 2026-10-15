@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private MonitorEmailNotificationSettings _emailNotificationSettings;
+        internal bool _emailNotificationSettingsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MonitorNotificationSettings"/>. </summary>
         public MonitorNotificationSettings()
@@ -27,13 +29,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MonitorNotificationSettings(MonitorEmailNotificationSettings emailNotificationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EmailNotificationSettings = emailNotificationSettings;
+            _emailNotificationSettings = emailNotificationSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The AML notification email settings. </summary>
         [WirePath("emailNotificationSettings")]
-        internal MonitorEmailNotificationSettings EmailNotificationSettings { get; set; }
+        internal MonitorEmailNotificationSettings EmailNotificationSettings
+        {
+            get
+            {
+                return _emailNotificationSettings;
+            }
+            set
+            {
+                _emailNotificationSettings = value;
+                _emailNotificationSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> The email recipient list which has a limitation of 499 characters in total. </summary>
         [WirePath("emailNotificationSettings.emails")]

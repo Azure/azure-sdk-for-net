@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> User Decision Target. </summary>
     public partial class AccessReviewDecisionUserSignInInsightProperties : AccessReviewDecisionInsightProperties
     {
+        private DateTimeOffset? _lastSignInOn;
+        internal bool _lastSignInOnIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="AccessReviewDecisionUserSignInInsightProperties"/>. </summary>
         public AccessReviewDecisionUserSignInInsightProperties() : base(AccessReviewDecisionInsightType.UserSignInInsight)
         {
@@ -26,11 +29,17 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="lastSignInOn"> Date Time when the user signed into the tenant. </param>
         internal AccessReviewDecisionUserSignInInsightProperties(AccessReviewDecisionInsightType @type, DateTimeOffset? insightCreatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? lastSignInOn) : base(@type, insightCreatedOn, additionalBinaryDataProperties)
         {
-            LastSignInOn = lastSignInOn;
+            _lastSignInOn = lastSignInOn;
         }
 
         /// <summary> Date Time when the user signed into the tenant. </summary>
         [WirePath("lastSignInDateTime")]
-        public DateTimeOffset? LastSignInOn { get; }
+        public DateTimeOffset? LastSignInOn
+        {
+            get
+            {
+                return _lastSignInOn;
+            }
+        }
     }
 }

@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.Maps.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MapsCorsRule(allowedOrigins, additionalBinaryDataProperties);
+            return new MapsCorsRule(allowedOrigins ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

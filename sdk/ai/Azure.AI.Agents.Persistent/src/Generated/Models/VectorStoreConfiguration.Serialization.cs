@@ -149,7 +149,7 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VectorStoreConfiguration(dataSources, additionalBinaryDataProperties);
+            return new VectorStoreConfiguration(dataSources ?? new ChangeTrackingList<VectorStoreDataSource>(), additionalBinaryDataProperties);
         }
     }
 }

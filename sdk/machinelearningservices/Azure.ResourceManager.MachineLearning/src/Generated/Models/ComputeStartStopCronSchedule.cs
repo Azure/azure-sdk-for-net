@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _startTime;
+        internal bool _startTimeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ComputeStartStopCronSchedule"/>. </summary>
         public ComputeStartStopCronSchedule()
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ComputeStartStopCronSchedule(string startTime, string timeZone, string expression, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartTime = startTime;
+            _startTime = startTime;
             TimeZone = timeZone;
             Expression = expression;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -43,7 +45,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The start time in yyyy-MM-ddTHH:mm:ss format. </summary>
         [WirePath("startTime")]
-        public string StartTime { get; set; }
+        public string StartTime
+        {
+            get
+            {
+                return _startTime;
+            }
+            set
+            {
+                _startTime = value;
+                _startTimeIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Specifies time zone in which the schedule runs.

@@ -211,17 +211,17 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CustomPriceProperties(
                 ruleType,
                 catalogId,
-                catalogClaims,
+                catalogClaims ?? new ChangeTrackingList<CatalogClaimsItem>(),
                 termUnits,
                 billingPeriod,
                 meterType,
-                marketSetPrices,
+                marketSetPrices ?? new ChangeTrackingList<MarketSetPricesItems>(),
                 additionalBinaryDataProperties);
         }
     }

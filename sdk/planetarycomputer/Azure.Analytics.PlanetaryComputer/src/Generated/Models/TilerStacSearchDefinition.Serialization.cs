@@ -204,7 +204,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             return new TilerStacSearchDefinition(
                 hash,
-                search,
+                search ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 lastUsedOn,
                 useCount,
                 metadata,

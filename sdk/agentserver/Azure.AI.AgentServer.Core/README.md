@@ -56,7 +56,7 @@ var app = builder.Build();
 app.Run();
 ```
 
-The builder provides all the same defaults as Tier 1 (OpenTelemetry, health endpoint, request correlation, version header, logging). Access the underlying `WebApplicationBuilder` via `builder.WebApplicationBuilder` for full ASP.NET Core customization (CORS, authentication, custom middleware, etc.).
+The builder provides all the same defaults as Tier 1 (OpenTelemetry, health endpoint, request correlation, version header, logging, and snapshot lifecycle endpoints). Access the underlying `WebApplicationBuilder` via `builder.WebApplicationBuilder` for full ASP.NET Core customization (CORS, authentication, custom middleware, etc.).
 
 ### Tier 3 — Standalone (existing apps)
 
@@ -72,7 +72,7 @@ app.MapGet("/hello", () => "Hello!");
 app.Run();
 ```
 
-This enables request correlation (`x-request-id`), server version header (`x-platform-server`), and inbound request logging. See the protocol-specific Tier 3 samples ([Responses][responses_tier3], [Invocations][invocations_tier3]) for complete examples including handler registration, health probes, and OpenTelemetry setup.
+This enables request correlation (`x-request-id`), server version header (`x-platform-server`), inbound request logging, and the platform snapshot lifecycle endpoints. See the protocol-specific Tier 3 samples ([Responses][responses_tier3], [Invocations][invocations_tier3]) for complete examples including handler registration, health probes, and OpenTelemetry setup.
 
 ## Key concepts
 
@@ -152,9 +152,73 @@ Azure SDK and outbound `HttpClient` dependency spans are disabled by default to 
 
 A `/readiness` endpoint is registered by default, responding to liveness and readiness probes. It reports healthy as soon as the host finishes starting.
 
+Add an application health check to control when the endpoint reports ready. The endpoint returns `503 Service Unavailable` while any registered check is unhealthy and `200 OK` after all checks become healthy:
+
+```C# Snippet:Core_ReadMe_ConfigureReadiness
+var builder = AgentHost.CreateBuilder();
+var readiness = new TaskCompletionSource(
+    TaskCreationOptions.RunContinuationsAsynchronously);
+
+builder.ConfigureHealth(health =>
+{
+    health.AddCheck("application", () =>
+        readiness.Task.IsCompletedSuccessfully
+            ? Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy()
+            : Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Unhealthy(
+                "Application initialization is still in progress."));
+});
+
+var app = builder.Build();
+
+// Complete required initialization before reporting ready.
+readiness.TrySetResult();
+
+app.Run();
+```
+
+### Snapshot lifecycle
+
+Core always registers the private platform endpoints `POST /_agent/before-snapshot` and `POST /_agent/after-restore`, with `POST /_before_snapshot` and `POST /_after_restore` as aliases. They are no-ops by default. Implement `IAgentSnapshotLifecycle` when your process owns connections, streams, or other in-memory state that must be released before capture and rebuilt after restoration:
+
+The snapshot lifecycle contract is experimental and may change or be removed. To implement it,
+suppress the `AAAS002` warning:
+
+```C#
+#pragma warning disable AAAS002
+```
+
+```C# Snippet:Core_ReadMe_SnapshotLifecycle
+public sealed class DatabaseSnapshotLifecycle : IAgentSnapshotLifecycle
+{
+    public Task BeforeSnapshotAsync(CancellationToken cancellationToken = default)
+    {
+        // Close connections and release state that must not be captured.
+        return Task.CompletedTask;
+    }
+
+    public Task AfterRestoreAsync(
+        AgentRestoreContext context,
+        CancellationToken cancellationToken = default)
+    {
+        // Environment overrides are already applied. Recreate clients
+        // or other state that was initialized before the snapshot.
+        return Task.CompletedTask;
+    }
+}
+```
+
+Register the implementation as a singleton:
+
+```C# Snippet:Core_ReadMe_ConfigureSnapshotLifecycle
+var builder = AgentHost.CreateBuilder();
+builder.Services.AddSingleton<IAgentSnapshotLifecycle, DatabaseSnapshotLifecycle>();
+```
+
+Core serializes lifecycle calls and handles platform retries. A completed `before-snapshot` callback runs once, a repeated `restore_id` returns success without repeating work, and a new `restore_id` for the same session runs `after-restore` again. Session environment overrides are applied before `AfterRestoreAsync` is invoked. Callback implementations should still make their external side effects idempotent.
+
 ### Resilient tasks and streaming
 
-The library provides durable **task** and resumable **streaming** primitives for long-running agents. Register tasks with `AddResilientTask()`/`AddResilientMultiTurnTask()` and event streams with `AddAgentEventStreams()`, then run work through the typed `TaskDefinition<TInput, TOutput>` handle returned at registration and emit progress through `AgentEventStreamRegistry`. Tasks survive process restarts and support multi-turn conversations and steering. Persist application checkpoints and idempotency state explicitly with `FoundryStateStore`. See the [Tasks guide][tasks_guide], [Streaming guide][streaming_guide], and [State Store guide][state_store_guide] for full walkthroughs.
+The library provides durable **task** and resumable **streaming** primitives for long-running agents. Durable tasks are opt-in: call `SetResilientTasksEnabled()` before host startup, then register tasks with `AddResilientTask()`/`AddResilientMultiTurnTask()`. Registration alone does not initialize task storage or recovery. Run work through the typed `TaskDefinition<TInput, TOutput>` handle returned at registration and emit progress through `AgentEventStreamRegistry`. Enabled tasks survive process restarts and support multi-turn conversations and steering. Persist application checkpoints and idempotency state explicitly with `FoundryStateStore`. See the [Tasks guide][tasks_guide], [Streaming guide][streaming_guide], and [State Store guide][state_store_guide] for full walkthroughs.
 
 ### Durable state store
 

@@ -22,9 +22,10 @@ namespace Azure.AI.AgentServer.Core.Tests.Tasks;
 public sealed class ResilientTaskRegistrationTests
 {
     [Test]
-    public async Task AddResilientTasksRegistersDurabilityHostedService()
+    public async Task EnabledResilientTasksResolveDurabilityHostedService()
     {
         var services = new ServiceCollection();
+        services.SetResilientTasksEnabled();
         services.AddResilientTasks();
 
         // The durability service must be registered as an IHostedService so the host drives its
@@ -65,32 +66,38 @@ public sealed class ResilientTaskRegistrationTests
     }
 
     [Test]
-    public void CredentialCanBeAttachedAfterFlatTaskRegistration()
+    public void CredentialAndEndpointCanBeAttachedAfterFlatTaskRegistration()
     {
         var services = new ServiceCollection();
         services.AddResilientTask<string, string>(
             "consumer-task",
             (ctx, ct) => Task.FromResult(ctx.Input));
         var credential = new Azure.Core.TestFramework.MockCredential();
+        var endpoint = new System.Uri("https://example.com/project");
 
-        Assert.DoesNotThrow(() => services.AddResilientTasks(credential));
+        Assert.DoesNotThrow(() => services.AddResilientTasks(credential, endpoint));
 
         using var provider = services.BuildServiceProvider();
-        Assert.That(
-            provider.GetRequiredService<TaskHostEnvironment>().Credential,
-            Is.SameAs(credential));
+        TaskHostEnvironment environment = provider.GetRequiredService<TaskHostEnvironment>();
+        Assert.That(environment.Credential, Is.SameAs(credential));
+        Assert.That(environment.Endpoint, Is.EqualTo(endpoint));
     }
 
     [Test]
-    public void DifferentCredentialAfterInitialConfigurationThrows()
+    public void DifferentConfigurationAfterInitialConfigurationThrows()
     {
         var services = new ServiceCollection();
         var first = new Azure.Core.TestFramework.MockCredential();
         var second = new Azure.Core.TestFramework.MockCredential();
-        services.AddResilientTasks(first);
+        var firstEndpoint = new System.Uri("https://example.com/first");
+        var secondEndpoint = new System.Uri("https://example.com/second");
+        services.AddResilientTasks(first, firstEndpoint);
 
-        Assert.DoesNotThrow(() => services.AddResilientTasks(first));
-        Assert.Throws<System.InvalidOperationException>(() => services.AddResilientTasks(second));
+        Assert.DoesNotThrow(() => services.AddResilientTasks(first, firstEndpoint));
+        Assert.Throws<System.InvalidOperationException>(() =>
+            services.AddResilientTasks(second, firstEndpoint));
+        Assert.Throws<System.InvalidOperationException>(() =>
+            services.AddResilientTasks(first, secondEndpoint));
     }
 
     [Test]
@@ -135,23 +142,26 @@ public sealed class ResilientTaskRegistrationTests
     }
 
     [Test]
-    public async Task KeyedDefinitionResolutionInitializesTheTaskEngine()
+    public async Task KeyedDefinitionResolutionUsesTheStartedTaskEngine()
     {
         string root = Path.Combine(Path.GetTempPath(), "agentserver-keyed-definition-" + System.Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
         try
         {
-            var services = new ServiceCollection();
-            services.AddSingleton<ITaskStore>(new LocalTaskStore(root));
-            TaskDefinition<string, string> registered = services.AddResilientTask<string, string>(
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.Services.AddSingleton<ITaskStore>(new LocalTaskStore(root));
+            builder.SetResilientTasksEnabled();
+            TaskDefinition<string, string> registered = builder.Services.AddResilientTask<string, string>(
                 "keyed-runnable", (ctx, ct) => Task.FromResult(ctx.Input));
 
-            await using var provider = services.BuildServiceProvider();
+            using IHost host = builder.Build();
+            await host.StartAsync();
             TaskDefinition<string, string> resolved =
-                provider.GetRequiredKeyedService<TaskDefinition<string, string>>("keyed-runnable");
+                host.Services.GetRequiredKeyedService<TaskDefinition<string, string>>("keyed-runnable");
 
             Assert.That(resolved, Is.SameAs(registered));
             Assert.That(await resolved.RunAsync("ready"), Is.EqualTo("ready"));
+            await host.StopAsync();
         }
         finally
         {
@@ -180,16 +190,19 @@ public sealed class ResilientTaskRegistrationTests
         Directory.CreateDirectory(root);
         try
         {
-            var services = new ServiceCollection();
-            services.AddSingleton<ITaskStore>(new LocalTaskStore(root));
-            TaskDefinition<string, int> registered = services.AddResilientTask<string, int>(
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.Services.AddSingleton<ITaskStore>(new LocalTaskStore(root));
+            builder.SetResilientTasksEnabled();
+            TaskDefinition<string, int> registered = builder.Services.AddResilientTask<string, int>(
                 "len", (ctx, ct) => Task.FromResult(ctx.Input.Length));
 
-            await using var provider = services.BuildServiceProvider();
-            TaskDefinition<string, int> resolved = provider.GetResilientTask<string, int>("len");
+            using IHost host = builder.Build();
+            await host.StartAsync();
+            TaskDefinition<string, int> resolved = host.Services.GetResilientTask<string, int>("len");
 
             Assert.That(resolved, Is.SameAs(registered));
             Assert.That(await resolved.RunAsync("hello"), Is.EqualTo(5));
+            await host.StopAsync();
         }
         finally
         {

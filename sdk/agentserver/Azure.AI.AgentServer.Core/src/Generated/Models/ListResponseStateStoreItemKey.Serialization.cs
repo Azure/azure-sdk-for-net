@@ -203,7 +203,7 @@ namespace Azure.AI.AgentServer.Core.Storage
             }
             return new ListResponseStateStoreItemKey(
                 @object,
-                data,
+                data ?? new ChangeTrackingList<StateStoreItemKey>(),
                 firstId,
                 lastId,
                 hasMore,

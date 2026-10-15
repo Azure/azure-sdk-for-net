@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _endOn;
+        internal bool _endOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BackupRestoreBaseResultProperties"/>. </summary>
         internal BackupRestoreBaseResultProperties()
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             StatusDetails = statusDetails;
             Error = error;
             StartOn = startOn;
-            EndOn = endOn;
+            _endOn = endOn;
             JobId = jobId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -54,7 +56,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> The end time of the backup/restore operation in UTC. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return _endOn;
+            }
+        }
 
         /// <summary> Identifier for the backup/restore operation. </summary>
         public string JobId { get; }

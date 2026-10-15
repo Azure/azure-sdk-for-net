@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationWatcherData, AutomationWatcherResource>(new WatcherGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationWatcherData, AutomationWatcherResource>(new AutomationWatcherDataAsyncCollectionResultOfT(
                 _watcherRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationWatcherData, AutomationWatcherResource>(new WatcherGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationWatcherData, AutomationWatcherResource>(new AutomationWatcherDataCollectionResultOfT(
                 _watcherRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

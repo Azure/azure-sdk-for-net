@@ -39,8 +39,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="capacityReservation"> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum compute api-version: 2021-04-01. </param>
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM. </param>
         /// <param name="vmExtensions"> Virtual Machine Extensions Array to be applied to the Virtual Machines. </param>
+        /// <param name="priority"> Specifies the priority for the virtual machines. Mirrors the priority property on Microsoft.Compute/virtualMachines. </param>
+        /// <param name="billingProfile"> Specifies the billing related details of the Azure Spot virtual machines. Mirrors the billingProfile property on Microsoft.Compute/virtualMachines. Only applies when priority is Spot. </param>
+        /// <param name="evictionPolicy"> Specifies the eviction policy for the Azure Spot virtual machines. Both Deallocate and Delete are supported. Mirrors the evictionPolicy property on Microsoft.Compute/virtualMachines. Only applies when priority is Spot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionVMProperties(ScheduledEventsPolicy scheduledEventsPolicy, StorageProfile storageProfile, HardwareProfile hardwareProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string extensionsTimeBudget, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, IList<BulkActionVMExtension> vmExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionVMProperties(ScheduledEventsPolicy scheduledEventsPolicy, StorageProfile storageProfile, HardwareProfile hardwareProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string extensionsTimeBudget, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, IList<BulkActionVMExtension> vmExtensions, PriorityType? priority, BillingProfile billingProfile, EvictionPolicy? evictionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScheduledEventsPolicy = scheduledEventsPolicy;
             StorageProfile = storageProfile;
@@ -57,6 +60,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             CapacityReservation = capacityReservation;
             ApplicationProfile = applicationProfile;
             VmExtensions = vmExtensions;
+            Priority = priority;
+            BillingProfile = billingProfile;
+            EvictionPolicy = evictionPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -105,6 +111,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Virtual Machine Extensions Array to be applied to the Virtual Machines. </summary>
         public IList<BulkActionVMExtension> VmExtensions { get; }
 
+        /// <summary> Specifies the priority for the virtual machines. Mirrors the priority property on Microsoft.Compute/virtualMachines. </summary>
+        public PriorityType? Priority { get; set; }
+
+        /// <summary> Specifies the billing related details of the Azure Spot virtual machines. Mirrors the billingProfile property on Microsoft.Compute/virtualMachines. Only applies when priority is Spot. </summary>
+        internal BillingProfile BillingProfile { get; set; }
+
+        /// <summary> Specifies the eviction policy for the Azure Spot virtual machines. Both Deallocate and Delete are supported. Mirrors the evictionPolicy property on Microsoft.Compute/virtualMachines. Only applies when priority is Spot. </summary>
+        public EvictionPolicy? EvictionPolicy { get; set; }
+
         /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
         public BootDiagnostics BootDiagnostics
         {
@@ -122,7 +137,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
         }
 
-        /// <summary> The ID of the sub-resource. </summary>
+        /// <summary> The Azure resource ID. </summary>
         public string CapacityReservationGroupId
         {
             get
@@ -149,6 +164,23 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     ApplicationProfile = new ApplicationProfile();
                 }
                 return ApplicationProfile.GalleryApplications;
+            }
+        }
+
+        /// <summary> Specifies the maximum price, in US Dollars, you are willing to pay per hour for each Azure Spot virtual machine. This price is compared with the current Azure Spot price for the virtual machine size at create time, and the operation only succeeds if maxPrice is greater than the current Azure Spot price. It is also used to evict a virtual machine if the current Azure Spot price rises above it after creation. Possible values are any decimal value greater than zero, or -1 to indicate the default price is up-to on-demand and the virtual machine should not be evicted for price reasons. The default is -1 when not provided. </summary>
+        public double? BillingMaxPrice
+        {
+            get
+            {
+                return BillingProfile is null ? default : BillingProfile.MaxPrice;
+            }
+            set
+            {
+                if (BillingProfile is null)
+                {
+                    BillingProfile = new BillingProfile();
+                }
+                BillingProfile.MaxPrice = value;
             }
         }
     }

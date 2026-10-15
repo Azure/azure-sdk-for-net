@@ -44,23 +44,23 @@ namespace Azure.ResourceManager.ScVmm.Mocking
 
         private ClientDiagnostics VmmServersClientDiagnostics => _vmmServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VmmServers VmmServersRestClient => _vmmServersRestClient ??= new VmmServers(VmmServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+        private VmmServers VmmServersRestClient => _vmmServersRestClient ??= new VmmServers(VmmServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ScVmm/vmmServers", out string apiVersion) ? apiVersion : "2025-03-13");
 
         private ClientDiagnostics CloudsClientDiagnostics => _cloudsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clouds CloudsRestClient => _cloudsRestClient ??= new Clouds(CloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+        private Clouds CloudsRestClient => _cloudsRestClient ??= new Clouds(CloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ScVmm/clouds", out string apiVersion0) ? apiVersion0 : "2025-03-13");
 
         private ClientDiagnostics VirtualNetworksClientDiagnostics => _virtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ScVmm/virtualNetworks", out string apiVersion1) ? apiVersion1 : "2025-03-13");
 
         private ClientDiagnostics VirtualMachineTemplatesClientDiagnostics => _virtualMachineTemplatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineTemplates VirtualMachineTemplatesRestClient => _virtualMachineTemplatesRestClient ??= new VirtualMachineTemplates(VirtualMachineTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+        private VirtualMachineTemplates VirtualMachineTemplatesRestClient => _virtualMachineTemplatesRestClient ??= new VirtualMachineTemplates(VirtualMachineTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ScVmm/virtualMachineTemplates", out string apiVersion2) ? apiVersion2 : "2025-03-13");
 
         private ClientDiagnostics AvailabilitySetsClientDiagnostics => _availabilitySetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailabilitySets AvailabilitySetsRestClient => _availabilitySetsRestClient ??= new AvailabilitySets(AvailabilitySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+        private AvailabilitySets AvailabilitySetsRestClient => _availabilitySetsRestClient ??= new AvailabilitySets(AvailabilitySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ScVmm/availabilitySets", out string apiVersion3) ? apiVersion3 : "2025-03-13");
 
         /// <summary>
         /// List of VmmServers in a subscription.
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ScVmm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScVmmServerData, ScVmmServerResource>(new VmmServersGetBySubscriptionAsyncCollectionResultOfT(VmmServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmServers"), data => new ScVmmServerResource(Client, data));
+            return new AsyncPageableWrapper<ScVmmServerData, ScVmmServerResource>(new ScVmmServerDataAsync0CollectionResultOfT(VmmServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmServers"), data => new ScVmmServerResource(Client, data));
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ScVmm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScVmmServerData, ScVmmServerResource>(new VmmServersGetBySubscriptionCollectionResultOfT(VmmServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmServers"), data => new ScVmmServerResource(Client, data));
+            return new PageableWrapper<ScVmmServerData, ScVmmServerResource>(new ScVmmServerData0CollectionResultOfT(VmmServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmServers"), data => new ScVmmServerResource(Client, data));
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ScVmm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScVmmCloudData, ScVmmCloudResource>(new CloudsGetBySubscriptionAsyncCollectionResultOfT(CloudsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmClouds"), data => new ScVmmCloudResource(Client, data));
+            return new AsyncPageableWrapper<ScVmmCloudData, ScVmmCloudResource>(new ScVmmCloudDataAsync0CollectionResultOfT(CloudsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmClouds"), data => new ScVmmCloudResource(Client, data));
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ScVmm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScVmmCloudData, ScVmmCloudResource>(new CloudsGetBySubscriptionCollectionResultOfT(CloudsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmClouds"), data => new ScVmmCloudResource(Client, data));
+            return new PageableWrapper<ScVmmCloudData, ScVmmCloudResource>(new ScVmmCloudData0CollectionResultOfT(CloudsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmClouds"), data => new ScVmmCloudResource(Client, data));
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ScVmm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScVmmVirtualNetworkData, ScVmmVirtualNetworkResource>(new VirtualNetworksGetBySubscriptionAsyncCollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmVirtualNetworks"), data => new ScVmmVirtualNetworkResource(Client, data));
+            return new AsyncPageableWrapper<ScVmmVirtualNetworkData, ScVmmVirtualNetworkResource>(new ScVmmVirtualNetworkDataAsync0CollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmVirtualNetworks"), data => new ScVmmVirtualNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ScVmm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScVmmVirtualNetworkData, ScVmmVirtualNetworkResource>(new VirtualNetworksGetBySubscriptionCollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmVirtualNetworks"), data => new ScVmmVirtualNetworkResource(Client, data));
+            return new PageableWrapper<ScVmmVirtualNetworkData, ScVmmVirtualNetworkResource>(new ScVmmVirtualNetworkData0CollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmVirtualNetworks"), data => new ScVmmVirtualNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ScVmm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScVmmVirtualMachineTemplateData, ScVmmVirtualMachineTemplateResource>(new VirtualMachineTemplatesGetBySubscriptionAsyncCollectionResultOfT(VirtualMachineTemplatesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmVirtualMachineTemplates"), data => new ScVmmVirtualMachineTemplateResource(Client, data));
+            return new AsyncPageableWrapper<ScVmmVirtualMachineTemplateData, ScVmmVirtualMachineTemplateResource>(new ScVmmVirtualMachineTemplateDataAsync0CollectionResultOfT(VirtualMachineTemplatesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmVirtualMachineTemplates"), data => new ScVmmVirtualMachineTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ScVmm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScVmmVirtualMachineTemplateData, ScVmmVirtualMachineTemplateResource>(new VirtualMachineTemplatesGetBySubscriptionCollectionResultOfT(VirtualMachineTemplatesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmVirtualMachineTemplates"), data => new ScVmmVirtualMachineTemplateResource(Client, data));
+            return new PageableWrapper<ScVmmVirtualMachineTemplateData, ScVmmVirtualMachineTemplateResource>(new ScVmmVirtualMachineTemplateData0CollectionResultOfT(VirtualMachineTemplatesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmVirtualMachineTemplates"), data => new ScVmmVirtualMachineTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.ScVmm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScVmmAvailabilitySetData, ScVmmAvailabilitySetResource>(new AvailabilitySetsGetBySubscriptionAsyncCollectionResultOfT(AvailabilitySetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmAvailabilitySets"), data => new ScVmmAvailabilitySetResource(Client, data));
+            return new AsyncPageableWrapper<ScVmmAvailabilitySetData, ScVmmAvailabilitySetResource>(new ScVmmAvailabilitySetDataAsync0CollectionResultOfT(AvailabilitySetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmAvailabilitySets"), data => new ScVmmAvailabilitySetResource(Client, data));
         }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ScVmm.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScVmmAvailabilitySetData, ScVmmAvailabilitySetResource>(new AvailabilitySetsGetBySubscriptionCollectionResultOfT(AvailabilitySetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmAvailabilitySets"), data => new ScVmmAvailabilitySetResource(Client, data));
+            return new PageableWrapper<ScVmmAvailabilitySetData, ScVmmAvailabilitySetResource>(new ScVmmAvailabilitySetData0CollectionResultOfT(AvailabilitySetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmAvailabilitySets"), data => new ScVmmAvailabilitySetResource(Client, data));
         }
     }
 }

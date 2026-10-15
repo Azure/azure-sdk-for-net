@@ -123,68 +123,38 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureTableSource":
-                        return AzureTableSource.DeserializeAzureTableSource(element, options);
-                    case "InformixSource":
-                        return InformixSource.DeserializeInformixSource(element, options);
-                    case "Db2Source":
-                        return Db2Source.DeserializeDb2Source(element, options);
-                    case "OdbcSource":
-                        return OdbcSource.DeserializeOdbcSource(element, options);
-                    case "MySqlSource":
-                        return MySqlSource.DeserializeMySqlSource(element, options);
-                    case "PostgreSqlSource":
-                        return PostgreSqlSource.DeserializePostgreSqlSource(element, options);
-                    case "PostgreSqlV2Source":
-                        return PostgreSqlV2Source.DeserializePostgreSqlV2Source(element, options);
-                    case "SybaseSource":
-                        return SybaseSource.DeserializeSybaseSource(element, options);
-                    case "SapBwSource":
-                        return SapBWSource.DeserializeSapBWSource(element, options);
-                    case "SalesforceSource":
-                        return SalesforceSource.DeserializeSalesforceSource(element, options);
-                    case "SapCloudForCustomerSource":
-                        return SapCloudForCustomerSource.DeserializeSapCloudForCustomerSource(element, options);
-                    case "SapEccSource":
-                        return SapEccSource.DeserializeSapEccSource(element, options);
-                    case "SapHanaSource":
-                        return SapHanaSource.DeserializeSapHanaSource(element, options);
-                    case "SapOpenHubSource":
-                        return SapOpenHubSource.DeserializeSapOpenHubSource(element, options);
-                    case "SapOdpSource":
-                        return SapOdpSource.DeserializeSapOdpSource(element, options);
-                    case "SapTableSource":
-                        return SapTableSource.DeserializeSapTableSource(element, options);
-                    case "SqlSource":
-                        return SqlSource.DeserializeSqlSource(element, options);
-                    case "SqlServerSource":
-                        return SqlServerSource.DeserializeSqlServerSource(element, options);
-                    case "AmazonRdsForSqlServerSource":
-                        return AmazonRdsForSqlServerSource.DeserializeAmazonRdsForSqlServerSource(element, options);
-                    case "AzureSqlSource":
-                        return AzureSqlSource.DeserializeAzureSqlSource(element, options);
-                    case "SqlMISource":
-                        return SqlMISource.DeserializeSqlMISource(element, options);
-                    case "SqlDWSource":
-                        return SqlDWSource.DeserializeSqlDWSource(element, options);
-                    case "AzureMySqlSource":
-                        return AzureMySqlSource.DeserializeAzureMySqlSource(element, options);
-                    case "TeradataSource":
-                        return TeradataSource.DeserializeTeradataSource(element, options);
-                    case "CassandraSource":
-                        return CassandraSource.DeserializeCassandraSource(element, options);
                     case "AmazonMWSSource":
                         return AmazonMwsSource.DeserializeAmazonMwsSource(element, options);
+                    case "AmazonRdsForSqlServerSource":
+                        return AmazonRdsForSqlServerSource.DeserializeAmazonRdsForSqlServerSource(element, options);
+                    case "AmazonRedshiftSource":
+                        return AmazonRedshiftSource.DeserializeAmazonRedshiftSource(element, options);
+                    case "AzureMariaDBSource":
+                        return AzureMariaDBSource.DeserializeAzureMariaDBSource(element, options);
+                    case "AzureMySqlSource":
+                        return AzureMySqlSource.DeserializeAzureMySqlSource(element, options);
                     case "AzurePostgreSqlSource":
                         return AzurePostgreSqlSource.DeserializeAzurePostgreSqlSource(element, options);
+                    case "AzureSqlSource":
+                        return AzureSqlSource.DeserializeAzureSqlSource(element, options);
+                    case "AzureTableSource":
+                        return AzureTableSource.DeserializeAzureTableSource(element, options);
+                    case "CassandraSource":
+                        return CassandraSource.DeserializeCassandraSource(element, options);
                     case "ConcurSource":
                         return ConcurSource.DeserializeConcurSource(element, options);
                     case "CouchbaseSource":
                         return CouchbaseSource.DeserializeCouchbaseSource(element, options);
+                    case "Db2Source":
+                        return Db2Source.DeserializeDb2Source(element, options);
                     case "DrillSource":
                         return DrillSource.DeserializeDrillSource(element, options);
+                    case "DynamicsAXSource":
+                        return DynamicsAXSource.DeserializeDynamicsAXSource(element, options);
                     case "EloquaSource":
                         return EloquaSource.DeserializeEloquaSource(element, options);
+                    case "GoogleAdWordsSource":
+                        return GoogleAdWordsSource.DeserializeGoogleAdWordsSource(element, options);
                     case "GoogleBigQuerySource":
                         return GoogleBigQuerySource.DeserializeGoogleBigQuerySource(element, options);
                     case "GoogleBigQueryV2Source":
@@ -199,58 +169,88 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return HubspotSource.DeserializeHubspotSource(element, options);
                     case "ImpalaSource":
                         return ImpalaSource.DeserializeImpalaSource(element, options);
+                    case "InformixSource":
+                        return InformixSource.DeserializeInformixSource(element, options);
                     case "JiraSource":
                         return JiraSource.DeserializeJiraSource(element, options);
                     case "MagentoSource":
                         return MagentoSource.DeserializeMagentoSource(element, options);
                     case "MariaDBSource":
                         return MariaDBSource.DeserializeMariaDBSource(element, options);
-                    case "AzureMariaDBSource":
-                        return AzureMariaDBSource.DeserializeAzureMariaDBSource(element, options);
                     case "MarketoSource":
                         return MarketoSource.DeserializeMarketoSource(element, options);
+                    case "MySqlSource":
+                        return MySqlSource.DeserializeMySqlSource(element, options);
+                    case "NetezzaSource":
+                        return NetezzaSource.DeserializeNetezzaSource(element, options);
+                    case "OdbcSource":
+                        return OdbcSource.DeserializeOdbcSource(element, options);
+                    case "OracleServiceCloudSource":
+                        return OracleServiceCloudSource.DeserializeOracleServiceCloudSource(element, options);
                     case "PaypalSource":
                         return PaypalSource.DeserializePaypalSource(element, options);
                     case "PhoenixSource":
                         return PhoenixSource.DeserializePhoenixSource(element, options);
+                    case "PostgreSqlSource":
+                        return PostgreSqlSource.DeserializePostgreSqlSource(element, options);
+                    case "PostgreSqlV2Source":
+                        return PostgreSqlV2Source.DeserializePostgreSqlV2Source(element, options);
                     case "PrestoSource":
                         return PrestoSource.DeserializePrestoSource(element, options);
                     case "QuickBooksSource":
                         return QuickBooksSource.DeserializeQuickBooksSource(element, options);
+                    case "ResponsysSource":
+                        return ResponsysSource.DeserializeResponsysSource(element, options);
+                    case "SalesforceMarketingCloudSource":
+                        return SalesforceMarketingCloudSource.DeserializeSalesforceMarketingCloudSource(element, options);
+                    case "SalesforceSource":
+                        return SalesforceSource.DeserializeSalesforceSource(element, options);
+                    case "SalesforceV2Source":
+                        return SalesforceV2Source.DeserializeSalesforceV2Source(element, options);
+                    case "SapBwSource":
+                        return SapBWSource.DeserializeSapBWSource(element, options);
+                    case "SapCloudForCustomerSource":
+                        return SapCloudForCustomerSource.DeserializeSapCloudForCustomerSource(element, options);
+                    case "SapEccSource":
+                        return SapEccSource.DeserializeSapEccSource(element, options);
+                    case "SapHanaSource":
+                        return SapHanaSource.DeserializeSapHanaSource(element, options);
+                    case "SapOdpSource":
+                        return SapOdpSource.DeserializeSapOdpSource(element, options);
+                    case "SapOpenHubSource":
+                        return SapOpenHubSource.DeserializeSapOpenHubSource(element, options);
+                    case "SapTableSource":
+                        return SapTableSource.DeserializeSapTableSource(element, options);
                     case "ServiceNowSource":
                         return ServiceNowSource.DeserializeServiceNowSource(element, options);
+                    case "ServiceNowV2Source":
+                        return ServiceNowV2Source.DeserializeServiceNowV2Source(element, options);
                     case "ShopifySource":
                         return ShopifySource.DeserializeShopifySource(element, options);
                     case "SparkSource":
                         return SparkSource.DeserializeSparkSource(element, options);
+                    case "SqlDWSource":
+                        return SqlDWSource.DeserializeSqlDWSource(element, options);
+                    case "SqlMISource":
+                        return SqlMISource.DeserializeSqlMISource(element, options);
+                    case "SqlServerSource":
+                        return SqlServerSource.DeserializeSqlServerSource(element, options);
+                    case "SqlSource":
+                        return SqlSource.DeserializeSqlSource(element, options);
                     case "SquareSource":
                         return SquareSource.DeserializeSquareSource(element, options);
+                    case "SybaseSource":
+                        return SybaseSource.DeserializeSybaseSource(element, options);
+                    case "TeradataSource":
+                        return TeradataSource.DeserializeTeradataSource(element, options);
+                    case "VerticaSource":
+                        return VerticaSource.DeserializeVerticaSource(element, options);
+                    case "WarehouseSource":
+                        return WarehouseSource.DeserializeWarehouseSource(element, options);
                     case "XeroSource":
                         return XeroSource.DeserializeXeroSource(element, options);
                     case "ZohoSource":
                         return ZohoSource.DeserializeZohoSource(element, options);
-                    case "NetezzaSource":
-                        return NetezzaSource.DeserializeNetezzaSource(element, options);
-                    case "VerticaSource":
-                        return VerticaSource.DeserializeVerticaSource(element, options);
-                    case "SalesforceMarketingCloudSource":
-                        return SalesforceMarketingCloudSource.DeserializeSalesforceMarketingCloudSource(element, options);
-                    case "ResponsysSource":
-                        return ResponsysSource.DeserializeResponsysSource(element, options);
-                    case "DynamicsAXSource":
-                        return DynamicsAXSource.DeserializeDynamicsAXSource(element, options);
-                    case "OracleServiceCloudSource":
-                        return OracleServiceCloudSource.DeserializeOracleServiceCloudSource(element, options);
-                    case "GoogleAdWordsSource":
-                        return GoogleAdWordsSource.DeserializeGoogleAdWordsSource(element, options);
-                    case "AmazonRedshiftSource":
-                        return AmazonRedshiftSource.DeserializeAmazonRedshiftSource(element, options);
-                    case "WarehouseSource":
-                        return WarehouseSource.DeserializeWarehouseSource(element, options);
-                    case "SalesforceV2Source":
-                        return SalesforceV2Source.DeserializeSalesforceV2Source(element, options);
-                    case "ServiceNowV2Source":
-                        return ServiceNowV2Source.DeserializeServiceNowV2Source(element, options);
                 }
             }
             return UnknownTabularSource.DeserializeUnknownTabularSource(element, options);

@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IoTSecurityAggregatedAlertList(value, nextLink, additionalBinaryDataProperties);
+            return new IoTSecurityAggregatedAlertList(value ?? new ChangeTrackingList<IotSecurityAggregatedAlertData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ScheduledActionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ScheduledActionListResult(value ?? new ChangeTrackingList<ScheduledActionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private MachineLearningEarlyTerminationPolicy _earlyTermination;
+        internal bool _earlyTerminationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ImageSweepSettings"/>. </summary>
         /// <param name="samplingAlgorithm"> [Required] Type of the hyperparameter sampling algorithms. </param>
@@ -30,14 +32,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ImageSweepSettings(MachineLearningEarlyTerminationPolicy earlyTermination, SamplingAlgorithmType samplingAlgorithm, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EarlyTermination = earlyTermination;
+            _earlyTermination = earlyTermination;
             SamplingAlgorithm = samplingAlgorithm;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of early termination policy. </summary>
         [WirePath("earlyTermination")]
-        public MachineLearningEarlyTerminationPolicy EarlyTermination { get; set; }
+        public MachineLearningEarlyTerminationPolicy EarlyTermination
+        {
+            get
+            {
+                return _earlyTermination;
+            }
+            set
+            {
+                _earlyTermination = value;
+                _earlyTerminationIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] Type of the hyperparameter sampling algorithms. </summary>
         [WirePath("samplingAlgorithm")]

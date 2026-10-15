@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConfigurationList(value, nextLink, additionalBinaryDataProperties);
+            return new ConfigurationList(value ?? new ChangeTrackingList<PostgreSqlFlexibleServerConfigurationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

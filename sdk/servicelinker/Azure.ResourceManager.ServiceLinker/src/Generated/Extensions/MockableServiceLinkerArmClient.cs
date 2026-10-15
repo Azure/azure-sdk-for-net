@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LinkerDryrunsGetDaprConfigurationsAsyncCollectionResultOfT(LinkerDryrunsRestClient, scope.ToString(), context, "MockableServiceLinkerArmClient.GetDaprConfigurations");
+            return new DaprConfigurationAsyncCollectionResultOfT(LinkerDryrunsRestClient, scope.ToString(), context, "MockableServiceLinkerArmClient.GetDaprConfigurations");
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LinkerDryrunsGetDaprConfigurationsCollectionResultOfT(LinkerDryrunsRestClient, scope.ToString(), context, "MockableServiceLinkerArmClient.GetDaprConfigurations");
+            return new DaprConfigurationCollectionResultOfT(LinkerDryrunsRestClient, scope.ToString(), context, "MockableServiceLinkerArmClient.GetDaprConfigurations");
         }
     }
 }

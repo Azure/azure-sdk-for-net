@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AdvisorTriageListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AdvisorTriageListResult(value ?? new ChangeTrackingList<AdvisorTriageData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

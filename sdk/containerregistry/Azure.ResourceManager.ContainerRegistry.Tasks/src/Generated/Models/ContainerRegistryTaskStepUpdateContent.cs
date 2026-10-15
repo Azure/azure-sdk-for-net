@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary>
     /// Base properties for updating any task step.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerRegistryDockerBuildStepUpdateContent"/>, <see cref="ContainerRegistryFileTaskStepUpdateContent"/>, and <see cref="ContainerRegistryEncodedTaskStepUpdateContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerRegistryDockerBuildStepUpdateContent"/>, <see cref="ContainerRegistryEncodedTaskStepUpdateContent"/>, and <see cref="ContainerRegistryFileTaskStepUpdateContent"/>.
     /// </summary>
     public abstract partial class ContainerRegistryTaskStepUpdateContent
     {

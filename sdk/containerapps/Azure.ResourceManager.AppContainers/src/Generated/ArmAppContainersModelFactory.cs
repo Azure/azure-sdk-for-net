@@ -1346,7 +1346,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary>
         /// Java Component common properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SpringBootAdminComponent"/>, <see cref="Models.SpringCloudEurekaComponent"/>, and <see cref="Models.SpringCloudConfigComponent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SpringBootAdminComponent"/>, <see cref="Models.SpringCloudConfigComponent"/>, and <see cref="Models.SpringCloudEurekaComponent"/>.
         /// </summary>
         /// <param name="componentType"> Type of the Java Component. </param>
         /// <param name="provisioningState"> Provisioning state of the Java Component. </param>
@@ -1360,7 +1360,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             serviceBinds ??= new ChangeTrackingList<JavaComponentServiceBind>();
 
             return new UnknownJavaComponentProperties(
-                default,
+                componentType is null ? default : new JavaComponentType(componentType),
                 provisioningState,
                 (configurations ?? new ChangeTrackingList<JavaComponentConfigurationProperty>()).ToList(),
                 scale,
@@ -1407,7 +1407,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             serviceBinds ??= new ChangeTrackingList<JavaComponentServiceBind>();
 
             return new SpringBootAdminComponent(
-                default,
+                JavaComponentType.SpringBootAdmin,
                 provisioningState,
                 (configurations ?? new ChangeTrackingList<JavaComponentConfigurationProperty>()).ToList(),
                 scale,
@@ -1428,7 +1428,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             serviceBinds ??= new ChangeTrackingList<JavaComponentServiceBind>();
 
             return new SpringCloudEurekaComponent(
-                default,
+                JavaComponentType.SpringCloudEureka,
                 provisioningState,
                 (configurations ?? new ChangeTrackingList<JavaComponentConfigurationProperty>()).ToList(),
                 scale,
@@ -1449,7 +1449,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             serviceBinds ??= new ChangeTrackingList<JavaComponentServiceBind>();
 
             return new SpringCloudConfigComponent(
-                default,
+                JavaComponentType.SpringCloudConfig,
                 provisioningState,
                 (configurations ?? new ChangeTrackingList<JavaComponentConfigurationProperty>()).ToList(),
                 scale,

@@ -162,7 +162,7 @@ namespace Azure.Communication.Messages
             }
             return new ReactionNotificationContent(
                 channelRegistrationId,
-                to,
+                to ?? new ChangeTrackingList<string>(),
                 kind,
                 additionalBinaryDataProperties,
                 emoji,

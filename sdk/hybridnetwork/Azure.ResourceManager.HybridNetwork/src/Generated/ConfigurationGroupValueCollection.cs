@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ConfigurationGroupValueCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ConfigurationGroupValueResource.ResourceType, out string configurationGroupValueApiVersion);
             _configurationGroupValuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ConfigurationGroupValueResource.ResourceType.Namespace, Diagnostics);
-            _configurationGroupValuesRestClient = new ConfigurationGroupValues(_configurationGroupValuesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, configurationGroupValueApiVersion ?? "2025-03-30");
+            _configurationGroupValuesRestClient = new ConfigurationGroupValues(_configurationGroupValuesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridNetwork/configurationGroupValues", out string configurationGroupValuesApiVersionOverride) ? configurationGroupValuesApiVersionOverride : "2025-03-30");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfigurationGroupValueData, ConfigurationGroupValueResource>(new ConfigurationGroupValuesGetByResourceGroupAsyncCollectionResultOfT(_configurationGroupValuesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ConfigurationGroupValueCollection.GetAll"), data => new ConfigurationGroupValueResource(Client, data));
+            return new AsyncPageableWrapper<ConfigurationGroupValueData, ConfigurationGroupValueResource>(new ConfigurationGroupValueDataAsyncCollectionResultOfT(_configurationGroupValuesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ConfigurationGroupValueCollection.GetAll"), data => new ConfigurationGroupValueResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfigurationGroupValueData, ConfigurationGroupValueResource>(new ConfigurationGroupValuesGetByResourceGroupCollectionResultOfT(_configurationGroupValuesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ConfigurationGroupValueCollection.GetAll"), data => new ConfigurationGroupValueResource(Client, data));
+            return new PageableWrapper<ConfigurationGroupValueData, ConfigurationGroupValueResource>(new ConfigurationGroupValueDataCollectionResultOfT(_configurationGroupValuesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ConfigurationGroupValueCollection.GetAll"), data => new ConfigurationGroupValueResource(Client, data));
         }
 
         /// <summary>

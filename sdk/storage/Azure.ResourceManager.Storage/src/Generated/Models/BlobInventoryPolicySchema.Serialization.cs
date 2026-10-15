@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BlobInventoryPolicySchema(isEnabled, destination, ruleType, rules, additionalBinaryDataProperties);
+            return new BlobInventoryPolicySchema(isEnabled, destination, ruleType, rules ?? new ChangeTrackingList<BlobInventoryPolicyRule>(), additionalBinaryDataProperties);
         }
     }
 }

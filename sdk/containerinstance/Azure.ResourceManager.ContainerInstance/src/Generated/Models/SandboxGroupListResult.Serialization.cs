@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SandboxGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SandboxGroupListResult(value ?? new ChangeTrackingList<ContainerGroupSandboxData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

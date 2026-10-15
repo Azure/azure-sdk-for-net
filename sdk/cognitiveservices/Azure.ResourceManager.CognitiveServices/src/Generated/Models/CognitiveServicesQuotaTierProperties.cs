@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private QuotaTierUpgradeEligibilityInfo _tierUpgradeEligibilityInfo;
+        internal bool _tierUpgradeEligibilityInfoIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesQuotaTierProperties"/>. </summary>
         public CognitiveServicesQuotaTierProperties()
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CurrentTierName = currentTierName;
             TierUpgradePolicy = tierUpgradePolicy;
             AssignmentOn = assignmentOn;
-            TierUpgradeEligibilityInfo = tierUpgradeEligibilityInfo;
+            _tierUpgradeEligibilityInfo = tierUpgradeEligibilityInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +53,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Information about the quota tier upgrade eligibility for the subscription. </summary>
         [WirePath("tierUpgradeEligibilityInfo")]
-        public QuotaTierUpgradeEligibilityInfo TierUpgradeEligibilityInfo { get; }
+        public QuotaTierUpgradeEligibilityInfo TierUpgradeEligibilityInfo
+        {
+            get
+            {
+                return _tierUpgradeEligibilityInfo;
+            }
+        }
     }
 }

@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Network.Models
             ETag = eTag;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterface"/>. </summary>
+        public ContainerNetworkInterface() : this(default)
+        {
+        }
+
         /// <summary> Container network interface properties. </summary>
         [WirePath("properties")]
         internal ContainerNetworkInterfacePropertiesFormat Properties { get; }

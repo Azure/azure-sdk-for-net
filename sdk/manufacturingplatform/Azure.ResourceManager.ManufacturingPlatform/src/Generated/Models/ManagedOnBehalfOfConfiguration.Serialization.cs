@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedOnBehalfOfConfiguration(brokerResources, additionalBinaryDataProperties);
+            return new ManagedOnBehalfOfConfiguration(brokerResources ?? new ChangeTrackingList<ManagedOnBehalfOfBrokerResourceInfo>(), additionalBinaryDataProperties);
         }
     }
 }

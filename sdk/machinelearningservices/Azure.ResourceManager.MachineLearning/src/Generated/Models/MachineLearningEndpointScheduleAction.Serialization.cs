@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("endpointInvocationDefinition"u8))
                 {
-                    endpointInvocationDefinition = BinaryData.FromString(prop.Value.GetRawText());
+                    endpointInvocationDefinition = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MachineLearningEndpointScheduleAction(actionType, additionalBinaryDataProperties, endpointInvocationDefinition);

@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// A client used to perform cryptographic operations with Azure Key Vault keys.
     /// </summary>
     [CallerShouldAudit(CallerShouldAuditReason)]
-    public class CryptographyClient : IKeyEncryptionKey
+    public class CryptographyClient : IKeyEncryptionKey, IDisposable
     {
         private const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-keys";
         private const string GetOperation = "get";
@@ -181,6 +181,21 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Gets the <see cref="KeyVaultKey.Id"/> of the key used to perform cryptographic operations for the client.
         /// </summary>
         public virtual string KeyId => _keyId;
+
+        /// <summary>
+        /// Releases the HTTP pipeline resources owned by this client.
+        /// </summary>
+        /// <remarks>
+        /// Dispose the client after its operations have completed. Clients created by a <see cref="KeyClient"/>
+        /// or <see cref="KeyResolver"/> borrow their creator's pipeline and do not dispose it. Keep the creator
+        /// alive until all use of the returned client has completed. Caller-provided transports and credentials
+        /// are not disposed. Local-only clients do not own an HTTP pipeline.
+        /// </remarks>
+        public virtual void Dispose()
+        {
+            _remoteProvider?.Dispose();
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
         /// Gets whether this <see cref="CryptographyClient"/> runs only local operations.

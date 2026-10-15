@@ -204,16 +204,16 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new OperatorApiConnectionDataProcessing(
                 processingOperation,
-                contexts,
+                contexts ?? new ChangeTrackingList<DataProcessingContext>(),
                 duration,
                 frequency,
-                transitRegions,
-                storageRegions,
+                transitRegions ?? new ChangeTrackingList<OperatorApiConnectionDataRegion>(),
+                storageRegions ?? new ChangeTrackingList<OperatorApiConnectionDataRegion>(),
                 additionalBinaryDataProperties);
         }
     }
