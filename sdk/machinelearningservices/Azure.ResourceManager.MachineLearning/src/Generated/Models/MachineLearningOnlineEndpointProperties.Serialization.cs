@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningOnlineEndpointProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_computeIsDefined || Optional.IsDefined(Compute))
+            if (Optional.IsDefined(Compute, _computeIsDefined))
             {
                 if (Compute != null)
                 {

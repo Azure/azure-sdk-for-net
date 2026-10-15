@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _clientId;
-        internal bool _clientIdIsDefined;
+        private bool _clientIdIsDefined;
         private string _tenantId;
-        internal bool _tenantIdIsDefined;
+        private bool _tenantIdIsDefined;
         private string _clientSecret;
-        internal bool _clientSecretIsDefined;
+        private bool _clientSecretIsDefined;
         private string _clientCertificate;
-        internal bool _clientCertificateIsDefined;
+        private bool _clientCertificateIsDefined;
         private string _clientCertificatePassword;
-        internal bool _clientCertificatePasswordIsDefined;
+        private bool _clientCertificatePasswordIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxServicePrincipal"/>. </summary>
         public FluxServicePrincipal()

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("parameterServerCount"u8);
                 writer.WriteNumberValue(ParameterServerCount.Value);
             }
-            if (_workerCountIsDefined || Optional.IsDefined(WorkerCount))
+            if (Optional.IsDefined(WorkerCount, _workerCountIsDefined))
             {
                 if (WorkerCount != null)
                 {

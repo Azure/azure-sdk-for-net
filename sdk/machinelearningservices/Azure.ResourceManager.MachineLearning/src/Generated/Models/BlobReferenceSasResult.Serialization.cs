@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(BlobReferenceSasResult)} does not support writing '{format}' format.");
             }
-            if (_blobReferenceForConsumptionIsDefined || Optional.IsDefined(BlobReferenceForConsumption))
+            if (Optional.IsDefined(BlobReferenceForConsumption, _blobReferenceForConsumptionIsDefined))
             {
                 if (BlobReferenceForConsumption != null)
                 {

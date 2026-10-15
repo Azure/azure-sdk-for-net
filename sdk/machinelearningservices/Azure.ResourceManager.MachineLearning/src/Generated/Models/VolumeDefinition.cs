@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private bool? _readOnly;
-        internal bool _readOnlyIsDefined;
+        private bool _readOnlyIsDefined;
         private string _consistency;
-        internal bool _consistencyIsDefined;
+        private bool _consistencyIsDefined;
         private MountBindOptions _bind;
-        internal bool _bindIsDefined;
+        private bool _bindIsDefined;
         private VolumeOptions _volume;
-        internal bool _volumeIsDefined;
+        private bool _volumeIsDefined;
         private TmpfsOptions _tmpfs;
-        internal bool _tmpfsIsDefined;
+        private bool _tmpfsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VolumeDefinition"/>. </summary>
         public VolumeDefinition()

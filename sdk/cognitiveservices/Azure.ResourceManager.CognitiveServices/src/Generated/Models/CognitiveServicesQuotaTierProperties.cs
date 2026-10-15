@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private QuotaTierUpgradeEligibilityInfo _tierUpgradeEligibilityInfo;
-        internal bool _tierUpgradeEligibilityInfoIsDefined;
+        private bool _tierUpgradeEligibilityInfoIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesQuotaTierProperties"/>. </summary>
         public CognitiveServicesQuotaTierProperties()

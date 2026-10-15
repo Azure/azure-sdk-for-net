@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningContainerResourceRequirements)} does not support writing '{format}' format.");
             }
-            if (_containerResourceLimitsIsDefined || Optional.IsDefined(ContainerResourceLimits))
+            if (Optional.IsDefined(ContainerResourceLimits, _containerResourceLimitsIsDefined))
             {
                 if (ContainerResourceLimits != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("containerResourceLimits"u8);
                 }
             }
-            if (_containerResourceRequestsIsDefined || Optional.IsDefined(ContainerResourceRequests))
+            if (Optional.IsDefined(ContainerResourceRequests, _containerResourceRequestsIsDefined))
             {
                 if (ContainerResourceRequests != null)
                 {

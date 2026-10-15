@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DateTimeOffset? _startOn;
-        internal bool _startOnIsDefined;
+        private bool _startOnIsDefined;
         private DateTimeOffset? _endOn;
-        internal bool _endOnIsDefined;
+        private bool _endOnIsDefined;
         private DateTimeOffset? _lastStatusModifiedOn;
-        internal bool _lastStatusModifiedOnIsDefined;
+        private bool _lastStatusModifiedOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RunbookTestJob"/>. </summary>
         internal RunbookTestJob()

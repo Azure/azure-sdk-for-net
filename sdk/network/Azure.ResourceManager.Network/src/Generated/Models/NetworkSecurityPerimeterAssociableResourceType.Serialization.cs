@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NetworkSecurityPerimeterAssociableResourceType PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterAssociableResourceType>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkSecurityPerimeterAssociableResourceType IPersistableModel<NetworkSecurityPerimeterAssociableResourceType>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkSecurityPerimeterAssociableResourceType)PersistableModelCreateCore(data, options);
+        NetworkSecurityPerimeterAssociableResourceType IPersistableModel<NetworkSecurityPerimeterAssociableResourceType>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NetworkSecurityPerimeterAssociableResourceType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkSecurityPerimeterAssociableResourceType IJsonModel<NetworkSecurityPerimeterAssociableResourceType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkSecurityPerimeterAssociableResourceType)JsonModelCreateCore(ref reader, options);
+        NetworkSecurityPerimeterAssociableResourceType IJsonModel<NetworkSecurityPerimeterAssociableResourceType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NetworkSecurityPerimeterAssociableResourceType JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterAssociableResourceType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

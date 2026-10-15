@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _description;
-        internal bool _descriptionIsDefined;
+        private protected bool _descriptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobInput"/>. </summary>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>

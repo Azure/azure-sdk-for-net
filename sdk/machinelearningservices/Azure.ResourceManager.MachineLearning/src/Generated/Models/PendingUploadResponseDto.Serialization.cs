@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(PendingUploadResponseDto)} does not support writing '{format}' format.");
             }
-            if (_blobReferenceForConsumptionIsDefined || Optional.IsDefined(BlobReferenceForConsumption))
+            if (Optional.IsDefined(BlobReferenceForConsumption, _blobReferenceForConsumptionIsDefined))
             {
                 if (BlobReferenceForConsumption != null)
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blobReferenceForConsumption"u8);
                 }
             }
-            if (_pendingUploadIdIsDefined || Optional.IsDefined(PendingUploadId))
+            if (Optional.IsDefined(PendingUploadId, _pendingUploadIdIsDefined))
             {
                 if (PendingUploadId != null)
                 {

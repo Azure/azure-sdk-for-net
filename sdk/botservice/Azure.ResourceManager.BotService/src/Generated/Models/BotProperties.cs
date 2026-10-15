@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _schemaTransformationVersion;
-        internal bool _schemaTransformationVersionIsDefined;
+        private bool _schemaTransformationVersionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BotProperties"/>. </summary>
         /// <param name="displayName"> The Name of the bot. </param>

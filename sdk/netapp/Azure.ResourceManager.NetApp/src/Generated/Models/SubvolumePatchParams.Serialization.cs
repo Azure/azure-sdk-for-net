@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 throw new FormatException($"The model {nameof(SubvolumePatchParams)} does not support writing '{format}' format.");
             }
-            if (_sizeIsDefined || Optional.IsDefined(Size))
+            if (Optional.IsDefined(Size, _sizeIsDefined))
             {
                 if (Size != null)
                 {

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("authMode"u8);
             writer.WriteStringValue(AuthMode.ToString());
-            if (_descriptionIsDefined || Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description, _descriptionIsDefined))
             {
                 if (Description != null)
                 {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description"u8);
                 }
             }
-            if (_keysIsDefined || Optional.IsDefined(Keys))
+            if (Optional.IsDefined(Keys, _keysIsDefined))
             {
                 if (Keys != null)
                 {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties"u8);
                 }
             }
-            if (options.Format != "W" && (_scoringUriIsDefined || Optional.IsDefined(ScoringUri)))
+            if (options.Format != "W" && Optional.IsDefined(ScoringUri, _scoringUriIsDefined))
             {
                 if (ScoringUri != null)
                 {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("scoringUri"u8);
                 }
             }
-            if (options.Format != "W" && (_swaggerUriIsDefined || Optional.IsDefined(SwaggerUri)))
+            if (options.Format != "W" && Optional.IsDefined(SwaggerUri, _swaggerUriIsDefined))
             {
                 if (SwaggerUri != null)
                 {

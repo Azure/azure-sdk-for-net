@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class ManagedComputeIdentity : MonitorComputeIdentityBase
     {
         private ManagedServiceIdentity _identity;
-        internal bool _identityIsDefined;
+        private bool _identityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ManagedComputeIdentity"/>. </summary>
         public ManagedComputeIdentity() : base(MonitorComputeIdentityType.ManagedIdentity)
