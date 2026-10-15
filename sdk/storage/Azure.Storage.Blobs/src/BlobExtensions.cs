@@ -819,7 +819,7 @@ namespace Azure.Storage.Blobs
                 return null;
             }
 
-            IReadOnlyList<BlobLayoutRange> ranges = blobLayoutInfo.Ranges;
+            IList<BlobLayoutRange> ranges = blobLayoutInfo.Ranges;
             if (ranges == null || ranges.Count == 0)
             {
                 return Array.Empty<BlobLayoutSegment>();

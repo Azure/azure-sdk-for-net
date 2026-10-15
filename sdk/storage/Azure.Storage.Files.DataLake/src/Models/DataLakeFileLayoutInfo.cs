@@ -21,12 +21,12 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// The byte ranges that make up the file.
         /// </summary>
-        public IReadOnlyList<DataLakeFileLayoutRange> Ranges { get; internal set; }
+        public IList<DataLakeFileLayoutRange> Ranges { get; internal set; }
 
         /// <summary>
         /// The endpoints that serve the <see cref="Ranges"/>.
         /// </summary>
-        public IReadOnlyList<DataLakeFileLayoutEndpoint> Endpoints { get; internal set; }
+        public IList<DataLakeFileLayoutEndpoint> Endpoints { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the file was last modified. Any operation that modifies the file,

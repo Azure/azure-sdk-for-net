@@ -666,7 +666,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public System.DateTimeOffset CreatedOn { get { throw null; } }
         public string EncryptionKeySha256 { get { throw null; } }
         public string EncryptionScope { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutEndpoint> Endpoints { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutEndpoint> Endpoints { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
         public string FileContentEncoding { get { throw null; } }
@@ -681,7 +681,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.DataLakeLeaseState LeaseState { get { throw null; } }
         public Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus LeaseStatus { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutRange> Ranges { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutRange> Ranges { get { throw null; } }
         public string SmartAccessTier { get { throw null; } }
     }
     public partial class DataLakeFileLayoutRange

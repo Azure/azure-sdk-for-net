@@ -941,7 +941,7 @@ namespace Azure.Storage.Blobs.Models
         public string DestinationSnapshot { get { throw null; } }
         public string EncryptionKeySha256 { get { throw null; } }
         public string EncryptionScope { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Storage.Blobs.Models.BlobLayoutEndpoint> Endpoints { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.BlobLayoutEndpoint> Endpoints { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
         public bool HasLegalHold { get { throw null; } }
@@ -958,7 +958,7 @@ namespace Azure.Storage.Blobs.Models
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ObjectReplicationDestinationPolicyId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.ObjectReplicationPolicy> ObjectReplicationSourceProperties { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Storage.Blobs.Models.BlobLayoutRange> Ranges { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.BlobLayoutRange> Ranges { get { throw null; } }
         public string RehydratePriority { get { throw null; } }
         public string SmartAccessTier { get { throw null; } }
         public long TagCount { get { throw null; } }

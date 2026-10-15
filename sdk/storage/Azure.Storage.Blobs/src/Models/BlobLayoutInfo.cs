@@ -17,12 +17,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The blob layout ranges.
         /// </summary>
-        public IReadOnlyList<BlobLayoutRange> Ranges { get; internal set; }
+        public IList<BlobLayoutRange> Ranges { get; internal set; }
 
         /// <summary>
         /// The blob layout endpoints.
         /// </summary>
-        public IReadOnlyList<BlobLayoutEndpoint> Endpoints { get; internal set; }
+        public IList<BlobLayoutEndpoint> Endpoints { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the blob was last modified. Any operation that modifies the blob,
