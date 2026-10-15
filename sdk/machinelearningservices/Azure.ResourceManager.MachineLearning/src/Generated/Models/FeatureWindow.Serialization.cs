@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(FeatureWindow)} does not support writing '{format}' format.");
             }
-            if (_featureWindowEndIsDefined || Optional.IsDefined(FeatureWindowEnd))
+            if (Optional.IsDefined(FeatureWindowEnd, _featureWindowEndIsDefined))
             {
                 if (FeatureWindowEnd != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featureWindowEnd"u8);
                 }
             }
-            if (_featureWindowStartIsDefined || Optional.IsDefined(FeatureWindowStart))
+            if (Optional.IsDefined(FeatureWindowStart, _featureWindowStartIsDefined))
             {
                 if (FeatureWindowStart != null)
                 {

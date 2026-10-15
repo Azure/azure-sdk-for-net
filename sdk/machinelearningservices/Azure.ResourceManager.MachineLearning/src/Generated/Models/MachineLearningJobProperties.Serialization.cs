@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("computeId"u8);
                 writer.WriteStringValue(ComputeId);
             }
-            if (_displayNameIsDefined || Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName, _displayNameIsDefined))
             {
                 if (DisplayName != null)
                 {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("experimentName"u8);
                 writer.WriteStringValue(ExperimentName);
             }
-            if (_identityIsDefined || Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity, _identityIsDefined))
             {
                 if (Identity != null)
                 {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
-            if (_notificationSettingIsDefined || Optional.IsDefined(NotificationSetting))
+            if (Optional.IsDefined(NotificationSetting, _notificationSettingIsDefined))
             {
                 if (NotificationSetting != null)
                 {

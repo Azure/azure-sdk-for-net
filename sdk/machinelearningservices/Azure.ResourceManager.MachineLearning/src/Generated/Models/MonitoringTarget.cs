@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _deploymentId;
-        internal bool _deploymentIdIsDefined;
+        private bool _deploymentIdIsDefined;
         private string _modelId;
-        internal bool _modelIdIsDefined;
+        private bool _modelIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MonitoringTarget"/>. </summary>
         /// <param name="taskType"> [Required] The machine learning task type of the monitored model. </param>

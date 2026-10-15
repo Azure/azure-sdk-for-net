@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("enableEarlyTermination"u8);
                 writer.WriteBooleanValue(EnableEarlyTermination.Value);
             }
-            if (_exitScoreIsDefined || Optional.IsDefined(ExitScore))
+            if (Optional.IsDefined(ExitScore, _exitScoreIsDefined))
             {
                 if (ExitScore != null)
                 {

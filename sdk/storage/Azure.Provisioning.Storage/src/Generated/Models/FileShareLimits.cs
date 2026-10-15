@@ -19,6 +19,8 @@ namespace Azure.Provisioning.Storage
         private BicepValue<int> _maxProvisionedIops;
         private BicepValue<int> _minProvisionedBandwidthMiBPerSec;
         private BicepValue<int> _maxProvisionedBandwidthMiBPerSec;
+        private BicepValue<double> _guardrailIOScalar;
+        private BicepValue<double> _guardrailBandwidthScalar;
 
         /// <summary> Creates a new FileShareLimits. </summary>
         public FileShareLimits()
@@ -85,6 +87,26 @@ namespace Azure.Provisioning.Storage
             }
         }
 
+        /// <summary> Gets the GuardrailIOScalar. </summary>
+        public BicepValue<double> GuardrailIOScalar
+        {
+            get
+            {
+                Initialize();
+                return _guardrailIOScalar;
+            }
+        }
+
+        /// <summary> Gets the GuardrailBandwidthScalar. </summary>
+        public BicepValue<double> GuardrailBandwidthScalar
+        {
+            get
+            {
+                Initialize();
+                return _guardrailBandwidthScalar;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for FileShareLimits. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -95,6 +117,8 @@ namespace Azure.Provisioning.Storage
             _maxProvisionedIops = DefineProperty<int>(nameof(MaxProvisionedIops), new string[] { "maxProvisionedIOPS" }, isOutput: true);
             _minProvisionedBandwidthMiBPerSec = DefineProperty<int>(nameof(MinProvisionedBandwidthMiBPerSec), new string[] { "minProvisionedBandwidthMiBPerSec" }, isOutput: true);
             _maxProvisionedBandwidthMiBPerSec = DefineProperty<int>(nameof(MaxProvisionedBandwidthMiBPerSec), new string[] { "maxProvisionedBandwidthMiBPerSec" }, isOutput: true);
+            _guardrailIOScalar = DefineProperty<double>(nameof(GuardrailIOScalar), new string[] { "guardrailIOScalar" }, isOutput: true);
+            _guardrailBandwidthScalar = DefineProperty<double>(nameof(GuardrailBandwidthScalar), new string[] { "guardrailBandwidthScalar" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

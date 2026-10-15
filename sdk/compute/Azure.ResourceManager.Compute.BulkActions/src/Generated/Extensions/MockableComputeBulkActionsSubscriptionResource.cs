@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// Lists scheduled actions in the specified subscription.
+        /// Lists recurring bulk actions in the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// Lists scheduled actions in the specified subscription.
+        /// Lists recurring bulk actions in the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// Gets the status of the specified scheduled action operation.
+        /// Gets the status of the specified recurring bulk action operation.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// Gets the status of the specified scheduled action operation.
+        /// Gets the status of the specified recurring bulk action operation.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningRecurrenceTrigger : MachineLearningTriggerBase
     {
         private MachineLearningRecurrenceSchedule _schedule;
-        internal bool _scheduleIsDefined;
+        private bool _scheduleIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningRecurrenceTrigger"/>. </summary>
         /// <param name="frequency"> [Required] The frequency to trigger schedule. </param>

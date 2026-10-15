@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningAksComputeSecrets : MachineLearningComputeSecrets
     {
         private string _imagePullSecretName;
-        internal bool _imagePullSecretNameIsDefined;
+        private bool _imagePullSecretNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningAksComputeSecrets"/>. </summary>
         internal MachineLearningAksComputeSecrets() : base(ComputeType.AKS)

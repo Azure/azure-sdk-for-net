@@ -27,6 +27,7 @@ namespace Azure.Security.Attestation
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PolicyRestClient _policyClient;
         private readonly PolicyCertificatesRestClient _policyManagementClient;
+        private readonly TcbBaselinesRestClient _tcbBaselinesClient;
         private readonly AttestationClient _attestationClient;
 
         private IReadOnlyList<AttestationSigner> _signers;
@@ -78,6 +79,7 @@ namespace Azure.Security.Attestation
 
             // Initialize the Certificates Rest Client.
             _policyManagementClient = new PolicyCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
+            _tcbBaselinesClient = new TcbBaselinesRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
 
             // Initialize the Attestation Rest Client.
             _attestationClient = new AttestationClient(endpoint, credential, options);
@@ -689,6 +691,58 @@ namespace Azure.Security.Attestation
                     }
                 }
                 return new AttestationResponse<PolicyCertificatesModificationResult>(result, token);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the trusted computing base (TCB) baselines available to the attestation provider for the specified <see cref="AttestationType"/>.
+        /// </summary>
+        /// <param name="attestationType">The <see cref="AttestationType"/> whose baselines to retrieve.</param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
+        /// <returns>The available baselines, including which one the provider's current policy selects.</returns>
+        /// <remarks>
+        /// TCB baselines apply to SGX attestation; the service supports this operation for <see cref="AttestationType.SgxEnclave"/> and <see cref="AttestationType.OpenEnclave"/>.
+        /// A policy selects a baseline by setting the <c>x-ms-sgx-tcbidentifier</c> claim to its <see cref="TcbBaseline.TcbIdentifier"/>.
+        /// Requires <see cref="AttestationClientOptions.ServiceVersion.V2025_06_01"/> or later.
+        /// </remarks>
+        /// <exception cref="NotSupportedException">The client targets a service version that does not support TCB baselines.</exception>
+        public virtual Response<TcbBaselineResult> GetTcbBaselines(AttestationType attestationType, CancellationToken cancellationToken = default)
+            => GetTcbBaselinesInternalAsync(attestationType, false, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Retrieves the trusted computing base (TCB) baselines available to the attestation provider for the specified <see cref="AttestationType"/>.
+        /// </summary>
+        /// <param name="attestationType">The <see cref="AttestationType"/> whose baselines to retrieve.</param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
+        /// <returns>The available baselines, including which one the provider's current policy selects.</returns>
+        /// <remarks>
+        /// TCB baselines apply to SGX attestation; the service supports this operation for <see cref="AttestationType.SgxEnclave"/> and <see cref="AttestationType.OpenEnclave"/>.
+        /// A policy selects a baseline by setting the <c>x-ms-sgx-tcbidentifier</c> claim to its <see cref="TcbBaseline.TcbIdentifier"/>.
+        /// Requires <see cref="AttestationClientOptions.ServiceVersion.V2025_06_01"/> or later.
+        /// </remarks>
+        /// <exception cref="NotSupportedException">The client targets a service version that does not support TCB baselines.</exception>
+        public virtual async Task<Response<TcbBaselineResult>> GetTcbBaselinesAsync(AttestationType attestationType, CancellationToken cancellationToken = default)
+            => await GetTcbBaselinesInternalAsync(attestationType, true, cancellationToken).ConfigureAwait(false);
+
+        private async Task<Response<TcbBaselineResult>> GetTcbBaselinesInternalAsync(AttestationType attestationType, bool async, CancellationToken cancellationToken)
+        {
+            if (string.CompareOrdinal(_options.Version, "2025-06-01") < 0)
+            {
+                throw new NotSupportedException($"TCB baselines require service version {AttestationClientOptions.ServiceVersion.V2025_06_01} or later.");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationAdministrationClient)}.{nameof(GetTcbBaselines)}");
+            scope.Start();
+            try
+            {
+                return async
+                    ? await _tcbBaselinesClient.GetAsync(attestationType, cancellationToken).ConfigureAwait(false)
+                    : _tcbBaselinesClient.Get(attestationType, cancellationToken);
             }
             catch (Exception ex)
             {

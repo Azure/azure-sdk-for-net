@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.5 (Unreleased)
+## 1.2.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,26 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.5 (2026-10-14)
+
+### Features Added
+
+- Added `BulkActionsVirtualMachinePlacement` and the `ZonePlacementPolicyType` enum, surfaced as the `Placement` property on `LocationBasedBulkCreateData` and `LocationBasedBulkCreateCustomData`. Use `ZonePlacementPolicy` together with `IncludeZones` and `ExcludeZones` to constrain which zones a bulk operation may place VMs into.
+- Added `ExtendedLocation` on `LocationBasedBulkCreateData` and `LocationBasedBulkCreateCustomData`, alongside the existing `Zones`, for targeting an extended location such as an Azure Edge Zone.
+- Added per-VM `Zone`, `ExtendedLocation`, and `Placement` overrides on `BulkCreateCustomOverride`, which take precedence over the operation-level values. Leaving `Zone` unset keeps the operation-level `Zones`; setting it to an empty string requests a regional (non-zonal) VM.
+- Added Spot settings on `BulkActionVMProperties`: `Priority`, `BillingMaxPrice`, and `EvictionPolicy`. Priority is now configured per VM through the compute profile.
+
+### Breaking Changes
+
+- Removed the `PriorityProfile` and `BulkCreateCustomPriorityProfile` models, along with the `PriorityProfile` properties on `BulkCreateProperties` and `BulkCreateCustomProperties`. Set `Priority`, `BillingMaxPrice`, and `EvictionPolicy` on `ComputeProfile.VirtualMachineProfile` (`BulkActionVMProperties`) instead.
+- Removed `MinCapacity` from `BulkCreateProperties` and `BulkCreateCustomProperties`.
+- Removed the `PartialFulfillmentPolicy`, `PartialFulfillmentMode`, and `PartialFulfillmentReason` models, along with the `PartialFulfillmentPolicy` properties on `BulkCreateProperties` and `BulkCreateCustomProperties`.
+- Updated the corresponding `ArmComputeBulkActionsModelFactory` methods to drop the parameters for the removed properties and add the new ones.
+
+### Other Changes
+
+- The client continues to target API version `2026-10-06-preview`.
 
 ## 1.2.0-beta.4 (2026-09-27)
 

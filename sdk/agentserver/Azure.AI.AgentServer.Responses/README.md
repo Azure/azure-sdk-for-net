@@ -34,6 +34,14 @@ In a hosted Foundry environment, the one-line and `AgentHostBuilder` APIs bind t
 credential, project endpoint, and response options from the `ResponsesServer` configuration
 section. Response storage and resilient-task storage use that same bound identity and endpoint.
 
+No configuration is required in a hosted container. When the section has no `Endpoint`, the
+platform's `FOUNDRY_PROJECT_ENDPOINT` is used. When it has no `Credential` section, a
+`DefaultAzureCredential` limited by default to the production credentials (environment, workload
+identity and managed identity) is used. To select the identity explicitly, set
+`ResponsesServer__Credential__CredentialSource` (for example `ManagedIdentityCredential`), or set
+`AZURE_TOKEN_CREDENTIALS` to override the fallback chain. A `Credential` section that does not
+resolve still fails startup instead of falling back.
+
 Durable task execution is opt-in. Setting `ResponsesServerOptions.ResilientBackground` to
 `true` enables it automatically. Otherwise stored responses run in-process unless the host
 explicitly calls `SetResilientTasksEnabled()`.

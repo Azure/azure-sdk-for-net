@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private MachineLearningSkuCapacity _capacity;
-        internal bool _capacityIsDefined;
+        private bool _capacityIsDefined;
         private string _resourceType;
-        internal bool _resourceTypeIsDefined;
+        private bool _resourceTypeIsDefined;
         private MachineLearningSkuSetting _sku;
-        internal bool _skuIsDefined;
+        private bool _skuIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningSkuDetail"/>. </summary>
         internal MachineLearningSkuDetail()

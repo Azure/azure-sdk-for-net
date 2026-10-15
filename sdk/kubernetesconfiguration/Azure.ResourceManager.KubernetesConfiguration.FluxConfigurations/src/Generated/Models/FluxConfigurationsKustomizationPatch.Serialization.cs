@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(FluxConfigurationsKustomizationPatch)} does not support writing '{format}' format.");
             }
-            if (_pathIsDefined || Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path, _pathIsDefined))
             {
                 if (Path != null)
                 {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("dependsOn"u8);
                 }
             }
-            if (_timeoutInSecondsIsDefined || Optional.IsDefined(TimeoutInSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds, _timeoutInSecondsIsDefined))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("timeoutInSeconds"u8);
                 }
             }
-            if (_syncIntervalInSecondsIsDefined || Optional.IsDefined(SyncIntervalInSeconds))
+            if (Optional.IsDefined(SyncIntervalInSeconds, _syncIntervalInSecondsIsDefined))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("syncIntervalInSeconds"u8);
                 }
             }
-            if (_retryIntervalInSecondsIsDefined || Optional.IsDefined(RetryIntervalInSeconds))
+            if (Optional.IsDefined(RetryIntervalInSeconds, _retryIntervalInSecondsIsDefined))
             {
                 if (RetryIntervalInSeconds != null)
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("retryIntervalInSeconds"u8);
                 }
             }
-            if (_isPruneIsDefined || Optional.IsDefined(IsPrune))
+            if (Optional.IsDefined(IsPrune, _isPruneIsDefined))
             {
                 if (IsPrune != null)
                 {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("prune"u8);
                 }
             }
-            if (_isForceIsDefined || Optional.IsDefined(IsForce))
+            if (Optional.IsDefined(IsForce, _isForceIsDefined))
             {
                 if (IsForce != null)
                 {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("force"u8);
                 }
             }
-            if (_isWaitIsDefined || Optional.IsDefined(IsWait))
+            if (Optional.IsDefined(IsWait, _isWaitIsDefined))
             {
                 if (IsWait != null)
                 {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("wait"u8);
                 }
             }
-            if (_postBuildIsDefined || Optional.IsDefined(PostBuild))
+            if (Optional.IsDefined(PostBuild, _postBuildIsDefined))
             {
                 if (PostBuild != null)
                 {

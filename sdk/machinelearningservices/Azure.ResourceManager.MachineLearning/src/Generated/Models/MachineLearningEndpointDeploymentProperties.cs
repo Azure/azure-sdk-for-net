@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private MachineLearningCodeConfiguration _codeConfiguration;
-        internal bool _codeConfigurationIsDefined;
+        private protected bool _codeConfigurationIsDefined;
         private string _description;
-        internal bool _descriptionIsDefined;
+        private protected bool _descriptionIsDefined;
         private string _environmentId;
-        internal bool _environmentIdIsDefined;
+        private protected bool _environmentIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointDeploymentProperties"/>. </summary>
         public MachineLearningEndpointDeploymentProperties()

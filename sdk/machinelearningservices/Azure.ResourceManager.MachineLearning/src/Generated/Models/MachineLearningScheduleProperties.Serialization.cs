@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("action"u8);
             writer.WriteObjectValue(Action, options);
-            if (_displayNameIsDefined || Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName, _displayNameIsDefined))
             {
                 if (DisplayName != null)
                 {

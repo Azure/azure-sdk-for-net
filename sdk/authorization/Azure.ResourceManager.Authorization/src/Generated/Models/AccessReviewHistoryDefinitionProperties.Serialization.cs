@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && (_reviewHistoryPeriodStartsOnIsDefined || Optional.IsDefined(ReviewHistoryPeriodStartsOn)))
+            if (options.Format != "W" && Optional.IsDefined(ReviewHistoryPeriodStartsOn, _reviewHistoryPeriodStartsOnIsDefined))
             {
                 if (ReviewHistoryPeriodStartsOn != null)
                 {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     writer.WriteNull("reviewHistoryPeriodStartDateTime"u8);
                 }
             }
-            if (options.Format != "W" && (_reviewHistoryPeriodEndsOnIsDefined || Optional.IsDefined(ReviewHistoryPeriodEndsOn)))
+            if (options.Format != "W" && Optional.IsDefined(ReviewHistoryPeriodEndsOn, _reviewHistoryPeriodEndsOnIsDefined))
             {
                 if (ReviewHistoryPeriodEndsOn != null)
                 {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && (_createdOnIsDefined || Optional.IsDefined(CreatedOn)))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn, _createdOnIsDefined))
             {
                 if (CreatedOn != null)
                 {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     writer.WriteNull("createdDateTime"u8);
                 }
             }
-            if (options.Format != "W" && (_createdByIsDefined || Optional.IsDefined(CreatedBy)))
+            if (options.Format != "W" && Optional.IsDefined(CreatedBy, _createdByIsDefined))
             {
                 if (CreatedBy != null)
                 {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (_settingsIsDefined || Optional.IsDefined(Settings))
+            if (Optional.IsDefined(Settings, _settingsIsDefined))
             {
                 if (Settings != null)
                 {

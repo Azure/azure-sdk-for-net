@@ -209,7 +209,12 @@ This creates a Kestrel host with OpenTelemetry, health checks, identity headers,
 
 In hosted Foundry environments, this path binds the Foundry credential, project endpoint, and
 response options from the `ResponsesServer` configuration section. The same bound identity and
-endpoint are used for response storage and resilient-task storage.
+endpoint are used for response storage and resilient-task storage. Values the section does not
+provide default to the platform: `FOUNDRY_PROJECT_ENDPOINT` for the endpoint and a
+`DefaultAzureCredential` limited by default to the production credentials (environment, workload
+identity and managed identity; `AZURE_TOKEN_CREDENTIALS` overrides the selection) when there is
+no `Credential` section. A `Credential` section that does not
+resolve fails startup instead of falling back.
 
 ### With Options / Builder Pattern
 

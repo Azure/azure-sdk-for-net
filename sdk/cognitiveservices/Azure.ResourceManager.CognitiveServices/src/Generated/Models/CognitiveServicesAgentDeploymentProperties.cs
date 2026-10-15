@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public abstract partial class CognitiveServicesAgentDeploymentProperties : CognitiveServicesResourceBase
     {
         private string _displayName;
-        internal bool _displayNameIsDefined;
+        private protected bool _displayNameIsDefined;
         private string _deploymentId;
-        internal bool _deploymentIdIsDefined;
+        private protected bool _deploymentIdIsDefined;
         private CognitiveServicesAgentDeploymentState? _state;
-        internal bool _stateIsDefined;
+        private protected bool _stateIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAgentDeploymentProperties"/>. </summary>
         /// <param name="deploymentType"> Gets or sets the type of deployment for the agent. </param>
