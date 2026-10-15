@@ -18,7 +18,7 @@ namespace Azure.Provisioning.SecurityCenter
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private SecurityAssessmentPropertiesResponse _properties;
+        private SecurityAssessmentPropertiesResult _properties;
         private ResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new SecurityAssessment. </summary>
@@ -64,7 +64,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        internal SecurityAssessmentPropertiesResponse Properties
+        internal SecurityAssessmentPropertiesResult Properties
         {
             get
             {
@@ -104,7 +104,7 @@ namespace Azure.Provisioning.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentPropertiesResponse();
+                    Properties = new SecurityAssessmentPropertiesResult();
                 }
                 Properties.Risk = value;
             }
@@ -121,7 +121,7 @@ namespace Azure.Provisioning.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentPropertiesResponse();
+                    Properties = new SecurityAssessmentPropertiesResult();
                 }
                 Properties.ResourceDetails = value;
             }
@@ -134,7 +134,7 @@ namespace Azure.Provisioning.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentPropertiesResponse();
+                    Properties = new SecurityAssessmentPropertiesResult();
                 }
                 return Properties.DisplayName;
             }
@@ -151,7 +151,7 @@ namespace Azure.Provisioning.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentPropertiesResponse();
+                    Properties = new SecurityAssessmentPropertiesResult();
                 }
                 Properties.AdditionalData = value;
             }
@@ -168,7 +168,7 @@ namespace Azure.Provisioning.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentPropertiesResponse();
+                    Properties = new SecurityAssessmentPropertiesResult();
                 }
                 Properties.Metadata = value;
             }
@@ -185,7 +185,7 @@ namespace Azure.Provisioning.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentPropertiesResponse();
+                    Properties = new SecurityAssessmentPropertiesResult();
                 }
                 Properties.PartnersData = value;
             }
@@ -198,7 +198,7 @@ namespace Azure.Provisioning.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentPropertiesResponse();
+                    Properties = new SecurityAssessmentPropertiesResult();
                 }
                 return Properties.LinksAzurePortalUri;
             }
@@ -215,7 +215,7 @@ namespace Azure.Provisioning.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentPropertiesResponse();
+                    Properties = new SecurityAssessmentPropertiesResult();
                 }
                 Properties.Status = value;
             }
@@ -228,7 +228,7 @@ namespace Azure.Provisioning.SecurityCenter
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<SecurityAssessmentPropertiesResponse>(nameof(Properties), new string[] { "properties" });
+            _properties = DefineModelProperty<SecurityAssessmentPropertiesResult>(nameof(Properties), new string[] { "properties" });
             _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
             DefineAdditionalProperties();
         }

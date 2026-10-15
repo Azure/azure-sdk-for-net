@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private SearchIndexerDataIdentity _authIdentity;
-        internal bool _authIdentityIsDefined;
+        private bool _authIdentityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="WebApiVectorizerParameters"/>. </summary>
         public WebApiVectorizerParameters()

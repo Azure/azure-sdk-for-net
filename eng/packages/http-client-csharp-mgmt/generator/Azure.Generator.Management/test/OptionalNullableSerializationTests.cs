@@ -35,7 +35,7 @@ public class OptionalNullableSerializationTests
             {
                 Assert.That(property.BackingField, Is.Not.Null, name);
                 Assert.That(modelCode, Does.Contain($"{presenceField} = true"), name);
-                Assert.That(serializationCode, Does.Contain($"{presenceField} ||"), name);
+                Assert.That(serializationCode, Does.Contain($"Optional.IsDefined({name}, {presenceField})"), name);
                 Assert.That(serializationCode, Does.Contain($"{presenceField} ="), name);
             });
         }

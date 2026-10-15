@@ -17,17 +17,17 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _name;
-        internal bool _nameIsDefined;
+        private bool _nameIsDefined;
         private string _description;
-        internal bool _descriptionIsDefined;
+        private bool _descriptionIsDefined;
         private string _instructions;
-        internal bool _instructionsIsDefined;
+        private bool _instructionsIsDefined;
         private float? _temperature;
-        internal bool _temperatureIsDefined;
+        private bool _temperatureIsDefined;
         private float? _topP;
-        internal bool _topPIsDefined;
+        private bool _topPIsDefined;
         private BinaryData _responseFormat;
-        internal bool _responseFormatIsDefined;
+        private bool _responseFormatIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="UpdateAgentRequest"/>. </summary>
         internal UpdateAgentRequest()

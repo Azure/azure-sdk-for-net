@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(AzureOpenAITokenizerParameters)} does not support writing '{format}' format.");
             }
-            if (_encoderModelNameIsDefined || Optional.IsDefined(EncoderModelName))
+            if (Optional.IsDefined(EncoderModelName, _encoderModelNameIsDefined))
             {
                 if (EncoderModelName != null)
                 {

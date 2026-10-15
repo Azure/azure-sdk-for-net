@@ -15,13 +15,13 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class CustomEntityLookupSkill : SearchIndexerSkill
     {
         private CustomEntityLookupSkillLanguage? _defaultLanguageCode;
-        internal bool _defaultLanguageCodeIsDefined;
+        private bool _defaultLanguageCodeIsDefined;
         private bool? _globalDefaultCaseSensitive;
-        internal bool _globalDefaultCaseSensitiveIsDefined;
+        private bool _globalDefaultCaseSensitiveIsDefined;
         private bool? _globalDefaultAccentSensitive;
-        internal bool _globalDefaultAccentSensitiveIsDefined;
+        private bool _globalDefaultAccentSensitiveIsDefined;
         private int? _globalDefaultFuzzyEditDistance;
-        internal bool _globalDefaultFuzzyEditDistanceIsDefined;
+        private bool _globalDefaultFuzzyEditDistanceIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CustomEntityLookupSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

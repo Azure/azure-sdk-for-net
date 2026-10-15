@@ -88,7 +88,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (_identityIsDefined || Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity, _identityIsDefined))
             {
                 if (Identity != null)
                 {

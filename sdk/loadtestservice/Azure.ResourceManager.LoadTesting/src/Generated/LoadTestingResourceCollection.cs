@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LoadTestingResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(LoadTestingResource.ResourceType, out string loadTestingResourceApiVersion);
             _loadTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", LoadTestingResource.ResourceType.Namespace, Diagnostics);
-            _loadTestsRestClient = new LoadTests(_loadTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, loadTestingResourceApiVersion ?? "2024-12-01-preview");
+            _loadTestsRestClient = new LoadTests(_loadTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.LoadTestService/loadTests", out string loadTestsApiVersionOverride) ? loadTestsApiVersionOverride : "2024-12-01-preview");
             ValidateResourceId(id);
         }
 

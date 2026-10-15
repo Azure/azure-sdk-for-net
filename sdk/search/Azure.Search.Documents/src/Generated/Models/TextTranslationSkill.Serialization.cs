@@ -87,7 +87,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("defaultFromLanguageCode"u8);
                 writer.WriteStringValue(DefaultFromLanguageCode.Value.ToString());
             }
-            if (_suggestedFromIsDefined || Optional.IsDefined(SuggestedFrom))
+            if (Optional.IsDefined(SuggestedFrom, _suggestedFromIsDefined))
             {
                 if (SuggestedFrom != null)
                 {

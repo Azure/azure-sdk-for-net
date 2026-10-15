@@ -11,7 +11,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The delivery method for scheduled action notifications. </summary>
+    /// <summary> The delivery method for recurring bulk action notifications. </summary>
     public readonly partial struct NotificationType : IEquatable<NotificationType>
     {
         private readonly string _value;

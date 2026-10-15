@@ -202,6 +202,93 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [Test]
+        public async Task DownloadStreamingRejectsTruncatedContent()
+        {
+            byte[] expectedContent = { 0, 1, 2, 3 };
+            string digest = BlobHelper.ComputeDigest(new MemoryStream(expectedContent));
+            var response = new MockResponse(200)
+            {
+                ContentStream = new MemoryStream(new byte[] { 0, 1, 2 })
+            };
+            response.AddHeader("Content-Length", expectedContent.Length.ToString());
+            ContainerRegistryContentClient client = CreateClient(new MockTransport(response));
+
+            DownloadRegistryBlobStreamingResult result = await client.DownloadBlobStreamingAsync(digest);
+
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await BinaryData.FromStreamAsync(result.Content));
+            Assert.AreEqual(ValidatingStream.ContentEndedEarlyMessage, exception.Message);
+        }
+
+        [Test]
+        public async Task DownloadStreamingRejectsReadPastExpectedLength()
+        {
+            byte[] expectedContent = { 0, 1, 2, 3 };
+            string digest = BlobHelper.ComputeDigest(new MemoryStream(expectedContent));
+            var response = new MockResponse(200)
+            {
+                ContentStream = new MemoryStream(new byte[] { 0, 1, 2, 3, 4 })
+            };
+            response.AddHeader("Content-Length", expectedContent.Length.ToString());
+            ContainerRegistryContentClient client = CreateClient(new MockTransport(response));
+
+            DownloadRegistryBlobStreamingResult result = await client.DownloadBlobStreamingAsync(digest);
+
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await BinaryData.FromStreamAsync(result.Content));
+            Assert.AreEqual(ValidatingStream.ContentExceededLengthMessage, exception.Message);
+        }
+
+        [Test]
+        public async Task DownloadStreamingRejectsContentAfterValidatedPrefix()
+        {
+            byte[] expectedContent = { 0, 1, 2, 3 };
+            string digest = BlobHelper.ComputeDigest(new MemoryStream(expectedContent));
+            var response = new MockResponse(200)
+            {
+                ContentStream = new MaxReadSizeStream(new byte[] { 0, 1, 2, 3, 4 }, expectedContent.Length)
+            };
+            response.AddHeader("Content-Length", expectedContent.Length.ToString());
+            ContainerRegistryContentClient client = CreateClient(new MockTransport(response));
+
+            DownloadRegistryBlobStreamingResult result = await client.DownloadBlobStreamingAsync(digest);
+
+            RequestFailedException exception = Assert.Throws<RequestFailedException>(
+                () => BinaryData.FromStream(result.Content));
+            Assert.AreEqual(ValidatingStream.ContentExceededLengthMessage, exception.Message);
+        }
+
+        [Test]
+        public async Task DownloadStreamingAllowsZeroLengthReadBeforeCompletion()
+        {
+            byte[] expectedContent = { 0, 1, 2, 3 };
+            string digest = BlobHelper.ComputeDigest(new MemoryStream(expectedContent));
+            var response = new MockResponse(200)
+            {
+                ContentStream = new MemoryStream(expectedContent)
+            };
+            response.AddHeader("Content-Length", expectedContent.Length.ToString());
+            ContainerRegistryContentClient client = CreateClient(new MockTransport(response));
+
+            DownloadRegistryBlobStreamingResult result = await client.DownloadBlobStreamingAsync(digest);
+
+            Assert.AreEqual(0, result.Content.Read(Array.Empty<byte>(), 0, 0));
+            CollectionAssert.AreEqual(expectedContent, BinaryData.FromStream(result.Content).ToArray());
+        }
+
+        [Test]
+        public void ValidatingStreamDisallowsSeeking()
+        {
+            byte[] content = { 0, 1, 2, 3 };
+            string digest = BlobHelper.ComputeDigest(new MemoryStream(content));
+            using var stream = new ValidatingStream(new MemoryStream(content), content.Length, digest);
+
+            Assert.IsFalse(stream.CanSeek);
+            Assert.Throws<NotSupportedException>(() => stream.Seek(0, SeekOrigin.Begin));
+            Assert.Throws<NotSupportedException>(() => stream.Position = 0);
+        }
+
+        [Test]
         public void DownloadBlobToValidatesContentRange()
         {
             // Arrange
@@ -414,6 +501,41 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 // Flush is allowed on read-only stream
             }
+        }
+
+        private static ContainerRegistryContentClient CreateClient(MockTransport transport)
+        {
+            ContainerRegistryClientOptions options = new()
+            {
+                Transport = transport
+            };
+
+            return new ContainerRegistryContentClient(
+                new Uri("https://example.acr.io"),
+                "TestRepository",
+                new MockCredential(),
+                options);
+        }
+
+        private class MaxReadSizeStream : MemoryStream
+        {
+            private readonly int _maxReadSize;
+
+            public MaxReadSizeStream(byte[] buffer, int maxReadSize)
+                : base(buffer)
+            {
+                _maxReadSize = maxReadSize;
+            }
+
+            public override int Read(byte[] buffer, int offset, int count) =>
+                base.Read(buffer, offset, Math.Min(count, _maxReadSize));
+
+            public override Task<int> ReadAsync(
+                byte[] buffer,
+                int offset,
+                int count,
+                CancellationToken cancellationToken) =>
+                base.ReadAsync(buffer, offset, Math.Min(count, _maxReadSize), cancellationToken);
         }
     }
 }

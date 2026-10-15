@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerAppManagedEnvironmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ContainerAppManagedEnvironmentResource.ResourceType, out string containerAppManagedEnvironmentApiVersion);
             _containerAppManagedEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _containerAppManagedEnvironmentsRestClient = new ContainerAppManagedEnvironments(_containerAppManagedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2026-07-01");
+            _containerAppManagedEnvironmentsRestClient = new ContainerAppManagedEnvironments(_containerAppManagedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.App/managedEnvironments", out string containerAppManagedEnvironmentsApiVersionOverride) ? containerAppManagedEnvironmentsApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
