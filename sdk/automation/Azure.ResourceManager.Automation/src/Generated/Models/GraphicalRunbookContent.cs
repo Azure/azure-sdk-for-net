@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private RawGraphicalRunbookContent _rawContent;
-        internal bool _rawContentIsDefined;
+        private bool _rawContentIsDefined;
         private string _graphRunbookJson;
-        internal bool _graphRunbookJsonIsDefined;
+        private bool _graphRunbookJsonIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="GraphicalRunbookContent"/>. </summary>
         public GraphicalRunbookContent()
