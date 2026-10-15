@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed Bicep literal conversion for `BicepValue<ResponseError>`.
+
 ### Other Changes
 
 ## 1.6.0 (2026-08-20)
