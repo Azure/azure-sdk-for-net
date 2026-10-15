@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ComputeFleetVmssNetworkConfigurationProperties(
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 isFpgaEnabled,
                 networkSecurityGroup,
                 dnsSettings,
-                ipConfigurations,
+                ipConfigurations ?? new ChangeTrackingList<ComputeFleetVmssIPConfiguration>(),
                 isIPForwardingEnabled,
                 deleteOption,
                 auxiliaryMode,

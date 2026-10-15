@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     (configuredRoleTypes ?? new ChangeTrackingList<DataBoxEdgeRoleType>()).ToList(),
                     nodeCount,
                     resourceMoveDetails,
-                    new EdgeProfile(edgeSubscription, default),
-                    new DataResidency(residencyType, default),
+                    edgeSubscription is null ? default : new EdgeProfile(edgeSubscription, default),
+                    residencyType is null ? default : new DataResidency(residencyType, default),
                     kubernetesWorkloadProfile,
                     default),
                 sku,
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DataBoxEdgeDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, subscriptionId is null ? default : new DataBoxEdgeDevicePropertiesPatch(new EdgeProfilePatch(new EdgeProfileSubscriptionPatch(subscriptionId, default), default), default), default);
+            return new DataBoxEdgeDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, subscriptionId is null ? default : new DataBoxEdgeDevicePropertiesPatch(subscriptionId is null ? default : new EdgeProfilePatch(subscriptionId is null ? default : new EdgeProfileSubscriptionPatch(subscriptionId, default), default), default), default);
         }
 
         /// <summary> Used in activation key generation flow. </summary>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                deviceAdminPassword is null ? default : new SecuritySettingsProperties(deviceAdminPassword, default),
                 default);
         }
 
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.UploadCertificateContent"/> instance for mocking. </returns>
         public static UploadCertificateContent UploadCertificateContent(DataBoxEdgeAuthenticationType? authenticationType = default, string certificate = default)
         {
-            return new UploadCertificateContent(certificate is null ? default : new RawCertificateData(default, certificate, default), default);
+            return new UploadCertificateContent(authenticationType is null && certificate is null ? default : new RawCertificateData(authenticationType, certificate, default), default);
         }
 
         /// <summary> The upload registration certificate response. </summary>
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new DataBoxEdgeRoleType(kind),
                 default);
         }
 
@@ -799,9 +799,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
+                DataBoxEdgeRoleType.CloudEdgeManagement,
                 default,
-                default,
-                localManagementStatus is null && edgeSubscription is null && roleStatus is null ? default : new CloudEdgeManagementRoleProperties(localManagementStatus, new EdgeProfile(edgeSubscription, default), roleStatus, default));
+                localManagementStatus is null && edgeSubscription is null && roleStatus is null ? default : new CloudEdgeManagementRoleProperties(localManagementStatus, edgeSubscription is null ? default : new EdgeProfile(edgeSubscription, default), roleStatus, default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataBoxEdgeRoleType.IoT,
                 default,
                 hostPlatform is null && iotDeviceDetails is null && iotEdgeDeviceDetails is null && shareMappings is null && iotEdgeAgentInfo is null && hostPlatformType is null && computeResource is null && roleStatus is null ? default : new IoTRoleProperties(
                     hostPlatform,
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.EdgeIotDeviceInfo"/> instance for mocking. </returns>
         public static EdgeIotDeviceInfo EdgeIotDeviceInfo(string deviceId = default, string iotHostHub = default, ResourceIdentifier iotHostHubId = default, AsymmetricEncryptedSecret symmetricKeyConnectionString = default)
         {
-            return new EdgeIotDeviceInfo(deviceId, iotHostHub, iotHostHubId, symmetricKeyConnectionString is null ? default : new Authentication(new DataBoxEdgeSymmetricKey(symmetricKeyConnectionString, default), default), default);
+            return new EdgeIotDeviceInfo(deviceId, iotHostHub, iotHostHubId, symmetricKeyConnectionString is null ? default : new Authentication(symmetricKeyConnectionString is null ? default : new DataBoxEdgeSymmetricKey(symmetricKeyConnectionString, default), default), default);
         }
 
         /// <summary> The share mount point. </summary>
@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataBoxEdgeRoleType.Kubernetes,
                 default,
                 hostPlatform is null && provisioningState is null && hostPlatformType is null && kubernetesClusterInfo is null && kubernetesRoleResources is null && roleStatus is null ? default : new KubernetesRoleProperties(
                     hostPlatform,
@@ -1057,7 +1057,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataBoxEdgeRoleType.Mec,
                 default,
                 connectionString is null && controllerEndpoint is null && resourceUniqueId is null && roleStatus is null ? default : new MECRoleProperties(connectionString, controllerEndpoint, resourceUniqueId, roleStatus, default));
         }
@@ -1079,7 +1079,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new AddonType(kind),
                 default);
         }
 
@@ -1101,9 +1101,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
+                AddonType.IotEdge,
                 default,
-                default,
-                default);
+                iotDeviceDetails is null && iotEdgeDeviceDetails is null && version is null && hostPlatform is null && hostPlatformType is null && provisioningState is null ? default : new IoTAddonProperties(
+                    iotDeviceDetails,
+                    iotEdgeDeviceDetails,
+                    version,
+                    hostPlatform,
+                    hostPlatformType,
+                    provisioningState,
+                    default));
         }
 
         /// <summary> Azure container mapping of the endpoint. </summary>
@@ -1162,7 +1169,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new TriggerEventType(kind),
                 default);
         }
 
@@ -1181,9 +1188,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
+                TriggerEventType.FileEvent,
                 default,
-                default,
-                sourceInfoShareId is null && sinkInfoRoleId is null ? default : new FileTriggerProperties(new EdgeFileSourceInfo(sourceInfoShareId, default), new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), default, default));
+                sourceInfoShareId is null && sinkInfoRoleId is null && customContextTag is null ? default : new FileTriggerProperties(new EdgeFileSourceInfo(sourceInfoShareId, default), new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), customContextTag, default));
         }
 
         /// <summary> File source details. </summary>
@@ -1217,9 +1224,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
+                TriggerEventType.PeriodicTimerEvent,
                 default,
-                default,
-                sinkInfoRoleId is null ? default : new PeriodicTimerProperties(default, new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), default, default));
+                sourceInfo is null && sinkInfoRoleId is null && customContextTag is null ? default : new PeriodicTimerProperties(sourceInfo, new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), customContextTag, default));
         }
 
         /// <summary> Periodic timer event source. </summary>
@@ -1246,7 +1253,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.DeviceCapacityRequestContent"/> instance for mocking. </returns>
         public static DeviceCapacityRequestContent DeviceCapacityRequestContent(IEnumerable<IList<string>> vmPlacementQuery = default, IEnumerable<VmPlacementRequestResult> vmPlacementResults = default)
         {
-            return new DeviceCapacityRequestContent(default, default);
+            return new DeviceCapacityRequestContent(vmPlacementQuery is null && vmPlacementResults is null ? default : new DeviceCapacityRequestInfoProperties((vmPlacementQuery ?? new ChangeTrackingList<IList<string>>()).ToList(), (vmPlacementResults ?? new ChangeTrackingList<VmPlacementRequestResult>()).ToList(), default), default);
         }
 
         /// <summary> List of VM sizes being checked for creation on appliance along with corresponding result. </summary>
@@ -1312,7 +1319,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                minimumTimeStamp is null && maximumTimeStamp is null ? default : new SupportPackageRequestProperties(minimumTimeStamp, maximumTimeStamp, default, default),
+                minimumTimeStamp is null && maximumTimeStamp is null && include is null ? default : new SupportPackageRequestProperties(minimumTimeStamp, maximumTimeStamp, include, default),
                 default);
         }
 
@@ -1661,8 +1668,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     (configuredRoleTypes ?? new ChangeTrackingList<DataBoxEdgeRoleType>()).ToList(),
                     nodeCount,
                     resourceMoveDetails,
-                    new EdgeProfile(edgeSubscription, default),
-                    new DataResidency(residencyType, default),
+                    edgeSubscription is null ? default : new EdgeProfile(edgeSubscription, default),
+                    residencyType is null ? default : new DataResidency(residencyType, default),
                     default,
                     default),
                 sku,
@@ -1777,9 +1784,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
+                DataBoxEdgeRoleType.CloudEdgeManagement,
                 default,
-                default,
-                localManagementStatus is null && edgeSubscription is null && roleStatus is null ? default : new CloudEdgeManagementRoleProperties(localManagementStatus, new EdgeProfile(edgeSubscription, default), roleStatus, default));
+                localManagementStatus is null && edgeSubscription is null && roleStatus is null ? default : new CloudEdgeManagementRoleProperties(localManagementStatus, edgeSubscription is null ? default : new EdgeProfile(edgeSubscription, default), roleStatus, default));
         }
 
         /// <summary> Trigger details. </summary>
@@ -1799,7 +1806,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                TriggerEventType.FileEvent,
                 default,
                 sourceInfoShareId is null && sinkInfoRoleId is null && customContextTag is null ? default : new FileTriggerProperties(new EdgeFileSourceInfo(sourceInfoShareId, default), new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), customContextTag, default));
         }
@@ -1831,7 +1838,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                TriggerEventType.PeriodicTimerEvent,
                 default,
                 sourceInfo is null && sinkInfoRoleId is null && customContextTag is null ? default : new PeriodicTimerProperties(sourceInfo, new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), customContextTag, default));
         }

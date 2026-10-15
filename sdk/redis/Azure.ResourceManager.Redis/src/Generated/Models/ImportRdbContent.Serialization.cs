@@ -200,10 +200,10 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ImportRdbContent(format, files, preferredDataArchiveAuthMethod, storageSubscriptionId, additionalBinaryDataProperties);
+            return new ImportRdbContent(format, files ?? new ChangeTrackingList<string>(), preferredDataArchiveAuthMethod, storageSubscriptionId, additionalBinaryDataProperties);
         }
     }
 }

@@ -157,15 +157,42 @@ function Invoke-AutoReleaseResolution {
   # the correct group and are not confused by name collisions across groups. Packages pulled in solely
   # for validation are not releasable.
   $releasableKeys = New-Object 'System.Collections.Generic.HashSet[string]' ([System.StringComparer]::OrdinalIgnoreCase)
+  $artifactNameToPackageName = [System.Collections.Generic.Dictionary[string, string]]::new([System.StringComparer]::OrdinalIgnoreCase)
   foreach ($package in $changedPackages) {
     if ($package.IncludedForValidation) { continue }
 
     $names = @()
-    if ($package.Name) { $names += [string]$package.Name }
-    if ($package.PSObject.Properties['ArtifactName'] -and $package.ArtifactName) { $names += [string]$package.ArtifactName }
+    $packageName = $null
+    $artifactName = $null
+    if ($package.Name)
+    {
+      $names += [string]$package.Name
+      $packageName = [string]$package.Name
+    }
+    if ($package.PSObject.Properties['ArtifactName'] -and $package.ArtifactName)
+    {
+      $names += [string]$package.ArtifactName
+      $artifactName = [string]$package.ArtifactName
+    }
 
     $group = $null
     if ($package.PSObject.Properties['Group'] -and $package.Group) { $group = [string]$package.Group }
+
+    # Map all relevant name variants to the canonical package name so later lookups work for both
+    # ungrouped and group-qualified artifact keys. This keeps the release-plan update aligned with the
+    # releasable key matching used above.
+    $lookupNames = @()
+    if ($packageName) { $lookupNames += [string]$packageName }
+    if ($artifactName) { $lookupNames += [string]$artifactName }
+    if ($group) {
+      if ($packageName) { $lookupNames += "$group/$packageName" }
+      if ($artifactName) { $lookupNames += "$group/$artifactName" }
+    }
+
+    foreach ($lookupName in ($lookupNames | Sort-Object -Unique)) {
+      if (-not $lookupName) { continue }
+      $artifactNameToPackageName[$lookupName] = $packageName
+    }
 
     foreach ($name in ($names | Sort-Object -Unique)) {
       [void]$releasableKeys.Add($name)
@@ -203,34 +230,41 @@ function Invoke-AutoReleaseResolution {
         # The release status is updated to "Released" after successful completion; until then, mark it as "Release In Progress" to indicate that the release is underway.
         try
         {
+          $packageName = $name
+          $lookupKey = if ($groupId) { "$groupId/$name" } else { $name }
+
+          if ($artifactNameToPackageName.ContainsKey($lookupKey)) {
+            $packageName = $artifactNameToPackageName[$lookupKey]
+          }
           if($AzsdkExePath)
           {
             $sdkPullRequestUrl = $pr.html_url
-            $cliArgs = @("release-plan", "update-release-status", "--package-name", $name, "--language", $LanguageDisplayName, "--status", "Release In Progress", "--sdk-pull-request", $sdkPullRequestUrl)
+            Write-Host "Updating release plan for package '$packageName' (artifact name: '$name', package name: '$packageName')"
+            $cliArgs = @("release-plan", "update-release-status", "--package-name", $packageName, "--language", $LanguageDisplayName, "--status", "Release In Progress", "--sdk-pull-request", $sdkPullRequestUrl)
             if ($PipelineUrl)
             {
                 $cliArgs += @("--release-pipeline", $PipelineUrl)
             }
             else
             {
-              LogWarning "Pipeline URL is not set; Not setting release pipeline link for package '$name' in release plan."
+              LogWarning "Pipeline URL is not set; Not setting release pipeline link for package '$packageName' in release plan."
             }
 
             & $AzsdkExePath @cliArgs
             if ($LASTEXITCODE -ne 0)
             {
                 ## Not all releases have a release plan. So we should not fail the script even if a release plan is missing.
-                Write-Host "Failed to update release pending status for package '$name' using azsdk. Exit code: $LASTEXITCODE"
+                Write-Host "Failed to update release in progress status for package '$packageName' using azsdk. Exit code: $LASTEXITCODE"
             }
           }
           else
           {
-            Write-Host "AzsdkExePath is not set; skipping release plan update for package '$name'."
+            Write-Host "AzsdkExePath is not set; skipping release plan update for package '$packageName'."
           }          
         }
         catch
         {
-          Write-Host "Failed to update release pending status in release plan for package '$name'. $($_.Exception.Message)"
+          Write-Host "Failed to update release in progress status in release plan for package '$name'. $($_.Exception.Message)"
         }
       }
       else {

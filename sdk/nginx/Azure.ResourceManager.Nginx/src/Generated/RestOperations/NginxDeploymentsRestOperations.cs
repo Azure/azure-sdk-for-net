@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Nginx.NginxPlus/nginxDeployments/", false);
             uri.AppendPath(deploymentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Nginx.NginxPlus/nginxDeployments/", false);
             uri.AppendPath(deploymentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -105,10 +99,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Nginx.NginxPlus/nginxDeployments/", false);
             uri.AppendPath(deploymentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -133,10 +124,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Nginx.NginxPlus/nginxDeployments/", false);
             uri.AppendPath(deploymentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -154,10 +142,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Nginx.NginxPlus/nginxDeployments", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -178,10 +163,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -198,10 +180,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Nginx.NginxPlus/nginxDeployments", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -222,10 +201,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -246,10 +222,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath("/providers/Nginx.NginxPlus/nginxDeployments/", false);
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/wafPolicies", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -270,10 +243,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -294,10 +264,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath("/providers/Nginx.NginxPlus/nginxDeployments/", false);
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/listDefaultWafPolicies", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

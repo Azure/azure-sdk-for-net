@@ -5,11 +5,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The ContainerSkill.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SkillReferenceParam"/> and <see cref="InlineSkillParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InlineSkillParam"/> and <see cref="SkillReferenceParam"/>.
     /// </summary>
     public abstract partial class ContainerSkill
     {

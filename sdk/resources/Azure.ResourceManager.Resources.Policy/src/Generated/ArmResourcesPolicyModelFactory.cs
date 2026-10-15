@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     (resourceTypeAliases ?? new ChangeTrackingList<PolicyResourceTypeAliases>()).ToList(),
                     (effects ?? new ChangeTrackingList<PolicyDataEffect>()).ToList(),
                     (fieldValues ?? new ChangeTrackingList<string>()).ToList(),
-                    new DataManifestResourceFunctionsDefinition((standard ?? new ChangeTrackingList<string>()).ToList(), (custom ?? new ChangeTrackingList<PolicyDataManifestCustomResourceFunctionDetail>()).ToList(), default),
+                    standard is null && custom is null ? default : new DataManifestResourceFunctionsDefinition((standard ?? new ChangeTrackingList<string>()).ToList(), (custom ?? new ChangeTrackingList<PolicyDataManifestCustomResourceFunctionDetail>()).ToList(), default),
                     default),
                 default);
         }

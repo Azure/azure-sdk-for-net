@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -70,20 +70,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly NetworkSdkStatsManager? _networkSdkStatsManager;
 
         /// <summary>
-        /// Host for failures that never produced a request. Null for the single-tenant handler, where
+        /// Host for failures that never produced a request. Null for the single-endpoint handler, where
         /// the stats manager falls back to the exporter's configured endpoint; a routed partition has
         /// no such fallback and must name its own.
         /// </summary>
         private readonly string? _statsHost;
         private readonly string? _storageDirectory;
+
+        /// <summary>Set only for a routed partition.</summary>
+        private readonly string? _route;
         private TaskCompletionSource<bool>? _inFlightDrain;
         private bool _disposed;
 
-        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled, NetworkSdkStatsManager? networkSdkStatsManager = null, string? storageDirectory = null, Uri? trackUri = null)
+        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled, NetworkSdkStatsManager? networkSdkStatsManager = null, string? storageDirectory = null, Uri? trackUri = null, string? route = null)
         {
             _applicationInsightsRestClient = applicationInsightsRestClient;
             _connectionVars = connectionVars;
             _trackUri = trackUri;
+            _route = route;
             _isAadEnabled = isAadEnabled;
             _blobProvider = blobProvider;
             _transmissionStateManager = transmissionStateManager;
@@ -162,6 +166,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 return winner.Task;
             }
+
+            // The exporter's own upload must not be recorded as telemetry, as on the export path.
+            using var suppress = SuppressInstrumentationScope.Begin();
 
             try
             {
@@ -335,6 +342,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
+
+            if (_route != null && (statusCode == ResponseStatusCodes.Unauthorized || statusCode == ResponseStatusCodes.Forbidden))
+            {
+                AzureMonitorExporterEventSource.Log.RoutedAuthenticationFailed(_route, statusCode, _isAadEnabled);
+            }
 
             // No blob is passed because this batch may span many of them: a partial success
             // re-persists the retryable subset as a single new blob, after which every blob in the

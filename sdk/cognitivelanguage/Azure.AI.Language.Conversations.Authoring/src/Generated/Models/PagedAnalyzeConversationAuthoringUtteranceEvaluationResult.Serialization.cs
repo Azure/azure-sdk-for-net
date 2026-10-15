@@ -166,10 +166,10 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedAnalyzeConversationAuthoringUtteranceEvaluationResult(value, nextLink, additionalBinaryDataProperties);
+            return new PagedAnalyzeConversationAuthoringUtteranceEvaluationResult(value ?? new ChangeTrackingList<AnalyzeConversationAuthoringUtteranceEvaluationResult>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

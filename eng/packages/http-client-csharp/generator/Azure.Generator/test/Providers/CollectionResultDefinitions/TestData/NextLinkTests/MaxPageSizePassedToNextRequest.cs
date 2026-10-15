@@ -41,7 +41,7 @@ namespace Samples
         /// <returns> The pages of CatClientGetCatsCollectionResult as an enumerable collection. </returns>
         public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken, global::System.UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 global::Azure.Response response = this.GetNextResponse(pageSizeHint, nextPage);

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CdnProfileAgentData, CdnProfileAgentResource>(new ProfileAgentsGetByProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CdnProfileAgentData, CdnProfileAgentResource>(new CdnProfileAgentDataAsyncCollectionResultOfT(
                 _profileAgentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CdnProfileAgentData, CdnProfileAgentResource>(new ProfileAgentsGetByProfileCollectionResultOfT(
+            return new PageableWrapper<CdnProfileAgentData, CdnProfileAgentResource>(new CdnProfileAgentDataCollectionResultOfT(
                 _profileAgentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

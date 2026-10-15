@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="overage"> The capacity overage properties of the Fabric capacity resource. </param>
         /// <param name="administrationMembers"> An array of administrator user identities. </param>
         /// <returns> A new <see cref="Models.FabricCapacityUpdateProperties"/> instance for mocking. </returns>
-        public static FabricCapacityUpdateProperties FabricCapacityUpdateProperties(CapacityOverageProperties overage = default, IEnumerable<string> administrationMembers = default)
+        public static FabricCapacityUpdateProperties FabricCapacityUpdateProperties(CapacityOverageProperties overage, IEnumerable<string> administrationMembers)
         {
             return new FabricCapacityUpdateProperties(overage, administrationMembers is null ? default : new FabricCapacityAdministration((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }

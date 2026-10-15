@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
@@ -24,21 +26,27 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkManagerSecurityUserRuleData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Indicates the properties of the security user rule. </param>
-        /// <param name="name"> The name of the rule. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkManagerSecurityUserRuleData(SecurityUserRulePropertiesFormat properties, string name, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkManagerSecurityUserRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityUserRulePropertiesFormat properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            Name = name;
-            SystemData = systemData;
+            ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates the properties of the security user rule. </summary>
         [WirePath("properties")]
         internal SecurityUserRulePropertiesFormat Properties { get; set; }
+
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; }
 
         /// <summary> A description for this rule. </summary>
         [WirePath("properties.description")]
@@ -64,7 +72,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Protocol;
+                return Properties is null ? (SecurityConfigurationRuleProtocol?)default : Properties.Protocol;
             }
             set
             {
@@ -141,7 +149,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Direction;
+                return Properties is null ? (SecurityConfigurationRuleDirection?)default : Properties.Direction;
             }
             set
             {

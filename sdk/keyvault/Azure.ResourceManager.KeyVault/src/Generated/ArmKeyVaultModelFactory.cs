@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.KeyVaultPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
         public static KeyVaultPrivateEndpointConnectionItemData KeyVaultPrivateEndpointConnectionItemData(string id = default, ETag? etag = default, KeyVaultPrivateLinkServiceConnectionState connectionState = default, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
-            return new KeyVaultPrivateEndpointConnectionItemData(id, etag, privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default), default);
+            return new KeyVaultPrivateEndpointConnectionItemData(id, etag, privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default), default);
         }
 
         /// <summary> An object that represents the approval state of the private link connection. </summary>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 etag,
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.ManagedHsmPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
         public static ManagedHsmPrivateEndpointConnectionItemData ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id = default, ETag? etag = default, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
-            return new ManagedHsmPrivateEndpointConnectionItemData(id, etag, privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(new ManagedHsmPrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default), default);
+            return new ManagedHsmPrivateEndpointConnectionItemData(id, etag, privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(privateEndpointId is null ? default : new ManagedHsmPrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default), default);
         }
 
         /// <summary> An object that represents the approval state of the private link connection. </summary>

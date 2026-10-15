@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.OperationTemplates.Models
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = default, CheckNameAvailabilityReason? reason = default, string message = default)
+        /// <returns> A new <see cref="Models.CheckNameAvailabilityResult"/> instance for mocking. </returns>
+        public static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool? nameAvailable = default, CheckNameAvailabilityReason? reason = default, string message = default)
         {
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message, default);
+            return new CheckNameAvailabilityResult(nameAvailable, reason, message, default);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>

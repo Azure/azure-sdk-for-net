@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 publicNetworkAccess,
                 monitoringSettings,
                 costManagementGranularityLevel is null ? default : new CostManagementSettings(costManagementGranularityLevel, default),
-                crossSubscriptionRestoreState is null ? default : new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
+                crossSubscriptionRestoreState is null ? default : new RestoreSettings(crossSubscriptionRestoreState is null ? default : new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
                 redundancySettings,
                 securitySettings,
                 secureScore,
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static ResourceCertificateAndAadDetails ResourceCertificateAndAadDetails(byte[] certificate = default, string friendlyName = default, string issuer = default, long? resourceId = default, string subject = default, BinaryData thumbprint = default, DateTimeOffset? validStartOn = default, DateTimeOffset? validEndOn = default, string aadAuthority = default, Guid aadTenantId = default, string servicePrincipalClientId = default, string servicePrincipalObjectId = default, string azureManagementEndpointAudience = default, ResourceIdentifier serviceResourceId = default, string aadAudience = default)
         {
             return new ResourceCertificateAndAadDetails(
-                default,
+                "AzureActiveDirectory",
                 certificate,
                 friendlyName,
                 issuer,
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static ResourceCertificateAndAcsDetails ResourceCertificateAndAcsDetails(byte[] certificate = default, string friendlyName = default, string issuer = default, long? resourceId = default, string subject = default, BinaryData thumbprint = default, DateTimeOffset? validStartOn = default, DateTimeOffset? validEndOn = default, string globalAcsNamespace = default, string globalAcsHostName = default, string globalAcsRPRealm = default)
         {
             return new ResourceCertificateAndAcsDetails(
-                default,
+                "AccessControlService",
                 certificate,
                 friendlyName,
                 issuer,
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 publicNetworkAccess,
                 monitoringSettings,
                 costManagementGranularityLevel is null ? default : new CostManagementSettings(costManagementGranularityLevel, default),
-                crossSubscriptionRestoreState is null ? default : new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
+                crossSubscriptionRestoreState is null ? default : new RestoreSettings(crossSubscriptionRestoreState is null ? default : new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
                 redundancySettings,
                 securitySettings,
                 secureScore,
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 publicNetworkAccess,
                 monitoringSettings,
                 default,
-                crossSubscriptionRestoreState is null ? default : new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
+                crossSubscriptionRestoreState is null ? default : new RestoreSettings(crossSubscriptionRestoreState is null ? default : new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
                 redundancySettings,
                 securitySettings,
                 secureScore,
@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 publicNetworkAccess,
                 monitoringSettings,
                 default,
-                crossSubscriptionRestoreState is null ? default : new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
+                crossSubscriptionRestoreState is null ? default : new RestoreSettings(crossSubscriptionRestoreState is null ? default : new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
                 redundancySettings,
                 securitySettings,
                 secureScore,

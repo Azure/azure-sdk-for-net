@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApiManagementGatewayConfigConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ApiManagementGatewayConfigConnectionListResult(value ?? new ChangeTrackingList<ApiGatewayConfigConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

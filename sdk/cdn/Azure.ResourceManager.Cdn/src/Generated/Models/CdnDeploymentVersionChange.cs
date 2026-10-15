@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Deployment change under the profile
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CdnDeploymentVersionRouteChange"/>, <see cref="CdnDeploymentVersionFrontDoorOriginGroupChange"/>, <see cref="CdnDeploymentVersionFrontDoorOriginChange"/>, <see cref="CdnDeploymentVersionRuleSetChange"/>, <see cref="CdnDeploymentVersionRuleChange"/>, and <see cref="CdnDeploymentVersionSecurityPolicyChange"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CdnDeploymentVersionFrontDoorOriginChange"/>, <see cref="CdnDeploymentVersionFrontDoorOriginGroupChange"/>, <see cref="CdnDeploymentVersionRouteChange"/>, <see cref="CdnDeploymentVersionRuleChange"/>, <see cref="CdnDeploymentVersionRuleSetChange"/>, and <see cref="CdnDeploymentVersionSecurityPolicyChange"/>.
     /// </summary>
     public abstract partial class CdnDeploymentVersionChange
     {

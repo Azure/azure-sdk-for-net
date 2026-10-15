@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DomainServices.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DomainServices
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.DomainServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DomainServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string domainServiceApiVersion);
             _domainServiceOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DomainServices", ResourceType.Namespace, Diagnostics);
-            _domainServiceOperationGroupRestClient = new DomainServiceOperationGroup(_domainServiceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, domainServiceApiVersion ?? "2025-10-01-preview");
+            _domainServiceOperationGroupRestClient = new DomainServiceOperationGroup(_domainServiceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AAD/domainServices", out string domainServiceOperationGroupApiVersionOverride) ? domainServiceOperationGroupApiVersionOverride : "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -611,10 +611,9 @@ namespace Azure.ResourceManager.DomainServices
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -654,10 +653,9 @@ namespace Azure.ResourceManager.DomainServices
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

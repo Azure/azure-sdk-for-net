@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.RulePriority;
+                return Properties is null ? (int?)default : Properties.RulePriority;
             }
             set
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.RuleType;
+                return Properties is null ? (GovernanceRuleType?)default : Properties.RuleType;
             }
             set
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.SourceResourceType;
+                return Properties is null ? (GovernanceRuleSourceResourceType?)default : Properties.SourceResourceType;
             }
             set
             {

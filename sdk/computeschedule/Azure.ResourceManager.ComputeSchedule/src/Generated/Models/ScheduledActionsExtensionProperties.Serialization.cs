@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ScheduledActionsExtensionProperties(
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 startsOn,
                 endsOn,
                 schedule,
-                notificationSettings,
+                notificationSettings ?? new ChangeTrackingList<NotificationSettings>(),
                 disabled,
                 provisioningState,
                 resourceNotificationSettings ?? new ChangeTrackingList<NotificationSettings>(),

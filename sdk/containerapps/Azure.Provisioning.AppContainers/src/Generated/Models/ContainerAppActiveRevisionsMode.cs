@@ -13,8 +13,6 @@ namespace Azure.Provisioning.AppContainers
         /// <summary> Multiple. </summary>
         Multiple = 0,
         /// <summary> Single. </summary>
-        Single = 1,
-        /// <summary> Labels. </summary>
-        Labels = 2
+        Single = 1
     }
 }

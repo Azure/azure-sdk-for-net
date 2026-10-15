@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Discovery.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     definitionContent = dictionary;
@@ -225,10 +225,10 @@ namespace Azure.ResourceManager.Discovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DiscoveryToolProperties(provisioningState, version, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), definitionContent, additionalBinaryDataProperties);
+            return new DiscoveryToolProperties(provisioningState, version, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), definitionContent ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
         }
     }
 }

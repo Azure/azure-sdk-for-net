@@ -25,7 +25,7 @@ namespace Azure.AI.AnomalyDetector
         internal MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status, MultivariateBatchDetectionOptions setupInfo)
         {
             Status = status;
-            Errors = new ChangeTrackingList<ErrorResponse>();
+            Errors = new ChangeTrackingList<ErrorResult>();
             VariableStates = new ChangeTrackingList<VariableState>();
             SetupInfo = setupInfo;
         }
@@ -39,7 +39,7 @@ namespace Azure.AI.AnomalyDetector
         /// will need another API to get detection results.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status, IList<ErrorResponse> errors, IList<VariableState> variableStates, MultivariateBatchDetectionOptions setupInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status, IList<ErrorResult> errors, IList<VariableState> variableStates, MultivariateBatchDetectionOptions setupInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Errors = errors;
@@ -52,7 +52,7 @@ namespace Azure.AI.AnomalyDetector
         public MultivariateBatchDetectionStatus Status { get; }
 
         /// <summary> Error message when detection fails. </summary>
-        public IList<ErrorResponse> Errors { get; }
+        public IList<ErrorResult> Errors { get; }
 
         /// <summary> Variable status. </summary>
         public IList<VariableState> VariableStates { get; }

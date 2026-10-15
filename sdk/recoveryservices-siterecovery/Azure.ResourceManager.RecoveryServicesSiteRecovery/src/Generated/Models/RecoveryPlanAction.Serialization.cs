@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RecoveryPlanAction(actionName, failoverTypes, failoverDirections, customDetails, additionalBinaryDataProperties);
+            return new RecoveryPlanAction(actionName, failoverTypes ?? new ChangeTrackingList<ReplicationProtectedItemOperation>(), failoverDirections ?? new ChangeTrackingList<PossibleOperationsDirection>(), customDetails, additionalBinaryDataProperties);
         }
     }
 }

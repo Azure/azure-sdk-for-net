@@ -60,27 +60,27 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                labStorageType is null ? default : new LabProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                defaultStorageAccount is null && defaultPremiumStorageAccount is null && artifactsStorageAccount is null && premiumDataDiskStorageAccount is null && vaultName is null && labStorageType is null && mandatoryArtifactsResourceIdsLinux is null && mandatoryArtifactsResourceIdsWindows is null && createdOn is null && premiumDataDisks is null && environmentPermission is null && announcement is null && support is null && vmCreationResourceGroup is null && publicIPId is null && loadBalancerId is null && networkSecurityGroupId is null && extendedProperties is null && provisioningState is null && uniqueIdentifier is null ? default : new LabProperties(
+                    defaultStorageAccount,
+                    defaultPremiumStorageAccount,
+                    artifactsStorageAccount,
+                    premiumDataDiskStorageAccount,
+                    vaultName,
                     labStorageType,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    (mandatoryArtifactsResourceIdsLinux ?? new ChangeTrackingList<string>()).ToList(),
+                    (mandatoryArtifactsResourceIdsWindows ?? new ChangeTrackingList<string>()).ToList(),
+                    createdOn,
+                    premiumDataDisks,
+                    environmentPermission,
+                    announcement,
+                    support,
+                    vmCreationResourceGroup,
+                    publicIPId,
+                    loadBalancerId,
+                    networkSecurityGroupId,
+                    extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                    provisioningState,
+                    uniqueIdentifier,
                     default),
                 default);
         }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DevTestLabVmCreationContent(bulkCreationParametersInstanceCount is null && notes is null && ownerObjectId is null && ownerUserPrincipalName is null && createdOn is null && customImageId is null && size is null && userName is null && password is null && sshKey is null && isAuthenticationWithSshKey is null && labSubnetName is null && labVirtualNetworkId is null && disallowPublicIPAddress is null && artifacts is null && galleryImageReference is null && planId is null && networkInterface is null && expireOn is null && allowClaim is null && storageType is null && environmentId is null && dataDiskParameters is null && scheduleParameters is null ? default : new LabVirtualMachineCreationParameterProperties(
-                new BulkCreationParameters(bulkCreationParametersInstanceCount, default),
+                bulkCreationParametersInstanceCount is null ? default : new BulkCreationParameters(bulkCreationParametersInstanceCount, default),
                 notes,
                 ownerObjectId,
                 ownerUserPrincipalName,
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="location"> The location of the new virtual machine or environment. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabScheduleCreationParameter"/> instance for mocking. </returns>
-        public static DevTestLabScheduleCreationParameter DevTestLabScheduleCreationParameter(DevTestLabEnableStatus? status = default, string taskType = default, DevTestLabWeekDetails weeklyRecurrence = default, string timeZoneId = default, DevTestLabNotificationSettings notificationSettings = default, ResourceIdentifier targetResourceId = default, string dailyRecurrenceTime = default, int? hourlyRecurrenceMinute = default, string name = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
+        public static DevTestLabScheduleCreationParameter DevTestLabScheduleCreationParameter(DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, string timeZoneId, DevTestLabNotificationSettings notificationSettings, ResourceIdentifier targetResourceId, string dailyRecurrenceTime, int? hourlyRecurrenceMinute, string name, AzureLocation? location, IDictionary<string, string> tags)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -322,8 +322,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 status,
                 taskType,
                 weeklyRecurrence,
-                new DayDetails(dailyRecurrenceTime, default),
-                new HourDetails(hourlyRecurrenceMinute, default),
+                dailyRecurrenceTime is null ? default : new DayDetails(dailyRecurrenceTime, default),
+                hourlyRecurrenceMinute is null ? default : new HourDetails(hourlyRecurrenceMinute, default),
                 timeZoneId,
                 notificationSettings,
                 targetResourceId,
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="dailyRecurrenceTime"> The time of day the schedule will occur. </param>
         /// <param name="hourlyRecurrenceMinute"> Minutes of the hour the schedule will run. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabScheduleData"/> instance for mocking. </returns>
-        public static DevTestLabScheduleData DevTestLabScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevTestLabEnableStatus? status = default, string taskType = default, DevTestLabWeekDetails weeklyRecurrence = default, string timeZoneId = default, DevTestLabNotificationSettings notificationSettings = default, DateTimeOffset? createdOn = default, string targetResourceId = default, string provisioningState = default, Guid? uniqueIdentifier = default, string dailyRecurrenceTime = default, int? hourlyRecurrenceMinute = default)
+        public static DevTestLabScheduleData DevTestLabScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, string timeZoneId, DevTestLabNotificationSettings notificationSettings, DateTimeOffset? createdOn, string targetResourceId, string provisioningState, Guid? uniqueIdentifier, string dailyRecurrenceTime, int? hourlyRecurrenceMinute)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -430,18 +430,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                dailyRecurrenceTime is null && hourlyRecurrenceMinute is null ? default : new ScheduleProperties(
-                    default,
-                    default,
-                    default,
-                    new DayDetails(dailyRecurrenceTime, default),
-                    new HourDetails(hourlyRecurrenceMinute, default),
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                status is null && taskType is null && weeklyRecurrence is null && dailyRecurrenceTime is null && hourlyRecurrenceMinute is null && timeZoneId is null && notificationSettings is null && createdOn is null && targetResourceId is null && provisioningState is null && uniqueIdentifier is null ? default : new ScheduleProperties(
+                    status,
+                    taskType,
+                    weeklyRecurrence,
+                    dailyRecurrenceTime is null ? default : new DayDetails(dailyRecurrenceTime, default),
+                    hourlyRecurrenceMinute is null ? default : new HourDetails(hourlyRecurrenceMinute, default),
+                    timeZoneId,
+                    notificationSettings,
+                    createdOn,
+                    targetResourceId,
+                    provisioningState,
+                    uniqueIdentifier,
                     default),
                 default);
         }
@@ -494,18 +494,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sourceType is null ? default : new ArtifactSourceProperties(
-                    default,
-                    default,
+                displayName is null && uri is null && sourceType is null && folderPath is null && armTemplateFolderPath is null && branchRef is null && securityToken is null && status is null && createdOn is null && provisioningState is null && uniqueIdentifier is null ? default : new ArtifactSourceProperties(
+                    displayName,
+                    uri,
                     sourceType,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    folderPath,
+                    armTemplateFolderPath,
+                    branchRef,
+                    securityToken,
+                    status,
+                    createdOn,
+                    provisioningState,
+                    uniqueIdentifier,
                     default),
                 default);
         }
@@ -546,14 +546,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                isEnabled is null ? default : new ArmTemplateProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                displayName is null && description is null && publisher is null && icon is null && contents is null && createdOn is null && parametersValueFilesInfo is null && isEnabled is null ? default : new ArmTemplateProperties(
+                    displayName,
+                    description,
+                    publisher,
+                    icon,
+                    contents,
+                    createdOn,
+                    (parametersValueFilesInfo ?? new ChangeTrackingList<DevTestLabParametersValueFileInfo>()).ToList(),
                     isEnabled,
                     default),
                 default);
@@ -594,7 +594,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                title is null && description is null && publisher is null && filePath is null && icon is null && targetOSType is null && parameters is null && createdOn is null ? default : new ArtifactProperties(
+                    title,
+                    description,
+                    publisher,
+                    filePath,
+                    icon,
+                    targetOSType,
+                    parameters,
+                    createdOn,
+                    default),
                 default);
         }
 
@@ -646,7 +655,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <param name="estimatedLabCost"> The cost component of the cost item. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabCostData"/> instance for mocking. </returns>
-        public static DevTestLabCostData DevTestLabCostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevTestLabTargetCost targetCost = default, IEnumerable<DevTestLabCostDetails> labCostDetails = default, IEnumerable<DevTestLabResourceCost> resourceCosts = default, string currencyCode = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? createdOn = default, string provisioningState = default, Guid? uniqueIdentifier = default, double? estimatedLabCost = default)
+        public static DevTestLabCostData DevTestLabCostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabTargetCost targetCost, IEnumerable<DevTestLabCostDetails> labCostDetails, IEnumerable<DevTestLabResourceCost> resourceCosts, string currencyCode, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier, double? estimatedLabCost)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -657,17 +666,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                targetCost is null && estimatedLabCost is null && labCostDetails is null && startOn is null && endOn is null ? default : new LabCostProperties(
+                targetCost is null && estimatedLabCost is null && labCostDetails is null && resourceCosts is null && currencyCode is null && startOn is null && endOn is null && createdOn is null && provisioningState is null && uniqueIdentifier is null ? default : new LabCostProperties(
                     targetCost,
-                    new LabCostSummaryProperties(estimatedLabCost, default),
+                    estimatedLabCost is null ? default : new LabCostSummaryProperties(estimatedLabCost, default),
                     (labCostDetails ?? new ChangeTrackingList<DevTestLabCostDetails>()).ToList(),
-                    default,
-                    default,
+                    (resourceCosts ?? new ChangeTrackingList<DevTestLabResourceCost>()).ToList(),
+                    currencyCode,
                     startOn,
                     endOn,
-                    default,
-                    default,
-                    default,
+                    createdOn,
+                    provisioningState,
+                    uniqueIdentifier,
                     default),
                 default);
         }
@@ -777,19 +786,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                createdOn is null && managedImageId is null && customImagePlan is null && isPlanAuthorized is null ? default : new CustomImageProperties(
-                    default,
-                    default,
-                    default,
-                    default,
+                vm is null && vhd is null && description is null && author is null && createdOn is null && managedImageId is null && managedSnapshotId is null && dataDiskStorageInfo is null && customImagePlan is null && isPlanAuthorized is null && provisioningState is null && uniqueIdentifier is null ? default : new CustomImageProperties(
+                    vm,
+                    vhd,
+                    description,
+                    author,
                     createdOn,
                     managedImageId,
-                    default,
-                    default,
+                    managedSnapshotId,
+                    (dataDiskStorageInfo ?? new ChangeTrackingList<DevTestLabDataDiskStorageTypeInfo>()).ToList(),
                     customImagePlan,
                     isPlanAuthorized,
-                    default,
-                    default,
+                    provisioningState,
+                    uniqueIdentifier,
                     default),
                 default);
         }
@@ -857,7 +866,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <param name="labVmId"> The identifier of the VM from which a formula is to be created. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabFormulaData"/> instance for mocking. </returns>
-        public static DevTestLabFormulaData DevTestLabFormulaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string author = default, string osType = default, DateTimeOffset? createdOn = default, DevTestLabVmCreationContent formulaContent = default, string provisioningState = default, Guid? uniqueIdentifier = default, string labVmId = default)
+        public static DevTestLabFormulaData DevTestLabFormulaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string author, string osType, DateTimeOffset? createdOn, DevTestLabVmCreationContent formulaContent, string provisioningState, Guid? uniqueIdentifier, string labVmId)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -868,15 +877,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                createdOn is null && formulaContent is null && labVmId is null ? default : new FormulaProperties(
-                    default,
-                    default,
-                    default,
+                description is null && author is null && osType is null && createdOn is null && formulaContent is null && labVmId is null && provisioningState is null && uniqueIdentifier is null ? default : new FormulaProperties(
+                    description,
+                    author,
+                    osType,
                     createdOn,
                     formulaContent,
-                    new FormulaPropertiesFromVm(labVmId, default),
-                    default,
-                    default,
+                    labVmId is null ? default : new FormulaPropertiesFromVm(labVmId, default),
+                    provisioningState,
+                    uniqueIdentifier,
                     default),
                 default);
         }
@@ -917,14 +926,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                imageReference is null && isEnabled is null && isPlanAuthorized is null ? default : new GalleryImageProperties(
-                    default,
-                    default,
-                    default,
+                author is null && createdOn is null && description is null && imageReference is null && icon is null && isEnabled is null && planId is null && isPlanAuthorized is null ? default : new GalleryImageProperties(
+                    author,
+                    createdOn,
+                    description,
                     imageReference,
-                    default,
+                    icon,
                     isEnabled,
-                    default,
+                    planId,
                     isPlanAuthorized,
                     default),
                 default);
@@ -956,15 +965,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                notificationLocale is null ? default : new NotificationChannelProperties(
-                    default,
-                    default,
+                webHookUri is null && emailRecipient is null && notificationLocale is null && description is null && events is null && createdOn is null && provisioningState is null && uniqueIdentifier is null ? default : new NotificationChannelProperties(
+                    webHookUri,
+                    emailRecipient,
                     notificationLocale,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    description,
+                    (events ?? new ChangeTrackingList<DevTestLabNotificationChannelEvent>()).ToList(),
+                    createdOn,
+                    provisioningState,
+                    uniqueIdentifier,
                     default),
                 default);
         }
@@ -1156,7 +1165,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                identity is null && secretStore is null && createdOn is null && provisioningState is null && uniqueIdentifier is null ? default : new UserProperties(
+                    identity,
+                    secretStore,
+                    createdOn,
+                    provisioningState,
+                    uniqueIdentifier,
+                    default),
                 default);
         }
 
@@ -1226,18 +1241,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                diskType is null && diskSizeGiB is null && diskBlobName is null && diskUri is null && managedDiskId is null ? default : new DiskProperties(
+                diskType is null && diskSizeGiB is null && leasedByLabVmId is null && diskBlobName is null && diskUri is null && storageAccountId is null && createdOn is null && hostCaching is null && managedDiskId is null && provisioningState is null && uniqueIdentifier is null ? default : new DiskProperties(
                     diskType,
                     diskSizeGiB,
-                    default,
+                    leasedByLabVmId,
                     diskBlobName,
                     diskUri,
-                    default,
-                    default,
-                    default,
+                    storageAccountId,
+                    createdOn,
+                    hostCaching,
                     managedDiskId,
-                    default,
-                    default,
+                    provisioningState,
+                    uniqueIdentifier,
                     default),
                 default);
         }
@@ -1292,7 +1307,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                deploymentProperties is null && armTemplateDisplayName is null && resourceGroupId is null && createdByUser is null && provisioningState is null && uniqueIdentifier is null ? default : new EnvironmentProperties(
+                    deploymentProperties,
+                    armTemplateDisplayName,
+                    resourceGroupId,
+                    createdByUser,
+                    provisioningState,
+                    uniqueIdentifier,
+                    default),
                 default);
         }
 
@@ -1347,7 +1369,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                value is null && provisioningState is null && uniqueIdentifier is null ? default : new SecretProperties(value, provisioningState, uniqueIdentifier, default),
                 default);
         }
 
@@ -1384,12 +1406,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                externalServiceFabricId is null ? default : new ServiceFabricProperties(
+                externalServiceFabricId is null && environmentId is null && applicableSchedule is null && provisioningState is null && uniqueIdentifier is null ? default : new ServiceFabricProperties(
                     externalServiceFabricId,
-                    default,
-                    default,
-                    default,
-                    default,
+                    environmentId,
+                    applicableSchedule,
+                    provisioningState,
+                    uniqueIdentifier,
                     default),
                 default);
         }
@@ -1414,7 +1436,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                labVmsShutdown is null && labVmsStartup is null ? default : new ApplicableScheduleProperties(labVmsShutdown, labVmsStartup, default),
                 default);
         }
 
@@ -1481,42 +1503,42 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                isAuthenticationWithSshKey is null && labSubnetName is null && labVirtualNetworkId is null && disallowPublicIPAddress is null && expireOn is null && allowClaim is null ? default : new LabVirtualMachineProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                notes is null && ownerObjectId is null && ownerUserPrincipalName is null && createdByUserId is null && createdByUser is null && createdOn is null && computeId is null && customImageId is null && osType is null && size is null && userName is null && password is null && sshKey is null && isAuthenticationWithSshKey is null && fqdn is null && labSubnetName is null && labVirtualNetworkId is null && disallowPublicIPAddress is null && artifacts is null && artifactDeploymentStatus is null && galleryImageReference is null && planId is null && computeVm is null && networkInterface is null && applicableSchedule is null && expireOn is null && allowClaim is null && storageType is null && vmCreationSource is null && environmentId is null && dataDiskParameters is null && scheduleParameters is null && lastKnownPowerState is null && provisioningState is null && uniqueIdentifier is null ? default : new LabVirtualMachineProperties(
+                    notes,
+                    ownerObjectId,
+                    ownerUserPrincipalName,
+                    createdByUserId,
+                    createdByUser,
+                    createdOn,
+                    computeId,
+                    customImageId,
+                    osType,
+                    size,
+                    userName,
+                    password,
+                    sshKey,
                     isAuthenticationWithSshKey,
-                    default,
+                    fqdn,
                     labSubnetName,
                     labVirtualNetworkId,
                     disallowPublicIPAddress,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    (artifacts ?? new ChangeTrackingList<DevTestLabArtifactInstallInfo>()).ToList(),
+                    artifactDeploymentStatus,
+                    galleryImageReference,
+                    planId,
+                    computeVm,
+                    networkInterface,
+                    applicableSchedule,
                     expireOn,
                     allowClaim,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    storageType,
+                    vmCreationSource,
+                    environmentId,
+                    (dataDiskParameters ?? new ChangeTrackingList<DevTestLabDataDiskProperties>()).ToList(),
+                    (scheduleParameters ?? new ChangeTrackingList<DevTestLabScheduleCreationParameter>()).ToList(),
+                    lastKnownPowerState,
+                    provisioningState,
+                    uniqueIdentifier,
                     default),
                 default);
         }
@@ -1648,7 +1670,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                allowedSubnets is null && description is null && externalProviderResourceId is null && externalSubnets is null && subnetOverrides is null && createdOn is null && provisioningState is null && uniqueIdentifier is null ? default : new VirtualNetworkProperties(
+                    (allowedSubnets ?? new ChangeTrackingList<DevTestLabSubnet>()).ToList(),
+                    description,
+                    externalProviderResourceId,
+                    (externalSubnets ?? new ChangeTrackingList<DevTestLabExternalSubnet>()).ToList(),
+                    (subnetOverrides ?? new ChangeTrackingList<DevTestLabSubnetOverride>()).ToList(),
+                    createdOn,
+                    provisioningState,
+                    uniqueIdentifier,
+                    default),
                 default);
         }
 
@@ -1742,8 +1773,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     status,
                     taskType,
                     weeklyRecurrence,
-                    new DayDetails(dailyRecurrenceTime, default),
-                    new HourDetails(hourlyRecurrenceMinute, default),
+                    dailyRecurrenceTime is null ? default : new DayDetails(dailyRecurrenceTime, default),
+                    hourlyRecurrenceMinute is null ? default : new HourDetails(hourlyRecurrenceMinute, default),
                     timeZoneId,
                     notificationSettings,
                     createdOn,
@@ -1784,7 +1815,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 location,
                 targetCost is null && estimatedLabCost is null && labCostDetails is null && resourceCosts is null && currencyCode is null && createdOn is null && provisioningState is null && uniqueIdentifier is null ? default : new LabCostProperties(
                     targetCost,
-                    new LabCostSummaryProperties(estimatedLabCost, default),
+                    estimatedLabCost is null ? default : new LabCostSummaryProperties(estimatedLabCost, default),
                     (labCostDetails ?? new ChangeTrackingList<DevTestLabCostDetails>()).ToList(),
                     (resourceCosts ?? new ChangeTrackingList<DevTestLabResourceCost>()).ToList(),
                     currencyCode,
@@ -1829,7 +1860,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     osType,
                     createdOn,
                     formulaContent,
-                    new FormulaPropertiesFromVm(labVmId, default),
+                    labVmId is null ? default : new FormulaPropertiesFromVm(labVmId, default),
                     provisioningState,
                     uniqueIdentifier,
                     default),
@@ -1856,8 +1887,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 status,
                 taskType,
                 weeklyRecurrence,
-                new DayDetails(dailyRecurrenceTime, default),
-                new HourDetails(hourlyRecurrenceMinute, default),
+                dailyRecurrenceTime is null ? default : new DayDetails(dailyRecurrenceTime, default),
+                hourlyRecurrenceMinute is null ? default : new HourDetails(hourlyRecurrenceMinute, default),
                 timeZoneId,
                 notificationSettings,
                 targetResourceId,

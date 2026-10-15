@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ClusterProperties(
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 isEventStoreServiceEnabled,
                 fabricSettings ?? new ChangeTrackingList<SettingsSectionDescription>(),
                 managementEndpoint,
-                nodeTypes,
+                nodeTypes ?? new ChangeTrackingList<ClusterNodeTypeDescription>(),
                 provisioningState,
                 reliabilityLevel,
                 reverseProxyCertificate,

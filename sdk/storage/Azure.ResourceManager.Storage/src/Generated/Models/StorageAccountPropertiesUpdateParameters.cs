@@ -49,8 +49,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="geoPriorityReplicationStatus"> Status indicating whether Geo Priority Replication is enabled for the account. </param>
         /// <param name="allowSharedKeyAccessForServices"> Indicate shared key access properties at service level. </param>
         /// <param name="dataCollaborationPolicyProperties"> Data Collaboration policy for the storage account. </param>
+        /// <param name="allowCrossTenantDelegationSas"> Allow or disallow cross AAD tenant user delegation SAS (shared access signature). The default interpretation is false for this property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountPropertiesUpdateParameters(StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountSasPolicy sasPolicy, KeyPolicy keyPolicy, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, StorageAccountNetworkRuleSet networkRuleSet, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageDnsEndpointType? dnsEndpointType, GeoPriorityReplicationStatus geoPriorityReplicationStatus, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountPropertiesUpdateParameters(StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountSasPolicy sasPolicy, KeyPolicy keyPolicy, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, StorageAccountNetworkRuleSet networkRuleSet, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageDnsEndpointType? dnsEndpointType, GeoPriorityReplicationStatus geoPriorityReplicationStatus, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties, bool? allowCrossTenantDelegationSas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CustomDomain = customDomain;
             Encryption = encryption;
@@ -78,6 +79,7 @@ namespace Azure.ResourceManager.Storage.Models
             GeoPriorityReplicationStatus = geoPriorityReplicationStatus;
             AllowSharedKeyAccessForServices = allowSharedKeyAccessForServices;
             DataCollaborationPolicyProperties = dataCollaborationPolicyProperties;
+            AllowCrossTenantDelegationSas = allowCrossTenantDelegationSas;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -185,13 +187,17 @@ namespace Azure.ResourceManager.Storage.Models
         [WirePath("dataCollaborationPolicyProperties")]
         public StorageDataCollaborationPolicyProperties DataCollaborationPolicyProperties { get; set; }
 
+        /// <summary> Allow or disallow cross AAD tenant user delegation SAS (shared access signature). The default interpretation is false for this property. </summary>
+        [WirePath("allowCrossTenantDelegationSas")]
+        public bool? AllowCrossTenantDelegationSas { get; set; }
+
         /// <summary> The key expiration period in days. </summary>
         [WirePath("keyPolicy.keyExpirationPeriodInDays")]
         public int? KeyExpirationPeriodInDays
         {
             get
             {
-                return KeyPolicy is null ? default : KeyPolicy.KeyExpirationPeriodInDays;
+                return KeyPolicy is null ? (int?)default : KeyPolicy.KeyExpirationPeriodInDays;
             }
             set
             {

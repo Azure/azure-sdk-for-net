@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContainerGroupInstanceCountSummary(zone, standbyContainerGroupInstanceCountsByState, additionalBinaryDataProperties);
+            return new ContainerGroupInstanceCountSummary(zone, standbyContainerGroupInstanceCountsByState ?? new ChangeTrackingList<PoolContainerGroupStateCount>(), additionalBinaryDataProperties);
         }
     }
 }

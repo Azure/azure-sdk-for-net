@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Microsoft.Extensions.DependencyInjection;
@@ -114,7 +114,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         private static bool LiveMetricsIsSupported()
         {
-            if (!MultiTenantConfig.Enabled)
+            if (!MultiEndpointConfig.Enabled)
             {
                 return true;
             }
@@ -122,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // Asked once per signal, but the answer is a property of the process.
             if (Interlocked.Exchange(ref s_liveMetricsSuppressionReported, 1) == 0)
             {
-                AzureMonitorExporterEventSource.Log.LiveMetricsDisabledForMultiTenantExport();
+                AzureMonitorExporterEventSource.Log.LiveMetricsDisabledForMultiEndpointRouting();
             }
 
             return false;

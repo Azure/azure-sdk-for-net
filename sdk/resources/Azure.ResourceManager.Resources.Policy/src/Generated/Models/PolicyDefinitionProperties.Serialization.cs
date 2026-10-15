@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    policyRule = BinaryData.FromString(prop.Value.GetRawText());
+                    policyRule = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    metadata = BinaryData.FromString(prop.Value.GetRawText());
+                    metadata = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PolicyDefinitionProperties(

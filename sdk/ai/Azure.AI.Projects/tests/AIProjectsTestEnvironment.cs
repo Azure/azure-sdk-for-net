@@ -23,6 +23,7 @@ namespace Azure.AI.Projects.Tests
         public string DATASETVERSION1 => GetRecordedVariable("DATASET_VERSION_1");
         public string DATASETVERSION2 => GetRecordedVariable("DATASET_VERSION_2");
         public string FOUNDRY_MODEL_NAME => GetRecordedVariable(nameof(FOUNDRY_MODEL_NAME));
+        public string FOUNDRY_REALTIME_MODEL_NAME => GetRecordedVariable(nameof(FOUNDRY_REALTIME_MODEL_NAME));
         public string MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME => GetRecordedVariable(nameof(MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME));
         public string MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME => GetRecordedVariable(nameof(MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME));
         public string EMBEDDING_MODEL_NAME => GetRecordedVariable(nameof(EMBEDDING_MODEL_NAME));
@@ -50,6 +51,7 @@ namespace Azure.AI.Projects.Tests
         public string MCP_PROJECT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(MCP_PROJECT_CONNECTION_NAME));
         public string OPENAPI_PROJECT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(OPENAPI_PROJECT_CONNECTION_NAME));
         public string PLAYWRIGHT_CONNECTION_ID => GetRecordedOptionalVariable(nameof(PLAYWRIGHT_CONNECTION_ID));
+        public string PLAYWRIGHT_MCP_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(PLAYWRIGHT_MCP_CONNECTION_NAME));
         public string OPENAPI_PROJECT_CONNECTION_ID => GetRecordedOptionalVariable(nameof(OPENAPI_PROJECT_CONNECTION_ID));
         public string SHAREPOINT_CONNECTION_ID => GetRecordedOptionalVariable(nameof(SHAREPOINT_CONNECTION_ID));
         public string FABRIC_CONNECTION_ID => GetRecordedOptionalVariable(nameof(FABRIC_CONNECTION_ID));

@@ -14,6 +14,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Model for API authentication with JWT. Simple exchange between user name + password to access token. </summary>
     public partial class JwtAuthModel : CcpAuthConfig
     {
+        private bool? _isCredentialsInHeaders;
+        internal bool _isCredentialsInHeadersIsDefined;
+        private bool? _isJsonRequest;
+        internal bool _isJsonRequestIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="JwtAuthModel"/>. </summary>
         /// <param name="tokenEndpoint"> Token endpoint to request JWT. </param>
         /// <param name="userName"> The user name. If user name and password sent in header request we only need to populate the `value` property with the user name (Same as basic auth). If user name and password sent in body request we need to specify the `Key` and `Value`. </param>
@@ -50,8 +55,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Password = password;
             QueryParameters = queryParameters;
             Headers = headers;
-            IsCredentialsInHeaders = isCredentialsInHeaders;
-            IsJsonRequest = isJsonRequest;
+            _isCredentialsInHeaders = isCredentialsInHeaders;
+            _isJsonRequest = isJsonRequest;
             RequestTimeoutInSeconds = requestTimeoutInSeconds;
         }
 
@@ -77,11 +82,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Flag indicating whether we want to send the user name and password to token endpoint in the headers. </summary>
         [WirePath("isCredentialsInHeaders")]
-        public bool? IsCredentialsInHeaders { get; set; }
+        public bool? IsCredentialsInHeaders
+        {
+            get
+            {
+                return _isCredentialsInHeaders;
+            }
+            set
+            {
+                _isCredentialsInHeaders = value;
+                _isCredentialsInHeadersIsDefined = true;
+            }
+        }
 
         /// <summary> Flag indicating whether the body request is JSON (header Content-Type = application/json), meaning its a Form URL encoded request (header Content-Type = application/x-www-form-urlencoded). </summary>
         [WirePath("isJsonRequest")]
-        public bool? IsJsonRequest { get; set; }
+        public bool? IsJsonRequest
+        {
+            get
+            {
+                return _isJsonRequest;
+            }
+            set
+            {
+                _isJsonRequest = value;
+                _isJsonRequestIsDefined = true;
+            }
+        }
 
         /// <summary> Request timeout in seconds. </summary>
         [WirePath("requestTimeoutInSeconds")]

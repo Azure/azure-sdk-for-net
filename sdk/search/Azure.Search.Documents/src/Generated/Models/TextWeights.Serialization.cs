@@ -145,10 +145,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TextWeights(weights, additionalBinaryDataProperties);
+            return new TextWeights(weights ?? new ChangeTrackingDictionary<string, double>(), additionalBinaryDataProperties);
         }
     }
 }

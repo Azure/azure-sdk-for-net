@@ -21,6 +21,228 @@ namespace Azure.Generator.Mgmt.Tests
     internal class ModelFactoryVisitorTests
     {
         [Test]
+        public void ConstructorRepairPreservesDefaultEnumDiscriminator(
+            [Values(false, true)] bool isExtensible,
+            [Values(false, true)] bool isNullable,
+            [Values("visitor", "writer", "hidden")] string repairKind)
+        {
+            var discriminatorEnum = InputFactory.StringEnum(
+                "DiscriminatorKind", [("Known", "Known")], access: "internal",
+                isExtensible: isExtensible, clientNamespace: "Samples.Models");
+            var derivedModel = InputFactory.Model(
+                "KnownDiscriminatorModel", properties: [], discriminatedKind: "Known");
+            var baseModel = InputFactory.Model(
+                "DiscriminatorModel",
+                properties: [InputFactory.Property("kind",
+                    isNullable ? new InputNullableType(discriminatorEnum) : discriminatorEnum,
+                    isRequired: true, isDiscriminator: true)],
+                derivedModels: [derivedModel]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputEnums: () => [discriminatorEnum],
+                inputModels: () => [baseModel, derivedModel]);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = modelFactory.Methods.Single(m => m.Signature.Name == "DiscriminatorModel");
+            var conversion = isExtensible
+                ? "new global::Samples.Models.DiscriminatorKind(kind)"
+                : "kind.ToDiscriminatorKind()";
+            Assert.That(method.BodyStatements!.ToDisplayString(), Does.Contain(conversion),
+                "Keep the supplied-input discriminator repair as a separate invariant.");
+
+            if (repairKind == "hidden")
+            {
+                var signature = method.Signature;
+                var hiddenSignature = new MethodSignature(
+                    signature.Name, signature.Description, signature.Modifiers, signature.ReturnType,
+                    signature.ReturnDescription,
+                    [.. signature.Parameters, new ParameterProvider("legacyValue", $"Legacy input.", typeof(string), Default)],
+                    [new AttributeStatement(typeof(System.ComponentModel.EditorBrowsableAttribute),
+                        FrameworkEnumValue(System.ComponentModel.EditorBrowsableState.Never))]);
+                method = new MethodProvider(hiddenSignature, method.BodyStatements!, modelFactory);
+                modelFactory.Update(methods: [.. modelFactory.Methods, method]);
+            }
+
+            if (repairKind == "visitor")
+            {
+                var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                    "VisitType", BindingFlags.NonPublic | BindingFlags.Instance)!;
+                visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+            }
+            else
+            {
+                _ = plugin.Object.GetWriter(modelFactory).Write();
+            }
+
+            var defaultValue = isNullable
+                ? "((global::Samples.Models.DiscriminatorKind?)default)"
+                : "((global::Samples.Models.DiscriminatorKind)default)";
+            Assert.That(method.BodyStatements!.ToDisplayString(),
+                Does.Contain($"(kind is null) ? {defaultValue} : {conversion}"),
+                "Omitted/null factory inputs must preserve the constructor's typed default, including null for nullable enums.");
+            var afterRepair = method.BodyStatements!.ToDisplayString();
+            _ = plugin.Object.GetWriter(modelFactory).Write();
+            Assert.That(method.BodyStatements!.ToDisplayString(), Is.EqualTo(afterRepair),
+                "Repeated repair must retain both the null guard and supplied-input conversion.");
+        }
+
+        [TestCase("ExecutionIdentity", false)]
+        [TestCase("ReferencedExecutionIdentity", false)]
+        [TestCase("ExecutionIdentity", true)]
+        [TestCase("ReferencedExecutionIdentity", true)]
+        public void ConstructorRepairPreservesInternalEnumDiscriminator(string factoryName, bool repairAtWriteTime)
+        {
+            var discriminatorEnum = InputFactory.StringEnum(
+                "ExecutionIdentityProvisioningMode",
+                [("Referenced", "Referenced")],
+                access: "internal",
+                isExtensible: true,
+                clientNamespace: "Samples.Models");
+            var discriminatorProperty = InputFactory.Property(
+                "provisioningMode", discriminatorEnum, isRequired: true, isDiscriminator: true);
+            InputModelProperty[] properties =
+            [
+                discriminatorProperty,
+                InputFactory.Property("scope", InputPrimitiveType.String)
+            ];
+            var derivedModel = InputFactory.Model(
+                "ReferencedExecutionIdentity",
+                properties: properties,
+                discriminatedKind: "Referenced");
+            var baseModel = InputFactory.Model(
+                "ExecutionIdentity",
+                properties: properties,
+                derivedModels: [derivedModel]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputEnums: () => [discriminatorEnum],
+                inputModels: () => [derivedModel, baseModel]);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = modelFactory.Methods.Single(m => m.Signature.Name == factoryName);
+            var isBaseFactory = factoryName == "ExecutionIdentity";
+            var expectedDiscriminator = isBaseFactory
+                ? "new global::Samples.Models.ExecutionIdentityProvisioningMode(provisioningMode)"
+                : "global::Samples.Models.ExecutionIdentityProvisioningMode.Referenced";
+
+            // Anchor the regression in the correct upstream factory, without a previous API contract.
+            if (isBaseFactory)
+            {
+                Assert.That(method.Signature.Parameters.Single(p => p.Name == "provisioningMode").Type,
+                    Is.EqualTo(new CSharpType(typeof(string))));
+            }
+            else
+            {
+                Assert.That(method.Signature.Parameters.Any(p => p.Name == "provisioningMode"), Is.False);
+            }
+            Assert.That(method.BodyStatements!.ToDisplayString(), Does.Contain(expectedDiscriminator),
+                "The upstream factory must supply the discriminator before management repair.");
+
+            if (repairAtWriteTime)
+            {
+                // Exercise the write-time repair independently, starting with the unmodified upstream body.
+                _ = plugin.Object.GetWriter(modelFactory).Write();
+            }
+            else
+            {
+                var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                    "VisitType", BindingFlags.NonPublic | BindingFlags.Instance)!;
+                visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+            }
+
+            Assert.That(method.BodyStatements!.ToDisplayString(), Does.Contain(expectedDiscriminator),
+                "Management constructor repair must not discard the discriminator.");
+        }
+
+        [TestCase("ExecutionIdentity")]
+        [TestCase("ReferencedExecutionIdentity")]
+        public void WriteTimeRepairPreservesHiddenOverloadDiscriminator(string factoryName)
+        {
+            var discriminatorEnum = InputFactory.StringEnum(
+                "ExecutionIdentityProvisioningMode", [("Referenced", "Referenced")],
+                access: "internal", isExtensible: true, clientNamespace: "Samples.Models");
+            var derivedModel = InputFactory.Model(
+                "ReferencedExecutionIdentity", properties: [], discriminatedKind: "Referenced");
+            var baseModel = InputFactory.Model(
+                "ExecutionIdentity",
+                properties: [InputFactory.Property("provisioningMode", discriminatorEnum, isRequired: true, isDiscriminator: true)],
+                derivedModels: [derivedModel]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputEnums: () => [discriminatorEnum],
+                inputModels: () => [baseModel, derivedModel]);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var primaryMethod = modelFactory.Methods.Single(m => m.Signature.Name == factoryName);
+            var signature = primaryMethod.Signature;
+            var hiddenSignature = new MethodSignature(
+                signature.Name,
+                signature.Description,
+                signature.Modifiers,
+                signature.ReturnType,
+                signature.ReturnDescription,
+                [.. signature.Parameters, new ParameterProvider("legacyValue", $"Legacy input.", typeof(string), Default)],
+                [new AttributeStatement(typeof(System.ComponentModel.EditorBrowsableAttribute),
+                    FrameworkEnumValue(System.ComponentModel.EditorBrowsableState.Never))]);
+            // Model the direct-constructor body of a previously generated hidden overload, rather than
+            // a delegating overload that is repaired by a different path.
+            var hiddenMethod = new MethodProvider(hiddenSignature, primaryMethod.BodyStatements!, modelFactory);
+            modelFactory.Update(methods: [.. modelFactory.Methods, hiddenMethod]);
+            var expectedDiscriminator = factoryName == "ExecutionIdentity"
+                ? "new global::Samples.Models.ExecutionIdentityProvisioningMode(provisioningMode)"
+                : "global::Samples.Models.ExecutionIdentityProvisioningMode.Referenced";
+            Assert.That(Management.Visitors.ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(hiddenMethod), Is.True);
+            Assert.That(hiddenMethod.BodyStatements!.ToDisplayString(), Does.Contain(expectedDiscriminator));
+
+            // Primary repair deliberately skips hidden overloads. Only the write-time compatibility
+            // repair can update this method, so checking its body distinguishes the two paths.
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+            Assert.That(hiddenMethod.BodyStatements!.ToDisplayString(), Does.Contain(expectedDiscriminator));
+            var generated = plugin.Object.GetWriter(modelFactory).Write().Content;
+            Assert.That(hiddenMethod.BodyStatements!.ToDisplayString(), Does.Contain(expectedDiscriminator));
+            Assert.That(generated, Does.Contain("legacyValue"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void RepeatedConstructorRepairPreservesDiscriminatorsFromEachHierarchyLevel(bool useEnum)
+        {
+            var discriminatorEnum = InputFactory.StringEnum(
+                "HierarchyKind", [("Child", "Child")], access: "internal", isExtensible: true,
+                clientNamespace: "Samples.Models");
+            var grandChildModel = InputFactory.Model(
+                "GrandChildModel", properties: [], discriminatedKind: "GrandChild");
+            var childModel = InputFactory.Model(
+                "ChildModel",
+                properties: [InputFactory.Property("nestedKind", InputPrimitiveType.String, isRequired: true, isDiscriminator: true)],
+                discriminatedKind: "Child",
+                derivedModels: [grandChildModel]);
+            var baseModel = InputFactory.Model(
+                "BaseModel",
+                properties: [InputFactory.Property("kind", useEnum ? discriminatorEnum : InputPrimitiveType.String, isRequired: true, isDiscriminator: true)],
+                derivedModels: [childModel]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputEnums: () => useEnum ? [discriminatorEnum] : [],
+                inputModels: () => [baseModel, childModel, grandChildModel]);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var baseFactory = modelFactory.Methods.Single(m => m.Signature.Name == "BaseModel");
+            var grandChildFactory = modelFactory.Methods.Single(m => m.Signature.Name == "GrandChildModel");
+            var expectedBaseDiscriminator = useEnum ? "new global::Samples.Models.HierarchyKind(kind)" : "kind";
+            var expectedParentDiscriminator = useEnum ? "global::Samples.Models.HierarchyKind.Child" : "\"Child\"";
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType", BindingFlags.NonPublic | BindingFlags.Instance)!;
+
+            AssertDiscriminators();
+            visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+            AssertDiscriminators();
+            var afterVisit = grandChildFactory.BodyStatements!.ToDisplayString();
+            _ = plugin.Object.GetWriter(modelFactory).Write();
+            AssertDiscriminators();
+            Assert.That(grandChildFactory.BodyStatements!.ToDisplayString(), Is.EqualTo(afterVisit));
+
+            void AssertDiscriminators()
+            {
+                Assert.That(baseFactory.BodyStatements!.ToDisplayString(), Does.Contain(expectedBaseDiscriminator));
+                Assert.That(grandChildFactory.BodyStatements!.ToDisplayString(), Does.Contain(expectedParentDiscriminator));
+                Assert.That(grandChildFactory.BodyStatements!.ToDisplayString(), Does.Contain("\"GrandChild\""));
+            }
+        }
+
+        [Test]
         public void DateTimeFactoryParameterBackCompatKeepsMrwDeserializationLocals()
         {
             var dateTimeType = new InputDateTimeType(

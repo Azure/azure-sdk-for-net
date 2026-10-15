@@ -17,7 +17,7 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    /// <summary> An device resource belonging to a device group resource. </summary>
+    /// <summary> A device resource belonging to a device group resource. </summary>
     public partial class SphereDeviceData : ResourceData, IJsonModel<SphereDeviceData>
     {
         /// <param name="data"> The data to parse. </param>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Sphere
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SphereDeviceData(

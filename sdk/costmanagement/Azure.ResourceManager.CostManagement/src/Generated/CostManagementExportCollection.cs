@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CostManagementExportData, CostManagementExportResource>(new ExportsGetAllAsyncCollectionResultOfT(_exportsRestClient, Id.ToString(), expand, context, "CostManagementExportCollection.GetAll"), data => new CostManagementExportResource(Client, data));
+            return new AsyncPageableWrapper<CostManagementExportData, CostManagementExportResource>(new CostManagementExportDataAsyncCollectionResultOfT(_exportsRestClient, Id.ToString(), expand, context, "CostManagementExportCollection.GetAll"), data => new CostManagementExportResource(Client, data));
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CostManagementExportData, CostManagementExportResource>(new ExportsGetAllCollectionResultOfT(_exportsRestClient, Id.ToString(), expand, context, "CostManagementExportCollection.GetAll"), data => new CostManagementExportResource(Client, data));
+            return new PageableWrapper<CostManagementExportData, CostManagementExportResource>(new CostManagementExportDataCollectionResultOfT(_exportsRestClient, Id.ToString(), expand, context, "CostManagementExportCollection.GetAll"), data => new CostManagementExportResource(Client, data));
         }
 
         /// <summary>

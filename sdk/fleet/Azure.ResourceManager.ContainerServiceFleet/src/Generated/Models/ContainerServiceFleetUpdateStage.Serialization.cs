@@ -91,10 +91,20 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(MemberSelector))
+            {
+                writer.WritePropertyName("memberSelector"u8);
+                writer.WriteObjectValue(MemberSelector, options);
+            }
             if (Optional.IsDefined(AfterStageWaitInSeconds))
             {
                 writer.WritePropertyName("afterStageWaitInSeconds"u8);
                 writer.WriteNumberValue(AfterStageWaitInSeconds.Value);
+            }
+            if (Optional.IsDefined(MaxAllowedFailures))
+            {
+                writer.WritePropertyName("maxAllowedFailures"u8);
+                writer.WriteStringValue(MaxAllowedFailures);
             }
             if (Optional.IsDefined(MaxConcurrency))
             {
@@ -165,7 +175,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
             string name = default;
             IList<ContainerServiceFleetUpdateGroup> groups = default;
+            MemberSelector memberSelector = default;
             int? afterStageWaitInSeconds = default;
+            string maxAllowedFailures = default;
             string maxConcurrency = default;
             IList<ContainerServiceFleetGateConfiguration> beforeGates = default;
             IList<ContainerServiceFleetGateConfiguration> afterGates = default;
@@ -191,6 +203,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     groups = array;
                     continue;
                 }
+                if (prop.NameEquals("memberSelector"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    memberSelector = MemberSelector.DeserializeMemberSelector(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("afterStageWaitInSeconds"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -198,6 +219,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                         continue;
                     }
                     afterStageWaitInSeconds = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("maxAllowedFailures"u8))
+                {
+                    maxAllowedFailures = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("maxConcurrency"u8))
@@ -235,13 +261,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ContainerServiceFleetUpdateStage(
                 name,
                 groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroup>(),
+                memberSelector,
                 afterStageWaitInSeconds,
+                maxAllowedFailures,
                 maxConcurrency,
                 beforeGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>(),
                 afterGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>(),

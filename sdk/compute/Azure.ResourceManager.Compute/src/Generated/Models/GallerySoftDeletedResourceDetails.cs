@@ -92,5 +92,23 @@ namespace Azure.ResourceManager.Compute.Models
                 Properties.SoftDeletedOn = value;
             }
         }
+
+        /// <summary> The timestamp after which a soft-deleted gallery image version is no longer consumable for VM/VMSS creation or VMSS scale out. It is calculated from the soft-deleted time plus the retention period. In dateTime offset format. </summary>
+        public DateTimeOffset? ConsumptionEndsOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConsumptionEndsOn;
+            }
+        }
+
+        /// <summary> The timestamp at which a soft-deleted gallery image version is permanently (hard) deleted and can no longer be recovered. In dateTime offset format. </summary>
+        public DateTimeOffset? HardDeletionTargetOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HardDeletionTargetOn;
+            }
+        }
     }
 }

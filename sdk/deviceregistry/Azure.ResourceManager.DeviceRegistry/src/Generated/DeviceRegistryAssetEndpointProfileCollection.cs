@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceRegistryAssetEndpointProfileCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DeviceRegistryAssetEndpointProfileResource.ResourceType, out string deviceRegistryAssetEndpointProfileApiVersion);
             _assetEndpointProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryAssetEndpointProfileResource.ResourceType.Namespace, Diagnostics);
-            _assetEndpointProfilesRestClient = new AssetEndpointProfiles(_assetEndpointProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryAssetEndpointProfileApiVersion ?? "2026-03-01-preview");
+            _assetEndpointProfilesRestClient = new AssetEndpointProfiles(_assetEndpointProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DeviceRegistry/assetEndpointProfiles", out string assetEndpointProfilesApiVersionOverride) ? assetEndpointProfilesApiVersionOverride : "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new AssetEndpointProfilesGetByResourceGroupAsyncCollectionResultOfT(_assetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeviceRegistryAssetEndpointProfileCollection.GetAll"), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new DeviceRegistryAssetEndpointProfileDataAsyncCollectionResultOfT(_assetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeviceRegistryAssetEndpointProfileCollection.GetAll"), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new AssetEndpointProfilesGetByResourceGroupCollectionResultOfT(_assetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeviceRegistryAssetEndpointProfileCollection.GetAll"), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
+            return new PageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new DeviceRegistryAssetEndpointProfileDataCollectionResultOfT(_assetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeviceRegistryAssetEndpointProfileCollection.GetAll"), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
         }
 
         /// <summary>

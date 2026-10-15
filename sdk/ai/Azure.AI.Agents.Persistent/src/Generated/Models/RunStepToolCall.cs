@@ -12,7 +12,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a detailed tool call as recorded within a run step for an existing run.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFileSearchToolCall"/>, <see cref="RunStepBingGroundingToolCall"/>, <see cref="RunStepAzureAISearchToolCall"/>, <see cref="RunStepBrowserAutomationToolCall"/>, <see cref="RunStepMcpToolCall"/>, <see cref="RunStepComputerUseToolCall"/>, <see cref="RunStepSharepointToolCall"/>, <see cref="RunStepMicrosoftFabricToolCall"/>, <see cref="RunStepBingCustomSearchToolCall"/>, <see cref="RunStepAzureFunctionToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="RunStepOpenAPIToolCall"/>, <see cref="RunStepDeepResearchToolCall"/>, and <see cref="RunStepConnectedAgentToolCall"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepAzureAISearchToolCall"/>, <see cref="RunStepAzureFunctionToolCall"/>, <see cref="RunStepBingCustomSearchToolCall"/>, <see cref="RunStepBingGroundingToolCall"/>, <see cref="RunStepBrowserAutomationToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepComputerUseToolCall"/>, <see cref="RunStepConnectedAgentToolCall"/>, <see cref="RunStepDeepResearchToolCall"/>, <see cref="RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="RunStepMcpToolCall"/>, <see cref="RunStepMicrosoftFabricToolCall"/>, <see cref="RunStepOpenAPIToolCall"/>, and <see cref="RunStepSharepointToolCall"/>.
     /// </summary>
     public abstract partial class RunStepToolCall
     {

@@ -316,7 +316,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AcsRouterWorkerOfferAcceptedEventData(
@@ -329,10 +329,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 offerId,
                 assignmentId,
                 jobPriority,
-                workerLabels,
-                workerTags,
-                jobLabels,
-                jobTags);
+                workerLabels ?? new ChangeTrackingDictionary<string, string>(),
+                workerTags ?? new ChangeTrackingDictionary<string, string>(),
+                jobLabels ?? new ChangeTrackingDictionary<string, string>(),
+                jobTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class AcsRouterWorkerOfferAcceptedEventDataConverter : JsonConverter<AcsRouterWorkerOfferAcceptedEventData>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -119,7 +120,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ManagedIdentityResourceId. </summary>
-        public BicepValue<string> ManagedIdentityResourceId
+        public BicepValue<ResourceIdentifier> ManagedIdentityResourceId
         {
             get
             {

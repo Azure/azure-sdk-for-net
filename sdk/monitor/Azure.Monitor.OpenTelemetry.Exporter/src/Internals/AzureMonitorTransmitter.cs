@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -10,7 +10,7 @@ using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
@@ -27,17 +27,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     /// <summary>
     /// This class encapsulates transmitting a collection of <see cref="TelemetryItem"/> to the configured Ingestion Endpoint.
     /// </summary>
-    internal class AzureMonitorTransmitter : ITransmitter, IMultiTenantTransmitter
+    internal class AzureMonitorTransmitter : ITransmitter, IMultiEndpointTransmitter
     {
         private const long StorageMaxSizeBytes = 52428800;
 
         internal readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
+
+        /// <summary>Sends routed telemetry not marked "aad". Never carries a token.</summary>
+        internal readonly ApplicationInsightsRestClient _routedRestClient;
+
+        /// <summary>Sends routed telemetry marked "aad". Null when there is no credential.</summary>
+        internal readonly ApplicationInsightsRestClient? _routedAadRestClient;
         internal PersistentBlobProvider? _fileBlobProvider;
         internal readonly AzureMonitorStatsbeat? _statsbeat;
         private readonly ConnectionVars _connectionVars;
         internal readonly TransmissionStateManager _transmissionStateManager;
         internal readonly TransmitFromStorageHandler? _transmitFromStorageHandler;
-        internal readonly MultiTenantStorage? _multiTenantStorage;
+        internal readonly MultiEndpointStorage? _multiEndpointStorage;
         private readonly bool _isAadEnabled;
         private readonly string? _storageDirectory;
         private readonly object _drainLock = new();
@@ -48,8 +54,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private int _drainWaitMilliseconds;
         internal bool _disposed;
 
+        internal bool IsAadEnabled => _isAadEnabled;
+
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform)
-            : this(options, platform, MultiTenantConfig.Enabled)
+            : this(options, platform, MultiEndpointConfig.Enabled)
         {
         }
 
@@ -57,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// The gate is a parameter so a test can exercise the routed path without mutating
         /// process-wide state, matching <see cref="AzureMonitorTraceExporter"/>.
         /// </remarks>
-        internal AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform, bool multiTenantEnabled)
+        internal AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform, bool multiEndpointEnabled)
         {
             if (options == null)
             {
@@ -66,44 +74,53 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             options.Retry.MaxRetries = 0;
 
-            _connectionVars = InitializeConnectionVars(options, platform);
-
+            _connectionVars = InitializeConnectionVars(options, platform, multiEndpointEnabled);
             _transmissionStateManager = new TransmissionStateManager(_connectionVars.IngestionEndpoint);
 
             _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, out _isAadEnabled);
 
-            // BearerTokenAuthenticationPolicy sits in the shared pipeline, so it would attach a token
-            // for the exporter's own audience to every routed request, including ones addressed to a
-            // host named by an Activity tag. Refuse the combination rather than disclose the token.
-            if (multiTenantEnabled && _isAadEnabled)
-            {
-                _transmissionStateManager.Dispose();
+            // Routed telemetry never uses the exporter's own token; only "aad" routes get one.
+            _routedRestClient = _applicationInsightsRestClient;
 
-                throw new NotSupportedException(
-                    "Multi-tenant export cannot be used with Microsoft Entra ID authentication. The credential is scoped to this exporter's audience and would be sent to endpoints supplied by telemetry, so either clear AzureMonitorExporterOptions.Credential or disable the Azure.Monitor.OpenTelemetry.EnableMultiTenantExport switch.");
+            if (multiEndpointEnabled && options.Credential != null)
+            {
+                _routedRestClient = CreateRestClient(options, _connectionVars, scope: null);
+
+                var routedScope = MultiEndpointConfig.GetAadScope();
+                _routedAadRestClient = CreateRestClient(options, _connectionVars, routedScope);
+                AzureMonitorExporterEventSource.Log.MultiEndpointAadEnabled(options.Credential.GetType().Name, routedScope);
             }
 
             _fileBlobProvider = InitializeOfflineStorage(platform, _connectionVars, options.DisableOfflineStorage, options.StorageDirectory, out var storageDirectory);
 
             _storageDirectory = storageDirectory;
 
-            _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
+            // Statsbeat picks its region from the configured ingestion endpoint and attributes every
+            // measurement to the configured key. With no connection string there is neither, and a
+            // routed destination cannot supply them: it is chosen per item, long after this runs.
+            _statsbeat = _connectionVars.IsUnconfigured ? null : InitializeStatsbeat(options, _connectionVars, platform);
 
-            if (_fileBlobProvider != null)
+            // Nothing can be addressed to a component the process does not have, so the handler would
+            // drain an empty directory to an endpoint that names nobody. Not creating it keeps that
+            // impossible rather than merely unused.
+            if (_fileBlobProvider != null && !_connectionVars.IsUnconfigured)
             {
                 _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars, _isAadEnabled, _statsbeat?.NetworkSdkStatsManager, storageDirectory);
             }
 
             // Partitions live in a sibling directory, never under storageDirectory: the blob
             // provider's size tracker sums subdirectories recursively, so nesting them would let a
-            // tenant backlog exhaust the host's own storage quota.
-            if (multiTenantEnabled && storageDirectory != null)
+            // routed backlog exhaust the host's own storage quota.
+            if (multiEndpointEnabled && storageDirectory != null)
             {
-                _multiTenantStorage = new MultiTenantStorage(_applicationInsightsRestClient, _connectionVars, _isAadEnabled, storageDirectory + MultiTenantStorage.RootDirectorySuffix, MultiTenantStorage.TotalStorageMaxSizeBytes, _statsbeat?.NetworkSdkStatsManager);
+                _multiEndpointStorage = new MultiEndpointStorage(_routedRestClient, _routedAadRestClient, _connectionVars, storageDirectory + MultiEndpointStorage.RootDirectorySuffix, MultiEndpointStorage.TotalStorageMaxSizeBytes, _statsbeat?.NetworkSdkStatsManager);
             }
         }
 
         internal static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform)
+            => InitializeConnectionVars(options, platform, multiEndpointEnabled: false);
+
+        internal static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform, bool multiEndpointEnabled)
         {
             if (options.ConnectionString == null)
             {
@@ -119,32 +136,44 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return ConnectionStringParser.GetValues(options.ConnectionString);
             }
 
+            // Routing takes every destination from the telemetry, so a process that only routes has
+            // no component of its own to name. Without routing there is nowhere to send anything.
+            if (multiEndpointEnabled)
+            {
+                AzureMonitorExporterEventSource.Log.RoutingWithoutConnectionString();
+
+                return ConnectionVars.CreateUnconfigured();
+            }
+
             throw new InvalidOperationException("A connection string was not found. Please set your connection string.");
         }
 
         private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars, out bool isAadEnabled)
         {
-            HttpPipeline pipeline;
+            isAadEnabled = options.Credential != null;
 
-            if (options.Credential != null)
+            var scope = isAadEnabled ? AadHelper.GetScope(connectionVars.AadAudience) : null;
+            var restClient = CreateRestClient(options, connectionVars, scope);
+
+            if (isAadEnabled)
             {
-                var scope = AadHelper.GetScope(connectionVars.AadAudience);
-                var httpPipelinePolicy = new HttpPipelinePolicy[]
+                AzureMonitorExporterEventSource.Log.SetAADCredentialsToPipeline(options.Credential!.GetType().Name, scope!);
+            }
+
+            return restClient;
+        }
+
+        private static ApplicationInsightsRestClient CreateRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars, string? scope)
+        {
+            var httpPipelinePolicy = scope == null
+                ? new HttpPipelinePolicy[] { new IngestionRedirectPolicy() }
+                : new HttpPipelinePolicy[]
                 {
-                    new BearerTokenAuthenticationPolicy(options.Credential, scope),
+                    new BearerTokenAuthenticationPolicy(options.Credential!, scope),
                     new IngestionRedirectPolicy()
                 };
 
-                isAadEnabled = true;
-                pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-                AzureMonitorExporterEventSource.Log.SetAADCredentialsToPipeline(options.Credential.GetType().Name, scope);
-            }
-            else
-            {
-                isAadEnabled = false;
-                var httpPipelinePolicy = new HttpPipelinePolicy[] { new IngestionRedirectPolicy() };
-                pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-            }
+            var pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
 
             return new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.IngestionEndpoint);
         }
@@ -157,10 +186,36 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
+                    var subDirectoryOverride = StorageConfig.GetSubDirectoryOverride();
+
+                    // Dropping a connection string moves this directory, stranding whatever the prior
+                    // configuration persisted, exactly as changing an instrumentation key does today.
                     storageDirectory = StorageHelper.GetStorageDirectory(
                         platform: platform,
                         configuredStorageDirectory: configuredStorageDirectory,
-                        instrumentationKey: connectionVars.InstrumentationKey);
+                        instrumentationKey: connectionVars.InstrumentationKey,
+                        omitInstrumentationKey: connectionVars.IsUnconfigured,
+                        subDirectoryOverride: subDirectoryOverride);
+
+                    if (subDirectoryOverride != null)
+                    {
+                        AzureMonitorExporterEventSource.Log.StorageSubDirectoryOverrideApplied(StorageConfig.SubDirectoryOverrideName, subDirectoryOverride, storageDirectory);
+                    }
+
+                    // The directory is still needed: it roots the per-destination storage that routed
+                    // telemetry persists into. A provider here would not be, though. Nothing writes to
+                    // it, because every send is routed, and nothing drains it, because there is no
+                    // component to drain it to. Building one would only create an empty directory and
+                    // a maintenance timer that outlive the process's usefulness.
+                    //
+                    // Returning before the event matters as much as returning at all: announcing
+                    // persistent storage here is where an operator would start when asking why a
+                    // backlog is not moving, and there is no backlog to move. Event 77 has already
+                    // explained the configuration.
+                    if (connectionVars.IsUnconfigured)
+                    {
+                        return null;
+                    }
 
                     AzureMonitorExporterEventSource.Log.InitializedPersistentStorage(connectionVars.InstrumentationKey, storageDirectory);
 
@@ -228,7 +283,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public void DrainStorage(int waitMilliseconds)
         {
             var handler = _transmitFromStorageHandler;
-            if (handler == null && _multiTenantStorage == null)
+            if (handler == null && _multiEndpointStorage == null)
             {
                 return;
             }
@@ -247,7 +302,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     // nothing new to gather: reuse what is running, because a composite completes
                     // after its inner drain does, and starting a fresh pass in that window spends a
                     // budget that may already be gone and leaves the pipeline disposed underneath it.
-                    if (_multiTenantStorage == null)
+                    if (_multiEndpointStorage == null)
                     {
                         drain = existing;
                     }
@@ -273,7 +328,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         /// <summary>
-        /// Drains the host's own storage and every tenant partition, so a shutdown budget covers
+        /// Drains the host's own storage and every endpoint partition, so a shutdown budget covers
         /// routed telemetry rather than only the exporter's own.
         /// </summary>
         private Task DrainAllAsync(TransmitFromStorageHandler? handler)
@@ -285,9 +340,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 drains.Add(handler.DrainAsync());
             }
 
-            if (_multiTenantStorage != null)
+            if (_multiEndpointStorage != null)
             {
-                foreach (var partition in _multiTenantStorage.Partitions)
+                foreach (var partition in _multiEndpointStorage.Partitions)
                 {
                     drains.Add(partition.TransmitFromStorageHandler.DrainAsync());
                 }
@@ -389,7 +444,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // regions. A failing region does not stop the rest.
             for (int i = 0; i < routeBatch.Count; i++)
             {
-                if (SendGroupAsync(routeBatch[i], origin, async: false, cancellationToken).EnsureCompleted() != ExportResult.Success)
+                if (SendGroupAsync(routeBatch[i], routeBatch.Sequence, origin, async: false, cancellationToken).EnsureCompleted() != ExportResult.Success)
                 {
                     result = ExportResult.Failure;
                 }
@@ -399,20 +454,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         /// <remarks>
-        /// A group that cannot be sent is written to its endpoint's own storage partition, so one
-        /// region's backlog and back-off never affect another's.
+        /// A group that cannot be sent is persisted to its route's own storage partition. AAD groups
+        /// are sent with a token, others without; AAD groups without a credential are dropped.
         /// </remarks>
-        private async ValueTask<ExportResult> SendGroupAsync(EndpointRouteBatch.Group group, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
+        private async ValueTask<ExportResult> SendGroupAsync(EndpointRouteBatch.Group group, long exportSequence, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {
-            var storage = _multiTenantStorage?.TryGet(group.IngestionEndpoint);
+            var itemCount = group.TelemetryItems.Count;
+            var restClient = group.IsAad ? _routedAadRestClient : _routedRestClient;
+
+            if (restClient == null)
+            {
+                AzureMonitorExporterEventSource.Log.RoutedAadTelemetryDroppedWithoutCredential(exportSequence, itemCount, group.Description);
+                ReportDelivery(exportSequence, group, itemCount, "dropped");
+
+                return ExportResult.Failure;
+            }
+
+            var storage = _multiEndpointStorage?.TryGet(group.IngestionEndpoint, group.IsAad);
 
             if (storage != null && (IsPersistOnly || storage.TransmissionStateManager.State != TransmissionState.Closed))
             {
-                return SaveGroupForLaterTransmission(group, storage);
+                var deferred = SaveGroupForLaterTransmission(group, storage);
+                ReportDelivery(exportSequence, group, itemCount, deferred == ExportResult.Success ? "persisted" : "dropped");
+
+                return deferred;
             }
 
             var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
             Uri? trackUri = null;
+            var statusCode = 0;
 
             try
             {
@@ -421,17 +491,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 var stopwatch = networkSdkStats != null ? Stopwatch.StartNew() : null;
 
                 using var httpMessage = async
-                    ? await _applicationInsightsRestClient.InternalTrackAsync(group.TelemetryItems, trackUri, cancellationToken).ConfigureAwait(false)
-                    : _applicationInsightsRestClient.InternalTrackAsync(group.TelemetryItems, trackUri, cancellationToken).Result;
+                    ? await restClient.InternalTrackAsync(group.TelemetryItems, trackUri, cancellationToken).ConfigureAwait(false)
+                    : restClient.InternalTrackAsync(group.TelemetryItems, trackUri, cancellationToken).Result;
 
                 stopwatch?.Stop();
+
+                statusCode = httpMessage.HasResponse ? httpMessage.Response.Status : 0;
 
                 var result = HttpPipelineHelper.IsSuccess(httpMessage);
 
                 if (networkSdkStats != null)
                 {
                     // Uri.Host reflects any redirect that was followed, so it names the stamp that
-                    // actually answered rather than the endpoint the tenant was routed to.
+                    // actually answered rather than the endpoint the telemetry was routed to.
                     var requestHost = httpMessage.Request.Uri.Host;
 
                     if (httpMessage.HasResponse)
@@ -457,36 +529,78 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     storage?.TransmissionStateManager.ResetConsecutiveErrors();
                     storage?.TransmissionStateManager.CloseTransmission();
+                    ReportDelivery(exportSequence, group, itemCount, "transmitted", itemCount, statusCode);
 
                     return result;
                 }
 
                 storage?.TransmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
 
-                return HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter: null, networkSdkStats).ExportResult;
+                if (statusCode == ResponseStatusCodes.Unauthorized || statusCode == ResponseStatusCodes.Forbidden)
+                {
+                    AzureMonitorExporterEventSource.Log.RoutedAuthenticationFailed(group.Description, statusCode, group.IsAad);
+                }
+
+                var transmission = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, group.IsAad, telemetrySchemaTypeCounter: null, networkSdkStats);
+                var accepted = AcceptedCount(transmission.ItemsAccepted, itemCount);
+                ReportDelivery(exportSequence, group, itemCount, DescribeDelivery(transmission.ExportResult, accepted, itemCount, statusCode), accepted, statusCode);
+
+                return transmission.ExportResult;
             }
             catch (Exception ex)
             {
                 // Null when the destination could not even be constructed. Building a Uri here would
                 // throw a second time, out of the catch, abandoning the remaining endpoint groups.
                 networkSdkStats?.TrackException(trackUri?.Host, exceptionType: ex.GetType().FullName);
-                AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _isAadEnabled, _connectionVars.InstrumentationKey, ex);
+                AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, group.IsAad, _connectionVars.InstrumentationKey, ex);
 
-                return storage == null ? ExportResult.Failure : SaveGroupForLaterTransmission(group, storage);
+                // An unreachable endpoint arrives here, so this is the outcome most worth reporting.
+                var thrown = storage == null ? ExportResult.Failure : SaveGroupForLaterTransmission(group, storage);
+
+                // Reading the response can throw after ingestion answered, so acceptance is unknown.
+                ReportDelivery(exportSequence, group, itemCount, thrown == ExportResult.Success ? "persisted" : "dropped", accepted: -1, statusCode);
+
+                return thrown;
             }
         }
 
-        private ExportResult SaveGroupForLaterTransmission(EndpointRouteBatch.Group group, MultiTenantStorage.EndpointStorage storage)
+        private static void ReportDelivery(long exportSequence, EndpointRouteBatch.Group group, int itemCount, string outcome, int accepted = -1, int statusCode = 0)
+            => AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(exportSequence, itemCount, group.Description, outcome, accepted, statusCode);
+
+        /// <summary>
+        /// Only the accepted count is asserted. A 206 settles each item separately, and which of the
+        /// rest were persisted for retry and which were rejected is not knowable from the result.
+        /// </summary>
+        private static string DescribeDelivery(ExportResult result, int accepted, int itemCount, int statusCode)
+        {
+            if (statusCode == ResponseStatusCodes.PartialSuccess)
+            {
+                return "partially accepted";
+            }
+
+            if (accepted >= itemCount)
+            {
+                return "transmitted";
+            }
+
+            return result == ExportResult.Success ? "persisted" : "dropped";
+        }
+
+        /// <summary>Returns -1 when ingestion reported no count, or one the batch cannot support.</summary>
+        private static int AcceptedCount(int? reported, int itemCount)
+            => reported is int value && value >= 0 && value <= itemCount ? value : -1;
+
+        private ExportResult SaveGroupForLaterTransmission(EndpointRouteBatch.Group group, MultiEndpointStorage.EndpointStorage storage)
         {
             try
             {
                 // A refusal is reported by BudgetedBlobProvider, which every persistence path shares.
-                return _multiTenantStorage!.SaveTelemetry(storage, HttpPipelineHelper.GetSerializedContent(group.TelemetryItems));
+                return _multiEndpointStorage!.SaveTelemetry(storage, HttpPipelineHelper.GetSerializedContent(group.TelemetryItems));
             }
             catch (Exception ex)
             {
                 // Reached on back-off and on a send exception, not only at shutdown.
-                AzureMonitorExporterEventSource.Log.RoutedTelemetryPersistenceThrew(group.IngestionEndpoint, ex);
+                AzureMonitorExporterEventSource.Log.RoutedTelemetryPersistenceThrew(group.Description, ex);
 
                 return ExportResult.Failure;
             }
@@ -497,6 +611,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             ExportResult result = ExportResult.Failure;
             if (cancellationToken.IsCancellationRequested)
             {
+                return result;
+            }
+
+            // This is the unrouted path: it sends to the configured endpoint under the configured
+            // key. With no connection string, both are placeholders that seed the REST client, so a
+            // send here would deliver a customer's telemetry to a host that names nobody, stamped
+            // with an empty key. Callers are all gated already; refusing here is what keeps that
+            // true when a new one is added.
+            if (_connectionVars.IsUnconfigured)
+            {
+                AzureMonitorExporterEventSource.Log.DroppedUnroutedTelemetryWithoutConnectionString();
                 return result;
             }
 
@@ -633,7 +758,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
 
                     _transmitFromStorageHandler?.Dispose();
-                    _multiTenantStorage?.Dispose();
+                    _multiEndpointStorage?.Dispose();
                     _statsbeat?.Dispose();
                     var fileBlobProvider = _fileBlobProvider as FileBlobProvider;
                     if (fileBlobProvider != null)

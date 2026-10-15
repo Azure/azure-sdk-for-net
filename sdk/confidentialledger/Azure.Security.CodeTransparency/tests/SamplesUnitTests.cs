@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -50,28 +50,21 @@ namespace Azure.Security.CodeTransparency.Tests
         [Test]
         public async Task Snippet_Readme_CodeTransparencySubmission_Test()
         {
-            // WaitUntil.Started returns after the entry is accepted, then the operation polls the
-            // entry resource until it is committed.
-            var createResponse = new MockResponse(303);
-            createResponse.AddHeader("Location", "https://foo.bar.com/entries/123.23");
-
-            var writer = new CborWriter();
-            writer.WriteStartMap(1);
-            writer.WriteTextString("EntryId");
-            writer.WriteTextString("123.23");
-            writer.WriteEndMap();
-            var committedEntryResponse = new MockResponse(200);
-            committedEntryResponse.SetContent(writer.Encode());
+            byte[] receiptBytes = readFileBytes("receipt.cose");
+            var createResponse = new MockResponse(201);
+            createResponse.AddHeader("Content-Type", "application/cose");
+            createResponse.AddHeader("Location", "https://foo.bar.com/entries/8.198");
+            createResponse.SetContent(receiptBytes);
 
             var statementResponse = new MockResponse(200);
             statementResponse.AddHeader("Content-Type", "application/cose");
             statementResponse.SetContent(new byte[] { 0x01, 0x02, 0x03 });
 
-            var mockTransport = new MockTransport(createResponse, committedEntryResponse, statementResponse);
+            var mockTransport = new MockTransport(createResponse, statementResponse);
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
             };
 
             #region Snippet:CodeTransparencySubmission
@@ -90,12 +83,11 @@ namespace Azure.Security.CodeTransparency.Tests
             FileStream fileStream = File.OpenRead("signature.cose");
             BinaryData content = BinaryData.FromStream(fileStream);
 #endif
-            CreateEntryOperation operation = await client.CreateEntryAsync(WaitUntil.Started, content);
+            NullableResponse<BinaryData> receiptResponse = await client.CreateEntryAsync(content);
             #endregion Snippet:CodeTransparencySubmission
 
             #region Snippet:CodeTransparencyDownloadTransparentStatement
-            await operation.WaitForCompletionAsync();
-            string entryId = operation.Id;
+            string entryId = CcfReceipt.GetRegistrationTransactionId(receiptResponse.Value.ToArray());
             Console.WriteLine($"The entry ID to use to retrieve the receipt and transparent statement is {{{entryId}}}");
             #region Snippet:CodeTransparencySample2_GetEntryStatement
             Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);
@@ -103,8 +95,7 @@ namespace Azure.Security.CodeTransparency.Tests
             #endregion Snippet:CodeTransparencySample2_GetEntryStatement
             #endregion Snippet:CodeTransparencyDownloadTransparentStatement
 
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.IsTrue(receiptResponse.HasValue);
 
             #region Snippet:CodeTransparencySample2_GetRawReceipt
 #if SNIPPET
@@ -138,7 +129,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
             };
 
             #region Snippet:CodeTransparencySubmissionSyncReceipt
@@ -206,7 +197,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://some.identity.com"
+                IdentityClientEndpoint = new Uri("https://some.identity.com")
             };
 
             #region Snippet:CodeTransparencyVerification_StoreForOfflineUse
@@ -313,7 +304,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
             };
             #region Snippet:CodeTransparencyVerification
 #if !SNIPPET
@@ -329,10 +320,10 @@ namespace Azure.Security.CodeTransparency.Tests
                 var verificationOptions = new CodeTransparencyVerificationOptions
                 {
 #if !SNIPPET
-                    AuthorizedDomains = new string[] { "foo.bar.com" },
+                    AuthorizedDomains = { "foo.bar.com" },
 #endif
 #if SNIPPET
-                    AuthorizedDomains = new string[] { "<< service name >>.confidential-ledger.azure.com" },
+                    AuthorizedDomains = { "<< service name >>.confidential-ledger.azure.com" },
 #endif
                     AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
                     UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
@@ -372,7 +363,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             Response<CodeTransparencyVerificationKeySet> jwksDoc = client.GetPublicKeys();

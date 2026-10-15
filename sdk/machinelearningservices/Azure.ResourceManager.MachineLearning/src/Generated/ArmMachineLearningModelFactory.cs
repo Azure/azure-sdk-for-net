@@ -76,46 +76,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                allowPublicAccessWhenBehindVnet is null && enableDataIsolation is null && enableServiceSideCMKEncryption is null && primaryUserAssignedIdentity is null && isHbiWorkspace is null && isProvisionNetworkNow is null && serviceManagedResourcesCosmosDBCollectionsThroughput is null && isStorageHnsEnabled is null && isV1LegacyMode is null && workspaceHubConfig is null && workspaceId is null ? default : new WorkspaceProperties(
+                allowPublicAccessWhenBehindVnet is null && applicationInsights is null && associatedWorkspaces is null && containerRegistry is null && description is null && discoveryUri is null && enableDataIsolation is null && enableServiceSideCMKEncryption is null && encryptionProperty is null && featureStoreSettings is null && friendlyName is null && isHbiWorkspace is null && hubResourceId is null && imageBuildCompute is null && keyVault is null && managedNetwork is null && mlFlowTrackingUri is null && notebookInfo is null && primaryUserAssignedIdentity is null && privateEndpointConnections is null && privateLinkCount is null && isProvisionNetworkNow is null && provisioningState is null && publicNetworkAccess is null && serverlessComputeSettings is null && serviceManagedResourcesCosmosDBCollectionsThroughput is null && serviceProvisionedResourceGroup is null && sharedPrivateLinkResources is null && storageAccount is null && isStorageHnsEnabled is null && systemDatastoresAuthMode is null && tenantId is null && isV1LegacyMode is null && workspaceHubConfig is null && workspaceId is null ? default : new WorkspaceProperties(
                     allowPublicAccessWhenBehindVnet,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    applicationInsights,
+                    (associatedWorkspaces ?? new ChangeTrackingList<string>()).ToList(),
+                    containerRegistry,
+                    description,
+                    discoveryUri,
                     enableDataIsolation,
                     enableServiceSideCMKEncryption,
-                    new MachineLearningEncryptionProperty(
-                        default,
-                        new IdentityForCmk(primaryUserAssignedIdentity, default),
-                        default,
-                        default,
-                        default,
-                        default,
-                        default),
-                    default,
-                    default,
+                    encryptionProperty,
+                    featureStoreSettings,
+                    friendlyName,
                     isHbiWorkspace,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    hubResourceId,
+                    imageBuildCompute,
+                    keyVault,
+                    managedNetwork,
+                    mlFlowTrackingUri,
+                    notebookInfo,
+                    primaryUserAssignedIdentity,
+                    (privateEndpointConnections ?? new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>()).ToList(),
+                    privateLinkCount,
                     isProvisionNetworkNow,
-                    default,
-                    default,
-                    default,
-                    new ServiceManagedResourcesSettings(new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
-                    default,
-                    default,
-                    default,
+                    provisioningState,
+                    publicNetworkAccess,
+                    serverlessComputeSettings,
+                    serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
+                    serviceProvisionedResourceGroup,
+                    (sharedPrivateLinkResources ?? new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>()).ToList(),
+                    storageAccount,
                     isStorageHnsEnabled,
-                    default,
-                    default,
+                    systemDatastoresAuthMode,
+                    tenantId,
                     isV1LegacyMode,
                     workspaceHubConfig,
                     workspaceId,
@@ -219,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new UnknownOutboundRule(
                 category,
                 status,
-                default,
+                @type is null ? default : new RuleType(@type),
                 errorInformation,
                 (parentRuleNames ?? new ChangeTrackingList<string>()).ToList(),
                 default);
@@ -239,7 +232,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new FqdnOutboundRule(
                 category,
                 status,
-                default,
+                RuleType.FQDN,
                 errorInformation,
                 (parentRuleNames ?? new ChangeTrackingList<string>()).ToList(),
                 default,
@@ -262,7 +255,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new PrivateEndpointOutboundRule(
                 category,
                 status,
-                default,
+                RuleType.PrivateEndpoint,
                 errorInformation,
                 (parentRuleNames ?? new ChangeTrackingList<string>()).ToList(),
                 default,
@@ -295,7 +288,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new ServiceTagOutboundRule(
                 category,
                 status,
-                default,
+                RuleType.ServiceTag,
                 errorInformation,
                 (parentRuleNames ?? new ChangeTrackingList<string>()).ToList(),
                 default,
@@ -445,7 +438,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 primaryUserAssignedIdentity,
                 publicNetworkAccessType,
                 serverlessComputeSettings,
-                new ServiceManagedResourcesSettings(new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
+                serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
                 systemDatastoresAuthMode,
                 isV1LegacyMode,
                 default), sku, tags ?? new ChangeTrackingDictionary<string, string>(), default);
@@ -482,7 +475,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 primaryUserAssignedIdentity,
                 publicNetworkAccessType,
                 serverlessComputeSettings,
-                serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
+                serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
                 systemDatastoresAuthMode,
                 isV1LegacyMode,
                 default);
@@ -816,15 +809,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                managedResourceId is null && managedResourceGroupAssignedIdentities is null && mlFlowRegistryUri is null && registryPrivateEndpointConnections is null ? default : new RegistryProperties(
-                    default,
-                    default,
-                    new ArmResourceId(managedResourceId, default),
-                    new ManagedResourceGroupSettings((managedResourceGroupAssignedIdentities ?? new ChangeTrackingList<ManagedResourceGroupAssignedIdentities>()).ToList(), default),
+                discoveryUri is null && intellectualPropertyPublisher is null && managedResourceId is null && managedResourceGroupAssignedIdentities is null && mlFlowRegistryUri is null && registryPrivateEndpointConnections is null && publicNetworkAccess is null && regionDetails is null ? default : new RegistryProperties(
+                    discoveryUri,
+                    intellectualPropertyPublisher,
+                    managedResourceId is null ? default : new ArmResourceId(managedResourceId, default),
+                    managedResourceGroupAssignedIdentities is null ? default : new ManagedResourceGroupSettings((managedResourceGroupAssignedIdentities ?? new ChangeTrackingList<ManagedResourceGroupAssignedIdentities>()).ToList(), default),
                     mlFlowRegistryUri,
                     (registryPrivateEndpointConnections ?? new ChangeTrackingList<RegistryPrivateEndpointConnection>()).ToList(),
-                    default,
-                    default,
+                    publicNetworkAccess,
+                    (regionDetails ?? new ChangeTrackingList<RegistryRegionArmDetails>()).ToList(),
                     default),
                 identity,
                 kind,
@@ -838,21 +831,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ManagedResourceGroupAssignedIdentities ManagedResourceGroupAssignedIdentities(Guid? principalId = default)
         {
             return new ManagedResourceGroupAssignedIdentities(principalId, default);
-        }
-
-        /// <param name="id">
-        /// This is the private endpoint connection name created on SRP
-        /// Full resource id: /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.MachineLearningServices/{resourceType}/{resourceName}/registryPrivateEndpointConnections/{peConnectionName}
-        /// </param>
-        /// <param name="location"> Same as workspace location. </param>
-        /// <param name="groupIds"> The group ids. </param>
-        /// <param name="privateEndpoint"> The PE network resource that is linked to this PE connection. </param>
-        /// <param name="registryPrivateLinkServiceConnectionState"> The connection state. </param>
-        /// <param name="provisioningState"> One of null, "Succeeded", "Provisioning", "Failed". While not approved, it's null. </param>
-        /// <returns> A new <see cref="Models.RegistryPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static RegistryPrivateEndpointConnection RegistryPrivateEndpointConnection(ResourceIdentifier id = default, AzureLocation? location = default, IEnumerable<string> groupIds = default, RegistryPrivateEndpoint privateEndpoint = default, RegistryPrivateLinkServiceConnectionState registryPrivateLinkServiceConnectionState = default, string provisioningState = default)
-        {
-            return new RegistryPrivateEndpointConnection(id, location, groupIds is null && privateEndpoint is null && registryPrivateLinkServiceConnectionState is null && provisioningState is null ? default : new RegistryPrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpoint, registryPrivateLinkServiceConnectionState, provisioningState, default), default);
         }
 
         /// <summary> The connection state. </summary>
@@ -1080,7 +1058,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.PendingUploadCredentialDto"/> instance for mocking. </returns>
         public static PendingUploadCredentialDto PendingUploadCredentialDto(string credentialType = default)
         {
-            return new UnknownPendingUploadCredentialDto(default, default);
+            return new UnknownPendingUploadCredentialDto(credentialType is null ? default : new PendingUploadCredentialType(credentialType), default);
         }
 
         /// <summary> The SasCredentialDto. </summary>
@@ -1088,7 +1066,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.SasCredentialDto"/> instance for mocking. </returns>
         public static SasCredentialDto SasCredentialDto(Uri sasUri = default)
         {
-            return new SasCredentialDto(default, default, sasUri);
+            return new SasCredentialDto(PendingUploadCredentialType.SAS, default, sasUri);
         }
 
         /// <summary> Azure Resource Manager resource envelope. </summary>
@@ -1268,7 +1246,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default,
                 isAnonymous,
                 isArchived,
-                default,
+                dataType is null ? default : new MachineLearningDataType(dataType),
                 dataUri);
         }
 
@@ -1294,7 +1272,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default,
                 isAnonymous,
                 isArchived,
-                default,
+                MachineLearningDataType.Mltable,
                 dataUri,
                 (referencedUris ?? new ChangeTrackingList<Uri>()).ToList());
         }
@@ -1319,7 +1297,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default,
                 isAnonymous,
                 isArchived,
-                default,
+                MachineLearningDataType.UriFile,
                 dataUri);
         }
 
@@ -1343,7 +1321,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default,
                 isAnonymous,
                 isArchived,
-                default,
+                MachineLearningDataType.UriFolder,
                 dataUri);
         }
 
@@ -1827,7 +1805,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.BatchDeploymentConfiguration"/> instance for mocking. </returns>
         public static BatchDeploymentConfiguration BatchDeploymentConfiguration(string deploymentConfigurationType = default)
         {
-            return new UnknownBatchDeploymentConfiguration(default, default);
+            return new UnknownBatchDeploymentConfiguration(deploymentConfigurationType is null ? default : new BatchDeploymentConfigurationType(deploymentConfigurationType), default);
         }
 
         /// <summary> Properties for a Batch Pipeline Component Deployment. </summary>
@@ -1842,7 +1820,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new BatchPipelineComponentDeploymentConfiguration(
-                default,
+                BatchDeploymentConfigurationType.PipelineComponent,
                 default,
                 componentId,
                 description,
@@ -1855,18 +1833,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningIdAssetReference"/> instance for mocking. </returns>
         public static MachineLearningIdAssetReference MachineLearningIdAssetReference(ResourceIdentifier assetId = default)
         {
-            return new MachineLearningIdAssetReference(default, default, assetId);
+            return new MachineLearningIdAssetReference(ReferenceType.Id, default, assetId);
         }
 
         /// <summary>
         /// Base definition for asset references.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MachineLearningIdAssetReference"/>, <see cref="Models.MachineLearningDataPathAssetReference"/>, and <see cref="Models.MachineLearningOutputPathAssetReference"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MachineLearningDataPathAssetReference"/>, <see cref="Models.MachineLearningIdAssetReference"/>, and <see cref="Models.MachineLearningOutputPathAssetReference"/>.
         /// </summary>
         /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
         /// <returns> A new <see cref="Models.MachineLearningAssetReferenceBase"/> instance for mocking. </returns>
         public static MachineLearningAssetReferenceBase MachineLearningAssetReferenceBase(string referenceType = default)
         {
-            return new UnknownAssetReferenceBase(default, default);
+            return new UnknownAssetReferenceBase(referenceType is null ? default : new ReferenceType(referenceType), default);
         }
 
         /// <summary> Reference to an asset via its path in a datastore. </summary>
@@ -1875,7 +1853,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningDataPathAssetReference"/> instance for mocking. </returns>
         public static MachineLearningDataPathAssetReference MachineLearningDataPathAssetReference(string datastoreId = default, string path = default)
         {
-            return new MachineLearningDataPathAssetReference(default, default, datastoreId, path);
+            return new MachineLearningDataPathAssetReference(ReferenceType.DataPath, default, datastoreId, path);
         }
 
         /// <summary> Reference to an asset via its path in a job output. </summary>
@@ -1884,7 +1862,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningOutputPathAssetReference"/> instance for mocking. </returns>
         public static MachineLearningOutputPathAssetReference MachineLearningOutputPathAssetReference(ResourceIdentifier jobId = default, string path = default)
         {
-            return new MachineLearningOutputPathAssetReference(default, default, jobId, path);
+            return new MachineLearningOutputPathAssetReference(ReferenceType.OutputPath, default, jobId, path);
         }
 
         /// <summary> The MachineLearningDeploymentResourceConfiguration. </summary>
@@ -2059,7 +2037,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 credentials,
-                default,
+                datastoreType is null ? default : new DatastoreType(datastoreType),
                 isDefault);
         }
 
@@ -2071,7 +2049,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningDatastoreCredentials"/> instance for mocking. </returns>
         public static MachineLearningDatastoreCredentials MachineLearningDatastoreCredentials(string credentialsType = default)
         {
-            return new UnknownDatastoreCredentials(default, default);
+            return new UnknownDatastoreCredentials(credentialsType is null ? default : new CredentialsType(credentialsType), default);
         }
 
         /// <summary> Account key datastore credentials configuration. </summary>
@@ -2079,7 +2057,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningAccountKeyDatastoreCredentials"/> instance for mocking. </returns>
         public static MachineLearningAccountKeyDatastoreCredentials MachineLearningAccountKeyDatastoreCredentials(MachineLearningAccountKeyDatastoreSecrets secrets = default)
         {
-            return new MachineLearningAccountKeyDatastoreCredentials(default, default, secrets);
+            return new MachineLearningAccountKeyDatastoreCredentials(CredentialsType.AccountKey, default, secrets);
         }
 
         /// <summary> Datastore account key secrets. </summary>
@@ -2087,7 +2065,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningAccountKeyDatastoreSecrets"/> instance for mocking. </returns>
         public static MachineLearningAccountKeyDatastoreSecrets MachineLearningAccountKeyDatastoreSecrets(string key = default)
         {
-            return new MachineLearningAccountKeyDatastoreSecrets(default, default, key);
+            return new MachineLearningAccountKeyDatastoreSecrets(SecretsType.AccountKey, default, key);
         }
 
         /// <summary>
@@ -2098,7 +2076,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningDatastoreSecrets"/> instance for mocking. </returns>
         public static MachineLearningDatastoreSecrets MachineLearningDatastoreSecrets(string secretsType = default)
         {
-            return new UnknownDatastoreSecrets(default, default);
+            return new UnknownDatastoreSecrets(secretsType is null ? default : new SecretsType(secretsType), default);
         }
 
         /// <summary> Datastore certificate secrets. </summary>
@@ -2106,7 +2084,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningCertificateDatastoreSecrets"/> instance for mocking. </returns>
         public static MachineLearningCertificateDatastoreSecrets MachineLearningCertificateDatastoreSecrets(string certificate = default)
         {
-            return new MachineLearningCertificateDatastoreSecrets(default, default, certificate);
+            return new MachineLearningCertificateDatastoreSecrets(SecretsType.Certificate, default, certificate);
         }
 
         /// <summary> Datastore SAS secrets. </summary>
@@ -2114,7 +2092,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningSasDatastoreSecrets"/> instance for mocking. </returns>
         public static MachineLearningSasDatastoreSecrets MachineLearningSasDatastoreSecrets(string sasToken = default)
         {
-            return new MachineLearningSasDatastoreSecrets(default, default, sasToken);
+            return new MachineLearningSasDatastoreSecrets(SecretsType.Sas, default, sasToken);
         }
 
         /// <summary> Datastore Service Principal secrets. </summary>
@@ -2122,7 +2100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningServicePrincipalDatastoreSecrets"/> instance for mocking. </returns>
         public static MachineLearningServicePrincipalDatastoreSecrets MachineLearningServicePrincipalDatastoreSecrets(string clientSecret = default)
         {
-            return new MachineLearningServicePrincipalDatastoreSecrets(default, default, clientSecret);
+            return new MachineLearningServicePrincipalDatastoreSecrets(SecretsType.ServicePrincipal, default, clientSecret);
         }
 
         /// <summary> Certificate datastore credentials configuration. </summary>
@@ -2136,7 +2114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningCertificateDatastoreCredentials MachineLearningCertificateDatastoreCredentials(Uri authorityUri = default, Guid clientId = default, Uri resourceUri = default, MachineLearningCertificateDatastoreSecrets secrets = default, Guid tenantId = default, string thumbprint = default)
         {
             return new MachineLearningCertificateDatastoreCredentials(
-                default,
+                CredentialsType.Certificate,
                 default,
                 authorityUri,
                 clientId,
@@ -2150,7 +2128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningNoneDatastoreCredentials"/> instance for mocking. </returns>
         public static MachineLearningNoneDatastoreCredentials MachineLearningNoneDatastoreCredentials()
         {
-            return new MachineLearningNoneDatastoreCredentials(default, default);
+            return new MachineLearningNoneDatastoreCredentials(CredentialsType.None, default);
         }
 
         /// <summary> SAS datastore credentials configuration. </summary>
@@ -2158,7 +2136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningSasDatastoreCredentials"/> instance for mocking. </returns>
         public static MachineLearningSasDatastoreCredentials MachineLearningSasDatastoreCredentials(MachineLearningSasDatastoreSecrets secrets = default)
         {
-            return new MachineLearningSasDatastoreCredentials(default, default, secrets);
+            return new MachineLearningSasDatastoreCredentials(CredentialsType.Sas, default, secrets);
         }
 
         /// <summary> Service Principal datastore credentials configuration. </summary>
@@ -2171,7 +2149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningServicePrincipalDatastoreCredentials MachineLearningServicePrincipalDatastoreCredentials(Uri authorityUri = default, Guid clientId = default, Uri resourceUri = default, MachineLearningServicePrincipalDatastoreSecrets secrets = default, Guid tenantId = default)
         {
             return new MachineLearningServicePrincipalDatastoreCredentials(
-                default,
+                CredentialsType.ServicePrincipal,
                 default,
                 authorityUri,
                 clientId,
@@ -2205,7 +2183,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 credentials,
-                default,
+                DatastoreType.AzureBlob,
                 isDefault,
                 resourceGroup,
                 subscriptionId,
@@ -2238,7 +2216,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 credentials,
-                default,
+                DatastoreType.AzureDataLakeGen1,
                 isDefault,
                 resourceGroup,
                 subscriptionId,
@@ -2271,7 +2249,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 credentials,
-                default,
+                DatastoreType.AzureDataLakeGen2,
                 isDefault,
                 resourceGroup,
                 subscriptionId,
@@ -2307,7 +2285,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 credentials,
-                default,
+                DatastoreType.AzureFile,
                 isDefault,
                 resourceGroup,
                 subscriptionId,
@@ -2340,7 +2318,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 credentials,
-                default,
+                DatastoreType.OneLake,
                 isDefault,
                 artifact,
                 endpoint,
@@ -2357,7 +2335,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.OneLakeArtifact"/> instance for mocking. </returns>
         public static OneLakeArtifact OneLakeArtifact(string artifactName = default, string artifactType = default)
         {
-            return new UnknownOneLakeArtifact(artifactName, default, default);
+            return new UnknownOneLakeArtifact(artifactName, artifactType is null ? default : new OneLakeArtifactType(artifactType), default);
         }
 
         /// <summary> The LakeHouseArtifact. </summary>
@@ -2365,7 +2343,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.LakeHouseArtifact"/> instance for mocking. </returns>
         public static LakeHouseArtifact LakeHouseArtifact(string artifactName = default)
         {
-            return new LakeHouseArtifact(artifactName, default, default);
+            return new LakeHouseArtifact(artifactName, OneLakeArtifactType.LakeHouse, default);
         }
 
         /// <summary> Secret expiration configuration. </summary>
@@ -2550,7 +2528,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningWebhook"/> instance for mocking. </returns>
         public static MachineLearningWebhook MachineLearningWebhook(string eventType = default, string webhookType = default)
         {
-            return new UnknownWebhook(eventType, default, default);
+            return new UnknownWebhook(eventType, webhookType is null ? default : new WebhookType(webhookType), default);
         }
 
         /// <summary> Webhook details specific for Azure DevOps. </summary>
@@ -2558,7 +2536,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.AzureDevOpsWebhook"/> instance for mocking. </returns>
         public static AzureDevOpsWebhook AzureDevOpsWebhook(string eventType = default)
         {
-            return new AzureDevOpsWebhook(eventType, default, default);
+            return new AzureDevOpsWebhook(eventType, WebhookType.AzureDevOps, default);
         }
 
         /// <summary> The MachineLearningRecurrenceTrigger. </summary>
@@ -2582,7 +2560,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 endTime,
                 startTime,
                 timeZone,
-                default,
+                MachineLearningTriggerType.Recurrence,
                 default,
                 frequency,
                 interval,
@@ -2607,7 +2585,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// The MachineLearningTriggerBase.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MachineLearningRecurrenceTrigger"/> and <see cref="Models.CronTrigger"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CronTrigger"/> and <see cref="Models.MachineLearningRecurrenceTrigger"/>.
         /// </summary>
         /// <param name="endTime">
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
@@ -2623,7 +2601,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningTriggerBase"/> instance for mocking. </returns>
         public static MachineLearningTriggerBase MachineLearningTriggerBase(string endTime = default, string startTime = default, string timeZone = default, string triggerType = default)
         {
-            return new UnknownTriggerBase(endTime, startTime, timeZone, default, default);
+            return new UnknownTriggerBase(endTime, startTime, timeZone, triggerType is null ? default : new MachineLearningTriggerType(triggerType), default);
         }
 
         /// <summary> The CronTrigger. </summary>
@@ -2648,7 +2626,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 endTime,
                 startTime,
                 timeZone,
-                default,
+                MachineLearningTriggerType.Cron,
                 default,
                 expression);
         }
@@ -3002,7 +2980,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 appInsightsEnabled,
                 dataCollector,
                 egressPublicNetworkAccess,
-                default,
+                endpointComputeType is null ? default : new MachineLearningEndpointComputeType(endpointComputeType),
                 instanceType,
                 livenessProbe,
                 model,
@@ -3012,25 +2990,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 requestSettings,
                 scaleSettings,
                 startupProbe);
-        }
-
-        /// <param name="collections">
-        /// [Required] The collection configuration. Each collection has it own configuration to collect model data and the name of collection can be arbitrary string.
-        /// Model data collector can be used for either payload logging or custom logging or both of them. Collection request and response are reserved for payload logging, others are for custom logging.
-        /// </param>
-        /// <param name="requestLoggingCaptureHeaders"> For payload logging, we only collect payload by default. If customers also want to collect the specified headers, they can set them in captureHeaders so that backend will collect those headers along with payload. </param>
-        /// <param name="rollingRate">
-        /// When model data is collected to blob storage, we need to roll the data to different path to avoid logging all of them in a single blob file.
-        /// If the rolling rate is hour, all data will be collected in the blob path /yyyy/MM/dd/HH/.
-        /// If it's day, all data will be collected in blob path /yyyy/MM/dd/.
-        /// The other benefit of rolling path is that model monitoring ui is able to select a time range of data very quickly.
-        /// </param>
-        /// <returns> A new <see cref="Models.DataCollector"/> instance for mocking. </returns>
-        public static DataCollector DataCollector(IDictionary<string, DataCollectionConfiguration> collections = default, IEnumerable<string> requestLoggingCaptureHeaders = default, RollingRateType? rollingRate = default)
-        {
-            collections ??= new ChangeTrackingDictionary<string, DataCollectionConfiguration>();
-
-            return new DataCollector(collections ?? new ChangeTrackingDictionary<string, DataCollectionConfiguration>(), requestLoggingCaptureHeaders is null ? default : new RequestLogging((requestLoggingCaptureHeaders ?? new ChangeTrackingList<string>()).ToList(), default), rollingRate, default);
         }
 
         /// <summary> The DataCollectionConfiguration. </summary>
@@ -3087,14 +3046,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningOnlineScaleSettings"/> instance for mocking. </returns>
         public static MachineLearningOnlineScaleSettings MachineLearningOnlineScaleSettings(string scaleType = default)
         {
-            return new UnknownOnlineScaleSettings(default, default);
+            return new UnknownOnlineScaleSettings(scaleType is null ? default : new ScaleType(scaleType), default);
         }
 
         /// <summary> The MachineLearningDefaultScaleSettings. </summary>
         /// <returns> A new <see cref="Models.MachineLearningDefaultScaleSettings"/> instance for mocking. </returns>
         public static MachineLearningDefaultScaleSettings MachineLearningDefaultScaleSettings()
         {
-            return new MachineLearningDefaultScaleSettings(default, default);
+            return new MachineLearningDefaultScaleSettings(ScaleType.Default, default);
         }
 
         /// <summary> The MachineLearningTargetUtilizationScaleSettings. </summary>
@@ -3106,7 +3065,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningTargetUtilizationScaleSettings MachineLearningTargetUtilizationScaleSettings(int? maxInstances = default, int? minInstances = default, TimeSpan? pollingInterval = default, int? targetUtilizationPercentage = default)
         {
             return new MachineLearningTargetUtilizationScaleSettings(
-                default,
+                ScaleType.TargetUtilization,
                 default,
                 maxInstances,
                 minInstances,
@@ -3154,7 +3113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 appInsightsEnabled,
                 dataCollector,
                 egressPublicNetworkAccess,
-                default,
+                MachineLearningEndpointComputeType.Kubernetes,
                 instanceType,
                 livenessProbe,
                 model,
@@ -3234,7 +3193,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 appInsightsEnabled,
                 dataCollector,
                 egressPublicNetworkAccess,
-                default,
+                MachineLearningEndpointComputeType.Managed,
                 instanceType,
                 livenessProbe,
                 model,
@@ -3357,7 +3316,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningScheduleAction"/> instance for mocking. </returns>
         public static MachineLearningScheduleAction MachineLearningScheduleAction(string actionType = default)
         {
-            return new UnknownScheduleActionBase(default, default);
+            return new UnknownScheduleActionBase(actionType is null ? default : new ScheduleActionType(actionType), default);
         }
 
         /// <summary> The CreateMonitorAction. </summary>
@@ -3365,7 +3324,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.CreateMonitorAction"/> instance for mocking. </returns>
         public static CreateMonitorAction CreateMonitorAction(MonitorDefinition monitorDefinition = default)
         {
-            return new CreateMonitorAction(default, default, monitorDefinition);
+            return new CreateMonitorAction(ScheduleActionType.CreateMonitor, default, monitorDefinition);
         }
 
         /// <param name="alertNotificationEmails"> The email recipient list which has a limitation of 499 characters in total. </param>
@@ -3388,7 +3347,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MonitorComputeConfigurationBase"/> instance for mocking. </returns>
         public static MonitorComputeConfigurationBase MonitorComputeConfigurationBase(string computeType = default)
         {
-            return new UnknownMonitorComputeConfigurationBase(default, default);
+            return new UnknownMonitorComputeConfigurationBase(computeType is null ? default : new MonitorComputeType(computeType), default);
         }
 
         /// <summary> Monitor serverless spark compute definition. </summary>
@@ -3398,7 +3357,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MonitorServerlessSparkCompute"/> instance for mocking. </returns>
         public static MonitorServerlessSparkCompute MonitorServerlessSparkCompute(MonitorComputeIdentityBase computeIdentity = default, string instanceType = default, string runtimeVersion = default)
         {
-            return new MonitorServerlessSparkCompute(default, default, computeIdentity, instanceType, runtimeVersion);
+            return new MonitorServerlessSparkCompute(MonitorComputeType.ServerlessSpark, default, computeIdentity, instanceType, runtimeVersion);
         }
 
         /// <summary>
@@ -3409,14 +3368,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MonitorComputeIdentityBase"/> instance for mocking. </returns>
         public static MonitorComputeIdentityBase MonitorComputeIdentityBase(string computeIdentityType = default)
         {
-            return new UnknownMonitorComputeIdentityBase(default, default);
+            return new UnknownMonitorComputeIdentityBase(computeIdentityType is null ? default : new MonitorComputeIdentityType(computeIdentityType), default);
         }
 
         /// <summary> AML token compute identity definition. </summary>
         /// <returns> A new <see cref="Models.AmlTokenComputeIdentity"/> instance for mocking. </returns>
         public static AmlTokenComputeIdentity AmlTokenComputeIdentity()
         {
-            return new AmlTokenComputeIdentity(default, default);
+            return new AmlTokenComputeIdentity(MonitorComputeIdentityType.AmlToken, default);
         }
 
         /// <summary> Managed compute identity definition. </summary>
@@ -3424,7 +3383,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.ManagedComputeIdentity"/> instance for mocking. </returns>
         public static ManagedComputeIdentity ManagedComputeIdentity(ManagedServiceIdentity identity = default)
         {
-            return new ManagedComputeIdentity(default, default, identity);
+            return new ManagedComputeIdentity(MonitorComputeIdentityType.ManagedIdentity, default, identity);
         }
 
         /// <summary> Monitoring target definition. </summary>
@@ -3450,7 +3409,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             notificationTypes ??= new ChangeTrackingList<MonitoringNotificationType>();
             properties ??= new ChangeTrackingDictionary<string, string>();
 
-            return new UnknownMonitoringSignalBase((notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>()).ToList(), properties ?? new ChangeTrackingDictionary<string, string>(), default, default);
+            return new UnknownMonitoringSignalBase((notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>()).ToList(), properties ?? new ChangeTrackingDictionary<string, string>(), signalType is null ? default : new MonitoringSignalType(signalType), default);
         }
 
         /// <summary> The CustomMonitoringSignal. </summary>
@@ -3472,7 +3431,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new CustomMonitoringSignal(
                 (notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>()).ToList(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
-                default,
+                MonitoringSignalType.Custom,
                 default,
                 componentId,
                 inputAssets ?? new ChangeTrackingDictionary<string, MonitoringInputDataBase>(),
@@ -3497,7 +3456,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new UnknownMonitoringInputDataBase(
                 columns ?? new ChangeTrackingDictionary<string, string>(),
                 dataContext,
-                default,
+                inputDataType is null ? default : new MonitoringInputDataType(inputDataType),
                 jobInputType,
                 uri,
                 default);
@@ -3516,7 +3475,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new FixedInputData(
                 columns ?? new ChangeTrackingDictionary<string, string>(),
                 dataContext,
-                default,
+                MonitoringInputDataType.Fixed,
                 jobInputType,
                 uri,
                 default);
@@ -3538,7 +3497,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new RollingInputData(
                 columns ?? new ChangeTrackingDictionary<string, string>(),
                 dataContext,
-                default,
+                MonitoringInputDataType.Rolling,
                 jobInputType,
                 uri,
                 default,
@@ -3563,7 +3522,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new StaticInputData(
                 columns ?? new ChangeTrackingDictionary<string, string>(),
                 dataContext,
-                default,
+                MonitoringInputDataType.Static,
                 jobInputType,
                 uri,
                 default,
@@ -3574,14 +3533,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// Command job definition.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MachineLearningTableJobInput"/>, <see cref="Models.MachineLearningCustomModelJobInput"/>, <see cref="Models.MachineLearningFlowModelJobInput"/>, <see cref="Models.MachineLearningLiteralJobInput"/>, <see cref="Models.MachineLearningTritonModelJobInput"/>, <see cref="Models.MachineLearningUriFileJobInput"/>, and <see cref="Models.MachineLearningUriFolderJobInput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MachineLearningCustomModelJobInput"/>, <see cref="Models.MachineLearningFlowModelJobInput"/>, <see cref="Models.MachineLearningLiteralJobInput"/>, <see cref="Models.MachineLearningTableJobInput"/>, <see cref="Models.MachineLearningTritonModelJobInput"/>, <see cref="Models.MachineLearningUriFileJobInput"/>, and <see cref="Models.MachineLearningUriFolderJobInput"/>.
         /// </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <returns> A new <see cref="Models.MachineLearningJobInput"/> instance for mocking. </returns>
         public static MachineLearningJobInput MachineLearningJobInput(string description = default, string jobInputType = default)
         {
-            return new UnknownJobInput(description, default, default);
+            return new UnknownJobInput(description, jobInputType is null ? default : new JobInputType(jobInputType), default);
         }
 
         /// <summary> The MachineLearningTableJobInput. </summary>
@@ -3591,7 +3550,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningTableJobInput"/> instance for mocking. </returns>
         public static MachineLearningTableJobInput MachineLearningTableJobInput(string description = default, MachineLearningInputDeliveryMode? mode = default, Uri uri = default)
         {
-            return new MachineLearningTableJobInput(description, default, default, mode, uri);
+            return new MachineLearningTableJobInput(description, JobInputType.Mltable, default, mode, uri);
         }
 
         /// <summary> The MachineLearningCustomModelJobInput. </summary>
@@ -3601,7 +3560,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningCustomModelJobInput"/> instance for mocking. </returns>
         public static MachineLearningCustomModelJobInput MachineLearningCustomModelJobInput(string description = default, MachineLearningInputDeliveryMode? mode = default, Uri uri = default)
         {
-            return new MachineLearningCustomModelJobInput(description, default, default, mode, uri);
+            return new MachineLearningCustomModelJobInput(description, JobInputType.CustomModel, default, mode, uri);
         }
 
         /// <summary> The MachineLearningFlowModelJobInput. </summary>
@@ -3611,7 +3570,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningFlowModelJobInput"/> instance for mocking. </returns>
         public static MachineLearningFlowModelJobInput MachineLearningFlowModelJobInput(string description = default, MachineLearningInputDeliveryMode? mode = default, Uri uri = default)
         {
-            return new MachineLearningFlowModelJobInput(description, default, default, mode, uri);
+            return new MachineLearningFlowModelJobInput(description, JobInputType.MlflowModel, default, mode, uri);
         }
 
         /// <summary> Literal input type. </summary>
@@ -3620,7 +3579,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningLiteralJobInput"/> instance for mocking. </returns>
         public static MachineLearningLiteralJobInput MachineLearningLiteralJobInput(string description = default, string value = default)
         {
-            return new MachineLearningLiteralJobInput(description, default, default, value);
+            return new MachineLearningLiteralJobInput(description, JobInputType.Literal, default, value);
         }
 
         /// <summary> The MachineLearningTritonModelJobInput. </summary>
@@ -3630,7 +3589,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningTritonModelJobInput"/> instance for mocking. </returns>
         public static MachineLearningTritonModelJobInput MachineLearningTritonModelJobInput(string description = default, MachineLearningInputDeliveryMode? mode = default, Uri uri = default)
         {
-            return new MachineLearningTritonModelJobInput(description, default, default, mode, uri);
+            return new MachineLearningTritonModelJobInput(description, JobInputType.TritonModel, default, mode, uri);
         }
 
         /// <summary> The MachineLearningUriFileJobInput. </summary>
@@ -3640,7 +3599,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningUriFileJobInput"/> instance for mocking. </returns>
         public static MachineLearningUriFileJobInput MachineLearningUriFileJobInput(string description = default, MachineLearningInputDeliveryMode? mode = default, Uri uri = default)
         {
-            return new MachineLearningUriFileJobInput(description, default, default, mode, uri);
+            return new MachineLearningUriFileJobInput(description, JobInputType.UriFile, default, mode, uri);
         }
 
         /// <summary> The MachineLearningUriFolderJobInput. </summary>
@@ -3650,7 +3609,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningUriFolderJobInput"/> instance for mocking. </returns>
         public static MachineLearningUriFolderJobInput MachineLearningUriFolderJobInput(string description = default, MachineLearningInputDeliveryMode? mode = default, Uri uri = default)
         {
-            return new MachineLearningUriFolderJobInput(description, default, default, mode, uri);
+            return new MachineLearningUriFolderJobInput(description, JobInputType.UriFolder, default, mode, uri);
         }
 
         /// <param name="metric"> [Required] The user-defined metric to calculate. </param>
@@ -3681,7 +3640,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new DataDriftMonitoringSignal(
                 (notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>()).ToList(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
-                default,
+                MonitoringSignalType.DataDrift,
                 default,
                 featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>(),
                 featureImportanceSettings,
@@ -3702,20 +3661,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// The MonitoringFeatureFilterBase.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MachineLearningAllFeatures"/>, <see cref="Models.FeatureSubset"/>, and <see cref="Models.TopNFeaturesByAttribution"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FeatureSubset"/>, <see cref="Models.MachineLearningAllFeatures"/>, and <see cref="Models.TopNFeaturesByAttribution"/>.
         /// </summary>
         /// <param name="filterType"> [Required] Specifies the feature filter to leverage when selecting features to calculate metrics over. </param>
         /// <returns> A new <see cref="Models.MonitoringFeatureFilterBase"/> instance for mocking. </returns>
         public static MonitoringFeatureFilterBase MonitoringFeatureFilterBase(string filterType = default)
         {
-            return new UnknownMonitoringFeatureFilterBase(default, default);
+            return new UnknownMonitoringFeatureFilterBase(filterType is null ? default : new MonitoringFeatureFilterType(filterType), default);
         }
 
         /// <summary> The MachineLearningAllFeatures. </summary>
         /// <returns> A new <see cref="Models.MachineLearningAllFeatures"/> instance for mocking. </returns>
         public static MachineLearningAllFeatures MachineLearningAllFeatures()
         {
-            return new MachineLearningAllFeatures(default, default);
+            return new MachineLearningAllFeatures(MonitoringFeatureFilterType.AllFeatures, default);
         }
 
         /// <summary> The FeatureSubset. </summary>
@@ -3725,7 +3684,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             features ??= new ChangeTrackingList<string>();
 
-            return new FeatureSubset(default, default, (features ?? new ChangeTrackingList<string>()).ToList());
+            return new FeatureSubset(MonitoringFeatureFilterType.FeatureSubset, default, (features ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <summary> The TopNFeaturesByAttribution. </summary>
@@ -3733,7 +3692,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.TopNFeaturesByAttribution"/> instance for mocking. </returns>
         public static TopNFeaturesByAttribution TopNFeaturesByAttribution(int? top = default)
         {
-            return new TopNFeaturesByAttribution(default, default, top);
+            return new TopNFeaturesByAttribution(MonitoringFeatureFilterType.TopNByAttribution, default, top);
         }
 
         /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
@@ -3741,7 +3700,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.DataDriftMetricThresholdBase"/> instance for mocking. </returns>
         public static DataDriftMetricThresholdBase DataDriftMetricThresholdBase(string dataType = default, double? thresholdValue = default)
         {
-            return new UnknownDataDriftMetricThresholdBase(default, thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default);
+            return new UnknownDataDriftMetricThresholdBase(dataType is null ? default : new MonitoringFeatureDataType(dataType), thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default);
         }
 
         /// <param name="thresholdValue"> The threshold value. If null, the set default is dependent on the metric type. </param>
@@ -3749,7 +3708,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.CategoricalDataDriftMetricThreshold"/> instance for mocking. </returns>
         public static CategoricalDataDriftMetricThreshold CategoricalDataDriftMetricThreshold(double? thresholdValue = default, CategoricalDataDriftMetric metric = default)
         {
-            return new CategoricalDataDriftMetricThreshold(default, thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default, metric);
+            return new CategoricalDataDriftMetricThreshold(MonitoringFeatureDataType.Categorical, thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default, metric);
         }
 
         /// <param name="thresholdValue"> The threshold value. If null, the set default is dependent on the metric type. </param>
@@ -3757,7 +3716,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.NumericalDataDriftMetricThreshold"/> instance for mocking. </returns>
         public static NumericalDataDriftMetricThreshold NumericalDataDriftMetricThreshold(double? thresholdValue = default, NumericalDataDriftMetric metric = default)
         {
-            return new NumericalDataDriftMetricThreshold(default, thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default, metric);
+            return new NumericalDataDriftMetricThreshold(MonitoringFeatureDataType.Numerical, thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default, metric);
         }
 
         /// <summary> The DataQualityMonitoringSignal. </summary>
@@ -3780,7 +3739,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new DataQualityMonitoringSignal(
                 (notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>()).ToList(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
-                default,
+                MonitoringSignalType.DataQuality,
                 default,
                 featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>(),
                 featureImportanceSettings,
@@ -3795,7 +3754,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.DataQualityMetricThresholdBase"/> instance for mocking. </returns>
         public static DataQualityMetricThresholdBase DataQualityMetricThresholdBase(string dataType = default, double? thresholdValue = default)
         {
-            return new UnknownDataQualityMetricThresholdBase(default, thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default);
+            return new UnknownDataQualityMetricThresholdBase(dataType is null ? default : new MonitoringFeatureDataType(dataType), thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default);
         }
 
         /// <param name="thresholdValue"> The threshold value. If null, the set default is dependent on the metric type. </param>
@@ -3803,7 +3762,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.CategoricalDataQualityMetricThreshold"/> instance for mocking. </returns>
         public static CategoricalDataQualityMetricThreshold CategoricalDataQualityMetricThreshold(double? thresholdValue = default, CategoricalDataQualityMetric metric = default)
         {
-            return new CategoricalDataQualityMetricThreshold(default, thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default, metric);
+            return new CategoricalDataQualityMetricThreshold(MonitoringFeatureDataType.Categorical, thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default, metric);
         }
 
         /// <param name="thresholdValue"> The threshold value. If null, the set default is dependent on the metric type. </param>
@@ -3811,7 +3770,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.NumericalDataQualityMetricThreshold"/> instance for mocking. </returns>
         public static NumericalDataQualityMetricThreshold NumericalDataQualityMetricThreshold(double? thresholdValue = default, NumericalDataQualityMetric metric = default)
         {
-            return new NumericalDataQualityMetricThreshold(default, thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default, metric);
+            return new NumericalDataQualityMetricThreshold(MonitoringFeatureDataType.Numerical, thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default, metric);
         }
 
         /// <summary> The FeatureAttributionDriftMonitoringSignal. </summary>
@@ -3833,7 +3792,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new FeatureAttributionDriftMonitoringSignal(
                 (notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>()).ToList(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
-                default,
+                MonitoringSignalType.FeatureAttributionDrift,
                 default,
                 featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>(),
                 featureImportanceSettings,
@@ -3868,7 +3827,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new PredictionDriftMonitoringSignal(
                 (notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>()).ToList(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
-                default,
+                MonitoringSignalType.PredictionDrift,
                 default,
                 featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>(),
                 (metricThresholds ?? new ChangeTrackingList<PredictionDriftMetricThresholdBase>()).ToList(),
@@ -3881,7 +3840,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.PredictionDriftMetricThresholdBase"/> instance for mocking. </returns>
         public static PredictionDriftMetricThresholdBase PredictionDriftMetricThresholdBase(string dataType = default, double? thresholdValue = default)
         {
-            return new UnknownPredictionDriftMetricThresholdBase(default, thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default);
+            return new UnknownPredictionDriftMetricThresholdBase(dataType is null ? default : new MonitoringFeatureDataType(dataType), thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default);
         }
 
         /// <param name="thresholdValue"> The threshold value. If null, the set default is dependent on the metric type. </param>
@@ -3889,7 +3848,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.CategoricalPredictionDriftMetricThreshold"/> instance for mocking. </returns>
         public static CategoricalPredictionDriftMetricThreshold CategoricalPredictionDriftMetricThreshold(double? thresholdValue = default, CategoricalPredictionDriftMetric metric = default)
         {
-            return new CategoricalPredictionDriftMetricThreshold(default, thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default, metric);
+            return new CategoricalPredictionDriftMetricThreshold(MonitoringFeatureDataType.Categorical, thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default, metric);
         }
 
         /// <param name="thresholdValue"> The threshold value. If null, the set default is dependent on the metric type. </param>
@@ -3897,7 +3856,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.NumericalPredictionDriftMetricThreshold"/> instance for mocking. </returns>
         public static NumericalPredictionDriftMetricThreshold NumericalPredictionDriftMetricThreshold(double? thresholdValue = default, NumericalPredictionDriftMetric metric = default)
         {
-            return new NumericalPredictionDriftMetricThreshold(default, thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default, metric);
+            return new NumericalPredictionDriftMetricThreshold(MonitoringFeatureDataType.Numerical, thresholdValue is null ? default : new MonitoringThreshold(thresholdValue, default), default, metric);
         }
 
         /// <summary> The MachineLearningEndpointScheduleAction. </summary>
@@ -3908,7 +3867,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningEndpointScheduleAction"/> instance for mocking. </returns>
         public static MachineLearningEndpointScheduleAction MachineLearningEndpointScheduleAction(BinaryData endpointInvocationDefinition = default)
         {
-            return new MachineLearningEndpointScheduleAction(default, default, endpointInvocationDefinition);
+            return new MachineLearningEndpointScheduleAction(ScheduleActionType.InvokeBatchEndpoint, default, endpointInvocationDefinition);
         }
 
         /// <summary> The MachineLearningJobScheduleAction. </summary>
@@ -3916,12 +3875,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningJobScheduleAction"/> instance for mocking. </returns>
         public static MachineLearningJobScheduleAction MachineLearningJobScheduleAction(MachineLearningJobProperties jobDefinition = default)
         {
-            return new MachineLearningJobScheduleAction(default, default, jobDefinition);
+            return new MachineLearningJobScheduleAction(ScheduleActionType.CreateJob, default, jobDefinition);
         }
 
         /// <summary>
         /// Base definition for a job.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.AutoMLJob"/>, <see cref="Models.MachineLearningCommandJob"/>, <see cref="Models.MachineLearningPipelineJob"/>, <see cref="Models.SparkJob"/>, and <see cref="Models.MachineLearningSweepJob"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.AutoMLJob"/>, <see cref="Models.MachineLearningCommandJob"/>, <see cref="Models.MachineLearningPipelineJob"/>, <see cref="Models.MachineLearningSweepJob"/>, and <see cref="Models.SparkJob"/>.
         /// </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
@@ -3960,7 +3919,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 experimentName,
                 identity,
                 isArchived,
-                default,
+                jobType is null ? default : new JobType(jobType),
                 notificationSetting,
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status);
@@ -3974,14 +3933,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningIdentityConfiguration"/> instance for mocking. </returns>
         public static MachineLearningIdentityConfiguration MachineLearningIdentityConfiguration(string identityType = default)
         {
-            return new UnknownIdentityConfiguration(default, default);
+            return new UnknownIdentityConfiguration(identityType is null ? default : new IdentityConfigurationType(identityType), default);
         }
 
         /// <summary> AML Token identity configuration. </summary>
         /// <returns> A new <see cref="Models.AmlToken"/> instance for mocking. </returns>
         public static AmlToken AmlToken()
         {
-            return new AmlToken(default, default);
+            return new AmlToken(IdentityConfigurationType.AMLToken, default);
         }
 
         /// <summary> Managed identity configuration. </summary>
@@ -3991,14 +3950,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningManagedIdentity"/> instance for mocking. </returns>
         public static MachineLearningManagedIdentity MachineLearningManagedIdentity(Guid? clientId = default, Guid? objectId = default, ResourceIdentifier resourceId = default)
         {
-            return new MachineLearningManagedIdentity(default, default, clientId, objectId, resourceId);
+            return new MachineLearningManagedIdentity(IdentityConfigurationType.Managed, default, clientId, objectId, resourceId);
         }
 
         /// <summary> User identity configuration. </summary>
         /// <returns> A new <see cref="Models.MachineLearningUserIdentity"/> instance for mocking. </returns>
         public static MachineLearningUserIdentity MachineLearningUserIdentity()
         {
-            return new MachineLearningUserIdentity(default, default);
+            return new MachineLearningUserIdentity(IdentityConfigurationType.UserIdentity, default);
         }
 
         /// <summary> Job endpoint definition. </summary>
@@ -4036,14 +3995,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.JobNodes"/> instance for mocking. </returns>
         public static JobNodes JobNodes(string nodesValueType = default)
         {
-            return new UnknownNodes(default, default);
+            return new UnknownNodes(nodesValueType is null ? default : new NodesValueType(nodesValueType), default);
         }
 
         /// <summary> All nodes means the service will be running on all of the nodes of the job. </summary>
         /// <returns> A new <see cref="Models.JobAllNodes"/> instance for mocking. </returns>
         public static JobAllNodes JobAllNodes()
         {
-            return new JobAllNodes(default, default);
+            return new JobAllNodes(NodesValueType.All, default);
         }
 
         /// <param name="description"> The asset description text. </param>
@@ -4093,7 +4052,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 experimentName,
                 identity,
                 isArchived,
-                default,
+                JobType.AutoML,
                 notificationSetting,
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status,
@@ -4114,7 +4073,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningJobOutput"/> instance for mocking. </returns>
         public static MachineLearningJobOutput MachineLearningJobOutput(string description = default, string jobOutputType = default)
         {
-            return new UnknownJobOutput(description, default, default);
+            return new UnknownJobOutput(description, jobOutputType is null ? default : new JobOutputType(jobOutputType), default);
         }
 
         /// <summary> The MachineLearningCustomModelJobOutput. </summary>
@@ -4127,7 +4086,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             return new MachineLearningCustomModelJobOutput(
                 description,
-                default,
+                JobOutputType.CustomModel,
                 default,
                 assetName,
                 mode,
@@ -4144,7 +4103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             return new MachineLearningFlowModelJobOutput(
                 description,
-                default,
+                JobOutputType.MlflowModel,
                 default,
                 assetName,
                 mode,
@@ -4161,7 +4120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             return new MachineLearningTableJobOutput(
                 description,
-                default,
+                JobOutputType.Mltable,
                 default,
                 assetName,
                 mode,
@@ -4178,7 +4137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             return new MachineLearningTritonModelJobOutput(
                 description,
-                default,
+                JobOutputType.TritonModel,
                 default,
                 assetName,
                 mode,
@@ -4195,7 +4154,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             return new MachineLearningUriFileJobOutput(
                 description,
-                default,
+                JobOutputType.UriFile,
                 default,
                 assetName,
                 mode,
@@ -4212,7 +4171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             return new MachineLearningUriFolderJobOutput(
                 description,
-                default,
+                JobOutputType.UriFolder,
                 default,
                 assetName,
                 mode,
@@ -4245,7 +4204,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// AutoML vertical class.
         /// Base class for AutoML verticals - TableVertical/ImageVertical/NLPVertical
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ClassificationTask"/>, <see cref="Models.MachineLearningForecasting"/>, <see cref="Models.ImageClassification"/>, <see cref="Models.ImageClassificationMultilabel"/>, <see cref="Models.ImageInstanceSegmentation"/>, <see cref="Models.ImageObjectDetection"/>, <see cref="Models.AutoMLVerticalRegression"/>, <see cref="Models.TextClassification"/>, <see cref="Models.TextClassificationMultilabel"/>, and <see cref="Models.TextNer"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AutoMLVerticalRegression"/>, <see cref="Models.ClassificationTask"/>, <see cref="Models.ImageClassification"/>, <see cref="Models.ImageClassificationMultilabel"/>, <see cref="Models.ImageInstanceSegmentation"/>, <see cref="Models.ImageObjectDetection"/>, <see cref="Models.MachineLearningForecasting"/>, <see cref="Models.TextClassification"/>, <see cref="Models.TextClassificationMultilabel"/>, and <see cref="Models.TextNer"/>.
         /// </summary>
         /// <param name="logVerbosity"> Enum for setting log verbosity. </param>
         /// <param name="targetColumnName">
@@ -4257,7 +4216,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.AutoMLVertical"/> instance for mocking. </returns>
         public static AutoMLVertical AutoMLVertical(MachineLearningLogVerbosity? logVerbosity = default, string targetColumnName = default, string taskType = default, MachineLearningTableJobInput trainingData = default)
         {
-            return new UnknownAutoMLVertical(logVerbosity, targetColumnName, default, trainingData, default);
+            return new UnknownAutoMLVertical(logVerbosity, targetColumnName, taskType is null ? default : new TaskType(taskType), trainingData, default);
         }
 
         /// <summary> Classification task in AutoML Table vertical. </summary>
@@ -4298,7 +4257,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new ClassificationTask(
                 logVerbosity,
                 targetColumnName,
-                default,
+                TaskType.Classification,
                 trainingData,
                 default,
                 (cvSplitColumnNames ?? new ChangeTrackingList<string>()).ToList(),
@@ -4395,14 +4354,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.NCrossValidations"/> instance for mocking. </returns>
         public static NCrossValidations NCrossValidations(string mode = default)
         {
-            return new UnknownNCrossValidations(default, default);
+            return new UnknownNCrossValidations(mode is null ? default : new NCrossValidationsMode(mode), default);
         }
 
         /// <summary> N-Cross validations determined automatically. </summary>
         /// <returns> A new <see cref="Models.AutoNCrossValidations"/> instance for mocking. </returns>
         public static AutoNCrossValidations AutoNCrossValidations()
         {
-            return new AutoNCrossValidations(default, default);
+            return new AutoNCrossValidations(NCrossValidationsMode.Auto, default);
         }
 
         /// <summary> N-Cross validations are specified by user. </summary>
@@ -4410,7 +4369,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.CustomNCrossValidations"/> instance for mocking. </returns>
         public static CustomNCrossValidations CustomNCrossValidations(int value = default)
         {
-            return new CustomNCrossValidations(default, default, value);
+            return new CustomNCrossValidations(NCrossValidationsMode.Custom, default, value);
         }
 
         /// <summary> Classification Training related configuration. </summary>
@@ -4518,7 +4477,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningForecasting(
                 logVerbosity,
                 targetColumnName,
-                default,
+                TaskType.Forecasting,
                 trainingData,
                 default,
                 (cvSplitColumnNames ?? new ChangeTrackingList<string>()).ToList(),
@@ -4592,14 +4551,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.ForecastHorizon"/> instance for mocking. </returns>
         public static ForecastHorizon ForecastHorizon(string mode = default)
         {
-            return new UnknownForecastHorizon(default, default);
+            return new UnknownForecastHorizon(mode is null ? default : new ForecastHorizonMode(mode), default);
         }
 
         /// <summary> Forecast horizon determined automatically by system. </summary>
         /// <returns> A new <see cref="Models.AutoForecastHorizon"/> instance for mocking. </returns>
         public static AutoForecastHorizon AutoForecastHorizon()
         {
-            return new AutoForecastHorizon(default, default);
+            return new AutoForecastHorizon(ForecastHorizonMode.Auto, default);
         }
 
         /// <summary> The desired maximum forecast horizon in units of time-series frequency. </summary>
@@ -4607,7 +4566,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.CustomForecastHorizon"/> instance for mocking. </returns>
         public static CustomForecastHorizon CustomForecastHorizon(int value = default)
         {
-            return new CustomForecastHorizon(default, default, value);
+            return new CustomForecastHorizon(ForecastHorizonMode.Custom, default, value);
         }
 
         /// <summary>
@@ -4618,14 +4577,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.ForecastingSeasonality"/> instance for mocking. </returns>
         public static ForecastingSeasonality ForecastingSeasonality(string mode = default)
         {
-            return new UnknownSeasonality(default, default);
+            return new UnknownSeasonality(mode is null ? default : new SeasonalityMode(mode), default);
         }
 
         /// <summary> The AutoSeasonality. </summary>
         /// <returns> A new <see cref="Models.AutoSeasonality"/> instance for mocking. </returns>
         public static AutoSeasonality AutoSeasonality()
         {
-            return new AutoSeasonality(default, default);
+            return new AutoSeasonality(SeasonalityMode.Auto, default);
         }
 
         /// <summary> The CustomSeasonality. </summary>
@@ -4633,7 +4592,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.CustomSeasonality"/> instance for mocking. </returns>
         public static CustomSeasonality CustomSeasonality(int value = default)
         {
-            return new CustomSeasonality(default, default, value);
+            return new CustomSeasonality(SeasonalityMode.Custom, default, value);
         }
 
         /// <summary>
@@ -4644,14 +4603,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.TargetLags"/> instance for mocking. </returns>
         public static TargetLags TargetLags(string mode = default)
         {
-            return new UnknownTargetLags(default, default);
+            return new UnknownTargetLags(mode is null ? default : new TargetLagsMode(mode), default);
         }
 
         /// <summary> The AutoTargetLags. </summary>
         /// <returns> A new <see cref="Models.AutoTargetLags"/> instance for mocking. </returns>
         public static AutoTargetLags AutoTargetLags()
         {
-            return new AutoTargetLags(default, default);
+            return new AutoTargetLags(TargetLagsMode.Auto, default);
         }
 
         /// <summary> The CustomTargetLags. </summary>
@@ -4661,7 +4620,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             values ??= new ChangeTrackingList<int>();
 
-            return new CustomTargetLags(default, default, (values ?? new ChangeTrackingList<int>()).ToList());
+            return new CustomTargetLags(TargetLagsMode.Custom, default, (values ?? new ChangeTrackingList<int>()).ToList());
         }
 
         /// <summary>
@@ -4672,14 +4631,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.TargetRollingWindowSize"/> instance for mocking. </returns>
         public static TargetRollingWindowSize TargetRollingWindowSize(string mode = default)
         {
-            return new UnknownTargetRollingWindowSize(default, default);
+            return new UnknownTargetRollingWindowSize(mode is null ? default : new TargetRollingWindowSizeMode(mode), default);
         }
 
         /// <summary> Target lags rolling window determined automatically. </summary>
         /// <returns> A new <see cref="Models.AutoTargetRollingWindowSize"/> instance for mocking. </returns>
         public static AutoTargetRollingWindowSize AutoTargetRollingWindowSize()
         {
-            return new AutoTargetRollingWindowSize(default, default);
+            return new AutoTargetRollingWindowSize(TargetRollingWindowSizeMode.Auto, default);
         }
 
         /// <summary> The CustomTargetRollingWindowSize. </summary>
@@ -4687,7 +4646,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.CustomTargetRollingWindowSize"/> instance for mocking. </returns>
         public static CustomTargetRollingWindowSize CustomTargetRollingWindowSize(int value = default)
         {
-            return new CustomTargetRollingWindowSize(default, default, value);
+            return new CustomTargetRollingWindowSize(TargetRollingWindowSizeMode.Custom, default, value);
         }
 
         /// <summary> Forecasting Training related configuration. </summary>
@@ -4751,7 +4710,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new ImageClassification(
                 logVerbosity,
                 targetColumnName,
-                default,
+                TaskType.ImageClassification,
                 trainingData,
                 default,
                 modelSettings,
@@ -5198,7 +5157,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningEarlyTerminationPolicy"/> instance for mocking. </returns>
         public static MachineLearningEarlyTerminationPolicy MachineLearningEarlyTerminationPolicy(int? delayEvaluation = default, int? evaluationInterval = default, string policyType = default)
         {
-            return new UnknownEarlyTerminationPolicy(delayEvaluation, evaluationInterval, default, default);
+            return new UnknownEarlyTerminationPolicy(delayEvaluation, evaluationInterval, policyType is null ? default : new EarlyTerminationPolicyType(policyType), default);
         }
 
         /// <summary> Defines an early termination policy based on slack criteria, and a frequency and delay interval for evaluation. </summary>
@@ -5212,7 +5171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new BanditPolicy(
                 delayEvaluation,
                 evaluationInterval,
-                default,
+                EarlyTerminationPolicyType.Bandit,
                 default,
                 slackAmount,
                 slackFactor);
@@ -5224,7 +5183,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MedianStoppingPolicy"/> instance for mocking. </returns>
         public static MedianStoppingPolicy MedianStoppingPolicy(int? delayEvaluation = default, int? evaluationInterval = default)
         {
-            return new MedianStoppingPolicy(delayEvaluation, evaluationInterval, default, default);
+            return new MedianStoppingPolicy(delayEvaluation, evaluationInterval, EarlyTerminationPolicyType.MedianStopping, default);
         }
 
         /// <summary> Defines an early termination policy that cancels a given percentage of runs at each evaluation interval. </summary>
@@ -5234,7 +5193,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.TruncationSelectionPolicy"/> instance for mocking. </returns>
         public static TruncationSelectionPolicy TruncationSelectionPolicy(int? delayEvaluation = default, int? evaluationInterval = default, int? truncationPercentage = default)
         {
-            return new TruncationSelectionPolicy(delayEvaluation, evaluationInterval, default, default, truncationPercentage);
+            return new TruncationSelectionPolicy(delayEvaluation, evaluationInterval, EarlyTerminationPolicyType.TruncationSelection, default, truncationPercentage);
         }
 
         /// <summary>
@@ -5266,7 +5225,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new ImageClassificationMultilabel(
                 logVerbosity,
                 targetColumnName,
-                default,
+                TaskType.ImageClassificationMultilabel,
                 trainingData,
                 default,
                 modelSettings,
@@ -5307,7 +5266,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new ImageInstanceSegmentation(
                 logVerbosity,
                 targetColumnName,
-                default,
+                TaskType.ImageInstanceSegmentation,
                 trainingData,
                 default,
                 modelSettings,
@@ -5662,7 +5621,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new ImageObjectDetection(
                 logVerbosity,
                 targetColumnName,
-                default,
+                TaskType.ImageObjectDetection,
                 trainingData,
                 default,
                 modelSettings,
@@ -5711,7 +5670,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new AutoMLVerticalRegression(
                 logVerbosity,
                 targetColumnName,
-                default,
+                TaskType.Regression,
                 trainingData,
                 default,
                 (cvSplitColumnNames ?? new ChangeTrackingList<string>()).ToList(),
@@ -5775,7 +5734,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new TextClassification(
                 logVerbosity,
                 targetColumnName,
-                default,
+                TaskType.TextClassification,
                 trainingData,
                 default,
                 featurizationDatasetLanguage is null ? default : new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage, default),
@@ -5813,7 +5772,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new TextClassificationMultilabel(
                 logVerbosity,
                 targetColumnName,
-                default,
+                TaskType.TextClassificationMultilabel,
                 trainingData,
                 default,
                 featurizationDatasetLanguage is null ? default : new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage, default),
@@ -5841,7 +5800,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new TextNer(
                 logVerbosity,
                 targetColumnName,
-                default,
+                TaskType.TextNER,
                 trainingData,
                 default,
                 featurizationDatasetLanguage is null ? default : new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage, default),
@@ -5900,7 +5859,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 experimentName,
                 identity,
                 isArchived,
-                default,
+                JobType.Command,
                 notificationSetting,
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status,
@@ -5925,7 +5884,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningDistributionConfiguration"/> instance for mocking. </returns>
         public static MachineLearningDistributionConfiguration MachineLearningDistributionConfiguration(string distributionType = default)
         {
-            return new UnknownDistributionConfiguration(default, default);
+            return new UnknownDistributionConfiguration(distributionType is null ? default : new DistributionType(distributionType), default);
         }
 
         /// <summary> MPI distribution configuration. </summary>
@@ -5933,7 +5892,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MpiDistributionConfiguration"/> instance for mocking. </returns>
         public static MpiDistributionConfiguration MpiDistributionConfiguration(int? processCountPerInstance = default)
         {
-            return new MpiDistributionConfiguration(default, default, processCountPerInstance);
+            return new MpiDistributionConfiguration(DistributionType.Mpi, default, processCountPerInstance);
         }
 
         /// <summary> PyTorch distribution configuration. </summary>
@@ -5941,7 +5900,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.PyTorchDistributionConfiguration"/> instance for mocking. </returns>
         public static PyTorchDistributionConfiguration PyTorchDistributionConfiguration(int? processCountPerInstance = default)
         {
-            return new PyTorchDistributionConfiguration(default, default, processCountPerInstance);
+            return new PyTorchDistributionConfiguration(DistributionType.PyTorch, default, processCountPerInstance);
         }
 
         /// <summary> TensorFlow distribution configuration. </summary>
@@ -5950,7 +5909,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.TensorFlowDistributionConfiguration"/> instance for mocking. </returns>
         public static TensorFlowDistributionConfiguration TensorFlowDistributionConfiguration(int? parameterServerCount = default, int? workerCount = default)
         {
-            return new TensorFlowDistributionConfiguration(default, default, parameterServerCount, workerCount);
+            return new TensorFlowDistributionConfiguration(DistributionType.TensorFlow, default, parameterServerCount, workerCount);
         }
 
         /// <summary> Command Job limit class. </summary>
@@ -5958,7 +5917,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningCommandJobLimits"/> instance for mocking. </returns>
         public static MachineLearningCommandJobLimits MachineLearningCommandJobLimits(TimeSpan? timeout = default)
         {
-            return new MachineLearningCommandJobLimits(default, timeout, default);
+            return new MachineLearningCommandJobLimits(JobLimitsType.Command, timeout, default);
         }
 
         /// <summary>
@@ -5970,7 +5929,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningJobLimits"/> instance for mocking. </returns>
         public static MachineLearningJobLimits MachineLearningJobLimits(string jobLimitsType = default, TimeSpan? timeout = default)
         {
-            return new UnknownJobLimits(default, timeout, default);
+            return new UnknownJobLimits(jobLimitsType is null ? default : new JobLimitsType(jobLimitsType), timeout, default);
         }
 
         /// <summary> Sweep Job limit class. </summary>
@@ -5982,7 +5941,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningSweepJobLimits MachineLearningSweepJobLimits(TimeSpan? timeout = default, int? maxConcurrentTrials = default, int? maxTotalTrials = default, TimeSpan? trialTimeout = default)
         {
             return new MachineLearningSweepJobLimits(
-                default,
+                JobLimitsType.Sweep,
                 timeout,
                 default,
                 maxConcurrentTrials,
@@ -6035,7 +5994,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 experimentName,
                 identity,
                 isArchived,
-                default,
+                JobType.Pipeline,
                 notificationSetting,
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status,
@@ -6104,7 +6063,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 experimentName,
                 identity,
                 isArchived,
-                default,
+                JobType.Spark,
                 notificationSetting,
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status,
@@ -6132,7 +6091,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.SparkJobEntry"/> instance for mocking. </returns>
         public static SparkJobEntry SparkJobEntry(string sparkJobEntryType = default)
         {
-            return new UnknownSparkJobEntry(default, default);
+            return new UnknownSparkJobEntry(sparkJobEntryType is null ? default : new SparkJobEntryType(sparkJobEntryType), default);
         }
 
         /// <summary> The SparkJobPythonEntry. </summary>
@@ -6140,7 +6099,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.SparkJobPythonEntry"/> instance for mocking. </returns>
         public static SparkJobPythonEntry SparkJobPythonEntry(string @file = default)
         {
-            return new SparkJobPythonEntry(default, default, @file);
+            return new SparkJobPythonEntry(SparkJobEntryType.SparkJobPythonEntry, default, @file);
         }
 
         /// <summary> The SparkJobScalaEntry. </summary>
@@ -6148,7 +6107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.SparkJobScalaEntry"/> instance for mocking. </returns>
         public static SparkJobScalaEntry SparkJobScalaEntry(string className = default)
         {
-            return new SparkJobScalaEntry(default, default, className);
+            return new SparkJobScalaEntry(SparkJobEntryType.SparkJobScalaEntry, default, className);
         }
 
         /// <summary> The SparkResourceConfiguration. </summary>
@@ -6207,7 +6166,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 experimentName,
                 identity,
                 isArchived,
-                default,
+                JobType.Sweep,
                 notificationSetting,
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status,
@@ -6240,21 +6199,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.SamplingAlgorithm"/> instance for mocking. </returns>
         public static SamplingAlgorithm SamplingAlgorithm(string samplingAlgorithmType = default)
         {
-            return new UnknownSamplingAlgorithm(default, default);
+            return new UnknownSamplingAlgorithm(samplingAlgorithmType is null ? default : new SamplingAlgorithmType(samplingAlgorithmType), default);
         }
 
         /// <summary> Defines a Sampling Algorithm that generates values based on previous values. </summary>
         /// <returns> A new <see cref="Models.BayesianSamplingAlgorithm"/> instance for mocking. </returns>
         public static BayesianSamplingAlgorithm BayesianSamplingAlgorithm()
         {
-            return new BayesianSamplingAlgorithm(default, default);
+            return new BayesianSamplingAlgorithm(SamplingAlgorithmType.Bayesian, default);
         }
 
         /// <summary> Defines a Sampling Algorithm that exhaustively generates every value combination in the space. </summary>
         /// <returns> A new <see cref="Models.GridSamplingAlgorithm"/> instance for mocking. </returns>
         public static GridSamplingAlgorithm GridSamplingAlgorithm()
         {
-            return new GridSamplingAlgorithm(default, default);
+            return new GridSamplingAlgorithm(SamplingAlgorithmType.Grid, default);
         }
 
         /// <summary> Defines a Sampling Algorithm that generates values randomly. </summary>
@@ -6263,7 +6222,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.RandomSamplingAlgorithm"/> instance for mocking. </returns>
         public static RandomSamplingAlgorithm RandomSamplingAlgorithm(RandomSamplingAlgorithmRule? rule = default, int? seed = default)
         {
-            return new RandomSamplingAlgorithm(default, default, rule, seed);
+            return new RandomSamplingAlgorithm(SamplingAlgorithmType.Random, default, rule, seed);
         }
 
         /// <summary> Trial component definition. </summary>
@@ -7019,7 +6978,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningComputePatch"/> instance for mocking. </returns>
         public static MachineLearningComputePatch MachineLearningComputePatch(AmlComputeScaleSettings scaleSettings = default)
         {
-            return new MachineLearningComputePatch(scaleSettings is null ? default : new ClusterUpdateProperties(new ScaleSettingsInformation(scaleSettings, default), default), default);
+            return new MachineLearningComputePatch(scaleSettings is null ? default : new ClusterUpdateProperties(scaleSettings is null ? default : new ScaleSettingsInformation(scaleSettings, default), default), default);
         }
 
         /// <summary> Compute node information related to a AmlCompute. </summary>
@@ -7044,13 +7003,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// Secrets related to a Machine Learning compute. Might differ for every type of compute.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MachineLearningAksComputeSecrets"/>, <see cref="Models.MachineLearningVirtualMachineSecrets"/>, and <see cref="Models.MachineLearningDatabricksComputeSecrets"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MachineLearningAksComputeSecrets"/>, <see cref="Models.MachineLearningDatabricksComputeSecrets"/>, and <see cref="Models.MachineLearningVirtualMachineSecrets"/>.
         /// </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeSecrets"/> instance for mocking. </returns>
         public static MachineLearningComputeSecrets MachineLearningComputeSecrets(string computeType = default)
         {
-            return new UnknownComputeSecrets(default, default);
+            return new UnknownComputeSecrets(computeType is null ? default : new ComputeType(computeType), default);
         }
 
         /// <summary> Secrets related to a Machine Learning compute based on AKS. </summary>
@@ -7060,7 +7019,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningAksComputeSecrets"/> instance for mocking. </returns>
         public static MachineLearningAksComputeSecrets MachineLearningAksComputeSecrets(string userKubeConfig = default, string adminKubeConfig = default, string imagePullSecretName = default)
         {
-            return new MachineLearningAksComputeSecrets(default, default, userKubeConfig, adminKubeConfig, imagePullSecretName);
+            return new MachineLearningAksComputeSecrets(ComputeType.AKS, default, userKubeConfig, adminKubeConfig, imagePullSecretName);
         }
 
         /// <summary> Secrets related to a Machine Learning compute based on AKS. </summary>
@@ -7068,7 +7027,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningVirtualMachineSecrets"/> instance for mocking. </returns>
         public static MachineLearningVirtualMachineSecrets MachineLearningVirtualMachineSecrets(MachineLearningVmSshCredentials administratorAccount = default)
         {
-            return new MachineLearningVirtualMachineSecrets(default, default, administratorAccount);
+            return new MachineLearningVirtualMachineSecrets(ComputeType.VirtualMachine, default, administratorAccount);
         }
 
         /// <summary> Secrets related to a Machine Learning compute based on Databricks. </summary>
@@ -7076,7 +7035,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningDatabricksComputeSecrets"/> instance for mocking. </returns>
         public static MachineLearningDatabricksComputeSecrets MachineLearningDatabricksComputeSecrets(string databricksAccessToken = default)
         {
-            return new MachineLearningDatabricksComputeSecrets(default, default, databricksAccessToken);
+            return new MachineLearningDatabricksComputeSecrets(ComputeType.Databricks, default, databricksAccessToken);
         }
 
         /// <summary> Features enabled for a workspace. </summary>
@@ -7161,14 +7120,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.DataReferenceCredential"/> instance for mocking. </returns>
         public static DataReferenceCredential DataReferenceCredential(string credentialType = default)
         {
-            return new UnknownDataReferenceCredential(default, default);
+            return new UnknownDataReferenceCredential(credentialType is null ? default : new DataReferenceCredentialType(credentialType), default);
         }
 
         /// <summary> Access credential with no credentials. </summary>
         /// <returns> A new <see cref="Models.AnonymousAccessCredential"/> instance for mocking. </returns>
         public static AnonymousAccessCredential AnonymousAccessCredential()
         {
-            return new AnonymousAccessCredential(default, default);
+            return new AnonymousAccessCredential(DataReferenceCredentialType.NoCredentials, default);
         }
 
         /// <summary> Credential for docker with username and password. </summary>
@@ -7177,7 +7136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.DockerCredential"/> instance for mocking. </returns>
         public static DockerCredential DockerCredential(string userName = default, string password = default)
         {
-            return new DockerCredential(default, default, password, userName);
+            return new DockerCredential(DataReferenceCredentialType.DockerCredentials, default, password, userName);
         }
 
         /// <summary> Credential for user managed identity. </summary>
@@ -7190,7 +7149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ManagedIdentityCredential ManagedIdentityCredential(string managedIdentityType = default, string userManagedIdentityResourceId = default, string userManagedIdentityClientId = default, string userManagedIdentityPrincipalId = default, string userManagedIdentityTenantId = default)
         {
             return new ManagedIdentityCredential(
-                default,
+                DataReferenceCredentialType.ManagedIdentity,
                 default,
                 managedIdentityType,
                 userManagedIdentityClientId,
@@ -7204,7 +7163,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.SasCredential"/> instance for mocking. </returns>
         public static SasCredential SasCredential(Uri sasUri = default)
         {
-            return new SasCredential(default, default, sasUri);
+            return new SasCredential(DataReferenceCredentialType.SAS, default, sasUri);
         }
 
         /// <summary> Azure Resource Manager resource envelope. </summary>
@@ -7245,7 +7204,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// The MachineLearningWorkspaceConnectionProperties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AadAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.AccountKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="Models.CustomKeysWorkspaceConnectionProperties"/>, <see cref="Models.MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="Models.MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="Models.OAuth2AuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="Models.MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="Models.ServicePrincipalAuthTypeWorkspaceConnectionProperties"/>, and <see cref="Models.MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AadAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.AccountKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="Models.CustomKeysWorkspaceConnectionProperties"/>, <see cref="Models.MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="Models.MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="Models.MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="Models.MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="Models.MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>, <see cref="Models.OAuth2AuthTypeWorkspaceConnectionProperties"/>, and <see cref="Models.ServicePrincipalAuthTypeWorkspaceConnectionProperties"/>.
         /// </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
@@ -7267,7 +7226,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new UnknownWorkspaceConnectionPropertiesV2(
-                default,
+                authType is null ? default : new ConnectionAuthType(authType),
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -7303,7 +7262,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new AadAuthTypeWorkspaceConnectionProperties(
-                default,
+                ConnectionAuthType.AAD,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -7340,7 +7299,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new AccessKeyAuthTypeWorkspaceConnectionProperties(
-                default,
+                ConnectionAuthType.AccessKey,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -7386,7 +7345,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new AccountKeyAuthTypeWorkspaceConnectionProperties(
-                default,
+                ConnectionAuthType.AccountKey,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -7423,7 +7382,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new ApiKeyAuthWorkspaceConnectionProperties(
-                default,
+                ConnectionAuthType.ApiKey,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -7460,7 +7419,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new CustomKeysWorkspaceConnectionProperties(
-                default,
+                ConnectionAuthType.CustomKeys,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -7498,7 +7457,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new MachineLearningManagedIdentityAuthTypeWorkspaceConnection(
-                default,
+                ConnectionAuthType.ManagedIdentity,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -7544,7 +7503,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new MachineLearningNoneAuthTypeWorkspaceConnection(
-                default,
+                ConnectionAuthType.None,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -7581,7 +7540,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new OAuth2AuthTypeWorkspaceConnectionProperties(
-                default,
+                ConnectionAuthType.OAuth2,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -7651,7 +7610,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new MachineLearningPatAuthTypeWorkspaceConnection(
-                default,
+                ConnectionAuthType.PAT,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -7688,7 +7647,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new MachineLearningSasAuthTypeWorkspaceConnection(
-                default,
+                ConnectionAuthType.SAS,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -7726,7 +7685,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new ServicePrincipalAuthTypeWorkspaceConnectionProperties(
-                default,
+                ConnectionAuthType.ServicePrincipal,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -7774,7 +7733,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             sharedUserList ??= new ChangeTrackingList<string>();
 
             return new MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(
-                default,
+                ConnectionAuthType.UsernamePassword,
                 category,
                 createdByWorkspaceArmId,
                 error,
@@ -7989,6 +7948,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningResourceName(value, localizedValue, default);
         }
 
+        /// <summary> Private endpoint connection definition. </summary>
+        /// <param name="id">
+        /// This is the private endpoint connection name created on SRP
+        /// Full resource id: /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.MachineLearningServices/{resourceType}/{resourceName}/registryPrivateEndpointConnections/{peConnectionName}
+        /// </param>
+        /// <param name="location"> Same as workspace location. </param>
+        /// <param name="groupIds"> The group ids. </param>
+        /// <param name="privateEndpoint"> The PE network resource that is linked to this PE connection. </param>
+        /// <param name="registryPrivateLinkServiceConnectionState"> The connection state. </param>
+        /// <param name="provisioningState"> One of null, "Succeeded", "Provisioning", "Failed". While not approved, it's null. </param>
+        /// <returns> A new <see cref="Models.RegistryPrivateEndpointConnection"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RegistryPrivateEndpointConnection RegistryPrivateEndpointConnection(ResourceIdentifier id = default, AzureLocation? location = default, IEnumerable<string> groupIds = default, RegistryPrivateEndpoint privateEndpoint = default, RegistryPrivateLinkServiceConnectionState registryPrivateLinkServiceConnectionState = default, string provisioningState = default)
+        {
+            return new RegistryPrivateEndpointConnection(id, location, groupIds is null && privateEndpoint is null && registryPrivateLinkServiceConnectionState is null && provisioningState is null ? default : new RegistryPrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpoint, registryPrivateLinkServiceConnectionState, provisioningState, default), default);
+        }
+
+        /// <summary> The DataCollector. </summary>
+        /// <param name="collections">
+        /// [Required] The collection configuration. Each collection has it own configuration to collect model data and the name of collection can be arbitrary string.
+        /// Model data collector can be used for either payload logging or custom logging or both of them. Collection request and response are reserved for payload logging, others are for custom logging.
+        /// </param>
+        /// <param name="requestLoggingCaptureHeaders"> For payload logging, we only collect payload by default. If customers also want to collect the specified headers, they can set them in captureHeaders so that backend will collect those headers along with payload. </param>
+        /// <param name="rollingRate">
+        /// When model data is collected to blob storage, we need to roll the data to different path to avoid logging all of them in a single blob file.
+        /// If the rolling rate is hour, all data will be collected in the blob path /yyyy/MM/dd/HH/.
+        /// If it's day, all data will be collected in blob path /yyyy/MM/dd/.
+        /// The other benefit of rolling path is that model monitoring ui is able to select a time range of data very quickly.
+        /// </param>
+        /// <returns> A new <see cref="Models.DataCollector"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataCollector DataCollector(IDictionary<string, DataCollectionConfiguration> collections = default, IEnumerable<string> requestLoggingCaptureHeaders = default, RollingRateType? rollingRate = default)
+        {
+            return new DataCollector(collections ?? new ChangeTrackingDictionary<string, DataCollectionConfiguration>(), requestLoggingCaptureHeaders is null ? default : new RequestLogging((requestLoggingCaptureHeaders ?? new ChangeTrackingList<string>()).ToList(), default), rollingRate, default);
+        }
+
         /// <summary> An object that represents a machine learning workspace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -8051,9 +8046,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     discoveryUri,
                     enableDataIsolation,
                     default,
-                    new MachineLearningEncryptionProperty(
+                    primaryUserAssignedIdentity is null ? default : new MachineLearningEncryptionProperty(
                         default,
-                        new IdentityForCmk(primaryUserAssignedIdentity, default),
+                        primaryUserAssignedIdentity is null ? default : new IdentityForCmk(primaryUserAssignedIdentity, default),
                         default,
                         default,
                         default,
@@ -8075,7 +8070,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     provisioningState,
                     default,
                     serverlessComputeSettings,
-                    new ServiceManagedResourcesSettings(new CosmosDBSettings(cosmosDbCollectionsThroughput, default), default),
+                    cosmosDbCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(cosmosDbCollectionsThroughput is null ? default : new CosmosDBSettings(cosmosDbCollectionsThroughput, default), default),
                     serviceProvisionedResourceGroup,
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>()).ToList(),
                     storageAccount,
@@ -8561,7 +8556,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 credentials,
-                default,
+                datastoreType is null ? default : new DatastoreType(datastoreType),
                 isDefault);
         }
 
@@ -8621,7 +8616,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// Base definition for a job.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.AutoMLJob"/>, <see cref="Models.MachineLearningCommandJob"/>, <see cref="Models.MachineLearningPipelineJob"/>, <see cref="Models.SparkJob"/>, and <see cref="Models.MachineLearningSweepJob"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.AutoMLJob"/>, <see cref="Models.MachineLearningCommandJob"/>, <see cref="Models.MachineLearningPipelineJob"/>, <see cref="Models.MachineLearningSweepJob"/>, and <see cref="Models.SparkJob"/>.
         /// </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -8657,7 +8652,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 experimentName,
                 identity,
                 isArchived,
-                default,
+                jobType is null ? default : new JobType(jobType),
                 notificationSetting,
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status);
@@ -8836,7 +8831,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 appInsightsEnabled,
                 dataCollector,
                 egressPublicNetworkAccess,
-                default,
+                endpointComputeType is null ? default : new MachineLearningEndpointComputeType(endpointComputeType),
                 instanceType,
                 livenessProbe,
                 model,
@@ -8995,7 +8990,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 discoveryUri is null && intellectualPropertyPublisher is null && managedResourceId is null && mlFlowRegistryUri is null && registryPrivateEndpointConnections is null && publicNetworkAccess is null && regionDetails is null ? default : new RegistryProperties(
                     discoveryUri,
                     intellectualPropertyPublisher,
-                    new ArmResourceId(managedResourceId, default),
+                    managedResourceId is null ? default : new ArmResourceId(managedResourceId, default),
                     default,
                     mlFlowRegistryUri,
                     (registryPrivateEndpointConnections ?? new ChangeTrackingList<RegistryPrivateEndpointConnection>()).ToList(),
@@ -9064,7 +9059,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningPatAuthTypeWorkspaceConnection MachineLearningPatAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, string credentialsPat = default)
         {
             return new MachineLearningPatAuthTypeWorkspaceConnection(
-                default,
+                ConnectionAuthType.PAT,
                 category,
                 createdByWorkspaceArmId,
                 default,
@@ -9098,7 +9093,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningSasAuthTypeWorkspaceConnection MachineLearningSasAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, string credentialsSas = default)
         {
             return new MachineLearningSasAuthTypeWorkspaceConnection(
-                default,
+                ConnectionAuthType.SAS,
                 category,
                 createdByWorkspaceArmId,
                 default,
@@ -9132,7 +9127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningUsernamePasswordAuthTypeWorkspaceConnection MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, MachineLearningWorkspaceConnectionUsernamePassword credentials = default)
         {
             return new MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(
-                default,
+                ConnectionAuthType.UsernamePassword,
                 category,
                 createdByWorkspaceArmId,
                 default,
@@ -9165,7 +9160,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningNoneAuthTypeWorkspaceConnection MachineLearningNoneAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default)
         {
             return new MachineLearningNoneAuthTypeWorkspaceConnection(
-                default,
+                ConnectionAuthType.None,
                 category,
                 createdByWorkspaceArmId,
                 default,
@@ -9198,7 +9193,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningManagedIdentityAuthTypeWorkspaceConnection MachineLearningManagedIdentityAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, MachineLearningWorkspaceConnectionManagedIdentity credentials = default)
         {
             return new MachineLearningManagedIdentityAuthTypeWorkspaceConnection(
-                default,
+                ConnectionAuthType.ManagedIdentity,
                 category,
                 createdByWorkspaceArmId,
                 default,
@@ -9231,7 +9226,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static AadAuthTypeWorkspaceConnectionProperties AadAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default)
         {
             return new AadAuthTypeWorkspaceConnectionProperties(
-                default,
+                ConnectionAuthType.AAD,
                 category,
                 createdByWorkspaceArmId,
                 default,
@@ -9264,7 +9259,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static AccessKeyAuthTypeWorkspaceConnectionProperties AccessKeyAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, WorkspaceConnectionAccessKey credentials = default)
         {
             return new AccessKeyAuthTypeWorkspaceConnectionProperties(
-                default,
+                ConnectionAuthType.AccessKey,
                 category,
                 createdByWorkspaceArmId,
                 default,
@@ -9298,7 +9293,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static AccountKeyAuthTypeWorkspaceConnectionProperties AccountKeyAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, string credentialsKey = default)
         {
             return new AccountKeyAuthTypeWorkspaceConnectionProperties(
-                default,
+                ConnectionAuthType.AccountKey,
                 category,
                 createdByWorkspaceArmId,
                 default,
@@ -9350,7 +9345,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ApiKeyAuthWorkspaceConnectionProperties ApiKeyAuthWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, string credentialsKey = default)
         {
             return new ApiKeyAuthWorkspaceConnectionProperties(
-                default,
+                ConnectionAuthType.ApiKey,
                 category,
                 createdByWorkspaceArmId,
                 default,
@@ -9390,7 +9385,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static CustomKeysWorkspaceConnectionProperties CustomKeysWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, IDictionary<string, string> credentialsKeys = default)
         {
             return new CustomKeysWorkspaceConnectionProperties(
-                default,
+                ConnectionAuthType.CustomKeys,
                 category,
                 createdByWorkspaceArmId,
                 default,
@@ -9424,7 +9419,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static OAuth2AuthTypeWorkspaceConnectionProperties OAuth2AuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, WorkspaceConnectionOAuth2 credentials = default)
         {
             return new OAuth2AuthTypeWorkspaceConnectionProperties(
-                default,
+                ConnectionAuthType.OAuth2,
                 category,
                 createdByWorkspaceArmId,
                 default,
@@ -9458,7 +9453,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ServicePrincipalAuthTypeWorkspaceConnectionProperties ServicePrincipalAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, WorkspaceConnectionServicePrincipal credentials = default)
         {
             return new ServicePrincipalAuthTypeWorkspaceConnectionProperties(
-                default,
+                ConnectionAuthType.ServicePrincipal,
                 category,
                 createdByWorkspaceArmId,
                 default,
@@ -9522,7 +9517,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 experimentName,
                 identity,
                 isArchived,
-                default,
+                JobType.AutoML,
                 notificationSetting,
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status,
@@ -9557,7 +9552,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 credentials,
-                default,
+                DatastoreType.AzureBlob,
                 isDefault,
                 resourceGroup,
                 subscriptionId,
@@ -9588,7 +9583,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 credentials,
-                default,
+                DatastoreType.AzureDataLakeGen1,
                 isDefault,
                 resourceGroup,
                 subscriptionId,
@@ -9619,7 +9614,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 credentials,
-                default,
+                DatastoreType.AzureDataLakeGen2,
                 isDefault,
                 resourceGroup,
                 subscriptionId,
@@ -9653,7 +9648,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 credentials,
-                default,
+                DatastoreType.AzureFile,
                 isDefault,
                 resourceGroup,
                 subscriptionId,
@@ -9709,7 +9704,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 experimentName,
                 identity,
                 isArchived,
-                default,
+                JobType.Command,
                 notificationSetting,
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status,
@@ -9763,7 +9758,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 appInsightsEnabled,
                 dataCollector,
                 egressPublicNetworkAccess,
-                default,
+                MachineLearningEndpointComputeType.Kubernetes,
                 instanceType,
                 livenessProbe,
                 model,
@@ -9812,7 +9807,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 appInsightsEnabled,
                 dataCollector,
                 egressPublicNetworkAccess,
-                default,
+                MachineLearningEndpointComputeType.Managed,
                 instanceType,
                 livenessProbe,
                 model,
@@ -9844,7 +9839,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 credentials,
-                default,
+                DatastoreType.OneLake,
                 isDefault,
                 artifact,
                 endpoint,
@@ -9891,7 +9886,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 experimentName,
                 identity,
                 isArchived,
-                default,
+                JobType.Pipeline,
                 notificationSetting,
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status,
@@ -9950,7 +9945,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 experimentName,
                 identity,
                 isArchived,
-                default,
+                JobType.Spark,
                 notificationSetting,
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status,
@@ -10013,7 +10008,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 experimentName,
                 identity,
                 isArchived,
-                default,
+                JobType.Sweep,
                 notificationSetting,
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status,
@@ -10052,7 +10047,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new TextClassificationMultilabel(
                 logVerbosity,
                 targetColumnName,
-                default,
+                TaskType.TextClassificationMultilabel,
                 trainingData,
                 default,
                 featurizationDatasetLanguage is null ? default : new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage, default),
@@ -10086,7 +10081,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new TextNer(
                 logVerbosity,
                 targetColumnName,
-                default,
+                TaskType.TextNER,
                 trainingData,
                 default,
                 featurizationDatasetLanguage is null ? default : new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage, default),

@@ -8,6 +8,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "ResourceProvisioningState",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceProvisioningState",
       "valueType": {
         "$id": "2",
@@ -75,6 +76,9 @@
       "$id": "6",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2023-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.Versions",
       "valueType": {
         "$id": "7",
@@ -150,6 +154,9 @@
       "$id": "13",
       "kind": "model",
       "name": "CancelResult",
+      "apiVersions": [
+        "2023-12-01-preview"
+      ],
       "namespace": "Azure.ResourceManager.LargeHeader",
       "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.CancelResult",
       "usage": "Output,Json,LroInitial,LroFinalEnvelope",
@@ -170,6 +177,9 @@
           "$id": "14",
           "kind": "property",
           "name": "succeeded",
+          "apiVersions": [
+            "2023-12-01-preview"
+          ],
           "serializedName": "succeeded",
           "type": {
             "$id": "15",
@@ -198,6 +208,12 @@
       "$id": "16",
       "kind": "model",
       "name": "ErrorResponse",
+      "apiVersions": [
+        "v3",
+        "v4",
+        "v5",
+        "v6"
+      ],
       "namespace": "Azure.ResourceManager.CommonTypes",
       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse",
       "usage": "Json,Exception",
@@ -215,12 +231,24 @@
           "$id": "17",
           "kind": "property",
           "name": "error",
+          "apiVersions": [
+            "v3",
+            "v4",
+            "v5",
+            "v6"
+          ],
           "serializedName": "error",
           "doc": "The error object.",
           "type": {
             "$id": "18",
             "kind": "model",
             "name": "ErrorDetail",
+            "apiVersions": [
+              "v3",
+              "v4",
+              "v5",
+              "v6"
+            ],
             "namespace": "Azure.ResourceManager.CommonTypes",
             "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail",
             "usage": "Json,Exception,LroPolling",
@@ -237,6 +265,12 @@
                 "$id": "19",
                 "kind": "property",
                 "name": "code",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "code",
                 "doc": "The error code.",
                 "type": {
@@ -264,6 +298,12 @@
                 "$id": "21",
                 "kind": "property",
                 "name": "message",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "message",
                 "doc": "The error message.",
                 "type": {
@@ -291,6 +331,12 @@
                 "$id": "23",
                 "kind": "property",
                 "name": "target",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "target",
                 "doc": "The error target.",
                 "type": {
@@ -318,6 +364,12 @@
                 "$id": "25",
                 "kind": "property",
                 "name": "details",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "details",
                 "doc": "The error details.",
                 "type": {
@@ -348,6 +400,12 @@
                 "$id": "27",
                 "kind": "property",
                 "name": "additionalInfo",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "additionalInfo",
                 "doc": "The error additional info.",
                 "type": {
@@ -358,6 +416,12 @@
                     "$id": "29",
                     "kind": "model",
                     "name": "ErrorAdditionalInfo",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "namespace": "Azure.ResourceManager.CommonTypes",
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo",
                     "usage": "Json,Exception,LroPolling",
@@ -374,6 +438,12 @@
                         "$id": "30",
                         "kind": "property",
                         "name": "type",
+                        "apiVersions": [
+                          "v3",
+                          "v4",
+                          "v5",
+                          "v6"
+                        ],
                         "serializedName": "type",
                         "doc": "The additional info type.",
                         "type": {
@@ -401,6 +471,12 @@
                         "$id": "32",
                         "kind": "property",
                         "name": "info",
+                        "apiVersions": [
+                          "v3",
+                          "v4",
+                          "v5",
+                          "v6"
+                        ],
                         "serializedName": "info",
                         "doc": "The additional info.",
                         "type": {
@@ -471,6 +547,7 @@
       "$id": "34",
       "kind": "model",
       "name": "ArmOperationStatusResourceProvisioningState",
+      "apiVersions": [],
       "namespace": "Azure.ResourceManager",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus",
       "usage": "LroPolling",
@@ -492,6 +569,7 @@
           "$id": "35",
           "kind": "property",
           "name": "status",
+          "apiVersions": [],
           "serializedName": "status",
           "doc": "The operation status",
           "type": {
@@ -515,6 +593,7 @@
           "$id": "36",
           "kind": "property",
           "name": "id",
+          "apiVersions": [],
           "serializedName": "id",
           "doc": "The unique identifier for the operationStatus resource",
           "type": {
@@ -542,6 +621,7 @@
           "$id": "38",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the operationStatus resource",
           "type": {
@@ -569,6 +649,7 @@
           "$id": "40",
           "kind": "property",
           "name": "startTime",
+          "apiVersions": [],
           "serializedName": "startTime",
           "doc": "Operation start time",
           "type": {
@@ -604,6 +685,7 @@
           "$id": "43",
           "kind": "property",
           "name": "endTime",
+          "apiVersions": [],
           "serializedName": "endTime",
           "doc": "Operation complete time",
           "type": {
@@ -639,6 +721,7 @@
           "$id": "46",
           "kind": "property",
           "name": "percentComplete",
+          "apiVersions": [],
           "serializedName": "percentComplete",
           "doc": "The progress made toward completing the operation",
           "type": {
@@ -666,6 +749,7 @@
           "$id": "48",
           "kind": "property",
           "name": "error",
+          "apiVersions": [],
           "serializedName": "error",
           "doc": "Errors that occurred if the operation ended with Canceled or Failed status",
           "type": {

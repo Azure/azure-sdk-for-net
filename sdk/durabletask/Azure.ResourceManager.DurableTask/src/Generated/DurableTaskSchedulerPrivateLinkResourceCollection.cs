@@ -38,9 +38,8 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DurableTaskSchedulerPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DurableTaskSchedulerPrivateLinkResource.ResourceType, out string durableTaskSchedulerPrivateLinkResourceApiVersion);
             _schedulersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", DurableTaskSchedulerPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskSchedulerPrivateLinkResourceApiVersion ?? "2026-02-01");
+            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DurableTaskSchedulerPrivateLinkResourceData, DurableTaskSchedulerPrivateLinkResource>(new SchedulersGetPrivateLinksAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DurableTaskSchedulerPrivateLinkResourceData, DurableTaskSchedulerPrivateLinkResource>(new DurableTaskSchedulerPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _schedulersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DurableTaskSchedulerPrivateLinkResourceData, DurableTaskSchedulerPrivateLinkResource>(new SchedulersGetPrivateLinksCollectionResultOfT(
+            return new PageableWrapper<DurableTaskSchedulerPrivateLinkResourceData, DurableTaskSchedulerPrivateLinkResource>(new DurableTaskSchedulerPrivateLinkResourceDataCollectionResultOfT(
                 _schedulersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

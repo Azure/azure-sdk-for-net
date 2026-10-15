@@ -35,14 +35,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="labels"> The labels for the fleet member. </param>
         /// <param name="status"> Status information of the last operation for fleet member. </param>
+        /// <param name="meshProperties"> The Mesh Member Properties associated with this Fleet Member. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetMemberProperties(ResourceIdentifier clusterResourceId, string @group, FleetMemberProvisioningState? provisioningState, IDictionary<string, string> labels, ContainerServiceFleetMemberStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetMemberProperties(ResourceIdentifier clusterResourceId, string @group, FleetMemberProvisioningState? provisioningState, IDictionary<string, string> labels, ContainerServiceFleetMemberStatus status, ContainerServiceFleetMeshMemberProperties meshProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterResourceId = clusterResourceId;
             Group = @group;
             ProvisioningState = provisioningState;
             Labels = labels;
             Status = status;
+            MeshProperties = meshProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,5 +62,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Status information of the last operation for fleet member. </summary>
         public ContainerServiceFleetMemberStatus Status { get; }
+
+        /// <summary> The Mesh Member Properties associated with this Fleet Member. </summary>
+        public ContainerServiceFleetMeshMemberProperties MeshProperties { get; }
     }
 }

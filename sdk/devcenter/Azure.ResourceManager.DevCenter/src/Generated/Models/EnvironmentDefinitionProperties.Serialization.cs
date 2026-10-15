@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EnvironmentDefinitionProperties(description, parameters ?? new ChangeTrackingList<DevCenterEnvironmentDefinitionParameterInfo>(), templatePath, validationStatus, additionalBinaryDataProperties);

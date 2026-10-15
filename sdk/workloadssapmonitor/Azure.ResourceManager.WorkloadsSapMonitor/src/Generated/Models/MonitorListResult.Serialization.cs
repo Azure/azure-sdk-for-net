@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MonitorListResult(value, nextLink, additionalBinaryDataProperties);
+            return new MonitorListResult(value ?? new ChangeTrackingList<SapMonitorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

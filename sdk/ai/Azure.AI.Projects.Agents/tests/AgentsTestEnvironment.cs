@@ -32,6 +32,7 @@ namespace Azure.AI.Projects.Agents.Tests
         public string BING_CONNECTION_ID => GetRecordedVariable(nameof(BING_CONNECTION_ID));
         public string A2A_CONNECTION_ID => GetRecordedVariable(nameof(A2A_CONNECTION_ID));
         public string PLAYWRIGHT_CONNECTION_ID => GetRecordedVariable(nameof(PLAYWRIGHT_CONNECTION_ID));
+        public string PLAYWRIGHT_MCP_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(PLAYWRIGHT_MCP_CONNECTION_NAME));
         public string SHAREPOINT_CONNECTION_ID => GetRecordedVariable(nameof(SHAREPOINT_CONNECTION_ID));
         public string FABRIC_CONNECTION_ID => GetRecordedVariable(nameof(FABRIC_CONNECTION_ID));
         public string STORAGE_QUEUE_URI => GetRecordedVariable(nameof(STORAGE_QUEUE_URI));

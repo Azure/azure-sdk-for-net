@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.BotService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BotCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(BotResource.ResourceType, out string botApiVersion);
             _botsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", BotResource.ResourceType.Namespace, Diagnostics);
-            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, botApiVersion ?? "2023-09-15-preview");
+            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.BotService/botServices", out string botsApiVersionOverride) ? botsApiVersionOverride : "2023-09-15-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BotData, BotResource>(new BotsGetByResourceGroupAsyncCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "BotCollection.GetAll"), data => new BotResource(Client, data));
+            return new AsyncPageableWrapper<BotData, BotResource>(new BotDataAsyncCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "BotCollection.GetAll"), data => new BotResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BotData, BotResource>(new BotsGetByResourceGroupCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "BotCollection.GetAll"), data => new BotResource(Client, data));
+            return new PageableWrapper<BotData, BotResource>(new BotDataCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "BotCollection.GetAll"), data => new BotResource(Client, data));
         }
 
         /// <summary>

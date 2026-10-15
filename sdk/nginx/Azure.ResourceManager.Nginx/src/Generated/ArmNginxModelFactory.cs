@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure.Core;
@@ -275,7 +276,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 userPreferredEmail is null ? default : new NginxDeploymentUserProfile(userPreferredEmail, default),
                 networkProfile,
                 upgradeChannel is null ? default : new AutoUpgradeProfile(upgradeChannel, default),
-                webApplicationFirewallActivationState is null ? default : new NginxDeploymentUpdatePropertiesNginxAppProtect(new WebApplicationFirewallSettings(webApplicationFirewallActivationState, default), default),
+                webApplicationFirewallActivationState is null ? default : new NginxDeploymentUpdatePropertiesNginxAppProtect(webApplicationFirewallActivationState is null ? default : new WebApplicationFirewallSettings(webApplicationFirewallActivationState, default), default),
                 default);
         }
 
@@ -662,6 +663,103 @@ namespace Azure.ResourceManager.Nginx.Models
         public static NginxDeploymentWafPolicyError NginxDeploymentWafPolicyError(string code = default, string @field = default, string message = default)
         {
             return new NginxDeploymentWafPolicyError(code, @field, message, default);
+        }
+
+        /// <summary> Nginx Configuration Response. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Nginx Configuration Response Properties. </param>
+        /// <param name="location"></param>
+        /// <returns> A new <see cref="Nginx.NginxConfigurationData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NginxConfigurationData NginxConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NginxConfigurationProperties properties, AzureLocation? location)
+        {
+            return new NginxConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Nginx Deployment. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity Properties. </param>
+        /// <param name="properties"> Nginx Deployment Properties. </param>
+        /// <param name="skuName"> Name of the SKU. </param>
+        /// <returns> A new <see cref="Nginx.NginxDeploymentData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NginxDeploymentData NginxDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NginxDeploymentProperties properties = default, string skuName = default)
+        {
+            return new NginxDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                skuName is null ? default : new NginxResourceSku(skuName, default),
+                default);
+        }
+
+        /// <summary> Nginx Certificate Properties. </summary>
+        /// <param name="provisioningState"> Provisioning State. </param>
+        /// <param name="keyVirtualPath"></param>
+        /// <param name="certificateVirtualPath"></param>
+        /// <param name="keyVaultSecretId"></param>
+        /// <returns> A new <see cref="Models.NginxCertificateProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NginxCertificateProperties NginxCertificateProperties(NginxProvisioningState? provisioningState, string keyVirtualPath, string certificateVirtualPath, string keyVaultSecretId)
+        {
+            return new NginxCertificateProperties(
+                provisioningState,
+                keyVirtualPath,
+                certificateVirtualPath,
+                keyVaultSecretId,
+                default,
+                default,
+                default,
+                default,
+                default);
+        }
+
+        /// <summary> Nginx Deployment Properties. </summary>
+        /// <param name="provisioningState"> Provisioning State. </param>
+        /// <param name="nginxVersion"></param>
+        /// <param name="managedResourceGroup"></param>
+        /// <param name="networkProfile"> Nginx Network Profile. </param>
+        /// <param name="ipAddress"> The IP address of the deployment. </param>
+        /// <param name="enableDiagnosticsSupport"></param>
+        /// <param name="loggingStorageAccount"> Nginx Storage Account. </param>
+        /// <param name="scalingCapacity"></param>
+        /// <param name="userPreferredEmail"> The preferred support contact email address of the user used for sending alerts and notification. Can be an empty string or a valid email address. </param>
+        /// <returns> A new <see cref="Models.NginxDeploymentProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NginxDeploymentProperties NginxDeploymentProperties(NginxProvisioningState? provisioningState, string nginxVersion, string managedResourceGroup, NginxNetworkProfile networkProfile, string ipAddress, bool? enableDiagnosticsSupport, NginxStorageAccount loggingStorageAccount, int? scalingCapacity, string userPreferredEmail = default)
+        {
+            return new NginxDeploymentProperties(
+                provisioningState,
+                nginxVersion,
+                networkProfile,
+                ipAddress,
+                enableDiagnosticsSupport,
+                loggingStorageAccount is null ? default : new NginxLogging(loggingStorageAccount, default),
+                scalingCapacity is null ? default : new NginxDeploymentScalingProperties(scalingCapacity, default, default),
+                default,
+                userPreferredEmail is null ? default : new NginxDeploymentUserProfile(userPreferredEmail, default),
+                default,
+                default,
+                default);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of an annotation to text thread message content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageTextUriCitationAnnotation"/>, <see cref="MessageTextFileCitationAnnotation"/>, and <see cref="MessageTextFilePathAnnotation"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageTextFileCitationAnnotation"/>, <see cref="MessageTextFilePathAnnotation"/>, and <see cref="MessageTextUriCitationAnnotation"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMessageTextAnnotation))]
     public abstract partial class MessageTextAnnotation : IJsonModel<MessageTextAnnotation>
@@ -131,12 +131,12 @@ namespace Azure.AI.Agents.Persistent
             {
                 switch (discriminator.GetString())
                 {
-                    case "url_citation":
-                        return MessageTextUriCitationAnnotation.DeserializeMessageTextUriCitationAnnotation(element, options);
                     case "file_citation":
                         return MessageTextFileCitationAnnotation.DeserializeMessageTextFileCitationAnnotation(element, options);
                     case "file_path":
                         return MessageTextFilePathAnnotation.DeserializeMessageTextFilePathAnnotation(element, options);
+                    case "url_citation":
+                        return MessageTextUriCitationAnnotation.DeserializeMessageTextUriCitationAnnotation(element, options);
                 }
             }
             return UnknownMessageTextAnnotation.DeserializeUnknownMessageTextAnnotation(element, options);

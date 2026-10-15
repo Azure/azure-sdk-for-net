@@ -54,43 +54,55 @@ namespace Azure.ResourceManager.EventGrid.Mocking
 
         private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/namespaces", out string apiVersion) ? apiVersion : "2025-07-15-preview");
 
         private ClientDiagnostics PartnerNamespacesClientDiagnostics => _partnerNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PartnerNamespaces PartnerNamespacesRestClient => _partnerNamespacesRestClient ??= new PartnerNamespaces(PartnerNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private PartnerNamespaces PartnerNamespacesRestClient => _partnerNamespacesRestClient ??= new PartnerNamespaces(PartnerNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/partnerNamespaces", out string apiVersion0) ? apiVersion0 : "2025-07-15-preview");
 
         private ClientDiagnostics DomainsClientDiagnostics => _domainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Domains DomainsRestClient => _domainsRestClient ??= new Domains(DomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private Domains DomainsRestClient => _domainsRestClient ??= new Domains(DomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/domains", out string apiVersion1) ? apiVersion1 : "2025-07-15-preview");
 
         private ClientDiagnostics EventSubscriptionsClientDiagnostics => _eventSubscriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EventSubscriptions EventSubscriptionsRestClient => _eventSubscriptionsRestClient ??= new EventSubscriptions(EventSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private EventSubscriptions EventSubscriptionsRestClient => _eventSubscriptionsRestClient ??= new EventSubscriptions(
+            EventSubscriptionsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-07-15-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion2) ? apiVersion2 : null);
 
         private ClientDiagnostics PartnerConfigurationsClientDiagnostics => _partnerConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PartnerConfigurations PartnerConfigurationsRestClient => _partnerConfigurationsRestClient ??= new PartnerConfigurations(PartnerConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private PartnerConfigurations PartnerConfigurationsRestClient => _partnerConfigurationsRestClient ??= new PartnerConfigurations(PartnerConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/partnerConfigurations", out string apiVersion3) ? apiVersion3 : "2025-07-15-preview");
 
         private ClientDiagnostics PartnerDestinationsClientDiagnostics => _partnerDestinationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PartnerDestinations PartnerDestinationsRestClient => _partnerDestinationsRestClient ??= new PartnerDestinations(PartnerDestinationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private PartnerDestinations PartnerDestinationsRestClient => _partnerDestinationsRestClient ??= new PartnerDestinations(PartnerDestinationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/partnerDestinations", out string apiVersion4) ? apiVersion4 : "2025-07-15-preview");
 
         private ClientDiagnostics PartnerRegistrationsClientDiagnostics => _partnerRegistrationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PartnerRegistrations PartnerRegistrationsRestClient => _partnerRegistrationsRestClient ??= new PartnerRegistrations(PartnerRegistrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private PartnerRegistrations PartnerRegistrationsRestClient => _partnerRegistrationsRestClient ??= new PartnerRegistrations(PartnerRegistrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/partnerRegistrations", out string apiVersion5) ? apiVersion5 : "2025-07-15-preview");
 
         private ClientDiagnostics PartnerTopicsClientDiagnostics => _partnerTopicsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PartnerTopics PartnerTopicsRestClient => _partnerTopicsRestClient ??= new PartnerTopics(PartnerTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private PartnerTopics PartnerTopicsRestClient => _partnerTopicsRestClient ??= new PartnerTopics(PartnerTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/partnerTopics", out string apiVersion6) ? apiVersion6 : "2025-07-15-preview");
 
         private ClientDiagnostics SystemTopicsClientDiagnostics => _systemTopicsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SystemTopics SystemTopicsRestClient => _systemTopicsRestClient ??= new SystemTopics(SystemTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private SystemTopics SystemTopicsRestClient => _systemTopicsRestClient ??= new SystemTopics(SystemTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/systemTopics", out string apiVersion7) ? apiVersion7 : "2025-07-15-preview");
 
         private ClientDiagnostics TopicsClientDiagnostics => _topicsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Topics TopicsRestClient => _topicsRestClient ??= new Topics(TopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private Topics TopicsRestClient => _topicsRestClient ??= new Topics(
+            TopicsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-07-15-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion2) ? apiVersion2 : null);
 
         /// <summary>
         /// List all the namespaces under an Azure subscription.
@@ -119,7 +131,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventGridNamespaceData, EventGridNamespaceResource>(new NamespacesGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventGridNamespaceData, EventGridNamespaceResource>(new EventGridNamespaceDataAsync0CollectionResultOfT(
                 NamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -155,7 +167,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventGridNamespaceData, EventGridNamespaceResource>(new NamespacesGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<EventGridNamespaceData, EventGridNamespaceResource>(new EventGridNamespaceData0CollectionResultOfT(
                 NamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -191,7 +203,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PartnerNamespaceData, PartnerNamespaceResource>(new PartnerNamespacesGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PartnerNamespaceData, PartnerNamespaceResource>(new PartnerNamespaceDataAsync0CollectionResultOfT(
                 PartnerNamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -227,7 +239,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PartnerNamespaceData, PartnerNamespaceResource>(new PartnerNamespacesGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<PartnerNamespaceData, PartnerNamespaceResource>(new PartnerNamespaceData0CollectionResultOfT(
                 PartnerNamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -263,7 +275,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventGridDomainData, EventGridDomainResource>(new DomainsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventGridDomainData, EventGridDomainResource>(new EventGridDomainDataAsync0CollectionResultOfT(
                 DomainsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -299,7 +311,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventGridDomainData, EventGridDomainResource>(new DomainsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<EventGridDomainData, EventGridDomainResource>(new EventGridDomainData0CollectionResultOfT(
                 DomainsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -335,7 +347,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PartnerConfigurationData, PartnerConfigurationResource>(new PartnerConfigurationsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PartnerConfigurationData, PartnerConfigurationResource>(new PartnerConfigurationDataAsync0CollectionResultOfT(
                 PartnerConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -371,7 +383,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PartnerConfigurationData, PartnerConfigurationResource>(new PartnerConfigurationsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<PartnerConfigurationData, PartnerConfigurationResource>(new PartnerConfigurationData0CollectionResultOfT(
                 PartnerConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -407,7 +419,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PartnerDestinationData, PartnerDestinationResource>(new PartnerDestinationsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PartnerDestinationData, PartnerDestinationResource>(new PartnerDestinationDataAsync0CollectionResultOfT(
                 PartnerDestinationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -443,7 +455,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PartnerDestinationData, PartnerDestinationResource>(new PartnerDestinationsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<PartnerDestinationData, PartnerDestinationResource>(new PartnerDestinationData0CollectionResultOfT(
                 PartnerDestinationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -479,7 +491,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PartnerRegistrationData, PartnerRegistrationResource>(new PartnerRegistrationsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PartnerRegistrationData, PartnerRegistrationResource>(new PartnerRegistrationDataAsync0CollectionResultOfT(
                 PartnerRegistrationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -515,7 +527,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PartnerRegistrationData, PartnerRegistrationResource>(new PartnerRegistrationsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<PartnerRegistrationData, PartnerRegistrationResource>(new PartnerRegistrationData0CollectionResultOfT(
                 PartnerRegistrationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -551,7 +563,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PartnerTopicData, PartnerTopicResource>(new PartnerTopicsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PartnerTopicData, PartnerTopicResource>(new PartnerTopicDataAsync0CollectionResultOfT(
                 PartnerTopicsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -587,7 +599,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PartnerTopicData, PartnerTopicResource>(new PartnerTopicsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<PartnerTopicData, PartnerTopicResource>(new PartnerTopicData0CollectionResultOfT(
                 PartnerTopicsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -623,7 +635,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SystemTopicData, SystemTopicResource>(new SystemTopicsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SystemTopicData, SystemTopicResource>(new SystemTopicDataAsync0CollectionResultOfT(
                 SystemTopicsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -659,7 +671,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SystemTopicData, SystemTopicResource>(new SystemTopicsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<SystemTopicData, SystemTopicResource>(new SystemTopicData0CollectionResultOfT(
                 SystemTopicsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -695,7 +707,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventGridTopicData, EventGridTopicResource>(new TopicsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventGridTopicData, EventGridTopicResource>(new EventGridTopicDataAsync0CollectionResultOfT(
                 TopicsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -731,7 +743,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventGridTopicData, EventGridTopicResource>(new TopicsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<EventGridTopicData, EventGridTopicResource>(new EventGridTopicData0CollectionResultOfT(
                 TopicsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,

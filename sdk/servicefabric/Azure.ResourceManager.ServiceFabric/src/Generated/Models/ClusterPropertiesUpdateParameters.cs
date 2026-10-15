@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         {
             get
             {
-                return ApplicationTypeVersionsCleanupPolicy is null ? default : ApplicationTypeVersionsCleanupPolicy.MaxUnusedVersionsToKeep;
+                return ApplicationTypeVersionsCleanupPolicy is null ? (long?)default : ApplicationTypeVersionsCleanupPolicy.MaxUnusedVersionsToKeep;
             }
             set
             {

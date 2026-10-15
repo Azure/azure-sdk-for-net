@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                amount is null && timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null ? default : new BudgetProperties(
-                    default,
+                category is null && amount is null && timeGrain is null && timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null ? default : new BudgetProperties(
+                    category.GetValueOrDefault(),
                     amount,
-                    default,
+                    timeGrain.GetValueOrDefault(),
                     timePeriod,
                     filter,
                     currentSpend,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     format,
                     new ExportDeliveryInfo(deliveryInfoDestination, default),
                     definition,
-                    new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), default),
+                    runHistoryValue is null ? default : new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), default),
                     partitionData,
                     dataOverwriteBehavior,
                     compressionMode,
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     modifiedOn,
                     dateRange,
                     currency,
-                    new ReportConfigDefinition(
+                    typePropertiesQueryType is null && timeframe is null && timePeriod is null && dataSet is null && includeMonetaryCommitment is null ? default : new ReportConfigDefinition(
                         typePropertiesQueryType,
                         timeframe,
                         timePeriod,
@@ -889,7 +889,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 systemData,
                 displayName is null && fileFormats is null && notification is null && notificationEmail is null && schedule is null && scope is null && status is null && viewId is null ? default : new ScheduledActionProperties(
                     displayName,
-                    new FileDestination((fileFormats ?? new ChangeTrackingList<ScheduledActionFileFormat>()).ToList(), default),
+                    fileFormats is null ? default : new FileDestination((fileFormats ?? new ChangeTrackingList<ScheduledActionFileFormat>()).ToList(), default),
                     notification,
                     notificationEmail,
                     schedule,
@@ -992,7 +992,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new SettingsKind(kind),
                 default);
         }
 
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SettingsKind.Taginheritance,
                 default,
                 preferContainerTags is null ? default : new TagInheritanceProperties(preferContainerTags.GetValueOrDefault(), default));
         }
@@ -1042,7 +1042,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     byteCount,
                     blobCount,
                     compressData,
-                    new RequestContext(requestScope, requestBody, default),
+                    requestScope is null && requestBody is null ? default : new RequestContext(requestScope, requestBody, default),
                     (blobs ?? new ChangeTrackingList<ExportBlobInfo>()).ToList(),
                     default),
                 validTill,
@@ -1183,10 +1183,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="nameAvailable"> Whether this rule name is available. </param>
         /// <param name="reason"> The reason this name is not available. </param>
         /// <param name="message"> Error message if the name is not available. </param>
-        /// <returns> A new <see cref="Models.CostAllocationRuleCheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CostAllocationRuleCheckNameAvailabilityResponse CostAllocationRuleCheckNameAvailabilityResponse(bool? nameAvailable = default, CostAllocationRuleCheckNameAvailabilityReason? reason = default, string message = default)
+        /// <returns> A new <see cref="Models.CostAllocationRuleCheckNameAvailabilityResult"/> instance for mocking. </returns>
+        public static CostAllocationRuleCheckNameAvailabilityResult CostAllocationRuleCheckNameAvailabilityResult(bool? nameAvailable = default, CostAllocationRuleCheckNameAvailabilityReason? reason = default, string message = default)
         {
-            return new CostAllocationRuleCheckNameAvailabilityResponse(nameAvailable, reason, message, default);
+            return new CostAllocationRuleCheckNameAvailabilityResult(nameAvailable, reason, message, default);
         }
 
         /// <summary> benefit plan recommendation details. </summary>
@@ -1197,7 +1197,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="kind"> Reservation or SavingsPlan. </param>
         /// <param name="properties"> The properties of the benefit recommendations. </param>
         /// <returns> A new <see cref="Models.BenefitRecommendationModel"/> instance for mocking. </returns>
-        public static BenefitRecommendationModel BenefitRecommendationModel(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingAccountBenefitKind? kind = default, BenefitRecommendationProperties properties = default)
+        public static BenefitRecommendationModel BenefitRecommendationModel(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountBenefitKind? kind, BenefitRecommendationProperties properties)
         {
             return new BenefitRecommendationModel(
                 id,
@@ -1211,7 +1211,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary>
         /// The properties of the benefit recommendations.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SingleScopeBenefitRecommendationProperties"/> and <see cref="Models.SharedScopeBenefitRecommendationProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SharedScopeBenefitRecommendationProperties"/> and <see cref="Models.SingleScopeBenefitRecommendationProperties"/>.
         /// </summary>
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
@@ -1242,7 +1242,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 costWithoutBenefit,
                 recommendationDetails,
                 allRecommendationDetails,
-                default,
+                scope is null ? default : new BenefitRecommendationScope(scope),
                 default);
         }
 
@@ -1325,7 +1325,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 costWithoutBenefit,
                 recommendationDetails,
                 allRecommendationDetails,
-                default,
+                BenefitRecommendationScope.Single,
                 default,
                 subscriptionId,
                 resourceGroup);
@@ -1360,7 +1360,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 costWithoutBenefit,
                 recommendationDetails,
                 allRecommendationDetails,
-                default,
+                BenefitRecommendationScope.Shared,
                 default);
         }
 
@@ -1399,7 +1399,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new BillingAccountBenefitKind(kind),
                 default);
         }
 
@@ -1421,7 +1421,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                BillingAccountBenefitKind.IncludedQuantity,
                 default,
                 armSkuName is null && benefitId is null && benefitOrderId is null && benefitType is null && usageOn is null && utilizationPercentage is null ? default : new IncludedQuantityUtilizationSummaryProperties(
                     armSkuName,
@@ -1453,7 +1453,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                BillingAccountBenefitKind.SavingsPlan,
                 default,
                 armSkuName is null && benefitId is null && benefitOrderId is null && benefitType is null && usageOn is null && avgUtilizationPercentage is null && minUtilizationPercentage is null && maxUtilizationPercentage is null ? default : new SavingsPlanUtilizationSummaryProperties(
                     armSkuName,
@@ -1961,7 +1961,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     format,
                     new ExportDeliveryInfo(deliveryInfoDestination, default),
                     definition,
-                    new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), default),
+                    runHistoryValue is null ? default : new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), default),
                     partitionData,
                     default,
                     default,
@@ -2069,7 +2069,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 systemData,
                 displayName is null && fileFormats is null && notification is null && notificationEmail is null && schedule is null && scope is null && status is null && viewId is null ? default : new ScheduledActionProperties(
                     displayName,
-                    new FileDestination((fileFormats ?? new ChangeTrackingList<ScheduledActionFileFormat>()).ToList(), default),
+                    fileFormats is null ? default : new FileDestination((fileFormats ?? new ChangeTrackingList<ScheduledActionFileFormat>()).ToList(), default),
                     notification,
                     notificationEmail,
                     schedule,

@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                 location,
                 systemId is null && lockboxState is null && encryption is null && networkInjectionVirtualNetworks is null && healthStatus is null ? default : new Properties(
                     systemId,
-                    new PropertiesLockbox(lockboxState, default),
+                    lockboxState is null ? default : new PropertiesLockbox(lockboxState, default),
                     encryption,
-                    new PropertiesNetworkInjection((networkInjectionVirtualNetworks ?? new ChangeTrackingList<PowerPlatformVirtualNetworkProperties>()).ToList(), default),
+                    networkInjectionVirtualNetworks is null ? default : new PropertiesNetworkInjection((networkInjectionVirtualNetworks ?? new ChangeTrackingList<PowerPlatformVirtualNetworkProperties>()).ToList(), default),
                     healthStatus,
                     default),
                 identity,
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                 kind,
                 systemId is null && lockboxState is null && encryption is null && networkInjectionVirtualNetworks is null && healthStatus is null ? default : new Properties(
                     systemId,
-                    new PropertiesLockbox(lockboxState, default),
+                    lockboxState is null ? default : new PropertiesLockbox(lockboxState, default),
                     encryption,
-                    new PropertiesNetworkInjection((networkInjectionVirtualNetworks ?? new ChangeTrackingList<PowerPlatformVirtualNetworkProperties>()).ToList(), default),
+                    networkInjectionVirtualNetworks is null ? default : new PropertiesNetworkInjection((networkInjectionVirtualNetworks ?? new ChangeTrackingList<PowerPlatformVirtualNetworkProperties>()).ToList(), default),
                     healthStatus,
                     default));
         }
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
+                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
                 default);
         }
 

@@ -6,7 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -87,7 +88,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("connector_id"u8);
-                writer.WriteStringValue(ConnectorId.Value.ToSerialString());
+                writer.WriteObjectValue<McpToolConnectorId?>(ConnectorId.Value, options);
             }
             if (Optional.IsDefined(TunnelId))
             {
@@ -106,41 +107,55 @@ namespace Azure.AI.Projects.Agents
             }
             if (Optional.IsCollectionDefined(Headers))
             {
-                writer.WritePropertyName("headers"u8);
-                writer.WriteStartObject();
-                foreach (var item in Headers)
+                if (Headers != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("headers"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Headers)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(AllowedTools))
-            {
-                writer.WritePropertyName("allowed_tools"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(AllowedTools);
-#else
-                using (JsonDocument document = JsonDocument.Parse(AllowedTools))
+                else
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    writer.WriteNull("headers"u8);
                 }
-#endif
+            }
+            if (Optional.IsDefined(AllowedTools, _allowedToolsIsDefined))
+            {
+                if (AllowedTools != null)
+                {
+                    writer.WritePropertyName("allowed_tools"u8);
+                    writer.WriteObjectValue(AllowedTools, options);
+                }
+                else
+                {
+                    writer.WriteNull("allowed_tools"u8);
+                }
             }
             if (Optional.IsCollectionDefined(AllowedCallers))
             {
-                writer.WritePropertyName("allowed_callers"u8);
-                writer.WriteStartArray();
-                foreach (CallableToolAllowedCaller item in AllowedCallers)
+                if (AllowedCallers != null)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WritePropertyName("allowed_callers"u8);
+                    writer.WriteStartArray();
+                    foreach (CallableToolAllowedCaller item in AllowedCallers)
+                    {
+                        writer.WriteStringValue(item.ToSerialString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("allowed_callers"u8);
+                }
             }
             if (Optional.IsDefined(RequireApprovalInternal))
             {
@@ -198,13 +213,14 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverLabel = default;
             Uri serverUri = default;
-            MCPToolboxToolConnectorId? connectorId = default;
+            McpToolConnectorId? connectorId = default;
             string tunnelId = default;
             string authorization = default;
             string serverDescription = default;
-            IDictionary<string, string> headers = default;
-            BinaryData allowedTools = default;
-            IList<CallableToolAllowedCaller> allowedCallers = default;
+            IDictionary<string, string> headers = new ChangeTrackingDictionary<string, string>();
+            bool allowedToolsIsDefined = false;
+            McpToolFilter allowedTools = default;
+            IList<CallableToolAllowedCaller> allowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
             BinaryData requireApprovalInternal = default;
             bool? deferLoading = default;
             string projectConnectionId = default;
@@ -234,7 +250,14 @@ namespace Azure.AI.Projects.Agents
                     Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
+                        }
                     }
                     toolConfigs = dictionary;
                     continue;
@@ -259,7 +282,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    connectorId = prop.Value.GetString().ToMCPToolboxToolConnectorId();
+                    connectorId = ModelReaderWriter.Read<McpToolConnectorId?>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tunnel_id"u8))
@@ -281,6 +304,7 @@ namespace Azure.AI.Projects.Agents
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        headers = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -300,18 +324,20 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("allowed_tools"u8))
                 {
+                    allowedToolsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         allowedTools = null;
                         continue;
                     }
-                    allowedTools = BinaryData.FromString(prop.Value.GetRawText());
+                    allowedTools = ModelReaderWriter.Read<McpToolFilter>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("allowed_callers"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        allowedCallers = null;
                         continue;
                     }
                     List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
@@ -329,7 +355,7 @@ namespace Azure.AI.Projects.Agents
                         requireApprovalInternal = null;
                         continue;
                     }
-                    requireApprovalInternal = BinaryData.FromString(prop.Value.GetRawText());
+                    requireApprovalInternal = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("defer_loading"u8))
@@ -348,7 +374,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MCPToolboxTool(
@@ -363,12 +389,15 @@ namespace Azure.AI.Projects.Agents
                 tunnelId,
                 authorization,
                 serverDescription,
-                headers ?? new ChangeTrackingDictionary<string, string>(),
+                headers,
                 allowedTools,
-                allowedCallers ?? new ChangeTrackingList<CallableToolAllowedCaller>(),
+                allowedCallers,
                 requireApprovalInternal,
                 deferLoading,
-                projectConnectionId);
+                projectConnectionId)
+            {
+                _allowedToolsIsDefined = allowedToolsIsDefined
+            };
         }
     }
 }

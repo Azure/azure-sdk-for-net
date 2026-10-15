@@ -113,6 +113,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/63023")]
         public async Task GetCurrentLedgerEntry_FailsOverToSecondaryLedger()
         {
             Response response = await _client.GetCurrentLedgerEntryAsync(

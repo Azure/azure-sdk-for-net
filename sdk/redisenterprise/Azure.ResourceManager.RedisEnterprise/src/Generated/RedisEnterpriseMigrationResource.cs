@@ -24,8 +24,6 @@ namespace Azure.ResourceManager.RedisEnterprise
     /// </summary>
     public partial class RedisEnterpriseMigrationResource : ArmResource
     {
-        private readonly ClientDiagnostics _migrationClientDiagnostics;
-        private readonly Migration _migrationRestClient;
         private readonly ClientDiagnostics _migrationsClientDiagnostics;
         private readonly Migrations _migrationsRestClient;
         private readonly RedisEnterpriseMigrationData _data;
@@ -52,10 +50,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         internal RedisEnterpriseMigrationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string redisEnterpriseMigrationApiVersion);
-            _migrationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ResourceType.Namespace, Diagnostics);
-            _migrationRestClient = new Migration(_migrationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseMigrationApiVersion ?? "2025-08-01-preview");
             _migrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ResourceType.Namespace, Diagnostics);
-            _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseMigrationApiVersion ?? "2025-08-01-preview");
+            _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseMigrationApiVersion ?? "2026-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -108,7 +104,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -124,7 +120,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.CreateOrUpdate");
+            using DiagnosticScope scope = _migrationsClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -132,11 +128,11 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, RedisEnterpriseMigrationData.ToRequestContent(data), context);
+                HttpMessage message = _migrationsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, RedisEnterpriseMigrationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation<RedisEnterpriseMigrationResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseMigrationResource>(
                     new RedisEnterpriseMigrationResourceOperationSource(Client),
-                    _migrationClientDiagnostics,
+                    _migrationsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -167,7 +163,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -183,7 +179,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.CreateOrUpdate");
+            using DiagnosticScope scope = _migrationsClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -191,11 +187,11 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, RedisEnterpriseMigrationData.ToRequestContent(data), context);
+                HttpMessage message = _migrationsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, RedisEnterpriseMigrationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation<RedisEnterpriseMigrationResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseMigrationResource>(
                     new RedisEnterpriseMigrationResourceOperationSource(Client),
-                    _migrationClientDiagnostics,
+                    _migrationsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -226,7 +222,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -237,7 +233,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RedisEnterpriseMigrationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Get");
+            using DiagnosticScope scope = _migrationsClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Get");
             scope.Start();
             try
             {
@@ -245,7 +241,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _migrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RedisEnterpriseMigrationData> response = Response.FromValue(RedisEnterpriseMigrationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -274,7 +270,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -285,7 +281,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RedisEnterpriseMigrationResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Get");
+            using DiagnosticScope scope = _migrationsClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Get");
             scope.Start();
             try
             {
@@ -293,7 +289,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _migrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RedisEnterpriseMigrationData> response = Response.FromValue(RedisEnterpriseMigrationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -322,7 +318,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -334,7 +330,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> CancelAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Cancel");
+            using DiagnosticScope scope = _migrationsClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Cancel");
             scope.Start();
             try
             {
@@ -342,9 +338,9 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _migrationsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_migrationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_migrationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -371,7 +367,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -383,7 +379,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Cancel(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Cancel");
+            using DiagnosticScope scope = _migrationsClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Cancel");
             scope.Start();
             try
             {
@@ -391,9 +387,9 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _migrationsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_migrationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_migrationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -420,7 +416,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -472,7 +468,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

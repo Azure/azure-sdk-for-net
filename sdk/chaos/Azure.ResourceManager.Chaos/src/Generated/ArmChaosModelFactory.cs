@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="urn"> String of the URN for this Capability Type. </param>
         /// <param name="provisioningState"> Resource provisioning state. Not currently in use because resource is created synchronously. </param>
         /// <returns> A new <see cref="Chaos.ChaosCapabilityData"/> instance for mocking. </returns>
-        public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publisher = default, string targetType = default, string description = default, string parametersSchema = default, string urn = default, ChaosProvisioningState? provisioningState = default)
+        public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string description, string parametersSchema, string urn, ChaosProvisioningState? provisioningState)
         {
             return new ChaosCapabilityData(
                 id,
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     (azureRbacActions ?? new ChangeTrackingList<string>()).ToList(),
                     (azureRbacDataActions ?? new ChangeTrackingList<string>()).ToList(),
                     (requiredAzureRoleDefinitionIds ?? new ChangeTrackingList<string>()).ToList(),
-                    new ChaosCapabilityMetadataRuntimeProperties(runtimeKind, default),
+                    runtimeKind is null ? default : new ChaosCapabilityMetadataRuntimeProperties(runtimeKind, default),
                     default),
                 default);
         }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="selectors"> List of selectors. </param>
         /// <param name="customerDataStorage"> Optional customer-managed Storage account where Experiment schema will be stored. </param>
         /// <returns> A new <see cref="Chaos.ChaosExperimentData"/> instance for mocking. </returns>
-        public static ChaosExperimentData ChaosExperimentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, ChaosProvisioningState? provisioningState = default, IEnumerable<ChaosExperimentStep> steps = default, IEnumerable<ChaosTargetSelector> selectors = default, CustomerDataStorageProperties customerDataStorage = default)
+        public static ChaosExperimentData ChaosExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ChaosProvisioningState? provisioningState, IEnumerable<ChaosExperimentStep> steps, IEnumerable<ChaosTargetSelector> selectors, CustomerDataStorageProperties customerDataStorage)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                default,
+                provisioningState is null && steps is null && selectors is null && customerDataStorage is null ? default : new ExperimentProperties(provisioningState, (steps ?? new ChangeTrackingList<ChaosExperimentStep>()).ToList(), (selectors ?? new ChangeTrackingList<ChaosTargetSelector>()).ToList(), customerDataStorage, default),
                 default);
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Models.ChaosExperimentAction"/> instance for mocking. </returns>
         public static ChaosExperimentAction ChaosExperimentAction(string name = default, string @type = default)
         {
-            return new UnknownChaosExperimentAction(name, default, default);
+            return new UnknownChaosExperimentAction(name, @type is null ? default : new ExperimentActionType(@type), default);
         }
 
         /// <summary> Model that represents a continuous action. </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
             return new ChaosContinuousAction(
                 name,
-                default,
+                ExperimentActionType.Continuous,
                 default,
                 duration,
                 (parameters ?? new ChangeTrackingList<ChaosKeyValuePair>()).ToList(),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Models.ChaosDelayAction"/> instance for mocking. </returns>
         public static ChaosDelayAction ChaosDelayAction(string name = default, TimeSpan duration = default)
         {
-            return new ChaosDelayAction(name, default, default, duration);
+            return new ChaosDelayAction(name, ExperimentActionType.Delay, default, duration);
         }
 
         /// <summary> Model that represents a discrete action. </summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             parameters ??= new ChangeTrackingList<ChaosKeyValuePair>();
 
-            return new ChaosDiscreteAction(name, default, default, (parameters ?? new ChangeTrackingList<ChaosKeyValuePair>()).ToList(), selectorId);
+            return new ChaosDiscreteAction(name, ExperimentActionType.Discrete, default, (parameters ?? new ChangeTrackingList<ChaosKeyValuePair>()).ToList(), selectorId);
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Models.ChaosTargetSelector"/> instance for mocking. </returns>
         public static ChaosTargetSelector ChaosTargetSelector(string id = default, string @type = default, ChaosTargetFilter filter = default)
         {
-            return new UnknownChaosTargetSelector(id, default, filter, default);
+            return new UnknownChaosTargetSelector(id, @type is null ? default : new SelectorType(@type), filter, default);
         }
 
         /// <summary>
@@ -240,14 +240,14 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Models.ChaosTargetFilter"/> instance for mocking. </returns>
         public static ChaosTargetFilter ChaosTargetFilter(string @type = default)
         {
-            return new UnknownChaosTargetFilter(default, default);
+            return new UnknownChaosTargetFilter(@type is null ? default : new FilterType(@type), default);
         }
 
         /// <param name="parametersZones"> List of Azure availability zones to filter targets by. </param>
         /// <returns> A new <see cref="Models.ChaosTargetSimpleFilter"/> instance for mocking. </returns>
         public static ChaosTargetSimpleFilter ChaosTargetSimpleFilter(IEnumerable<string> parametersZones = default)
         {
-            return new ChaosTargetSimpleFilter(default, default, parametersZones is null ? default : new ChaosTargetSimpleFilterParameters((parametersZones ?? new ChangeTrackingList<string>()).ToList(), default));
+            return new ChaosTargetSimpleFilter(FilterType.Simple, default, parametersZones is null ? default : new ChaosTargetSimpleFilterParameters((parametersZones ?? new ChangeTrackingList<string>()).ToList(), default));
         }
 
         /// <summary> Model that represents a list selector. </summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             targets ??= new ChangeTrackingList<ChaosTargetReference>();
 
-            return new ChaosTargetListSelector(id, default, filter, default, (targets ?? new ChangeTrackingList<ChaosTargetReference>()).ToList());
+            return new ChaosTargetListSelector(id, SelectorType.List, filter, default, (targets ?? new ChangeTrackingList<ChaosTargetReference>()).ToList());
         }
 
         /// <summary> Model that represents a reference to a Target in the selector. </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
             return new ChaosTargetQuerySelector(
                 id,
-                default,
+                SelectorType.Query,
                 filter,
                 default,
                 queryString,
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="stoppedOn"> String that represents the stop date time. </param>
         /// <param name="provisioningState"> Resource provisioning state. Not currently in use for executions. </param>
         /// <returns> A new <see cref="Chaos.ChaosExperimentExecutionData"/> instance for mocking. </returns>
-        public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string status = default, DateTimeOffset? startedOn = default, DateTimeOffset? stoppedOn = default, ChaosProvisioningState? provisioningState = default)
+        public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, ChaosProvisioningState? provisioningState)
         {
             return new ChaosExperimentExecutionData(
                 id,
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="lastActionOn"> String that represents the last action date time. </param>
         /// <param name="runInformationSteps"> The steps of the experiment run. </param>
         /// <returns> A new <see cref="Models.ExperimentExecutionDetails"/> instance for mocking. </returns>
-        public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string status = default, DateTimeOffset? startedOn = default, DateTimeOffset? stoppedOn = default, ChaosProvisioningState? provisioningState = default, string failureReason = default, DateTimeOffset? lastActionOn = default, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps = default)
+        public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, ChaosProvisioningState? provisioningState, string failureReason, DateTimeOffset? lastActionOn, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps)
         {
             return new ExperimentExecutionDetails(
                 id,
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     provisioningState,
                     failureReason,
                     lastActionOn,
-                    new ExperimentExecutionDetailsPropertiesRunInformation((runInformationSteps ?? new ChangeTrackingList<ChaosExperimentRunStepStatus>()).ToList(), default),
+                    runInformationSteps is null ? default : new ExperimentExecutionDetailsPropertiesRunInformation((runInformationSteps ?? new ChangeTrackingList<ChaosExperimentRunStepStatus>()).ToList(), default),
                     default),
                 default);
         }
@@ -592,16 +592,16 @@ namespace Azure.ResourceManager.Chaos.Models
                 name,
                 resourceType,
                 systemData,
-                actionName is null && actionType is null ? default : new ActionProperties(
-                    default,
-                    default,
-                    default,
+                canonicalId is null && displayName is null && description is null && actionName is null && version is null && actionType is null && supportedTargetTypes is null && parametersSchema is null && recommendedRoles is null ? default : new ActionProperties(
+                    canonicalId,
+                    displayName,
+                    description,
                     actionName,
-                    default,
+                    version,
                     actionType,
-                    default,
-                    default,
-                    default,
+                    (supportedTargetTypes ?? new ChangeTrackingList<ChaosActionSupportedTargetType>()).ToList(),
+                    parametersSchema,
+                    (recommendedRoles ?? new ChangeTrackingList<Guid>()).ToList(),
                     default),
                 default);
         }
@@ -645,16 +645,16 @@ namespace Azure.ResourceManager.Chaos.Models
                 name,
                 resourceType,
                 systemData,
-                actionName is null && actionType is null ? default : new ActionProperties(
-                    default,
-                    default,
-                    default,
+                canonicalId is null && displayName is null && description is null && actionName is null && version is null && actionType is null && supportedTargetTypes is null && parametersSchema is null && recommendedRoles is null ? default : new ActionProperties(
+                    canonicalId,
+                    displayName,
+                    description,
                     actionName,
-                    default,
+                    version,
                     actionType,
-                    default,
-                    default,
-                    default,
+                    (supportedTargetTypes ?? new ChangeTrackingList<ChaosActionSupportedTargetType>()).ToList(),
+                    parametersSchema,
+                    (recommendedRoles ?? new ChangeTrackingList<Guid>()).ToList(),
                     default),
                 default);
         }
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                displayName is null && description is null && propertiesSchema is null && resourceTypes is null ? default : new TargetTypeProperties(displayName, description, propertiesSchema, (resourceTypes ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
         }
 
@@ -1633,7 +1633,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     default,
                     failureReason,
                     lastActionOn,
-                    new ExperimentExecutionDetailsPropertiesRunInformation((runInformationSteps ?? new ChangeTrackingList<ChaosExperimentRunStepStatus>()).ToList(), default),
+                    runInformationSteps is null ? default : new ExperimentExecutionDetailsPropertiesRunInformation((runInformationSteps ?? new ChangeTrackingList<ChaosExperimentRunStepStatus>()).ToList(), default),
                     default),
                 default);
         }

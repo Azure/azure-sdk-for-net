@@ -12,7 +12,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// The abstract base representation of a streaming run step tool call's Code Interpreter tool output.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepDeltaCodeInterpreterLogOutput"/> and <see cref="RunStepDeltaCodeInterpreterImageOutput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepDeltaCodeInterpreterImageOutput"/> and <see cref="RunStepDeltaCodeInterpreterLogOutput"/>.
     /// </summary>
     public abstract partial class RunStepDeltaCodeInterpreterOutput
     {

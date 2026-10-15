@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetAppBackupVaultData, NetAppBackupVaultResource>(new BackupVaultsGetByNetAppAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetAppBackupVaultData, NetAppBackupVaultResource>(new NetAppBackupVaultDataAsyncCollectionResultOfT(
                 _backupVaultsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetAppBackupVaultData, NetAppBackupVaultResource>(new BackupVaultsGetByNetAppAccountCollectionResultOfT(
+            return new PageableWrapper<NetAppBackupVaultData, NetAppBackupVaultResource>(new NetAppBackupVaultDataCollectionResultOfT(
                 _backupVaultsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

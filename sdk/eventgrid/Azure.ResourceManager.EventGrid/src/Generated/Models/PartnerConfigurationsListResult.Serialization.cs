@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PartnerConfigurationsListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PartnerConfigurationsListResult(value ?? new ChangeTrackingList<PartnerConfigurationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

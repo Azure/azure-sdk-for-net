@@ -161,7 +161,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 switch (result.Status)
                 {
                     case SdkStatsConfigStatus.UseUrl:
-                        connectionString = BuildConnectionStringFromHost(result.Url!);
+                        connectionString = BuildConnectionStringFromHost(result.Url!, GetSdkStatsInstrumentationKey(ingestionEndpoint));
                         break;
                     case SdkStatsConfigStatus.Disabled:
                         // Explicit remote kill switch. Honor it: do not build the
@@ -191,20 +191,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             }
         }
 
-        private static string BuildConnectionStringFromHost(string host)
+        internal static string BuildConnectionStringFromHost(string host, string instrumentationKey)
         {
             // Build a Breeze-compatible connection string from the config-supplied host.
-            // The transmitter appends the standard /v2.1/track path; the placeholder iKey
-            // is required by ConnectionStringParser but is ignored server-side by the
-            // distro endpoint family.
+            // The transmitter appends the standard /v2.1/track path. The distro changes only
+            // where SDK statistics are sent, not whose they are, so the envelope keeps the
+            // same SDK statistics instrumentation key the legacy endpoint receives.
             var trimmed = host.TrimEnd('/');
             if (!trimmed.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
                 && !trimmed.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
             {
                 trimmed = "https://" + trimmed;
             }
-            return "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=" + trimmed + "/";
+            return "InstrumentationKey=" + instrumentationKey + ";IngestionEndpoint=" + trimmed + "/";
         }
+
+        /// <summary>
+        /// Returns the SDK statistics instrumentation key for the customer's region. Selected
+        /// with the same rule as <see cref="GetSdkStatsConfigUrl"/>, so an EU customer's
+        /// statistics carry the EU key to the EU host; unknown regions default to non-EU.
+        /// </summary>
+        internal static string GetSdkStatsInstrumentationKey(string ingestionEndpoint)
+            => IsEuRegion(ingestionEndpoint)
+                ? StatsbeatConstants.Statsbeat_InstrumentationKey_EU
+                : StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU;
 
         /// <summary>
         /// Returns the legacy AI internal Statsbeat connection string for the customer's
@@ -233,7 +243,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 .AddMeter(StatsbeatConstants.DistroFeatureSdkStatsMeterName)
                 .AddMeter(StatsbeatConstants.NetworkSdkStatsMeterName)
                 .AddMeter(StatsbeatConstants.DistroNetworkSdkStatsMeterName)
-                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), _networkExportIntervalMilliseconds)
+                .AddReader(new PeriodicExportingMetricReader(AzureMonitorMetricExporter.CreateForInternalTelemetry(exporterOptions), _networkExportIntervalMilliseconds)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
 
@@ -349,14 +359,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         {
             // Distro path: pick the EU or non-EU configuration endpoint based on the
             // customer's ingestion region. Unknown regions default to non-EU.
-            var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
-            if (patternMatch.Success
-                && StatsbeatConstants.s_EU_Endpoints.Contains(patternMatch.Groups[1].Value))
-            {
-                return StatsbeatConstants.SdkStatsConfigUrl_EU;
-            }
+            return IsEuRegion(ingestionEndpoint)
+                ? StatsbeatConstants.SdkStatsConfigUrl_EU
+                : StatsbeatConstants.SdkStatsConfigUrl_NonEU;
+        }
 
-            return StatsbeatConstants.SdkStatsConfigUrl_NonEU;
+        private static bool IsEuRegion(string ingestionEndpoint)
+        {
+            var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
+            return patternMatch.Success
+                && StatsbeatConstants.s_EU_Endpoints.Contains(patternMatch.Groups[1].Value);
         }
 
         private IEnumerable<Measurement<int>> GetAttachStatsbeat()
