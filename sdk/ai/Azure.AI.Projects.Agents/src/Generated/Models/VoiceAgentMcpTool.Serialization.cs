@@ -7,10 +7,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> An MCP tool available to a voice agent. </summary>
+    /// <summary> An MCP tool available to a voice agent. Server endpoints use `server_url`; connector and tunnel identifiers are not supported. </summary>
     public partial class VoiceAgentMcpTool : VoiceAgentTool, IJsonModel<VoiceAgentMcpTool>
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentMcpTool"/> for deserialization. </summary>
@@ -79,6 +80,11 @@ namespace Azure.AI.Projects.Agents
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("server_label"u8);
             writer.WriteStringValue(ServerLabel);
+            if (Optional.IsDefined(ServerUrl))
+            {
+                writer.WritePropertyName("server_url"u8);
+                writer.WriteStringValue(ServerUrl.AbsoluteUri);
+            }
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
@@ -117,14 +123,7 @@ namespace Azure.AI.Projects.Agents
                 if (AllowedTools != null)
                 {
                     writer.WritePropertyName("allowed_tools"u8);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(AllowedTools);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(AllowedTools))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WriteObjectValue(AllowedTools, options);
                 }
                 else
                 {
@@ -148,24 +147,17 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("allowed_callers"u8);
                 }
             }
-            if (Optional.IsDefined(RequireApproval, _requireApprovalIsDefined))
+            if (Optional.IsDefined(RequireApprovalInternal))
             {
-                if (RequireApproval != null)
-                {
-                    writer.WritePropertyName("require_approval"u8);
+                writer.WritePropertyName("require_approval"u8);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(RequireApproval);
+                writer.WriteRawValue(RequireApprovalInternal);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(RequireApproval))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                else
+                using (JsonDocument document = JsonDocument.Parse(RequireApprovalInternal))
                 {
-                    writer.WriteNull("require_approval"u8);
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
             if (Optional.IsDefined(DeferLoading))
             {
@@ -192,11 +184,6 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(ServerUrl))
-            {
-                writer.WritePropertyName("server_url"u8);
-                writer.WriteStringValue(ServerUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(ResponseScheduling))
             {
@@ -233,18 +220,17 @@ namespace Azure.AI.Projects.Agents
             string @type = "mcp";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverLabel = default;
+            Uri serverUrl = default;
             string authorization = default;
             string serverDescription = default;
             IDictionary<string, string> headers = new ChangeTrackingDictionary<string, string>();
             bool allowedToolsIsDefined = false;
-            BinaryData allowedTools = default;
+            McpToolFilter allowedTools = default;
             IList<CallableToolAllowedCaller> allowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
-            bool requireApprovalIsDefined = false;
-            BinaryData requireApproval = default;
+            BinaryData requireApprovalInternal = default;
             bool? deferLoading = default;
             string projectConnectionId = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
-            Uri serverUrl = default;
             VoiceAgentToolResponseScheduling? responseScheduling = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -256,6 +242,15 @@ namespace Azure.AI.Projects.Agents
                 if (prop.NameEquals("server_label"u8))
                 {
                     serverLabel = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("server_url"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serverUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("authorization"u8))
@@ -298,7 +293,7 @@ namespace Azure.AI.Projects.Agents
                         allowedTools = null;
                         continue;
                     }
-                    allowedTools = prop.Value.GetUtf8Bytes();
+                    allowedTools = ModelReaderWriter.Read<McpToolFilter>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("allowed_callers"u8))
@@ -318,13 +313,12 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("require_approval"u8))
                 {
-                    requireApprovalIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requireApproval = null;
+                        requireApprovalInternal = null;
                         continue;
                     }
-                    requireApproval = prop.Value.GetUtf8Bytes();
+                    requireApprovalInternal = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("defer_loading"u8))
@@ -362,15 +356,6 @@ namespace Azure.AI.Projects.Agents
                     toolConfigs = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("server_url"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    serverUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
-                    continue;
-                }
                 if (prop.NameEquals("response_scheduling"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -389,20 +374,19 @@ namespace Azure.AI.Projects.Agents
                 @type,
                 additionalBinaryDataProperties,
                 serverLabel,
+                serverUrl,
                 authorization,
                 serverDescription,
                 headers,
                 allowedTools,
                 allowedCallers,
-                requireApproval,
+                requireApprovalInternal,
                 deferLoading,
                 projectConnectionId,
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
-                serverUrl,
                 responseScheduling)
             {
-                _allowedToolsIsDefined = allowedToolsIsDefined,
-                _requireApprovalIsDefined = requireApprovalIsDefined
+                _allowedToolsIsDefined = allowedToolsIsDefined
             };
         }
     }

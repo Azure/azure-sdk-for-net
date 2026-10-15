@@ -536,6 +536,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 storage?.TransmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
 
+                if (statusCode == ResponseStatusCodes.Unauthorized || statusCode == ResponseStatusCodes.Forbidden)
+                {
+                    AzureMonitorExporterEventSource.Log.RoutedAuthenticationFailed(group.Description, statusCode, group.IsAad);
+                }
+
                 var transmission = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, group.IsAad, telemetrySchemaTypeCounter: null, networkSdkStats);
                 var accepted = AcceptedCount(transmission.ItemsAccepted, itemCount);
                 ReportDelivery(exportSequence, group, itemCount, DescribeDelivery(transmission.ExportResult, accepted, itemCount, statusCode), accepted, statusCode);

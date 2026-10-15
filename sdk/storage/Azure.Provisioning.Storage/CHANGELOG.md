@@ -8,6 +8,7 @@
 
 ### Bugs Fixed
 
+- Restored the 3-63 character, lowercase letter, number, and hyphen naming constraints for `FileShare` and `BlobContainer`. Automatically generated names once again lowercase mixed-case identifiers and remove underscores and unsupported punctuation.
 - Includes the fix for `StorageActiveDirectoryProperties.DomainGuid` to share its value with `ActiveDirectoryDomainGuid`, preventing conflicting assignments from emitting an outdated domain GUID.
 
 ## 1.2.0-beta.2 (2026-10-13)
