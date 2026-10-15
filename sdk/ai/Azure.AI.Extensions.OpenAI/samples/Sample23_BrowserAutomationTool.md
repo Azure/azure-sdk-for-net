@@ -11,13 +11,20 @@ Playwright is an open-source framework for end-to-end testing and browser automa
 5. Enter a name and expiration date, and then generate the token.
 6. Copy the token immediately. You can't retrieve its value later.
 
-> **Warning:** Prefer Microsoft Entra ID authentication when supported by the PlaywrightWorkspaces connection. Workspace access tokens are less secure and are disabled by default. Treat an access token like a password, and never commit it to source control or include it in prompts or logs.
+> **Warning:** Prefer Microsoft Entra ID authentication when supported by the PlaywrightWorkspace connection. Workspace access tokens are less secure and are disabled by default. Treat an access token like a password, and never commit it to source control or include it in prompts or logs.
 
 ## Configure Microsoft Foundry
 
-**Note:** `BrowserAutomationTool` uses a PlaywrightWorkspaces connection. `BrowserAutomationPreviewTool` uses a Serverless Model connection.
+**Note:** `BrowserAutomationTool` uses a `PlaywrightWorkspace` project connection whose target is the Playwright Workspaces remote MCP endpoint. `PlaywrightWorkspace` is the connection's resource category; MCP is the communication protocol. `BrowserAutomationPreviewTool` uses a Serverless Model connection.
 
-Follow [Set up Browser Automation in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/browser-automation#set-up-browser-automation) to connect your Playwright workspace. In the Foundry portal, select **Build** > **Tools**, create a toolbox, and add **Browser Automation**. Select your Playwright workspace and authentication method to create the PlaywrightWorkspaces connection. Copy the **Project connection ID** from the tool's details page for use in this sample.
+Follow [Set up Browser Automation in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/browser-automation#set-up-browser-automation) to connect your Playwright workspace:
+
+1. Open your project in the Microsoft Foundry portal and select **Build** > **Tools**.
+2. Select **Create a toolbox** and enter a name and description.
+3. Under **Tools**, select **Add**, choose **Browser Automation**, and select **Add tool**.
+4. Enter a connection name, select your **Playwright Workspace**, and choose the authentication method.
+5. Select **Connect**, then **Publish** to save the toolbox.
+6. Copy the **Project connection ID** from the tool's details page and set `BROWSER_AUTOMATION_PROJECT_CONNECTION_ID` to that full resource ID.
 
 ## Run this sample.
 
@@ -104,7 +111,7 @@ private static void ParseResponse(StreamingResponseUpdate streamResponse)
 }
 ```
 
-4. Create a streaming response using the exact agent version created above. Set `ToolChoice = ResponseToolChoice.CreateRequiredChoice()` to require tool use. Ask the agent to read the Playwright Workspaces overview and summarize three benefits for a team running browser tests. This read-only task demonstrates browser-grounded research without depending on search controls or a dynamic stock chart.
+4. Create a streaming response using the exact agent version created above. Set `ToolChoice = ResponseToolChoice.CreateRequiredChoice()` to require tool use. Ask the agent to open Microsoft's Yahoo Finance performance page directly and report the labeled YTD return. This read-only task avoids search controls and chart interactions. The value changes over time, and the agent should report when the value is unavailable or access is blocked rather than guess.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Sync
@@ -116,10 +123,10 @@ CreateResponseOptions responseOptions = new()
     StreamingEnabled = true,
     InputItems =
     {
-        ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit " +
-            "https://learn.microsoft.com/azure/app-testing/playwright-workspaces/overview-what-is-microsoft-playwright-workspaces. " +
-            "Read the overview and summarize three benefits of Playwright Workspaces for a team running browser tests. " +
-            "Base your answer on the page, not on prior knowledge.")
+        ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://finance.yahoo.com/quote/MSFT/performance/. " +
+            "Read the YTD return shown on the page for Microsoft (MSFT) and report the percentage with its label. " +
+            "Use the visible page content, not prior knowledge. Do not use the search bar or interact with charts. " +
+            "If the value is unavailable or access is blocked, say so rather than guessing.")
     }
 };
 foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(responseOptions))
@@ -138,10 +145,10 @@ CreateResponseOptions responseOptions = new()
     StreamingEnabled = true,
     InputItems =
     {
-        ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit " +
-            "https://learn.microsoft.com/azure/app-testing/playwright-workspaces/overview-what-is-microsoft-playwright-workspaces. " +
-            "Read the overview and summarize three benefits of Playwright Workspaces for a team running browser tests. " +
-            "Base your answer on the page, not on prior knowledge.")
+        ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://finance.yahoo.com/quote/MSFT/performance/. " +
+            "Read the YTD return shown on the page for Microsoft (MSFT) and report the percentage with its label. " +
+            "Use the visible page content, not prior knowledge. Do not use the search bar or interact with charts. " +
+            "If the value is unavailable or access is blocked, say so rather than guessing.")
     }
 };
 await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))

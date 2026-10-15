@@ -93,10 +93,10 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             StreamingEnabled = true,
             InputItems =
             {
-                ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit " +
-                    "https://learn.microsoft.com/azure/app-testing/playwright-workspaces/overview-what-is-microsoft-playwright-workspaces. " +
-                    "Read the overview and summarize three benefits of Playwright Workspaces for a team running browser tests. " +
-                    "Base your answer on the page, not on prior knowledge.")
+                ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://finance.yahoo.com/quote/MSFT/performance/. " +
+                    "Read the YTD return shown on the page for Microsoft (MSFT) and report the percentage with its label. " +
+                    "Use the visible page content, not prior knowledge. Do not use the search bar or interact with charts. " +
+                    "If the value is unavailable or access is blocked, say so rather than guessing.")
             }
         };
         await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
@@ -153,10 +153,10 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             StreamingEnabled = true,
             InputItems =
             {
-                ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit " +
-                    "https://learn.microsoft.com/azure/app-testing/playwright-workspaces/overview-what-is-microsoft-playwright-workspaces. " +
-                    "Read the overview and summarize three benefits of Playwright Workspaces for a team running browser tests. " +
-                    "Base your answer on the page, not on prior knowledge.")
+                ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://finance.yahoo.com/quote/MSFT/performance/. " +
+                    "Read the YTD return shown on the page for Microsoft (MSFT) and report the percentage with its label. " +
+                    "Use the visible page content, not prior knowledge. Do not use the search bar or interact with charts. " +
+                    "If the value is unavailable or access is blocked, say so rather than guessing.")
             }
         };
         foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(responseOptions))

@@ -1494,12 +1494,21 @@ Playwright is a Node.js library for browser automation. Microsoft provides [Play
 
 #### Configure Microsoft Foundry
 
-Follow [Set up Browser Automation in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/browser-automation#set-up-browser-automation) to connect your Playwright workspace. In the Foundry portal, select **Build** > **Tools**, create a toolbox, and add **Browser Automation**. Select your Playwright workspace and authentication method to create the PlaywrightWorkspaces connection. Copy the **Project connection ID** from the tool's details page for use in this sample. Prefer Microsoft Entra ID authentication when supported; never include workspace access tokens in source code, prompts, or logs.
+Follow [Set up Browser Automation in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/browser-automation#set-up-browser-automation) to connect your Playwright workspace:
+
+1. Open your project in the Microsoft Foundry portal and select **Build** > **Tools**.
+2. Select **Create a toolbox** and enter a name and description.
+3. Under **Tools**, select **Add**, choose **Browser Automation**, and select **Add tool**.
+4. Enter a connection name, select your **Playwright Workspace**, and choose the authentication method.
+5. Select **Connect**, then **Publish** to save the toolbox.
+6. Copy the **Project connection ID** from the tool's details page and set `BROWSER_AUTOMATION_PROJECT_CONNECTION_ID` to that full resource ID.
+
+Prefer Microsoft Entra ID authentication when supported; never include workspace access tokens in source code, prompts, or logs.
 
 #### Using Browser automation tool
 
 Please note that Browser automation operations may take longer than typical calls to process. Using background mode for Responses or applying a network timeout of at least five minutes for non-background calls is highly recommended.
-`BrowserAutomationTool` uses a PlaywrightWorkspaces connection. `BrowserAutomationPreviewTool` uses a Serverless Model connection.
+`BrowserAutomationTool` uses a `PlaywrightWorkspace` project connection whose target is the Playwright Workspaces remote MCP endpoint. `PlaywrightWorkspace` is the connection's resource category; MCP is the communication protocol. `BrowserAutomationPreviewTool` uses a Serverless Model connection.
 Set `FOUNDRY_PROJECT_ENDPOINT` to your project endpoint, `FOUNDRY_MODEL_NAME` to your model deployment name, and `BROWSER_AUTOMATION_PROJECT_CONNECTION_ID` to the full project connection resource ID, not just the connection name.
 
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
@@ -1533,7 +1542,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
-Stream browser automation responses using the exact agent version created above. Require tool use with `ResponseToolChoice.CreateRequiredChoice()`, and ask the agent to read the Playwright Workspaces overview and summarize three benefits for a team running browser tests. Print complete text messages once, not token-by-token. The [browser automation sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/samples/Sample23_BrowserAutomationTool.md) includes the `ParseResponse` helper and synchronous equivalent.
+Stream browser automation responses using the exact agent version created above. Require tool use with `ResponseToolChoice.CreateRequiredChoice()`, and ask the agent to open Microsoft's Yahoo Finance performance page directly and report the labeled YTD return, without using search controls or interacting with charts. The value changes over time; the agent should say when it is unavailable or access is blocked rather than guess. Print complete text messages once, not token-by-token. The [browser automation sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/samples/Sample23_BrowserAutomationTool.md) includes the `ParseResponse` helper and synchronous equivalent.
 
 **Warning:** Complete messages may contain sensitive browser live-view URLs. Use these only in a trusted local terminal and redact them from saved logs or shared output.
 
@@ -1546,10 +1555,10 @@ CreateResponseOptions responseOptions = new()
     StreamingEnabled = true,
     InputItems =
     {
-        ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit " +
-            "https://learn.microsoft.com/azure/app-testing/playwright-workspaces/overview-what-is-microsoft-playwright-workspaces. " +
-            "Read the overview and summarize three benefits of Playwright Workspaces for a team running browser tests. " +
-            "Base your answer on the page, not on prior knowledge.")
+        ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://finance.yahoo.com/quote/MSFT/performance/. " +
+            "Read the YTD return shown on the page for Microsoft (MSFT) and report the percentage with its label. " +
+            "Use the visible page content, not prior knowledge. Do not use the search bar or interact with charts. " +
+            "If the value is unavailable or access is blocked, say so rather than guessing.")
     }
 };
 await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
@@ -1565,7 +1574,7 @@ Agents can be reused across responses. Delete an agent version only when it is n
 Along with `BrowserAutomationTool`, Azure.AI.Extensions.OpenAI contain `BrowserAutomationPreviewTool`, which has the same functionality as `BrowserAutomationTool`.
 This tool was released to preview the functionality, please use the stable version of the tool.
 
-`BrowserAutomationPreviewTool` uses a Serverless Model connection as opposed to the PlaywrightWorkspaces connection used by `BrowserAutomationTool`. Please follow the steps below to create it.
+`BrowserAutomationPreviewTool` uses a Serverless Model connection as opposed to the `PlaywrightWorkspace` connection used by `BrowserAutomationTool`. Please follow the steps below to create it.
 
 1. On the left panel select **Management center**.
 2. Choose **Connected resources**.
