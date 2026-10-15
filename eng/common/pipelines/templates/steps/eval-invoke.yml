@@ -32,10 +32,9 @@ steps:
             --shard-name "$(shardName)" \
             --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
             --threshold ${{ parameters.threshold }}
-      ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-        env:
-          COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
-          GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
+      env:
+        COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
+        GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
 
   - ${{ else }}:
     - script: |
@@ -46,7 +45,6 @@ steps:
           --threshold ${{ parameters.threshold }}
       displayName: 'vally eval $(shardName)'
       workingDirectory: ${{ parameters.vallyRoot }}
-      ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-        env:
-          COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
-          GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
+      env:
+        COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
+        GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)

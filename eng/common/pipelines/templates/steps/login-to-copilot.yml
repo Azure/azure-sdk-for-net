@@ -1,14 +1,13 @@
 # Shared GitHub App authentication for Vally executors and prompt judges.
 steps:
-  - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-    - template: /eng/common/pipelines/templates/steps/login-to-github.yml
-      parameters:
-        TokenOwners:
-          - ${{ split(variables['Build.Repository.Name'], '/')[0] }}
-        VariableNamePrefix: COPILOT_GITHUB_TOKEN
-        TokenRequest:
-          repositories:
-            - ${{ split(variables['Build.Repository.Name'], '/')[1] }}
-          permissions:
-            organization_copilot_requests: read
-            metadata: read
+  - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+    parameters:
+      TokenOwners:
+        - ${{ split(variables['Build.Repository.Name'], '/')[0] }}
+      VariableNamePrefix: COPILOT_GITHUB_TOKEN
+      TokenRequest:
+        repositories:
+          - ${{ split(variables['Build.Repository.Name'], '/')[1] }}
+        permissions:
+          organization_copilot_requests: read
+          metadata: read
