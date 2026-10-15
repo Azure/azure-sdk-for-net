@@ -24,6 +24,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
 - [Key concepts](#key-concepts)
   - [Create and authenticate the client](#create-and-authenticate-the-client)
 - [Examples](#examples)
+  - [Voice Agent realtime transport](#voice-agent-realtime-transport)
   - [Performing Agent operations](#performing-agent-operations)
   - [Get an authenticated AzureOpenAI client](#get-an-authenticated-azureopenai-client)
   - [Get an authenticated ChatCompletionsClient](#get-an-authenticated-chatcompletionsclient)
@@ -98,6 +99,34 @@ AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new Defau
 Once the `AIProjectClient` is created, you can use properties such as `.Datasets` and `.Indexes` on this client to perform relevant operations.
 
 ## Examples
+
+### Voice Agent realtime transport
+
+To select a transport for a Voice Agent connection, pass `ProjectsRealtimeSessionClientOptions`
+to `AIProjectClient.ProjectsRealtimeClient.StartSessionAsync`:
+
+```C#
+#pragma warning disable AAIP001 // VoiceAgentTransport is experimental.
+#pragma warning disable AAIP002 // The realtime client is experimental.
+#pragma warning disable OPENAI002 // OpenAI realtime types are experimental.
+ProjectsRealtimeSessionClientOptions options = new()
+{
+    Transport = VoiceAgentTransport.Websocket,
+    QueryString = "store=true"
+};
+using RealtimeSessionClient session = await projectClient.ProjectsRealtimeClient.StartSessionAsync(
+    "my-voice-agent", intent: null, options: options);
+```
+
+Omit `Transport` to use the service's default WebSocket transport. Setting `VoiceAgentTransport.Webrtc`
+selects WebRTC signaling over the WebSocket; your application must also handle the peer connection,
+media, and SDP exchange. The typed option overrides any `transport` value in `QueryString` while
+preserving other query parameters.
+
+See the [runnable WebSocket transport sample](./samples/Sample_VoiceAgent_WebSocketTransport.md)
+for a complete text exchange using the typed transport with `store=true` and a REST read of the
+persisted conversation. The [WebSocket audio sample](./samples/Sample_VoiceAgent_WebSocketAudio.md)
+demonstrates streaming PCM input and output while logging actual byte counts.
 
 ### Performing Agent operations
 
