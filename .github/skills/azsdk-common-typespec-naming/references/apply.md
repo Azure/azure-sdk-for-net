@@ -2,39 +2,35 @@
 
 This is an edit workflow, not a prerequisite for guidance or review.
 
-## Before Editing
+## Before Calling
 
 Require authorization to edit and resolve all affected decisions from the [naming plan](naming-conventions.md#plan). Confirm the absolute TypeSpec project root, target declarations, language scope, intended SDK names, existing overrides, and release compatibility. Do not apply blocked, ambiguous, unsupported, or synthesized-target renames.
 
-Read the existing `client.tsp` and the project entrypoint before writing. Apply only when:
+Use `azure-sdk-mcp:azsdk_customized_code_update` to apply SDK-only naming overrides. Supply:
 
-- the target resolves to a service-owned TypeSpec declaration;
-- `client.tsp` is loaded by the active generation entrypoint;
-- the requested decorator is supported by the installed TCGC version; and
-- the edit can preserve wire names, other language scopes and unrelated overrides.
+| Argument               | Value                                                                                                       |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `tspProjectPath`       | Absolute local project directory containing `tspconfig.yaml`                                                |
+| `editScope`            | `SpecInputs` explicitly; never rely on the default `All`                                                    |
+| `customizationRequest` | Exact TypeSpec targets, proposed names, language scopes, evidence/constraints and preservation requirements |
 
-If any condition is not established, report the blocker instead of guessing or broadening the edit.
+Omit `packagePath`; no SDK package or checkout is needed for this spec-only workflow. Explicitly state the SDK language in the request because no package is available to infer it. `SpecInputs` excludes SDK custom-code repair and skips the tool's SDK regeneration/build stage.
 
-## Edit `client.tsp`
+Example request text:
 
-Make the smallest direct edit to `client.tsp`. Reuse the project's existing imports, namespace qualification and decorator placement. For example:
+> For C# ARM, rename the unshipped SDK property for `WidgetProperties.enabled` to `IsEnabled` using `@@clientName(..., "csharp")`. Reuse the existing `client.tsp` and ensure the generation entrypoint loads it. Preserve the wire name `enabled`, all Java/Python overrides, routes and other declarations. Do not modify SDK code or dependencies.
 
-```typespec
-@@clientName(WidgetProperties.enabled, "IsEnabled", "csharp");
-```
-
-Add the `@azure-tools/typespec-client-generator-core` import or `using Azure.ClientGenerator.Core;` only when the file needs it and the installed package provides it. Preserve existing decorators and ordering conventions. Do not edit `main.tsp`, service models, routes, SDK code, generated code, package manifests or dependencies to make a naming-only customization work.
-
-For exact enum names, require verified installed TCGC capability and spelling. If unsupported, report the blocker rather than upgrading dependencies or writing unavailable syntax.
+The tool owns decorator imports, placement, target resolution and customization edits. Calling the tool is the authorized `client.tsp` mutation; the agent must not duplicate that implementation with file-edit or shell tools. For exact enum names, include the verified installed TCGC capability and required spelling; if unsupported, report the blocker rather than upgrading dependencies or writing unavailable syntax.
 
 ## Results and Failures
 
-- Inspect the diff after writing. Verify planned targets, names and language scopes, customization loading, and unchanged wire/other-language names.
-- If an edit fails or leaves a partial change, inspect and repair only the naming edit. Do not undo unrelated work or create SDK-side rename shims.
-- A valid `client.tsp` override proves the customization is declared and compiles; it is not evidence that the generated SDK exposes the expected API name.
+- Inspect `Success`, error details, change summaries and remaining guidance. Do not claim all decisions were applied if the response is incomplete or reports manual intervention.
+- If the tool is unavailable, fails, or times out, report the unresolved customization. Do not fall back to direct edits, broaden scope to `All`/`CustomCode`, or create SDK-side rename shims.
+- If a tool failure may have left partial edits, inspect the diff read-only and report them. Do not undo unrelated work or repeat mutations blindly.
+- Read the successful diff to verify planned names, scopes, customization loading and unchanged wire/other-language names. A tool success response or a valid `client.tsp` override is not evidence that generated SDK names were verified.
 
 ## Validation After Writes
 
-The calling authoring workflow retains its normal validation sequence. For a standalone naming fix, run the project's normal TypeSpec compile command after editing, normally `npx --no-install tsp compile .` from the TypeSpec project root. Fix compile failures caused by the naming edit and rerun. Report missing tooling or unrelated failures; do not substitute an SDK build or mark an unrun compile as passed.
+The calling authoring workflow retains its normal TypeSpec validation. For a standalone naming fix, run `azure-sdk-mcp:azsdk_run_typespec_validation` and the project's normal TypeSpec compile command after successful customization. Report missing tooling or failures; do not substitute an SDK build or mark unrun checks as passed.
 
 SDK generation is not required to consult or apply naming guidance. Without generation, report effective SDK names as unverified. Read-only review never runs this apply/validation sequence; it returns suggested changes and evidence gaps to the reviewer.
