@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FirstPartyServiceTagCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(FirstPartyServiceTagResource.ResourceType, out string firstPartyServiceTagApiVersion);
             _firstPartyServiceTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FirstPartyServiceTagResource.ResourceType.Namespace, Diagnostics);
-            _firstPartyServiceTagsRestClient = new FirstPartyServiceTags(_firstPartyServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firstPartyServiceTagApiVersion ?? "2026-01-01");
+            _firstPartyServiceTagsRestClient = new FirstPartyServiceTags(_firstPartyServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FirstPartyServiceTagData, FirstPartyServiceTagResource>(new FirstPartyServiceTagsListAsyncCollectionResultOfT(_firstPartyServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirstPartyServiceTagCollection.GetAll"), data => new FirstPartyServiceTagResource(Client, data));
+            return new AsyncPageableWrapper<FirstPartyServiceTagData, FirstPartyServiceTagResource>(new FirstPartyServiceTagDataAsyncCollectionResultOfT(_firstPartyServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirstPartyServiceTagCollection.GetAll"), data => new FirstPartyServiceTagResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FirstPartyServiceTagData, FirstPartyServiceTagResource>(new FirstPartyServiceTagsListCollectionResultOfT(_firstPartyServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirstPartyServiceTagCollection.GetAll"), data => new FirstPartyServiceTagResource(Client, data));
+            return new PageableWrapper<FirstPartyServiceTagData, FirstPartyServiceTagResource>(new FirstPartyServiceTagDataCollectionResultOfT(_firstPartyServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirstPartyServiceTagCollection.GetAll"), data => new FirstPartyServiceTagResource(Client, data));
         }
 
         /// <summary>

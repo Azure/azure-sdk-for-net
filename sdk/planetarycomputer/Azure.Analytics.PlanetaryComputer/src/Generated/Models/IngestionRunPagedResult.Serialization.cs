@@ -169,7 +169,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IngestionRunPagedResult(value, nextLink, additionalBinaryDataProperties);
+            return new IngestionRunPagedResult(value ?? new ChangeTrackingList<IngestionRun>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecretsStoreExtension.Models;
 
 namespace Azure.ResourceManager.SecretsStoreExtension
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecretSyncResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string secretSyncApiVersion);
             _secretSyncsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension", ResourceType.Namespace, Diagnostics);
-            _secretSyncsRestClient = new SecretSyncs(_secretSyncsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, secretSyncApiVersion ?? "2024-08-21-preview");
+            _secretSyncsRestClient = new SecretSyncs(_secretSyncsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.SecretSyncController/secretSyncs", out string secretSyncsApiVersionOverride) ? secretSyncsApiVersionOverride : "2026-09-25-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -515,10 +515,9 @@ namespace Azure.ResourceManager.SecretsStoreExtension
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -558,10 +557,9 @@ namespace Azure.ResourceManager.SecretsStoreExtension
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

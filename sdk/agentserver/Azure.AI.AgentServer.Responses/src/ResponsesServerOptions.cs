@@ -21,8 +21,8 @@ public class ResponsesServerOptions
     /// Gets or sets the maximum number of conversation history items that
     /// <see cref="ResponseContext.GetHistoryAsync"/> fetches, or <c>-1</c> to fetch
     /// all available history. Default: <c>-1</c>.
-    /// Can also be configured via the <c>DEFAULT_FETCH_HISTORY_ITEM_COUNT</c>
-    /// environment variable (integer value). Programmatic configuration takes precedence.
+    /// Hosted applications can bind this through
+    /// <see cref="ResponsesServerSettings.DefaultFetchHistoryCount"/>.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">
     /// Thrown when the value is zero or less than <c>-1</c>.
@@ -41,11 +41,8 @@ public class ResponsesServerOptions
             }
 
             _defaultFetchHistoryCount = value;
-            IsDefaultFetchHistoryCountConfigured = true;
         }
     }
-
-    internal bool IsDefaultFetchHistoryCountConfigured { get; private set; }
 
     /// <summary>
     /// The default value for <see cref="DefaultFetchHistoryCount"/>.
@@ -62,9 +59,10 @@ public class ResponsesServerOptions
     /// <see langword="false"/> (the default), an interrupted background response
     /// transitions to a failed terminal state and is not re-invoked.
     /// <para>
-    /// Enabling this option requires resilient-capable response, task, and stream
-    /// persistence providers to be registered; the server fails loudly at startup when
-    /// they are missing rather than silently downgrading to weaker durability.
+    /// Enabling this option automatically opts the host into the Core resilient-task runtime and
+    /// requires resilient-capable response, task, and stream persistence providers; the server
+    /// fails loudly at startup when they are missing rather than silently downgrading to weaker
+    /// durability.
     /// </para>
     /// </summary>
     public bool ResilientBackground { get; set; }
@@ -78,6 +76,10 @@ public class ResponsesServerOptions
     /// forks are rejected with <c>409 conversation_fork_not_supported</c>, and overlapping
     /// turns are rejected with <c>409 conversation_locked</c>. When <see langword="false"/>
     /// (the default), steering is disabled.
+    /// Enabling steering requires the Core resilient-task runtime; set
+    /// <see cref="ResilientBackground"/> or call
+    /// <see cref="Azure.AI.AgentServer.Core.Tasks.ResilientTaskEnablementExtensions.SetResilientTasksEnabled(Microsoft.Extensions.DependencyInjection.IServiceCollection, bool)"/>
+    /// before host startup.
     /// </summary>
     public bool SteerableConversations { get; set; }
 

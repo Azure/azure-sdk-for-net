@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AppService.SreAgent
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SreAgentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SreAgentResource.ResourceType, out string sreAgentApiVersion);
             _agentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService.SreAgent", SreAgentResource.ResourceType.Namespace, Diagnostics);
-            _agentsRestClient = new Agents(_agentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sreAgentApiVersion ?? "2026-01-01");
+            _agentsRestClient = new Agents(_agentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.App/agents", out string agentsApiVersionOverride) ? agentsApiVersionOverride : "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SreAgentData, SreAgentResource>(new AgentsGetByResourceGroupAsyncCollectionResultOfT(_agentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SreAgentCollection.GetAll"), data => new SreAgentResource(Client, data));
+            return new AsyncPageableWrapper<SreAgentData, SreAgentResource>(new SreAgentDataAsyncCollectionResultOfT(_agentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SreAgentCollection.GetAll"), data => new SreAgentResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SreAgentData, SreAgentResource>(new AgentsGetByResourceGroupCollectionResultOfT(_agentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SreAgentCollection.GetAll"), data => new SreAgentResource(Client, data));
+            return new PageableWrapper<SreAgentData, SreAgentResource>(new SreAgentDataCollectionResultOfT(_agentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SreAgentCollection.GetAll"), data => new SreAgentResource(Client, data));
         }
 
         /// <summary>

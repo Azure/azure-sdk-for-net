@@ -92,6 +92,7 @@ namespace Azure.Generator.Management
             AddVisitor(new NameVisitor());
             AddVisitor(new SerializationVisitor());
             AddVisitor(new RestClientVisitor());
+            AddVisitor(new RawRequestUriBuilderVisitor());
             AddVisitor(new ResourceVisitor());
             AddVisitor(new InheritableSystemObjectModelVisitor());
             AddVisitor(new FlattenPropertyVisitor());

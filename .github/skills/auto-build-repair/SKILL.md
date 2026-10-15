@@ -58,6 +58,30 @@ directory. Do not manufacture responses, diagnostics, or build evidence. If the
 process fails, retain its actual output/error for the failure report; do not
 substitute an earlier successful result.
 
+For CLI invocations, execute a Bash argument array and record that same array,
+serialized per argument with `LC_ALL=C printf '%q'`, as `engine-command.txt` in
+the results directory. Within ANSI-C-quoted arguments (`$'...'`), replace literal
+ampersands with `\x26` before joining the serialized arguments with spaces; this
+prevents the comment sanitizer's global HTML-entity decoding from changing values.
+Leave ordinary shell-escaped arguments unchanged. Scope the C locale to this
+serialization only, not the engine process: it encodes non-ASCII bytes as ASCII
+shell escapes that survive comment sanitization.
+Include every argument and its actual value, including `-o json`, the package
+path, customization request, and `--max-attempts`; never reconstruct or
+abbreviate the command for reporting.
+Record stdout as `engine-stdout.txt`, stderr as
+`engine-stderr.txt`, and the process exit code as `engine-exit-code.txt`. Run
+[capture-engine-result.ps1](capture-engine-result.ps1) with `-ResultsDir` and
+`-MaxIterations` to capture the actual response. azsdk can write failed JSON to
+stderr after process diagnostics; redirecting stdout alone loses that response.
+The helper preserves both raw streams, consolidates `engine-errors.txt`, removes
+stale results, and rejects missing, malformed, ambiguous, or contradictory
+responses. Only standalone response objects are candidates; objects nested in
+arrays or other objects are never promoted to the final response.
+Its exit code retains the engine failure; capture never authorizes
+publishing a failed repair. Do not merge diagnostics into JSON or manually
+reconstruct a response.
+
 ## Scope and stopping
 
 Only the selected package's custom code may be patched. Only the generator may
@@ -85,6 +109,14 @@ comment or telemetry yourself.
 
 - Pass `-ResultsDir` containing the single `result.json`, the captured
   `-PreRepairErrorsFile`, package/PR identity, and configured `-MaxIterations`.
+- The engine command comes only from `engine-command.txt`, displayed verbatim in
+  a Bash code block. Missing capture is explicitly unavailable, not a guessed
+  invocation. Already-green and ineligible outcomes must not display a stale command.
+- Pass `-CommandArtifactDir` pointing to the workflow's existing uploaded,
+  secret-redacted agent log directory. If the complete report exceeds the
+  65,000-character safe-output limit, the emitter saves the full command and report
+  there and emits a compact summary with telemetry and a workflow-artifacts link.
+  Do not truncate the recorded command or actual engine arguments to fit the comment.
 - Iterations come from `attemptsUsed`: completed patch proposals reaching host
   validation, including a no-progress proposal. Baseline/classifier-only builds
   and tool/Exit reminders do not count. Never count JSON files or infer attempts

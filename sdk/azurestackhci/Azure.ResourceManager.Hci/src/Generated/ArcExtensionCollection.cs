@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArcExtensionData, ArcExtensionResource>(new ExtensionsGetByArcSettingAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ArcExtensionData, ArcExtensionResource>(new ArcExtensionDataAsyncCollectionResultOfT(
                 _extensionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArcExtensionData, ArcExtensionResource>(new ExtensionsGetByArcSettingCollectionResultOfT(
+            return new PageableWrapper<ArcExtensionData, ArcExtensionResource>(new ArcExtensionDataCollectionResultOfT(
                 _extensionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotOperations.Mocking
 
         private ClientDiagnostics InstanceClientDiagnostics => _instanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotOperations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Instance InstanceRestClient => _instanceRestClient ??= new Instance(InstanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private Instance InstanceRestClient => _instanceRestClient ??= new Instance(InstanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.IoTOperations/instances", out string apiVersion) ? apiVersion : "2026-07-01");
 
         /// <summary>
         /// List InstanceResource resources by subscription ID
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.IotOperations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new InstanceGetBySubscriptionAsyncCollectionResultOfT(InstanceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotOperationsSubscriptionResource.GetIotOperationsInstances"), data => new IotOperationsInstanceResource(Client, data));
+            return new AsyncPageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new IotOperationsInstanceDataAsync0CollectionResultOfT(InstanceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotOperationsSubscriptionResource.GetIotOperationsInstances"), data => new IotOperationsInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.IotOperations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new InstanceGetBySubscriptionCollectionResultOfT(InstanceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotOperationsSubscriptionResource.GetIotOperationsInstances"), data => new IotOperationsInstanceResource(Client, data));
+            return new PageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new IotOperationsInstanceData0CollectionResultOfT(InstanceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotOperationsSubscriptionResource.GetIotOperationsInstances"), data => new IotOperationsInstanceResource(Client, data));
         }
     }
 }

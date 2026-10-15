@@ -204,12 +204,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("rootPath"u8))
                 {
-                    rootPath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    rootPath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("entryFilePath"u8))
                 {
-                    entryFilePath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    entryFilePath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("arguments"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sparkJobLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    sparkJobLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("className"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    proxyUser = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    proxyUser = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sparkConfig"u8))

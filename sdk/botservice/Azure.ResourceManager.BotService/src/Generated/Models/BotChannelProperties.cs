@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.BotService.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BotChannelProperties"/>. </summary>
+        protected BotChannelProperties() : this(default)
+        {
+        }
+
         /// <summary> The channel name. </summary>
         internal string ChannelName { get; set; }
 

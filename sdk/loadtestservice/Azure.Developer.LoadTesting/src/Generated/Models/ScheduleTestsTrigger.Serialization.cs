@@ -277,7 +277,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties,
-                testIds,
+                testIds ?? new ChangeTrackingList<string>(),
                 startsOn,
                 recurrenceStatus,
                 recurrence);

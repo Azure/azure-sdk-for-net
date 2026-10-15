@@ -5,7 +5,7 @@
 
 .DESCRIPTION
   Produces the ENTIRE PR summary comment from code-accessible sources only
-  (the final engine result JSON, `git diff`, and $GITHUB_* env) so the
+  (the recorded engine command, final engine result JSON, `git diff`, and $GITHUB_* env) so the
   content never depends on the LLM. The agent's only job is to run this script
   and pass the rendered file's contents verbatim to the gh-aw `add_comment`
   safe-output tool.
@@ -62,8 +62,11 @@ param(
     # source for the "errors fixed" list. Mechanical capture (redirect), not LLM-authored.
     [string]$PreRepairErrorsFile = $env:AZSDK_REPAIR_PRE_ERRORS_FILE,
 
-    # Captured CLI stderr/capability errors, including failures without a JSON response.
+    # Captured CLI output/capability errors, including response-capture failures.
     [string]$EngineErrorsFile = '',
+
+    # Existing secret-redacted, uploaded agent log directory for oversized reports.
+    [string]$CommandArtifactDir = '',
 
     # Identity fields (default to GitHub Actions env; overridable for tests).
     [string]$Repo = $env:GITHUB_REPOSITORY,
@@ -142,6 +145,15 @@ elseif ((Get-Prop $final 'success') -eq $true -and
 else {
     $ec = Get-Prop $final 'errorCode'
     $stopReason = if ($ec) { [string]$ec } elseif ($iterations -ge $MaxIterations) { 'maxIterations' } else { 'EngineFailed' }
+}
+
+$engineCommand = ''
+if ($status -in @('repaired', 'failed') -and $ResultsDir) {
+    $commandFile = Join-Path $ResultsDir 'engine-command.txt'
+    if (Test-Path -LiteralPath $commandFile -PathType Leaf) {
+        $engineCommand = ([string](Get-Content -Raw -LiteralPath $commandFile)).TrimEnd([char[]]"`r`n")
+        if ([string]::IsNullOrWhiteSpace($engineCommand)) { $engineCommand = '' }
+    }
 }
 
 # repaired_at anchors the time-to-green / subsequent-correction metrics, so it must be
@@ -331,6 +343,7 @@ function Format-Cell([string]$s) {
 }
 
 $sb = [System.Text.StringBuilder]::new()
+$summaryEnd = 0
 # NOTE: no HTML identity marker — gh-aw's add_comment sanitizer (removeXmlComments)
 # strips <!-- ... --> from the posted body. Comment identity for dedup/parsing is the
 # visible "SDK Build Repair" heading plus the "schema_version":"v1" telemetry object.
@@ -356,7 +369,10 @@ else {
     [void]$sb.AppendLine("| **Final build status** | $buildStatusCell |")
     $iterationText = if ($null -ne $iterations) { "$iterations of $MaxIterations" } else { "Unknown of $MaxIterations (no valid attemptsUsed)" }
     [void]$sb.AppendLine("| **Iterations used** | $iterationText |")
-    [void]$sb.AppendLine('| **Engine** | `azsdk tsp client customized-update --edit-scope CustomCode` |')
+    $engineText = if ($engineCommand) { 'See exact invocation below' }
+        elseif ($status -eq 'skipped_already_green') { 'Not invoked (package already green)' }
+        else { 'Unavailable (invocation was not recorded)' }
+    [void]$sb.AppendLine("| **Engine** | $engineText |")
     if ($stopReason) { [void]$sb.AppendLine("| **Stop reason** | ``$(Format-Cell $stopReason)`` |") }
     [void]$sb.AppendLine('')
     [void]$sb.AppendLine('_Iterations count completed patch proposals reaching host validation, including no-progress proposals; baseline/classifier checks and tool calls are excluded._')
@@ -365,6 +381,22 @@ else {
         [void]$sb.AppendLine("[Workflow logs]($server/$Repo/actions/runs/$($Matches[1]))")
     }
     [void]$sb.AppendLine('')
+    $summaryEnd = $sb.Length
+
+    if ($engineCommand) {
+        $fenceLength = 3
+        foreach ($match in [regex]::Matches($engineCommand, '`+')) {
+            $fenceLength = [Math]::Max($fenceLength, $match.Length + 1)
+        }
+        $fence = '`' * $fenceLength
+        [void]$sb.AppendLine('<details><summary>Exact engine command</summary>')
+        [void]$sb.AppendLine('')
+        [void]$sb.AppendLine("${fence}bash")
+        [void]$sb.AppendLine($engineCommand)
+        [void]$sb.AppendLine($fence)
+        [void]$sb.AppendLine('</details>')
+        [void]$sb.AppendLine('')
+    }
 
     # ----- Build errors (fixed on success, remaining on failure) -----
     if ($status -eq 'repaired' -or $status -eq 'failed') {
@@ -516,6 +548,7 @@ else {
     [void]$sb.AppendLine('')
 }
 
+$telemetryStart = $sb.Length
 [void]$sb.AppendLine('<details><summary>Telemetry (machine-readable)</summary>')
 [void]$sb.AppendLine('')
 [void]$sb.AppendLine('```json')
@@ -529,6 +562,25 @@ $body = $sb.ToString()
 # Normalize to LF so the rendered bytes are identical on Windows and the Linux runner
 # (the gh-aw sanitizer trims trailing whitespace; CRLF would otherwise perturb the object).
 $body = $body -replace "`r`n", "`n"
+if ($body.Length -gt 65000) {
+    if (-not $CommandArtifactDir -or -not (Test-Path -LiteralPath $CommandArtifactDir -PathType Container)) {
+        throw 'The repair report exceeds the 65,000-character safe-output limit. Supply -CommandArtifactDir for lossless workflow artifact reporting.'
+    }
+    if ($engineCommand) {
+        Set-Content -LiteralPath (Join-Path $CommandArtifactDir 'engine-command.txt') -Value $engineCommand -NoNewline -Encoding utf8
+    }
+    Set-Content -LiteralPath (Join-Path $CommandArtifactDir 'repair-report-full.md') -Value $body -NoNewline -Encoding utf8
+    $compact = $sb.ToString(0, $summaryEnd).Replace('See exact invocation below', 'See full invocation in workflow artifacts')
+    $compact += "The full report exceeds the 65,000-character comment limit. No command or engine argument was truncated.`n`n"
+    $compact += "Inspect ``repair-report-full.md``$(if ($engineCommand) { ' and `engine-command.txt`' }) in the workflow's ``agent`` artifact for the complete record.`n`n"
+    if ($RunId -match '^gha-(\d+)-\d+$') {
+        $server = if ($env:GITHUB_SERVER_URL) { $env:GITHUB_SERVER_URL.TrimEnd('/') } else { 'https://github.com' }
+        $compact += "[Workflow artifacts]($server/$Repo/actions/runs/$($Matches[1])#artifacts)`n`n"
+    }
+    $compact += $sb.ToString($telemetryStart, $sb.Length - $telemetryStart)
+    $body = $compact -replace "`r`n", "`n"
+    if ($body.Length -gt 65000) { throw 'The compact repair summary exceeds the 65,000-character safe-output limit.' }
+}
 Set-Content -LiteralPath $OutFile -Value $body -NoNewline -Encoding utf8
 
 Write-Host "Rendered repair comment ($status) -> $OutFile"

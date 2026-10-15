@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.DomainRegistration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DomainRegistration/domains/", false);
             uri.AppendPath(domainName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.DomainRegistration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DomainRegistration/domains/", false);
             uri.AppendPath(domainName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +96,7 @@ namespace Azure.ResourceManager.DomainRegistration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DomainRegistration/domains/", false);
             uri.AppendPath(domainName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +118,7 @@ namespace Azure.ResourceManager.DomainRegistration
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DomainRegistration/domains/", false);
             uri.AppendPath(domainName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             if (forceHardDeleteDomain != null)
             {
                 uri.AppendQuery("forceHardDeleteDomain", TypeFormatters.ConvertToString(forceHardDeleteDomain), true);
@@ -152,10 +140,7 @@ namespace Azure.ResourceManager.DomainRegistration
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DomainRegistration/domains", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -176,10 +161,7 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2024-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -196,10 +178,7 @@ namespace Azure.ResourceManager.DomainRegistration
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.DomainRegistration/domains", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -220,10 +199,7 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2024-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -244,10 +220,7 @@ namespace Azure.ResourceManager.DomainRegistration
             uri.AppendPath("/providers/Microsoft.DomainRegistration/domains/", false);
             uri.AppendPath(domainName, true);
             uri.AppendPath("/renew", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -267,10 +240,7 @@ namespace Azure.ResourceManager.DomainRegistration
             uri.AppendPath("/providers/Microsoft.DomainRegistration/domains/", false);
             uri.AppendPath(domainName, true);
             uri.AppendPath("/transferOut", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Network.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BgpCommunity"/>. </summary>
+        public BgpCommunity() : this(default)
+        {
+        }
+
         /// <summary> The prefixes that the bgp community contains. </summary>
         [WirePath("communityPrefixes")]
         public IList<string> CommunityPrefixes { get; }

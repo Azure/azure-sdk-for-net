@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.EventHubs
         {
             TryGetApiVersion(EventHubsNamespaceResource.ResourceType, out string eventHubsNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubsNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsNamespaceApiVersion ?? "2026-07-01-preview");
+            _namespacesRestClient = new Namespaces(
+                _namespacesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                eventHubsNamespaceApiVersion ?? "2026-07-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubsNamespaceData, EventHubsNamespaceResource>(new NamespacesGetByResourceGroupAsyncCollectionResultOfT(_namespacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "EventHubsNamespaceCollection.GetAll"), data => new EventHubsNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<EventHubsNamespaceData, EventHubsNamespaceResource>(new EventHubsNamespaceDataAsyncCollectionResultOfT(_namespacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "EventHubsNamespaceCollection.GetAll"), data => new EventHubsNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubsNamespaceData, EventHubsNamespaceResource>(new NamespacesGetByResourceGroupCollectionResultOfT(_namespacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "EventHubsNamespaceCollection.GetAll"), data => new EventHubsNamespaceResource(Client, data));
+            return new PageableWrapper<EventHubsNamespaceData, EventHubsNamespaceResource>(new EventHubsNamespaceDataCollectionResultOfT(_namespacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "EventHubsNamespaceCollection.GetAll"), data => new EventHubsNamespaceResource(Client, data));
         }
 
         /// <summary>

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedDeviceInsight(value, nextLink, additionalBinaryDataProperties);
+            return new PagedDeviceInsight(value ?? new ChangeTrackingList<SphereDeviceInsight>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

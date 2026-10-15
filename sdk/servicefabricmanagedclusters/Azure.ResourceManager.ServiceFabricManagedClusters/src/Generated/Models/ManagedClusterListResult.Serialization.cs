@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedClusterListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ManagedClusterListResult(value ?? new ChangeTrackingList<ServiceFabricManagedClusterData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

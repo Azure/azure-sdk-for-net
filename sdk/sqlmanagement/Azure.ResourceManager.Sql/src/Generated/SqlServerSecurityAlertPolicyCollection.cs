@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlServerSecurityAlertPolicyData, SqlServerSecurityAlertPolicyResource>(new ServerSecurityAlertPoliciesGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlServerSecurityAlertPolicyData, SqlServerSecurityAlertPolicyResource>(new SqlServerSecurityAlertPolicyDataAsyncCollectionResultOfT(
                 _serverSecurityAlertPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlServerSecurityAlertPolicyData, SqlServerSecurityAlertPolicyResource>(new ServerSecurityAlertPoliciesGetByServerCollectionResultOfT(
+            return new PageableWrapper<SqlServerSecurityAlertPolicyData, SqlServerSecurityAlertPolicyResource>(new SqlServerSecurityAlertPolicyDataCollectionResultOfT(
                 _serverSecurityAlertPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

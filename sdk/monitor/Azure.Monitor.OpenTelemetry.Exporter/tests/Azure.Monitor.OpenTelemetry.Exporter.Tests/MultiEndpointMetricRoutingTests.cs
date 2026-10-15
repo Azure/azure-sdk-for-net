@@ -37,6 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private const string IkeyTag = SemanticConventions.AttributeMicrosoftInstrumentationKey;
         private const string EndpointTag = SemanticConventions.AttributeMicrosoftIngestionEndpoint;
+        private const string IngestionAuthTag = SemanticConventions.AttributeMicrosoftIngestionAuth;
         private const string CloudRoleTag = SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole;
 
         private const string TooLongInstrumentationKey = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
@@ -97,6 +98,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 group.TelemetryItems.Select(i => i.InstrumentationKey).OrderBy(k => k, StringComparer.Ordinal));
         }
 
+        [Fact]
+        public void AadAndInstrumentationKeyRoutesToOneEndpointBecomeDistinctGroups()
+        {
+            var routeBatch = Convert(
+                Measure(1, Ikey("ikey-a"), Endpoint(EastUs)),
+                Measure(1, Ikey("ikey-b"), Endpoint(EastUs), IngestionAuth("aad")));
+
+            var groups = Groups(routeBatch).OrderBy(g => g.IsAad).ToArray();
+            Assert.Equal(2, groups.Length);
+
+            Assert.Equal(EastUs, groups[0].IngestionEndpoint);
+            Assert.False(groups[0].IsAad);
+            Assert.Equal("ikey-a", Assert.Single(groups[0].TelemetryItems).InstrumentationKey);
+
+            Assert.Equal(EastUs, groups[1].IngestionEndpoint);
+            Assert.True(groups[1].IsAad);
+            Assert.Equal("ikey-b", Assert.Single(groups[1].TelemetryItems).InstrumentationKey);
+        }
+
+        [Fact]
+        public void AnUnrecognizedIngestionAuthIsAnInstrumentationKeyRoute()
+        {
+            var routeBatch = Convert(Measure(1, Ikey("ikey-a"), Endpoint(EastUs), IngestionAuth("entra")));
+
+            Assert.False(Assert.Single(Groups(routeBatch)).IsAad);
+        }
+
         [Theory]
         [InlineData(null, EastUs)]
         [InlineData("ikey-a", null)]
@@ -141,13 +169,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void RoutingDimensionsAreConsumedAndNotEmittedAsProperties()
         {
-            var routeBatch = Convert(Measure(1, Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role"), Tag("customer.dimension", "kept")));
+            var routeBatch = Convert(Measure(1, Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role"), IngestionAuth("aad"), Tag("customer.dimension", "kept")));
 
             var item = Assert.Single(Assert.Single(Groups(routeBatch)).TelemetryItems);
             var properties = ((MetricsData)item.Data.BaseData).Properties;
 
             Assert.False(properties.ContainsKey(IkeyTag));
             Assert.False(properties.ContainsKey(EndpointTag));
+            Assert.False(properties.ContainsKey(IngestionAuthTag));
             Assert.False(properties.ContainsKey(CloudRoleTag));
             Assert.Equal("kept", properties["customer.dimension"]);
         }
@@ -798,6 +827,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private static KeyValuePair<string, object?> Ikey(string value) => Tag(IkeyTag, value);
 
         private static KeyValuePair<string, object?> Endpoint(string value) => Tag(EndpointTag, value);
+
+        private static KeyValuePair<string, object?> IngestionAuth(string value) => Tag(IngestionAuthTag, value);
 
         private static KeyValuePair<string, object?> CloudRole(string value) => Tag(CloudRoleTag, value);
 

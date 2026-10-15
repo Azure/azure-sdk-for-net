@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmMarketplaceGalleryImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HciVmMarketplaceGalleryImageResource.ResourceType, out string hciVmMarketplaceGalleryImageApiVersion);
             _marketplaceGalleryImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmMarketplaceGalleryImageResource.ResourceType.Namespace, Diagnostics);
-            _marketplaceGalleryImagesRestClient = new MarketplaceGalleryImages(_marketplaceGalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmMarketplaceGalleryImageApiVersion ?? "2025-09-01-preview");
+            _marketplaceGalleryImagesRestClient = new MarketplaceGalleryImages(_marketplaceGalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/marketplaceGalleryImages", out string marketplaceGalleryImagesApiVersionOverride) ? marketplaceGalleryImagesApiVersionOverride : "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmMarketplaceGalleryImageData, HciVmMarketplaceGalleryImageResource>(new MarketplaceGalleryImagesGetByResourceGroupAsyncCollectionResultOfT(_marketplaceGalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmMarketplaceGalleryImageCollection.GetAll"), data => new HciVmMarketplaceGalleryImageResource(Client, data));
+            return new AsyncPageableWrapper<HciVmMarketplaceGalleryImageData, HciVmMarketplaceGalleryImageResource>(new HciVmMarketplaceGalleryImageDataAsyncCollectionResultOfT(_marketplaceGalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmMarketplaceGalleryImageCollection.GetAll"), data => new HciVmMarketplaceGalleryImageResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmMarketplaceGalleryImageData, HciVmMarketplaceGalleryImageResource>(new MarketplaceGalleryImagesGetByResourceGroupCollectionResultOfT(_marketplaceGalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmMarketplaceGalleryImageCollection.GetAll"), data => new HciVmMarketplaceGalleryImageResource(Client, data));
+            return new PageableWrapper<HciVmMarketplaceGalleryImageData, HciVmMarketplaceGalleryImageResource>(new HciVmMarketplaceGalleryImageDataCollectionResultOfT(_marketplaceGalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmMarketplaceGalleryImageCollection.GetAll"), data => new HciVmMarketplaceGalleryImageResource(Client, data));
         }
 
         /// <summary>

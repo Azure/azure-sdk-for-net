@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EntitySignalHistoryResult(entityName, signalName, history, nextMarker, additionalBinaryDataProperties);
+            return new EntitySignalHistoryResult(entityName, signalName, history ?? new ChangeTrackingList<SignalHistoryDataPoint>(), nextMarker, additionalBinaryDataProperties);
         }
     }
 }

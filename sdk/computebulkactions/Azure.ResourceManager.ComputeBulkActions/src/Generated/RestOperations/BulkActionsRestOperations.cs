@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of BulkActions for mocking. </summary>
         protected BulkActions()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal BulkActions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal BulkActions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(BulkActions).Assembly, applicationId);
         }
 
@@ -56,10 +59,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/launchBulkInstancesOperations/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ComputeBulkActions/locations/launchBulkInstancesOperations") ?? "2026-02-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -104,10 +104,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/launchBulkInstancesOperations/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ComputeBulkActions/locations/launchBulkInstancesOperations") ?? "2026-02-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -131,10 +128,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/launchBulkInstancesOperations/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ComputeBulkActions/locations/launchBulkInstancesOperations") ?? "2026-02-01-preview", true);
             if (deleteInstances != null)
             {
                 uri.AppendQuery("deleteInstances", TypeFormatters.ConvertToString(deleteInstances), true);
@@ -160,10 +154,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             uri.AppendPath("/launchBulkInstancesOperations/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/cancel", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ComputeBulkActions/locations/launchBulkInstancesOperations") ?? "2026-02-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -183,10 +174,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             uri.AppendPath("/providers/Microsoft.ComputeBulkActions/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/launchBulkInstancesOperations", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ComputeBulkActions/locations/launchBulkInstancesOperations") ?? "2026-02-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -207,10 +195,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.ComputeBulkActions/locations/launchBulkInstancesOperations") ?? "2026-02-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -229,10 +214,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             uri.AppendPath("/providers/Microsoft.ComputeBulkActions/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/launchBulkInstancesOperations", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ComputeBulkActions/locations/launchBulkInstancesOperations") ?? "2026-02-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -253,10 +235,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.ComputeBulkActions/locations/launchBulkInstancesOperations") ?? "2026-02-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -279,10 +258,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             uri.AppendPath("/launchBulkInstancesOperations/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/virtualMachines", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ComputeBulkActions/locations/launchBulkInstancesOperations") ?? "2026-02-01-preview", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -311,10 +287,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.ComputeBulkActions/locations/launchBulkInstancesOperations") ?? "2026-02-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

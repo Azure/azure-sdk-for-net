@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AppConfigurationStoreApiKeyListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AppConfigurationStoreApiKeyListResult(value ?? new ChangeTrackingList<AppConfigurationStoreApiKey>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

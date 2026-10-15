@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 useInApiDocumentation,
                 clientRegistrationEndpoint,
                 authorizationEndpoint,
-                grantTypes,
+                grantTypes ?? new ChangeTrackingList<GrantType>(),
                 clientId,
                 clientSecret);
         }

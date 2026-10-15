@@ -40,7 +40,13 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(RoleAssignmentResource.ResourceType, out string roleAssignmentApiVersion);
             _roleAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", RoleAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _roleAssignmentsRestClient = new RoleAssignments(_roleAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, roleAssignmentApiVersion ?? "2022-04-01");
+            _roleAssignmentsRestClient = new RoleAssignments(
+                _roleAssignmentsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                roleAssignmentApiVersion ?? "2022-04-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
         }
 
         /// <summary>
@@ -281,7 +287,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentsGetForScopeAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentDataAsyncCollectionResultOfT(
                 _roleAssignmentsRestClient,
                 Id.ToString(),
                 filter,
@@ -319,7 +325,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentsGetForScopeCollectionResultOfT(
+            return new PageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentDataCollectionResultOfT(
                 _roleAssignmentsRestClient,
                 Id.ToString(),
                 filter,

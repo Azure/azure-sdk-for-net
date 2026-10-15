@@ -16,13 +16,9 @@ namespace Azure.ResourceManager.HanaOnAzure
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ProviderInstanceData))]
-    [ModelReaderWriterBuildable(typeof(ProviderInstanceListResult))]
-    [ModelReaderWriterBuildable(typeof(ProviderInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(ProviderInstanceResource))]
     [ModelReaderWriterBuildable(typeof(SapMonitorData))]
-    [ModelReaderWriterBuildable(typeof(SapMonitorListResult))]
     [ModelReaderWriterBuildable(typeof(SapMonitorPatch))]
-    [ModelReaderWriterBuildable(typeof(SapMonitorProperties))]
     [ModelReaderWriterBuildable(typeof(SapMonitorResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerHanaOnAzureContext : ModelReaderWriterContext

@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Communication
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of CommunicationServices for mocking. </summary>
         protected CommunicationServices()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.Communication
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal CommunicationServices(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal CommunicationServices(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(CommunicationServices).Assembly, applicationId);
         }
 
@@ -54,10 +57,7 @@ namespace Azure.ResourceManager.Communication
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Communication/communicationServices/", false);
             uri.AppendPath(communicationServiceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Communication/communicationServices") ?? "2026-03-18", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +77,7 @@ namespace Azure.ResourceManager.Communication
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Communication/communicationServices/", false);
             uri.AppendPath(communicationServiceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Communication/communicationServices") ?? "2026-03-18", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +99,7 @@ namespace Azure.ResourceManager.Communication
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Communication/communicationServices/", false);
             uri.AppendPath(communicationServiceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Communication/communicationServices") ?? "2026-03-18", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +121,7 @@ namespace Azure.ResourceManager.Communication
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Communication/communicationServices/", false);
             uri.AppendPath(communicationServiceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Communication/communicationServices") ?? "2026-03-18", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,10 +139,7 @@ namespace Azure.ResourceManager.Communication
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Communication/communicationServices", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Communication/communicationServices") ?? "2026-03-18", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -172,10 +160,7 @@ namespace Azure.ResourceManager.Communication
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Communication/communicationServices") ?? "2026-03-18");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -192,10 +177,7 @@ namespace Azure.ResourceManager.Communication
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Communication/communicationServices", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Communication/communicationServices") ?? "2026-03-18", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,10 +198,7 @@ namespace Azure.ResourceManager.Communication
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Communication/communicationServices") ?? "2026-03-18");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -240,10 +219,7 @@ namespace Azure.ResourceManager.Communication
             uri.AppendPath("/providers/Microsoft.Communication/communicationServices/", false);
             uri.AppendPath(communicationServiceName, true);
             uri.AppendPath("/linkNotificationHub", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Communication/communicationServices") ?? "2026-03-18", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -269,10 +245,7 @@ namespace Azure.ResourceManager.Communication
             uri.AppendPath("/providers/Microsoft.Communication/communicationServices/", false);
             uri.AppendPath(communicationServiceName, true);
             uri.AppendPath("/listKeys", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Communication/communicationServices") ?? "2026-03-18", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -293,10 +266,7 @@ namespace Azure.ResourceManager.Communication
             uri.AppendPath("/providers/Microsoft.Communication/communicationServices/", false);
             uri.AppendPath(communicationServiceName, true);
             uri.AppendPath("/regenerateKey", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Communication/communicationServices") ?? "2026-03-18", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

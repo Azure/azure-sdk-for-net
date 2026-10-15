@@ -97,6 +97,8 @@ network:
     - defaults
     - dotnet
     - github
+    # Pinned TypeSpec regeneration installs tsp-client and emitter dependencies from npm.
+    - registry.npmjs.org
     # The nested azsdk Copilot client calls this API directly, unlike the outer managed-proxy agent.
     - api.githubcopilot.com
 
@@ -125,6 +127,8 @@ tools:
   edit:
 
 safe-outputs:
+  # Preserve the exact recorded command's URLs inside its code block.
+  urls: allowed-or-code-region
   steps:
     - name: Disable implicit tag fetching
       if: ${{ (!cancelled()) && needs.agent.result != 'skipped' && contains(needs.agent.outputs.output_types, 'push_to_pull_request_branch') }}
@@ -166,6 +170,7 @@ The skill drives the shared **`azsdk_customized_code_update`** engine. In this w
 
 ```bash
 mkdir -p "$RUNNER_TEMP/repair-results"
+rm -f "$RUNNER_TEMP/repair-results/engine-command.txt"
 if ! azsdk tsp client customized-update --help \
   > "$RUNNER_TEMP/repair-results/capability.txt" \
   2> "$RUNNER_TEMP/repair-results/engine-errors.txt"; then
@@ -176,14 +181,48 @@ if ! grep -Fq -- '--max-attempts' "$RUNNER_TEMP/repair-results/capability.txt"; 
     > "$RUNNER_TEMP/repair-results/engine-errors.txt"
   exit 1
 fi
-azsdk -o json tsp client customized-update \
-  --edit-scope CustomCode \
-  --package-path "<failing SDK package dir>" \
-  --customization-request "<the build errors / failure context>" \
-  --max-attempts "<maxIterations from repair-config.yml>" \
-  > "$RUNNER_TEMP/repair-results/result.json" \
-  2> "$RUNNER_TEMP/repair-results/engine-errors.txt"
+engine_command=(
+  azsdk -o json tsp client customized-update
+  --edit-scope CustomCode
+  --package-path "<failing SDK package dir>"
+  --customization-request "<the build errors / failure context>"
+  --max-attempts "<maxIterations from repair-config.yml>"
+)
+engine_command_text=''
+for engine_argument in "${engine_command[@]}"; do
+  LC_ALL=C printf -v engine_argument_text '%q' "$engine_argument"
+  if [[ "$engine_argument_text" == "\$'"* ]]; then
+    engine_argument_text=${engine_argument_text//&/'\x26'}
+  fi
+  engine_command_text+="$engine_argument_text "
+done
+printf '%s\n' "${engine_command_text% }" \
+  > "$RUNNER_TEMP/repair-results/engine-command.txt" || exit 1
+if "${engine_command[@]}" \
+  > "$RUNNER_TEMP/repair-results/engine-stdout.txt" \
+  2> "$RUNNER_TEMP/repair-results/engine-stderr.txt"; then
+  engine_exit=0
+else
+  engine_exit=$?
+fi
+printf '%s\n' "$engine_exit" > "$RUNNER_TEMP/repair-results/engine-exit-code.txt"
+pwsh "$GITHUB_WORKSPACE/.github/skills/auto-build-repair/capture-engine-result.ps1" \
+  -ResultsDir "$RUNNER_TEMP/repair-results" \
+  -MaxIterations "<maxIterations from repair-config.yml>"
 ```
+
+The capture helper handles azsdk's failed JSON responses on stderr after process
+diagnostics. It preserves both raw streams, consolidates diagnostics into
+`engine-errors.txt`, and writes only the actual final response to `result.json`.
+`engine-command.txt` records the same argument array that is executed, with Bash
+escaping under the C locale to preserve argument boundaries and Unicode bytes
+through comment sanitization. Ampersands within ANSI-C-quoted arguments are
+encoded as `\x26` so global HTML-entity decoding cannot change their values.
+Ordinary shell-escaped arguments are unchanged. The engine's locale is unchanged.
+Do not author or abbreviate this record.
+It returns the engine's nonzero exit code on a valid failure, or fails closed when
+the response is missing, malformed, ambiguous, or contradicts the process outcome.
+Do not merge stderr into JSON or extract a response manually.
 
 Do not re-invoke the command or create per-attempt result files. A capability or process failure still goes to the failure report in Step 5; preserve the captured error, publish no changes, and do not invent an engine response. This requires [Azure/azure-sdk-tools#17068](https://github.com/Azure/azure-sdk-tools/pull/17068) to be released; an older installed CLI must fail closed rather than restore the outer loop.
 
@@ -224,10 +263,10 @@ pwsh .github/skills/auto-build-repair/emit-repair-report.ps1 \
 > **Before any step, `cd "$GITHUB_WORKSPACE"`.** Your current working directory is *not* the checkout. Run every `git`, build, and script command from `$GITHUB_WORKSPACE` (or address files by absolute `$GITHUB_WORKSPACE/...` paths). Relative paths like `.github/skills/...` or `repair-results/...` will otherwise resolve outside the repo and fail. Keep all scratch output under `$RUNNER_TEMP` (never the agent working dir), so it is not swept into the run artifacts.
 
 1. Identify the single failing SDK package path from the PR diff. **Record the current PR head sha** (`git rev-parse HEAD`) as the pre-repair sha — the summary in Step 5 uses it to diff changed files. Create `$RUNNER_TEMP/repair-results` and collect the package's build errors by building the changed package, **redirecting the raw build output to `$RUNNER_TEMP/repair-results/pre-repair-errors.txt`** — the Step 5 emitter parses this to list the errors it fixed (a first-try success leaves no `buildResult` in the engine result, so this capture is the only source for the "Build Errors Fixed" list). This is a mechanical redirect, not authored content. **If the package already builds cleanly (no errors), there is nothing to repair: skip Steps 2–4, render the already-green summary using the `skipped_already_green` invocation in Step 5, post it, and end.**
-2. Apply the skill once: call the engine with `--edit-scope CustomCode`, `--max-attempts <configured maxIterations>`, the `--package-path`, and build errors as `--customization-request`. Capture the final JSON as `$RUNNER_TEMP/repair-results/result.json` and stderr as `engine-errors.txt`, as shown above. **Never run an outer retry loop**, even if the error set shrinks.
+2. Apply the skill once: call the engine with `--edit-scope CustomCode`, `--max-attempts <configured maxIterations>`, the `--package-path`, and build errors as `--customization-request`. Record the executed argument array as `engine-command.txt`, both raw streams, and the process exit code, then run the checked-in capture helper to produce `result.json` and `engine-errors.txt`, as shown above. **Never run an outer retry loop**, even if the error set shrinks.
 3. Inspect the final response and process outcome. Stop on success or any failure (`SpecChangeRequired`, failed regeneration/build, no progress, exhausted attempts, cancellation, or infrastructure error). Surface the actual diagnostics and guidance; do not retry or escalate to a human prompt.
 4. **Gate the push on a green build.** Inspect `result.json` and invoke the `push-to-pull-request-branch` safe output (custom-code edits + regenerated `Generated/`) **only when the process succeeded and its `success` property is exactly `true`**. In the bounded CustomCode engine this means the final package build passed. Do not infer a green build from tool completion, a smaller error set, applied patches, or exhausted iterations. For every other terminal state, including missing/unparseable JSON or a non-Boolean success value, **do not invoke `push-to-pull-request-branch`**. Render and post the failure report with `add-comment` only; attempted changes remain uncommitted in the ephemeral workspace.
-5. **Render the summary comment deterministically and post it verbatim.** Do **not** author the comment yourself — run the checked-in emitter, which uses the final response, captured errors, `git`, and env. It reports the engine's `attemptsUsed`, not the number of files, and explains failures using actual diagnostics and guidance:
+5. **Render the summary comment deterministically and post it verbatim.** Do **not** author the comment yourself — run the checked-in emitter, which uses the recorded command, final response, captured errors, `git`, and env. It displays the exact recorded invocation, reports the engine's `attemptsUsed`, not the number of files, and explains failures using actual diagnostics and guidance:
 
    ```bash
    pwsh "$GITHUB_WORKSPACE/.github/skills/auto-build-repair/emit-repair-report.ps1" \
@@ -238,10 +277,18 @@ pwsh .github/skills/auto-build-repair/emit-repair-report.ps1 \
      -PreRepairSha "<pre-repair sha from Step 1>" \
      -Pr <pr-number> -HeadSha "<pr-head-sha>" -Repo "$GITHUB_REPOSITORY" \
      -MaxIterations <maxIterations> \
+     -CommandArtifactDir "/tmp/gh-aw/sandbox/agent/logs" \
      -OutFile "$RUNNER_TEMP/repair-comment.md"
    ```
 
    Then pass the **exact contents** of `$RUNNER_TEMP/repair-comment.md` as the `add-comment` body — unedited, unsummarized, unreordered. The emitter already appends `--generated by Copilot`. Emit this comment on **every** terminal outcome (repaired, still-failing/stop-condition, already-green) so no run silently degrades.
+
+   If the report would exceed the safe-output body's 65,000-character limit,
+   the emitter saves the full command and report as `engine-command.txt` and
+   `repair-report-full.md` in `-CommandArtifactDir` and links to workflow artifacts
+   from a compact comment. This is the existing agent log directory, which gh-aw
+   secret-redacts and uploads in its `agent` artifact. Never truncate or change the
+   executed request to make the command fit, and never skip this artifact parameter.
 
    **Already-green outcome (from Step 1):** if the package built cleanly and no engine attempt ran, there is no `result.json`. Do **not** use the invocation above (with no engine result it would derive a `failed`/`NoEngineResult` status). Instead render the already-green summary explicitly so the status and telemetry are correct:
 

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridComputePrivateLinkResourceData, HybridComputePrivateLinkResource>(new PrivateLinkResourcesGetByPrivateLinkScopeAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HybridComputePrivateLinkResourceData, HybridComputePrivateLinkResource>(new HybridComputePrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridComputePrivateLinkResourceData, HybridComputePrivateLinkResource>(new PrivateLinkResourcesGetByPrivateLinkScopeCollectionResultOfT(
+            return new PageableWrapper<HybridComputePrivateLinkResourceData, HybridComputePrivateLinkResource>(new HybridComputePrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

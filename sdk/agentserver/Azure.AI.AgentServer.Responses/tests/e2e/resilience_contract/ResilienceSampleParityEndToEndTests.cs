@@ -137,7 +137,7 @@ public sealed class ResilienceSampleParityEndToEndTests
             }
 
             // The durable response snapshot is the phase watermark.
-            yield return stream.Checkpoint();
+            yield return stream.CreateCheckpointEvent();
         }
 
         yield return stream.EmitCompleted();

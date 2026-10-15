@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StorageMover.Mocking
 
         private ClientDiagnostics StorageMoversClientDiagnostics => _storageMoversClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageMover.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageMovers StorageMoversRestClient => _storageMoversRestClient ??= new StorageMovers(StorageMoversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01");
+        private StorageMovers StorageMoversRestClient => _storageMoversRestClient ??= new StorageMovers(StorageMoversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.StorageMover/storageMovers", out string apiVersion) ? apiVersion : "2026-05-01");
 
         /// <summary>
         /// Lists all Storage Movers in a subscription.
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageMover.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageMoverData, StorageMoverResource>(new StorageMoversGetBySubscriptionAsyncCollectionResultOfT(StorageMoversRestClient, Id.SubscriptionId, context, "MockableStorageMoverSubscriptionResource.GetStorageMovers"), data => new StorageMoverResource(Client, data));
+            return new AsyncPageableWrapper<StorageMoverData, StorageMoverResource>(new StorageMoverDataAsync0CollectionResultOfT(StorageMoversRestClient, Id.SubscriptionId, context, "MockableStorageMoverSubscriptionResource.GetStorageMovers"), data => new StorageMoverResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.StorageMover.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageMoverData, StorageMoverResource>(new StorageMoversGetBySubscriptionCollectionResultOfT(StorageMoversRestClient, Id.SubscriptionId, context, "MockableStorageMoverSubscriptionResource.GetStorageMovers"), data => new StorageMoverResource(Client, data));
+            return new PageableWrapper<StorageMoverData, StorageMoverResource>(new StorageMoverData0CollectionResultOfT(StorageMoversRestClient, Id.SubscriptionId, context, "MockableStorageMoverSubscriptionResource.GetStorageMovers"), data => new StorageMoverResource(Client, data));
         }
     }
 }

@@ -79,29 +79,43 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(NotificationTypes))
             {
-                writer.WritePropertyName("notificationTypes"u8);
-                writer.WriteStartArray();
-                foreach (MonitoringNotificationType item in NotificationTypes)
+                if (NotificationTypes != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("notificationTypes"u8);
+                    writer.WriteStartArray();
+                    foreach (MonitoringNotificationType item in NotificationTypes)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("notificationTypes"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteStartObject();
-                foreach (var item in Properties)
+                if (Properties != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("properties"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Properties)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("properties"u8);
+                }
             }
             writer.WritePropertyName("signalType"u8);
             writer.WriteStringValue(SignalType.ToString());

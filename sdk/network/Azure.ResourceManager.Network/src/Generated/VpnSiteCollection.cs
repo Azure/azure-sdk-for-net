@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VpnSiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(VpnSiteResource.ResourceType, out string vpnSiteApiVersion);
             _vpnSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteResource.ResourceType.Namespace, Diagnostics);
-            _vpnSitesRestClient = new VpnSites(_vpnSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vpnSiteApiVersion ?? "2026-01-01");
+            _vpnSitesRestClient = new VpnSites(_vpnSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VpnSiteData, VpnSiteResource>(new VpnSitesGetByResourceGroupAsyncCollectionResultOfT(_vpnSitesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VpnSiteCollection.GetAll"), data => new VpnSiteResource(Client, data));
+            return new AsyncPageableWrapper<VpnSiteData, VpnSiteResource>(new VpnSiteDataAsyncCollectionResultOfT(_vpnSitesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VpnSiteCollection.GetAll"), data => new VpnSiteResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VpnSiteData, VpnSiteResource>(new VpnSitesGetByResourceGroupCollectionResultOfT(_vpnSitesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VpnSiteCollection.GetAll"), data => new VpnSiteResource(Client, data));
+            return new PageableWrapper<VpnSiteData, VpnSiteResource>(new VpnSiteDataCollectionResultOfT(_vpnSitesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VpnSiteCollection.GetAll"), data => new VpnSiteResource(Client, data));
         }
 
         /// <summary>

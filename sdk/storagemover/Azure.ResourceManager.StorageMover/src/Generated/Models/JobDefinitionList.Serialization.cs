@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new JobDefinitionList(value, nextLink, additionalBinaryDataProperties);
+            return new JobDefinitionList(value ?? new ChangeTrackingList<JobDefinitionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

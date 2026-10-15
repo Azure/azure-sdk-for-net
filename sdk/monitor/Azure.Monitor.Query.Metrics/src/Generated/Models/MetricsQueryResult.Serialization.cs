@@ -214,7 +214,7 @@ namespace Azure.Monitor.Query.Metrics.Models
                 @namespace,
                 resourceRegion,
                 resourceId,
-                metrics,
+                metrics ?? new ChangeTrackingList<MetricResult>(),
                 additionalBinaryDataProperties);
         }
     }
