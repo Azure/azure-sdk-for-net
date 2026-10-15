@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
             }
-            if (options.Format != "W" && (_disableShowmountIsDefined || Optional.IsDefined(DisableShowmount)))
+            if (options.Format != "W" && Optional.IsDefined(DisableShowmount, _disableShowmountIsDefined))
             {
                 if (DisableShowmount != null)
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("disableShowmount"u8);
                 }
             }
-            if (_nfsV4IdDomainIsDefined || Optional.IsDefined(NfsV4IdDomain))
+            if (Optional.IsDefined(NfsV4IdDomain, _nfsV4IdDomainIsDefined))
             {
                 if (NfsV4IdDomain != null)
                 {
