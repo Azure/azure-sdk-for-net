@@ -12,6 +12,5 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewayLoadDistributionTarget type. </summary>
     public partial class ApplicationGatewayLoadDistributionTarget : NetworkResourceData { }
 }

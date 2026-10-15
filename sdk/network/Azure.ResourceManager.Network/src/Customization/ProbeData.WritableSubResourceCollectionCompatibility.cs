@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ProbeData type. </summary>
     [CodeGenSuppress("LoadBalancingRules")]
     public partial class ProbeData
     {

@@ -12,6 +12,5 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewayFrontendPort type. </summary>
     public partial class ApplicationGatewayFrontendPort : NetworkResourceData { }
 }

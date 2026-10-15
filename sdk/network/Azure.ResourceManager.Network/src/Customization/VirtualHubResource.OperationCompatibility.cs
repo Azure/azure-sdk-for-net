@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VirtualHubResource type. </summary>
     [CodeGenSuppress("GetEffectiveVirtualHubRoutesAsync", typeof(WaitUntil), typeof(EffectiveRoutesContent), typeof(CancellationToken))]
     [CodeGenSuppress("GetEffectiveVirtualHubRoutes", typeof(WaitUntil), typeof(EffectiveRoutesContent), typeof(CancellationToken))]
     [CodeGenSuppress("GetInboundRoutesAsync", typeof(WaitUntil), typeof(VirtualHubInboundRoutesContent), typeof(CancellationToken))]

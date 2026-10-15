@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkManagerResource type. </summary>
     public partial class NetworkManagerResource
     {
         /// <summary> Invokes the PostNetworkManagerCommitAsync compatibility operation. </summary>

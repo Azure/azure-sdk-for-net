@@ -8,7 +8,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the PublicIPPrefixData type. </summary>
     [CodeGenSuppress("LoadBalancerFrontendIPConfigurationId")]
     public partial class PublicIPPrefixData
     {

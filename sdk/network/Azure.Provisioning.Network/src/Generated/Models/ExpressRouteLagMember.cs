@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Network
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.Network
     {
         private ExpressRouteLagMemberPropertiesFormat _properties;
         private BicepValue<string> _id;
-        private BicepValue<string> _type;
+        private BicepValue<ResourceType> _resourceType;
         private BicepValue<string> _name;
         private BicepValue<string> _eTag;
 
@@ -48,13 +49,13 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the Type. </summary>
-        public BicepValue<string> Type
+        /// <summary> Gets the ResourceType. </summary>
+        public BicepValue<ResourceType> ResourceType
         {
             get
             {
                 Initialize();
-                return _type;
+                return _resourceType;
             }
         }
 
@@ -84,7 +85,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<ExpressRouteLagMemberPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isOutput: true, isRequired: true);
-            _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true, isRequired: true);
+            _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true, isRequired: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true, isRequired: true);
             _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();

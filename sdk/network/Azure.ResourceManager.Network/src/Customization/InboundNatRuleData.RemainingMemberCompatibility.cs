@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the InboundNatRuleData type. </summary>
     public partial class InboundNatRuleData
     {
         /// <summary> Gets or sets the ETag compatibility property. </summary>

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -24,14 +25,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="VirtualHubData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the virtual hub. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="kind"> Kind of service virtual hub. This is metadata used for the Azure portal experience for Route Server. </param>
-        internal VirtualHubData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualHubProperties properties, ETag? eTag, string kind) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal VirtualHubData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualHubProperties properties, ETag? eTag, string kind) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -96,6 +97,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> List of all virtual hub route table v2s associated with this VirtualHub. </summary>
+        [WirePath("properties.virtualHubRouteTableV2s")]
+        public IList<VirtualHubRouteTableV2Data> VirtualHubRouteTableV2S
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                return Properties.VirtualHubRouteTableV2S;
+            }
+        }
+
         /// <summary> The sku of this VirtualHub. </summary>
         [WirePath("properties.sku")]
         public string Sku
@@ -124,6 +139,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> List of references to IpConfigurations. </summary>
+        [WirePath("properties.ipConfigurations")]
+        public IReadOnlyList<WritableSubResource> IPConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                return Properties.IPConfigurations;
+            }
+        }
+
         /// <summary> VirtualRouter ASN. </summary>
         [WirePath("properties.virtualRouterAsn")]
         public long? VirtualRouterAsn
@@ -139,6 +168,20 @@ namespace Azure.ResourceManager.Network
                     Properties = new VirtualHubProperties();
                 }
                 Properties.VirtualRouterAsn = value;
+            }
+        }
+
+        /// <summary> VirtualRouter IPs. </summary>
+        [WirePath("properties.virtualRouterIps")]
+        public IList<string> VirtualRouterIPs
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                return Properties.VirtualRouterIPs;
             }
         }
 

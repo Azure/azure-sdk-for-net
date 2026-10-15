@@ -12,7 +12,6 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRouteGatewayCollection type. </summary>
     public partial class ExpressRouteGatewayCollection : IEnumerable<ExpressRouteGatewayResource>, IAsyncEnumerable<ExpressRouteGatewayResource>
     {
         IEnumerator<ExpressRouteGatewayResource> IEnumerable<ExpressRouteGatewayResource>.GetEnumerator() => ((IEnumerable<ExpressRouteGatewayResource>)Array.Empty<ExpressRouteGatewayResource>()).GetEnumerator();

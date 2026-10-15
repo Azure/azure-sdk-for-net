@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkExtensions type. </summary>
     [CodeGenSuppress("GetNetworkInterfaceResource", typeof(ArmClient), typeof(ResourceIdentifier))]
     [CodeGenSuppress("GetPublicIPAddressResource", typeof(ArmClient), typeof(ResourceIdentifier))]
     public static partial class NetworkExtensions

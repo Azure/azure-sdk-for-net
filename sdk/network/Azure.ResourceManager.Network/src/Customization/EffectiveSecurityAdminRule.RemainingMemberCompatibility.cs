@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the EffectiveSecurityAdminRule type. </summary>
     [CodeGenSuppress("Sources")]
     [CodeGenSuppress("Destinations")]
     [CodeGenSuppress("SourcePortRanges")]

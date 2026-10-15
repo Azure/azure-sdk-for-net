@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the IpamPoolData type. </summary>
     public partial class IpamPoolData
     {
         /// <summary> Initializes a new instance of the IpamPoolData class. </summary>

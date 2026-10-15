@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRoutePortData type. </summary>
     [CodeGenSuppress("Circuits")]
     public partial class ExpressRoutePortData
     {

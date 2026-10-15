@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkVirtualApplianceResource type. </summary>
     public partial class NetworkVirtualApplianceResource
     {
         /// <summary> Invokes the RestartAsync compatibility operation. </summary>

@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkManagerResource type. </summary>
     public partial class NetworkManagerResource
     {
         /// <summary> Invokes the GetNetworkManagerDeploymentStatusAsync compatibility operation. </summary>

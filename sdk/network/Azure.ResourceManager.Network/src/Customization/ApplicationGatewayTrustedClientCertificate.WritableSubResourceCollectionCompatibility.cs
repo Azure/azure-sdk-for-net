@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewayTrustedClientCertificate type. </summary>
     [CodeGenSuppress("Data")]
     [CodeGenSuppress("ValidatedCertData")]
     public partial class ApplicationGatewayTrustedClientCertificate

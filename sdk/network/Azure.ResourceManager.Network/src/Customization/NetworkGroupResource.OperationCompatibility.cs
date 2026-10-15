@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkGroupResource type. </summary>
     public partial class NetworkGroupResource
     {
         /// <summary> Invokes the UpdateAsync compatibility operation. </summary>

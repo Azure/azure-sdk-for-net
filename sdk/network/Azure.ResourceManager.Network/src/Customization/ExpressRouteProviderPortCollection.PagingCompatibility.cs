@@ -14,7 +14,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRouteProviderPortCollection type. </summary>
     public partial class ExpressRouteProviderPortCollection
     {
         /// <summary> Invokes the GetAllAsync compatibility operation. </summary>

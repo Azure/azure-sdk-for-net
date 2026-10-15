@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the RoutingIntentData type. </summary>
     public partial class RoutingIntentData
     {
         /// <summary> Gets or sets the ETag compatibility property. </summary>

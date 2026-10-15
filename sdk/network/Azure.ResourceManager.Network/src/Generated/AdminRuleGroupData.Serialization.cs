@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -118,6 +123,7 @@ namespace Azure.ResourceManager.Network
             ResourceType resourceType = default;
             SystemData systemData = default;
             AdminRuleCollectionPropertiesFormat properties = default;
+            ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,6 +168,15 @@ namespace Azure.ResourceManager.Network
                     properties = AdminRuleCollectionPropertiesFormat.DeserializeAdminRuleCollectionPropertiesFormat(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -173,6 +188,7 @@ namespace Azure.ResourceManager.Network
                 resourceType,
                 systemData,
                 properties,
+                eTag,
                 additionalBinaryDataProperties);
         }
     }

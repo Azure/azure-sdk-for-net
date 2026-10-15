@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the LoadBalancerCollection type. </summary>
     public partial class LoadBalancerCollection
     {
         /// <summary> Invokes the GetIfExists compatibility operation. </summary>

@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the NetworkVerifierWorkspaceProperties type. </summary>
     public partial class NetworkVerifierWorkspaceProperties
     {
         /// <summary> Gets or sets the ProvisioningState compatibility property. </summary>

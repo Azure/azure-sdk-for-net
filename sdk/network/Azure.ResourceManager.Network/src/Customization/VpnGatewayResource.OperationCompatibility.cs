@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VpnGatewayResource type. </summary>
     public partial class VpnGatewayResource
     {
         /// <summary> Invokes the ResetAsync compatibility operation. </summary>

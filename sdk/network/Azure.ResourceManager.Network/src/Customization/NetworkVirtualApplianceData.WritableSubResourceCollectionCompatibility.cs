@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkVirtualApplianceData type. </summary>
     [CodeGenSuppress("InboundSecurityRules")]
     [CodeGenSuppress("VirtualApplianceConnections")]
     [CodeGenSuppress("VirtualApplianceSites")]

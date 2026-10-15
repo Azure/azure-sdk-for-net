@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRoutePortResource type. </summary>
     public partial class ExpressRoutePortResource
     {
         /// <summary> Invokes the GetExpressRoutePortAuthorizations compatibility operation. </summary>

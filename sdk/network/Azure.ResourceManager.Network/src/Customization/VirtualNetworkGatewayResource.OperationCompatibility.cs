@@ -10,7 +10,6 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VirtualNetworkGatewayResource type. </summary>
     public partial class VirtualNetworkGatewayResource
     {
         /// <summary> Invokes the GenerateVpnClientPackageAsync compatibility operation. </summary>

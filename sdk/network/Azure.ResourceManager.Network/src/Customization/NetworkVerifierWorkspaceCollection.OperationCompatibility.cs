@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkVerifierWorkspaceCollection type. </summary>
     public partial class NetworkVerifierWorkspaceCollection
     {
         /// <summary> Invokes the CreateOrUpdateAsync compatibility operation. </summary>

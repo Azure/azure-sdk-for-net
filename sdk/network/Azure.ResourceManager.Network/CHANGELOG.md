@@ -8,7 +8,22 @@
 
 ### Bugs Fixed
 
+- Restored preferred management model property names while retaining obsolete forwarding aliases for the previous names.
+- Restored strongly typed `ResourceType` metadata and connected compatibility setters and typed model-factory inputs to the serialized values, retaining the string `Type` aliases present in 1.17.0. Generated legacy factory overloads accepting string `type` still discard that input; use the typed `resourceType` overloads instead.
+- Preserved resource-reference wire formats and deserialization of renamed required properties.
+- Restored `WritableSubResource` types for virtual hub IP configurations, virtual network gateway default sites, and virtual network peering references.
+- Restored flattened gateway and peering address-prefix properties as forwarding accessors to their address-space models.
+- Restored the writable `P2SConnectionConfiguration.ConfigurationPolicyGroups` collection and its serialization; `ConfigurationPolicyGroupAssociations` now provides an obsolete read-only view of the same collection.
+- Restored `P2SConnectionConfiguration.VpnClientAddressPrefixes` as a forwarding accessor to `VpnClientAddressPool.AddressPrefixes`.
+- Restored `PfsGroup.Pfs` to use the `PFSMM` wire value and retained `PFSMM` as an obsolete forwarding alias.
+- Restored the preferred TLS enum names while retaining obsolete aliases with the same wire values.
+- Fixed `PolicySettings.CaptchaCookieExpirationInMins` to forward to `CaptchaExpirationInMins`, so assignments are included in service requests.
+
 ### Other Changes
+
+- Marked the unsupported `NetworkVirtualApplianceConnectionData.ConnectionRoutingConfiguration` compatibility property obsolete and hidden from IntelliSense; use `RoutingConfiguration` instead.
+- Marked the unsupported `P2SConnectionConfiguration.RoutingConfiguration` compatibility property obsolete and hidden from IntelliSense.
+- Deprecated `PolicySettings.CaptchaCookieExpirationInMins` in favor of `CaptchaExpirationInMins` and hid the legacy property from IntelliSense.
 
 ## 1.18.0-beta.1 (2026-09-20)
 

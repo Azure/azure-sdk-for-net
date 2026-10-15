@@ -10,7 +10,6 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network.Mocking
 {
-    /// <summary> Compatibility declaration for the MockableNetworkResourceGroupResource type. </summary>
     public partial class MockableNetworkResourceGroupResource
     {
         /// <summary> Invokes the GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync compatibility operation. </summary>

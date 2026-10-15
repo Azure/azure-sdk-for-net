@@ -12,6 +12,5 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VpnServerConfigurationData type. </summary>
     public partial class VpnServerConfigurationData : NetworkTrackedResourceData { }
 }

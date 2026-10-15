@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkVirtualApplianceSkuResource type. </summary>
     public partial class NetworkVirtualApplianceSkuResource
     {
         /// <summary> Invokes the AddTag compatibility operation. </summary>

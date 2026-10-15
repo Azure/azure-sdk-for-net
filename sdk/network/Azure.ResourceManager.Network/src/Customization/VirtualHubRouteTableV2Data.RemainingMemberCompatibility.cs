@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VirtualHubRouteTableV2Data type. </summary>
     public partial class VirtualHubRouteTableV2Data
     {
         /// <summary> Gets or sets the ETag compatibility property. </summary>

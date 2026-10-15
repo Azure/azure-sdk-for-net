@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRouteConnectionCollection type. </summary>
     public partial class ExpressRouteConnectionCollection : global::System.Collections.Generic.IEnumerable<global::Azure.ResourceManager.Network.ExpressRouteConnectionResource>, global::System.Collections.Generic.IAsyncEnumerable<global::Azure.ResourceManager.Network.ExpressRouteConnectionResource>
     {
         /// <summary> Invokes the GetAllAsync compatibility operation. </summary>

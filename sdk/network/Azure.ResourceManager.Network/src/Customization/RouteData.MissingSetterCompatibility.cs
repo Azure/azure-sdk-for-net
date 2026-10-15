@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the RouteData type. </summary>
     public partial class RouteData
     {
         /// <summary> Gets or sets the HasBgpOverride compatibility property. </summary>

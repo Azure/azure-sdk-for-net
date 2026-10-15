@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewayWafDynamicManifestData type. </summary>
     [CodeGenSuppress("AvailableRuleSets")]
     public partial class ApplicationGatewayWafDynamicManifestData
     {

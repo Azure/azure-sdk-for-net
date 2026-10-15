@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRouteCircuitPeeringResource type. </summary>
     public partial class ExpressRouteCircuitPeeringResource
     {
         /// <summary> Invokes the GetArpTableExpressRouteCircuitAsync compatibility operation. </summary>

@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VpnServerConfigurationResource type. </summary>
     public partial class VpnServerConfigurationResource
     {
     }

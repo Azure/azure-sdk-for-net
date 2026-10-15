@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ConnectionMonitorCreateOrUpdateContent type. </summary>
     public partial class ConnectionMonitorCreateOrUpdateContent
     {
         /// <summary> Gets or sets the Location compatibility property. </summary>

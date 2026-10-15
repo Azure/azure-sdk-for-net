@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the FirewallPolicyRule type. </summary>
     public abstract partial class FirewallPolicyRule
     {
         /// <summary> Initializes a new instance of the FirewallPolicyRule class. </summary>

@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VirtualWanResource type. </summary>
     [CodeGenSuppress("GeneratevirtualwanvpnserverconfigurationvpnprofileAsync", typeof(WaitUntil), typeof(VirtualWanVpnProfileContent), typeof(CancellationToken))]
     [CodeGenSuppress("Generatevirtualwanvpnserverconfigurationvpnprofile", typeof(WaitUntil), typeof(VirtualWanVpnProfileContent), typeof(CancellationToken))]
     public partial class VirtualWanResource

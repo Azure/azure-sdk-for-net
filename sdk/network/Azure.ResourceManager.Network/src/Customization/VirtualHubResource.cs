@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VirtualHubResource type. </summary>
     public partial class VirtualHubResource
     {
     }

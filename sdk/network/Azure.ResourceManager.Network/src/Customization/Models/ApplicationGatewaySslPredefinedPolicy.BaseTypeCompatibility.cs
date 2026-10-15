@@ -12,6 +12,5 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewaySslPredefinedPolicy type. </summary>
     public partial class ApplicationGatewaySslPredefinedPolicy : NetworkResourceData { }
 }

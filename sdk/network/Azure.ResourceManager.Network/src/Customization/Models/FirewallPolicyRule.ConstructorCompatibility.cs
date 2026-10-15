@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the FirewallPolicyRule type. </summary>
     [CodeGenSuppress("FirewallPolicyRule")]
     public abstract partial class FirewallPolicyRule
     {

@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ActiveBaseSecurityAdminRule type. </summary>
     public abstract partial class ActiveBaseSecurityAdminRule
     {
         /// <summary> Initializes a new instance of the ActiveBaseSecurityAdminRule class. </summary>

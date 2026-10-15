@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the NetworkIPConfiguration type. </summary>
     public partial class NetworkIPConfiguration
     {
         /// <summary> Initializes a new instance of the NetworkIPConfiguration class. </summary>

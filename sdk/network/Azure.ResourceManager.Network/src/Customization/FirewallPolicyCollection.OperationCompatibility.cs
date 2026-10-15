@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the FirewallPolicyCollection type. </summary>
     [CodeGenSuppress("CreateOrUpdateAsync", typeof(WaitUntil), typeof(string), typeof(FirewallPolicyData), typeof(CancellationToken))]
     [CodeGenSuppress("CreateOrUpdate", typeof(WaitUntil), typeof(string), typeof(FirewallPolicyData), typeof(CancellationToken))]
     public partial class FirewallPolicyCollection

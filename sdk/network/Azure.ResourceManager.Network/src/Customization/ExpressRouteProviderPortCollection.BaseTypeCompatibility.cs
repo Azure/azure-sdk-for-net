@@ -12,7 +12,6 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRouteProviderPortCollection type. </summary>
     public partial class ExpressRouteProviderPortCollection : IEnumerable<ExpressRouteProviderPortResource>, IAsyncEnumerable<ExpressRouteProviderPortResource>
     {
         IEnumerator<ExpressRouteProviderPortResource> IEnumerable<ExpressRouteProviderPortResource>.GetEnumerator() => ((IEnumerable<ExpressRouteProviderPortResource>)Array.Empty<ExpressRouteProviderPortResource>()).GetEnumerator();

@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the IpamPoolCollection type. </summary>
     public partial class IpamPoolCollection
     {
         /// <summary> Invokes the CreateOrUpdateAsync compatibility operation. </summary>

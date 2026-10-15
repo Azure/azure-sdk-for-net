@@ -15,7 +15,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> The Network Security Perimeter resource. </summary>
     [CodeGenSuppress("NetworkSecurityPerimeterData", typeof(NetworkSecurityPerimeterProperties), typeof(string), typeof(IDictionary<string, BinaryData>))]
     [CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
     [CodeGenSuppress("DeserializeNetworkSecurityPerimeterData", typeof(JsonElement), typeof(ModelReaderWriterOptions))]

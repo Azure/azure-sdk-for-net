@@ -13,11 +13,6 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Geo code for CIDR advertising. </summary>
-    /// The TypeSpec rename restores the generated CidrAdvertisingGeoCode type, but the generator
-    /// still emits only the all-caps wire-name fields. Keep the shipped C#-cased members and the
-    /// non-null string conversion/equality implementation for API compatibility.
-    /// <summary> Compatibility declaration for the CidrAdvertisingGeoCode type. </summary>
     public readonly partial struct CidrAdvertisingGeoCode : IEquatable<CidrAdvertisingGeoCode>
     {
         private readonly string _value;

@@ -12,6 +12,5 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ConnectionAnalyzerData type. </summary>
     public partial class ConnectionAnalyzerData : TrackedResourceData { }
 }

@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the TroubleshootingContent type. </summary>
     public partial class TroubleshootingContent
     {
         /// <summary> Invokes the this compatibility operation. </summary>

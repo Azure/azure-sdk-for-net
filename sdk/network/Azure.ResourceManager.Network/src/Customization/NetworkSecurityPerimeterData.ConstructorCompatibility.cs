@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkSecurityPerimeterData type. </summary>
     public partial class NetworkSecurityPerimeterData
     {
         /// <summary> Invokes the base compatibility operation. </summary>

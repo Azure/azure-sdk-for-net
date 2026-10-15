@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the HubIPConfigurationData type. </summary>
     public partial class HubIPConfigurationData
     {
         /// <summary> Gets or sets the ETag compatibility property. </summary>

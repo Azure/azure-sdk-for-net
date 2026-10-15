@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewaySslPredefinedPolicy type. </summary>
     public partial class ApplicationGatewaySslPredefinedPolicy
     {
         /// <summary> Initializes a new instance of the ApplicationGatewaySslPredefinedPolicy class. </summary>

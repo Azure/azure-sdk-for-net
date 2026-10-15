@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the PublicIPPrefixData type. </summary>
     [CodeGenSuppress("PublicIPAddresses")]
     public partial class PublicIPPrefixData
     {

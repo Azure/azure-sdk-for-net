@@ -14,7 +14,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> ExpressRouteProviderPortData serialization compatibility. </summary>
     [CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
     public partial class ExpressRouteProviderPortData
     {

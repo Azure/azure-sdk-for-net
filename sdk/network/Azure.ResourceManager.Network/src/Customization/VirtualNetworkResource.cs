@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VirtualNetworkResource type. </summary>
     public partial class VirtualNetworkResource
     {
     }
