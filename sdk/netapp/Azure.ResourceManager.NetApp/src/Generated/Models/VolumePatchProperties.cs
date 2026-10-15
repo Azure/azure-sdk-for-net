@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _unixPermissions;
-        internal bool _unixPermissionsIsDefined;
+        private bool _unixPermissionsIsDefined;
         private SmbAccessBasedEnumeration? _smbAccessBasedEnumeration;
-        internal bool _smbAccessBasedEnumerationIsDefined;
+        private bool _smbAccessBasedEnumerationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VolumePatchProperties"/>. </summary>
         public VolumePatchProperties()

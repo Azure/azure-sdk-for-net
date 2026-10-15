@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support writing '{format}' format.");
             }
-            if (_rawContentIsDefined || Optional.IsDefined(RawContent))
+            if (Optional.IsDefined(RawContent, _rawContentIsDefined))
             {
                 if (RawContent != null)
                 {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("rawContent"u8);
                 }
             }
-            if (_graphRunbookJsonIsDefined || Optional.IsDefined(GraphRunbookJson))
+            if (Optional.IsDefined(GraphRunbookJson, _graphRunbookJsonIsDefined))
             {
                 if (GraphRunbookJson != null)
                 {

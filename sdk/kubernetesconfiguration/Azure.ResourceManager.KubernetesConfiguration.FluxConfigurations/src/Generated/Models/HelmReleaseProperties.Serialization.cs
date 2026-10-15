@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support writing '{format}' format.");
             }
-            if (_lastRevisionAppliedIsDefined || Optional.IsDefined(LastRevisionApplied))
+            if (Optional.IsDefined(LastRevisionApplied, _lastRevisionAppliedIsDefined))
             {
                 if (LastRevisionApplied != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("helmChartRef"u8);
                 writer.WriteObjectValue(HelmChartRef, options);
             }
-            if (_failureCountIsDefined || Optional.IsDefined(FailureCount))
+            if (Optional.IsDefined(FailureCount, _failureCountIsDefined))
             {
                 if (FailureCount != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("failureCount"u8);
                 }
             }
-            if (_installFailureCountIsDefined || Optional.IsDefined(InstallFailureCount))
+            if (Optional.IsDefined(InstallFailureCount, _installFailureCountIsDefined))
             {
                 if (InstallFailureCount != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("installFailureCount"u8);
                 }
             }
-            if (_upgradeFailureCountIsDefined || Optional.IsDefined(UpgradeFailureCount))
+            if (Optional.IsDefined(UpgradeFailureCount, _upgradeFailureCountIsDefined))
             {
                 if (UpgradeFailureCount != null)
                 {

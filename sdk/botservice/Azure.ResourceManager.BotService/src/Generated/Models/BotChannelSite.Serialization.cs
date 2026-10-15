@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("isDetailedLoggingEnabled"u8);
                 writer.WriteBooleanValue(IsDetailedLoggingEnabled.Value);
             }
-            if (_isBlockUserUploadEnabledIsDefined || Optional.IsDefined(IsBlockUserUploadEnabled))
+            if (Optional.IsDefined(IsBlockUserUploadEnabled, _isBlockUserUploadEnabledIsDefined))
             {
                 if (IsBlockUserUploadEnabled != null)
                 {

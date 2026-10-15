@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class DataQualityMonitoringSignal : MonitoringSignalBase
     {
         private FeatureImportanceSettings _featureImportanceSettings;
-        internal bool _featureImportanceSettingsIsDefined;
+        private bool _featureImportanceSettingsIsDefined;
         private MonitoringFeatureFilterBase _features;
-        internal bool _featuresIsDefined;
+        private bool _featuresIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DataQualityMonitoringSignal"/>. </summary>
         /// <param name="metricThresholds"> [Required] A list of metrics to calculate and their associated thresholds. </param>

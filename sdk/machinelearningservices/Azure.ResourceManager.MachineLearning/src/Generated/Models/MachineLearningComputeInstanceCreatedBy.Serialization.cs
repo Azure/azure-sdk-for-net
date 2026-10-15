@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningComputeInstanceCreatedBy)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && (_userNameIsDefined || Optional.IsDefined(UserName)))
+            if (options.Format != "W" && Optional.IsDefined(UserName, _userNameIsDefined))
             {
                 if (UserName != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("userOrgId"u8);
                 writer.WriteStringValue(UserOrgId);
             }
-            if (options.Format != "W" && (_userIdIsDefined || Optional.IsDefined(UserId)))
+            if (options.Format != "W" && Optional.IsDefined(UserId, _userIdIsDefined))
             {
                 if (UserId != null)
                 {

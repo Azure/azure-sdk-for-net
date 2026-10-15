@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private FluxObjectReference _appliedBy;
-        internal bool _appliedByIsDefined;
+        private bool _appliedByIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxObjectStatus"/>. </summary>
         internal FluxObjectStatus()

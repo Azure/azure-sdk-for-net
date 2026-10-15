@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private GetBlobReferenceForConsumptionDto _blobReferenceForConsumption;
-        internal bool _blobReferenceForConsumptionIsDefined;
+        private bool _blobReferenceForConsumptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BlobReferenceSasResult"/>. </summary>
         internal BlobReferenceSasResult()

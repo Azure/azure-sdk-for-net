@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _clusterFqdn;
-        internal bool _clusterFqdnIsDefined;
+        private bool _clusterFqdnIsDefined;
         private int? _agentCount;
-        internal bool _agentCountIsDefined;
+        private bool _agentCountIsDefined;
         private string _agentVmSize;
-        internal bool _agentVmSizeIsDefined;
+        private bool _agentVmSizeIsDefined;
         private MachineLearningSslConfiguration _sslConfiguration;
-        internal bool _sslConfigurationIsDefined;
+        private bool _sslConfigurationIsDefined;
         private MachineLearningAksNetworkingConfiguration _aksNetworkingConfiguration;
-        internal bool _aksNetworkingConfigurationIsDefined;
+        private bool _aksNetworkingConfigurationIsDefined;
         private string _loadBalancerSubnet;
-        internal bool _loadBalancerSubnetIsDefined;
+        private bool _loadBalancerSubnetIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningAksComputeProperties"/>. </summary>
         public MachineLearningAksComputeProperties()

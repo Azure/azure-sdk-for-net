@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("cognitiveServiceResourceId"u8);
                 writer.WriteStringValue(CognitiveServiceResourceId);
             }
-            if (_cognitiveServiceRegionIsDefined || Optional.IsDefined(CognitiveServiceRegion))
+            if (Optional.IsDefined(CognitiveServiceRegion, _cognitiveServiceRegionIsDefined))
             {
                 if (CognitiveServiceRegion != null)
                 {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceRegion"u8);
                 }
             }
-            if (_cognitiveServiceSubscriptionKeyIsDefined || Optional.IsDefined(CognitiveServiceSubscriptionKey))
+            if (Optional.IsDefined(CognitiveServiceSubscriptionKey, _cognitiveServiceSubscriptionKeyIsDefined))
             {
                 if (CognitiveServiceSubscriptionKey != null)
                 {

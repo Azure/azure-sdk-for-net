@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningJobResourceConfiguration : MachineLearningResourceConfiguration
     {
         private string _dockerArgs;
-        internal bool _dockerArgsIsDefined;
+        private bool _dockerArgsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobResourceConfiguration"/>. </summary>
         public MachineLearningJobResourceConfiguration()
