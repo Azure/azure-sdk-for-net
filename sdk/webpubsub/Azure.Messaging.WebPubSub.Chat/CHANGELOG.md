@@ -4,9 +4,16 @@
 
 ### Features Added
 
+- Regenerated the client from service API version `2026-08-01-preview`, now the default. The `2026-02-01-preview` version remains selectable.
+- Added pageable listing of rooms, users, topics, and rooms associated with a user.
+- Added topic creation, retrieval, merge-patch updates, and conditional soft deletion, with topic lifecycle states and conversation metadata.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed `GetRoomsForUser` pagination to expose page-size and continuation-token parameters.
+- Added the resource provider namespace to client diagnostics.
 
 ### Other Changes
 
