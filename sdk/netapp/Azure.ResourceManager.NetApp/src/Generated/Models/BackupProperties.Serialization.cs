@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && (_snapshotCreatedOnIsDefined || Optional.IsDefined(SnapshotCreatedOn)))
+            if (options.Format != "W" && Optional.IsDefined(SnapshotCreatedOn, _snapshotCreatedOnIsDefined))
             {
                 if (SnapshotCreatedOn != null)
                 {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("snapshotCreationDate"u8);
                 }
             }
-            if (options.Format != "W" && (_completionOnIsDefined || Optional.IsDefined(CompletionOn)))
+            if (options.Format != "W" && Optional.IsDefined(CompletionOn, _completionOnIsDefined))
             {
                 if (CompletionOn != null)
                 {

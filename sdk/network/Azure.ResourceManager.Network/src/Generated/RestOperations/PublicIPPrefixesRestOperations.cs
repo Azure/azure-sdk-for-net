@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string publicIpPrefixName, string expand, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string publicIPPrefixName, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/publicIPPrefixes/", false);
-            uri.AppendPath(publicIpPrefixName, true);
+            uri.AppendPath(publicIPPrefixName, true);
             uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/publicIPPrefixes") ?? "2026-01-01", true);
             if (expand != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string publicIpPrefixName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string publicIPPrefixName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/publicIPPrefixes/", false);
-            uri.AppendPath(publicIpPrefixName, true);
+            uri.AppendPath(publicIPPrefixName, true);
             uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/publicIPPrefixes") ?? "2026-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(Guid subscriptionId, string resourceGroupName, string publicIpPrefixName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateTagsRequest(Guid subscriptionId, string resourceGroupName, string publicIPPrefixName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/publicIPPrefixes/", false);
-            uri.AppendPath(publicIpPrefixName, true);
+            uri.AppendPath(publicIPPrefixName, true);
             uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/publicIPPrefixes") ?? "2026-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string publicIpPrefixName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string publicIPPrefixName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/publicIPPrefixes/", false);
-            uri.AppendPath(publicIpPrefixName, true);
+            uri.AppendPath(publicIPPrefixName, true);
             uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/publicIPPrefixes") ?? "2026-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
