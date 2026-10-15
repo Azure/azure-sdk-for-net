@@ -372,12 +372,15 @@ public class ResponseEventStream
     /// and an auto-generated item ID.
     /// </summary>
     /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the structured outputs item.</returns>
+    // AgentStructuredOutputsResponseItem is still tagged experimental in Azure.AI.Extensions.OpenAI; the tag is owned and removed there.
+#pragma warning disable AAIP002
     public virtual OutputItemBuilder<StructuredOutputsOutputItem> AddOutputItemStructuredOutputs()
     {
         var outputIndex = _outputIndex++;
         var itemId = IdGenerator.NewStructuredOutputItemId(_context.ResponseId);
         return new OutputItemBuilder<StructuredOutputsOutputItem>(this, outputIndex, itemId);
     }
+#pragma warning restore AAIP002
 
     /// <summary>
     /// Creates a computer tool call output item scope with the next output index
@@ -685,7 +688,9 @@ public class ResponseEventStream
     public IEnumerable<ResponseStreamEvent> OutputItemStructuredOutputs(BinaryData output)
     {
         var builder = AddOutputItemStructuredOutputs();
+#pragma warning disable AAIP002 // AgentStructuredOutputsResponseItem is still tagged experimental upstream in Azure.AI.Extensions.OpenAI.
         var item = new StructuredOutputsOutputItem(output) { Id = builder.ItemId };
+#pragma warning restore AAIP002
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }

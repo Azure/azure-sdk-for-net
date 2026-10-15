@@ -13,8 +13,8 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 ```C# Snippet:Responses_Sample5_StudyTutorHandler
 public class StudyTutorHandler : ResponseHandler
 {
-    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         CancellationToken cancellationToken)
     {
@@ -26,7 +26,7 @@ public class StudyTutorHandler : ResponseHandler
                 var history = await context.GetHistoryAsync(ct);
 
                 var currentInput = await context.GetInputTextAsync(cancellationToken: ct);
-                var turnNumber = history.OfType<OutputItemMessage>().Count() + 1;
+                var turnNumber = history.OfType<MessageResponseItem>().Count() + 1;
 
                 // In a real agent, pass the history + current question to a model.
                 if (history.Count == 0)
@@ -35,7 +35,7 @@ public class StudyTutorHandler : ResponseHandler
                            "Let me help you understand that topic.";
                 }
 
-                var lastMessage = history.OfType<OutputItemMessage>().LastOrDefault();
+                var lastMessage = history.OfType<MessageResponseItem>().LastOrDefault();
                 var lastText = lastMessage?.Content
                     .FirstOrDefault(c => c.Kind == ResponseContentPartKind.OutputText)?.Text ?? "(none)";
 

@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
@@ -34,8 +35,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         public class FileAnnotationsHandler : ResponseHandler
         {
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
@@ -48,12 +49,12 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 // file_path — references a file by ID in your own store.
                 // file_citation — cites a file stored in your own file store.
                 // url_citation — cites a web URL referenced in the text.
-                var annotations = new Annotation[]
+                var annotations = new ResponseMessageAnnotation[]
                 {
-                    new FilePath("/reports/monthly-summary.pdf", 0),
-                    new FilePath("/exports/data.csv", 1),
-                    new FilePath("/images/chart.png", 2),
-                    new FileCitationBody("/sources/research-paper.pdf", 3, "research-paper.pdf"),
+                    new FilePathMessageAnnotation("/reports/monthly-summary.pdf", 0),
+                    new FilePathMessageAnnotation("/exports/data.csv", 1),
+                    new FilePathMessageAnnotation("/images/chart.png", 2),
+                    new FileCitationMessageAnnotation("/sources/research-paper.pdf", 3, "research-paper.pdf"),
                     new UriCitationMessageAnnotation(new Uri("https://example.com/docs/guide"), 0, 29, "Developer Guide"),
                 };
 

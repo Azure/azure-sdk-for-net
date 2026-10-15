@@ -25,8 +25,8 @@ public class ResilientMultiTurnHandler : ResponseHandler
 {
     private static readonly DefaultAzureCredential s_credential = new();
 
-    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         CancellationToken cancellationToken)
     {
@@ -95,7 +95,7 @@ public class ResilientMultiTurnHandler : ResponseHandler
             }
 
             // Framework-managed conversation history.
-            IReadOnlyList<OutputItem> history = await context.GetHistoryAsync(ct);
+            IReadOnlyList<ResponseItem> history = await context.GetHistoryAsync(ct);
 
             string reply =
                 $"Turn {turnCount}: You said '{inputText}'. " +

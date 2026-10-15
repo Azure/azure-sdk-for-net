@@ -1,13 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!-- OPENAI001: the whole OpenAI.Responses surface this package is built on is marked experimental by the OpenAI SDK,
-         and the System.ClientModel model-reader generator also emits OpenAI.OpenAIContext references we cannot annotate.
-         Removable only once OpenAI drops the tag.
-         AAIP002: only two generated sites remain (CreateResponseRequest.Tools, ItemFieldComputerToolCall.Actions assign
-         experimental-tagged properties in their own constructors) plus upstream-tagged Extensions items; drop it once
-         the spec PR is regenerated and the upstream tags are lifted. -->
-    <NoWarn>$(NoWarn);AAIP002;OPENAI001</NoWarn>
     <!-- Server-side ASP.NET Core library — no netstandard2.0 support needed. -->
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

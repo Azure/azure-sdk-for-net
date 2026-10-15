@@ -113,6 +113,8 @@ public class ItemConversionTests
     {
         var message = MessageItemFactory.Message(MessageRole.Assistant, "hi");
         message.Id = "msg_1";
+        // ResponseItem.Patch is the only way to write/read raw JSON paths on the OpenAI model and is tagged experimental by System.ClientModel.
+#pragma warning disable SCME0001
         message.Patch.Set(
             "$.metadata"u8,
             BinaryData.FromString($$"""{"{{InternalMetadataEgress.ResponseInternalMetadataKey}}":"secret"}""").ToArray());
@@ -123,5 +125,6 @@ public class ItemConversionTests
         Assert.That(
             result!.Patch.GetJson("$.metadata"u8)?.ToString() ?? string.Empty,
             Does.Not.Contain("secret"));
+#pragma warning restore SCME0001
     }
 }

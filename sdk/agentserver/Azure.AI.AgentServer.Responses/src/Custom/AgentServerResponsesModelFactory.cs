@@ -143,12 +143,15 @@ internal static partial class AgentServerResponsesModelFactory
     {
         data ??= new List<OutputItem>();
 
+        // The internal constructor is tagged AAIP002 because its parameter list carries OpenAI-experimental/upstream-tagged item types.
+#pragma warning disable AAIP002
         return new AgentsPagedResultOutputItem(
             data.ToList(),
             firstId,
             lastId,
             hasMore,
             additionalBinaryDataProperties: null);
+#pragma warning restore AAIP002
     }
 
     /// <summary>Creates a <see cref="ResponseUsage"/> instance for mocking.</summary>

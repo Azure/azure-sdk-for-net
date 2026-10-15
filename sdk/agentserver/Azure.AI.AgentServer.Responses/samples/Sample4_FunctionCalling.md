@@ -15,8 +15,8 @@ Use `OutputItemFunctionCall()` and `OutputItemMessage()` to emit complete output
 ```C# Snippet:Responses_Sample4_WeatherHandlerConvenience
 public class WeatherHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -25,7 +25,7 @@ public class WeatherHandler : ResponseHandler
 
         // Check if the input contains a function call output (turn 2)
         var inputItems = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
-        var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
+        var toolOutput = inputItems.OfType<FunctionCallOutputResponseItem>().FirstOrDefault();
 
         if (toolOutput is not null)
         {
@@ -65,8 +65,8 @@ When you need to set custom properties on the function call item before `EmitAdd
 ```C# Snippet:Responses_Sample4_WeatherHandler
 public class WeatherHandlerFullControl : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -75,7 +75,7 @@ public class WeatherHandlerFullControl : ResponseHandler
 
         // Check if the input contains a function call output (turn 2)
         var inputItems = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
-        var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
+        var toolOutput = inputItems.OfType<FunctionCallOutputResponseItem>().FirstOrDefault();
 
         if (toolOutput is not null)
         {

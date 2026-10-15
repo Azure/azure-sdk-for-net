@@ -47,6 +47,20 @@
 - `ResponseContext.ClientCancelled` was renamed to `IsClientCancelled`. `IsShutdownRequested` and
   `IsClientCancelled` are now get-only virtual passthroughs over the `Shutdown` /
   `ClientCancellation` tokens; the settable `IsShutdownRequested` was removed.
+- The package no longer emits its own copies of the OpenAI Responses models. Public handler,
+  context, and event-stream APIs now use the shared types from the `OpenAI` package and
+  `Azure.AI.Extensions.OpenAI`, so handlers and tests that referenced the removed types must
+  switch to them (add `using OpenAI.Responses;`, and `using Azure.AI.Extensions.OpenAI;` for
+  Azure-specific items). The handler signature is now
+  `IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(CreateResponseOptions request, ResponseContext context, CancellationToken cancellationToken)`.
+  Common replacements: `CreateResponse` → `CreateResponseOptions`, `ResponseStreamEvent` →
+  `StreamingResponseUpdate` (and `Response*Event` → `StreamingResponse*Update`),
+  `ResponseObject` → `ResponseResult`, `Item` / `OutputItem` → `ResponseItem`,
+  `ItemMessage` / `OutputItemMessage` → `MessageResponseItem`,
+  `FunctionCallOutputItemParam` → `FunctionCallOutputResponseItem`,
+  `ConversationReference` → `ResponseConversationOptions`, and
+  `StructuredOutputsOutputItem` → `AgentStructuredOutputsResponseItem`. Consumers must also
+  suppress or acknowledge the OpenAI package's `OPENAI001` experimental diagnostic.
 
 ### Bugs Fixed
 

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenTelemetry;
 using NUnit.Framework;
+using OpenAI.Responses;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
@@ -88,8 +89,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
             public KnowledgeHandler(IKnowledgeBase kb) => _kb = kb;
 
-            public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 CancellationToken cancellationToken)
             {

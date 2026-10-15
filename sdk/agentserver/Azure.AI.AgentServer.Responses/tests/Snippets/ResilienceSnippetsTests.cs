@@ -10,6 +10,7 @@ using Azure.AI.AgentServer.Responses.Models;
 using Azure.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
@@ -111,8 +112,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         {
             private static readonly string[] PhaseOrder = { "analyze", "generate", "refine" };
 
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
@@ -186,8 +187,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         {
             private static readonly DefaultAzureCredential s_credential = new();
 
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
@@ -294,8 +295,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         {
             private static readonly DefaultAzureCredential s_credential = new();
 
-            public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 CancellationToken cancellationToken)
             {
@@ -364,7 +365,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                     }
 
                     // Framework-managed conversation history.
-                    IReadOnlyList<OutputItem> history = await context.GetHistoryAsync(ct);
+                    IReadOnlyList<ResponseItem> history = await context.GetHistoryAsync(ct);
 
                     string reply =
                         $"Turn {turnCount}: You said '{inputText}'. " +

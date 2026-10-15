@@ -23,8 +23,18 @@ nowarn:AZC0004
 # that cannot be annotated. Removable only once OpenAI drops the tag upstream.
 nowarn:OPENAI001
 
-# AAIP002 fires on two generated constructors that assign an experimental-tagged property of
-# their own type (CreateResponseRequest.Tools, ItemFieldComputerToolCall.Actions) and on a few
-# hand-written uses of Azure.AI.Extensions.OpenAI items still tagged upstream. Generated files
-# cannot carry pragmas (wiped on regen). This package adds no experimental markers itself.
-nowarn:AAIP002
+# AAIP002 is attached to generated declarations whose signatures involve OpenAI-experimental
+# or upstream-tagged Azure.AI.Extensions.OpenAI types (CreateResponseRequest.Tools,
+# CreateResponseResponse.Output/Usage/Error/Conversation, ItemFieldComputerToolCall.Actions,
+# MessageContentOutputTextContent.Annotations, ...). The generated serialization code of the
+# declaring type must read and construct those members, and checked-in Generated/ files cannot
+# carry pragmas (they are wiped on regeneration). Each entry is scoped to the one generated
+# type so AAIP002 stays live everywhere else; hand-written uses carry local pragmas instead.
+nowarn:AAIP002 T:Azure.AI.AgentServer.Responses.CreateResponseRequest
+nowarn:AAIP002 T:Azure.AI.AgentServer.Responses.CreateResponseResponse
+nowarn:AAIP002 T:Azure.AI.AgentServer.Responses.Models.AgentsPagedResultOutputItem
+nowarn:AAIP002 T:Azure.AI.AgentServer.Responses.Models.AgentsPagedResultResponse
+nowarn:AAIP002 T:Azure.AI.AgentServer.Responses.Models.CompactResource
+nowarn:AAIP002 T:Azure.AI.AgentServer.Responses.Models.ItemFieldComputerToolCall
+nowarn:AAIP002 T:Azure.AI.AgentServer.Responses.Models.ItemFieldToolSearchOutput
+nowarn:AAIP002 T:Azure.AI.AgentServer.Responses.Models.MessageContentOutputTextContent

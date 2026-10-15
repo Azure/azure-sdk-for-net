@@ -7,7 +7,7 @@ using System.IO;
 using System.Text.Json;
 
 // Maps Azure.AI.Extensions.OpenAI tool-call items that are still marked experimental upstream; the tag is owned and removed there.
-#pragma warning disable AAIP001
+#pragma warning disable AAIP001, AAIP002
 
 namespace Azure.AI.AgentServer.Responses.Models;
 

@@ -22,8 +22,8 @@ Use the `OutputItemMessage(text, annotations)` convenience method to emit a mess
 ```C# Snippet:Responses_Sample15_FileAnnotationsHandler
 public class FileAnnotationsHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -36,12 +36,12 @@ public class FileAnnotationsHandler : ResponseHandler
         // file_path — references a file by ID in your own store.
         // file_citation — cites a file stored in your own file store.
         // url_citation — cites a web URL referenced in the text.
-        var annotations = new Annotation[]
+        var annotations = new ResponseMessageAnnotation[]
         {
-            new FilePath("/reports/monthly-summary.pdf", 0),
-            new FilePath("/exports/data.csv", 1),
-            new FilePath("/images/chart.png", 2),
-            new FileCitationBody("/sources/research-paper.pdf", 3, "research-paper.pdf"),
+            new FilePathMessageAnnotation("/reports/monthly-summary.pdf", 0),
+            new FilePathMessageAnnotation("/exports/data.csv", 1),
+            new FilePathMessageAnnotation("/images/chart.png", 2),
+            new FileCitationMessageAnnotation("/sources/research-paper.pdf", 3, "research-paper.pdf"),
             new UriCitationMessageAnnotation(new Uri("https://example.com/docs/guide"), 0, 29, "Developer Guide"),
         };
 

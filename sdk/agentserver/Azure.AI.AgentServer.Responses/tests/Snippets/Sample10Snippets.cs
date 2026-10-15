@@ -55,8 +55,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
             public StreamingUpstreamHandler(ResponsesClient upstream) => _upstream = upstream;
 
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
@@ -68,12 +68,11 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                     StreamingEnabled = true,
                 };
 
-                // Translate every input item. Both model stacks share the
-                // same JSON wire contract, so .Translate().To<T>() round-trips
-                // through JSON: our Item → JSON → OpenAI ResponseItem.
-                foreach (Item item in await context.GetInputItemsAsync(cancellationToken: cancellationToken))
+                // Input items are already OpenAI ResponseItem instances, so
+                // they can be forwarded to the upstream as-is.
+                foreach (ResponseItem item in await context.GetInputItemsAsync(cancellationToken: cancellationToken))
                 {
-                    options.InputItems.Add(item.Translate().To<ResponseItem>());
+                    options.InputItems.Add(item);
                 }
 
                 // This handler owns the response lifecycle — construct
@@ -83,15 +82,15 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 // contributes content.
                 int seq = 0;
                 var conversationId = request.GetConversationId();
-                var response = new ResponseObject { Id = context.ResponseId, Model = request.Model ?? "", Status = ResponseStatus.InProgress, AgentReference = request.AgentReference, BackgroundModeEnabled = request.BackgroundModeEnabled, ConversationOptions = conversationId != null ? new ConversationReference(conversationId) : null, PreviousResponseId = request.PreviousResponseId };
-                yield return new ResponseCreatedEvent { SequenceNumber = (int)(seq++), Response = response };
-                yield return new ResponseInProgressEvent { SequenceNumber = (int)(seq++), Response = response };
+                var response = new ResponseResult { Id = context.ResponseId, Model = request.Model ?? "", Status = ResponseStatus.InProgress, AgentReference = request.AgentReference, BackgroundModeEnabled = request.BackgroundModeEnabled, ConversationOptions = conversationId != null ? new ResponseConversationOptions(conversationId) : null, PreviousResponseId = request.PreviousResponseId };
+                yield return new StreamingResponseCreatedUpdate { SequenceNumber = (int)(seq++), Response = response };
+                yield return new StreamingResponseInProgressUpdate { SequenceNumber = (int)(seq++), Response = response };
 
-                // Stream from the upstream. Translate content events (output
-                // items, deltas, etc.) and yield them directly. Skip upstream
+                // Stream from the upstream. Forward content events (output
+                // items, deltas, etc.) directly. Skip upstream
                 // lifecycle events — we own the response envelope.
                 // Track completed output items for the terminal event.
-                var outputItems = new List<OutputItem>();
+                var outputItems = new List<ResponseItem>();
                 bool upstreamFailed = false;
 
                 await foreach (StreamingResponseUpdate update in
@@ -115,20 +114,17 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                         break;
                     }
 
-                    // Translate content events via JSON round-trip.
-                    ResponseStreamEvent evt = update.Translate().To<ResponseStreamEvent>();
-
                     // Clear upstream response_id on output items so the
                     // orchestrator's auto-stamp fills in this server's ID.
-                    if (evt is ResponseOutputItemAddedEvent added)
+                    if (update is StreamingResponseOutputItemAddedUpdate added)
                         added.Item.ResponseId = null;
-                    else if (evt is ResponseOutputItemDoneEvent done)
+                    else if (update is StreamingResponseOutputItemDoneUpdate done)
                     {
                         done.Item.ResponseId = null;
                         outputItems.Add(done.Item);
                     }
 
-                    yield return evt;
+                    yield return update;
                 }
 
                 // Emit terminal event — the handler decides the outcome.
@@ -136,14 +132,14 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 {
                     response.Status = ResponseStatus.Failed;
                     response.Error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "Upstream request failed");
-                    yield return new ResponseFailedEvent { SequenceNumber = (int)(seq++), Response = response };
+                    yield return new StreamingResponseFailedUpdate { SequenceNumber = (int)(seq++), Response = response };
                 }
                 else
                 {
                     response.Status = ResponseStatus.Completed;
                     foreach (var item in outputItems)
                         response.OutputItems.Add(item);
-                    yield return new ResponseCompletedEvent { SequenceNumber = (int)(seq++), Response = response };
+                    yield return new StreamingResponseCompletedUpdate { SequenceNumber = (int)(seq++), Response = response };
                 }
             }
         }

@@ -17,8 +17,8 @@ Use `OutputItemMessage()` to emit a complete text message in one call. The conve
 ```C# Snippet:Responses_Sample3_GreetingHandlerConvenience
 public class GreetingHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -49,8 +49,8 @@ When your handler calls an LLM that produces tokens incrementally, pass an `IAsy
 ```C# Snippet:Responses_Sample3_StreamingGreetingHandler
 public class StreamingGreetingHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -93,8 +93,8 @@ When you need to interleave non-event work between individual delta/done calls w
 ```C# Snippet:Responses_Sample3_GreetingHandler
 public class GreetingHandlerFullControl : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {

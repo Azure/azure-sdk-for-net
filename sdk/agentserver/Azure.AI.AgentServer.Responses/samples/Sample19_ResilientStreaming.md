@@ -39,8 +39,8 @@ public class ResilientStreamingHandler : ResponseHandler
 {
     private static readonly string[] PhaseOrder = { "analyze", "generate", "refine" };
 
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {

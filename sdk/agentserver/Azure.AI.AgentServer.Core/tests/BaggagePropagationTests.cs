@@ -9,11 +9,11 @@ using System.Text;
 using System.Text.Json;
 using Azure.AI.AgentServer.Invocations;
 using Azure.AI.AgentServer.Responses;
-using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Core.Tests;
 
@@ -257,8 +257,8 @@ public class BaggagePropagationTests
     {
         internal static Dictionary<string, string?>? CapturedBaggage { get; set; }
 
-        public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-            CreateResponse request,
+        public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+            CreateResponseOptions request,
             ResponseContext context,
             [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken)
         {
@@ -266,13 +266,12 @@ public class BaggagePropagationTests
                 .GroupBy(kvp => kvp.Key)
                 .ToDictionary(g => g.Key, g => g.Last().Value);
 
-            var responseObj = new ResponseObject(context.ResponseId, request.Model ?? "test");
-            yield return new ResponseCreatedEvent(0, responseObj);
+            var stream = new ResponseEventStream(context, request);
+            yield return stream.EmitCreated();
 
             await Task.Yield();
 
-            responseObj.Status = ResponseStatus.Completed;
-            yield return new ResponseCompletedEvent(1, responseObj);
+            yield return stream.EmitCompleted();
         }
     }
 }
