@@ -10,8 +10,6 @@
 
 ### Other Changes
 
-- Aligned the TypeSpec specification revision with `Azure.Provisioning.ContainerService`; the default API version remains `2026-07-01`.
-
 ## 1.8.0 (2026-10-08)
 
 ### Features Added
