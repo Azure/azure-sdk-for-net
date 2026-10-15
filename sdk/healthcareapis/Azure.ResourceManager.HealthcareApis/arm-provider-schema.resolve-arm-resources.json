@@ -1,0 +1,669 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.HealthcareApis.ServicesDescription",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}",
+      "resourceType": "Microsoft.HealthcareApis/services",
+      "methods": [
+        {
+          "methodId": "Microsoft.HealthcareApis.ServicesDescriptions.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.ServicesDescriptions.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.ServicesDescriptions.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.ServicesDescriptions.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.ServicesDescriptions.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/services",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.ServicesDescriptions.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "ServicesDescription",
+      "nameConstraints": {
+        "minLength": 3,
+        "maxLength": 24
+      },
+      "apiVersions": [
+        "2025-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.HealthcareApis.PrivateEndpointConnectionDescription",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+      "resourceType": "Microsoft.HealthcareApis/services/privateEndpointConnections",
+      "methods": [
+        {
+          "methodId": "Microsoft.HealthcareApis.PrivateEndpointConnectionDescriptions.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.PrivateEndpointConnectionDescriptions.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.PrivateEndpointConnectionDescriptions.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.PrivateEndpointConnectionDescriptions.listByService",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}",
+      "resourceName": "ServicesPrivateEndpointConnections",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.HealthcareApis.PrivateLinkResourceDescription",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateLinkResources/{groupName}",
+      "resourceType": "Microsoft.HealthcareApis/services/privateLinkResources",
+      "methods": [
+        {
+          "methodId": "Microsoft.HealthcareApis.PrivateLinkResourceDescriptions.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateLinkResources/{groupName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateLinkResources/{groupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.PrivateLinkResourceDescriptions.listByService",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateLinkResources",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}",
+      "resourceName": "ServicesPrivateLinkResources",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.HealthcareApis.Workspace",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+      "resourceType": "Microsoft.HealthcareApis/workspaces",
+      "methods": [
+        {
+          "methodId": "Microsoft.HealthcareApis.Workspaces.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.Workspaces.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.Workspaces.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.Workspaces.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.Workspaces.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.Workspaces.listBySubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/workspaces",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.DicomServiceOperationGroup.delete",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.DicomServiceOperationGroup.update",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.FhirServiceOperationGroup.delete",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.FhirServiceOperationGroup.update",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.IotConnectorOperationGroup.delete",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.IotConnectorOperationGroup.update",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "Workspace",
+      "nameConstraints": {
+        "minLength": 3,
+        "maxLength": 24
+      },
+      "apiVersions": [
+        "2025-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.HealthcareApis.DicomService",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}",
+      "resourceType": "Microsoft.HealthcareApis/workspaces/dicomservices",
+      "methods": [
+        {
+          "methodId": "Microsoft.HealthcareApis.DicomServices.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.DicomServices.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.DicomServices.listByWorkspace",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+      "resourceName": "DicomService",
+      "nameConstraints": {
+        "minLength": 3,
+        "maxLength": 24
+      },
+      "apiVersions": [
+        "2025-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.HealthcareApis.FhirService",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}",
+      "resourceType": "Microsoft.HealthcareApis/workspaces/fhirservices",
+      "methods": [
+        {
+          "methodId": "Microsoft.HealthcareApis.FhirServices.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.FhirServices.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.FhirServices.listByWorkspace",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+      "resourceName": "FhirService",
+      "nameConstraints": {
+        "minLength": 3,
+        "maxLength": 24
+      },
+      "apiVersions": [
+        "2025-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.HealthcareApis.IotConnector",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}",
+      "resourceType": "Microsoft.HealthcareApis/workspaces/iotconnectors",
+      "methods": [
+        {
+          "methodId": "Microsoft.HealthcareApis.IotConnectors.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.IotConnectors.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.IotConnectors.listByWorkspace",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+      "resourceName": "IotConnector",
+      "nameConstraints": {
+        "minLength": 3,
+        "maxLength": 24
+      },
+      "apiVersions": [
+        "2025-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.HealthcareApis.IotFhirDestination",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}",
+      "resourceType": "Microsoft.HealthcareApis/workspaces/iotconnectors/fhirdestinations",
+      "methods": [
+        {
+          "methodId": "Microsoft.HealthcareApis.IotFhirDestinations.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.IotFhirDestinations.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.IotFhirDestinations.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.IotFhirDestinations.listByIotConnector",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}",
+      "resourceName": "IotFhirDestination",
+      "nameConstraints": {
+        "minLength": 3,
+        "maxLength": 24
+      },
+      "apiVersions": [
+        "2025-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.HealthcareApis.PrivateEndpointConnectionDescription",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+      "resourceType": "Microsoft.HealthcareApis/workspaces/privateEndpointConnections",
+      "methods": [
+        {
+          "methodId": "Microsoft.HealthcareApis.WorkspacePrivateEndpointConnections.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.WorkspacePrivateEndpointConnections.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.WorkspacePrivateEndpointConnections.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.WorkspacePrivateEndpointConnections.listByWorkspace",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+      "resourceName": "WorkspacesPrivateEndpointConnections",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.HealthcareApis.PrivateLinkResourceDescription",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateLinkResources/{groupName}",
+      "resourceType": "Microsoft.HealthcareApis/workspaces/privateLinkResources",
+      "methods": [
+        {
+          "methodId": "Microsoft.HealthcareApis.WorkspacePrivateLinkResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateLinkResources/{groupName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateLinkResources/{groupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HealthcareApis.WorkspacePrivateLinkResources.listByWorkspace",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateLinkResources",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+      "resourceName": "WorkspacesPrivateLinkResources",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-04-01-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Microsoft.HealthcareApis.Operations.list",
+      "operationPath": "/providers/Microsoft.HealthcareApis/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.HealthcareApis.ServicesOperationGroup.checkNameAvailability",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/checkNameAvailability",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.HealthcareApis.OperationResultsOperationGroup.get",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/locations/{locationName}/operationresults/{operationResultId}",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.ContainerService.DeploymentSafeguard",
+      "resourceIdPattern": "/{resourceUri}/providers/Microsoft.ContainerService/deploymentSafeguards/default",
+      "resourceType": "Microsoft.ContainerService/deploymentSafeguards",
+      "methods": [
+        {
+          "methodId": "Microsoft.ContainerService.DeploymentSafeguards.create",
+          "kind": "Create",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ContainerService/deploymentSafeguards/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ContainerService/deploymentSafeguards/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.ContainerService.DeploymentSafeguards.get",
+          "kind": "Read",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ContainerService/deploymentSafeguards/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ContainerService/deploymentSafeguards/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.ContainerService.DeploymentSafeguards.delete",
+          "kind": "Delete",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ContainerService/deploymentSafeguards/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ContainerService/deploymentSafeguards/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.ContainerService.DeploymentSafeguards.list",
+          "kind": "List",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ContainerService/deploymentSafeguards",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      },
+      "singletonResourceName": "default",
+      "resourceName": "DeploymentSafeguard",
+      "nameConstraints": {
+        "pattern": "default"
+      },
+      "apiVersions": [
+        "2025-04-02-preview",
+        "2025-04-01",
+        "2025-05-02-preview",
+        "2025-07-01"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.ContainerService/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}

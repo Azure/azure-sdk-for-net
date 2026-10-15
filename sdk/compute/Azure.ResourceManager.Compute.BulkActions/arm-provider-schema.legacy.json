@@ -1,0 +1,554 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.Compute.LocationBasedBulkCreateCustom",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/bulkCreateCustom/{name}",
+      "resourceType": "Microsoft.Compute/locations/bulkCreateCustom",
+      "methods": [
+        {
+          "methodId": "Microsoft.Compute.BulkCreateCustom.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/bulkCreateCustom/{name}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/bulkCreateCustom/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.BulkCreateCustom.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/bulkCreateCustom/{name}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/bulkCreateCustom/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.BulkCreateCustom.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/bulkCreateCustom/{name}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/bulkCreateCustom/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.BulkCreateCustom.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/bulkCreateCustom",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.BulkCreateCustom.listBySubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/bulkCreateCustom",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.BulkCreateCustom.cancel",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/bulkCreateCustom/{name}/cancel",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/bulkCreateCustom/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "LocationBasedBulkCreateCustom",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2026-07-06-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Compute.LocationBasedLaunchBulkInstancesOperation",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations/{name}",
+      "resourceType": "Microsoft.Compute/locations/launchBulkInstancesOperations",
+      "methods": [
+        {
+          "methodId": "Microsoft.Compute.LaunchBulkInstancesOperation.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations/{name}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.LaunchBulkInstancesOperation.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations/{name}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.LaunchBulkInstancesOperation.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations/{name}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.LaunchBulkInstancesOperation.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.LaunchBulkInstancesOperation.listBySubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.LaunchBulkInstancesOperation.cancel",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations/{name}/cancel",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.LaunchBulkInstancesOperation.listVirtualMachines",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations/{name}/virtualMachines",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "LocationBasedLaunchBulkInstancesOperation",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2026-07-06-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Compute.ScheduledAction",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+      "resourceType": "Microsoft.Compute/scheduledActions",
+      "methods": [
+        {
+          "methodId": "Microsoft.Compute.ScheduledActions.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.ScheduledActions.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.ScheduledActions.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.ScheduledActions.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.ScheduledActions.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.ScheduledActions.listBySubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/scheduledActions",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.ScheduledActions.attachResources",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/attachResources",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.ScheduledActions.cancelNextOccurrence",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/cancelNextOccurrence",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.ScheduledActions.detachResources",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/detachResources",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.ScheduledActions.disable",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/disable",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.ScheduledActions.enable",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/enable",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.ScheduledActions.listResources",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/resources",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.ScheduledActions.patchResources",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/patchResources",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.ScheduledActions.triggerManualOccurrence",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/triggerManualOccurrence",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "ScheduledAction",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2026-07-06-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Compute.Occurrence",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}",
+      "resourceType": "Microsoft.Compute/scheduledActions/occurrences",
+      "methods": [
+        {
+          "methodId": "Microsoft.Compute.Occurrences.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.Occurrences.listByScheduledAction",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/occurrences",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.Occurrences.cancel",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}/cancel",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.Occurrences.delay",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}/delay",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.Occurrences.listResources",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}/resources",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}",
+      "resourceName": "ScheduledActionOccurrence",
+      "nameConstraints": {
+        "pattern": "[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}"
+      },
+      "apiVersions": [
+        "2026-07-06-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.Compute/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Compute.VirtualMachineBulkOperations.bulkDeallocate",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/virtualMachinesBulkDeallocate",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.Compute.VirtualMachineBulkOperations.bulkHibernate",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/virtualMachinesBulkHibernate",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.Compute.VirtualMachineBulkOperations.bulkStart",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/virtualMachinesBulkStart",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.Compute.VirtualMachineBulkOperations.bulkCreate",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/virtualMachinesBulkCreate",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.Compute.VirtualMachineBulkOperations.bulkVdiFlexCreate",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/virtualMachinesBulkVdiFlexCreate",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.Compute.VirtualMachineBulkOperations.bulkDelete",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/virtualMachinesBulkDelete",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.Compute.VirtualMachineBulkOperations.bulkGetOperationsStatus",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/virtualMachinesBulkGetOperationStatus",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.Compute.VirtualMachineBulkOperations.bulkCancel",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/virtualMachinesBulkCancel",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.Compute.VirtualMachineBulkOperations.bulkReimage",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/virtualMachinesBulkReimage",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.Compute.VirtualMachineBulkOperations.bulkListOperationErrors",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/listBulkOperationErrors",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.Compute.VirtualMachineBulkOperations.bulkAcknowledgeOperationErrors",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/acknowledgeBulkOperationErrors",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.Compute.LaunchBulkInstancesOperation.getOperationStatus",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations/asyncOperations/{asyncOperationId}",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.Compute.BulkCreateCustom.getAsyncOperationStatus",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/bulkCreateCustom/asyncOperations/{asyncOperationId}",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.Compute.ScheduledActionExtension.listByVms",
+      "operationPath": "/{resourceUri}/providers/Microsoft.Compute/associatedScheduledActions",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      }
+    },
+    {
+      "methodId": "Microsoft.Compute.ScheduledActionOperationStatus.get",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/scheduledActionsOperationStatuses/{operationId}",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.Compute.OccurrenceExtension.listOccurrenceByVms",
+      "operationPath": "/{resourceUri}/providers/Microsoft.Compute/associatedOccurrences",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      }
+    }
+  ]
+}

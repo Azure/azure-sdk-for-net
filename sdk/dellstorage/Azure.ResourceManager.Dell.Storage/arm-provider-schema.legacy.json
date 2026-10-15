@@ -1,0 +1,96 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "LiftrBase.Storage.FileSystemResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}",
+      "resourceType": "Dell.Storage/filesystems",
+      "methods": [
+        {
+          "methodId": "Dell.Storage.FileSystems.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Dell.Storage.FileSystems.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Dell.Storage.FileSystems.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Dell.Storage.FileSystems.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Dell.Storage.FileSystems.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Dell.Storage.FileSystems.listBySubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Dell.Storage/filesystems",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "DellFileSystem",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9_-]*$"
+      },
+      "apiVersions": [
+        "2025-03-21-preview",
+        "2025-03-21"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Dell.Storage/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}

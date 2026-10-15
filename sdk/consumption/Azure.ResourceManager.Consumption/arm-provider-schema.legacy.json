@@ -1,0 +1,363 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.Consumption.Budget",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}",
+      "resourceType": "Microsoft.Consumption/budgets",
+      "methods": [
+        {
+          "methodId": "Microsoft.Consumption.Budgets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Consumption.Budgets.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Consumption.Budgets.delete",
+          "kind": "Delete",
+          "operationPath": "/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Consumption.Budgets.list",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Consumption/budgets",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "ConsumptionBudget",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-08-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Consumption.CreditSummary",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/credits/balanceSummary",
+      "resourceType": "Microsoft.Consumption/credits",
+      "methods": [
+        {
+          "methodId": "Microsoft.Consumption.CreditSummaries.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/credits/balanceSummary",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/credits/balanceSummary",
+            "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}",
+        "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles"
+      },
+      "singletonResourceName": "balanceSummary",
+      "resourceName": "ConsumptionCreditSummary",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-08-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Consumption.PriceSheetResult",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default",
+      "resourceType": "Microsoft.Consumption/pricesheets",
+      "methods": [
+        {
+          "methodId": "Microsoft.Consumption.PriceSheet.getByBillingPeriod",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default",
+            "scopeResourceType": "Microsoft.Billing/billingPeriods"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}",
+        "scopeResourceType": "Microsoft.Billing/billingPeriods"
+      },
+      "singletonResourceName": "default",
+      "resourceName": "PriceSheet",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-08-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Consumption.PriceSheetResult",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default",
+      "resourceType": "Microsoft.Consumption/pricesheets",
+      "methods": [
+        {
+          "methodId": "Microsoft.Consumption.PriceSheetResults.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "singletonResourceName": "default",
+      "resourceName": "PriceSheetResult",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-08-01"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Legacy.Operations.list",
+      "operationPath": "/providers/Microsoft.Consumption/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.PriceSheetOperationGroup.downloadByBillingAccountPeriod",
+      "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/download",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}",
+        "scopeResourceType": "Microsoft.Billing/billingAccounts/billingPeriods"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.UsageDetailsOperationGroup.list",
+      "operationPath": "/{scope}/providers/Microsoft.Consumption/usageDetails",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.MarketplacesOperationGroup.list",
+      "operationPath": "/{scope}/providers/Microsoft.Consumption/marketplaces",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.TagsOperationGroup.get",
+      "operationPath": "/{scope}/providers/Microsoft.Consumption/tags",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.ChargesOperationGroup.list",
+      "operationPath": "/{scope}/providers/Microsoft.Consumption/charges",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.BalancesOperationGroup.getByBillingAccount",
+      "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/balances",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}",
+        "scopeResourceType": "Microsoft.Billing/billingAccounts"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.BalancesOperationGroup.getForBillingPeriodByBillingAccount",
+      "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}",
+        "scopeResourceType": "Microsoft.Billing/billingAccounts/billingPeriods"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.ReservationsSummariesOperationGroup.listByReservationOrder",
+      "operationPath": "/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationSummaries",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}",
+        "scopeResourceType": "Microsoft.Capacity/reservationorders"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.ReservationsSummariesOperationGroup.listByReservationOrderAndReservation",
+      "operationPath": "/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationSummaries",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}",
+        "scopeResourceType": "Microsoft.Capacity/reservationorders/reservations"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.ReservationsSummariesOperationGroup.list",
+      "operationPath": "/{resourceScope}/providers/Microsoft.Consumption/reservationSummaries",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceScope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.ReservationsDetailsOperationGroup.listByReservationOrder",
+      "operationPath": "/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationDetails",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}",
+        "scopeResourceType": "Microsoft.Capacity/reservationorders"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.ReservationsDetailsOperationGroup.listByReservationOrderAndReservation",
+      "operationPath": "/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationDetails",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}",
+        "scopeResourceType": "Microsoft.Capacity/reservationorders/reservations"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.ReservationsDetailsOperationGroup.list",
+      "operationPath": "/{resourceScope}/providers/Microsoft.Consumption/reservationDetails",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceScope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.ReservationRecommendationsOperationGroup.list",
+      "operationPath": "/{resourceScope}/providers/Microsoft.Consumption/reservationRecommendations",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceScope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.ReservationRecommendationDetailsOperationGroup.get",
+      "operationPath": "/{resourceScope}/providers/Microsoft.Consumption/reservationRecommendationDetails",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceScope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.ReservationTransactionsOperationGroup.list",
+      "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}",
+        "scopeResourceType": "Microsoft.Billing/billingAccounts"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.ReservationTransactionsOperationGroup.listByBillingProfile",
+      "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/reservationTransactions",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}",
+        "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.AggregatedCostOperationGroup.getByManagementGroup",
+      "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost",
+      "scope": {
+        "kind": "ManagementGroup",
+        "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
+        "scopeResourceType": "Microsoft.Management/managementGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.AggregatedCostOperationGroup.getForBillingPeriodByManagementGroup",
+      "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}",
+        "scopeResourceType": "Microsoft.Billing/billingPeriods"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.EventsOperationGroup.listByBillingProfile",
+      "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/events",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}",
+        "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.EventsOperationGroup.listByBillingAccount",
+      "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/events",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}",
+        "scopeResourceType": "Microsoft.Billing/billingAccounts"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.LotsOperationGroup.listByBillingProfile",
+      "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/lots",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}",
+        "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.LotsOperationGroup.listByBillingAccount",
+      "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/lots",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}",
+        "scopeResourceType": "Microsoft.Billing/billingAccounts"
+      }
+    },
+    {
+      "methodId": "Microsoft.Consumption.LotsOperationGroup.listByCustomer",
+      "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}/providers/Microsoft.Consumption/lots",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}",
+        "scopeResourceType": "Microsoft.Billing/billingAccounts/customers"
+      }
+    }
+  ]
+}

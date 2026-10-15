@@ -1,0 +1,76 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.PortalServices.CopilotSettingsResource",
+      "resourceIdPattern": "/providers/Microsoft.PortalServices/copilotSettings/default",
+      "resourceType": "Microsoft.PortalServices/copilotSettings",
+      "methods": [
+        {
+          "methodId": "Microsoft.PortalServices.CopilotSettings.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.PortalServices/copilotSettings/default",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.PortalServices/copilotSettings/default",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.PortalServices.CopilotSettings.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.PortalServices/copilotSettings/default",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.PortalServices/copilotSettings/default",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.PortalServices.CopilotSettings.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.PortalServices/copilotSettings/default",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.PortalServices/copilotSettings/default",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.PortalServices.CopilotSettings.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.PortalServices/copilotSettings/default",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.PortalServices/copilotSettings/default",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "singletonResourceName": "default",
+      "resourceName": "PortalServicesCopilotSetting",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2024-04-01-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.PortalServices/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}

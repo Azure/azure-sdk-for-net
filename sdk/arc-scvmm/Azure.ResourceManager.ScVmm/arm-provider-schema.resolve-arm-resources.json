@@ -1,0 +1,725 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.ScVmm.VirtualMachineInstance",
+      "resourceIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default",
+      "resourceType": "Microsoft.ScVmm/virtualMachineInstances",
+      "methods": [
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineInstances.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineInstances.get",
+          "kind": "Read",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineInstances.update",
+          "kind": "Update",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineInstances.delete",
+          "kind": "Delete",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineInstances.list",
+          "kind": "List",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineInstances.createCheckpoint",
+          "kind": "Action",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/createCheckpoint",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineInstances.deleteCheckpoint",
+          "kind": "Action",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/deleteCheckpoint",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineInstances.restart",
+          "kind": "Action",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/restart",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineInstances.restoreCheckpoint",
+          "kind": "Action",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/restoreCheckpoint",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineInstances.start",
+          "kind": "Action",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/start",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineInstances.stop",
+          "kind": "Action",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/stop",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      },
+      "singletonResourceName": "default",
+      "resourceName": "VirtualMachineInstance",
+      "nameConstraints": {
+        "pattern": "[a-zA-Z0-9-_\\.]",
+        "minLength": 1,
+        "maxLength": 54
+      },
+      "apiVersions": [
+        "2023-10-07",
+        "2024-06-01",
+        "2025-03-13"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ScVmm.GuestAgent",
+      "resourceIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/guestAgents/default",
+      "resourceType": "Microsoft.ScVmm/virtualMachineInstances/guestAgents",
+      "methods": [
+        {
+          "methodId": "Microsoft.ScVmm.GuestAgents.create",
+          "kind": "Create",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/guestAgents/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/guestAgents/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.GuestAgents.get",
+          "kind": "Read",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/guestAgents/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/guestAgents/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.GuestAgents.delete",
+          "kind": "Delete",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/guestAgents/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/guestAgents/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.GuestAgents.listByVirtualMachineInstance",
+          "kind": "List",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/guestAgents",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      },
+      "parentResourceId": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default",
+      "singletonResourceName": "default",
+      "resourceName": "GuestAgent",
+      "nameConstraints": {
+        "pattern": "[a-zA-Z0-9-_\\.]",
+        "minLength": 1,
+        "maxLength": 54
+      },
+      "apiVersions": [
+        "2023-10-07",
+        "2024-06-01",
+        "2025-03-13"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ScVmm.VmInstanceHybridIdentityMetadata",
+      "resourceIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/hybridIdentityMetadata/default",
+      "resourceType": "Microsoft.ScVmm/virtualMachineInstances/hybridIdentityMetadata",
+      "methods": [
+        {
+          "methodId": "Microsoft.ScVmm.VmInstanceHybridIdentityMetadatas.get",
+          "kind": "Read",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/hybridIdentityMetadata/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/hybridIdentityMetadata/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VmInstanceHybridIdentityMetadatas.listByVirtualMachineInstance",
+          "kind": "List",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default/hybridIdentityMetadata",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      },
+      "parentResourceId": "/{resourceUri}/providers/Microsoft.ScVmm/virtualMachineInstances/default",
+      "singletonResourceName": "default",
+      "resourceName": "VmInstanceHybridIdentityMetadata",
+      "nameConstraints": {
+        "pattern": "[a-zA-Z0-9-_\\.]",
+        "minLength": 1,
+        "maxLength": 54
+      },
+      "apiVersions": [
+        "2023-10-07",
+        "2024-06-01",
+        "2025-03-13"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ScVmm.AvailabilitySet",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetResourceName}",
+      "resourceType": "Microsoft.ScVmm/availabilitySets",
+      "methods": [
+        {
+          "methodId": "Microsoft.ScVmm.AvailabilitySets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetResourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetResourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.AvailabilitySets.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetResourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetResourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.AvailabilitySets.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetResourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetResourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.AvailabilitySets.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetResourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets/{availabilitySetResourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.AvailabilitySets.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/availabilitySets",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.AvailabilitySets.listBySubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/availabilitySets",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "AvailabilitySet",
+      "nameConstraints": {
+        "pattern": "[a-zA-Z0-9-_\\.]",
+        "minLength": 1,
+        "maxLength": 54
+      },
+      "apiVersions": [
+        "2023-10-07",
+        "2024-06-01",
+        "2025-03-13"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ScVmm.Cloud",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}",
+      "resourceType": "Microsoft.ScVmm/clouds",
+      "methods": [
+        {
+          "methodId": "Microsoft.ScVmm.Clouds.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.Clouds.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.Clouds.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.Clouds.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.Clouds.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.Clouds.listBySubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/clouds",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "Cloud",
+      "nameConstraints": {
+        "pattern": "[a-zA-Z0-9-_\\.]",
+        "minLength": 1,
+        "maxLength": 54
+      },
+      "apiVersions": [
+        "2023-10-07",
+        "2024-06-01",
+        "2025-03-13"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ScVmm.VirtualMachineTemplate",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}",
+      "resourceType": "Microsoft.ScVmm/virtualMachineTemplates",
+      "methods": [
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineTemplates.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineTemplates.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineTemplates.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineTemplates.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineTemplates.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualMachineTemplates.listBySubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachineTemplates",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "VirtualMachineTemplate",
+      "nameConstraints": {
+        "pattern": "[a-zA-Z0-9-_\\.]",
+        "minLength": 1,
+        "maxLength": 54
+      },
+      "apiVersions": [
+        "2023-10-07",
+        "2024-06-01",
+        "2025-03-13"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ScVmm.VirtualNetwork",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualNetworks/{virtualNetworkName}",
+      "resourceType": "Microsoft.ScVmm/virtualNetworks",
+      "methods": [
+        {
+          "methodId": "Microsoft.ScVmm.VirtualNetworks.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualNetworks/{virtualNetworkName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualNetworks/{virtualNetworkName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualNetworks.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualNetworks/{virtualNetworkName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualNetworks/{virtualNetworkName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualNetworks.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualNetworks/{virtualNetworkName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualNetworks/{virtualNetworkName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualNetworks.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualNetworks/{virtualNetworkName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualNetworks/{virtualNetworkName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualNetworks.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualNetworks",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VirtualNetworks.listBySubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualNetworks",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "VirtualNetwork",
+      "nameConstraints": {
+        "pattern": "[a-zA-Z0-9-_\\.]",
+        "minLength": 1,
+        "maxLength": 54
+      },
+      "apiVersions": [
+        "2023-10-07",
+        "2024-06-01",
+        "2025-03-13"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ScVmm.VmmServer",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}",
+      "resourceType": "Microsoft.ScVmm/vmmServers",
+      "methods": [
+        {
+          "methodId": "Microsoft.ScVmm.VmmServers.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VmmServers.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VmmServers.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VmmServers.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VmmServers.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.VmmServers.listBySubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/vmmServers",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "VmmServer",
+      "nameConstraints": {
+        "pattern": "[a-zA-Z0-9-_\\.]",
+        "minLength": 1,
+        "maxLength": 54
+      },
+      "apiVersions": [
+        "2023-10-07",
+        "2024-06-01",
+        "2025-03-13"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ScVmm.InventoryItem",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}",
+      "resourceType": "Microsoft.ScVmm/vmmServers/inventoryItems",
+      "methods": [
+        {
+          "methodId": "Microsoft.ScVmm.InventoryItems.create",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.InventoryItems.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.InventoryItems.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ScVmm.InventoryItems.listByVmmServer",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}",
+      "resourceName": "InventoryItem",
+      "nameConstraints": {
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "apiVersions": [
+        "2023-10-07",
+        "2024-06-01",
+        "2025-03-13"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.ScVmm/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}
