@@ -4,11 +4,17 @@
 
 ### Features Added
 
+- Added `ProjectsRealtimeSessionClientOptions.Transport` to select a Voice Agent's WebSocket or WebRTC signaling transport.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+### Sample Updates
+
+- Added runnable Voice Agent WebSocket transport samples for stored text conversations and streamed PCM audio with actual input and output byte counts.
 
 ## 3.0.0-beta.4 (2026-10-12)
 
