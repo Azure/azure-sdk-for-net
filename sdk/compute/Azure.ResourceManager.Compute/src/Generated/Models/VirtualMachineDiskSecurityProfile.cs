@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -37,5 +38,18 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies the customer managed disk encryption set resource id for the managed disk that is used for Customer Managed Key encrypted ConfidentialVM OS Disk and VMGuest blob. </summary>
         internal DiskEncryptionSetParameters DiskEncryptionSet { get; set; }
+
+        /// <summary> Resource Id. </summary>
+        public virtual ResourceIdentifier DiskEncryptionSetId
+        {
+            get
+            {
+                return DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
+            }
+            set
+            {
+                DiskEncryptionSet = new DiskEncryptionSetParameters(value);
+            }
+        }
     }
 }

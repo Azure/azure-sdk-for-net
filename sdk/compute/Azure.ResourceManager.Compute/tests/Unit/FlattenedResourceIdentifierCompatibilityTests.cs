@@ -14,12 +14,14 @@ namespace Azure.ResourceManager.Compute.Tests.Unit
     public class FlattenedResourceIdentifierCompatibilityTests
     {
         [Test]
-        public void KeyVaultSourceVaultIdRemainsNonVirtual()
+        public void KeyVaultSourceVaultIdRetainsGaAccessors()
         {
             var property = typeof(KeyVaultKeyReference).GetProperty(nameof(KeyVaultKeyReference.SourceVaultId));
 
-            Assert.IsFalse(property.GetMethod.IsVirtual);
-            Assert.IsFalse(property.SetMethod.IsVirtual);
+            Assert.IsNotNull(property);
+            Assert.AreEqual(typeof(ResourceIdentifier), property.PropertyType);
+            Assert.IsTrue(property.GetMethod.IsPublic);
+            Assert.IsTrue(property.SetMethod.IsPublic);
         }
 
         [TestCase("J")]
@@ -45,59 +47,63 @@ namespace Azure.ResourceManager.Compute.Tests.Unit
 
         public static IEnumerable<TestCaseData> FlattenedIdProperties()
         {
-            yield return new TestCaseData(typeof(AvailabilitySetData), nameof(AvailabilitySetData.ProximityPlacementGroupId));
-            yield return new TestCaseData(typeof(DiskImageData), nameof(DiskImageData.SourceVirtualMachineId));
-            yield return new TestCaseData(typeof(AvailabilitySetPatch), nameof(AvailabilitySetPatch.ProximityPlacementGroupId));
-            yield return new TestCaseData(typeof(CapacityReservationProfile), nameof(CapacityReservationProfile.CapacityReservationGroupId));
-            yield return new TestCaseData(typeof(DataDisksToAttach), nameof(DataDisksToAttach.DiskEncryptionSetId));
-            yield return new TestCaseData(typeof(DefaultVirtualMachineScaleSetInfo), nameof(DefaultVirtualMachineScaleSetInfo.DefaultVirtualMachineScaleSetId));
-            yield return new TestCaseData(typeof(DiskImagePatch), nameof(DiskImagePatch.SourceVirtualMachineId));
-            yield return new TestCaseData(typeof(ImageDisk), nameof(ImageDisk.SnapshotId));
-            yield return new TestCaseData(typeof(ImageDisk), nameof(ImageDisk.ManagedDiskId));
-            yield return new TestCaseData(typeof(ImageDisk), nameof(ImageDisk.DiskEncryptionSetId));
-            yield return new TestCaseData(typeof(InterconnectGroupProfile), nameof(InterconnectGroupProfile.InterconnectGroupId));
-            yield return new TestCaseData(typeof(KeyVaultKeyReference), nameof(KeyVaultKeyReference.SourceVaultId));
-            yield return new TestCaseData(typeof(KeyVaultSecretReference), nameof(KeyVaultSecretReference.SourceVaultId));
-            yield return new TestCaseData(typeof(MigrateToVirtualMachineScaleSetInput), nameof(MigrateToVirtualMachineScaleSetInput.VirtualMachineScaleSetFlexibleId));
-            yield return new TestCaseData(typeof(RestorePointEncryption), nameof(RestorePointEncryption.DiskEncryptionSetId));
-            yield return new TestCaseData(typeof(VaultSecretGroup), nameof(VaultSecretGroup.SourceVaultId));
-            yield return new TestCaseData(typeof(VirtualMachineDiskSecurityProfile), nameof(VirtualMachineDiskSecurityProfile.DiskEncryptionSetId));
-            yield return new TestCaseData(typeof(VirtualMachineManagedDisk), nameof(VirtualMachineManagedDisk.DiskEncryptionSetId));
-            yield return new TestCaseData(typeof(VirtualMachineNetworkInterfaceConfiguration), nameof(VirtualMachineNetworkInterfaceConfiguration.NetworkSecurityGroupId));
-            yield return new TestCaseData(typeof(VirtualMachineNetworkInterfaceConfiguration), nameof(VirtualMachineNetworkInterfaceConfiguration.DscpConfigurationId));
-            yield return new TestCaseData(typeof(VirtualMachineNetworkInterfaceIPConfiguration), nameof(VirtualMachineNetworkInterfaceIPConfiguration.SubnetId));
-            yield return new TestCaseData(typeof(VirtualMachinePatch), nameof(VirtualMachinePatch.AvailabilitySetId));
-            yield return new TestCaseData(typeof(VirtualMachinePatch), nameof(VirtualMachinePatch.VirtualMachineScaleSetId));
-            yield return new TestCaseData(typeof(VirtualMachinePatch), nameof(VirtualMachinePatch.ProximityPlacementGroupId));
-            yield return new TestCaseData(typeof(VirtualMachinePatch), nameof(VirtualMachinePatch.HostId));
-            yield return new TestCaseData(typeof(VirtualMachinePatch), nameof(VirtualMachinePatch.HostGroupId));
-            yield return new TestCaseData(typeof(VirtualMachinePublicIPAddressConfiguration), nameof(VirtualMachinePublicIPAddressConfiguration.PublicIPPrefixId));
-            yield return new TestCaseData(typeof(VirtualMachineScaleSetManagedDisk), nameof(VirtualMachineScaleSetManagedDisk.DiskEncryptionSetId));
-            yield return new TestCaseData(typeof(VirtualMachineScaleSetMigrationInfo), nameof(VirtualMachineScaleSetMigrationInfo.MigrateToVirtualMachineScaleSetId));
-            yield return new TestCaseData(typeof(VirtualMachineScaleSetNetworkConfiguration), nameof(VirtualMachineScaleSetNetworkConfiguration.NetworkSecurityGroupId));
-            yield return new TestCaseData(typeof(VirtualMachineScaleSetPatchProperties), nameof(VirtualMachineScaleSetPatchProperties.ProximityPlacementGroupId));
-            yield return new TestCaseData(typeof(VirtualMachineScaleSetProperties), nameof(VirtualMachineScaleSetProperties.ProximityPlacementGroupId));
-            yield return new TestCaseData(typeof(VirtualMachineScaleSetProperties), nameof(VirtualMachineScaleSetProperties.HostGroupId));
-            yield return new TestCaseData(typeof(VirtualMachineScaleSetPublicIPAddressConfiguration), nameof(VirtualMachineScaleSetPublicIPAddressConfiguration.PublicIPPrefixId));
-            yield return new TestCaseData(typeof(VirtualMachineScaleSetUpdateNetworkConfiguration), nameof(VirtualMachineScaleSetUpdateNetworkConfiguration.NetworkSecurityGroupId));
-            yield return new TestCaseData(typeof(VirtualMachineScaleSetUpdatePublicIPAddressConfiguration), nameof(VirtualMachineScaleSetUpdatePublicIPAddressConfiguration.PublicIPPrefixId));
-            yield return new TestCaseData(typeof(VirtualMachineScaleSetVmProperties), nameof(VirtualMachineScaleSetVmProperties.AvailabilitySetId));
-            yield return new TestCaseData(typeof(VirtualMachineData), nameof(VirtualMachineData.AvailabilitySetId));
-            yield return new TestCaseData(typeof(VirtualMachineData), nameof(VirtualMachineData.VirtualMachineScaleSetId));
-            yield return new TestCaseData(typeof(VirtualMachineData), nameof(VirtualMachineData.ProximityPlacementGroupId));
-            yield return new TestCaseData(typeof(VirtualMachineData), nameof(VirtualMachineData.HostId));
-            yield return new TestCaseData(typeof(VirtualMachineData), nameof(VirtualMachineData.HostGroupId));
+            yield return new TestCaseData(typeof(AvailabilitySetData), nameof(AvailabilitySetData.ProximityPlacementGroupId), true);
+            yield return new TestCaseData(typeof(DiskImageData), nameof(DiskImageData.SourceVirtualMachineId), true);
+            yield return new TestCaseData(typeof(AvailabilitySetPatch), nameof(AvailabilitySetPatch.ProximityPlacementGroupId), true);
+            yield return new TestCaseData(typeof(CapacityReservationProfile), nameof(CapacityReservationProfile.CapacityReservationGroupId), true);
+            yield return new TestCaseData(typeof(DataDisksToAttach), nameof(DataDisksToAttach.DiskEncryptionSetId), true);
+            yield return new TestCaseData(typeof(DefaultVirtualMachineScaleSetInfo), nameof(DefaultVirtualMachineScaleSetInfo.DefaultVirtualMachineScaleSetId), false);
+            yield return new TestCaseData(typeof(DiskImagePatch), nameof(DiskImagePatch.SourceVirtualMachineId), true);
+            yield return new TestCaseData(typeof(ImageDisk), nameof(ImageDisk.SnapshotId), true);
+            yield return new TestCaseData(typeof(ImageDisk), nameof(ImageDisk.ManagedDiskId), true);
+            yield return new TestCaseData(typeof(ImageDisk), nameof(ImageDisk.DiskEncryptionSetId), true);
+            yield return new TestCaseData(typeof(InterconnectGroupProfile), nameof(InterconnectGroupProfile.InterconnectGroupId), true);
+            yield return new TestCaseData(typeof(KeyVaultKeyReference), nameof(KeyVaultKeyReference.SourceVaultId), true);
+            yield return new TestCaseData(typeof(KeyVaultSecretReference), nameof(KeyVaultSecretReference.SourceVaultId), true);
+            yield return new TestCaseData(typeof(MigrateToVirtualMachineScaleSetInput), nameof(MigrateToVirtualMachineScaleSetInput.VirtualMachineScaleSetFlexibleId), false);
+            yield return new TestCaseData(typeof(RestorePointEncryption), nameof(RestorePointEncryption.DiskEncryptionSetId), true);
+            yield return new TestCaseData(typeof(VaultSecretGroup), nameof(VaultSecretGroup.SourceVaultId), true);
+            yield return new TestCaseData(typeof(VirtualMachineDiskSecurityProfile), nameof(VirtualMachineDiskSecurityProfile.DiskEncryptionSetId), true);
+            yield return new TestCaseData(typeof(VirtualMachineManagedDisk), nameof(VirtualMachineManagedDisk.DiskEncryptionSetId), true);
+            yield return new TestCaseData(typeof(VirtualMachineNetworkInterfaceConfiguration), nameof(VirtualMachineNetworkInterfaceConfiguration.NetworkSecurityGroupId), true);
+            yield return new TestCaseData(typeof(VirtualMachineNetworkInterfaceConfiguration), nameof(VirtualMachineNetworkInterfaceConfiguration.DscpConfigurationId), true);
+            yield return new TestCaseData(typeof(VirtualMachineNetworkInterfaceIPConfiguration), nameof(VirtualMachineNetworkInterfaceIPConfiguration.SubnetId), true);
+            yield return new TestCaseData(typeof(VirtualMachinePatch), nameof(VirtualMachinePatch.AvailabilitySetId), true);
+            yield return new TestCaseData(typeof(VirtualMachinePatch), nameof(VirtualMachinePatch.VirtualMachineScaleSetId), true);
+            yield return new TestCaseData(typeof(VirtualMachinePatch), nameof(VirtualMachinePatch.ProximityPlacementGroupId), true);
+            yield return new TestCaseData(typeof(VirtualMachinePatch), nameof(VirtualMachinePatch.HostId), true);
+            yield return new TestCaseData(typeof(VirtualMachinePatch), nameof(VirtualMachinePatch.HostGroupId), true);
+            yield return new TestCaseData(typeof(VirtualMachinePublicIPAddressConfiguration), nameof(VirtualMachinePublicIPAddressConfiguration.PublicIPPrefixId), true);
+            yield return new TestCaseData(typeof(VirtualMachineScaleSetManagedDisk), nameof(VirtualMachineScaleSetManagedDisk.DiskEncryptionSetId), true);
+            yield return new TestCaseData(typeof(VirtualMachineScaleSetMigrationInfo), nameof(VirtualMachineScaleSetMigrationInfo.MigrateToVirtualMachineScaleSetId), false);
+            yield return new TestCaseData(typeof(VirtualMachineScaleSetNetworkConfiguration), nameof(VirtualMachineScaleSetNetworkConfiguration.NetworkSecurityGroupId), true);
+            yield return new TestCaseData(typeof(VirtualMachineScaleSetPatchProperties), nameof(VirtualMachineScaleSetPatchProperties.ProximityPlacementGroupId), true);
+            yield return new TestCaseData(typeof(VirtualMachineScaleSetProperties), nameof(VirtualMachineScaleSetProperties.ProximityPlacementGroupId), true);
+            yield return new TestCaseData(typeof(VirtualMachineScaleSetProperties), nameof(VirtualMachineScaleSetProperties.HostGroupId), true);
+            yield return new TestCaseData(typeof(VirtualMachineScaleSetPublicIPAddressConfiguration), nameof(VirtualMachineScaleSetPublicIPAddressConfiguration.PublicIPPrefixId), true);
+            yield return new TestCaseData(typeof(VirtualMachineScaleSetUpdateNetworkConfiguration), nameof(VirtualMachineScaleSetUpdateNetworkConfiguration.NetworkSecurityGroupId), true);
+            yield return new TestCaseData(typeof(VirtualMachineScaleSetUpdatePublicIPAddressConfiguration), nameof(VirtualMachineScaleSetUpdatePublicIPAddressConfiguration.PublicIPPrefixId), true);
+            yield return new TestCaseData(typeof(VirtualMachineScaleSetVmProperties), nameof(VirtualMachineScaleSetVmProperties.AvailabilitySetId), true);
+            yield return new TestCaseData(typeof(VirtualMachineData), nameof(VirtualMachineData.AvailabilitySetId), true);
+            yield return new TestCaseData(typeof(VirtualMachineData), nameof(VirtualMachineData.VirtualMachineScaleSetId), true);
+            yield return new TestCaseData(typeof(VirtualMachineData), nameof(VirtualMachineData.ProximityPlacementGroupId), true);
+            yield return new TestCaseData(typeof(VirtualMachineData), nameof(VirtualMachineData.HostId), true);
+            yield return new TestCaseData(typeof(VirtualMachineData), nameof(VirtualMachineData.HostGroupId), true);
         }
 
         [TestCaseSource(nameof(FlattenedIdProperties))]
-        public void FlattenedIdRemainsNonVirtual(Type type, string name)
+        public void FlattenedIdRetainsGaAccessors(Type type, string name, bool hadPublicSetter)
         {
             var property = type.GetProperty(name);
 
-            Assert.IsFalse(property.GetMethod.IsVirtual);
-            if (property.SetMethod != null)
+            // Adding virtual is compatible; preserve the public accessors shipped in GA.
+            Assert.IsNotNull(property);
+            Assert.AreEqual(typeof(ResourceIdentifier), property.PropertyType);
+            Assert.IsTrue(property.GetMethod.IsPublic);
+            if (hadPublicSetter)
             {
-                Assert.IsFalse(property.SetMethod.IsVirtual);
+                Assert.IsNotNull(property.SetMethod);
+                Assert.IsTrue(property.SetMethod.IsPublic);
             }
         }
 

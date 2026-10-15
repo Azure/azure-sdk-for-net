@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -131,6 +132,23 @@ namespace Azure.ResourceManager.Compute.Models
                     Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties();
                 }
                 return Properties.LoadBalancerBackendAddressPoolResources;
+            }
+        }
+
+        /// <summary> Resource Id. </summary>
+        public virtual ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties();
+                }
+                Properties.SubnetId = value;
             }
         }
     }

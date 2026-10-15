@@ -161,6 +161,19 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
+        /// <summary> Resource Id. </summary>
+        public virtual ResourceIdentifier AvailabilitySetId
+        {
+            get
+            {
+                return AvailabilitySet is null ? default : AvailabilitySet.Id;
+            }
+            set
+            {
+                AvailabilitySet = new ComputeWriteableSubResourceData(value);
+            }
+        }
+
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
         public ResourceIdentifier InterconnectBlockId
         {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -47,6 +48,19 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies additional properties for the managed disk that can be set at the time of implicit creation of the disk. This property is not captured for Restore Points. </summary>
         internal AdditionalDiskProperties AdditionalDiskProperties { get; set; }
+
+        /// <summary> Resource Id. </summary>
+        public virtual ResourceIdentifier DiskEncryptionSetId
+        {
+            get
+            {
+                return DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
+            }
+            set
+            {
+                DiskEncryptionSet = new DiskEncryptionSetParameters(value);
+            }
+        }
 
         /// <summary> Specifies the managed disk properties that can be set at the time of implicit creation of the disk. </summary>
         public VirtualMachineDiskProperties ManagedDiskProperties

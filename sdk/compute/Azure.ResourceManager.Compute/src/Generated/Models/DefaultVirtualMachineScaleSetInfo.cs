@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -37,5 +38,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The default Virtual Machine ScaleSet Uri that the Availability Set will be moved to upon triggering a seamless migration via the ConvertToVirtualMachineScaleSet API. </summary>
         internal ComputeWriteableSubResourceData DefaultVirtualMachineScaleSet { get; }
+
+        /// <summary> Resource Id. </summary>
+        public virtual ResourceIdentifier DefaultVirtualMachineScaleSetId
+        {
+            get
+            {
+                return DefaultVirtualMachineScaleSet is null ? default : DefaultVirtualMachineScaleSet.Id;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -62,5 +63,44 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies the customer managed disk encryption set resource id for the managed image disk. </summary>
         internal DiskEncryptionSetParameters DiskEncryptionSet { get; set; }
+
+        /// <summary> Resource Id. </summary>
+        public virtual ResourceIdentifier SnapshotId
+        {
+            get
+            {
+                return Snapshot is null ? default : Snapshot.Id;
+            }
+            set
+            {
+                Snapshot = new ComputeWriteableSubResourceData(value);
+            }
+        }
+
+        /// <summary> Resource Id. </summary>
+        public virtual ResourceIdentifier ManagedDiskId
+        {
+            get
+            {
+                return ManagedDisk is null ? default : ManagedDisk.Id;
+            }
+            set
+            {
+                ManagedDisk = new ComputeWriteableSubResourceData(value);
+            }
+        }
+
+        /// <summary> Resource Id. </summary>
+        public virtual ResourceIdentifier DiskEncryptionSetId
+        {
+            get
+            {
+                return DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
+            }
+            set
+            {
+                DiskEncryptionSet = new DiskEncryptionSetParameters(value);
+            }
+        }
     }
 }

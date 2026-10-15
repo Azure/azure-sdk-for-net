@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -162,6 +163,32 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+
+        /// <summary> Resource Id. </summary>
+        public virtual ResourceIdentifier ProximityPlacementGroupId
+        {
+            get
+            {
+                return ProximityPlacementGroup is null ? default : ProximityPlacementGroup.Id;
+            }
+            set
+            {
+                ProximityPlacementGroup = new ComputeWriteableSubResourceData(value);
+            }
+        }
+
+        /// <summary> Resource Id. </summary>
+        public virtual ResourceIdentifier HostGroupId
+        {
+            get
+            {
+                return HostGroup is null ? default : HostGroup.Id;
+            }
+            set
+            {
+                HostGroup = new ComputeWriteableSubResourceData(value);
+            }
+        }
 
         /// <summary> Specifies the lifecycle hooks configured for the virtual machine scale set. </summary>
         public IList<VirtualMachineScaleSetLifecycleHook> LifecycleHooks

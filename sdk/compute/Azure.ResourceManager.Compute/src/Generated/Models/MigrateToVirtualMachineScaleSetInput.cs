@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -33,5 +34,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies information about the Virtual Machine Scale Set that the Availability Set should be migrated to. Minimum api‐version: 2024‐11‐01. </summary>
         internal ComputeWriteableSubResourceData VirtualMachineScaleSetFlexible { get; }
+
+        /// <summary> Resource Id. </summary>
+        public virtual ResourceIdentifier VirtualMachineScaleSetFlexibleId
+        {
+            get
+            {
+                return VirtualMachineScaleSetFlexible.Id;
+            }
+        }
     }
 }

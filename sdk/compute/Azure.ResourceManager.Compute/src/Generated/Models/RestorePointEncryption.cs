@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -37,5 +38,18 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The type of key used to encrypt the data of the disk restore point. </summary>
         public RestorePointEncryptionType? EncryptionType { get; set; }
+
+        /// <summary> Resource Id. </summary>
+        public virtual ResourceIdentifier DiskEncryptionSetId
+        {
+            get
+            {
+                return DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
+            }
+            set
+            {
+                DiskEncryptionSet = new DiskEncryptionSetParameters(value);
+            }
+        }
     }
 }
