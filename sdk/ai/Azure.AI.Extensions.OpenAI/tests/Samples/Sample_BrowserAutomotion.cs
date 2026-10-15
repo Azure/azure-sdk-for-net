@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
-using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
@@ -16,8 +14,11 @@ namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
 public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
 {
+    private AIProjectClient _projectClient;
+    private ProjectsAgentVersion _agentVersion;
+
     #region Snippet:Sample_ParseResponse_BrowserAutomotion
-    private static bool ParseResponse(StreamingResponseUpdate streamResponse)
+    private static void ParseResponse(StreamingResponseUpdate streamResponse)
     {
         if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
         {
@@ -26,26 +27,6 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
         {
             Console.WriteLine($"Response done with full message: {textDoneUpdate.Text}");
-        }
-        else if (streamResponse is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
-        {
-            // GA browser actions use remote function items, which are not strongly typed by this SDK.
-            string kind = itemDoneUpdate.Item.Kind.ToString();
-            if (kind == "remote_function_call" || kind == "remote_function_call_output")
-            {
-                JsonNode item = JsonNode.Parse(ModelReaderWriter.Write(itemDoneUpdate.Item).ToString());
-                string callId = item["call_id"].GetValue<string>();
-                if (kind == "remote_function_call")
-                {
-                    JsonObject arguments = JsonNode.Parse(item["arguments"].GetValue<string>()).AsObject();
-                    arguments.Remove("browserSessionId");
-                    Console.WriteLine($"Browser action: {item["name"].GetValue<string>()}, call ID: {callId}, arguments: {arguments.ToJsonString()}");
-                }
-                else
-                {
-                    Console.WriteLine($"Browser action completed: {callId}");
-                }
-            }
         }
         else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
         {
@@ -59,7 +40,6 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         {
             throw new InvalidOperationException($"The response is incomplete: {incompleteUpdate.Response.Id}");
         }
-        return streamResponse is StreamingResponseCompletedUpdate;
     }
     #endregion
 
@@ -72,11 +52,11 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_MCP_CONNECTION_NAME");
+        var playwrightConnectionId = System.Environment.GetEnvironmentVariable("BROWSER_AUTOMATION_PROJECT_CONNECTION_ID");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        var playwrightConnectionName = TestEnvironment.PLAYWRIGHT_MCP_CONNECTION_NAME;
+        var playwrightConnectionId = TestEnvironment.BROWSER_AUTOMATION_PROJECT_CONNECTION_ID;
 #endif
         AIProjectClientOptions options = new()
         {
@@ -88,7 +68,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgent_BrowserAutomotion_Async
         BrowserAutomationTool playwrightTool = new(
             new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionOptions(playwrightConnectionName)
+                new BrowserAutomationToolConnectionOptions(playwrightConnectionId)
             ));
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -102,37 +82,27 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
+        _projectClient = projectClient;
+        _agentVersion = agentVersion;
         #region Snippet:Sample_CreateResponse_BrowserAutomotion_Async
-        try
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
+            new AgentReference(agentVersion.Name, agentVersion.Version));
+        CreateResponseOptions responseOptions = new()
         {
-            ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
-                new AgentReference(agentVersion.Name, agentVersion.Version));
-            CreateResponseOptions responseOptions = new()
+            StreamingEnabled = true,
+            InputItems =
             {
-                StreamingEnabled = true,
-                InputItems =
-                {
-                    ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://example.com. " +
-                        "Read the page and report its title and the visible description paragraph. " +
-                        "Base your answer on the browser results, not on prior knowledge.")
-                }
-            };
-            bool responseCompleted = false;
-            await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
-            {
-                responseCompleted |= ParseResponse(update);
+                ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
+                    "To do that, go to the website finance.yahoo.com.\n" +
+                    "At the top of the page, you will find a search bar.\n" +
+                    "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
+                    "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
+                    "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
             }
-            if (!responseCompleted)
-            {
-                throw new InvalidOperationException("The stream ended before the response completed.");
-            }
-        }
-        #endregion
-
-        #region Snippet:Sample_Cleanup_BrowserAutomotion_Async
-        finally
+        };
+        await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
         {
-            await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+            ParseResponse(update);
         }
         #endregion
     }
@@ -145,11 +115,11 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_MCP_CONNECTION_NAME");
+        var playwrightConnectionId = System.Environment.GetEnvironmentVariable("BROWSER_AUTOMATION_PROJECT_CONNECTION_ID");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        var playwrightConnectionName = TestEnvironment.PLAYWRIGHT_MCP_CONNECTION_NAME;
+        var playwrightConnectionId = TestEnvironment.BROWSER_AUTOMATION_PROJECT_CONNECTION_ID;
 #endif
         AIProjectClientOptions options = new()
         {
@@ -159,7 +129,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
         BrowserAutomationTool playwrightTool = new(
             new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionOptions(playwrightConnectionName)
+                new BrowserAutomationToolConnectionOptions(playwrightConnectionId)
             ));
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -173,39 +143,41 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
+        _projectClient = projectClient;
+        _agentVersion = agentVersion;
         #region Snippet:Sample_CreateResponse_BrowserAutomotion_Sync
-        try
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
+            new AgentReference(agentVersion.Name, agentVersion.Version));
+        CreateResponseOptions responseOptions = new()
         {
-            ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
-                new AgentReference(agentVersion.Name, agentVersion.Version));
-            CreateResponseOptions responseOptions = new()
+            StreamingEnabled = true,
+            InputItems =
             {
-                StreamingEnabled = true,
-                InputItems =
-                {
-                    ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://example.com. " +
-                        "Read the page and report its title and the visible description paragraph. " +
-                        "Base your answer on the browser results, not on prior knowledge.")
-                }
-            };
-            bool responseCompleted = false;
-            foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(responseOptions))
-            {
-                responseCompleted |= ParseResponse(update);
+                ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
+                    "To do that, go to the website finance.yahoo.com.\n" +
+                    "At the top of the page, you will find a search bar.\n" +
+                    "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
+                    "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
+                    "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
             }
-            if (!responseCompleted)
-            {
-                throw new InvalidOperationException("The stream ended before the response completed.");
-            }
+        };
+        foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(responseOptions))
+        {
+            ParseResponse(update);
         }
         #endregion
+    }
 
-        #region Snippet:Sample_Cleanup_BrowserAutomotion_Sync
-        finally
+    [TearDown]
+    public override void Cleanup()
+    {
+        if (_agentVersion is not null)
         {
-            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+            _projectClient.AgentAdministrationClient.DeleteAgentVersion(
+                agentName: _agentVersion.Name, agentVersion: _agentVersion.Version);
+            _agentVersion = null;
         }
-        #endregion
+        base.Cleanup();
     }
 
     public Sample_BrowserAutomotion(bool isAsync) : base(isAsync)
