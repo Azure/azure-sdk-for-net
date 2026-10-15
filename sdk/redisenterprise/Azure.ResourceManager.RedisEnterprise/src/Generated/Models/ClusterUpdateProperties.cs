@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     internal partial class ClusterUpdateProperties : ClusterProperties
     {
         private RedisEnterprisePublicNetworkAccess? _publicNetworkAccess;
-        internal bool _publicNetworkAccessIsDefined;
+        private bool _publicNetworkAccessIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ClusterUpdateProperties"/>. </summary>
         public ClusterUpdateProperties()
