@@ -94,6 +94,16 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteObjectValue(ProvisioningStatus, options);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(OperationDetails))
+            {
+                writer.WritePropertyName("operationDetails"u8);
+                writer.WriteStartArray();
+                foreach (OperationStepResult item in OperationDetails)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -140,6 +150,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             string errorMessage = default;
             HciVmPowerState? powerState = default;
             HciVmInstanceProvisioningStatus provisioningStatus = default;
+            IReadOnlyList<OperationStepResult> operationDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -171,12 +182,32 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     provisioningStatus = HciVmInstanceProvisioningStatus.DeserializeHciVmInstanceProvisioningStatus(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("operationDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<OperationStepResult> array = new List<OperationStepResult>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(OperationStepResult.DeserializeOperationStepResult(item, options));
+                    }
+                    operationDetails = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HciVmInstanceStatus(errorCode, errorMessage, powerState, provisioningStatus, additionalBinaryDataProperties);
+            return new HciVmInstanceStatus(
+                errorCode,
+                errorMessage,
+                powerState,
+                provisioningStatus,
+                operationDetails ?? new ChangeTrackingList<OperationStepResult>(),
+                additionalBinaryDataProperties);
         }
     }
 }
