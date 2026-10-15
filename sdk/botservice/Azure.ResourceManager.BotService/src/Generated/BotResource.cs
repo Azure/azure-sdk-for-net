@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.BotService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BotResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string botApiVersion);
             _botsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ResourceType.Namespace, Diagnostics);
-            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, botApiVersion ?? "2023-09-15-preview");
+            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.BotService/botServices", out string botsApiVersionOverride) ? botsApiVersionOverride : "2023-09-15-preview");
             ValidateResourceId(id);
         }
 
@@ -521,7 +520,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new BotsGetPrivateLinkResourcesByBotResourceAsyncCollectionResultOfT(
+            return new BotServicePrivateLinkResourceDataAsyncCollectionResultOfT(
                 _botsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -559,7 +558,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new BotsGetPrivateLinkResourcesByBotResourceCollectionResultOfT(
+            return new BotServicePrivateLinkResourceDataCollectionResultOfT(
                 _botsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

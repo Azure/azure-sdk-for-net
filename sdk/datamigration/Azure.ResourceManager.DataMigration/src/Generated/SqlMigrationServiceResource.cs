@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlMigrationServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string sqlMigrationServiceApiVersion);
             _sqlMigrationServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", ResourceType.Namespace, Diagnostics);
-            _sqlMigrationServicesRestClient = new SqlMigrationServices(_sqlMigrationServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlMigrationServiceApiVersion ?? "2025-09-01-preview");
+            _sqlMigrationServicesRestClient = new SqlMigrationServices(_sqlMigrationServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DataMigration/sqlMigrationServices", out string sqlMigrationServicesApiVersionOverride) ? sqlMigrationServicesApiVersionOverride : "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -635,7 +634,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new SqlMigrationServicesGetMigrationsAsyncCollectionResultOfT(
+            return new DatabaseMigrationAsyncCollectionResultOfT(
                 _sqlMigrationServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -673,7 +672,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new SqlMigrationServicesGetMigrationsCollectionResultOfT(
+            return new DatabaseMigrationCollectionResultOfT(
                 _sqlMigrationServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

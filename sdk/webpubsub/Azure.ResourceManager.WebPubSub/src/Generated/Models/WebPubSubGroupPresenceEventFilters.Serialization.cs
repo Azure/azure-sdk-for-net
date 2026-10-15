@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WebPubSubGroupPresenceEventFilters(eventNames, groupFilters ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new WebPubSubGroupPresenceEventFilters(eventNames ?? new ChangeTrackingList<WebPubSubGroupPresenceEventName>(), groupFilters ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

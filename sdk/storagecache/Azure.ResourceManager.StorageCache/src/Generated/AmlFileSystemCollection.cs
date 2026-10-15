@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AmlFileSystemCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AmlFileSystemResource.ResourceType, out string amlFileSystemApiVersion);
             _amlFilesystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", AmlFileSystemResource.ResourceType.Namespace, Diagnostics);
-            _amlFilesystemsRestClient = new AmlFilesystems(_amlFilesystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, amlFileSystemApiVersion ?? "2026-08-01");
+            _amlFilesystemsRestClient = new AmlFilesystems(_amlFilesystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.StorageCache/amlFilesystems", out string amlFilesystemsApiVersionOverride) ? amlFilesystemsApiVersionOverride : "2026-08-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AmlFileSystemData, AmlFileSystemResource>(new AmlFilesystemsGetByResourceGroupAsyncCollectionResultOfT(_amlFilesystemsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AmlFileSystemCollection.GetAll"), data => new AmlFileSystemResource(Client, data));
+            return new AsyncPageableWrapper<AmlFileSystemData, AmlFileSystemResource>(new AmlFileSystemDataAsyncCollectionResultOfT(_amlFilesystemsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AmlFileSystemCollection.GetAll"), data => new AmlFileSystemResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AmlFileSystemData, AmlFileSystemResource>(new AmlFilesystemsGetByResourceGroupCollectionResultOfT(_amlFilesystemsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AmlFileSystemCollection.GetAll"), data => new AmlFileSystemResource(Client, data));
+            return new PageableWrapper<AmlFileSystemData, AmlFileSystemResource>(new AmlFileSystemDataCollectionResultOfT(_amlFilesystemsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AmlFileSystemCollection.GetAll"), data => new AmlFileSystemResource(Client, data));
         }
 
         /// <summary>

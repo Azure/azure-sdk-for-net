@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AvailabilitySetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string availabilitySetApiVersion);
             _availabilitySetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _availabilitySetsRestClient = new AvailabilitySets(_availabilitySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, availabilitySetApiVersion ?? "2026-04-01");
+            _availabilitySetsRestClient = new AvailabilitySets(_availabilitySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -611,7 +610,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailabilitySetsGetAvailableSizesAsyncCollectionResultOfT(
+            return new VirtualMachineSizeAsync0CollectionResultOfT(
                 _availabilitySetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -649,7 +648,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailabilitySetsGetAvailableSizesCollectionResultOfT(
+            return new VirtualMachineSize0CollectionResultOfT(
                 _availabilitySetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

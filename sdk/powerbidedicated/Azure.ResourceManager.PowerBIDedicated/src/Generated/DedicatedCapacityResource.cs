@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.PowerBIDedicated
         {
             TryGetApiVersion(ResourceType, out string dedicatedCapacityApiVersion);
             _capacitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PowerBIDedicated", ResourceType.Namespace, Diagnostics);
-            _capacitiesRestClient = new Capacities(_capacitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dedicatedCapacityApiVersion ?? "2021-01-01");
+            _capacitiesRestClient = new Capacities(
+                _capacitiesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dedicatedCapacityApiVersion ?? "2021-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -435,7 +441,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             {
                 CancellationToken = cancellationToken
             };
-            return new CapacitiesGetSkusForCapacityAsyncCollectionResultOfT(
+            return new SkuDetailsAsyncCollectionResultOfT(
                 _capacitiesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -473,7 +479,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             {
                 CancellationToken = cancellationToken
             };
-            return new CapacitiesGetSkusForCapacityCollectionResultOfT(
+            return new SkuDetailsCollectionResultOfT(
                 _capacitiesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

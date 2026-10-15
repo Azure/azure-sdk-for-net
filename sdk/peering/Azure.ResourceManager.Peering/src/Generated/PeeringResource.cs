@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Peering
         {
             TryGetApiVersion(ResourceType, out string peeringApiVersion);
             _peeringsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ResourceType.Namespace, Diagnostics);
-            _peeringsRestClient = new Peerings(_peeringsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, peeringApiVersion ?? "2025-05-01");
+            _peeringsRestClient = new Peerings(_peeringsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Peering/peerings", out string peeringsApiVersionOverride) ? peeringsApiVersionOverride : "2025-05-01");
             _rpUnbilledPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ResourceType.Namespace, Diagnostics);
             _rpUnbilledPrefixesRestClient = new RpUnbilledPrefixes(_rpUnbilledPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, peeringApiVersion ?? "2025-05-01");
             _receivedRoutesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ResourceType.Namespace, Diagnostics);
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new RpUnbilledPrefixesGetRpUnbilledPrefixesAsyncCollectionResultOfT(
+            return new RoutingPreferenceUnbilledPrefixAsyncCollectionResultOfT(
                 _rpUnbilledPrefixesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new RpUnbilledPrefixesGetRpUnbilledPrefixesCollectionResultOfT(
+            return new RoutingPreferenceUnbilledPrefixCollectionResultOfT(
                 _rpUnbilledPrefixesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new ReceivedRoutesGetReceivedRoutesAsyncCollectionResultOfT(
+            return new PeeringReceivedRouteAsyncCollectionResultOfT(
                 _receivedRoutesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new ReceivedRoutesGetReceivedRoutesCollectionResultOfT(
+            return new PeeringReceivedRouteCollectionResultOfT(
                 _receivedRoutesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

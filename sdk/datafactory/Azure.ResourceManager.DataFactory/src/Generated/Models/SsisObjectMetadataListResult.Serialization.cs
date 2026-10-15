@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SsisObjectMetadataListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SsisObjectMetadataListResult(value ?? new ChangeTrackingList<SsisObjectMetadata>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

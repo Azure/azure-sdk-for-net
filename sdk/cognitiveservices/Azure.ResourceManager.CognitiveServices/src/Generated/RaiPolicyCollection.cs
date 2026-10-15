@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RaiPolicyData, RaiPolicyResource>(new RaiPoliciesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RaiPolicyData, RaiPolicyResource>(new RaiPolicyDataAsyncCollectionResultOfT(
                 _raiPoliciesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RaiPolicyData, RaiPolicyResource>(new RaiPoliciesGetAllCollectionResultOfT(
+            return new PageableWrapper<RaiPolicyData, RaiPolicyResource>(new RaiPolicyDataCollectionResultOfT(
                 _raiPoliciesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

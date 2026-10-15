@@ -74,20 +74,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningSkuDetail)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Capacity))
+            if (_capacityIsDefined || Optional.IsDefined(Capacity))
             {
-                writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                if (Capacity != null)
+                {
+                    writer.WritePropertyName("capacity"u8);
+                    writer.WriteObjectValue(Capacity, options);
+                }
+                else
+                {
+                    writer.WriteNull("capacity"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && (_resourceTypeIsDefined || Optional.IsDefined(ResourceType)))
             {
-                writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType);
+                if (ResourceType != null)
+                {
+                    writer.WritePropertyName("resourceType"u8);
+                    writer.WriteStringValue(ResourceType);
+                }
+                else
+                {
+                    writer.WriteNull("resourceType"u8);
+                }
             }
-            if (Optional.IsDefined(Sku))
+            if (_skuIsDefined || Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                if (Sku != null)
+                {
+                    writer.WritePropertyName("sku"u8);
+                    writer.WriteObjectValue(Sku, options);
+                }
+                else
+                {
+                    writer.WriteNull("sku"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,14 +152,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool capacityIsDefined = false;
             MachineLearningSkuCapacity capacity = default;
+            bool resourceTypeIsDefined = false;
             string resourceType = default;
+            bool skuIsDefined = false;
             MachineLearningSkuSetting sku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("capacity"u8))
                 {
+                    capacityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         capacity = null;
@@ -149,6 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("resourceType"u8))
                 {
+                    resourceTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         resourceType = null;
@@ -159,6 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("sku"u8))
                 {
+                    skuIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         sku = null;
@@ -172,7 +199,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningSkuDetail(capacity, resourceType, sku, additionalBinaryDataProperties);
+            return new MachineLearningSkuDetail(capacity, resourceType, sku, additionalBinaryDataProperties)
+            {
+                _capacityIsDefined = capacityIsDefined,
+                _resourceTypeIsDefined = resourceTypeIsDefined,
+                _skuIsDefined = skuIsDefined
+            };
         }
     }
 }

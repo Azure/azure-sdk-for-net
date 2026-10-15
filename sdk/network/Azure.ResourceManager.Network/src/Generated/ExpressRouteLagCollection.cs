@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExpressRouteLagCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ExpressRouteLagResource.ResourceType, out string expressRouteLagApiVersion);
             _expressRouteLagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteLagResource.ResourceType.Namespace, Diagnostics);
-            _expressRouteLagsRestClient = new ExpressRouteLags(_expressRouteLagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteLagApiVersion ?? "2026-01-01");
+            _expressRouteLagsRestClient = new ExpressRouteLags(_expressRouteLagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRouteLagData, ExpressRouteLagResource>(new ExpressRouteLagsGetByResourceGroupAsyncCollectionResultOfT(_expressRouteLagsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteLagCollection.GetAll"), data => new ExpressRouteLagResource(Client, data));
+            return new AsyncPageableWrapper<ExpressRouteLagData, ExpressRouteLagResource>(new ExpressRouteLagDataAsyncCollectionResultOfT(_expressRouteLagsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteLagCollection.GetAll"), data => new ExpressRouteLagResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRouteLagData, ExpressRouteLagResource>(new ExpressRouteLagsGetByResourceGroupCollectionResultOfT(_expressRouteLagsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteLagCollection.GetAll"), data => new ExpressRouteLagResource(Client, data));
+            return new PageableWrapper<ExpressRouteLagData, ExpressRouteLagResource>(new ExpressRouteLagDataCollectionResultOfT(_expressRouteLagsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteLagCollection.GetAll"), data => new ExpressRouteLagResource(Client, data));
         }
 
         /// <summary>

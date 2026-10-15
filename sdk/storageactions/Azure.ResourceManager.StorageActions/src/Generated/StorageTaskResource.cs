@@ -58,7 +58,13 @@ namespace Azure.ResourceManager.StorageActions
         {
             TryGetApiVersion(ResourceType, out string storageTaskApiVersion);
             _storageTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", ResourceType.Namespace, Diagnostics);
-            _storageTasksRestClient = new StorageTasks(_storageTasksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageTaskApiVersion ?? "2023-01-01");
+            _storageTasksRestClient = new StorageTasks(
+                _storageTasksClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                storageTaskApiVersion ?? "2023-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _storageTasksReportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", ResourceType.Namespace, Diagnostics);
             _storageTasksReportRestClient = new StorageTasksReport(_storageTasksReportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageTaskApiVersion ?? "2023-01-01");
             _storageTaskAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", ResourceType.Namespace, Diagnostics);
@@ -445,7 +451,7 @@ namespace Azure.ResourceManager.StorageActions
             {
                 CancellationToken = cancellationToken
             };
-            return new StorageTasksReportGetStorageTasksReportsAsyncCollectionResultOfT(
+            return new StorageTaskReportInstanceAsyncCollectionResultOfT(
                 _storageTasksReportRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -487,7 +493,7 @@ namespace Azure.ResourceManager.StorageActions
             {
                 CancellationToken = cancellationToken
             };
-            return new StorageTasksReportGetStorageTasksReportsCollectionResultOfT(
+            return new StorageTaskReportInstanceCollectionResultOfT(
                 _storageTasksReportRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -528,7 +534,7 @@ namespace Azure.ResourceManager.StorageActions
             {
                 CancellationToken = cancellationToken
             };
-            return new StorageTaskAssignmentGetStorageTaskAssignmentsAsyncCollectionResultOfT(
+            return new SubResourceAsyncCollectionResultOfT(
                 _storageTaskAssignmentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -568,7 +574,7 @@ namespace Azure.ResourceManager.StorageActions
             {
                 CancellationToken = cancellationToken
             };
-            return new StorageTaskAssignmentGetStorageTaskAssignmentsCollectionResultOfT(
+            return new SubResourceCollectionResultOfT(
                 _storageTaskAssignmentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

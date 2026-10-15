@@ -56,7 +56,13 @@ namespace Azure.ResourceManager.Attestation
         {
             TryGetApiVersion(ResourceType, out string attestationProviderApiVersion);
             _attestationProvidersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Attestation", ResourceType.Namespace, Diagnostics);
-            _attestationProvidersRestClient = new AttestationProviders(_attestationProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, attestationProviderApiVersion ?? "2021-06-01");
+            _attestationProvidersRestClient = new AttestationProviders(
+                _attestationProvidersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                attestationProviderApiVersion ?? "2021-06-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Attestation", ResourceType.Namespace, Diagnostics);
             _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, attestationProviderApiVersion ?? "2021-06-01");
             ValidateResourceId(id);
@@ -429,7 +435,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new AttestationPrivateLinkResourceAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -467,7 +473,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetPrivateLinkResourcesCollectionResultOfT(
+            return new AttestationPrivateLinkResourceCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

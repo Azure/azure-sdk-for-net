@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerAppManagedEnvironmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ContainerAppManagedEnvironmentResource.ResourceType, out string containerAppManagedEnvironmentApiVersion);
             _containerAppManagedEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _containerAppManagedEnvironmentsRestClient = new ContainerAppManagedEnvironments(_containerAppManagedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2026-07-01");
+            _containerAppManagedEnvironmentsRestClient = new ContainerAppManagedEnvironments(_containerAppManagedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.App/managedEnvironments", out string containerAppManagedEnvironmentsApiVersionOverride) ? containerAppManagedEnvironmentsApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppManagedEnvironmentData, ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentsGetByResourceGroupAsyncCollectionResultOfT(_containerAppManagedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppManagedEnvironmentCollection.GetAll"), data => new ContainerAppManagedEnvironmentResource(Client, data));
+            return new AsyncPageableWrapper<ContainerAppManagedEnvironmentData, ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentDataAsyncCollectionResultOfT(_containerAppManagedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppManagedEnvironmentCollection.GetAll"), data => new ContainerAppManagedEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppManagedEnvironmentData, ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentsGetByResourceGroupCollectionResultOfT(_containerAppManagedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppManagedEnvironmentCollection.GetAll"), data => new ContainerAppManagedEnvironmentResource(Client, data));
+            return new PageableWrapper<ContainerAppManagedEnvironmentData, ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentDataCollectionResultOfT(_containerAppManagedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppManagedEnvironmentCollection.GetAll"), data => new ContainerAppManagedEnvironmentResource(Client, data));
         }
 
         /// <summary>

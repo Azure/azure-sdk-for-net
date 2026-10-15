@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _ruleId;
+        internal bool _ruleIdIsDefined;
+        private string _description;
+        internal bool _descriptionIsDefined;
+        private string _deploymentId;
+        internal bool _deploymentIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesTrafficRoutingRule"/>. </summary>
         public CognitiveServicesTrafficRoutingRule()
@@ -30,24 +36,57 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal CognitiveServicesTrafficRoutingRule(string ruleId, string description, string deploymentId, int? trafficPercentage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RuleId = ruleId;
-            Description = description;
-            DeploymentId = deploymentId;
+            _ruleId = ruleId;
+            _description = description;
+            _deploymentId = deploymentId;
             TrafficPercentage = trafficPercentage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The identifier of this traffic routing rule. </summary>
         [WirePath("ruleId")]
-        public string RuleId { get; set; }
+        public string RuleId
+        {
+            get
+            {
+                return _ruleId;
+            }
+            set
+            {
+                _ruleId = value;
+                _ruleIdIsDefined = true;
+            }
+        }
 
         /// <summary> A user-provided description for this traffic routing rule. </summary>
         [WirePath("description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+                _descriptionIsDefined = true;
+            }
+        }
 
         /// <summary> The unique identifier of the deployment to which traffic is routed by this rule. </summary>
         [WirePath("deploymentId")]
-        public string DeploymentId { get; set; }
+        public string DeploymentId
+        {
+            get
+            {
+                return _deploymentId;
+            }
+            set
+            {
+                _deploymentId = value;
+                _deploymentIdIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the percentage of traffic allocated to this instance. </summary>
         [WirePath("trafficPercentage")]

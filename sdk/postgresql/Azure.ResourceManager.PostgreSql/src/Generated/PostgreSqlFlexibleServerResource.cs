@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(ResourceType, out string postgreSqlFlexibleServerApiVersion);
             _serversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
+            _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DBforPostgreSQL/flexibleServers", out string serversApiVersionOverride) ? serversApiVersionOverride : "2026-04-01-preview");
             _migrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
             _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
             _backupsLongTermRetentionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new CapabilitiesByServerGetServerCapabilitiesAsyncCollectionResultOfT(
+            return new PostgreSqlFlexibleServerCapabilityPropertiesAsyncCollectionResultOfT(
                 _capabilitiesByServerRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new CapabilitiesByServerGetServerCapabilitiesCollectionResultOfT(
+            return new PostgreSqlFlexibleServerCapabilityPropertiesCollectionResultOfT(
                 _capabilitiesByServerRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new CapturedLogsGetPostgreSqlFlexibleServerLogFilesAsyncCollectionResultOfT(
+            return new PostgreSqlFlexibleServerLogFileAsyncCollectionResultOfT(
                 _capturedLogsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new CapturedLogsGetPostgreSqlFlexibleServerLogFilesCollectionResultOfT(
+            return new PostgreSqlFlexibleServerLogFileCollectionResultOfT(
                 _capturedLogsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new ReplicasGetReplicasAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new PostgreSqlFlexibleServerDataAsync1CollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -963,7 +963,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new ReplicasGetReplicasCollectionResultOfT(
+            return new PageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new PostgreSqlFlexibleServerData1CollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

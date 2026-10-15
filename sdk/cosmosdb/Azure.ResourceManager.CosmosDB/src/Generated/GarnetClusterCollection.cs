@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GarnetClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(GarnetClusterResource.ResourceType, out string garnetClusterApiVersion);
             _garnetClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", GarnetClusterResource.ResourceType.Namespace, Diagnostics);
-            _garnetClustersRestClient = new GarnetClusters(_garnetClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, garnetClusterApiVersion ?? "2026-04-01-preview");
+            _garnetClustersRestClient = new GarnetClusters(_garnetClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DocumentDB/garnetClusters", out string garnetClustersApiVersionOverride) ? garnetClustersApiVersionOverride : "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GarnetClusterData, GarnetClusterResource>(new GarnetClustersGetByResourceGroupAsyncCollectionResultOfT(_garnetClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "GarnetClusterCollection.GetAll"), data => new GarnetClusterResource(Client, data));
+            return new AsyncPageableWrapper<GarnetClusterData, GarnetClusterResource>(new GarnetClusterDataAsyncCollectionResultOfT(_garnetClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "GarnetClusterCollection.GetAll"), data => new GarnetClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GarnetClusterData, GarnetClusterResource>(new GarnetClustersGetByResourceGroupCollectionResultOfT(_garnetClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "GarnetClusterCollection.GetAll"), data => new GarnetClusterResource(Client, data));
+            return new PageableWrapper<GarnetClusterData, GarnetClusterResource>(new GarnetClusterDataCollectionResultOfT(_garnetClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "GarnetClusterCollection.GetAll"), data => new GarnetClusterResource(Client, data));
         }
 
         /// <summary>

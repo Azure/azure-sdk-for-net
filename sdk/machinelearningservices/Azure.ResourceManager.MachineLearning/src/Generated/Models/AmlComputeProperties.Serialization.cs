@@ -89,10 +89,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("vmPriority"u8);
                 writer.WriteStringValue(VmPriority.Value.ToString());
             }
-            if (Optional.IsDefined(VirtualMachineImage))
+            if (_virtualMachineImageIsDefined || Optional.IsDefined(VirtualMachineImage))
             {
-                writer.WritePropertyName("virtualMachineImage"u8);
-                writer.WriteObjectValue(VirtualMachineImage, options);
+                if (VirtualMachineImage != null)
+                {
+                    writer.WritePropertyName("virtualMachineImage"u8);
+                    writer.WriteObjectValue(VirtualMachineImage, options);
+                }
+                else
+                {
+                    writer.WriteNull("virtualMachineImage"u8);
+                }
             }
             if (Optional.IsDefined(IsolatedNetwork))
             {
@@ -104,15 +111,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("scaleSettings"u8);
                 writer.WriteObjectValue(ScaleSettings, options);
             }
-            if (Optional.IsDefined(UserAccountCredentials))
+            if (_userAccountCredentialsIsDefined || Optional.IsDefined(UserAccountCredentials))
             {
-                writer.WritePropertyName("userAccountCredentials"u8);
-                writer.WriteObjectValue(UserAccountCredentials, options);
+                if (UserAccountCredentials != null)
+                {
+                    writer.WritePropertyName("userAccountCredentials"u8);
+                    writer.WriteObjectValue(UserAccountCredentials, options);
+                }
+                else
+                {
+                    writer.WriteNull("userAccountCredentials"u8);
+                }
             }
-            if (Optional.IsDefined(Subnet))
+            if (_subnetIsDefined || Optional.IsDefined(Subnet))
             {
-                writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet, options);
+                if (Subnet != null)
+                {
+                    writer.WritePropertyName("subnet"u8);
+                    writer.WriteObjectValue(Subnet, options);
+                }
+                else
+                {
+                    writer.WriteNull("subnet"u8);
+                }
             }
             if (Optional.IsDefined(RemoteLoginPortPublicAccess))
             {
@@ -131,45 +152,87 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
-                writer.WritePropertyName("errors"u8);
-                writer.WriteStartArray();
-                foreach (MachineLearningError item in Errors)
+                if (Errors != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("errors"u8);
+                    writer.WriteStartArray();
+                    foreach (MachineLearningError item in Errors)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("errors"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentNodeCount))
+            if (options.Format != "W" && (_currentNodeCountIsDefined || Optional.IsDefined(CurrentNodeCount)))
             {
-                writer.WritePropertyName("currentNodeCount"u8);
-                writer.WriteNumberValue(CurrentNodeCount.Value);
+                if (CurrentNodeCount != null)
+                {
+                    writer.WritePropertyName("currentNodeCount"u8);
+                    writer.WriteNumberValue(CurrentNodeCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("currentNodeCount"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetNodeCount))
+            if (options.Format != "W" && (_targetNodeCountIsDefined || Optional.IsDefined(TargetNodeCount)))
             {
-                writer.WritePropertyName("targetNodeCount"u8);
-                writer.WriteNumberValue(TargetNodeCount.Value);
+                if (TargetNodeCount != null)
+                {
+                    writer.WritePropertyName("targetNodeCount"u8);
+                    writer.WriteNumberValue(TargetNodeCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("targetNodeCount"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeStateCounts))
+            if (options.Format != "W" && (_nodeStateCountsIsDefined || Optional.IsDefined(NodeStateCounts)))
             {
-                writer.WritePropertyName("nodeStateCounts"u8);
-                writer.WriteObjectValue(NodeStateCounts, options);
+                if (NodeStateCounts != null)
+                {
+                    writer.WritePropertyName("nodeStateCounts"u8);
+                    writer.WriteObjectValue(NodeStateCounts, options);
+                }
+                else
+                {
+                    writer.WriteNull("nodeStateCounts"u8);
+                }
             }
-            if (Optional.IsDefined(EnableNodePublicIP))
+            if (_enableNodePublicIPIsDefined || Optional.IsDefined(EnableNodePublicIP))
             {
-                writer.WritePropertyName("enableNodePublicIp"u8);
-                writer.WriteBooleanValue(EnableNodePublicIP.Value);
+                if (EnableNodePublicIP != null)
+                {
+                    writer.WritePropertyName("enableNodePublicIp"u8);
+                    writer.WriteBooleanValue(EnableNodePublicIP.Value);
+                }
+                else
+                {
+                    writer.WriteNull("enableNodePublicIp"u8);
+                }
             }
-            if (Optional.IsDefined(PropertyBag))
+            if (_propertyBagIsDefined || Optional.IsDefined(PropertyBag))
             {
-                writer.WritePropertyName("propertyBag"u8);
+                if (PropertyBag != null)
+                {
+                    writer.WritePropertyName("propertyBag"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(PropertyBag);
+                    writer.WriteRawValue(PropertyBag);
 #else
-                using (JsonDocument document = JsonDocument.Parse(PropertyBag))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    using (JsonDocument document = JsonDocument.Parse(PropertyBag))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                else
+                {
+                    writer.WriteNull("propertyBag"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -216,19 +279,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningOSType? osType = default;
             string vmSize = default;
             MachineLearningVmPriority? vmPriority = default;
+            bool virtualMachineImageIsDefined = false;
             VirtualMachineImage virtualMachineImage = default;
             bool? isolatedNetwork = default;
             AmlComputeScaleSettings scaleSettings = default;
+            bool userAccountCredentialsIsDefined = false;
             MachineLearningUserAccountCredentials userAccountCredentials = default;
+            bool subnetIsDefined = false;
             ResourceId subnet = default;
             MachineLearningRemoteLoginPortPublicAccess? remoteLoginPortPublicAccess = default;
             MachineLearningAllocationState? allocationState = default;
             DateTimeOffset? allocationStateTransitionOn = default;
-            IReadOnlyList<MachineLearningError> errors = default;
+            IReadOnlyList<MachineLearningError> errors = new ChangeTrackingList<MachineLearningError>();
+            bool currentNodeCountIsDefined = false;
             int? currentNodeCount = default;
+            bool targetNodeCountIsDefined = false;
             int? targetNodeCount = default;
+            bool nodeStateCountsIsDefined = false;
             MachineLearningNodeStateCounts nodeStateCounts = default;
+            bool enableNodePublicIPIsDefined = false;
             bool? enableNodePublicIP = default;
+            bool propertyBagIsDefined = false;
             BinaryData propertyBag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -258,6 +329,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("virtualMachineImage"u8))
                 {
+                    virtualMachineImageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         virtualMachineImage = null;
@@ -286,6 +358,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("userAccountCredentials"u8))
                 {
+                    userAccountCredentialsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         userAccountCredentials = null;
@@ -296,6 +369,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("subnet"u8))
                 {
+                    subnetIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         subnet = null;
@@ -335,6 +409,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        errors = null;
                         continue;
                     }
                     List<MachineLearningError> array = new List<MachineLearningError>();
@@ -347,6 +422,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("currentNodeCount"u8))
                 {
+                    currentNodeCountIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         currentNodeCount = null;
@@ -357,6 +433,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("targetNodeCount"u8))
                 {
+                    targetNodeCountIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         targetNodeCount = null;
@@ -367,6 +444,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("nodeStateCounts"u8))
                 {
+                    nodeStateCountsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nodeStateCounts = null;
@@ -377,6 +455,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("enableNodePublicIp"u8))
                 {
+                    enableNodePublicIPIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         enableNodePublicIP = null;
@@ -387,6 +466,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("propertyBag"u8))
                 {
+                    propertyBagIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         propertyBag = null;
@@ -412,13 +492,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 remoteLoginPortPublicAccess,
                 allocationState,
                 allocationStateTransitionOn,
-                errors ?? new ChangeTrackingList<MachineLearningError>(),
+                errors,
                 currentNodeCount,
                 targetNodeCount,
                 nodeStateCounts,
                 enableNodePublicIP,
                 propertyBag,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _virtualMachineImageIsDefined = virtualMachineImageIsDefined,
+                _userAccountCredentialsIsDefined = userAccountCredentialsIsDefined,
+                _subnetIsDefined = subnetIsDefined,
+                _currentNodeCountIsDefined = currentNodeCountIsDefined,
+                _targetNodeCountIsDefined = targetNodeCountIsDefined,
+                _nodeStateCountsIsDefined = nodeStateCountsIsDefined,
+                _enableNodePublicIPIsDefined = enableNodePublicIPIsDefined,
+                _propertyBagIsDefined = propertyBagIsDefined
+            };
         }
     }
 }

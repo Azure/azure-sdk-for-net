@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new ExportsGetExecutionHistoryAsyncCollectionResultOfT(_exportsRestClient, Id.Parent.ToString(), Id.Name, context, "CostManagementExportResource.GetExecutionHistory");
+            return new ExportRunAsyncCollectionResultOfT(_exportsRestClient, Id.Parent.ToString(), Id.Name, context, "CostManagementExportResource.GetExecutionHistory");
         }
 
         /// <summary>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new ExportsGetExecutionHistoryCollectionResultOfT(_exportsRestClient, Id.Parent.ToString(), Id.Name, context, "CostManagementExportResource.GetExecutionHistory");
+            return new ExportRunCollectionResultOfT(_exportsRestClient, Id.Parent.ToString(), Id.Name, context, "CostManagementExportResource.GetExecutionHistory");
         }
 
         /// <summary>

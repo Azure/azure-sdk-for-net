@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(ResourceType, out string actionGroupApiVersion);
             _actionGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _actionGroupsRestClient = new ActionGroups(_actionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, actionGroupApiVersion ?? "2024-10-01-preview");
+            _actionGroupsRestClient = new ActionGroups(_actionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _nspActionGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
             _nspActionGroupRestClient = new NspActionGroup(_nspActionGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, actionGroupApiVersion ?? "2021-10-01");
             ValidateResourceId(id);
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new NspActionGroupGetNetworkSecurityPerimeterConfigurationsAsyncCollectionResultOfT(
+            return new MonitorNetworkSecurityPerimeterConfigurationDataAsync1CollectionResultOfT(
                 _nspActionGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new NspActionGroupGetNetworkSecurityPerimeterConfigurationsCollectionResultOfT(
+            return new MonitorNetworkSecurityPerimeterConfigurationData1CollectionResultOfT(
                 _nspActionGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

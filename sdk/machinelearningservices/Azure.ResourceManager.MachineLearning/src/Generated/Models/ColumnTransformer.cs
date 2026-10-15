@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private BinaryData _parameters;
+        internal bool _parametersIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ColumnTransformer"/>. </summary>
         public ColumnTransformer()
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal ColumnTransformer(IList<string> fields, BinaryData parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Fields = fields;
-            Parameters = parameters;
+            _parameters = parameters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -70,6 +72,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </para>
         /// </summary>
         [WirePath("parameters")]
-        public BinaryData Parameters { get; set; }
+        public BinaryData Parameters
+        {
+            get
+            {
+                return _parameters;
+            }
+            set
+            {
+                _parameters = value;
+                _parametersIsDefined = true;
+            }
+        }
     }
 }

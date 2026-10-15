@@ -534,8 +534,15 @@
               "type": {
                 "$id": "44",
                 "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
+                "name": "armResourceIdentifier",
+                "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
+                "baseType": {
+                  "$id": "45",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
                 "decorators": []
               },
               "optional": true,
@@ -553,7 +560,7 @@
               "isExactName": false
             },
             {
-              "$id": "45",
+              "$id": "46",
               "kind": "property",
               "name": "name",
               "apiVersions": [
@@ -565,7 +572,7 @@
               "serializedName": "name",
               "doc": "The name of the resource",
               "type": {
-                "$id": "46",
+                "$id": "47",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -586,7 +593,7 @@
               "isExactName": false
             },
             {
-              "$id": "47",
+              "$id": "48",
               "kind": "property",
               "name": "type",
               "apiVersions": [
@@ -598,12 +605,12 @@
               "serializedName": "type",
               "doc": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
               "type": {
-                "$id": "48",
+                "$id": "49",
                 "kind": "string",
                 "name": "armResourceType",
                 "crossLanguageDefinitionId": "Azure.Core.armResourceType",
                 "baseType": {
-                  "$id": "49",
+                  "$id": "50",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -626,7 +633,7 @@
               "isExactName": false
             },
             {
-              "$id": "50",
+              "$id": "51",
               "kind": "property",
               "name": "systemData",
               "apiVersions": [
@@ -638,7 +645,7 @@
               "serializedName": "systemData",
               "doc": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
               "type": {
-                "$id": "51",
+                "$id": "52",
                 "kind": "model",
                 "name": "SystemData",
                 "apiVersions": [
@@ -660,7 +667,7 @@
                 "isExactName": false,
                 "properties": [
                   {
-                    "$id": "52",
+                    "$id": "53",
                     "kind": "property",
                     "name": "createdBy",
                     "apiVersions": [
@@ -672,7 +679,7 @@
                     "serializedName": "createdBy",
                     "doc": "The identity that created the resource.",
                     "type": {
-                      "$id": "53",
+                      "$id": "54",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -693,7 +700,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "54",
+                    "$id": "55",
                     "kind": "property",
                     "name": "createdByType",
                     "apiVersions": [
@@ -722,7 +729,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "55",
+                    "$id": "56",
                     "kind": "property",
                     "name": "createdAt",
                     "apiVersions": [
@@ -734,12 +741,12 @@
                     "serializedName": "createdAt",
                     "doc": "The timestamp of resource creation (UTC).",
                     "type": {
-                      "$id": "56",
+                      "$id": "57",
                       "kind": "utcDateTime",
                       "name": "utcDateTime",
                       "encode": "rfc3339",
                       "wireType": {
-                        "$id": "57",
+                        "$id": "58",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -763,7 +770,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "58",
+                    "$id": "59",
                     "kind": "property",
                     "name": "lastModifiedBy",
                     "apiVersions": [
@@ -775,7 +782,7 @@
                     "serializedName": "lastModifiedBy",
                     "doc": "The identity that last modified the resource.",
                     "type": {
-                      "$id": "59",
+                      "$id": "60",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -796,7 +803,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "60",
+                    "$id": "61",
                     "kind": "property",
                     "name": "lastModifiedByType",
                     "apiVersions": [
@@ -825,7 +832,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "61",
+                    "$id": "62",
                     "kind": "property",
                     "name": "lastModifiedAt",
                     "apiVersions": [
@@ -837,12 +844,12 @@
                     "serializedName": "lastModifiedAt",
                     "doc": "The timestamp of resource last modification (UTC)",
                     "type": {
-                      "$id": "62",
+                      "$id": "63",
                       "kind": "utcDateTime",
                       "name": "utcDateTime",
                       "encode": "rfc3339",
                       "wireType": {
-                        "$id": "63",
+                        "$id": "64",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -885,7 +892,7 @@
         },
         "properties": [
           {
-            "$id": "64",
+            "$id": "65",
             "kind": "property",
             "name": "tags",
             "apiVersions": [
@@ -897,17 +904,17 @@
             "serializedName": "tags",
             "doc": "Resource tags.",
             "type": {
-              "$id": "65",
+              "$id": "66",
               "kind": "dict",
               "keyType": {
-                "$id": "66",
+                "$id": "67",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
                 "decorators": []
               },
               "valueType": {
-                "$id": "67",
+                "$id": "68",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -930,7 +937,7 @@
             "isExactName": false
           },
           {
-            "$id": "68",
+            "$id": "69",
             "kind": "property",
             "name": "location",
             "apiVersions": [
@@ -942,12 +949,12 @@
             "serializedName": "location",
             "doc": "The geo-location where the resource lives",
             "type": {
-              "$id": "69",
+              "$id": "70",
               "kind": "string",
               "name": "azureLocation",
               "crossLanguageDefinitionId": "Azure.Core.azureLocation",
               "baseType": {
-                "$id": "70",
+                "$id": "71",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -973,14 +980,14 @@
       },
       "properties": [
         {
-          "$id": "71",
+          "$id": "72",
           "kind": "property",
           "name": "properties",
           "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
-            "$id": "72",
+            "$id": "73",
             "kind": "model",
             "name": "VirtualMachineProperties",
             "apiVersions": [
@@ -1006,7 +1013,7 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "73",
+                "$id": "74",
                 "kind": "property",
                 "name": "provisioningState",
                 "apiVersions": [
@@ -1048,14 +1055,14 @@
           "isExactName": false
         },
         {
-          "$id": "74",
+          "$id": "75",
           "kind": "property",
           "name": "name",
           "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the VirtualMachine",
           "type": {
-            "$id": "75",
+            "$id": "76",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1085,7 +1092,7 @@
       ]
     },
     {
-      "$ref": "72"
+      "$ref": "73"
     },
     {
       "$ref": "41"
@@ -1094,10 +1101,10 @@
       "$ref": "42"
     },
     {
-      "$ref": "51"
+      "$ref": "52"
     },
     {
-      "$id": "76",
+      "$id": "77",
       "kind": "model",
       "name": "ErrorResponse",
       "apiVersions": [
@@ -1120,7 +1127,7 @@
       "isExactName": false,
       "properties": [
         {
-          "$id": "77",
+          "$id": "78",
           "kind": "property",
           "name": "error",
           "apiVersions": [
@@ -1132,7 +1139,7 @@
           "serializedName": "error",
           "doc": "The error object.",
           "type": {
-            "$id": "78",
+            "$id": "79",
             "kind": "model",
             "name": "ErrorDetail",
             "apiVersions": [
@@ -1154,7 +1161,7 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "79",
+                "$id": "80",
                 "kind": "property",
                 "name": "code",
                 "apiVersions": [
@@ -1166,7 +1173,7 @@
                 "serializedName": "code",
                 "doc": "The error code.",
                 "type": {
-                  "$id": "80",
+                  "$id": "81",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1187,7 +1194,7 @@
                 "isExactName": false
               },
               {
-                "$id": "81",
+                "$id": "82",
                 "kind": "property",
                 "name": "message",
                 "apiVersions": [
@@ -1199,7 +1206,7 @@
                 "serializedName": "message",
                 "doc": "The error message.",
                 "type": {
-                  "$id": "82",
+                  "$id": "83",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1220,7 +1227,7 @@
                 "isExactName": false
               },
               {
-                "$id": "83",
+                "$id": "84",
                 "kind": "property",
                 "name": "target",
                 "apiVersions": [
@@ -1232,7 +1239,7 @@
                 "serializedName": "target",
                 "doc": "The error target.",
                 "type": {
-                  "$id": "84",
+                  "$id": "85",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1253,7 +1260,7 @@
                 "isExactName": false
               },
               {
-                "$id": "85",
+                "$id": "86",
                 "kind": "property",
                 "name": "details",
                 "apiVersions": [
@@ -1265,11 +1272,11 @@
                 "serializedName": "details",
                 "doc": "The error details.",
                 "type": {
-                  "$id": "86",
+                  "$id": "87",
                   "kind": "array",
                   "name": "ArrayErrorDetail",
                   "valueType": {
-                    "$ref": "78"
+                    "$ref": "79"
                   },
                   "crossLanguageDefinitionId": "TypeSpec.Array",
                   "decorators": []
@@ -1289,7 +1296,7 @@
                 "isExactName": false
               },
               {
-                "$id": "87",
+                "$id": "88",
                 "kind": "property",
                 "name": "additionalInfo",
                 "apiVersions": [
@@ -1301,11 +1308,11 @@
                 "serializedName": "additionalInfo",
                 "doc": "The error additional info.",
                 "type": {
-                  "$id": "88",
+                  "$id": "89",
                   "kind": "array",
                   "name": "ArrayErrorAdditionalInfo",
                   "valueType": {
-                    "$id": "89",
+                    "$id": "90",
                     "kind": "model",
                     "name": "ErrorAdditionalInfo",
                     "apiVersions": [
@@ -1327,7 +1334,7 @@
                     "isExactName": false,
                     "properties": [
                       {
-                        "$id": "90",
+                        "$id": "91",
                         "kind": "property",
                         "name": "type",
                         "apiVersions": [
@@ -1339,7 +1346,7 @@
                         "serializedName": "type",
                         "doc": "The additional info type.",
                         "type": {
-                          "$id": "91",
+                          "$id": "92",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1360,7 +1367,7 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "92",
+                        "$id": "93",
                         "kind": "property",
                         "name": "info",
                         "apiVersions": [
@@ -1372,7 +1379,7 @@
                         "serializedName": "info",
                         "doc": "The additional info.",
                         "type": {
-                          "$id": "93",
+                          "$id": "94",
                           "kind": "unknown",
                           "name": "unknown",
                           "crossLanguageDefinitionId": "",
@@ -1430,13 +1437,13 @@
       ]
     },
     {
-      "$ref": "78"
+      "$ref": "79"
     },
     {
-      "$ref": "89"
+      "$ref": "90"
     },
     {
-      "$id": "94",
+      "$id": "95",
       "kind": "model",
       "name": "ArmOperationStatusResourceProvisioningState",
       "apiVersions": [],
@@ -1453,7 +1460,7 @@
       "isExactName": false,
       "properties": [
         {
-          "$id": "95",
+          "$id": "96",
           "kind": "property",
           "name": "status",
           "apiVersions": [],
@@ -1477,14 +1484,14 @@
           "isExactName": false
         },
         {
-          "$id": "96",
+          "$id": "97",
           "kind": "property",
           "name": "id",
           "apiVersions": [],
           "serializedName": "id",
           "doc": "The unique identifier for the operationStatus resource",
           "type": {
-            "$id": "97",
+            "$id": "98",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1505,14 +1512,14 @@
           "isExactName": false
         },
         {
-          "$id": "98",
+          "$id": "99",
           "kind": "property",
           "name": "name",
           "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the operationStatus resource",
           "type": {
-            "$id": "99",
+            "$id": "100",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1533,19 +1540,19 @@
           "isExactName": false
         },
         {
-          "$id": "100",
+          "$id": "101",
           "kind": "property",
           "name": "startTime",
           "apiVersions": [],
           "serializedName": "startTime",
           "doc": "Operation start time",
           "type": {
-            "$id": "101",
+            "$id": "102",
             "kind": "utcDateTime",
             "name": "utcDateTime",
             "encode": "rfc3339",
             "wireType": {
-              "$id": "102",
+              "$id": "103",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1569,19 +1576,19 @@
           "isExactName": false
         },
         {
-          "$id": "103",
+          "$id": "104",
           "kind": "property",
           "name": "endTime",
           "apiVersions": [],
           "serializedName": "endTime",
           "doc": "Operation complete time",
           "type": {
-            "$id": "104",
+            "$id": "105",
             "kind": "utcDateTime",
             "name": "utcDateTime",
             "encode": "rfc3339",
             "wireType": {
-              "$id": "105",
+              "$id": "106",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1605,14 +1612,14 @@
           "isExactName": false
         },
         {
-          "$id": "106",
+          "$id": "107",
           "kind": "property",
           "name": "percentComplete",
           "apiVersions": [],
           "serializedName": "percentComplete",
           "doc": "The progress made toward completing the operation",
           "type": {
-            "$id": "107",
+            "$id": "108",
             "kind": "float64",
             "name": "float64",
             "crossLanguageDefinitionId": "TypeSpec.float64",
@@ -1633,14 +1640,14 @@
           "isExactName": false
         },
         {
-          "$id": "108",
+          "$id": "109",
           "kind": "property",
           "name": "error",
           "apiVersions": [],
           "serializedName": "error",
           "doc": "Errors that occurred if the operation ended with Canceled or Failed status",
           "type": {
-            "$ref": "78"
+            "$ref": "79"
           },
           "optional": true,
           "readOnly": true,
@@ -1659,7 +1666,7 @@
       ]
     },
     {
-      "$id": "109",
+      "$id": "110",
       "kind": "model",
       "name": "Disk",
       "apiVersions": [
@@ -1693,14 +1700,14 @@
       },
       "properties": [
         {
-          "$id": "110",
+          "$id": "111",
           "kind": "property",
           "name": "properties",
           "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
-            "$id": "111",
+            "$id": "112",
             "kind": "model",
             "name": "DiskProperties",
             "apiVersions": [
@@ -1727,7 +1734,7 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "112",
+                "$id": "113",
                 "kind": "property",
                 "name": "provisioningState",
                 "apiVersions": [
@@ -1769,14 +1776,14 @@
           "isExactName": false
         },
         {
-          "$id": "113",
+          "$id": "114",
           "kind": "property",
           "name": "name",
           "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the Disk",
           "type": {
-            "$id": "114",
+            "$id": "115",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1806,12 +1813,12 @@
       ]
     },
     {
-      "$ref": "111"
+      "$ref": "112"
     }
   ],
   "clients": [
     {
-      "$id": "115",
+      "$id": "116",
       "kind": "client",
       "name": "CombinedClient",
       "isExactName": false,
@@ -1819,13 +1826,13 @@
       "methods": [],
       "parameters": [
         {
-          "$id": "116",
+          "$id": "117",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "117",
+            "$id": "118",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1836,7 +1843,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "118",
+              "$id": "119",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1850,13 +1857,13 @@
           "isExactName": false
         },
         {
-          "$id": "119",
+          "$id": "120",
           "kind": "method",
           "name": "apiVersion",
           "serializedName": "apiVersion",
           "doc": "The API version to use for this operation.",
           "type": {
-            "$id": "120",
+            "$id": "121",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1894,24 +1901,24 @@
                 "resourceType": "Microsoft.Compute/virtualMachines",
                 "methods": [
                   {
-                    "$id": "121",
+                    "$id": "122",
                     "methodId": "Azure.ResourceManager.MultiService.Compute.VirtualMachines.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
                     "scope": {
-                      "$id": "122",
+                      "$id": "123",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "123",
+                    "$id": "124",
                     "methodId": "Azure.ResourceManager.MultiService.Compute.VirtualMachines.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
                     "scope": {
-                      "$id": "124",
+                      "$id": "125",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -1919,7 +1926,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "125",
+                  "$id": "126",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -1938,24 +1945,24 @@
                 "resourceType": "Microsoft.Compute/disks",
                 "methods": [
                   {
-                    "$id": "126",
+                    "$id": "127",
                     "methodId": "Azure.ResourceManager.MultiService.ComputeDisk.Disks.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}",
                     "scope": {
-                      "$id": "127",
+                      "$id": "128",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "128",
+                    "$id": "129",
                     "methodId": "Azure.ResourceManager.MultiService.ComputeDisk.Disks.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}",
                     "scope": {
-                      "$id": "129",
+                      "$id": "130",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -1963,7 +1970,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "130",
+                  "$id": "131",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -1985,14 +1992,14 @@
       "apiVersions": [],
       "children": [
         {
-          "$id": "131",
+          "$id": "132",
           "kind": "client",
           "name": "VirtualMachines",
           "isExactName": false,
           "namespace": "Azure.ResourceManager.MultiService.Compute",
           "methods": [
             {
-              "$id": "132",
+              "$id": "133",
               "kind": "basic",
               "name": "get",
               "isExactName": false,
@@ -2003,7 +2010,7 @@
               ],
               "doc": "Retrieves information about the model view or the instance view of a virtual machine.",
               "operation": {
-                "$id": "133",
+                "$id": "134",
                 "name": "get",
                 "isExactName": false,
                 "resourceName": "VirtualMachine",
@@ -2011,13 +2018,13 @@
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "134",
+                    "$id": "135",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "135",
+                      "$id": "136",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2027,7 +2034,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "136",
+                        "$id": "137",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2050,13 +2057,13 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$id": "137",
+                        "$id": "138",
                         "kind": "method",
                         "name": "apiVersion",
                         "serializedName": "apiVersion",
                         "doc": "The API version to use for this operation.",
                         "type": {
-                          "$id": "138",
+                          "$id": "139",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2066,7 +2073,7 @@
                         "isApiVersion": true,
                         "defaultValue": {
                           "type": {
-                            "$id": "139",
+                            "$id": "140",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2094,16 +2101,23 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "140",
+                    "$id": "141",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "141",
+                      "$id": "142",
                       "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "143",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
                       "decorators": []
                     },
                     "isApiVersion": false,
@@ -2127,16 +2141,23 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.Compute.VirtualMachines.get.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$id": "142",
+                        "$id": "144",
                         "kind": "method",
                         "name": "subscriptionId",
                         "serializedName": "subscriptionId",
                         "doc": "The ID of the target subscription. The value must be an UUID.",
                         "type": {
-                          "$id": "143",
+                          "$id": "145",
                           "kind": "string",
-                          "name": "string",
-                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "146",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
                           "decorators": []
                         },
                         "location": "",
@@ -2162,13 +2183,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "144",
+                    "$id": "147",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "145",
+                      "$id": "148",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2209,13 +2230,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.Compute.VirtualMachines.get.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "146",
+                        "$id": "149",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "147",
+                          "$id": "150",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2258,13 +2279,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "148",
+                    "$id": "151",
                     "kind": "path",
                     "name": "vmName",
                     "serializedName": "vmName",
                     "doc": "The name of the VirtualMachine",
                     "type": {
-                      "$id": "149",
+                      "$id": "152",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2289,13 +2310,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.Compute.VirtualMachines.get.vmName",
                     "methodParameterSegments": [
                       {
-                        "$id": "150",
+                        "$id": "153",
                         "kind": "method",
                         "name": "vmName",
                         "serializedName": "vmName",
                         "doc": "The name of the VirtualMachine",
                         "type": {
-                          "$id": "151",
+                          "$id": "154",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2322,7 +2343,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "152",
+                    "$id": "155",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -2338,7 +2359,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.Compute.VirtualMachines.get.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "153",
+                        "$id": "156",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -2396,21 +2417,21 @@
               },
               "parameters": [
                 {
-                  "$ref": "146"
-                },
-                {
-                  "$ref": "150"
+                  "$ref": "149"
                 },
                 {
                   "$ref": "153"
                 },
                 {
-                  "$id": "154",
+                  "$ref": "156"
+                },
+                {
+                  "$id": "157",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "141"
+                    "$ref": "142"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -2432,7 +2453,7 @@
               "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.Compute.VirtualMachines.get"
             },
             {
-              "$id": "155",
+              "$id": "158",
               "kind": "lro",
               "name": "createOrUpdate",
               "isExactName": false,
@@ -2443,7 +2464,7 @@
               ],
               "doc": "The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.",
               "operation": {
-                "$id": "156",
+                "$id": "159",
                 "name": "createOrUpdate",
                 "isExactName": false,
                 "resourceName": "VirtualMachine",
@@ -2451,13 +2472,13 @@
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "157",
+                    "$id": "160",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "158",
+                      "$id": "161",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2467,7 +2488,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "159",
+                        "$id": "162",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2490,22 +2511,29 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "137"
+                        "$ref": "138"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "160",
+                    "$id": "163",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "161",
+                      "$id": "164",
                       "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "165",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
                       "decorators": []
                     },
                     "isApiVersion": false,
@@ -2529,19 +2557,19 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.Compute.VirtualMachines.createOrUpdate.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "142"
+                        "$ref": "144"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "162",
+                    "$id": "166",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "163",
+                      "$id": "167",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2582,13 +2610,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.Compute.VirtualMachines.createOrUpdate.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "164",
+                        "$id": "168",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "165",
+                          "$id": "169",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2631,13 +2659,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "166",
+                    "$id": "170",
                     "kind": "path",
                     "name": "vmName",
                     "serializedName": "vmName",
                     "doc": "The name of the VirtualMachine",
                     "type": {
-                      "$id": "167",
+                      "$id": "171",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2662,13 +2690,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.Compute.VirtualMachines.createOrUpdate.vmName",
                     "methodParameterSegments": [
                       {
-                        "$id": "168",
+                        "$id": "172",
                         "kind": "method",
                         "name": "vmName",
                         "serializedName": "vmName",
                         "doc": "The name of the VirtualMachine",
                         "type": {
-                          "$id": "169",
+                          "$id": "173",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2695,7 +2723,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "170",
+                    "$id": "174",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -2712,7 +2740,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.Compute.VirtualMachines.createOrUpdate.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "171",
+                        "$id": "175",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
@@ -2734,7 +2762,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "172",
+                    "$id": "176",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -2750,7 +2778,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.Compute.VirtualMachines.createOrUpdate.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "173",
+                        "$id": "177",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -2771,7 +2799,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "174",
+                    "$id": "178",
                     "kind": "body",
                     "name": "resource",
                     "serializedName": "resource",
@@ -2791,7 +2819,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.Compute.VirtualMachines.createOrUpdate.resource",
                     "methodParameterSegments": [
                       {
-                        "$id": "175",
+                        "$id": "179",
                         "kind": "method",
                         "name": "resource",
                         "serializedName": "resource",
@@ -2850,7 +2878,7 @@
                         "nameInResponse": "Azure-AsyncOperation",
                         "doc": "A link to the status monitor",
                         "type": {
-                          "$id": "176",
+                          "$id": "180",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2862,7 +2890,7 @@
                         "nameInResponse": "Retry-After",
                         "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
                         "type": {
-                          "$id": "177",
+                          "$id": "181",
                           "kind": "int32",
                           "name": "int32",
                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -2901,27 +2929,27 @@
               },
               "parameters": [
                 {
-                  "$ref": "164"
+                  "$ref": "168"
                 },
                 {
-                  "$ref": "168"
+                  "$ref": "172"
+                },
+                {
+                  "$ref": "179"
                 },
                 {
                   "$ref": "175"
                 },
                 {
-                  "$ref": "171"
+                  "$ref": "177"
                 },
                 {
-                  "$ref": "173"
-                },
-                {
-                  "$id": "178",
+                  "$id": "182",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "161"
+                    "$ref": "164"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -2956,13 +2984,13 @@
           ],
           "parameters": [
             {
-              "$id": "179",
+              "$id": "183",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "180",
+                "$id": "184",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -2973,7 +3001,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "181",
+                  "$id": "185",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2987,7 +3015,7 @@
               "isExactName": false
             },
             {
-              "$ref": "137"
+              "$ref": "138"
             }
           ],
           "initializedBy": 0,
@@ -3003,19 +3031,19 @@
             "2025-04-01"
           ],
           "parent": {
-            "$ref": "115"
+            "$ref": "116"
           },
           "isMultiServiceClient": false
         },
         {
-          "$id": "182",
+          "$id": "186",
           "kind": "client",
           "name": "Disks",
           "isExactName": false,
           "namespace": "Azure.ResourceManager.MultiService.ComputeDisk",
           "methods": [
             {
-              "$id": "183",
+              "$id": "187",
               "kind": "basic",
               "name": "get",
               "isExactName": false,
@@ -3026,7 +3054,7 @@
               ],
               "doc": "Gets information about a disk.",
               "operation": {
-                "$id": "184",
+                "$id": "188",
                 "name": "get",
                 "isExactName": false,
                 "resourceName": "Disk",
@@ -3034,13 +3062,13 @@
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "185",
+                    "$id": "189",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "186",
+                      "$id": "190",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3050,7 +3078,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "187",
+                        "$id": "191",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -3073,13 +3101,13 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$id": "188",
+                        "$id": "192",
                         "kind": "method",
                         "name": "apiVersion",
                         "serializedName": "apiVersion",
                         "doc": "The API version to use for this operation.",
                         "type": {
-                          "$id": "189",
+                          "$id": "193",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3089,7 +3117,7 @@
                         "isApiVersion": true,
                         "defaultValue": {
                           "type": {
-                            "$id": "190",
+                            "$id": "194",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string"
@@ -3117,16 +3145,23 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "191",
+                    "$id": "195",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "192",
+                      "$id": "196",
                       "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "197",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
                       "decorators": []
                     },
                     "isApiVersion": false,
@@ -3150,16 +3185,23 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.ComputeDisk.Disks.get.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$id": "193",
+                        "$id": "198",
                         "kind": "method",
                         "name": "subscriptionId",
                         "serializedName": "subscriptionId",
                         "doc": "The ID of the target subscription. The value must be an UUID.",
                         "type": {
-                          "$id": "194",
+                          "$id": "199",
                           "kind": "string",
-                          "name": "string",
-                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "200",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
                           "decorators": []
                         },
                         "location": "",
@@ -3185,13 +3227,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "195",
+                    "$id": "201",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "196",
+                      "$id": "202",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3232,13 +3274,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.ComputeDisk.Disks.get.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "197",
+                        "$id": "203",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "198",
+                          "$id": "204",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3281,13 +3323,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "199",
+                    "$id": "205",
                     "kind": "path",
                     "name": "diskName",
                     "serializedName": "diskName",
                     "doc": "The name of the Disk",
                     "type": {
-                      "$id": "200",
+                      "$id": "206",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3312,13 +3354,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.ComputeDisk.Disks.get.diskName",
                     "methodParameterSegments": [
                       {
-                        "$id": "201",
+                        "$id": "207",
                         "kind": "method",
                         "name": "diskName",
                         "serializedName": "diskName",
                         "doc": "The name of the Disk",
                         "type": {
-                          "$id": "202",
+                          "$id": "208",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3345,7 +3387,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "203",
+                    "$id": "209",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -3361,7 +3403,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.ComputeDisk.Disks.get.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "204",
+                        "$id": "210",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -3388,7 +3430,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "109"
+                      "$ref": "110"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -3419,21 +3461,21 @@
               },
               "parameters": [
                 {
-                  "$ref": "197"
+                  "$ref": "203"
                 },
                 {
-                  "$ref": "201"
+                  "$ref": "207"
                 },
                 {
-                  "$ref": "204"
+                  "$ref": "210"
                 },
                 {
-                  "$id": "205",
+                  "$id": "211",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "192"
+                    "$ref": "196"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -3446,7 +3488,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "109"
+                  "$ref": "110"
                 }
               },
               "isOverride": false,
@@ -3455,7 +3497,7 @@
               "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.ComputeDisk.Disks.get"
             },
             {
-              "$id": "206",
+              "$id": "212",
               "kind": "lro",
               "name": "createOrUpdate",
               "isExactName": false,
@@ -3466,7 +3508,7 @@
               ],
               "doc": "Creates or updates a disk.",
               "operation": {
-                "$id": "207",
+                "$id": "213",
                 "name": "createOrUpdate",
                 "isExactName": false,
                 "resourceName": "Disk",
@@ -3474,13 +3516,13 @@
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "208",
+                    "$id": "214",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "209",
+                      "$id": "215",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3490,7 +3532,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "210",
+                        "$id": "216",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -3513,22 +3555,29 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "188"
+                        "$ref": "192"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "211",
+                    "$id": "217",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "212",
+                      "$id": "218",
                       "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "219",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
                       "decorators": []
                     },
                     "isApiVersion": false,
@@ -3552,19 +3601,19 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.ComputeDisk.Disks.createOrUpdate.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "193"
+                        "$ref": "198"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "213",
+                    "$id": "220",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "214",
+                      "$id": "221",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3605,13 +3654,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.ComputeDisk.Disks.createOrUpdate.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "215",
+                        "$id": "222",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "216",
+                          "$id": "223",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3654,13 +3703,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "217",
+                    "$id": "224",
                     "kind": "path",
                     "name": "diskName",
                     "serializedName": "diskName",
                     "doc": "The name of the Disk",
                     "type": {
-                      "$id": "218",
+                      "$id": "225",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3685,13 +3734,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.ComputeDisk.Disks.createOrUpdate.diskName",
                     "methodParameterSegments": [
                       {
-                        "$id": "219",
+                        "$id": "226",
                         "kind": "method",
                         "name": "diskName",
                         "serializedName": "diskName",
                         "doc": "The name of the Disk",
                         "type": {
-                          "$id": "220",
+                          "$id": "227",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3718,7 +3767,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "221",
+                    "$id": "228",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -3735,7 +3784,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.ComputeDisk.Disks.createOrUpdate.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "222",
+                        "$id": "229",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
@@ -3757,7 +3806,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "223",
+                    "$id": "230",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -3773,7 +3822,7 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.ComputeDisk.Disks.createOrUpdate.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "224",
+                        "$id": "231",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -3794,13 +3843,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "225",
+                    "$id": "232",
                     "kind": "body",
                     "name": "resource",
                     "serializedName": "resource",
                     "doc": "Resource create parameters.",
                     "type": {
-                      "$ref": "109"
+                      "$ref": "110"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -3814,13 +3863,13 @@
                     "crossLanguageDefinitionId": "Azure.ResourceManager.MultiService.ComputeDisk.Disks.createOrUpdate.resource",
                     "methodParameterSegments": [
                       {
-                        "$id": "226",
+                        "$id": "233",
                         "kind": "method",
                         "name": "resource",
                         "serializedName": "resource",
                         "doc": "Resource create parameters.",
                         "type": {
-                          "$ref": "109"
+                          "$ref": "110"
                         },
                         "location": "Body",
                         "isApiVersion": false,
@@ -3847,7 +3896,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "109"
+                      "$ref": "110"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -3865,7 +3914,7 @@
                       201
                     ],
                     "bodyType": {
-                      "$ref": "109"
+                      "$ref": "110"
                     },
                     "headers": [
                       {
@@ -3873,7 +3922,7 @@
                         "nameInResponse": "Azure-AsyncOperation",
                         "doc": "A link to the status monitor",
                         "type": {
-                          "$id": "227",
+                          "$id": "234",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3885,7 +3934,7 @@
                         "nameInResponse": "Retry-After",
                         "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
                         "type": {
-                          "$id": "228",
+                          "$id": "235",
                           "kind": "int32",
                           "name": "int32",
                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -3924,27 +3973,27 @@
               },
               "parameters": [
                 {
-                  "$ref": "215"
-                },
-                {
-                  "$ref": "219"
+                  "$ref": "222"
                 },
                 {
                   "$ref": "226"
                 },
                 {
-                  "$ref": "222"
+                  "$ref": "233"
                 },
                 {
-                  "$ref": "224"
+                  "$ref": "229"
                 },
                 {
-                  "$id": "229",
+                  "$ref": "231"
+                },
+                {
+                  "$id": "236",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "212"
+                    "$ref": "218"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -3957,7 +4006,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "109"
+                  "$ref": "110"
                 }
               },
               "isOverride": false,
@@ -3971,7 +4020,7 @@
                     200
                   ],
                   "bodyType": {
-                    "$ref": "109"
+                    "$ref": "110"
                   }
                 }
               }
@@ -3979,13 +4028,13 @@
           ],
           "parameters": [
             {
-              "$id": "230",
+              "$id": "237",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "231",
+                "$id": "238",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -3996,7 +4045,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "232",
+                  "$id": "239",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4010,7 +4059,7 @@
               "isExactName": false
             },
             {
-              "$ref": "188"
+              "$ref": "192"
             }
           ],
           "initializedBy": 0,
@@ -4026,7 +4075,7 @@
             "2025-01-02"
           ],
           "parent": {
-            "$ref": "115"
+            "$ref": "116"
           },
           "isMultiServiceClient": false
         }

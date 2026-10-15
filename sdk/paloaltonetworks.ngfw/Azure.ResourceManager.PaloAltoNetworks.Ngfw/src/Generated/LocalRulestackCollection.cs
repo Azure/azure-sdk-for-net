@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LocalRulestackCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(LocalRulestackResource.ResourceType, out string localRulestackApiVersion);
             _localRulestacksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", LocalRulestackResource.ResourceType.Namespace, Diagnostics);
-            _localRulestacksRestClient = new LocalRulestacks(_localRulestacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, localRulestackApiVersion ?? "2026-07-29-preview");
+            _localRulestacksRestClient = new LocalRulestacks(_localRulestacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("PaloAltoNetworks.Cloudngfw/localRulestacks", out string localRulestacksApiVersionOverride) ? localRulestacksApiVersionOverride : "2026-07-29-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LocalRulestackData, LocalRulestackResource>(new LocalRulestacksGetByResourceGroupAsyncCollectionResultOfT(_localRulestacksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "LocalRulestackCollection.GetAll"), data => new LocalRulestackResource(Client, data));
+            return new AsyncPageableWrapper<LocalRulestackData, LocalRulestackResource>(new LocalRulestackDataAsyncCollectionResultOfT(_localRulestacksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "LocalRulestackCollection.GetAll"), data => new LocalRulestackResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LocalRulestackData, LocalRulestackResource>(new LocalRulestacksGetByResourceGroupCollectionResultOfT(_localRulestacksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "LocalRulestackCollection.GetAll"), data => new LocalRulestackResource(Client, data));
+            return new PageableWrapper<LocalRulestackData, LocalRulestackResource>(new LocalRulestackDataCollectionResultOfT(_localRulestacksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "LocalRulestackCollection.GetAll"), data => new LocalRulestackResource(Client, data));
         }
 
         /// <summary>

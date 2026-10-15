@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Resources to remove from a scheduled action. </summary>
+    /// <summary> Resources to remove from a recurring bulk action. </summary>
     public partial class ResourceDetachRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LocalRulestackResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string localRulestackApiVersion);
             _localRulestacksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _localRulestacksRestClient = new LocalRulestacks(_localRulestacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, localRulestackApiVersion ?? "2026-07-29-preview");
+            _localRulestacksRestClient = new LocalRulestacks(_localRulestacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("PaloAltoNetworks.Cloudngfw/localRulestacks", out string localRulestacksApiVersionOverride) ? localRulestacksApiVersionOverride : "2026-07-29-preview");
             ValidateResourceId(id);
         }
 
@@ -819,7 +818,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new LocalRulestacksGetAppIdsAsyncCollectionResultOfT(
+            return new StringAsyncCollectionResultOfT(
                 _localRulestacksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -865,7 +864,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new LocalRulestacksGetAppIdsCollectionResultOfT(
+            return new StringCollectionResultOfT(
                 _localRulestacksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -909,7 +908,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new LocalRulestacksGetCountriesAsyncCollectionResultOfT(
+            return new RulestackCountryAsyncCollectionResultOfT(
                 _localRulestacksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -951,7 +950,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new LocalRulestacksGetCountriesCollectionResultOfT(
+            return new RulestackCountryCollectionResultOfT(
                 _localRulestacksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -993,7 +992,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new LocalRulestacksGetPredefinedUrlCategoriesAsyncCollectionResultOfT(
+            return new PredefinedUrlCategoryAsyncCollectionResultOfT(
                 _localRulestacksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1035,7 +1034,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new LocalRulestacksGetPredefinedUrlCategoriesCollectionResultOfT(
+            return new PredefinedUrlCategoryCollectionResultOfT(
                 _localRulestacksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

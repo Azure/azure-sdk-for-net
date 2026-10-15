@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerAppJobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string containerAppJobApiVersion);
             _containerAppJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobApiVersion ?? "2026-07-01");
+            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -435,7 +434,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerAppJobsGetSecretsAsyncCollectionResultOfT(
+            return new ContainerAppWritableSecretAsyncCollectionResultOfT(
                 _containerAppJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -473,7 +472,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerAppJobsGetSecretsCollectionResultOfT(
+            return new ContainerAppWritableSecretCollectionResultOfT(
                 _containerAppJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

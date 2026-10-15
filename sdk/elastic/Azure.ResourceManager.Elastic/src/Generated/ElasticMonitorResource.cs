@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ElasticMonitorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string elasticMonitorApiVersion);
             _elasticMonitorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ResourceType.Namespace, Diagnostics);
-            _elasticMonitorResourcesRestClient = new ElasticMonitorResources(_elasticMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticMonitorApiVersion ?? "2025-06-01");
+            _elasticMonitorResourcesRestClient = new ElasticMonitorResources(_elasticMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Elastic/monitors", out string elasticMonitorResourcesApiVersionOverride) ? elasticMonitorResourcesApiVersionOverride : "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -721,7 +720,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetConnectedPartnerResourcesAsyncCollectionResultOfT(
+            return new ConnectedPartnerResourceInfoAsyncCollectionResultOfT(
                 _elasticMonitorResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -759,7 +758,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetConnectedPartnerResourcesCollectionResultOfT(
+            return new ConnectedPartnerResourceInfoCollectionResultOfT(
                 _elasticMonitorResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1577,7 +1576,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetMonitoredResourcesAsyncCollectionResultOfT(
+            return new MonitoredResourceInfoAsyncCollectionResultOfT(
                 _elasticMonitorResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1615,7 +1614,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetMonitoredResourcesCollectionResultOfT(
+            return new MonitoredResourceInfoCollectionResultOfT(
                 _elasticMonitorResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2137,7 +2136,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetVmHostsAsyncCollectionResultOfT(
+            return new ElasticVmResourceInfoAsyncCollectionResultOfT(
                 _elasticMonitorResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2175,7 +2174,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetVmHostsCollectionResultOfT(
+            return new ElasticVmResourceInfoCollectionResultOfT(
                 _elasticMonitorResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

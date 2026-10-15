@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FirewallPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(FirewallPolicyResource.ResourceType, out string firewallPolicyApiVersion);
             _firewallPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FirewallPolicyResource.ResourceType.Namespace, Diagnostics);
-            _firewallPoliciesRestClient = new FirewallPolicies(_firewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyApiVersion ?? "2026-01-01");
+            _firewallPoliciesRestClient = new FirewallPolicies(_firewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -298,7 +297,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FirewallPolicyData, FirewallPolicyResource>(new FirewallPoliciesListAsyncCollectionResultOfT(_firewallPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirewallPolicyCollection.GetAll"), data => new FirewallPolicyResource(Client, data));
+            return new AsyncPageableWrapper<FirewallPolicyData, FirewallPolicyResource>(new FirewallPolicyDataAsyncCollectionResultOfT(_firewallPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirewallPolicyCollection.GetAll"), data => new FirewallPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +325,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FirewallPolicyData, FirewallPolicyResource>(new FirewallPoliciesListCollectionResultOfT(_firewallPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirewallPolicyCollection.GetAll"), data => new FirewallPolicyResource(Client, data));
+            return new PageableWrapper<FirewallPolicyData, FirewallPolicyResource>(new FirewallPolicyDataCollectionResultOfT(_firewallPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirewallPolicyCollection.GetAll"), data => new FirewallPolicyResource(Client, data));
         }
 
         /// <summary>

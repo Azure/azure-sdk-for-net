@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBFleetspaceData, CosmosDBFleetspaceResource>(new FleetspaceGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBFleetspaceData, CosmosDBFleetspaceResource>(new CosmosDBFleetspaceDataAsyncCollectionResultOfT(
                 _fleetspaceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBFleetspaceData, CosmosDBFleetspaceResource>(new FleetspaceGetAllCollectionResultOfT(
+            return new PageableWrapper<CosmosDBFleetspaceData, CosmosDBFleetspaceResource>(new CosmosDBFleetspaceDataCollectionResultOfT(
                 _fleetspaceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _content;
+        internal bool _contentIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningDeploymentLogs"/>. </summary>
         internal MachineLearningDeploymentLogs()
@@ -27,12 +29,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningDeploymentLogs(string content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Content = content;
+            _content = content;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The retrieved online deployment logs. </summary>
         [WirePath("content")]
-        public string Content { get; }
+        public string Content
+        {
+            get
+            {
+                return _content;
+            }
+        }
     }
 }

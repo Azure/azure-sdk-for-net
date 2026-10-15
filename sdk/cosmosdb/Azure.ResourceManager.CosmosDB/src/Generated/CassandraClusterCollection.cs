@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CassandraClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(CassandraClusterResource.ResourceType, out string cassandraClusterApiVersion);
             _cassandraClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CassandraClusterResource.ResourceType.Namespace, Diagnostics);
-            _cassandraClustersRestClient = new CassandraClusters(_cassandraClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cassandraClusterApiVersion ?? "2026-04-01-preview");
+            _cassandraClustersRestClient = new CassandraClusters(_cassandraClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DocumentDB/cassandraClusters", out string cassandraClustersApiVersionOverride) ? cassandraClustersApiVersionOverride : "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CassandraClusterData, CassandraClusterResource>(new CassandraClustersGetByResourceGroupAsyncCollectionResultOfT(_cassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CassandraClusterCollection.GetAll"), data => new CassandraClusterResource(Client, data));
+            return new AsyncPageableWrapper<CassandraClusterData, CassandraClusterResource>(new CassandraClusterDataAsyncCollectionResultOfT(_cassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CassandraClusterCollection.GetAll"), data => new CassandraClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CassandraClusterData, CassandraClusterResource>(new CassandraClustersGetByResourceGroupCollectionResultOfT(_cassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CassandraClusterCollection.GetAll"), data => new CassandraClusterResource(Client, data));
+            return new PageableWrapper<CassandraClusterData, CassandraClusterResource>(new CassandraClusterDataCollectionResultOfT(_cassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CassandraClusterCollection.GetAll"), data => new CassandraClusterResource(Client, data));
         }
 
         /// <summary>

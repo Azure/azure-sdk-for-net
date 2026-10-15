@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OperationListResult(value, additionalBinaryDataProperties);
+            return new OperationListResult(value ?? new ChangeTrackingList<ResourceHealthOperationInfo>(), additionalBinaryDataProperties);
         }
     }
 }

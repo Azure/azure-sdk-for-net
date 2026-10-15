@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DevCenterNetworkConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string devCenterNetworkConnectionApiVersion);
             _networkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _networkConnectionsRestClient = new NetworkConnections(_networkConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterNetworkConnectionApiVersion ?? "2026-01-01-preview");
+            _networkConnectionsRestClient = new NetworkConnections(_networkConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -436,7 +435,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new NetworkConnectionsGetOutboundEnvironmentEndpointsAsyncCollectionResultOfT(
+            return new OutboundEnvironmentEndpointAsyncCollectionResultOfT(
                 _networkConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -476,7 +475,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new NetworkConnectionsGetOutboundEnvironmentEndpointsCollectionResultOfT(
+            return new OutboundEnvironmentEndpointCollectionResultOfT(
                 _networkConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

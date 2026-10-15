@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
 
         private ClientDiagnostics ProfilesClientDiagnostics => _profilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TrafficManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01");
+        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(
+            ProfilesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-09-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Lists all Traffic Manager profiles within a subscription.
@@ -65,7 +71,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new ProfilesGetBySubscriptionAsyncCollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles"), data => new TrafficManagerProfileResource(Client, data));
+            return new AsyncPageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new TrafficManagerProfileDataAsyncCollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles"), data => new TrafficManagerProfileResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +99,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new ProfilesGetBySubscriptionCollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles"), data => new TrafficManagerProfileResource(Client, data));
+            return new PageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new TrafficManagerProfileDataCollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles"), data => new TrafficManagerProfileResource(Client, data));
         }
 
         /// <summary>

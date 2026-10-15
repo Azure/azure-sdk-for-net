@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.ContainerService.Mocking
 
         private ClientDiagnostics ManagedClustersClientDiagnostics => _managedClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedClusters ManagedClustersRestClient => _managedClustersRestClient ??= new ManagedClusters(ManagedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private ManagedClusters ManagedClustersRestClient => _managedClustersRestClient ??= new ManagedClusters(ManagedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerService/managedClusters", out string apiVersion) ? apiVersion : "2026-07-01");
 
         private ClientDiagnostics SnapshotsClientDiagnostics => _snapshotsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Snapshots SnapshotsRestClient => _snapshotsRestClient ??= new Snapshots(SnapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private Snapshots SnapshotsRestClient => _snapshotsRestClient ??= new Snapshots(SnapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerService/snapshots", out string apiVersion0) ? apiVersion0 : "2026-07-01");
 
         private ClientDiagnostics ManagedClustersOperationGroupClientDiagnostics => _managedClustersOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ManagedClustersGetContainerServiceManagedClustersAsyncCollectionResultOfT(ManagedClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetContainerServiceManagedClusters"), data => new ContainerServiceManagedClusterResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ContainerServiceManagedClusterDataAsync0CollectionResultOfT(ManagedClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetContainerServiceManagedClusters"), data => new ContainerServiceManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ManagedClustersGetContainerServiceManagedClustersCollectionResultOfT(ManagedClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetContainerServiceManagedClusters"), data => new ContainerServiceManagedClusterResource(Client, data));
+            return new PageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ContainerServiceManagedClusterData0CollectionResultOfT(ManagedClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetContainerServiceManagedClusters"), data => new ContainerServiceManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new SnapshotsGetAllAsyncCollectionResultOfT(SnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots"), data => new AgentPoolSnapshotResource(Client, data));
+            return new AsyncPageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new AgentPoolSnapshotDataAsync0CollectionResultOfT(SnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots"), data => new AgentPoolSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new SnapshotsGetAllCollectionResultOfT(SnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots"), data => new AgentPoolSnapshotResource(Client, data));
+            return new PageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new AgentPoolSnapshotData0CollectionResultOfT(SnapshotsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots"), data => new AgentPoolSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new TrustedAccessRolesOperationGroupGetTrustedAccessRolesAsyncCollectionResultOfT(TrustedAccessRolesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles");
+            return new ContainerServiceTrustedAccessRoleAsyncCollectionResultOfT(TrustedAccessRolesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles");
         }
 
         /// <summary>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new TrustedAccessRolesOperationGroupGetTrustedAccessRolesCollectionResultOfT(TrustedAccessRolesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles");
+            return new ContainerServiceTrustedAccessRoleCollectionResultOfT(TrustedAccessRolesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles");
         }
     }
 }

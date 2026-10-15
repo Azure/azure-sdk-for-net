@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             TryGetApiVersion(ResourceType, out string redisEnterpriseClusterApiVersion);
             _redisEnterpriseClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ResourceType.Namespace, Diagnostics);
-            _redisEnterpriseClusterRestClient = new RedisEnterpriseCluster(_redisEnterpriseClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseClusterApiVersion ?? "2026-06-01-preview");
+            _redisEnterpriseClusterRestClient = new RedisEnterpriseCluster(_redisEnterpriseClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Cache/redisEnterprise", out string redisEnterpriseClusterApiVersionOverride) ? redisEnterpriseClusterApiVersionOverride : "2026-06-01-preview");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ResourceType.Namespace, Diagnostics);
             _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseClusterApiVersion ?? "2026-06-01-preview");
             ValidateResourceId(id);
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetPrivateLinkResourcesByClusterAsyncCollectionResultOfT(
+            return new RedisEnterprisePrivateLinkResourceAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetPrivateLinkResourcesByClusterCollectionResultOfT(
+            return new RedisEnterprisePrivateLinkResourceCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

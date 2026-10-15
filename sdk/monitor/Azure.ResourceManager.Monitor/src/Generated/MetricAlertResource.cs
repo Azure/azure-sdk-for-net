@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(ResourceType, out string metricAlertApiVersion);
             _metricAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _metricAlertsRestClient = new MetricAlerts(_metricAlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, metricAlertApiVersion ?? "2026-01-01");
+            _metricAlertsRestClient = new MetricAlerts(_metricAlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _metricAlertsStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
             _metricAlertsStatusRestClient = new MetricAlertsStatus(_metricAlertsStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, metricAlertApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricAlertsStatusGetAllMetricAlertsStatusAsyncCollectionResultOfT(
+            return new MetricAlertStatusAsyncCollectionResultOfT(
                 _metricAlertsStatusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricAlertsStatusGetAllMetricAlertsStatusCollectionResultOfT(
+            return new MetricAlertStatusCollectionResultOfT(
                 _metricAlertsStatusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricAlertsStatusGetAllMetricAlertsStatusByNameAsyncCollectionResultOfT(
+            return new MetricAlertStatusAsync0CollectionResultOfT(
                 _metricAlertsStatusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new MetricAlertsStatusGetAllMetricAlertsStatusByNameCollectionResultOfT(
+            return new MetricAlertStatus0CollectionResultOfT(
                 _metricAlertsStatusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(ResourceType, out string virtualApplicationGroupApiVersion);
             _applicationGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _applicationGroupsRestClient = new ApplicationGroups(_applicationGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualApplicationGroupApiVersion ?? "2026-03-01-preview");
+            _applicationGroupsRestClient = new ApplicationGroups(_applicationGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DesktopVirtualization/applicationGroups", out string applicationGroupsApiVersionOverride) ? applicationGroupsApiVersionOverride : "2026-03-01-preview");
             _startMenuItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _startMenuItemsRestClient = new StartMenuItems(_startMenuItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualApplicationGroupApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new StartMenuItemsGetStartMenuItemsAsyncCollectionResultOfT(
+            return new DesktopVirtualizationStartMenuItemAsyncCollectionResultOfT(
                 _startMenuItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new StartMenuItemsGetStartMenuItemsCollectionResultOfT(
+            return new DesktopVirtualizationStartMenuItemCollectionResultOfT(
                 _startMenuItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

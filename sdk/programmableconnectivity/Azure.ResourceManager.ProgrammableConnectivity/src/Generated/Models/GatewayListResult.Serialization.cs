@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GatewayListResult(value, nextLink, additionalBinaryDataProperties);
+            return new GatewayListResult(value ?? new ChangeTrackingList<ProgrammableConnectivityGatewayData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

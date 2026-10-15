@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ContainerAppJobExecutionResource.ResourceType, out string containerAppJobExecutionApiVersion);
             _containerAppJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobExecutionResource.ResourceType.Namespace, Diagnostics);
-            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobExecutionApiVersion ?? "2026-07-01");
+            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _jobsExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobExecutionResource.ResourceType.Namespace, Diagnostics);
             _jobsExecutionsRestClient = new JobsExecutions(_jobsExecutionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobExecutionApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppJobExecutionData, ContainerAppJobExecutionResource>(new JobsExecutionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerAppJobExecutionData, ContainerAppJobExecutionResource>(new ContainerAppJobExecutionDataAsyncCollectionResultOfT(
                 _jobsExecutionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppJobExecutionData, ContainerAppJobExecutionResource>(new JobsExecutionsGetAllCollectionResultOfT(
+            return new PageableWrapper<ContainerAppJobExecutionData, ContainerAppJobExecutionResource>(new ContainerAppJobExecutionDataCollectionResultOfT(
                 _jobsExecutionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

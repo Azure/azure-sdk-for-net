@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
 
         private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NapsterOmniagentApi.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-11");
+        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Napster.CompanionAPI/organizations", out string apiVersion) ? apiVersion : "2026-08-11");
 
         private ClientDiagnostics SaaSOperationGroupClientDiagnostics => _saaSOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NapsterOmniagentApi.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NapsterOrganizationData, NapsterOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizations"), data => new NapsterOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<NapsterOrganizationData, NapsterOrganizationResource>(new NapsterOrganizationDataAsync0CollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizations"), data => new NapsterOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NapsterOrganizationData, NapsterOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizations"), data => new NapsterOrganizationResource(Client, data));
+            return new PageableWrapper<NapsterOrganizationData, NapsterOrganizationResource>(new NapsterOrganizationData0CollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizations"), data => new NapsterOrganizationResource(Client, data));
         }
 
         /// <summary>

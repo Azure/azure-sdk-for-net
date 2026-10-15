@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WebPubSubResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string webPubSubApiVersion);
             _webPubSubResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, Diagnostics);
-            _webPubSubResourcesRestClient = new WebPubSubResources(_webPubSubResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubApiVersion ?? "2025-08-01-preview");
+            _webPubSubResourcesRestClient = new WebPubSubResources(_webPubSubResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.SignalRService/webPubSub", out string webPubSubResourcesApiVersionOverride) ? webPubSubResourcesApiVersionOverride : "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -435,7 +434,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new WebPubSubResourcesGetWebPubSubPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new WebPubSubPrivateLinkAsyncCollectionResultOfT(
                 _webPubSubResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -473,7 +472,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new WebPubSubResourcesGetWebPubSubPrivateLinkResourcesCollectionResultOfT(
+            return new WebPubSubPrivateLinkCollectionResultOfT(
                 _webPubSubResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -607,7 +606,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new WebPubSubResourcesGetSkusAsyncCollectionResultOfT(
+            return new WebPubSubSkuAsyncCollectionResultOfT(
                 _webPubSubResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -645,7 +644,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new WebPubSubResourcesGetSkusCollectionResultOfT(
+            return new WebPubSubSkuCollectionResultOfT(
                 _webPubSubResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

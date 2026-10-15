@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(ResourceType, out string devTestLabApiVersion);
             _labsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
-            _labsRestClient = new Labs(_labsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabApiVersion ?? "2018-09-15");
+            _labsRestClient = new Labs(_labsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DevTestLab/labs", out string labsApiVersionOverride) ? labsApiVersionOverride : "2018-09-15");
             _galleryImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
             _galleryImagesRestClient = new GalleryImages(_galleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabApiVersion ?? "2018-09-15");
             _policySetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new GalleryImagesGetGalleryImagesAsyncCollectionResultOfT(
+            return new DevTestLabGalleryImageAsyncCollectionResultOfT(
                 _galleryImagesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new GalleryImagesGetGalleryImagesCollectionResultOfT(
+            return new DevTestLabGalleryImageCollectionResultOfT(
                 _galleryImagesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new LabsGetDevTestLabVhdsAsyncCollectionResultOfT(
+            return new DevTestLabVhdAsyncCollectionResultOfT(
                 _labsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1081,7 +1081,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new LabsGetDevTestLabVhdsCollectionResultOfT(
+            return new DevTestLabVhdCollectionResultOfT(
                 _labsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

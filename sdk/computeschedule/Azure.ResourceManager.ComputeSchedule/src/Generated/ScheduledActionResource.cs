@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             TryGetApiVersion(ResourceType, out string scheduledActionApiVersion);
             _scheduledActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule", ResourceType.Namespace, Diagnostics);
-            _scheduledActionsRestClient = new ScheduledActions(_scheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledActionApiVersion ?? "2026-04-15-preview");
+            _scheduledActionsRestClient = new ScheduledActions(
+                _scheduledActionsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                scheduledActionApiVersion ?? "2026-04-15-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -905,7 +911,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionsGetAttachedResourcesAsyncCollectionResultOfT(
+            return new ScheduledActionResourceDetailsAsyncCollectionResultOfT(
                 _scheduledActionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -943,7 +949,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionsGetAttachedResourcesCollectionResultOfT(
+            return new ScheduledActionResourceDetailsCollectionResultOfT(
                 _scheduledActionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

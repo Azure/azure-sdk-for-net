@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CognitiveServicesAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string cognitiveServicesAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesAccountApiVersion ?? "2026-07-01");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.CognitiveServices/accounts", out string accountsApiVersionOverride) ? accountsApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -641,7 +640,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetModelsAsyncCollectionResultOfT(
+            return new CognitiveServicesAccountModelAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -679,7 +678,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetModelsCollectionResultOfT(
+            return new CognitiveServicesAccountModelCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -717,7 +716,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetSkusAsyncCollectionResultOfT(
+            return new CognitiveServicesAccountSkuAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -755,7 +754,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetSkusCollectionResultOfT(
+            return new CognitiveServicesAccountSkuCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -794,7 +793,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetUsagesAsyncCollectionResultOfT(
+            return new ServiceAccountUsageAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -834,7 +833,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetUsagesCollectionResultOfT(
+            return new ServiceAccountUsageCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -873,7 +872,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new CognitiveServicesPrivateLinkResourceAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -911,7 +910,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetPrivateLinkResourcesCollectionResultOfT(
+            return new CognitiveServicesPrivateLinkResourceCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

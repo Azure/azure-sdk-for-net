@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableSqlDatabasesGetRestorableSqlDatabasesAsyncCollectionResultOfT(
+            return new RestorableSqlDatabaseAsyncCollectionResultOfT(
                 _restorableSqlDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableSqlDatabasesGetRestorableSqlDatabasesCollectionResultOfT(
+            return new RestorableSqlDatabaseCollectionResultOfT(
                 _restorableSqlDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableGremlinDatabasesGetRestorableGremlinDatabasesAsyncCollectionResultOfT(
+            return new RestorableGremlinDatabaseAsyncCollectionResultOfT(
                 _restorableGremlinDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableGremlinDatabasesGetRestorableGremlinDatabasesCollectionResultOfT(
+            return new RestorableGremlinDatabaseCollectionResultOfT(
                 _restorableGremlinDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableGremlinGraphsGetRestorableGremlinGraphsAsyncCollectionResultOfT(
+            return new RestorableGremlinGraphAsyncCollectionResultOfT(
                 _restorableGremlinGraphsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableGremlinGraphsGetRestorableGremlinGraphsCollectionResultOfT(
+            return new RestorableGremlinGraphCollectionResultOfT(
                 _restorableGremlinGraphsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableGremlinResourcesGetRestorableGremlinResourcesAsyncCollectionResultOfT(
+            return new RestorableGremlinResourceDataAsyncCollectionResultOfT(
                 _restorableGremlinResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableGremlinResourcesGetRestorableGremlinResourcesCollectionResultOfT(
+            return new RestorableGremlinResourceDataCollectionResultOfT(
                 _restorableGremlinResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableMongodbCollectionsGetRestorableMongoDBCollectionsAsyncCollectionResultOfT(
+            return new RestorableMongoDBCollectionAsyncCollectionResultOfT(
                 _restorableMongodbCollectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableMongodbCollectionsGetRestorableMongoDBCollectionsCollectionResultOfT(
+            return new RestorableMongoDBCollectionCollectionResultOfT(
                 _restorableMongodbCollectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableMongodbDatabasesGetRestorableMongoDBDatabasesAsyncCollectionResultOfT(
+            return new RestorableMongoDBDatabaseAsyncCollectionResultOfT(
                 _restorableMongodbDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableMongodbDatabasesGetRestorableMongoDBDatabasesCollectionResultOfT(
+            return new RestorableMongoDBDatabaseCollectionResultOfT(
                 _restorableMongodbDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableMongodbResourcesGetAllRestorableMongoDBResourceDataAsyncCollectionResultOfT(
+            return new RestorableMongoDBResourceDataAsyncCollectionResultOfT(
                 _restorableMongodbResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableMongodbResourcesGetAllRestorableMongoDBResourceDataCollectionResultOfT(
+            return new RestorableMongoDBResourceDataCollectionResultOfT(
                 _restorableMongodbResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableSqlContainersGetRestorableSqlContainersAsyncCollectionResultOfT(
+            return new RestorableSqlContainerAsyncCollectionResultOfT(
                 _restorableSqlContainersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableSqlContainersGetRestorableSqlContainersCollectionResultOfT(
+            return new RestorableSqlContainerCollectionResultOfT(
                 _restorableSqlContainersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableSqlResourcesGetAllRestorableSqlResourceDataAsyncCollectionResultOfT(
+            return new RestorableSqlResourceDataAsyncCollectionResultOfT(
                 _restorableSqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableSqlResourcesGetAllRestorableSqlResourceDataCollectionResultOfT(
+            return new RestorableSqlResourceDataCollectionResultOfT(
                 _restorableSqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -1007,7 +1007,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableTableResourcesGetRestorableTableResourcesAsyncCollectionResultOfT(
+            return new RestorableTableResourceDataAsyncCollectionResultOfT(
                 _restorableTableResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableTableResourcesGetRestorableTableResourcesCollectionResultOfT(
+            return new RestorableTableResourceDataCollectionResultOfT(
                 _restorableTableResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableTablesGetRestorableTablesAsyncCollectionResultOfT(
+            return new RestorableTableAsyncCollectionResultOfT(
                 _restorableTablesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -1133,7 +1133,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new RestorableTablesGetRestorableTablesCollectionResultOfT(
+            return new RestorableTableCollectionResultOfT(
                 _restorableTablesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,

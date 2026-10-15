@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             TryGetApiVersion(ResourceType, out string paymentHsmClusterApiVersion);
             _paymentHsmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
-            _paymentHsmClustersRestClient = new PaymentHsmClusters(_paymentHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, paymentHsmClusterApiVersion ?? "2025-12-01-preview");
+            _paymentHsmClustersRestClient = new PaymentHsmClusters(_paymentHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HardwareSecurityModules/paymentHsmClusters", out string paymentHsmClustersApiVersionOverride) ? paymentHsmClustersApiVersionOverride : "2025-12-01-preview");
             _paymentHsmClusterPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
             _paymentHsmClusterPrivateLinkResourcesRestClient = new PaymentHsmClusterPrivateLinkResources(_paymentHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, paymentHsmClusterApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new PaymentHsmClusterPrivateLinkResourcesGetByPaymentHsmClusterAsyncCollectionResultOfT(
+            return new CloudHsmClusterPrivateLinkDataAsync0CollectionResultOfT(
                 _paymentHsmClusterPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new PaymentHsmClusterPrivateLinkResourcesGetByPaymentHsmClusterCollectionResultOfT(
+            return new CloudHsmClusterPrivateLinkData0CollectionResultOfT(
                 _paymentHsmClusterPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(ResourceType, out string dataCollectionRuleApiVersion);
             _dataCollectionRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _dataCollectionRulesRestClient = new DataCollectionRules(_dataCollectionRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataCollectionRuleApiVersion ?? "2024-03-11");
+            _dataCollectionRulesRestClient = new DataCollectionRules(_dataCollectionRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _dataCollectionRuleAssociationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
             _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociations(_dataCollectionRuleAssociationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataCollectionRuleApiVersion ?? "2024-03-11");
             ValidateResourceId(id);
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetDataCollectionRuleAssociationsByRuleAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationDataAsync1CollectionResultOfT(
                 _dataCollectionRuleAssociationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetDataCollectionRuleAssociationsByRuleCollectionResultOfT(
+            return new PageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationData1CollectionResultOfT(
                 _dataCollectionRuleAssociationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

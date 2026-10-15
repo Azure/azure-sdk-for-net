@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceMaintenanceConfigurationData, ContainerServiceMaintenanceConfigurationResource>(new MaintenanceConfigurationsGetByManagedClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerServiceMaintenanceConfigurationData, ContainerServiceMaintenanceConfigurationResource>(new ContainerServiceMaintenanceConfigurationDataAsyncCollectionResultOfT(
                 _maintenanceConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceMaintenanceConfigurationData, ContainerServiceMaintenanceConfigurationResource>(new MaintenanceConfigurationsGetByManagedClusterCollectionResultOfT(
+            return new PageableWrapper<ContainerServiceMaintenanceConfigurationData, ContainerServiceMaintenanceConfigurationResource>(new ContainerServiceMaintenanceConfigurationDataCollectionResultOfT(
                 _maintenanceConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

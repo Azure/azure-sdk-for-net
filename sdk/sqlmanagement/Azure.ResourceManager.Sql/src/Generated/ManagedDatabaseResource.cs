@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedDatabaseSecurityEventsGetManagedDatabaseSecurityEventsByDatabaseAsyncCollectionResultOfT(
+            return new SecurityEventAsyncCollectionResultOfT(
                 _managedDatabaseSecurityEventsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedDatabaseSecurityEventsGetManagedDatabaseSecurityEventsByDatabaseCollectionResultOfT(
+            return new SecurityEventCollectionResultOfT(
                 _managedDatabaseSecurityEventsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

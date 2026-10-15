@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Azure.Core;
@@ -18,6 +20,10 @@ namespace Azure.Security.Attestation
     // These models have public constructors and setters, so factory methods add nothing for mocking.
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("TpmAttestationRequest", typeof(BinaryData))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("StoredAttestationPolicy", typeof(string))]
+    // Replaced below by an overload without the internal revocation endpoint.
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AttestationOpenIdMetadata", typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(string), typeof(string), typeof(Uri), typeof(IEnumerable<string>))]
+    // Replaced below by the same overload with an accurate description of the token.
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SealedAttestationResult", typeof(string))]
     public static partial class AttestationModelFactory
     {
         /// <summary>
@@ -70,6 +76,7 @@ namespace Azure.Security.Attestation
         /// <param name="deprecatedPolicySigner"> DEPRECATED: Private Preview version of x-ms-policy-signer. </param>
         /// <param name="deprecatedPolicyHash"> DEPRECATED: Private Preview version of x-ms-policy-hash. </param>
         /// <param name="deprecatedRpData"> DEPRECATED: Private Preview version of nonce. </param>
+        /// <param name="additionalClaims"> The token's claims that have no dedicated property, as returned by <see cref="Attestation.AttestationResult.AdditionalClaims"/>; each value is the claim's JSON value. </param>
         /// <returns>An <see cref="Attestation.AttestationResult"/> object.</returns>
         public static AttestationResult AttestationResult(
             string jti = null,
@@ -105,7 +112,8 @@ namespace Azure.Security.Attestation
             string deprecatedTee = null,
             AttestationSigner deprecatedPolicySigner = null,
             BinaryData deprecatedPolicyHash = null,
-            string deprecatedRpData = null)
+            string deprecatedRpData = null,
+            IReadOnlyDictionary<string, BinaryData> additionalClaims = null)
         {
             return new AttestationResult(jti,
                 issuer,
@@ -141,8 +149,17 @@ namespace Azure.Security.Attestation
                 deprecatedPolicySigner,
                 deprecatedPolicyHash,
                 deprecatedRpData,
-                null);
+                additionalClaims?.ToDictionary(claim => claim.Key, claim => claim.Value));
         }
+
+        /// <summary> Initializes a new instance of AttestationResult for mocking purposes. </summary>
+        /// <returns>An <see cref="Attestation.AttestationResult"/> object.</returns>
+        // The 1.0.0 signature, kept for compatibility; without defaults it never competes with the overload above.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1573 // Parameters are documented on the overload above.
+        public static AttestationResult AttestationResult(string jti, string issuer, DateTimeOffset issuedAt, DateTimeOffset expiration, DateTimeOffset notBefore, object cnf, string nonce, string version, object runtimeClaims, object inittimeClaims, object policyClaims, string verifierType, AttestationSigner policySigner, BinaryData policyHash, bool? isDebuggable, float? productId, string mrEnclave, string mrSigner, float? svn, BinaryData enclaveHeldData, object sgxCollateral, string deprecatedVersion, bool? deprecatedIsDebuggable, object deprecatedSgxCollateral, BinaryData deprecatedEnclaveHeldData, BinaryData deprecatedEnclaveHeldData2, float? deprecatedProductId, string deprecatedMrEnclave, string deprecatedMrSigner, float? deprecatedSvn, string deprecatedTee, AttestationSigner deprecatedPolicySigner, BinaryData deprecatedPolicyHash, string deprecatedRpData)
+#pragma warning restore CS1573
+            => AttestationResult(jti, issuer, issuedAt, expiration, notBefore, cnf, nonce, version, runtimeClaims, inittimeClaims, policyClaims, verifierType, policySigner, policyHash, isDebuggable, productId, mrEnclave, mrSigner, svn, enclaveHeldData, sgxCollateral, deprecatedVersion, deprecatedIsDebuggable, deprecatedSgxCollateral, deprecatedEnclaveHeldData, deprecatedEnclaveHeldData2, deprecatedProductId, deprecatedMrEnclave, deprecatedMrSigner, deprecatedSvn, deprecatedTee, deprecatedPolicySigner, deprecatedPolicyHash, deprecatedRpData, additionalClaims: null);
         /// <summary>
         /// Creates a new instance of <see cref="Attestation.PolicyCertificatesModificationResult"/> for mocking purposes.
         /// </summary>
@@ -197,5 +214,32 @@ namespace Azure.Security.Attestation
             }
             return jwk;
         }
+
+        /// <summary>
+        /// Creates an instance of <see cref="Attestation.AttestationOpenIdMetadata"/> for mocking.
+        /// </summary>
+        /// <param name="issuer">The issuer of the tokens the attestation provider returns.</param>
+        /// <param name="jsonWebKeySetUri">The URI of the keys that sign the tokens the attestation provider returns.</param>
+        /// <param name="responseTypesSupported">The response types the attestation provider supports.</param>
+        /// <param name="tokenSigningAlgorithmsSupported">The algorithms the attestation provider signs tokens with.</param>
+        /// <param name="supportedClaims">The names of the claims the attestation provider can issue.</param>
+        /// <returns>A new <see cref="Attestation.AttestationOpenIdMetadata"/> instance for mocking.</returns>
+        public static AttestationOpenIdMetadata AttestationOpenIdMetadata(string issuer = default, Uri jsonWebKeySetUri = default, IEnumerable<string> responseTypesSupported = default, IEnumerable<string> tokenSigningAlgorithmsSupported = default, IEnumerable<string> supportedClaims = default)
+            => new AttestationOpenIdMetadata(
+                new List<string>(responseTypesSupported ?? Array.Empty<string>()),
+                new List<string>(tokenSigningAlgorithmsSupported ?? Array.Empty<string>()),
+                revocationEndpoint: null,
+                issuer,
+                jsonWebKeySetUri,
+                new List<string>(supportedClaims ?? Array.Empty<string>()),
+                additionalBinaryDataProperties: null);
+
+        /// <summary>
+        /// Creates an instance of <see cref="Attestation.SealedAttestationResult"/> for mocking.
+        /// </summary>
+        /// <param name="token">The sealed token: the Base64Url-encoded JSON envelope that holds the encrypted attestation token. It is not itself a JSON Web Token.</param>
+        /// <returns>A new <see cref="Attestation.SealedAttestationResult"/> instance for mocking.</returns>
+        public static SealedAttestationResult SealedAttestationResult(string token = default)
+            => new SealedAttestationResult(token, additionalBinaryDataProperties: null);
     }
 }

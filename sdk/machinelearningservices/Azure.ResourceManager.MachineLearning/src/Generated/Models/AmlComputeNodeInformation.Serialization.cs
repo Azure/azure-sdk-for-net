@@ -100,10 +100,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("nodeState"u8);
                 writer.WriteStringValue(NodeState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RunId))
+            if (options.Format != "W" && (_runIdIsDefined || Optional.IsDefined(RunId)))
             {
-                writer.WritePropertyName("runId"u8);
-                writer.WriteStringValue(RunId);
+                if (RunId != null)
+                {
+                    writer.WritePropertyName("runId"u8);
+                    writer.WriteStringValue(RunId);
+                }
+                else
+                {
+                    writer.WriteNull("runId"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -152,6 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IPAddress publicIPAddress = default;
             int? port = default;
             MachineLearningNodeState? nodeState = default;
+            bool runIdIsDefined = false;
             string runId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -199,6 +207,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("runId"u8))
                 {
+                    runIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         runId = null;
@@ -219,7 +228,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 port,
                 nodeState,
                 runId,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _runIdIsDefined = runIdIsDefined
+            };
         }
     }
 }

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebPubSubSharedPrivateLinkData, WebPubSubReplicaSharedPrivateLinkResource>(new SharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebPubSubSharedPrivateLinkData, WebPubSubReplicaSharedPrivateLinkResource>(new WebPubSubSharedPrivateLinkDataAsync0CollectionResultOfT(
                 _sharedPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebPubSubSharedPrivateLinkData, WebPubSubReplicaSharedPrivateLinkResource>(new SharedPrivateLinkResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<WebPubSubSharedPrivateLinkData, WebPubSubReplicaSharedPrivateLinkResource>(new WebPubSubSharedPrivateLinkData0CollectionResultOfT(
                 _sharedPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

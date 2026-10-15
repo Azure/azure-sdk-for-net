@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosFaultData, ChaosFaultResource>(new ChaosFaultGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ChaosFaultData, ChaosFaultResource>(new ChaosFaultDataAsyncCollectionResultOfT(
                 _chaosFaultRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosFaultData, ChaosFaultResource>(new ChaosFaultGetAllCollectionResultOfT(
+            return new PageableWrapper<ChaosFaultData, ChaosFaultResource>(new ChaosFaultDataCollectionResultOfT(
                 _chaosFaultRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

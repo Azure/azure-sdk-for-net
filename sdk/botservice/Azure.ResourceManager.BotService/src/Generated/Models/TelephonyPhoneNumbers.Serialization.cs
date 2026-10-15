@@ -85,45 +85,87 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
             }
-            if (Optional.IsDefined(AcsEndpoint))
+            if (_acsEndpointIsDefined || Optional.IsDefined(AcsEndpoint))
             {
-                writer.WritePropertyName("acsEndpoint"u8);
-                writer.WriteStringValue(AcsEndpoint);
+                if (AcsEndpoint != null)
+                {
+                    writer.WritePropertyName("acsEndpoint"u8);
+                    writer.WriteStringValue(AcsEndpoint);
+                }
+                else
+                {
+                    writer.WriteNull("acsEndpoint"u8);
+                }
             }
-            if (Optional.IsDefined(AcsSecret))
+            if (_acsSecretIsDefined || Optional.IsDefined(AcsSecret))
             {
-                writer.WritePropertyName("acsSecret"u8);
-                writer.WriteStringValue(AcsSecret);
+                if (AcsSecret != null)
+                {
+                    writer.WritePropertyName("acsSecret"u8);
+                    writer.WriteStringValue(AcsSecret);
+                }
+                else
+                {
+                    writer.WriteNull("acsSecret"u8);
+                }
             }
             if (Optional.IsDefined(AcsResourceId))
             {
                 writer.WritePropertyName("acsResourceId"u8);
                 writer.WriteStringValue(AcsResourceId);
             }
-            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
+            if (_cognitiveServiceSubscriptionKeyIsDefined || Optional.IsDefined(CognitiveServiceSubscriptionKey))
             {
-                writer.WritePropertyName("cognitiveServiceSubscriptionKey"u8);
-                writer.WriteStringValue(CognitiveServiceSubscriptionKey);
+                if (CognitiveServiceSubscriptionKey != null)
+                {
+                    writer.WritePropertyName("cognitiveServiceSubscriptionKey"u8);
+                    writer.WriteStringValue(CognitiveServiceSubscriptionKey);
+                }
+                else
+                {
+                    writer.WriteNull("cognitiveServiceSubscriptionKey"u8);
+                }
             }
-            if (Optional.IsDefined(CognitiveServiceRegion))
+            if (_cognitiveServiceRegionIsDefined || Optional.IsDefined(CognitiveServiceRegion))
             {
-                writer.WritePropertyName("cognitiveServiceRegion"u8);
-                writer.WriteStringValue(CognitiveServiceRegion);
+                if (CognitiveServiceRegion != null)
+                {
+                    writer.WritePropertyName("cognitiveServiceRegion"u8);
+                    writer.WriteStringValue(CognitiveServiceRegion);
+                }
+                else
+                {
+                    writer.WriteNull("cognitiveServiceRegion"u8);
+                }
             }
             if (Optional.IsDefined(CognitiveServiceResourceId))
             {
                 writer.WritePropertyName("cognitiveServiceResourceId"u8);
                 writer.WriteStringValue(CognitiveServiceResourceId);
             }
-            if (Optional.IsDefined(DefaultLocale))
+            if (_defaultLocaleIsDefined || Optional.IsDefined(DefaultLocale))
             {
-                writer.WritePropertyName("defaultLocale"u8);
-                writer.WriteStringValue(DefaultLocale);
+                if (DefaultLocale != null)
+                {
+                    writer.WritePropertyName("defaultLocale"u8);
+                    writer.WriteStringValue(DefaultLocale);
+                }
+                else
+                {
+                    writer.WriteNull("defaultLocale"u8);
+                }
             }
-            if (Optional.IsDefined(OfferType))
+            if (_offerTypeIsDefined || Optional.IsDefined(OfferType))
             {
-                writer.WritePropertyName("offerType"u8);
-                writer.WriteStringValue(OfferType);
+                if (OfferType != null)
+                {
+                    writer.WritePropertyName("offerType"u8);
+                    writer.WriteStringValue(OfferType);
+                }
+                else
+                {
+                    writer.WriteNull("offerType"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -169,13 +211,19 @@ namespace Azure.ResourceManager.BotService.Models
             }
             string id = default;
             string phoneNumber = default;
+            bool acsEndpointIsDefined = false;
             string acsEndpoint = default;
+            bool acsSecretIsDefined = false;
             string acsSecret = default;
             ResourceIdentifier acsResourceId = default;
+            bool cognitiveServiceSubscriptionKeyIsDefined = false;
             string cognitiveServiceSubscriptionKey = default;
+            bool cognitiveServiceRegionIsDefined = false;
             string cognitiveServiceRegion = default;
             ResourceIdentifier cognitiveServiceResourceId = default;
+            bool defaultLocaleIsDefined = false;
             string defaultLocale = default;
+            bool offerTypeIsDefined = false;
             string offerType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -192,6 +240,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("acsEndpoint"u8))
                 {
+                    acsEndpointIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         acsEndpoint = null;
@@ -202,6 +251,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("acsSecret"u8))
                 {
+                    acsSecretIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         acsSecret = null;
@@ -221,6 +271,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("cognitiveServiceSubscriptionKey"u8))
                 {
+                    cognitiveServiceSubscriptionKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cognitiveServiceSubscriptionKey = null;
@@ -231,6 +282,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("cognitiveServiceRegion"u8))
                 {
+                    cognitiveServiceRegionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cognitiveServiceRegion = null;
@@ -250,6 +302,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("defaultLocale"u8))
                 {
+                    defaultLocaleIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         defaultLocale = null;
@@ -260,6 +313,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("offerType"u8))
                 {
+                    offerTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         offerType = null;
@@ -284,7 +338,15 @@ namespace Azure.ResourceManager.BotService.Models
                 cognitiveServiceResourceId,
                 defaultLocale,
                 offerType,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _acsEndpointIsDefined = acsEndpointIsDefined,
+                _acsSecretIsDefined = acsSecretIsDefined,
+                _cognitiveServiceSubscriptionKeyIsDefined = cognitiveServiceSubscriptionKeyIsDefined,
+                _cognitiveServiceRegionIsDefined = cognitiveServiceRegionIsDefined,
+                _defaultLocaleIsDefined = defaultLocaleIsDefined,
+                _offerTypeIsDefined = offerTypeIsDefined
+            };
         }
     }
 }

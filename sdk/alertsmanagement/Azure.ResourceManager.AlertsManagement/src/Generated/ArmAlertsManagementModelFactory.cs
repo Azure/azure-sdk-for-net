@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <returns> A new <see cref="Models.AlertsManagementBaseDetails"/> instance for mocking. </returns>
         public static AlertsManagementBaseDetails AlertsManagementBaseDetails(string @type = default)
         {
-            return new UnknownAlertsManagementBaseDetails(default, default);
+            return new UnknownAlertsManagementBaseDetails(@type is null ? default : new AlertModificationType(@type), default);
         }
 
         /// <summary> The ServiceAlertPropertyChangeDetails. </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <returns> A new <see cref="Models.ServiceAlertPropertyChangeDetails"/> instance for mocking. </returns>
         public static ServiceAlertPropertyChangeDetails ServiceAlertPropertyChangeDetails(string oldValue = default, string newValue = default, string comment = default)
         {
-            return new ServiceAlertPropertyChangeDetails(default, default, oldValue, newValue, comment);
+            return new ServiceAlertPropertyChangeDetails(AlertModificationType.PropertyChange, default, oldValue, newValue, comment);
         }
 
         /// <summary> The ServiceAlertActionSuppressedDetails. </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             suppressionActionRules ??= new ChangeTrackingList<string>();
             suppressedActionGroups ??= new ChangeTrackingList<AlertsManagementTriggeredRule>();
 
-            return new ServiceAlertActionSuppressedDetails(default, default, (suppressionActionRules ?? new ChangeTrackingList<string>()).ToList(), (suppressedActionGroups ?? new ChangeTrackingList<AlertsManagementTriggeredRule>()).ToList());
+            return new ServiceAlertActionSuppressedDetails(AlertModificationType.ActionsSuppressed, default, (suppressionActionRules ?? new ChangeTrackingList<string>()).ToList(), (suppressedActionGroups ?? new ChangeTrackingList<AlertsManagementTriggeredRule>()).ToList());
         }
 
         /// <summary> The AlertsManagementTriggeredRule. </summary>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <returns> A new <see cref="Models.ServiceAlertActionTriggeredDetails"/> instance for mocking. </returns>
         public static ServiceAlertActionTriggeredDetails ServiceAlertActionTriggeredDetails(AlertsManagementTriggeredRule actionGroup = default, AlertsManagementNotificationResult notificationResult = default)
         {
-            return new ServiceAlertActionTriggeredDetails(default, default, actionGroup, notificationResult);
+            return new ServiceAlertActionTriggeredDetails(AlertModificationType.ActionsTriggered, default, actionGroup, notificationResult);
         }
 
         /// <summary> The AlertsManagementNotificationResult. </summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 description,
                 status,
                 errorMessage,
-                default,
+                alertEnrichmentType is null ? default : new AlertsManagementType(alertEnrichmentType),
                 default);
         }
 
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 description,
                 status,
                 errorMessage,
-                default,
+                AlertsManagementType.PrometheusEnrichmentItem,
                 default,
                 linkToApi,
                 (datasources ?? new ChangeTrackingList<string>()).ToList(),
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 description,
                 status,
                 errorMessage,
-                default,
+                AlertsManagementType.PrometheusEnrichmentItem,
                 default,
                 linkToApi,
                 (datasources ?? new ChangeTrackingList<string>()).ToList(),
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 description,
                 status,
                 errorMessage,
-                default,
+                AlertsManagementType.PrometheusEnrichmentItem,
                 default,
                 linkToApi,
                 (datasources ?? new ChangeTrackingList<string>()).ToList(),
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <returns> A new <see cref="Models.ServiceAlertMetadataProperties"/> instance for mocking. </returns>
         public static ServiceAlertMetadataProperties ServiceAlertMetadataProperties(string metadataIdentifier = default)
         {
-            return new UnknownAlertsMetaDataProperties(default, default);
+            return new UnknownAlertsMetaDataProperties(metadataIdentifier is null ? default : new ServiceAlertMetadataIdentifier(metadataIdentifier), default);
         }
 
         /// <summary> Monitor service details. </summary>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             data ??= new ChangeTrackingList<MonitorServiceDetails>();
 
-            return new MonitorServiceList(default, default, (data ?? new ChangeTrackingList<MonitorServiceDetails>()).ToList());
+            return new MonitorServiceList(ServiceAlertMetadataIdentifier.MonitorServiceList, default, (data ?? new ChangeTrackingList<MonitorServiceDetails>()).ToList());
         }
 
         /// <summary> Details of a monitor service. </summary>

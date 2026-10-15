@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiskAccessResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string diskAccessApiVersion);
             _diskAccessesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _diskAccessesRestClient = new DiskAccesses(_diskAccessesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, diskAccessApiVersion ?? "2026-03-02");
+            _diskAccessesRestClient = new DiskAccesses(_diskAccessesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -435,7 +434,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new DiskAccessesGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new ComputePrivateLinkResourceDataAsyncCollectionResultOfT(
                 _diskAccessesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -473,7 +472,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new DiskAccessesGetPrivateLinkResourcesCollectionResultOfT(
+            return new ComputePrivateLinkResourceDataCollectionResultOfT(
                 _diskAccessesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

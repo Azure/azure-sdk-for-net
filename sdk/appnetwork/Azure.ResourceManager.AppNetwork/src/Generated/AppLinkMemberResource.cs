@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.AppNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new UpgradeHistoriesGetAppLinkUpgradeHistoriesAsyncCollectionResultOfT(
+            return new AppLinkUpgradeHistoryAsyncCollectionResultOfT(
                 _upgradeHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.AppNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new UpgradeHistoriesGetAppLinkUpgradeHistoriesCollectionResultOfT(
+            return new AppLinkUpgradeHistoryCollectionResultOfT(
                 _upgradeHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

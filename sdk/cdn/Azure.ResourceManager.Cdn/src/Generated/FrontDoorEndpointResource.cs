@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new FrontDoorEndpointsGetResourceUsagesAsyncCollectionResultOfT(
+            return new FrontDoorUsageAsync0CollectionResultOfT(
                 _frontDoorEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new FrontDoorEndpointsGetResourceUsagesCollectionResultOfT(
+            return new FrontDoorUsage0CollectionResultOfT(
                 _frontDoorEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

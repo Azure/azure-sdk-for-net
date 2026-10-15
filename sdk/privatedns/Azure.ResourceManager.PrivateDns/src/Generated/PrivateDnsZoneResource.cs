@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             TryGetApiVersion(ResourceType, out string privateDnsZoneApiVersion);
             _privateZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", ResourceType.Namespace, Diagnostics);
-            _privateZonesRestClient = new PrivateZones(_privateZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateDnsZoneApiVersion ?? "2024-06-01");
+            _privateZonesRestClient = new PrivateZones(_privateZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/privateDnsZones", out string privateZonesApiVersionOverride) ? privateZonesApiVersionOverride : "2024-06-01");
             _recordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", ResourceType.Namespace, Diagnostics);
             _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateDnsZoneApiVersion ?? "2024-06-01");
             ValidateResourceId(id);
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 CancellationToken = cancellationToken
             };
-            return new RecordSetsGetRecordsAsyncCollectionResultOfT(
+            return new PrivateDnsRecordDataAsyncCollectionResultOfT(
                 _recordSetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 CancellationToken = cancellationToken
             };
-            return new RecordSetsGetRecordsCollectionResultOfT(
+            return new PrivateDnsRecordDataCollectionResultOfT(
                 _recordSetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

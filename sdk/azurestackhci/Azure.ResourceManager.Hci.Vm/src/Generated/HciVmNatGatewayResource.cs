@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmNatGatewayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string hciVmNatGatewayApiVersion);
             _natGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _natGatewaysRestClient = new NatGateways(_natGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmNatGatewayApiVersion ?? "2025-09-01-preview");
+            _natGatewaysRestClient = new NatGateways(_natGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/natGateways", out string natGatewaysApiVersionOverride) ? natGatewaysApiVersionOverride : "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

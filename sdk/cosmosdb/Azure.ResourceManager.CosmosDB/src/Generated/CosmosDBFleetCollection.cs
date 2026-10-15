@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CosmosDBFleetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(CosmosDBFleetResource.ResourceType, out string cosmosDBFleetApiVersion);
             _fleetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBFleetResource.ResourceType.Namespace, Diagnostics);
-            _fleetRestClient = new Fleet(_fleetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBFleetApiVersion ?? "2026-04-01-preview");
+            _fleetRestClient = new Fleet(_fleetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DocumentDB/fleets", out string fleetApiVersionOverride) ? fleetApiVersionOverride : "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBFleetData, CosmosDBFleetResource>(new FleetGetByResourceGroupAsyncCollectionResultOfT(_fleetRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBFleetCollection.GetAll"), data => new CosmosDBFleetResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBFleetData, CosmosDBFleetResource>(new CosmosDBFleetDataAsyncCollectionResultOfT(_fleetRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBFleetCollection.GetAll"), data => new CosmosDBFleetResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBFleetData, CosmosDBFleetResource>(new FleetGetByResourceGroupCollectionResultOfT(_fleetRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBFleetCollection.GetAll"), data => new CosmosDBFleetResource(Client, data));
+            return new PageableWrapper<CosmosDBFleetData, CosmosDBFleetResource>(new CosmosDBFleetDataCollectionResultOfT(_fleetRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBFleetCollection.GetAll"), data => new CosmosDBFleetResource(Client, data));
         }
 
         /// <summary>

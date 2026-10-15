@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.Compute.BulkActions
         {
             TryGetApiVersion(ResourceType, out string locationBasedBulkCreateApiVersion);
             _bulkCreateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions", ResourceType.Namespace, Diagnostics);
-            _bulkCreateRestClient = new BulkCreate(_bulkCreateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, locationBasedBulkCreateApiVersion ?? "2026-10-06-preview");
+            _bulkCreateRestClient = new BulkCreate(
+                _bulkCreateClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                locationBasedBulkCreateApiVersion ?? "2026-10-06-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -418,7 +424,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new BulkCreateVirtualMachinesGetOperationStatusAsyncCollectionResultOfT(
+            return new ComputeBulkOperationResultAsync0CollectionResultOfT(
                 _bulkCreateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -457,7 +463,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new BulkCreateVirtualMachinesGetOperationStatusCollectionResultOfT(
+            return new ComputeBulkOperationResult0CollectionResultOfT(
                 _bulkCreateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

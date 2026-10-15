@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             TryGetApiVersion(ResourceType, out string mySqlFlexibleServerApiVersion);
             _serversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
+            _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DBforMySQL/flexibleServers", out string serversApiVersionOverride) ? serversApiVersionOverride : "2024-12-30");
             _backupAndExportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
             _backupAndExportRestClient = new BackupAndExport(_backupAndExportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
             _configurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new LogFilesGetLogFilesAsyncCollectionResultOfT(
+            return new MySqlFlexibleServerLogFileAsyncCollectionResultOfT(
                 _logFilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new LogFilesGetLogFilesCollectionResultOfT(
+            return new MySqlFlexibleServerLogFileCollectionResultOfT(
                 _logFilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new ReplicasGetReplicasAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new MySqlFlexibleServerDataAsync1CollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new ReplicasGetReplicasCollectionResultOfT(
+            return new PageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new MySqlFlexibleServerData1CollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

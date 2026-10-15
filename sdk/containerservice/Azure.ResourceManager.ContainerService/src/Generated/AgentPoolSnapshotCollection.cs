@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AgentPoolSnapshotCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AgentPoolSnapshotResource.ResourceType, out string agentPoolSnapshotApiVersion);
             _snapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", AgentPoolSnapshotResource.ResourceType.Namespace, Diagnostics);
-            _snapshotsRestClient = new Snapshots(_snapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, agentPoolSnapshotApiVersion ?? "2026-07-01");
+            _snapshotsRestClient = new Snapshots(_snapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerService/snapshots", out string snapshotsApiVersionOverride) ? snapshotsApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new SnapshotsGetByResourceGroupAsyncCollectionResultOfT(_snapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgentPoolSnapshotCollection.GetAll"), data => new AgentPoolSnapshotResource(Client, data));
+            return new AsyncPageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new AgentPoolSnapshotDataAsyncCollectionResultOfT(_snapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgentPoolSnapshotCollection.GetAll"), data => new AgentPoolSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new SnapshotsGetByResourceGroupCollectionResultOfT(_snapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgentPoolSnapshotCollection.GetAll"), data => new AgentPoolSnapshotResource(Client, data));
+            return new PageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new AgentPoolSnapshotDataCollectionResultOfT(_snapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgentPoolSnapshotCollection.GetAll"), data => new AgentPoolSnapshotResource(Client, data));
         }
 
         /// <summary>

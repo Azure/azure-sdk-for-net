@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _propagation;
+        internal bool _propagationIsDefined;
+        private bool? _shouldCreateHostPath;
+        internal bool _shouldCreateHostPathIsDefined;
+        private string _selinux;
+        internal bool _selinuxIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MountBindOptions"/>. </summary>
         public MountBindOptions()
@@ -29,22 +35,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MountBindOptions(string propagation, bool? shouldCreateHostPath, string selinux, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Propagation = propagation;
-            ShouldCreateHostPath = shouldCreateHostPath;
-            Selinux = selinux;
+            _propagation = propagation;
+            _shouldCreateHostPath = shouldCreateHostPath;
+            _selinux = selinux;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of Bind Option. </summary>
         [WirePath("propagation")]
-        public string Propagation { get; set; }
+        public string Propagation
+        {
+            get
+            {
+                return _propagation;
+            }
+            set
+            {
+                _propagation = value;
+                _propagationIsDefined = true;
+            }
+        }
 
         /// <summary> Indicate whether to create host path. </summary>
         [WirePath("createHostPath")]
-        public bool? ShouldCreateHostPath { get; set; }
+        public bool? ShouldCreateHostPath
+        {
+            get
+            {
+                return _shouldCreateHostPath;
+            }
+            set
+            {
+                _shouldCreateHostPath = value;
+                _shouldCreateHostPathIsDefined = true;
+            }
+        }
 
         /// <summary> Mention the selinux options. </summary>
         [WirePath("selinux")]
-        public string Selinux { get; set; }
+        public string Selinux
+        {
+            get
+            {
+                return _selinux;
+            }
+            set
+            {
+                _selinux = value;
+                _selinuxIsDefined = true;
+            }
+        }
     }
 }

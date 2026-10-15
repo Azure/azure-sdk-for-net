@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(ResourceType, out string dataCollectionEndpointApiVersion);
             _dataCollectionEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _dataCollectionEndpointsRestClient = new DataCollectionEndpoints(_dataCollectionEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataCollectionEndpointApiVersion ?? "2024-03-11");
+            _dataCollectionEndpointsRestClient = new DataCollectionEndpoints(_dataCollectionEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _dataCollectionRuleAssociationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
             _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociations(_dataCollectionRuleAssociationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataCollectionEndpointApiVersion ?? "2024-03-11");
             _nspDataCollectionEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetDataCollectionRuleAssociationsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationDataAsyncCollectionResultOfT(
                 _dataCollectionRuleAssociationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetDataCollectionRuleAssociationsCollectionResultOfT(
+            return new PageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationDataCollectionResultOfT(
                 _dataCollectionRuleAssociationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new NspDataCollectionEndpointGetNetworkSecurityPerimeterConfigurationsAsyncCollectionResultOfT(
+            return new MonitorNetworkSecurityPerimeterConfigurationDataAsyncCollectionResultOfT(
                 _nspDataCollectionEndpointRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new NspDataCollectionEndpointGetNetworkSecurityPerimeterConfigurationsCollectionResultOfT(
+            return new MonitorNetworkSecurityPerimeterConfigurationDataCollectionResultOfT(
                 _nspDataCollectionEndpointRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

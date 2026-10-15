@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DaprComponentResiliencyPoliciesCollection(value, nextLink, additionalBinaryDataProperties);
+            return new DaprComponentResiliencyPoliciesCollection(value ?? new ChangeTrackingList<DaprComponentResiliencyPolicyData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

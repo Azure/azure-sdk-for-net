@@ -15,7 +15,9 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
         public void AuthenticateWithConnectionString()
         {
             #region Snippet:WebPubSubChatAuthenticateWithConnectionString
+            // <ChatDotNet_AuthenticateWithConnectionString>
             var client = new WebPubSubChatServiceClient("<connection-string>", "chat");
+            // </ChatDotNet_AuthenticateWithConnectionString>
             #endregion
         }
 
@@ -44,11 +46,13 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             var client = new WebPubSubChatServiceClient(ConnectionString, "chat");
 
             #region Snippet:WebPubSubChatGenerateClientAccessUri
+            // <ChatDotNet_GenerateClientAccessUri>
             Uri clientAccessUri = client.GetClientAccessUri(new ClientAccessUriOptions
             {
                 UserId = "user1",
                 ExpiresAfter = TimeSpan.FromHours(1),
             });
+            // </ChatDotNet_GenerateClientAccessUri>
             #endregion
         }
 
@@ -56,6 +60,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
         {
             var client = new WebPubSubChatServiceClient(ConnectionString, "chat");
 
+            // <ChatDotNet_CreateRoomAndMember>
             // Create (or replace) a room.
             WebPubSubChatRoom room = client.CreateOrReplaceRoom("room1", new WebPubSubChatRoom("General")).Value;
 
@@ -64,6 +69,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
 
             // Add the user to the room as a room member.
             client.CreateOrReplaceRoomMember("room1", "user1", new WebPubSubChatRoomMember(BuiltInChatRoles.RoomMember));
+            // </ChatDotNet_CreateRoomAndMember>
         }
 
         public async Task DiscoverRoomsAndUsersAsync()
@@ -164,6 +170,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
         {
             var client = new WebPubSubChatServiceClient(ConnectionString, "chat");
 
+            // <ChatDotNet_DefineCustomRole>
             var role = new WebPubSubChatRole(new[]
             {
                 ChatPermission.RoomPublishMessage,
@@ -172,6 +179,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             });
 
             client.CreateOrReplaceRole("room.contributor", role);
+            // </ChatDotNet_DefineCustomRole>
         }
 
         public void InspectBuiltInRole()
@@ -179,22 +187,27 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             var client = new WebPubSubChatServiceClient(ConnectionString, "chat");
 
             #region Snippet:WebPubSubChatInspectBuiltInRole
+            // <ChatDotNet_InspectBuiltInRole>
             WebPubSubChatRole memberRole = client.GetRole(BuiltInChatRoles.RoomMember).Value;
 
             Console.WriteLine($"{memberRole.Name}: {string.Join(", ", memberRole.Permissions)}");
+            // </ChatDotNet_InspectBuiltInRole>
             #endregion
         }
 
         public void ReadMessageHistory()
         {
             var client = new WebPubSubChatServiceClient(ConnectionString, "chat");
-            WebPubSubChatRoom room = client.GetRoom("room1").Value;
 
             #region Snippet:WebPubSubChatReadMessageHistory
+            // <ChatDotNet_ReadMessageHistory>
+            WebPubSubChatRoom room = client.GetRoom("room1").Value;
+
             foreach (WebPubSubChatMessage message in client.GetMessages(room.DefaultConversation))
             {
                 Console.WriteLine($"{message.CreatedBy}: {message.Content.Text}");
             }
+            // </ChatDotNet_ReadMessageHistory>
             #endregion
         }
 

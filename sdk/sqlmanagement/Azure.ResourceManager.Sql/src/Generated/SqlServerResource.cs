@@ -65,7 +65,13 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string sqlServerApiVersion);
             _serversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerApiVersion ?? "2025-08-01-preview");
+            _serversRestClient = new Servers(
+                _serversClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                sqlServerApiVersion ?? "2025-08-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _tdeCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             _tdeCertificatesRestClient = new TdeCertificates(_tdeCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerApiVersion ?? "2025-08-01-preview");
             _replicationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
@@ -682,7 +688,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlServerDatabaseReplicationLinkData, SqlServerDatabaseReplicationLinkResource>(new ReplicationLinksGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlServerDatabaseReplicationLinkData, SqlServerDatabaseReplicationLinkResource>(new SqlServerDatabaseReplicationLinkDataAsync0CollectionResultOfT(
                 _replicationLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -720,7 +726,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlServerDatabaseReplicationLinkData, SqlServerDatabaseReplicationLinkResource>(new ReplicationLinksGetByServerCollectionResultOfT(
+            return new PageableWrapper<SqlServerDatabaseReplicationLinkData, SqlServerDatabaseReplicationLinkResource>(new SqlServerDatabaseReplicationLinkData0CollectionResultOfT(
                 _replicationLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -758,7 +764,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlDatabaseData, SqlDatabaseResource>(new DatabasesGetInaccessibleByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlDatabaseData, SqlDatabaseResource>(new SqlDatabaseDataAsync0CollectionResultOfT(
                 _databasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -796,7 +802,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlDatabaseData, SqlDatabaseResource>(new DatabasesGetInaccessibleByServerCollectionResultOfT(
+            return new PageableWrapper<SqlDatabaseData, SqlDatabaseResource>(new SqlDatabaseData0CollectionResultOfT(
                 _databasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -944,7 +950,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ServerOperationsGetServerOperationsAsyncCollectionResultOfT(
+            return new ServerOperationDataAsyncCollectionResultOfT(
                 _serverOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -982,7 +988,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ServerOperationsGetServerOperationsCollectionResultOfT(
+            return new ServerOperationDataCollectionResultOfT(
                 _serverOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1020,7 +1026,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ServerUsagesGetServerUsagesAsyncCollectionResultOfT(
+            return new SqlServerUsageAsyncCollectionResultOfT(
                 _serverUsagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1058,7 +1064,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new ServerUsagesGetServerUsagesCollectionResultOfT(
+            return new SqlServerUsageCollectionResultOfT(
                 _serverUsagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

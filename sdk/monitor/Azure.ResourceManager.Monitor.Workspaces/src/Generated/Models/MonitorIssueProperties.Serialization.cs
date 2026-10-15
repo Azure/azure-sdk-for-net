@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 title,
                 status,
                 severity,
-                investigations,
+                investigations ?? new ChangeTrackingList<IssueInvestigationMetadata>(),
                 impactOn,
                 investigationsCount,
                 background,

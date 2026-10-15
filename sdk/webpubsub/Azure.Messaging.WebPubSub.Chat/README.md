@@ -79,7 +79,9 @@ var client = new WebPubSubChatServiceClient(
 Alternatively, use the connection string when local authentication is enabled:
 
 ```C# Snippet:WebPubSubChatAuthenticateWithConnectionString
+// <ChatDotNet_AuthenticateWithConnectionString>
 var client = new WebPubSubChatServiceClient("<connection-string>", "chat");
+// </ChatDotNet_AuthenticateWithConnectionString>
 ```
 
 Both clients use `2026-08-01-preview` by default for Chat resource operations.
@@ -203,10 +205,14 @@ Given a room returned by an earlier create or get operation, read its default
 conversation's history:
 
 ```C# Snippet:WebPubSubChatReadMessageHistory
+// <ChatDotNet_ReadMessageHistory>
+WebPubSubChatRoom room = client.GetRoom("room1").Value;
+
 foreach (WebPubSubChatMessage message in client.GetMessages(room.DefaultConversation))
 {
     Console.WriteLine($"{message.CreatedBy}: {message.Content.Text}");
 }
+// </ChatDotNet_ReadMessageHistory>
 ```
 
 See [Read and manage messages](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub.Chat/tests/Samples/Sample3_Messages.md)
@@ -219,11 +225,13 @@ Treat the URI as a credential: do not log it or send it to an unauthorized
 recipient:
 
 ```C# Snippet:WebPubSubChatGenerateClientAccessUri
+// <ChatDotNet_GenerateClientAccessUri>
 Uri clientAccessUri = client.GetClientAccessUri(new ClientAccessUriOptions
 {
     UserId = "user1",
     ExpiresAfter = TimeSpan.FromHours(1),
 });
+// </ChatDotNet_GenerateClientAccessUri>
 ```
 
 See [Roles and permissions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub.Chat/tests/Samples/Sample2_RolesAndPermissions.md)

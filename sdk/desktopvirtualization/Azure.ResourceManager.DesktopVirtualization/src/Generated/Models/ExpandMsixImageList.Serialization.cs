@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExpandMsixImageList(value, nextLink, additionalBinaryDataProperties);
+            return new ExpandMsixImageList(value ?? new ChangeTrackingList<ExpandMsixImage>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

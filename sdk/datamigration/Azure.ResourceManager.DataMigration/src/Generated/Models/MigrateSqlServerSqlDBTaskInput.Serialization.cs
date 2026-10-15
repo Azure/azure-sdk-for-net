@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 sourceConnectionInfo,
                 targetConnectionInfo,
                 additionalBinaryDataProperties,
-                selectedDatabases,
+                selectedDatabases ?? new ChangeTrackingList<MigrateSqlServerSqlDBDatabaseInput>(),
                 validationOptions,
                 startedOn,
                 encryptedKeyForSecureFields);

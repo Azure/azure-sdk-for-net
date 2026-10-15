@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "_Specs_.Azure.Core.ApiVersionOverride": "2025-01-01"
+  }
+}

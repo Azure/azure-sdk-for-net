@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new NodeTypesGetFaultSimulationAsyncCollectionResultOfT(
+            return new FaultSimulationAsync0CollectionResultOfT(
                 _nodeTypesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new NodeTypesGetFaultSimulationCollectionResultOfT(
+            return new FaultSimulation0CollectionResultOfT(
                 _nodeTypesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1494,7 +1494,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new NodeTypeSkusGetAvailableSkusAsyncCollectionResultOfT(
+            return new NodeTypeAvailableSkuAsyncCollectionResultOfT(
                 _nodeTypeSkusRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1533,7 +1533,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new NodeTypeSkusGetAvailableSkusCollectionResultOfT(
+            return new NodeTypeAvailableSkuCollectionResultOfT(
                 _nodeTypeSkusRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -58,7 +58,13 @@ namespace Azure.ResourceManager.ServiceBus
         {
             TryGetApiVersion(ResourceType, out string serviceBusNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusNamespaceApiVersion ?? "2026-07-01-preview");
+            _namespacesRestClient = new Namespaces(
+                _namespacesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                serviceBusNamespaceApiVersion ?? "2026-07-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _sbNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
             _sbNamespacesRestClient = new SBNamespaces(_sbNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusNamespaceApiVersion ?? "2026-07-01-preview");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
@@ -651,7 +657,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new ServiceBusPrivateLinkResourceAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -689,7 +695,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetPrivateLinkResourcesCollectionResultOfT(
+            return new ServiceBusPrivateLinkResourceCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceGatewayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string serviceGatewayApiVersion);
             _serviceGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _serviceGatewaysRestClient = new ServiceGateways(_serviceGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGatewayApiVersion ?? "2026-01-01");
+            _serviceGatewaysRestClient = new ServiceGateways(_serviceGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -421,7 +420,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceGatewaysGetAddressLocationsAsyncCollectionResultOfT(
+            return new ServiceGatewayAddressLocationResponseAsyncCollectionResultOfT(
                 _serviceGatewaysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -459,7 +458,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceGatewaysGetAddressLocationsCollectionResultOfT(
+            return new ServiceGatewayAddressLocationResponseCollectionResultOfT(
                 _serviceGatewaysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -497,7 +496,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceGatewaysGetServicesAsyncCollectionResultOfT(
+            return new ServiceGatewayServiceAsyncCollectionResultOfT(
                 _serviceGatewaysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -535,7 +534,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceGatewaysGetServicesCollectionResultOfT(
+            return new ServiceGatewayServiceCollectionResultOfT(
                 _serviceGatewaysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

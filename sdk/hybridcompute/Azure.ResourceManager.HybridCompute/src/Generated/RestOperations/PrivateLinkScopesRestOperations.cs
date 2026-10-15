@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.HybridCompute
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of PrivateLinkScopes for mocking. </summary>
         protected PrivateLinkScopes()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal PrivateLinkScopes(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal PrivateLinkScopes(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(PrivateLinkScopes).Assembly, applicationId);
         }
 
@@ -55,10 +58,7 @@ namespace Azure.ResourceManager.HybridCompute
             uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
             uri.AppendPath(machineName, true);
             uri.AppendPath("/privateLinkScopes/current", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HybridCompute/machines") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -78,10 +78,7 @@ namespace Azure.ResourceManager.HybridCompute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/privateLinkScopes/", false);
             uri.AppendPath(scopeName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HybridCompute/privateLinkScopes") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -101,10 +98,7 @@ namespace Azure.ResourceManager.HybridCompute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/privateLinkScopes/", false);
             uri.AppendPath(scopeName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HybridCompute/privateLinkScopes") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -126,10 +120,7 @@ namespace Azure.ResourceManager.HybridCompute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/privateLinkScopes/", false);
             uri.AppendPath(scopeName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HybridCompute/privateLinkScopes") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -151,10 +142,7 @@ namespace Azure.ResourceManager.HybridCompute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/privateLinkScopes/", false);
             uri.AppendPath(scopeName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HybridCompute/privateLinkScopes") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -172,10 +160,7 @@ namespace Azure.ResourceManager.HybridCompute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/privateLinkScopes", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HybridCompute/privateLinkScopes") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -196,10 +181,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.HybridCompute/privateLinkScopes") ?? "2026-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,10 +198,7 @@ namespace Azure.ResourceManager.HybridCompute
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/privateLinkScopes", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.HybridCompute/privateLinkScopes") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -240,10 +219,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.HybridCompute/privateLinkScopes") ?? "2026-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

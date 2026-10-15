@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiskEncryptionSetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string diskEncryptionSetApiVersion);
             _diskEncryptionSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _diskEncryptionSetsRestClient = new DiskEncryptionSets(_diskEncryptionSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, diskEncryptionSetApiVersion ?? "2026-03-02");
+            _diskEncryptionSetsRestClient = new DiskEncryptionSets(_diskEncryptionSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -435,7 +434,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new DiskEncryptionSetsGetAssociatedResourcesAsyncCollectionResultOfT(
+            return new StringAsync0CollectionResultOfT(
                 _diskEncryptionSetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -473,7 +472,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new DiskEncryptionSetsGetAssociatedResourcesCollectionResultOfT(
+            return new String0CollectionResultOfT(
                 _diskEncryptionSetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

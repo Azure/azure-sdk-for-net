@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceProvisioningServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string deviceProvisioningServiceApiVersion);
             _provisioningServiceDescriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ResourceType.Namespace, Diagnostics);
-            _provisioningServiceDescriptionsRestClient = new ProvisioningServiceDescriptions(_provisioningServiceDescriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServiceApiVersion ?? "2026-08-31");
+            _provisioningServiceDescriptionsRestClient = new ProvisioningServiceDescriptions(_provisioningServiceDescriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Devices/provisioningServices", out string provisioningServiceDescriptionsApiVersionOverride) ? provisioningServiceDescriptionsApiVersionOverride : "2026-08-31");
             ValidateResourceId(id);
         }
 
@@ -435,7 +434,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new ProvisioningServiceDescriptionsGetKeysAsyncCollectionResultOfT(
+            return new DeviceProvisioningServicesSharedAccessKeyAsyncCollectionResultOfT(
                 _provisioningServiceDescriptionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -473,7 +472,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new ProvisioningServiceDescriptionsGetKeysCollectionResultOfT(
+            return new DeviceProvisioningServicesSharedAccessKeyCollectionResultOfT(
                 _provisioningServiceDescriptionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -617,7 +616,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new ProvisioningServiceDescriptionsGetValidSkusAsyncCollectionResultOfT(
+            return new DeviceProvisioningServicesSkuDefinitionAsyncCollectionResultOfT(
                 _provisioningServiceDescriptionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -655,7 +654,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new ProvisioningServiceDescriptionsGetValidSkusCollectionResultOfT(
+            return new DeviceProvisioningServicesSkuDefinitionCollectionResultOfT(
                 _provisioningServiceDescriptionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.Compute.BulkActions
         {
             TryGetApiVersion(ResourceType, out string locationBasedBulkCreateCustomApiVersion);
             _bulkCreateCustomClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions", ResourceType.Namespace, Diagnostics);
-            _bulkCreateCustomRestClient = new BulkCreateCustom(_bulkCreateCustomClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, locationBasedBulkCreateCustomApiVersion ?? "2026-10-06-preview");
+            _bulkCreateCustomRestClient = new BulkCreateCustom(
+                _bulkCreateCustomClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                locationBasedBulkCreateCustomApiVersion ?? "2026-10-06-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -418,7 +424,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new BulkCreateCustomVirtualMachinesGetOperationStatusAsyncCollectionResultOfT(
+            return new ComputeBulkOperationResultAsyncCollectionResultOfT(
                 _bulkCreateCustomRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -457,7 +463,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new BulkCreateCustomVirtualMachinesGetOperationStatusCollectionResultOfT(
+            return new ComputeBulkOperationResultCollectionResultOfT(
                 _bulkCreateCustomRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

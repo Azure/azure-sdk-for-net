@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudCloudServicesNetworkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string networkCloudCloudServicesNetworkApiVersion);
             _cloudServicesNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            _cloudServicesNetworksRestClient = new CloudServicesNetworks(_cloudServicesNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudCloudServicesNetworkApiVersion ?? "2026-07-01");
+            _cloudServicesNetworksRestClient = new CloudServicesNetworks(_cloudServicesNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkCloud/cloudServicesNetworks", out string cloudServicesNetworksApiVersionOverride) ? cloudServicesNetworksApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Get a GoalAssignment
+        /// Gets a goal assignment.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetGoalAssignment(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="goalAssignmentName"> The name of the GoalAssignment. </param>
+        /// <param name="goalAssignmentName"> The name of the goal assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Get a GoalAssignment
+        /// Gets a goal assignment.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetGoalAssignmentAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="goalAssignmentName"> The name of the GoalAssignment. </param>
+        /// <param name="goalAssignmentName"> The name of the goal assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
@@ -118,82 +118,6 @@ namespace Azure.ResourceManager.ResilienceManagement
             Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockableResilienceManagementArmClient(client).GetGoalAssignmentAsync(scope, goalAssignmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="GoalTemplateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetGoalTemplateResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GoalTemplateResource"/> object. </returns>
-        public static GoalTemplateResource GetGoalTemplateResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableResilienceManagementArmClient(client).GetGoalTemplateResource(id);
-        }
-
-        /// <summary>
-        /// Gets a collection of <see cref="GoalTemplateCollection"/> objects within the specified scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetGoalTemplates(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="GoalTemplateResource"/> objects. </returns>
-        public static GoalTemplateCollection GetGoalTemplates(this ArmClient client, ResourceIdentifier scope)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableResilienceManagementArmClient(client).GetGoalTemplates(scope);
-        }
-
-        /// <summary>
-        /// Get a GoalTemplate
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetGoalTemplate(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="goalTemplateName"> The name of the goalTemplate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<GoalTemplateResource> GetGoalTemplate(this ArmClient client, ResourceIdentifier scope, string goalTemplateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableResilienceManagementArmClient(client).GetGoalTemplate(scope, goalTemplateName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a GoalTemplate
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetGoalTemplateAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="goalTemplateName"> The name of the goalTemplate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<GoalTemplateResource>> GetGoalTemplateAsync(this ArmClient client, ResourceIdentifier scope, string goalTemplateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return await GetMockableResilienceManagementArmClient(client).GetGoalTemplateAsync(scope, goalTemplateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -233,7 +157,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Get a GoalResource
+        /// Gets a goal resource.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetGoalMembers(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
@@ -241,7 +165,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="goalResourceName"> The name of the GoalAssignment. </param>
+        /// <param name="goalResourceName"> The name of the goal resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
@@ -253,7 +177,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Get a GoalResource
+        /// Gets a goal resource.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableResilienceManagementArmClient.GetGoalMembersAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
@@ -261,7 +185,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="goalResourceName"> The name of the GoalAssignment. </param>
+        /// <param name="goalResourceName"> The name of the goal resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]

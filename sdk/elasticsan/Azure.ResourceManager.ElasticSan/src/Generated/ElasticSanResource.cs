@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             TryGetApiVersion(ResourceType, out string elasticSanApiVersion);
             _elasticSansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ResourceType.Namespace, Diagnostics);
-            _elasticSansRestClient = new ElasticSans(_elasticSansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanApiVersion ?? "2026-05-01-preview");
+            _elasticSansRestClient = new ElasticSans(_elasticSansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ElasticSan/elasticSans", out string elasticSansApiVersionOverride) ? elasticSansApiVersionOverride : "2026-05-01-preview");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ResourceType.Namespace, Diagnostics);
             _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new ElasticSanPrivateLinkResourceAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetPrivateLinkResourcesCollectionResultOfT(
+            return new ElasticSanPrivateLinkResourceCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AiGatewayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string aiGatewayApiVersion);
             _aiGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _aiGatewaysRestClient = new AiGateways(_aiGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, aiGatewayApiVersion ?? "2026-03-15");
+            _aiGatewaysRestClient = new AiGateways(_aiGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Web/aigateways", out string aiGatewaysApiVersionOverride) ? aiGatewaysApiVersionOverride : "2026-03-15");
             ValidateResourceId(id);
         }
 

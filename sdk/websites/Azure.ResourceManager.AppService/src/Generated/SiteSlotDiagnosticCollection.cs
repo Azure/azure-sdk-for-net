@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiagnosticCategoryData, SiteSlotDiagnosticResource>(new DiagnosticCategoryOperationGroupGetSiteDiagnosticCategoriesSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DiagnosticCategoryData, SiteSlotDiagnosticResource>(new DiagnosticCategoryDataAsyncCollectionResultOfT(
                 _diagnosticCategoryOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiagnosticCategoryData, SiteSlotDiagnosticResource>(new DiagnosticCategoryOperationGroupGetSiteDiagnosticCategoriesSlotCollectionResultOfT(
+            return new PageableWrapper<DiagnosticCategoryData, SiteSlotDiagnosticResource>(new DiagnosticCategoryDataCollectionResultOfT(
                 _diagnosticCategoryOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 networkPacketBrokerId,
                 sourceTapRuleId,
                 networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                destinationSettings,
+                destinationSettings ?? new ChangeTrackingList<NetworkTapDestinationProperties>(),
                 pollingType,
                 lastOperation,
                 configurationState,

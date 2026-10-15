@@ -56,7 +56,13 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string applicationGatewayApiVersion);
             _applicationGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _applicationGatewaysRestClient = new ApplicationGateways(_applicationGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationGatewayApiVersion ?? "2026-01-01");
+            _applicationGatewaysRestClient = new ApplicationGateways(
+                _applicationGatewaysClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                applicationGatewayApiVersion ?? "2026-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _applicationGatewayPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             _applicationGatewayPrivateLinkResourcesRestClient = new ApplicationGatewayPrivateLinkResources(_applicationGatewayPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationGatewayApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
@@ -425,7 +431,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ApplicationGatewayPrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+            return new ApplicationGatewayPrivateLinkResourceAsyncCollectionResultOfT(
                 _applicationGatewayPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -463,7 +469,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ApplicationGatewayPrivateLinkResourcesGetAllCollectionResultOfT(
+            return new ApplicationGatewayPrivateLinkResourceCollectionResultOfT(
                 _applicationGatewayPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

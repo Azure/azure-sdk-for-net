@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A telephony binding returned in a list, including its entity tag.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TeamsPhoneExtensionTelephonyBindingListItem"/> and <see cref="TwilioTelephonyBindingListItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TeamsPhoneExtensibilityTelephonyBindingListItem"/> and <see cref="TwilioTelephonyBindingListItem"/>.
     /// </summary>
     [Experimental("AAIP001")]
     public abstract partial class TelephonyBindingListItem

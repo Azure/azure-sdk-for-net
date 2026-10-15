@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             TryGetApiVersion(ResourceType, out string applicationInsightsComponentApiVersion);
             _componentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
-            _componentsRestClient = new Components(_componentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentApiVersion ?? "2020-02-02");
+            _componentsRestClient = new Components(_componentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _analyticsItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
             _analyticsItemsRestClient = new AnalyticsItems(_analyticsItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentApiVersion ?? "2015-05-01");
             _annotationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             _webTestLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
             _webTestLocationsRestClient = new WebTestLocations(_webTestLocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentApiVersion ?? "2015-05-01");
             _webTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
-            _webTestsRestClient = new WebTests(_webTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentApiVersion ?? "2022-06-15");
+            _webTestsRestClient = new WebTests(_webTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -1148,7 +1148,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AnnotationsGetAnnotationsAsyncCollectionResultOfT(
+            return new ApplicationInsightsAnnotationAsyncCollectionResultOfT(
                 _annotationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1195,7 +1195,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AnnotationsGetAnnotationsCollectionResultOfT(
+            return new ApplicationInsightsAnnotationCollectionResultOfT(
                 _annotationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1551,7 +1551,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new APIKeysGetApiKeysAsyncCollectionResultOfT(
+            return new ApplicationInsightsComponentApiKeyAsyncCollectionResultOfT(
                 _apiKeysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1589,7 +1589,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new APIKeysGetApiKeysCollectionResultOfT(
+            return new ApplicationInsightsComponentApiKeyCollectionResultOfT(
                 _apiKeysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3293,7 +3293,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkItemConfigurationsGetWorkItemConfigurationsAsyncCollectionResultOfT(
+            return new WorkItemConfigurationAsyncCollectionResultOfT(
                 _workItemConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3331,7 +3331,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkItemConfigurationsGetWorkItemConfigurationsCollectionResultOfT(
+            return new WorkItemConfigurationCollectionResultOfT(
                 _workItemConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4207,7 +4207,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new WebTestLocationsGetWebTestLocationsAsyncCollectionResultOfT(
+            return new ApplicationInsightsComponentWebTestLocationAsyncCollectionResultOfT(
                 _webTestLocationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4245,7 +4245,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new WebTestLocationsGetWebTestLocationsCollectionResultOfT(
+            return new ApplicationInsightsComponentWebTestLocationCollectionResultOfT(
                 _webTestLocationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4283,7 +4283,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new WebTestsGetWebTestsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new ApplicationInsightsWebTestDataAsync1CollectionResultOfT(
                 _webTestsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,
@@ -4321,7 +4321,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new WebTestsGetWebTestsCollectionResultOfT(
+            return new PageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new ApplicationInsightsWebTestData1CollectionResultOfT(
                 _webTestsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,

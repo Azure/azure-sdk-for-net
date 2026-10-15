@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string containerAppApiVersion);
             _containerAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppsRestClient = new ContainerApps(_containerAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppApiVersion ?? "2026-07-01");
+            _containerAppsRestClient = new ContainerApps(_containerAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.App/containerApps", out string containerAppsApiVersionOverride) ? containerAppsApiVersionOverride : "2026-07-01");
             _containerAppPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
             _containerAppPrivateLinkResourcesRestClient = new ContainerAppPrivateLinkResources(_containerAppPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerAppPrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+            return new ContainerAppPrivateLinkAsyncCollectionResultOfT(
                 _containerAppPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerAppPrivateLinkResourcesGetAllCollectionResultOfT(
+            return new ContainerAppPrivateLinkCollectionResultOfT(
                 _containerAppPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerAppsGetSecretsAsyncCollectionResultOfT(
+            return new ContainerAppSecretAsyncCollectionResultOfT(
                 _containerAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerAppsGetSecretsCollectionResultOfT(
+            return new ContainerAppSecretCollectionResultOfT(
                 _containerAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

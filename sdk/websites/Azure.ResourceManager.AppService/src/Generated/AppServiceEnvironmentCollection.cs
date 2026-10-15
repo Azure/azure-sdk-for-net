@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppServiceEnvironmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AppServiceEnvironmentResource.ResourceType, out string appServiceEnvironmentApiVersion);
             _appServiceEnvironmentResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _appServiceEnvironmentResourcesRestClient = new AppServiceEnvironmentResources(_appServiceEnvironmentResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceEnvironmentApiVersion ?? "2026-03-15");
+            _appServiceEnvironmentResourcesRestClient = new AppServiceEnvironmentResources(_appServiceEnvironmentResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Web/hostingEnvironments", out string appServiceEnvironmentResourcesApiVersionOverride) ? appServiceEnvironmentResourcesApiVersionOverride : "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentResourcesGetByResourceGroupAsyncCollectionResultOfT(_appServiceEnvironmentResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServiceEnvironmentCollection.GetAll"), data => new AppServiceEnvironmentResource(Client, data));
+            return new AsyncPageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentDataAsyncCollectionResultOfT(_appServiceEnvironmentResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServiceEnvironmentCollection.GetAll"), data => new AppServiceEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentResourcesGetByResourceGroupCollectionResultOfT(_appServiceEnvironmentResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServiceEnvironmentCollection.GetAll"), data => new AppServiceEnvironmentResource(Client, data));
+            return new PageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentDataCollectionResultOfT(_appServiceEnvironmentResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServiceEnvironmentCollection.GetAll"), data => new AppServiceEnvironmentResource(Client, data));
         }
 
         /// <summary>

@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.DataMigration
         {
             TryGetApiVersion(ResourceType, out string dataMigrationServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataMigrationServiceApiVersion ?? "2025-09-01-preview");
+            _servicesRestClient = new Services(
+                _servicesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dataMigrationServiceApiVersion ?? "2025-09-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -637,7 +643,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new ServicesGetSkusAsyncCollectionResultOfT(
+            return new DataMigrationAvailableServiceSkuAsyncCollectionResultOfT(
                 _servicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -675,7 +681,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new ServicesGetSkusCollectionResultOfT(
+            return new DataMigrationAvailableServiceSkuCollectionResultOfT(
                 _servicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.ExtendedLocations
         {
             TryGetApiVersion(ResourceType, out string customLocationApiVersion);
             _customLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ExtendedLocations", ResourceType.Namespace, Diagnostics);
-            _customLocationsRestClient = new CustomLocations(_customLocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customLocationApiVersion ?? "2021-08-31-preview");
+            _customLocationsRestClient = new CustomLocations(
+                _customLocationsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                customLocationApiVersion ?? "2021-08-31-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -525,7 +531,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             {
                 CancellationToken = cancellationToken
             };
-            return new CustomLocationsGetEnabledResourceTypesAsyncCollectionResultOfT(
+            return new CustomLocationEnabledResourceTypeAsyncCollectionResultOfT(
                 _customLocationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -563,7 +569,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             {
                 CancellationToken = cancellationToken
             };
-            return new CustomLocationsGetEnabledResourceTypesCollectionResultOfT(
+            return new CustomLocationEnabledResourceTypeCollectionResultOfT(
                 _customLocationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -56,7 +56,13 @@ namespace Azure.ResourceManager.EventHubs
         {
             TryGetApiVersion(ResourceType, out string eventHubsClusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsClusterApiVersion ?? "2026-07-01-preview");
+            _clustersRestClient = new Clusters(
+                _clustersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                eventHubsClusterApiVersion ?? "2026-07-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _configurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
             _configurationRestClient = new Configuration(_configurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsClusterApiVersion ?? "2026-07-01-preview");
             ValidateResourceId(id);
@@ -535,7 +541,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetNamespacesAsyncCollectionResultOfT(
+            return new SubResourceAsyncCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -573,7 +579,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetNamespacesCollectionResultOfT(
+            return new SubResourceCollectionResultOfT(
                 _clustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

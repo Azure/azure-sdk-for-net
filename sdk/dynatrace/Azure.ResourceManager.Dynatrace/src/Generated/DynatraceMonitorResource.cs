@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.Dynatrace
         {
             TryGetApiVersion(ResourceType, out string dynatraceMonitorApiVersion);
             _monitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dynatrace", ResourceType.Namespace, Diagnostics);
-            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dynatraceMonitorApiVersion ?? "2024-04-24");
+            _monitorsRestClient = new Monitors(
+                _monitorsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dynatraceMonitorApiVersion ?? "2024-04-24",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -713,7 +719,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetAppServicesAsyncCollectionResultOfT(
+            return new DynatraceOneAgentEnabledAppServiceInfoAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -751,7 +757,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetAppServicesCollectionResultOfT(
+            return new DynatraceOneAgentEnabledAppServiceInfoCollectionResultOfT(
                 _monitorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -789,7 +795,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetHostsAsyncCollectionResultOfT(
+            return new DynatraceMonitorVmInfoAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -827,7 +833,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetHostsCollectionResultOfT(
+            return new DynatraceMonitorVmInfoCollectionResultOfT(
                 _monitorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -869,7 +875,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetLinkableEnvironmentsAsyncCollectionResultOfT(
+            return new LinkableEnvironmentResultAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -912,7 +918,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetLinkableEnvironmentsCollectionResultOfT(
+            return new LinkableEnvironmentResultCollectionResultOfT(
                 _monitorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -952,7 +958,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetMonitoredResourcesAsyncCollectionResultOfT(
+            return new DynatraceMonitoredResourceDetailsAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -992,7 +998,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetMonitoredResourcesCollectionResultOfT(
+            return new DynatraceMonitoredResourceDetailsCollectionResultOfT(
                 _monitorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

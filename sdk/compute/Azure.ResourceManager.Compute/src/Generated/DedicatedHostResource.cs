@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new DedicatedHostsGetAvailableSizesAsyncCollectionResultOfT(
+            return new StringAsyncCollectionResultOfT(
                 _dedicatedHostsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new DedicatedHostsGetAvailableSizesCollectionResultOfT(
+            return new StringCollectionResultOfT(
                 _dedicatedHostsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.OracleDatabase
     public partial class OracleDBSystemShapeCollection : ArmCollection, IEnumerable<OracleDBSystemShapeResource>, IAsyncEnumerable<OracleDBSystemShapeResource>
     {
         private readonly ClientDiagnostics _dbSystemShapesClientDiagnostics;
-        private readonly DbSystemShapes _dbSystemShapesRestClient;
+        private readonly DBSystemShapes _dbSystemShapesRestClient;
         /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OracleDatabase
             TryGetApiVersion(OracleDBSystemShapeResource.ResourceType, out string oracleDBSystemShapeApiVersion);
             _location = location;
             _dbSystemShapesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDBSystemShapeResource.ResourceType.Namespace, Diagnostics);
-            _dbSystemShapesRestClient = new DbSystemShapes(_dbSystemShapesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBSystemShapeApiVersion ?? "2025-09-01");
+            _dbSystemShapesRestClient = new DBSystemShapes(_dbSystemShapesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBSystemShapeApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleDBSystemShapeData, OracleDBSystemShapeResource>(new DbSystemShapesGetByLocationAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OracleDBSystemShapeData, OracleDBSystemShapeResource>(new OracleDBSystemShapeDataAsyncCollectionResultOfT(
                 _dbSystemShapesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleDBSystemShapeData, OracleDBSystemShapeResource>(new DbSystemShapesGetByLocationCollectionResultOfT(
+            return new PageableWrapper<OracleDBSystemShapeData, OracleDBSystemShapeResource>(new OracleDBSystemShapeDataCollectionResultOfT(
                 _dbSystemShapesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,

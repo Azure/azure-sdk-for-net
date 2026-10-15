@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             TryGetApiVersion(ResourceType, out string containerRegistryApiVersion);
             _registriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ResourceType.Namespace, Diagnostics);
-            _registriesRestClient = new Registries(_registriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryApiVersion ?? "2026-09-01-preview");
+            _registriesRestClient = new Registries(
+                _registriesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                containerRegistryApiVersion ?? "2026-09-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -755,7 +761,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new RegistriesGetUsagesAsyncCollectionResultOfT(
+            return new ContainerRegistryUsageAsyncCollectionResultOfT(
                 _registriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -793,7 +799,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new RegistriesGetUsagesCollectionResultOfT(
+            return new ContainerRegistryUsageCollectionResultOfT(
                 _registriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
