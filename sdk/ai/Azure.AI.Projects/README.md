@@ -118,14 +118,13 @@ using RealtimeSessionClient session = await projectClient.ProjectsRealtimeClient
     "my-voice-agent", intent: null, options: options);
 ```
 
-Omit `Transport` to use the service's default WebSocket transport. Setting `VoiceAgentTransport.Webrtc`
-selects WebRTC signaling over the WebSocket; your application must also handle the peer connection,
-media, and SDP exchange. The typed option overrides any `transport` value in `QueryString` while
-preserving other query parameters.
+Use `Transport` to select the connection transport; the SDK handles the connection details.
+Setting `VoiceAgentTransport.Webrtc` selects WebRTC signaling over the WebSocket; your application
+must also handle the peer connection, media, and SDP exchange.
 
-See the [runnable WebSocket transport sample](./samples/Sample_VoiceAgent_WebSocketTransport.md)
+See the [runnable WebSocket transport sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_WebSocketTransport.md)
 for a complete text exchange using the typed transport with `store=true` and a REST read of the
-persisted conversation. The [WebSocket audio sample](./samples/Sample_VoiceAgent_WebSocketAudio.md)
+persisted conversation. The [WebSocket audio sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_WebSocketAudio.md)
 demonstrates streaming PCM input and output while logging actual byte counts.
 
 ### Performing Agent operations

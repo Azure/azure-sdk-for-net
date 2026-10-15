@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added `ProjectsRealtimeSessionClientOptions.Transport` to select a Voice Agent's WebSocket or WebRTC signaling transport without editing the raw query string. Omitting it preserves the service default.
+- Added `ProjectsRealtimeSessionClientOptions.Transport` to select a Voice Agent's WebSocket or WebRTC signaling transport.
 
 ### Breaking Changes
 

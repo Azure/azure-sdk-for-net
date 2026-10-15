@@ -29,8 +29,8 @@ Console.WriteLine($"Created voice agent {agentName} version {agentVersion.Versio
 ```
 
 2. Connect with the typed WebSocket transport, request conversation persistence, send a text
-message, and verify the response. The SDK adds `transport=websocket` to the WebSocket handshake.
-Omitting `Transport` instead uses the service's default WebSocket transport.
+message, and verify the response. Select WebSocket through
+`ProjectsRealtimeSessionClientOptions.Transport`; the SDK handles the connection details.
 
 ```C# Snippet:Sample_VoiceAgent_WebSocketTransport_Connect
 using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(2));

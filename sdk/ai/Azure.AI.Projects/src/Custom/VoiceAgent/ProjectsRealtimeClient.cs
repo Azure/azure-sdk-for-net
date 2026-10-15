@@ -84,7 +84,6 @@ public class ProjectsRealtimeClient : RealtimeClient
     /// Additional connection options. Use <see cref="ProjectsRealtimeSessionClientOptions.Transport"/>
     /// to select a Voice Agent transport, or <see cref="RealtimeSessionClientOptions.QueryString"/>
     /// to pass Foundry's "store" option as <c>"store=true"</c> or <c>"store=false"</c>.
-    /// An explicit transport overrides any transport value in the query string.
     /// </param>
     /// <param name="cancellationToken"></param>
     /// <exception cref="ArgumentException">The selected transport has no value.</exception>
