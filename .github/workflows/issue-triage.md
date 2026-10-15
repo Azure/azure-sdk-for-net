@@ -66,6 +66,7 @@ safe-outputs:
       runs-on: ubuntu-latest
       output: "Owner mention comment posted"
       permissions:
+        contents: read
         issues: write
       inputs:
         message:
@@ -146,12 +147,82 @@ safe-outputs:
               }
 
               const items = agentOutput.items.filter(i => i.type === 'mention_owners');
-              if (items.length === 0) {
-                await failSafe('No mention_owners items in agent output');
+              if (items.length !== 1) {
+                core.setFailed('Owner notification requires exactly one mention_owners item');
+                return;
+              }
+
+              const labelItems = agentOutput.items.filter(i => i.type === 'add_labels');
+              if ((labelItems.length !== 1) || (Number(labelItems[0].item_number ?? issueNumber) !== issueNumber) || (!Array.isArray(labelItems[0].labels))) {
+                core.setFailed('Owner notification requires one final label decision for the triggering issue');
+                return;
+              }
+
+              const labels = labelItems[0].labels.map(label => typeof label === 'string' ? label : label?.name);
+              if (labels.some(label => typeof label !== 'string' || !label.trim())) {
+                core.setFailed('Owner notification requires valid label names');
+                return;
+              }
+              const finalLabels = new Set(labels);
+              if ((finalLabels.has('needs-triage')) || (finalLabels.has('needs-team-triage'))) {
+                core.setFailed('Owner notification is not allowed for a manual triage decision');
+                return;
+              }
+
+              let matchedOwners;
+              try {
+                const { data } = await github.rest.repos.getContent({
+                  owner, repo, path: '.github/CODEOWNERS', ref: context.sha
+                });
+                if ((data.encoding !== 'base64') || (typeof data.content !== 'string')) {
+                  throw new Error('CODEOWNERS response did not contain base64 file content');
+                }
+                const blocks = Buffer.from(data.content, 'base64').toString('utf8').split(/\r?\n\s*\r?\n/);
+                for (const block of blocks.reverse()) {
+                  const entries = [...block.matchAll(/^#[ \t]*ServiceLabel:[ \t]*(.+)$/gm)];
+                  if (entries.length === 0) continue;
+                  if (entries.length !== 1) {
+                    throw new Error('CODEOWNERS block contains multiple ServiceLabel entries');
+                  }
+                  const entryLabels = entries[0][1].split('%').slice(1).map(label => label.trim());
+                  if ((entryLabels.length === 0) || (entryLabels.some(label => !label))) {
+                    throw new Error('CODEOWNERS ServiceLabel entry has invalid labels');
+                  }
+                  if (!entryLabels.every(label => finalLabels.has(label))) continue;
+                  const readOwners = name => [...block.matchAll(new RegExp(`^#[ \\t]*${name}:[ \\t]*(.*)$`, 'gm'))]
+                    .flatMap(match => match[1].trim().split(/\s+/)).filter(Boolean)
+                    .map(value => value.replace(/^@/, '').toLowerCase());
+                  matchedOwners = {
+                    azureSdk: readOwners('AzureSdkOwners'),
+                    service: readOwners('ServiceOwners')
+                  };
+                  break;
+                }
+              } catch (lookupError) {
+                await failSafe(`Unable to resolve notification owners: ${lookupError.message}`);
+                return;
+              }
+
+              if (!matchedOwners) {
+                core.setFailed('Owner notification has no matching CODEOWNERS ServiceLabel entry');
+                return;
+              }
+
+              let eligibleOwners;
+              if (matchedOwners.azureSdk.length > 1) {
+                eligibleOwners = matchedOwners.azureSdk;
+              } else if ((matchedOwners.azureSdk.length === 0) && (matchedOwners.service.length > 0) && (finalLabels.has('Service Attention'))) {
+                eligibleOwners = matchedOwners.service;
+              } else {
+                core.setFailed('Owner notification requires multiple AzureSdkOwners or ServiceOwners with Service Attention in the final label decision');
                 return;
               }
 
               for (const item of items) {
+                if ((typeof item.message !== 'string') || (item.message.includes('@'))) {
+                  core.setFailed('Owner notification message must be text without @ symbols');
+                  return;
+                }
                 if (!item.owners || typeof item.owners !== 'string' || !item.owners.trim()) {
                   await failSafe('mention_owners item missing owners field');
                   return;
@@ -169,8 +240,15 @@ safe-outputs:
                   })
                   .filter(Boolean);
 
-                if (mentions.length === 0) {
-                  await failSafe('No valid owners after parsing owners field');
+                if ((mentions.length === 0) || (mentions.length !== item.owners.trim().split(/[\s,]+/).length)) {
+                  core.setFailed('Owner notification contains invalid owners');
+                  return;
+                }
+
+                const requestedOwners = new Set(mentions.map(mention => mention.slice(1).toLowerCase()));
+                const expectedOwners = new Set(eligibleOwners);
+                if ((requestedOwners.size !== expectedOwners.size) || ([...requestedOwners].some(value => !expectedOwners.has(value)))) {
+                  core.setFailed('Owner notification must include only and all eligible owners from the first matching CODEOWNERS block');
                   return;
                 }
 
@@ -471,7 +549,8 @@ The CODEOWNERS file contains `# ServiceLabel:` entries that associate one or mor
 1. Start from the END of the CODEOWNERS file and scan each line upward
 2. For each `# ServiceLabel:` entry, check if ALL labels listed in it (after each `%`) are present in the issue's predicted labels
 3. STOP at the first entry where all its labels match — this is the matching entry
-4. Use the AzureSdkOwners and/or ServiceOwners from that entry and any adjacent owner lines
+4. Use only the AzureSdkOwners and/or ServiceOwners in the same blank-line-delimited block as that entry, including owner lines before or after the ServiceLabel line
+5. Never combine owners from other blocks, even if an earlier block has identical labels
 
 **Why this matters:** The file is structured so that more specific multi-label entries appear AFTER less specific entries. In bottom-to-top scanning, entries closer to the end of the file are encountered first. Multi-label entries placed after a catch-all are encountered before it, correctly overriding the catch-all
 
@@ -506,7 +585,7 @@ Scan starts from end of file upward:
 
 The `%Mgmt` catch-all is never reached because the more specific `%ARM %Mgmt` entry was encountered first (it appears after the catch-all in the file)
 
-**Outcome:** Matches `%ARM %Mgmt`. ServiceOwners: @Azure/arm-sdk-owners, no AzureSdkOwners. Add "Service Attention" to the final label set, no assignment, no @mention. If customer status is `external`, also add "needs-team-attention" to the final label set
+**Outcome:** Matches `%ARM %Mgmt`. ServiceOwners: @Azure/arm-sdk-owners, no AzureSdkOwners. Add "Service Attention" to the final label set, leave unassigned, and mention only those ServiceOwners in Step 7 after committing that label decision. If the final label decision does not contain "Service Attention", do not mention ServiceOwners. If customer status is `external`, also add "needs-team-attention" to the final label set
 
 **Example 2 — Predicted labels: "Event Hubs" + "Client"**
 
@@ -515,7 +594,7 @@ Scan starts from end of file upward:
 2. `%Mgmt` catch-all — requires "Mgmt"; issue has "Client" → no match, continue
 3. `%Event Hubs` — requires only "Event Hubs"; issue has "Event Hubs" → ALL labels match ✅ STOP
 
-**Outcome:** Matches `%Event Hubs`. AzureSdkOwners: @jsquire, ServiceOwners: @axisc @hmlam. Assign @jsquire, @mention @jsquire in Step 7 comment. If customer status is `external`, also add "needs-team-attention" to the final label set
+**Outcome:** Matches `%Event Hubs`. AzureSdkOwners: @jsquire, ServiceOwners: @axisc @hmlam. Assign @jsquire and post the Step 7 routing message without @mentions because assignment already notifies the single AzureSdkOwner. If customer status is `external`, also add "needs-team-attention" to the final label set
 
 Note: There is no `%Client` catch-all entry in CODEOWNERS, so "Client" as a category label does not contribute to CODEOWNERS matching. The service label drives the match
 
@@ -570,17 +649,23 @@ Do not call `add_labels` again during this run
 
 ## Step 7: Owner Routing Comment
 
-Post a routing comment before the analysis comment. The comment type depends on who was identified in Step 5:
+Request a routing comment before requesting the analysis comment. Select the comment using the final label decision committed in Step 6 and only the owners from the first matching Step 5 block:
 
-- For **multiple AzureSdkOwners** or **ServiceOwners**: use `mention_owners` to preserve @mentions as real pings
+- For **multiple AzureSdkOwners**: use `mention_owners` to preserve @mentions as real pings, without requiring "Service Attention"
+- For **ServiceOwners with no AzureSdkOwners**: use `mention_owners` only when the final label decision contains "Service Attention"
 - For a **single AzureSdkOwner**: use `add_comment` with just the routing message (no @mentions needed — the assignment already notifies them)
 
 **When using `mention_owners`:** Pass owner names in the `owners` field WITHOUT the @ prefix; the `mention_owners` job prepends @ on the server side to avoid safe-outputs sanitization. Never include @ symbols in any `mention_owners` tool parameter
 
+The publishing job validates the requested labels and owners, not the live issue labels, because label application and owner notification run independently
+
 This comment should be concise: a brief routing message only; no analysis or debugging detail
 
 ```
-IF a single AzureSdkOwner was identified in Step 5:
+IF the final label decision contains "needs-triage" or "needs-team-triage":
+    - Skip this step
+
+ELSE IF a single AzureSdkOwner was identified in Step 5:
     - Use `add_comment` with body: "Thank you for your feedback. Tagging and routing to the team member(s) best able to assist."
 
 ELSE IF multiple AzureSdkOwners were identified in Step 5:
@@ -588,13 +673,14 @@ ELSE IF multiple AzureSdkOwners were identified in Step 5:
         message: "Thank you for your feedback. Tagging and routing to the team member(s) best able to assist."
         owners: "owner1, owner2"
 
-ELSE IF ServiceOwners were identified in Step 5 (Service Attention path):
+ELSE IF no AzureSdkOwners were identified AND ServiceOwners were identified AND the final label decision contains "Service Attention":
     - Use `mention_owners` with:
         message: "Thank you for your feedback. Tagging and routing to the team member(s) best able to assist."
         owners: "owner1, owner2"
 
 ELSE:
     - Skip this step
+    - Do not request ServiceOwners mentions when "Service Attention" is absent, regardless of customer status
 ```
 
 ## Step 8: Analysis Comment
