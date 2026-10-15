@@ -19,11 +19,21 @@ const call = (argumentsValue = args) => ({
     arguments: argumentsValue,
   },
 });
+const validationCall = (typeSpecProjectRootPath = "/fixtures/Widget") => ({
+  jsonrpc: "2.0",
+  id: 3,
+  method: "tools/call",
+  params: {
+    name: "azsdk_run_typespec_validation",
+    arguments: { typeSpecProjectRootPath },
+  },
+});
 
-test("fixture advertises the customization tool and edit scopes", () => {
+test("fixture advertises customization and validation tools", () => {
   const result = handleRequest({ id: 1, method: "tools/list" }).result;
-  assert.equal(result.tools.length, 1);
+  assert.equal(result.tools.length, 2);
   assert.equal(result.tools[0].name, "azsdk_customized_code_update");
+  assert.equal(result.tools[1].name, "azsdk_run_typespec_validation");
   assert.deepEqual(result.tools[0].inputSchema.properties.editScope.enum, [
     "SpecInputs",
     "CustomCode",
@@ -42,6 +52,28 @@ test("customization failures remain failures", () => {
   const result = JSON.parse(handleRequest(call(), true).result.content[0].text);
   assert.equal(result.Success, false);
   assert.equal(result.ErrorCode, "CustomizationFailed");
+});
+
+test("validation requires a successful customization in the same session", () => {
+  const state = { customizationApplied: false };
+  assert.equal(
+    handleRequest(validationCall(), false, state).result.isError,
+    true,
+  );
+  assert.equal(handleRequest(call(), false, state).result.isError, undefined);
+  const validation = JSON.parse(
+    handleRequest(validationCall(), false, state).result.content[0].text,
+  );
+  assert.equal(validation.Success, true);
+  assert.match(validation.Message, /compile command next/);
+});
+
+test("validation requires the TypeSpec project root", () => {
+  const state = { customizationApplied: true };
+  assert.equal(
+    handleRequest(validationCall(""), false, state).result.isError,
+    true,
+  );
 });
 
 for (const invalid of [
@@ -75,6 +107,7 @@ test("stdio handshake and customization work without dependencies or file writes
     { method: "notifications/initialized" },
     { id: 1, method: "tools/list" },
     call(),
+    validationCall(),
   ];
   const process = spawnSync(
     globalThis.process.execPath,
@@ -88,7 +121,8 @@ test("stdio handshake and customization work without dependencies or file writes
   );
   assert.equal(process.status, 0, process.stderr);
   const responses = process.stdout.trim().split("\n").map(JSON.parse);
-  assert.equal(responses.length, 3);
+  assert.equal(responses.length, 4);
   assert.equal(responses[0].result.protocolVersion, "2024-11-05");
   assert.equal(JSON.parse(responses[2].result.content[0].text).Success, true);
+  assert.equal(JSON.parse(responses[3].result.content[0].text).Success, true);
 });

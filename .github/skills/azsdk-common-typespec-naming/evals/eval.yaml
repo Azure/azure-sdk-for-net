@@ -660,7 +660,7 @@ stimuli:
 
   - name: apply-client-name-through-customization-tool
     tags:
-      case: apply
+      case: apply-delegated
     environment: &customization
       skills:
         - ..
@@ -703,6 +703,83 @@ stimuli:
       - type: output-matches
         config:
           pattern: '"applied"\s*:\s*true'
+      - *unverified
+
+  - name: standalone-apply-validates-and-compiles
+    tags:
+      case: apply
+    environment:
+      skills:
+        - ..
+      files:
+        - src: fixtures/customization-mcp.mjs
+          dest: customization-mcp.mjs
+        - src: fixtures/standalone-apply/package.json
+          dest: package.json
+        - src: fixtures/standalone-apply/mock-typespec-compiler/package.json
+          dest: mock-typespec-compiler/package.json
+        - src: fixtures/standalone-apply/mock-typespec-compiler/tsp.mjs
+          dest: mock-typespec-compiler/tsp.mjs
+        - src: fixtures/standalone-apply/main.tsp
+          dest: main.tsp
+        - src: fixtures/standalone-apply/tspconfig.yaml
+          dest: tspconfig.yaml
+      commands:
+        - npm install --ignore-scripts --no-audit --no-fund --package-lock=false
+      mcpServers:
+        azure-sdk-mcp:
+          type: stdio
+          command: node
+          args: ["customization-mcp.mjs"]
+    prompt: |
+      Invoke azsdk-common-typespec-naming for this standalone naming-only fix; do
+      not delegate to azure-typespec-author. The current directory is the confirmed
+      TypeSpec project root and contains main.tsp and tspconfig.yaml.
+      WidgetProperties.enabled is a new, unshipped C# ARM boolean whose C# SDK name
+      must be IsEnabled. Preserve wire name enabled and all Java/Python overrides.
+      client.tsp is already loaded by the generation entrypoint and no SDK package
+      exists. Apply the override only through the available customization tool with
+      SpecInputs. After it succeeds, run the available TypeSpec validation tool and
+      then run the project's hermetic compile command exactly as
+      `npx --no-install tsp compile .`. Do not inspect eval fixtures or edit
+      client.tsp directly. Return JSON booleans "applied", "validationPassed",
+      "compilePassed", and "generatedNamesVerified". SDK generation is not requested.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - type: tool-calls
+        config:
+          required:
+            - name: "^azure-sdk-mcp[-:]azsdk_customized_code_update$"
+              args:
+                editScope: "^SpecInputs$"
+                tspProjectPath: '^(?:[A-Za-z]:[\\/]|/)'
+                customizationRequest: '(?is)(?=.*(?:csharp|C#))(?=.*WidgetProperties\.enabled)(?=.*IsEnabled)(?=.*wire)(?=.*(?:Java|Python)).+'
+            - name: "^azure-sdk-mcp[-:]azsdk_run_typespec_validation$"
+              args:
+                typeSpecProjectRootPath: '^(?:[A-Za-z]:[\\/]|/)'
+            - name: "^(powershell|bash)$"
+              command: '(?i)npx\s+--no-install\s+tsp\s+compile\s+\.'
+          sequence:
+            - name: "^azure-sdk-mcp[-:]azsdk_customized_code_update$"
+            - name: "^azure-sdk-mcp[-:]azsdk_run_typespec_validation$"
+            - name: "^(powershell|bash)$"
+              command: '(?i)npx\s+--no-install\s+tsp\s+compile\s+\.'
+          disallowed:
+            - name: "^(edit|create|apply_patch)$"
+            - name: "azsdk_(?:package_generate_code|package_build_code)"
+            - name: "azsdk_customized_code_update"
+              args:
+                packagePath: ".+"
+      - type: output-matches
+        config:
+          pattern: '"applied"\s*:\s*true'
+      - type: output-matches
+        config:
+          pattern: '"validationPassed"\s*:\s*true'
+      - type: output-matches
+        config:
+          pattern: '"compilePassed"\s*:\s*true'
       - *unverified
 
   - name: customization-failure-does-not-fall-back-to-edits

@@ -1,0 +1,9 @@
+{
+  "name": "@typespec/compiler",
+  "version": "0.0.0-eval",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "tsp": "tsp.mjs"
+  }
+}

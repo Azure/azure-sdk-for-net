@@ -1,0 +1,7 @@
+{
+  "name": "typespec-naming-standalone-apply-fixture",
+  "private": true,
+  "dependencies": {
+    "@typespec/compiler": "file:./mock-typespec-compiler"
+  }
+}
