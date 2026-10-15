@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 throw new FormatException($"The model {nameof(ConfigurationStore)} does not support writing '{format}' format.");
             }
-            if (_appConfigurationIdIsDefined || Optional.IsDefined(AppConfigurationId))
+            if (Optional.IsDefined(AppConfigurationId, _appConfigurationIdIsDefined))
             {
                 if (AppConfigurationId != null)
                 {

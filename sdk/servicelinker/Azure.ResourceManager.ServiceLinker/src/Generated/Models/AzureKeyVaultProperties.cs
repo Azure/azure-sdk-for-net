@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public partial class AzureKeyVaultProperties : AzureResourceBaseProperties
     {
         private bool? _doesConnectAsKubernetesCsiDriver;
-        internal bool _doesConnectAsKubernetesCsiDriverIsDefined;
+        private bool _doesConnectAsKubernetesCsiDriverIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AzureKeyVaultProperties"/>. </summary>
         public AzureKeyVaultProperties() : base(AzureResourceType.KeyVault)
