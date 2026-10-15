@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private bool? _privileged;
-        internal bool _privilegedIsDefined;
+        private bool _privilegedIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DockerSetting"/>. </summary>
         public DockerSetting()

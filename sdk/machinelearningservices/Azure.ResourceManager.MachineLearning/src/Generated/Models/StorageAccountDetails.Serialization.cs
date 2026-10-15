@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(StorageAccountDetails)} does not support writing '{format}' format.");
             }
-            if (_systemCreatedStorageAccountIsDefined || Optional.IsDefined(SystemCreatedStorageAccount))
+            if (Optional.IsDefined(SystemCreatedStorageAccount, _systemCreatedStorageAccountIsDefined))
             {
                 if (SystemCreatedStorageAccount != null)
                 {

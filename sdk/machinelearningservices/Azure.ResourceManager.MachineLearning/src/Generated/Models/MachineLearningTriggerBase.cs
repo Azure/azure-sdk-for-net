@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _endTime;
-        internal bool _endTimeIsDefined;
+        private protected bool _endTimeIsDefined;
         private string _startTime;
-        internal bool _startTimeIsDefined;
+        private protected bool _startTimeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningTriggerBase"/>. </summary>
         /// <param name="triggerType"> [Required]. </param>

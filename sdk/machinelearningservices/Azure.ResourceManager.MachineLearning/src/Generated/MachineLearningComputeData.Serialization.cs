@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (_skuIsDefined || Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku, _skuIsDefined))
             {
                 if (Sku != null)
                 {

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningAzureFileDatastore)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_resourceGroupIsDefined || Optional.IsDefined(ResourceGroup))
+            if (Optional.IsDefined(ResourceGroup, _resourceGroupIsDefined))
             {
                 if (ResourceGroup != null)
                 {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceGroup"u8);
                 }
             }
-            if (_subscriptionIdIsDefined || Optional.IsDefined(SubscriptionId))
+            if (Optional.IsDefined(SubscriptionId, _subscriptionIdIsDefined))
             {
                 if (SubscriptionId != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
-            if (_endpointIsDefined || Optional.IsDefined(Endpoint))
+            if (Optional.IsDefined(Endpoint, _endpointIsDefined))
             {
                 if (Endpoint != null)
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("fileShareName"u8);
             writer.WriteStringValue(FileShareName);
-            if (_protocolIsDefined || Optional.IsDefined(Protocol))
+            if (Optional.IsDefined(Protocol, _protocolIsDefined))
             {
                 if (Protocol != null)
                 {

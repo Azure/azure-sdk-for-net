@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(ManagedComputeIdentity)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_identityIsDefined || Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity, _identityIsDefined))
             {
                 if (Identity != null)
                 {

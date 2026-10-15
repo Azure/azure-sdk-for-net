@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class StaticInputData : MonitoringInputDataBase
     {
         private string _preprocessingComponentId;
-        internal bool _preprocessingComponentIdIsDefined;
+        private bool _preprocessingComponentIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="StaticInputData"/>. </summary>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
