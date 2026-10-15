@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -246,8 +247,31 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
         {
             var options = new WebPubSubChatServiceClientOptions { Transport = transport };
             options.Retry.MaxRetries = 0;
+            options.AddPolicy(new SyncAsyncValidatingPolicy(IsAsync), HttpPipelinePosition.PerCall);
             return InstrumentClient(new WebPubSubChatServiceClient(
                 new Uri(Endpoint), "hub", new AzureKeyCredential("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH"), options));
+        }
+
+        private sealed class SyncAsyncValidatingPolicy : HttpPipelinePolicy
+        {
+            private readonly bool _isAsync;
+
+            public SyncAsyncValidatingPolicy(bool isAsync)
+            {
+                _isAsync = isAsync;
+            }
+
+            public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                Assert.That(_isAsync, Is.False, "The async fixture must use the asynchronous pipeline.");
+                ProcessNext(message, pipeline);
+            }
+
+            public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                Assert.That(_isAsync, Is.True, "The sync fixture must use the synchronous pipeline.");
+                return ProcessNextAsync(message, pipeline);
+            }
         }
 
         private static MockResponse JsonResponse(int status, string json)

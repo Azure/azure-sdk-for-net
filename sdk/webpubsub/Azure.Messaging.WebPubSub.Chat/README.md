@@ -82,7 +82,10 @@ Alternatively, use the connection string when local authentication is enabled:
 var client = new WebPubSubChatServiceClient("<connection-string>", "chat");
 ```
 
-Both clients use `2026-08-01-preview` by default for all operations.
+Both clients use `2026-08-01-preview` by default for Chat resource operations.
+When using a token credential, `GetClientAccessUri` obtains a client token through
+the separate Web PubSub token API using `2024-12-01`. Connection-string and
+access-key clients generate the client token locally.
 
 If you store the endpoint and access key separately, use `AzureKeyCredential`:
 
@@ -101,8 +104,9 @@ var client = new WebPubSubChatServiceClient(
   user role, and each membership has a room role. `BuiltInChatRoles` provides
   service-defined roles; `ChatPermission` defines permissions for custom roles.
 - **Topics and conversations:** Each room has a default conversation. Topics
-  belong to a room and have their own conversation IDs. The server supplies
-  topic identifiers, creator metadata, timestamps, and ETags in responses.
+  belong to a room and have their own conversation IDs. Topic IDs are supplied
+  by the caller; the service returns conversation IDs, creator metadata,
+  timestamps, and ETags.
 - **Topic lifecycle:** States include `Normal`, `Archived`, and `SoftDeleted`.
   Deleting a topic is a soft delete, not permanent removal. Unknown future
   states are preserved by the extensible `ChatTopicState` type.

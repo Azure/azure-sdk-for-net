@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.WebPubSub.Chat
 {
@@ -36,13 +37,23 @@ namespace Azure.Messaging.WebPubSub.Chat
             ClientAccessUriOptions options = null,
             CancellationToken cancellationToken = default)
         {
-            options ??= new ClientAccessUriOptions();
-            TimeSpan expiresAfter = GetExpiresAfter(options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("WebPubSubChatServiceClient.GetClientAccessUri");
+            scope.Start();
+            try
+            {
+                options ??= new ClientAccessUriOptions();
+                TimeSpan expiresAfter = GetExpiresAfter(options);
 
-            string token = _keyCredential != null
-                ? GenerateClientToken(options, expiresAfter)
-                : RequestClientToken(options, expiresAfter, cancellationToken);
-            return CreateClientAccessUri(token);
+                string token = _keyCredential != null
+                    ? GenerateClientToken(options, expiresAfter)
+                    : RequestClientToken(options, expiresAfter, cancellationToken);
+                return CreateClientAccessUri(token);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 #pragma warning restore AZC0015
 
@@ -58,13 +69,23 @@ namespace Azure.Messaging.WebPubSub.Chat
             ClientAccessUriOptions options = null,
             CancellationToken cancellationToken = default)
         {
-            options ??= new ClientAccessUriOptions();
-            TimeSpan expiresAfter = GetExpiresAfter(options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("WebPubSubChatServiceClient.GetClientAccessUri");
+            scope.Start();
+            try
+            {
+                options ??= new ClientAccessUriOptions();
+                TimeSpan expiresAfter = GetExpiresAfter(options);
 
-            string token = _keyCredential != null
-                ? GenerateClientToken(options, expiresAfter)
-                : await RequestClientTokenAsync(options, expiresAfter, cancellationToken).ConfigureAwait(false);
-            return CreateClientAccessUri(token);
+                string token = _keyCredential != null
+                    ? GenerateClientToken(options, expiresAfter)
+                    : await RequestClientTokenAsync(options, expiresAfter, cancellationToken).ConfigureAwait(false);
+                return CreateClientAccessUri(token);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 #pragma warning restore AZC0015
 

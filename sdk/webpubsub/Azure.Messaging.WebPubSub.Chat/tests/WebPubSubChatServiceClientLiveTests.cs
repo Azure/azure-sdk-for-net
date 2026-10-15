@@ -26,14 +26,14 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
         {
             WebPubSubChatServiceClientOptions options = InstrumentClientOptions(
                 new WebPubSubChatServiceClientOptions(WebPubSubChatServiceClientOptions.ServiceVersion.V2026_08_01_Preview));
-            _client = new WebPubSubChatServiceClient(
+            _client = InstrumentClient(new WebPubSubChatServiceClient(
                 new Uri(TestEnvironment.Endpoint),
                 "test_hub",
                 TestEnvironment.Credential,
-                options);
+                options));
             if (!TestEnvironment.DisableLocalAuth)
             {
-                _accessKeyClient = new WebPubSubChatServiceClient(TestEnvironment.ConnectionString, "test_hub", options);
+                _accessKeyClient = InstrumentClient(new WebPubSubChatServiceClient(TestEnvironment.ConnectionString, "test_hub", options));
             }
         }
 
