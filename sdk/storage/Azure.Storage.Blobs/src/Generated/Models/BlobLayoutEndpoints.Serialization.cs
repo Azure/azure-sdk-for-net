@@ -16,8 +16,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The endpoints that serve the ranges of a blob. </summary>
-    public partial class BlobLayoutEndpoints : IPersistableModel<BlobLayoutEndpoints>, IXmlSerializable
+    internal partial class BlobLayoutEndpoints : IPersistableModel<BlobLayoutEndpoints>, IXmlSerializable
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -103,7 +102,7 @@ namespace Azure.Storage.Blobs.Models
 
             if (Endpoint != null && Optional.IsCollectionDefined(Endpoint))
             {
-                foreach (BlobLayoutEndpoint item in Endpoint)
+                foreach (BlobLayoutEndpointInternal item in Endpoint)
                 {
                     writer.WriteStartElement("Endpoint");
                     writer.WriteObjectValue(item, options);
@@ -121,7 +120,7 @@ namespace Azure.Storage.Blobs.Models
                 return null;
             }
 
-            IList<BlobLayoutEndpoint> endpoint = default;
+            IList<BlobLayoutEndpointInternal> endpoint = default;
 
             foreach (var child in element.Elements())
             {
@@ -130,13 +129,13 @@ namespace Azure.Storage.Blobs.Models
                 {
                     if (endpoint == null)
                     {
-                        endpoint = new List<BlobLayoutEndpoint>();
+                        endpoint = new List<BlobLayoutEndpointInternal>();
                     }
-                    endpoint.Add(BlobLayoutEndpoint.DeserializeBlobLayoutEndpoint(child, options));
+                    endpoint.Add(BlobLayoutEndpointInternal.DeserializeBlobLayoutEndpointInternal(child, options));
                     continue;
                 }
             }
-            return new BlobLayoutEndpoints(endpoint ?? new ChangeTrackingList<BlobLayoutEndpoint>());
+            return new BlobLayoutEndpoints(endpoint ?? new ChangeTrackingList<BlobLayoutEndpointInternal>());
         }
 
         /// <param name="writer"> The XML writer. </param>

@@ -7,14 +7,13 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> A range of a blob, and the endpoint that serves it. </summary>
-    public partial class BlobLayoutRange
+    internal partial class BlobLayoutRangeInternal
     {
-        /// <summary> Initializes a new instance of <see cref="BlobLayoutRange"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobLayoutRangeInternal"/>. </summary>
         /// <param name="start"> The start byte offset of the range. </param>
         /// <param name="end"> The end byte offset of the range. </param>
         /// <param name="endpointIndex"> Index into the Endpoints array indicating which endpoint serves this range. </param>
-        internal BlobLayoutRange(long start, long end, int endpointIndex)
+        internal BlobLayoutRangeInternal(long start, long end, int endpointIndex)
         {
             Start = start;
             End = end;

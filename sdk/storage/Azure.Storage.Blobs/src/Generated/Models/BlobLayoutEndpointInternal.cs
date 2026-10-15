@@ -7,13 +7,12 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> An endpoint that serves ranges of a blob. </summary>
-    public partial class BlobLayoutEndpoint
+    internal partial class BlobLayoutEndpointInternal
     {
-        /// <summary> Initializes a new instance of <see cref="BlobLayoutEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobLayoutEndpointInternal"/>. </summary>
         /// <param name="index"> The index of the endpoint, referenced by Range elements. </param>
         /// <param name="value"> The host:port of the endpoint. </param>
-        internal BlobLayoutEndpoint(int index, string value)
+        internal BlobLayoutEndpointInternal(int index, string value)
         {
             Index = index;
             Value = value;

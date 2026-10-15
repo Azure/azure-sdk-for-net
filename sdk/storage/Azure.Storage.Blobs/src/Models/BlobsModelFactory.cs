@@ -2899,14 +2899,44 @@ namespace Azure.Storage.Blobs.Models
             };
         #endregion
 
+        #region BlobLayoutRange
+        /// <summary>
+        /// Creates a new <see cref="Models.BlobLayoutRange"/> instance for mocking.
+        /// </summary>
+        public static BlobLayoutRange BlobLayoutRange(
+            long start = default,
+            long end = default,
+            int endpointIndex = default)
+            => new BlobLayoutRange
+            {
+                Start = start,
+                End = end,
+                EndpointIndex = endpointIndex,
+            };
+        #endregion
+
+        #region BlobLayoutEndpoint
+        /// <summary>
+        /// Creates a new <see cref="Models.BlobLayoutEndpoint"/> instance for mocking.
+        /// </summary>
+        public static BlobLayoutEndpoint BlobLayoutEndpoint(
+            int index = default,
+            Uri value = default)
+            => new BlobLayoutEndpoint
+            {
+                Index = index,
+                Value = value,
+            };
+        #endregion
+
         #region BlobLayoutInfo
         /// <summary>
         /// Creates a new BlobLayoutInfo instance for mocking.
         /// </summary>
         public static BlobLayoutInfo BlobLayoutInfo(
-            BlobLayoutRanges ranges = default,
-            BlobLayoutEndpoints endpoints = default,
-            DateTimeOffset lastModified = default,
+            IEnumerable<BlobLayoutRange> ranges = default,
+            IEnumerable<BlobLayoutEndpoint> endpoints = default,
+            DateTimeOffset lastModifiedOn = default,
             DateTimeOffset createdOn = default,
             IDictionary<string, string> metadata = default,
             string objectReplicationDestinationPolicyId = default,
@@ -2948,7 +2978,7 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset expiresOn = default,
             bool isSealed = default,
             string rehydratePriority = default,
-            DateTimeOffset lastAccessed = default,
+            DateTimeOffset lastAccessedOn = default,
             BlobImmutabilityPolicy immutabilityPolicy = default,
             bool hasLegalHold = default,
             long blobContentLength = default,
@@ -2959,9 +2989,9 @@ namespace Azure.Storage.Blobs.Models
         {
             return new BlobLayoutInfo
             {
-                Ranges = ranges,
-                Endpoints = endpoints,
-                LastModified = lastModified,
+                Ranges = ranges == null ? null : new List<BlobLayoutRange>(ranges),
+                Endpoints = endpoints == null ? null : new List<BlobLayoutEndpoint>(endpoints),
+                LastModifiedOn = lastModifiedOn,
                 CreatedOn = createdOn,
                 Metadata = metadata,
                 ObjectReplicationDestinationPolicyId = objectReplicationDestinationPolicyId,
@@ -3003,7 +3033,7 @@ namespace Azure.Storage.Blobs.Models
                 ExpiresOn = expiresOn,
                 IsSealed = isSealed,
                 RehydratePriority = rehydratePriority,
-                LastAccessed = lastAccessed,
+                LastAccessedOn = lastAccessedOn,
                 ImmutabilityPolicy = immutabilityPolicy,
                 HasLegalHold = hasLegalHold,
                 BlobContentLength = blobContentLength,

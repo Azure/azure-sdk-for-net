@@ -48,7 +48,7 @@ namespace Azure.Storage.Blobs.Models
         /// <para>
         /// Enumerate the pages returned by
         /// <see cref="Specialized.BlobBaseClient.GetLayoutAsync(BlobGetLayoutOptions, System.Threading.CancellationToken)"/>
-        /// and select the endpoint whose layout range covers the offset of the
+        /// and select the <see cref="BlobLayoutEndpoint.Value"/> whose layout range covers the offset of the
         /// requested <see cref="Range"/>; pass that value here.
         /// </para>
         /// <para>
@@ -56,6 +56,6 @@ namespace Azure.Storage.Blobs.Models
         /// configured endpoint with no rewriting.
         /// </para>
         /// </summary>
-        public string LayoutEndpoint { get; set; }
+        public Uri LayoutEndpoint { get; set; }
     }
 }

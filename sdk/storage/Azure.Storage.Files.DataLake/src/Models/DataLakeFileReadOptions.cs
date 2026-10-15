@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 
 namespace Azure.Storage.Files.DataLake.Models
@@ -35,7 +36,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <para>
         /// Enumerate the pages returned by
         /// <see cref="DataLakeFileClient.GetLayout(DataLakeFileGetLayoutOptions, CancellationToken)"/>
-        /// and select the endpoint whose layout range covers the offset of the
+        /// and select the <see cref="DataLakeFileLayoutEndpoint.Value"/> whose layout range covers the offset of the
         /// requested <see cref="Range"/>; pass that value here.
         /// </para>
         /// <para>
@@ -43,6 +44,6 @@ namespace Azure.Storage.Files.DataLake.Models
         /// configured endpoint with no rewriting.
         /// </para>
         /// </summary>
-        public string LayoutEndpoint { get; set; }
+        public Uri LayoutEndpoint { get; set; }
     }
 }

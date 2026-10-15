@@ -336,7 +336,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 .FirstAsync();
 
             // Single-entry layout means exactly one endpoint - just grab it.
-            string layoutEndpoint = layoutInfo.Endpoints.Endpoint[0].Value;
+            Uri layoutEndpoint = layoutInfo.Endpoints[0].Value;
 
             DataLakeFileReadOptions readOptions = new()
             {
@@ -440,7 +440,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 .FirstAsync();
 
             // Single-entry layout means exactly one endpoint - just grab it.
-            string layoutEndpoint = layoutInfo.Endpoints.Endpoint[0].Value;
+            Uri layoutEndpoint = layoutInfo.Endpoints[0].Value;
 
             DataLakeFileReadOptions readOptions = new()
             {
@@ -558,7 +558,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 .FirstAsync();
 
             // Single-entry layout means exactly one endpoint - just grab it.
-            string layoutEndpoint = layoutInfo.Endpoints.Endpoint[0].Value;
+            Uri layoutEndpoint = layoutInfo.Endpoints[0].Value;
 
             DataLakeFileReadOptions readOptions = new()
             {
@@ -659,7 +659,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 .FirstAsync();
 
             // Single-entry layout means exactly one endpoint - just grab it.
-            string layoutEndpoint = layoutInfo.Endpoints.Endpoint[0].Value;
+            Uri layoutEndpoint = layoutInfo.Endpoints[0].Value;
 
             DataLakeFileReadOptions readOptions = new()
             {

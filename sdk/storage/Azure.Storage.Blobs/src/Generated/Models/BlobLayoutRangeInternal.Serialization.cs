@@ -15,35 +15,34 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> An endpoint that serves ranges of a blob. </summary>
-    public partial class BlobLayoutEndpoint : IPersistableModel<BlobLayoutEndpoint>, IXmlSerializable
+    internal partial class BlobLayoutRangeInternal : IPersistableModel<BlobLayoutRangeInternal>, IXmlSerializable
     {
-        /// <summary> Initializes a new instance of <see cref="BlobLayoutEndpoint"/> for deserialization. </summary>
-        internal BlobLayoutEndpoint()
+        /// <summary> Initializes a new instance of <see cref="BlobLayoutRangeInternal"/> for deserialization. </summary>
+        internal BlobLayoutRangeInternal()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BlobLayoutEndpoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BlobLayoutRangeInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobLayoutEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BlobLayoutRangeInternal>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
                     using (Stream dataStream = data.ToStream())
                     {
-                        return DeserializeBlobLayoutEndpoint(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                        return DeserializeBlobLayoutRangeInternal(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BlobLayoutEndpoint)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobLayoutRangeInternal)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobLayoutEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BlobLayoutRangeInternal>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
@@ -51,7 +50,7 @@ namespace Azure.Storage.Blobs.Models
                     {
                         using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
                         {
-                            WriteXml(writer, options, "Endpoint");
+                            WriteXml(writer, options, "Range");
                         }
                         if (stream.Position > int.MaxValue)
                         {
@@ -63,19 +62,19 @@ namespace Azure.Storage.Blobs.Models
                         }
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BlobLayoutEndpoint)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobLayoutRangeInternal)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BlobLayoutEndpoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BlobLayoutRangeInternal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BlobLayoutEndpoint IPersistableModel<BlobLayoutEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BlobLayoutRangeInternal IPersistableModel<BlobLayoutRangeInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BlobLayoutEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<BlobLayoutRangeInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
 
         /// <param name="writer"> The XML writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -99,48 +98,57 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobLayoutEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BlobLayoutRangeInternal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "X")
             {
-                throw new FormatException($"The model {nameof(BlobLayoutEndpoint)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobLayoutRangeInternal)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartAttribute("Index");
-            writer.WriteValue(Index);
+            writer.WriteStartAttribute("Start");
+            writer.WriteValue(Start);
             writer.WriteEndAttribute();
-            writer.WriteStartAttribute("Value");
-            writer.WriteValue(Value);
+            writer.WriteStartAttribute("End");
+            writer.WriteValue(End);
+            writer.WriteEndAttribute();
+            writer.WriteStartAttribute("EndpointIndex");
+            writer.WriteValue(EndpointIndex);
             writer.WriteEndAttribute();
         }
 
         /// <param name="element"> The xml element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BlobLayoutEndpoint DeserializeBlobLayoutEndpoint(XElement element, ModelReaderWriterOptions options)
+        internal static BlobLayoutRangeInternal DeserializeBlobLayoutRangeInternal(XElement element, ModelReaderWriterOptions options)
         {
             if (element == null)
             {
                 return null;
             }
 
-            int index = default;
-            string value = default;
+            long start = default;
+            long end = default;
+            int endpointIndex = default;
 
             foreach (var attr in element.Attributes())
             {
                 string localName = attr.Name.LocalName;
-                if (localName == "Index")
+                if (localName == "Start")
                 {
-                    index = (int)attr;
+                    start = (long)attr;
                     continue;
                 }
-                if (localName == "Value")
+                if (localName == "End")
                 {
-                    value = (string)attr;
+                    end = (long)attr;
+                    continue;
+                }
+                if (localName == "EndpointIndex")
+                {
+                    endpointIndex = (int)attr;
                     continue;
                 }
             }
 
-            return new BlobLayoutEndpoint(index, value);
+            return new BlobLayoutRangeInternal(start, end, endpointIndex);
         }
 
         /// <param name="writer"> The XML writer. </param>

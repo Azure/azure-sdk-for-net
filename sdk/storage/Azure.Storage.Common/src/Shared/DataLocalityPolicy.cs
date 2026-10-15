@@ -31,14 +31,12 @@ namespace Azure.Storage
         public override void OnSendingRequest(HttpMessage message)
         {
             if (message.TryGetProperty(LayoutEndpointKey, out var value)
-                && value is string endpoint
-                && !string.IsNullOrEmpty(endpoint))
+                && value is Uri layoutEndpoint)
             {
                 string originalHostHeader = message.Request.Uri.ToUri().Authority;
 
-                var uri = new Uri(endpoint);
-                message.Request.Uri.Host = uri.Host;
-                message.Request.Uri.Port = uri.Port;
+                message.Request.Uri.Host = layoutEndpoint.Host;
+                message.Request.Uri.Port = layoutEndpoint.Port;
 
                 message.Request.Headers.SetValue("Host", originalHostHeader);
             }

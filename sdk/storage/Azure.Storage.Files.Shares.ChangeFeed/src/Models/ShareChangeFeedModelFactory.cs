@@ -15,7 +15,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// </summary>
         public static ShareChangeFeedEvent ShareChangeFeedEvent(
             long schemaVersion = default,
-            ShareChangeFeedReasonType reason = default,
+            ShareChangeFeedReasonKind reason = default,
             ShareChangeFeedProtocol protocol = default,
             DateTimeOffset eventTime = default,
             string id = default,
@@ -26,7 +26,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 SchemaVersion = schemaVersion,
                 Reason = reason,
                 Protocol = protocol,
-                EventTime = eventTime,
+                EventOccurredOn = eventTime,
                 Id = id,
                 ContainerVersionNumber = containerVersionNumber,
                 EventData = eventData,
@@ -97,8 +97,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             => new ShareChangeFeedResetEvent
             {
                 SchemaVersion = schemaVersion,
-                Reason = ShareChangeFeedReasonType.Reset,
-                EventTime = resetTimeUtc,
+                Reason = ShareChangeFeedReasonKind.Reset,
+                EventOccurredOn = resetTimeUtc,
                 Id = resetId.ToString(),
                 ContainerVersionNumber = 0,
                 EventData = null,

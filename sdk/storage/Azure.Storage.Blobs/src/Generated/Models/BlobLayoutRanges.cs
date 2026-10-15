@@ -10,23 +10,22 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The ranges that make up a blob. </summary>
-    public partial class BlobLayoutRanges
+    internal partial class BlobLayoutRanges
     {
         /// <summary> Initializes a new instance of <see cref="BlobLayoutRanges"/>. </summary>
         internal BlobLayoutRanges()
         {
-            Range = new ChangeTrackingList<BlobLayoutRange>();
+            Range = new ChangeTrackingList<BlobLayoutRangeInternal>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobLayoutRanges"/>. </summary>
         /// <param name="range"> The list of ranges. </param>
-        internal BlobLayoutRanges(IList<BlobLayoutRange> range)
+        internal BlobLayoutRanges(IList<BlobLayoutRangeInternal> range)
         {
             Range = range;
         }
 
         /// <summary> The list of ranges. </summary>
-        public IList<BlobLayoutRange> Range { get; }
+        public IList<BlobLayoutRangeInternal> Range { get; }
     }
 }

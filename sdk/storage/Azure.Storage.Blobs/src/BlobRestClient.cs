@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs
         /// <param name="layoutEndpoint"> Optional.  When set, this request is routed to the given layout endpoint by <see cref="DataLocalityPolicy"/>.  The value is set on this message only, so requests issued while this download is in flight are never rerouted. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Stream> Download(string snapshot = default, string versionId = default, int? timeout = default, string range = default, string leaseId = default, bool? rangeGetContentMd5 = default, bool? rangeGetContentCrc64 = default, string structuredBodyType = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string ifTags = default, RequestConditions requestConditions = default, string layoutEndpoint = default, CancellationToken cancellationToken = default)
+        public virtual Response<Stream> Download(string snapshot = default, string versionId = default, int? timeout = default, string range = default, string leaseId = default, bool? rangeGetContentMd5 = default, bool? rangeGetContentCrc64 = default, string structuredBodyType = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string ifTags = default, RequestConditions requestConditions = default, Uri layoutEndpoint = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.Download");
             scope.Start();
@@ -56,7 +56,7 @@ namespace Azure.Storage.Blobs
                 RequestContext context = cancellationToken.ToRequestContext();
                 using HttpMessage message = CreateDownloadRequest(snapshot, versionId, timeout, range, leaseId, rangeGetContentMd5, rangeGetContentCrc64, structuredBodyType, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), ifTags, requestConditions, context);
                 message.BufferResponse = false;
-                if (!string.IsNullOrEmpty(layoutEndpoint))
+                if (layoutEndpoint != null)
                 {
                     message.SetProperty(DataLocalityPolicy.LayoutEndpointKey, layoutEndpoint);
                 }
@@ -88,7 +88,7 @@ namespace Azure.Storage.Blobs
         /// <param name="layoutEndpoint"> Optional.  When set, this request is routed to the given layout endpoint by <see cref="DataLocalityPolicy"/>. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Stream>> DownloadAsync(string snapshot = default, string versionId = default, int? timeout = default, string range = default, string leaseId = default, bool? rangeGetContentMd5 = default, bool? rangeGetContentCrc64 = default, string structuredBodyType = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string ifTags = default, RequestConditions requestConditions = default, string layoutEndpoint = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> DownloadAsync(string snapshot = default, string versionId = default, int? timeout = default, string range = default, string leaseId = default, bool? rangeGetContentMd5 = default, bool? rangeGetContentCrc64 = default, string structuredBodyType = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string ifTags = default, RequestConditions requestConditions = default, Uri layoutEndpoint = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.Download");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.Storage.Blobs
                 RequestContext context = cancellationToken.ToRequestContext();
                 using HttpMessage message = CreateDownloadRequest(snapshot, versionId, timeout, range, leaseId, rangeGetContentMd5, rangeGetContentCrc64, structuredBodyType, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), ifTags, requestConditions, context);
                 message.BufferResponse = false;
-                if (!string.IsNullOrEmpty(layoutEndpoint))
+                if (layoutEndpoint != null)
                 {
                     message.SetProperty(DataLocalityPolicy.LayoutEndpointKey, layoutEndpoint);
                 }

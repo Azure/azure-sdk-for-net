@@ -194,8 +194,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.AreEqual(ContainerNameFixture, evt.ContainerName);
             Assert.AreEqual(ResetReasonFixture, evt.ResetReason);
             // Base fields populated from the per-event marker.
-            Assert.AreEqual(ShareChangeFeedReasonType.Reset, evt.Reason);
-            Assert.AreEqual(ResetTimeUtcFixture, evt.EventTime);
+            Assert.AreEqual(ShareChangeFeedReasonKind.Reset, evt.Reason);
+            Assert.AreEqual(ResetTimeUtcFixture, evt.EventOccurredOn);
             Assert.AreEqual(ResetIdFixture.ToString(), evt.Id);
             Assert.AreEqual(1, evt.SchemaVersion);
         }

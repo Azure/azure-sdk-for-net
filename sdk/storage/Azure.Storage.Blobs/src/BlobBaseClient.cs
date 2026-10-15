@@ -1557,7 +1557,7 @@ namespace Azure.Storage.Blobs.Specialized
             DownloadTransferValidationOptions transferValidationOverride,
             IProgress<long> progressHandler,
             string operationName,
-            string layoutEndpoint,
+            Uri layoutEndpoint,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1623,7 +1623,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// determine the optimal endpoint.
         /// </param>
         /// <param name="layoutEndpoint">
-        /// Optional. Caller-supplied layout endpoint string.
+        /// Optional. Caller-supplied layout endpoint.
         /// Wins over <paramref name="layoutCache"/> when both are provided. When set,
         /// the request is routed to this endpoint via <see cref="DataLocalityPolicy"/>.
         /// </param>
@@ -1635,7 +1635,7 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler,
             string operationName,
             AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache,
-            string layoutEndpoint,
+            Uri layoutEndpoint,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1846,7 +1846,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions validationOptions,
             long startOffset = 0,
-            string layoutEndpoint = null,
+            Uri layoutEndpoint = null,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -2474,7 +2474,7 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler,
             HttpRange range,
             DownloadTransferValidationOptions transferValidationOverride,
-            string layoutEndpoint,
+            Uri layoutEndpoint,
             bool async,
             CancellationToken cancellationToken)
         {

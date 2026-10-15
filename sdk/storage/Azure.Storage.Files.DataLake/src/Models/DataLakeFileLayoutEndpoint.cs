@@ -1,23 +1,25 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// A single endpoint entry within a <see cref="DataLakeFileLayoutEndpoints"/> collection.
+    /// An endpoint that serves one or more ranges of a file.
     /// </summary>
     public class DataLakeFileLayoutEndpoint
     {
         /// <summary>
-        /// The zero-based index of this endpoint within the parent endpoints collection.
+        /// The index of the endpoint, referenced by <see cref="DataLakeFileLayoutRange.EndpointIndex"/>.
         /// </summary>
         public int Index { get; internal set; }
 
         /// <summary>
-        /// The endpoint value (for example, a host name) that ranges associated with
-        /// this index should be routed to.
+        /// The endpoint that ranges with this index should be routed to.
+        /// Can be passed to <see cref="DataLakeFileReadOptions.LayoutEndpoint"/>.
         /// </summary>
-        public string Value { get; internal set; }
+        public Uri Value { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of <see cref="DataLakeFileLayoutEndpoint"/> instances.

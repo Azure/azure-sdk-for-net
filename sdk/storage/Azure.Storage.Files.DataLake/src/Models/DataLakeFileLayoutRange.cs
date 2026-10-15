@@ -4,8 +4,8 @@
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// A single byte range within a <see cref="DataLakeFileLayoutRanges"/> collection
-    /// that maps to a specific endpoint in <see cref="DataLakeFileLayoutEndpoints"/>.
+    /// A byte range of a file and the index of the endpoint in
+    /// <see cref="DataLakeFileLayoutInfo.Endpoints"/> that serves it.
     /// </summary>
     public class DataLakeFileLayoutRange
     {
@@ -20,8 +20,8 @@ namespace Azure.Storage.Files.DataLake.Models
         public long End { get; internal set; }
 
         /// <summary>
-        /// The index into <see cref="DataLakeFileLayoutEndpoints.Endpoint"/> that
-        /// identifies the optimal endpoint for reads against this range.
+        /// The <see cref="DataLakeFileLayoutEndpoint.Index"/> of the optimal
+        /// endpoint for reads against this range.
         /// </summary>
         public int EndpointIndex { get; internal set; }
 
