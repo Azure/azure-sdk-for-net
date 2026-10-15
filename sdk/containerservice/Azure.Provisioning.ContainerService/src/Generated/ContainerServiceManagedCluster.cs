@@ -36,7 +36,7 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> Creates a new ContainerServiceManagedCluster. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerServiceManagedCluster(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2026-01-01")
+        public ContainerServiceManagedCluster(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2026-07-01")
         {
         }
 
@@ -489,6 +489,23 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the IsFipsEnabled. </summary>
+        public BicepValue<bool> IsFipsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsFipsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.IsFipsEnabled = value;
+            }
+        }
+
         /// <summary> Gets or sets the NetworkProfile. </summary>
         public ContainerServiceNetworkProfile NetworkProfile
         {
@@ -693,6 +710,23 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the IngressProfile. </summary>
+        public ManagedClusterIngressProfile IngressProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IngressProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.IngressProfile = value;
+            }
+        }
+
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
         public BicepValue<ContainerServicePublicNetworkAccess> PublicNetworkAccess
         {
@@ -724,6 +758,23 @@ namespace Azure.Provisioning.ContainerService
                     Properties = new ManagedClusterProperties();
                 }
                 Properties.WorkloadAutoScalerProfile = value;
+            }
+        }
+
+        /// <summary> Gets or sets the AzureMonitorProfile. </summary>
+        public ManagedClusterAzureMonitorProfile AzureMonitorProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureMonitorProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.AzureMonitorProfile = value;
             }
         }
 
@@ -791,6 +842,23 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the HostedSystemProfile. </summary>
+        public ManagedClusterHostedSystemProfile HostedSystemProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostedSystemProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.HostedSystemProfile = value;
+            }
+        }
+
         /// <summary> Gets or sets the Code. </summary>
         public BicepValue<ContainerServiceStateCode> PowerStateCode
         {
@@ -838,40 +906,6 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the WebAppRouting. </summary>
-        public ManagedClusterIngressProfileWebAppRouting IngressWebAppRouting
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IngressWebAppRouting;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterProperties();
-                }
-                Properties.IngressWebAppRouting = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Metrics. </summary>
-        public ManagedClusterMonitorProfileMetrics AzureMonitorMetrics
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AzureMonitorMetrics;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterProperties();
-                }
-                Properties.AzureMonitorMetrics = value;
-            }
-        }
-
         /// <summary> Gets or sets the IsCostAnalysisEnabled. </summary>
         public BicepValue<bool> MetricsIsCostAnalysisEnabled
         {
@@ -903,6 +937,23 @@ namespace Azure.Provisioning.ContainerService
                     Properties = new ManagedClusterProperties();
                 }
                 Properties.IsAIToolchainOperatorEnabled = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SchedulerConfigMode. </summary>
+        public BicepValue<SchedulerConfigMode> UpstreamSchedulerConfigMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpstreamSchedulerConfigMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.UpstreamSchedulerConfigMode = value;
             }
         }
 
@@ -993,6 +1044,18 @@ namespace Azure.Provisioning.ContainerService
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-07-01". </summary>
+            public static readonly string V2026_07_01 = "2026-07-01";
+            /// <summary> API version "2026-06-01". </summary>
+            public static readonly string V2026_06_01 = "2026-06-01";
+            /// <summary> API version "2026-05-01". </summary>
+            public static readonly string V2026_05_01 = "2026-05-01";
+            /// <summary> API version "2026-04-01". </summary>
+            public static readonly string V2026_04_01 = "2026-04-01";
+            /// <summary> API version "2026-03-01". </summary>
+            public static readonly string V2026_03_01 = "2026-03-01";
+            /// <summary> API version "2026-02-01". </summary>
+            public static readonly string V2026_02_01 = "2026-02-01";
             /// <summary> API version "2026-01-01". </summary>
             public static readonly string V2026_01_01 = "2026-01-01";
             /// <summary> API version "2025-10-01". </summary>
