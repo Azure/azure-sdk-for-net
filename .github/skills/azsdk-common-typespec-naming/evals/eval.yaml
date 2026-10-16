@@ -193,6 +193,7 @@ stimuli:
       WidgetProperties has these new members:
       enabled: boolean; createdTime: utcDateTime; monitoringInterval: int32 (documented seconds);
       ttl: int32 (documented minutes); retentionDuration: duration (ISO 8601).
+      It also has starts: utcDateTime and ends: utcDateTime for scheduled start and end.
       Return JSON with "names" mapping each original property identifier to its proposed
       C# property name, plus "scope" (the TCGC language identifier) and boolean
       "generatedNamesVerified".
@@ -219,6 +220,12 @@ stimuli:
           pattern: '"createdTime"\s*:\s*"CreatedOn"'
       - type: output-matches
         config:
+          pattern: '"starts"\s*:\s*"StartsOn"'
+      - type: output-matches
+        config:
+          pattern: '"ends"\s*:\s*"EndsOn"'
+      - type: output-matches
+        config:
           pattern: '"monitoringInterval"\s*:\s*"MonitoringIntervalInSeconds"'
       - type: output-matches
         config:
@@ -243,7 +250,7 @@ stimuli:
       SDK, project specification/widget/resource-manager/Microsoft.Widget, preview
       2026-01-01-preview. Use bundled skill references; no network, MCP, compilation or edits.
       New models: WidgetParameters is the PATCH body. Its nested property uses
-      WidgetSettingsParameters, which is replaced as a whole. WidgetCreateRequest is a
+      WidgetSettingsParameters, a pure transport wrapper replaced as a whole. WidgetCreateRequest is a
       POST body. WidgetExportResponse is a response. WidgetConnectionOptions is a plain
       configuration model, not a ClientOptions subtype. None are resource data classes.
       Return JSON "names" mapping each original model to the proposed C# type name.
@@ -350,19 +357,102 @@ stimuli:
         config:
           pattern: '"WidgetId"\s*:\s*"WidgetId"'
 
-  - name: numeric-enum-exact-name-supported
+  - name: csharp-arm-domain-model-and-method-options
+    tags:
+      case: body-role
+    prompt: |
+      Invoke azsdk-common-typespec-naming in guidance mode for a new, never-shipped
+      C# ARM Widget SDK at specification/widget/resource-manager/Microsoft.Widget.
+      WidgetConnection names a reusable domain concept used in both POST input and
+      GET output; it is not a transport wrapper or resource data.
+      WidgetCreateOptions is a genuine SDK method options bag aggregating query,
+      header, and body parameters, not a serialized JSON payload or TypeSpec body
+      model. WidgetCreateParameters is a separate dedicated POST transport wrapper.
+      Use bundled references and these confirmed facts only; no network, MCP,
+      compilation, generation or edits. Return JSON "names" mapping these three
+      effective SDK names to the proposed names. Do not change their roles or types.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - type: output-matches
+        config:
+          pattern: '"WidgetConnection"\s*:\s*"WidgetConnection"'
+      - type: output-matches
+        config:
+          pattern: '"WidgetCreateOptions"\s*:\s*"WidgetCreateOptions"'
+      - type: output-matches
+        config:
+          pattern: '"WidgetCreateParameters"\s*:\s*"WidgetCreateContent"'
+
+  - name: csharp-arm-uri-naming-without-type-conversion
+    tags:
+      case: member-semantics
+    prompt: |
+      Invoke azsdk-common-typespec-naming in guidance mode for a new, never-shipped
+      C# ARM Widget SDK at specification/widget/resource-manager/Microsoft.Widget.
+      WidgetProperties.callbackUrl is a string whose documented value is an absolute
+      HTTPS callback URI. The effective C# property is CallbackUrl.
+      Only a naming recommendation is authorized; changing its SDK or wire type is
+      outside this request. There are no collisions or existing overrides.
+      Use bundled references and these confirmed facts only; no network, MCP,
+      compilation, generation or edits. Return JSON "name", "typeChangesPlanned",
+      "wireNamesChanged", and "generatedNamesVerified".
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - type: output-matches
+        config:
+          pattern: '"name"\s*:\s*"CallbackUri"'
+      - type: output-matches
+        config:
+          pattern: '"typeChangesPlanned"\s*:\s*false'
+      - type: output-matches
+        config:
+          pattern: '"wireNamesChanged"\s*:\s*false'
+      - *unverified
+
+  - name: csharp-arm-abbreviation-family-consistency
+    tags:
+      case: member-semantics
+    prompt: |
+      Invoke azsdk-common-typespec-naming in guidance mode for a new, never-shipped
+      C# ARM Widget SDK at specification/widget/resource-manager/Microsoft.Widget.
+      The service team confirms auth means authentication, not authorization.
+      The affected public API family consists of WidgetAuthDetails, the sibling
+      WidgetManagedAuthDetails, property Auth, and parameter auth. No shipped
+      names, collisions, or existing overrides constrain these additions.
+      Use bundled references and these confirmed facts only; no network, MCP,
+      compilation, generation or edits. Return JSON "names" mapping all four
+      effective SDK identifiers to consistent descriptive names.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - type: output-matches
+        config:
+          pattern: '"WidgetAuthDetails"\s*:\s*"WidgetAuthenticationDetails"'
+      - type: output-matches
+        config:
+          pattern: '"WidgetManagedAuthDetails"\s*:\s*"WidgetManagedAuthenticationDetails"'
+      - type: output-matches
+        config:
+          pattern: '"Auth"\s*:\s*"Authentication"'
+      - type: output-matches
+        config:
+          pattern: '"auth"\s*:\s*"authentication"'
+
+  - name: numeric-enum-preserves-valid-emitter-names
     tags:
       case: numeric-enum
     prompt: |
       Invoke azsdk-common-typespec-naming in guidance mode for a new, never-shipped
       C# ARM Widget SDK at specification/widget/resource-manager/Microsoft.Widget.
       The service-owned enum WidgetTlsVersion has tls10: "1.0" and tls12: "1.2";
-      these represent TLS protocol versions. Existing emitted names are Tls10 and Tls12.
-      Ordinary string clientName overrides lose underscores during normalization.
-      Confirmed installed-package evidence: Azure.ClientGenerator.Core exports
-      extern fn exact(name: valueof string): valueof string; its documented use as
-      the clientName name argument disables normalization, and the installed C# emitter
-      honors that marker for enum members. There are no name collisions.
+      these represent TLS protocol versions. The expected default C# names are Tls10
+      and Tls12, but no generated SDK API evidence has been supplied.
+      No semantic naming problem or collision has been identified.
       client.tsp is loaded by the generation entrypoint; Azure.ClientGenerator.Core and
       WidgetTlsVersion are in scope. Java/Python overrides must remain unchanged.
       Use bundled references and these supplied facts only; no network, MCP, compilation,
@@ -375,105 +465,26 @@ stimuli:
       - *planningTools
       - type: output-matches
         config:
-          pattern: '"tls10"\s*:\s*"Tls1_0"'
+          pattern: '"tls10"\s*:\s*"Tls10"'
       - type: output-matches
         config:
-          pattern: '"tls12"\s*:\s*"Tls1_2"'
+          pattern: '"tls12"\s*:\s*"Tls12"'
       - type: output-matches
         config:
-          pattern: '@@(?:Azure\.ClientGenerator\.Core\.)?clientName\(WidgetTlsVersion\.tls10,\s*(?:Azure\.ClientGenerator\.Core\.)?exact\(\\"Tls1_0\\"\),\s*\\"csharp\\"\)'
-      - type: output-matches
-        config:
-          pattern: '@@(?:Azure\.ClientGenerator\.Core\.)?clientName\(WidgetTlsVersion\.tls12,\s*(?:Azure\.ClientGenerator\.Core\.)?exact\(\\"Tls1_2\\"\),\s*\\"csharp\\"\)'
+          pattern: '"decorators"\s*:\s*\[\s*\]'
       - type: output-matches
         config:
           pattern: '"blocked"\s*:\s*false'
-      - &unchangedWire
-        type: output-matches
+      - type: output-matches
         config:
           pattern: '"wireNamesChanged"\s*:\s*false'
-      - &unchangedLanguages
-        type: output-matches
+      - type: output-matches
         config:
           pattern: '"otherLanguagesChanged"\s*:\s*false'
       - *unverified
-      - &noWireRename
-        type: output-not-matches
+      - type: output-not-matches
         config:
           pattern: "@encodedName"
-
-  - name: numeric-enum-exact-name-unsupported
-    tags:
-      case: numeric-enum
-    prompt: |
-      Invoke azsdk-common-typespec-naming in guidance mode for a new, never-shipped
-      C# ARM Widget SDK at specification/widget/resource-manager/Microsoft.Widget.
-      WidgetTlsVersion.tls12 has wire value "1.2" for TLS protocol version 1.2 and
-      currently emits Tls12. Ordinary string clientName overrides lose underscores.
-      Confirmed installed-package evidence: this older TCGC does not export exact;
-      its paired C# emitter has no supported way to preserve an exact enum member name.
-      No dependency upgrade, wire change, SDK code edit, or other-language change is
-      authorized. There are no collisions; client.tsp is already loaded and its
-      namespaces are in scope. Use only bundled references and these confirmed facts.
-      No network, MCP, compilation, generation or edits. Do not ask interactively.
-      Return JSON with "suggestedName", "decorators" (only overrides usable with the
-      installed packages), "blocked", "blocker", "wireNamesChanged",
-      "otherLanguagesChanged", and "generatedNamesVerified".
-    constraints: *bounded
-    graders:
-      - *namingLoaded
-      - *planningTools
-      - &suggestedTlsName
-        type: output-matches
-        config:
-          pattern: '"suggestedName"\s*:\s*"Tls1_2"'
-      - &noEnumOverride
-        type: output-matches
-        config:
-          pattern: '"decorators"\s*:\s*\[\s*\]'
-      - &blockedEnum
-        type: output-matches
-        config:
-          pattern: '"blocked"\s*:\s*true'
-      - type: output-matches
-        config:
-          pattern: '(?is)"blocker"\s*:\s*"[^"]*(unsupported|does not|cannot|unavailable|no support|lacks|not export)'
-      - *unchangedWire
-      - *unchangedLanguages
-      - *unverified
-      - *noWireRename
-
-  - name: numeric-enum-exact-name-unconfirmed
-    tags:
-      case: numeric-enum
-    prompt: |
-      Invoke azsdk-common-typespec-naming in guidance mode for a new, never-shipped
-      C# ARM Widget SDK at specification/widget/resource-manager/Microsoft.Widget.
-      WidgetTlsVersion.tls12 has wire value "1.2" for TLS protocol version 1.2 and
-      currently emits Tls12. Ordinary string clientName overrides lose underscores.
-      No installed TCGC/emitter version or exact-name capability evidence is available.
-      Do not infer installed support from current online documentation. There are no
-      collisions; client.tsp is loaded and its namespaces are in scope. No dependency,
-      wire, SDK code, or other-language changes are authorized.
-      Use only bundled references and these supplied facts; no network, MCP, compilation,
-      generation or edits. Do not ask interactively; record missing evidence instead.
-      Return JSON with "suggestedName", "decorators" (only overrides justified now),
-      "blocked", "blocker", "wireNamesChanged", "otherLanguagesChanged",
-      and "generatedNamesVerified".
-    constraints: *bounded
-    graders:
-      - *namingLoaded
-      - *planningTools
-      - *suggestedTlsName
-      - *noEnumOverride
-      - *blockedEnum
-      - type: output-matches
-        config:
-          pattern: '(?is)"blocker"\s*:\s*"[^"]*(unconfirmed|unknown|missing|evidence|not (?:available|verified|confirmed))'
-      - *unchangedWire
-      - *unchangedLanguages
-      - *unverified
-      - *noWireRename
 
   - name: sdk-only-rename-isolation
     prompt: |

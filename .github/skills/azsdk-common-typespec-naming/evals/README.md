@@ -6,9 +6,10 @@ plus natural routing and negative routing cases. A standalone apply case also ve
 the required customization, TypeSpec validation, and compile sequence with hermetic
 fixtures; delegated authoring remains covered separately.
 
-Numeric-version enum cases cover supported, unsupported, and unconfirmed TCGC/emitter
-exact-name capabilities. They check scoped `exact(...)` proposals or blocked overrides,
-unchanged wire values/other languages, and explicitly unverified generated names.
+Numeric-version enum coverage preserves valid emitter-produced member names without
+inventing underscore overrides or exact-name capability blockers. Member and model
+cases also cover date/time examples, URI naming without type conversions, consistent
+abbreviation expansion, reusable domain models, and genuine method options bags.
 
 Apply and review cases expose an isolated MCP fixture with the production customization
 and validation argument names. The fixture performs no product edits or network calls.
@@ -30,7 +31,7 @@ Use `--tag case=apply,apply-delegated,apply-failure,review` for the tool-boundar
 Explicit skill mounts avoid loading unrelated skills. Run serially to avoid local executor
 filesystem provider races. The shared skill-eval pipeline discovers the suite.
 
-Use `--tag case=numeric-enum` for the exact-name capability subset.
+Use `--tag case=numeric-enum,member-semantics,body-role` for the reviewed naming subset.
 
 Authoring/assessment delegation is covered separately in the repository's
 `evals/workflows/mock/typespec-naming-handoffs.eval.yaml`.

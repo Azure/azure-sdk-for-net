@@ -4,12 +4,16 @@ Load with [C# member naming](csharp-naming.md) for confirmed C# management SDK t
 
 Sources: [.NET management naming conventions](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/Mgmt-Naming-Conventions.md) and [.NET management PR review skill](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/azure-sdk-mgmt-pr-review/SKILL.md).
 
+Additional context: [payload and options-bag naming rules](https://github.com/Azure/azure-sdk-for-net/blob/8ce543a7602e7e3c8402fe808b9b376c1c3ea833/.github/skills/code-review/references/repository-rules.md#naming--review-only)
+from [Azure/azure-sdk-for-net#62615](https://github.com/Azure/azure-sdk-for-net/pull/62615).
+
 ## Body Role Before Suffix
 
 Choose names from HTTP usage, not a global string replacement:
 
-- PATCH body model: `<Model>Patch`. A nested property model is not itself patched; when renaming its suffix, use `Content`, not `Patch`.
-- PUT/POST body model: `<Model>Content`, or `<Model>Data` for actual resource data.
+- Dedicated PATCH body model: `<Model>Patch`. A nested property model is not itself patched; when renaming a transport wrapper's suffix, use `Content`, not `Patch`.
+- Dedicated PUT/POST transport wrapper: `<Model>Content`, or `<Model>Data` for actual resource data. An output-only transport wrapper uses `Result`.
+- A reusable domain model does not acquire `Content` or `Result` merely because it appears in an input, output, or both. Preserve a descriptive domain noun such as `WidgetConnection`.
 - Shared models used in incompatible roles need an explicit design decision. Do not pick a suffix from the first operation encountered or split a model without approval.
 - Do not rename the literal TypeSpec body parameter to PascalCase just because the SDK body model needs a new name.
 
@@ -19,7 +23,7 @@ Choose names from HTTP usage, not a global string replacement:
 | ------------------------------------ | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | `Parameter`, `Parameters`, `Request` | `Content`, or `Patch` for the PATCH body | Apply the HTTP-role rules above                                                                                    |
 | `Response`                           | `Result`                                 | Confirm it represents a response                                                                                   |
-| `Options`                            | `Config`                                 | Preserve `ClientOptions` types                                                                                     |
+| `Options`                            | `Config`                                 | Preserve `ClientOptions` types and genuine method options bags that aggregate parameters from multiple request locations |
 | `Update`                             | `Patch` / `Content`                      | Contextual review guidance; use the actual body role                                                               |
 | `Definition`                         | Remove                                   | Keep if removal conflicts with another resource                                                                    |
 | `Data`                               | Remove                                   | Keep for types deriving from `ResourceData` / `TrackedResourceData`                                                |

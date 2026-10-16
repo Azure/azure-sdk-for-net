@@ -4,12 +4,17 @@ Load only for confirmed C# management SDK targets via the [naming dispatcher](na
 
 Sources: [.NET management naming conventions](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/Mgmt-Naming-Conventions.md), [.NET management PR review skill](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/azure-sdk-mgmt-pr-review/SKILL.md), and [tracked linter rules](https://github.com/Azure/typespec-azure/issues/4442). The convention document is the primary naming guide; the review skill supplies additional contextual checks and accepted exceptions. Where guidance differs, preserve shipped API and resolve uncertainty rather than enforcing a mechanical rewrite.
 
+Additional context: [naming review rules](https://github.com/Azure/azure-sdk-for-net/blob/8ce543a7602e7e3c8402fe808b9b376c1c3ea833/.github/skills/code-review/references/repository-rules.md#naming--review-only)
+from [Azure/azure-sdk-for-net#62615](https://github.com/Azure/azure-sdk-for-net/pull/62615).
+Apply these checks to the effective public SDK surface, not private implementation names.
+
 ## Properties and Parameters
 
 | Applies to                | Guidance                                                                                      | Guardrails                                                                                                                                                       |
 | ------------------------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Boolean                   | Start with a verb, normally `Is`, `Can`, or `Has`: `enabled` -> `IsEnabled`                   | Preserve meaningful existing verbs. The review skill also accepts `Does`, `Should`, `Allow`, `Enable`, `Disable`, `Use`, `Support`; do not produce `IsIsEnabled` |
-| Date/time                 | Prefer `On`: `StartOn`, `EndOn`, `CreatedOn`                                                  | Use active/passive voice appropriately. The review skill also accepts `At` for `DateTimeOffset`; do not churn an accepted name such as `CreatedAt`               |
+| Date/time                 | Prefer `On`: `StartsOn`, `EndsOn`, `CreatedOn`                                                | Use active/passive voice appropriately. The review skill also accepts `At` for `DateTimeOffset`; do not churn an accepted name such as `CreatedAt`               |
+| URI                       | Use `Uri`, not `Url`, for a confirmed URI concept: `callbackUrl` -> `CallbackUri`             | A name alone does not establish URI semantics. SDK type conversions are separate from this naming-only workflow                                                  |
 | Integer interval/duration | Include the verified unit: `MonitoringIntervalInSeconds`                                      | Never infer seconds from an integer type or name alone. Do not append integer-unit suffixes to a `duration` scalar or an encoded duration value                  |
 | Numeric TTL               | Use `TimeToLiveIn<Unit>` when the unit is verified: `ttl` in minutes -> `TimeToLiveInMinutes` | Confirm the unit from the contract/documentation; keep units and serialized values unchanged                                                                     |
 
@@ -24,13 +29,13 @@ instead of returning only emitter-normalized casing such as `Enabled`,
 - Coordinate related operation/model/enum names; avoid collisions with other resource providers' public API.
 - Use the [model naming rules](csharp-model-naming.md) for request/response and PATCH bodies. Do not change HTTP verbs, requiredness, or serialization merely to satisfy a naming rule.
 
-## Casing and Enums
+## Acronyms, Enums, and Related Names
 
-- Use PascalCase for C# public types/properties/methods and normal C# parameter casing. Longer acronyms use `Http`, `Tcp`, `Aes`.
+- Longer acronyms use `Http`, `Tcp`, `Aes`.
 - Two-letter acronyms such as `IP`, `OS`, and `DB` are uppercase where they are acronym components; retain the `Id` and `Vm` exceptions. Do not uppercase every matching pair of letters inside ordinary words.
 - Prefer singular enum type names; plural names are for flags.
-- Numeric version enum members use underscores, e.g. `Tls1_0`. Preserve the wire value. Check the installed TCGC/emitter's exact-name support when ordinary `clientName` normalization cannot preserve the requested spelling; do not assume a new helper exists in an older project.
-- When both support [TCGC `exact`](https://github.com/Azure/typespec-azure/blob/main/packages/typespec-client-generator-core/lib/functions.tsp), propose a scoped override such as `@@clientName(WidgetTlsVersion.tls10, exact("Tls1_0"), "csharp");`. If support is absent or unconfirmed, block the override and report the missing capability/evidence; do not substitute a normalized name, change the wire value, or upgrade dependencies.
 - Expand unclear acronyms only with verified service/domain meaning, not a guessed expansion.
+- When expanding a verified abbreviation, check the entire affected type/member/parameter family, not just one declaration. For example, if `auth` is confirmed to mean authentication, coordinate `WidgetAuthDetails`, its sibling types, and the public properties and parameters using them.
+- Keep parameter names consistent for the same concept across related operations and constructors. Numeric-suffixed collision artifacts or public `internal*` names require resolving the modeling or domain ambiguity, not inventing another spelling.
 
 The initial support covers naming decisions only. Type conversions, operation removal, compatibility shims, and other non-naming review checks are not automatic consequences of this profile.
