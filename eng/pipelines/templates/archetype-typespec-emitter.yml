@@ -112,14 +112,11 @@ extends:
 
         - ${{ if in(parameters.EmitterPackagePath, 'eng/packages/http-client-csharp', 'eng/packages/http-client-csharp-mgmt') }}:
           - pwsh: |
-              git fetch --no-tags origin main:refs/remotes/origin/main
-              if ($LASTEXITCODE -ne 0) {
-                throw "Unable to fetch canonical main approval history; emitter dependency approval cannot be established."
-              }
-              & "$(Build.SourcesDirectory)/eng/scripts/typespec/Validate-EmitterDependencies.ps1" `
+              . "$(Build.SourcesDirectory)/eng/scripts/typespec/CodeGen-Helpers.ps1"
+              Assert-EmitterDependencies `
                 -RepoRoot "$(Build.SourcesDirectory)" `
                 -EmitterPackagePath "${{ parameters.EmitterPackagePath }}"
-            displayName: Validate official emitter dependencies
+            displayName: Validate emitter dependency versions
 
           - pwsh: |
               . "$(Build.SourcesDirectory)/eng/common/scripts/Helpers/PSModule-Helpers.ps1"

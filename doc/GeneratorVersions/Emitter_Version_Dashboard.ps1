@@ -22,7 +22,7 @@ param(
     [switch]$ValidateOnly
 )
 
-. (Join-Path $PSScriptRoot "../../eng/scripts/typespec/EmitterVersion-Helpers.ps1")
+. (Join-Path $PSScriptRoot "../../eng/scripts/typespec/CodeGen-Helpers.ps1")
 
 if (-not $OutputPath) {
     $OutputPath = Join-Path $RepoRoot "doc" "GeneratorVersions" "Emitter_Version_Dashboard.md"
