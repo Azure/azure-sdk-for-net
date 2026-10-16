@@ -29,7 +29,7 @@ For multiple targets, load only matching profiles and record coverage per target
 - Propose a language-scoped [TCGC `clientName` decorator](https://azure.github.io/typespec-azure/docs/libraries/typespec-client-generator-core/reference/decorators/#clientname) for SDK-only renames. Omitting the scope affects all languages. Example: `@@clientName(WidgetProperties.enabled, "IsEnabled", "csharp");`.
 - Preserve wire names, serialized enum values, routes, and other language customizations. Do not use `@encodedName` or rename a source property to fix C# spelling.
 - Check target resolution, existing customizations and entrypoint loading. Never fabricate a TypeSpec target for an emitter-synthesized type.
-- Guidance and review only propose changes. For authorized writes follow the [tool-based apply workflow](apply.md), not direct file edits.
+- Guidance and review only propose changes. For authorized writes follow the [apply workflow](apply.md), including its scoped direct-edit fallback only when the customization tool is unavailable.
 
 ## Validate
 

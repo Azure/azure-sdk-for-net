@@ -856,14 +856,77 @@ stimuli:
           pattern: '"applied"\s*:\s*false'
       - *unverified
 
-  - name: missing-customization-tool-is-a-blocker
+  - name: missing-customization-tool-applies-scoped-fallback
+    tags:
+      case: missing-tool
+    environment:
+      skills:
+        - ..
+      files:
+        - src: fixtures/standalone-apply/main.tsp
+          dest: main.tsp
+        - src: fixtures/standalone-apply/tspconfig.yaml
+          dest: tspconfig.yaml
+    prompt: |
+      Invoke azsdk-common-typespec-naming in apply mode. Apply the approved C# ARM
+      naming-only override Widget.WidgetProperties.enabled -> IsEnabled.
+      All names are new/unshipped; the absolute current workspace is the TypeSpec
+      project root. main.tsp is the generation entrypoint; there is no client.tsp
+      yet and no existing naming overrides. The installed TCGC supports
+      @@clientName with the csharp language scope; this capability is confirmed.
+      No customization MCP tool is available and installation is out of scope.
+      The calling authoring workflow will handle TypeSpec validation after your
+      return. Do not compile or generate an SDK. Return JSON booleans "applied"
+      and "generatedNamesVerified", plus "applyMethod" describing the path used.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - type: tool-calls
+        config:
+          required:
+            - name: "^(edit|create|apply_patch)$"
+          disallowed:
+            - name: "azsdk_"
+      - type: file-matches
+        config:
+          path: client.tsp
+          pattern: '@@clientName\(\s*(?:Widget\.)?WidgetProperties\.enabled\s*,\s*"IsEnabled"\s*,\s*"csharp"\s*\)\s*;'
+      - type: file-matches
+        config:
+          path: client.tsp
+          pattern: 'namespace\s+Widget\s*[;{]|@@clientName\(\s*Widget\.WidgetProperties\.enabled'
+      - type: file-contains
+        config:
+          path: client.tsp
+          value: 'import "@azure-tools/typespec-client-generator-core";'
+      - type: file-contains
+        config:
+          path: client.tsp
+          value: "using Azure.ClientGenerator.Core;"
+      - type: file-matches
+        config:
+          path: main.tsp
+          pattern: 'import\s+"\.\/client\.tsp"\s*;'
+      - type: file-matches
+        config:
+          path: main.tsp
+          pattern: 'model\s+WidgetProperties\s*\{\s*enabled\s*:\s*boolean\s*;\s*\}'
+      - type: output-matches
+        config:
+          pattern: '"applied"\s*:\s*true'
+      - type: output-matches
+        config:
+          pattern: '(?is)"applyMethod"\s*:\s*"[^"]*(direct|fallback)'
+      - *unverified
+
+  - name: missing-customization-tool-and-project-remains-blocked
     tags:
       case: missing-tool
     prompt: |
       Invoke azsdk-common-typespec-naming. Apply the approved C# ARM naming-only override
       WidgetProperties.enabled -> IsEnabled in client.tsp. All names are new/unshipped;
-      the absolute current workspace is the TypeSpec project root. No customization
-      MCP tool is available in this environment and installation is out of scope.
+      the intended TypeSpec project is not present in this workspace. No customization
+      MCP tool is available and installation or project creation is out of scope.
       Return JSON "applied" and "blocker"; do not create fixtures or run SDK generation.
     constraints: *bounded
     graders:
@@ -878,4 +941,4 @@ stimuli:
           pattern: '"applied"\s*:\s*false'
       - type: output-matches
         config:
-          pattern: '(?is)"blocker"\s*:\s*"[^"]*(tool|MCP)'
+          pattern: '(?is)"blocker"\s*:\s*"[^"]*(project|source|target|file)'

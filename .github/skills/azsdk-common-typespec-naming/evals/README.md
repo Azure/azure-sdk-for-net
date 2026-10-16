@@ -18,6 +18,11 @@ constraints, read-only tool absence and failure handling. The standalone compile
 local command shim that verifies `tsp compile .` is run against the staged project. These
 cases do not verify emitted SDK names or substitute for tool integration tests.
 
+When the customization tool is absent, a separate case verifies that the direct-edit
+fallback creates a C#-scoped override, loads it from the generation entrypoint, and
+preserves the source property. Missing project evidence remains a blocker; tool
+failures still must not trigger automatic direct edits.
+
 From `.github/skills`, using Vally 0.14:
 
 ```powershell
@@ -27,7 +32,7 @@ vally lint -e azsdk-common-typespec-naming\evals\eval.yaml --strict
 vally eval -e azsdk-common-typespec-naming\evals\eval.yaml --workers 1 --output jsonl --output-dir ..\..\artifacts\naming-evals
 ```
 
-Use `--tag case=apply,apply-delegated,apply-failure,review` for the tool-boundary subset.
+Use `--tag case=apply,apply-delegated,apply-failure,missing-tool,review` for the tool-boundary subset.
 Explicit skill mounts avoid loading unrelated skills. Run serially to avoid local executor
 filesystem provider races. The shared skill-eval pipeline discovers the suite.
 
