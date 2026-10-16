@@ -430,12 +430,14 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <param name="assignedSessionLockToken">When set, the attach echoes back a non-exclusive session filter carrying this token.</param>
         /// <param name="attachFailure">When set, the attach fails with this exception, simulating an endpoint that refuses the link.</param>
+        /// <param name="sessionLockedUntil">When set, the attach supplies the session lock expiration.</param>
         ///
         /// <returns>A scope whose receiver link attach behaves as requested.</returns>
         ///
         internal static Mock<AmqpConnectionScope> CreateMockReceiverScope(
             Guid? assignedSessionLockToken = null,
-            Exception attachFailure = null)
+            Exception attachFailure = null,
+            DateTime? sessionLockedUntil = null)
         {
             var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
             var endpoint = new Uri("amqp://mine.hubs.com");
@@ -492,6 +494,15 @@ namespace Azure.Messaging.ServiceBus.Tests
                     if (attachFailure != null)
                     {
                         throw attachFailure;
+                    }
+
+                    if (sessionLockedUntil.HasValue)
+                    {
+                        var openedLink = (ReceivingAmqpLink)invocation.Arguments[0];
+                        openedLink.Settings.Properties = new Microsoft.Azure.Amqp.Framing.Fields
+                        {
+                            [AmqpClientConstants.LockedUntilUtc] = sessionLockedUntil.Value.Ticks
+                        };
                     }
 
                     // Simulate the service honoring the non-exclusive session on attach: echo back the composite
