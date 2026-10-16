@@ -197,6 +197,31 @@ namespace Azure.Security.Attestation.Tests.Samples
             return null;
         }
 
+        // Not a test: shows the relying party's side of the Secure Key Release pattern. Compiled to keep the README snippet valid.
+        public async Task<AttestationResult> ValidatingTokenInRelyingParty(string serializedToken)
+        {
+            #region Snippet:ValidateAttestationTokenInRelyingParty
+            // The attestation provider the relying party trusts to have issued the token.
+            string attestationEndpoint = "https://myprovider.attest.azure.net";
+
+            // Retrieve the provider's signing certificates. Only these certificates are trusted to have signed the
+            // token; certificates carried in the token itself are not.
+            var certificateClient = new AttestationClient(new Uri(attestationEndpoint), new DefaultAzureCredential());
+            IReadOnlyList<AttestationSigner> signers = (await certificateClient.GetSigningCertificatesAsync()).Value;
+
+            AttestationToken token = AttestationToken.Deserialize(serializedToken);
+            var validationOptions = new AttestationTokenValidationOptions { ExpectedIssuer = attestationEndpoint };
+            if (!await token.ValidateTokenAsync(validationOptions, signers))
+            {
+                throw new InvalidOperationException("The attestation token is not valid.");
+            }
+
+            // The token's claims can now be trusted, for example the EnclaveHeldData with the enclave's key.
+            AttestationResult attestedResult = token.GetBody<AttestationResult>();
+            #endregion
+            return attestedResult;
+        }
+
         // Not a test: confidential VM evidence can only be produced inside the VM. Compiled to keep the README snippets valid.
         public async Task AttestingConfidentialVms(AttestationClient client, byte[] tdxQuote, byte[] snpEvidence, byte[] runtimeData, string nonce)
         {
