@@ -65,6 +65,111 @@ safe-outputs:
   noop:
     report-as-issue: false
   jobs:
+    update_typespec_guidance:
+      description: "Create or refresh the single TypeSpec resolution checklist after a complete review"
+      runs-on: ubuntu-latest
+      needs: safe_outputs
+      if: needs.agent.result == 'success' && needs.safe_outputs.result == 'success'
+      output: "TypeSpec resolution checklist refreshed"
+      permissions:
+        pull-requests: write
+      steps:
+        - name: Update TypeSpec resolution checklist
+          uses: actions/github-script@v9.0.0
+          env:
+            TARGET_PR_NUMBER: "${{ github.event.inputs.pr_number }}"
+            REVIEW_WORKFLOW_NAME: "${{ github.workflow }}"
+          with:
+            script: |
+              const fs = require('fs');
+              const output = JSON.parse(fs.readFileSync(process.env.GH_AW_AGENT_OUTPUT, 'utf8'));
+              if ((!Array.isArray(output?.items)) || (!output.items.some(item => item.type === 'submit_pull_request_review')) ||
+                  (!Array.isArray(output.errors)) || (output.errors.length !== 0) ||
+                  (output.items.some(item => ['report_incomplete', 'missing_tool', 'missing_data'].includes(item.type)))) {
+                throw new Error('TypeSpec guidance cannot be updated after incomplete or invalid agent output');
+              }
+
+              const prNumber = Number(process.env.TARGET_PR_NUMBER);
+              if (!/^[1-9]\d*$/.test(process.env.TARGET_PR_NUMBER || '') || !Number.isSafeInteger(prNumber)) {
+                throw new Error('No valid target pull request number found');
+              }
+              const { owner, repo } = context.repo;
+              const { data: pr } = await github.rest.pulls.get({ owner, repo, pull_number: prNumber });
+              const workflowName = process.env.REVIEW_WORKFLOW_NAME;
+              const reviews = (await github.paginate(github.rest.pulls.listReviews, {
+                owner, repo, pull_number: prNumber, per_page: 100
+              })).filter(review => review.user?.login === 'github-actions[bot]' &&
+                review.body?.includes('### Management SDK Review Summary') &&
+                review.body.includes(`Analyzed by ${workflowName}:`))
+                .sort((a, b) => new Date(b.submitted_at) - new Date(a.submitted_at) || b.id - a.id);
+              const latestReview = reviews[0];
+              const runUrl = `${process.env.GITHUB_SERVER_URL}/${owner}/${repo}/actions/runs/${context.runId}`;
+              if (!latestReview || latestReview.commit_id !== pr.head.sha ||
+                  !['COMMENTED', 'CHANGES_REQUESTED'].includes(latestReview.state) ||
+                  !latestReview.body.split(/\s+/).includes(runUrl)) {
+                core.info('No complete management review from this run on the current head; skipping TypeSpec guidance.');
+                return;
+              }
+
+              const marker = '<!-- mgmt-review-typespec-guidance -->';
+              const statusStart = '<!-- mgmt-review-typespec-status:start -->';
+              const statusEnd = '<!-- mgmt-review-typespec-status:end -->';
+              // Use the visible alert: gh-aw sanitization strips HTML comments from review bodies.
+              const hasFindings = /^> \*\*TypeSpec changes required\.\*\*/m.test(latestReview.body);
+              const comments = await github.paginate(github.rest.issues.listComments, {
+                owner, repo, issue_number: prNumber, per_page: 100
+              });
+              const existing = comments.find(comment => comment.user?.login === 'github-actions[bot]' &&
+                comment.body?.startsWith(marker));
+              if (!hasFindings && !existing) {
+                core.info('No TypeSpec findings or existing checklist; no guidance comment needed.');
+                return;
+              }
+
+              const status = [
+                statusStart,
+                hasFindings ? '## ⚠️ Action required: resolve TypeSpec review findings' : '## ✅ No outstanding TypeSpec review findings',
+                '',
+                ...(hasFindings ? [
+                  '> [!IMPORTANT]',
+                  '> Fix these findings in `azure-rest-api-specs`, then validate the regenerated SDK.',
+                  '> **Do not merge the spec PR while review findings remain.**'
+                ] : [
+                  'The latest review has no outstanding TypeSpec findings. This does not confirm that the spec PR was merged or final regeneration completed.'
+                ]),
+                '',
+                `Latest review: [\`${pr.head.sha.slice(0, 7)}\`](${latestReview.html_url}).`,
+                statusEnd
+              ].join('\n');
+              let body;
+              if (existing) {
+                const start = existing.body.indexOf(statusStart);
+                const end = existing.body.indexOf(statusEnd, start + statusStart.length);
+                if (start < 0 || end < 0) {
+                  throw new Error('TypeSpec checklist status markers are missing; refusing to overwrite author edits');
+                }
+                // Preserve checked boxes, notes, and the original author mention outside the managed status.
+                body = existing.body.slice(0, start) + status + existing.body.slice(end + statusEnd.length);
+                body = body.replace(/\n\n&#45; by copilot(?=\n|$)/g, '').trimEnd() + '\n\n&#45; by copilot';
+                if (body === existing.body) return;
+                await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+              } else {
+                body = [
+                  marker,
+                  status,
+                  '',
+                  `@${pr.user.login}, follow this **TypeSpec resolution checklist** before merging the spec PR. Do not manually edit generated C# files.`,
+                  '',
+                  '- [ ] Open a separate spec PR in `azure-rest-api-specs`, or update the existing spec PR for this SDK change.',
+                  '- [ ] Before the spec PR merges, update `tsp-location.yaml` to its latest commit, regenerate the SDK, and rerun this review.',
+                  '- [ ] Address any new findings in the same spec PR, update the SDK from its latest commit, and repeat regeneration and review until no findings remain.',
+                  '- [ ] Only after the review reports no more findings, merge the spec PR.',
+                  '- [ ] After the spec PR merges, update `tsp-location.yaml` to the latest specs `main` commit containing the changes, then regenerate the SDK.',
+                  '',
+                  '&#45; by copilot'
+                ].join('\n');
+                await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body });
+              }
     dismiss_stale_change_requests:
       description: "Dismiss the prior management review change request after a newer non-blocking review"
       runs-on: ubuntu-latest
@@ -310,7 +415,16 @@ Then submit exactly one review using `submit_pull_request_review`:
 - Do not use `APPROVE`.
 - When submitting `COMMENT`, also emit the `dismiss_stale_change_requests` safe-output tool with no arguments. The deterministic safe-output job will check that this workflow's latest review is the new non-blocking comment on the current head, then dismiss this workflow's prior stale `REQUEST_CHANGES` review from an older commit. Do not attempt to dismiss reviews directly from the agent.
 
-The review body should contain:
+Before `### Management SDK Review Summary`, if there are outstanding TypeSpec-related findings that must be fixed in the spec repository, put this alert at the very top of the review body. Keep the bold opening sentence exactly as shown; the checklist handler recognizes it after gh-aw sanitization strips HTML comments. This includes applicable findings already posted by another reviewer and omitted here to avoid duplicate inline comments; a `COMMENT` verdict alone does not mean those findings are resolved:
+
+```markdown
+> [!IMPORTANT]
+> **TypeSpec changes required.** Follow the **TypeSpec resolution checklist** PR comment: fix the specs, regenerate the SDK, and rerun review until clean **before merging the spec PR**.
+```
+
+If this workflow already has a `github-actions[bot]` comment containing the **TypeSpec resolution checklist** and its five steps, link to that comment in the alert. Identify it by its visible text because incoming comment sanitization may hide HTML markers. Otherwise refer to it by the bold title above; do not invent a comment URL. Omit the alert when there are no outstanding TypeSpec-related findings.
+
+After that optional alert, the review body should contain:
 
 ```markdown
 ### Management SDK Review Summary
@@ -326,14 +440,6 @@ The review body should contain:
 
 If there are no findings, submit a neutral `COMMENT` review with a short body indicating that no blocking management SDK review issues were found.
 
-When the review has findings, append this process guidance to the review body:
+After submitting every complete review, request the `update_typespec_guidance` custom safe-output tool. It creates a separate, author-addressed TypeSpec resolution checklist only when the review contains the exact visible alert above. On subsequent runs it updates only that comment's status and latest-review link, preserving checkbox progress and author notes. A clean review refreshes an existing checklist to clear the action-required notice; it does not create a checklist on a clean PR.
 
-```markdown
-#### Resolving TypeSpec-related review comments
-
-1. Open a separate spec PR in `azure-rest-api-specs`, or update the existing spec PR for this SDK change.
-2. Before the spec PR merges, update `tsp-location.yaml` to the latest commit from the spec PR, regenerate the SDK, and rerun this review.
-3. If the review reports new findings, address them in the same spec PR, update the SDK from its latest commit, and repeat steps 2 and 3. Do not merge the spec PR while any review findings remain.
-4. Only after the review reports no more findings, merge the spec PR.
-5. After the spec PR merges, update `tsp-location.yaml` to the latest `main` commit in `azure-rest-api-specs` that contains the merged changes, then regenerate the SDK.
-```
+Do not append the full checklist to the review body or post it with `add_comment`. Keep review summaries and inline findings as separate historical reviews; never edit a previous review, resolve its threads, or reset the author's checklist progress as part of updating the guidance. The existing stale-change-request dismissal guard remains a separate operation.
