@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlManagedInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string sqlManagedInstanceApiVersion);
             _sqlManagedInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArcData", ResourceType.Namespace, Diagnostics);
-            _sqlManagedInstancesRestClient = new SqlManagedInstances(_sqlManagedInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlManagedInstanceApiVersion ?? "2026-03-01-preview");
+            _sqlManagedInstancesRestClient = new SqlManagedInstances(_sqlManagedInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureArcData/sqlManagedInstances", out string sqlManagedInstancesApiVersionOverride) ? sqlManagedInstancesApiVersionOverride : "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

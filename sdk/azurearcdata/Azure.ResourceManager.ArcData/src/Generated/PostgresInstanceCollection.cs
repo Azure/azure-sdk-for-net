@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PostgresInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PostgresInstanceResource.ResourceType, out string postgresInstanceApiVersion);
             _postgresInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArcData", PostgresInstanceResource.ResourceType.Namespace, Diagnostics);
-            _postgresInstancesRestClient = new PostgresInstances(_postgresInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgresInstanceApiVersion ?? "2026-03-01-preview");
+            _postgresInstancesRestClient = new PostgresInstances(_postgresInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureArcData/postgresInstances", out string postgresInstancesApiVersionOverride) ? postgresInstancesApiVersionOverride : "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

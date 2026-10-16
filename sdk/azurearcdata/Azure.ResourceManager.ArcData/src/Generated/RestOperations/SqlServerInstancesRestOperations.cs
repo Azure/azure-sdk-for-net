@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +96,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +118,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,10 +136,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -172,10 +157,7 @@ namespace Azure.ResourceManager.ArcData
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-03-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -192,10 +174,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,10 +195,7 @@ namespace Azure.ResourceManager.ArcData
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-03-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -240,10 +216,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
             uri.AppendPath("/getTelemetry", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -266,10 +239,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
             uri.AppendPath("/getBestPracticesAssessment", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -292,10 +262,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
             uri.AppendPath("/runMigrationAssessment", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -316,10 +283,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
             uri.AppendPath("/runTargetRecommendationJob", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -345,10 +309,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
             uri.AppendPath("/getTargetRecommendationReports", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -374,10 +335,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
             uri.AppendPath("/getMigrationReadinessReport", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -398,10 +356,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
             uri.AppendPath("/runBestPracticesAssessment", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -422,10 +377,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
             uri.AppendPath("/runBestPracticeAssessment", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -446,10 +398,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
             uri.AppendPath("/runMigrationReadinessAssessment", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -470,10 +419,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
             uri.AppendPath("/getJobsStatus", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -499,10 +445,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
             uri.AppendPath("/getJobs", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -528,10 +471,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
             uri.AppendPath("/preUpgrade", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -552,10 +492,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
             uri.AppendPath("/postUpgrade", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -576,10 +513,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
             uri.AppendPath("/runManagedInstanceLinkAssessment", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -602,10 +536,7 @@ namespace Azure.ResourceManager.ArcData
             uri.AppendPath("/providers/Microsoft.AzureArcData/sqlServerInstances/", false);
             uri.AppendPath(sqlServerInstanceName, true);
             uri.AppendPath("/getAllAvailabilityGroups", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -631,10 +562,7 @@ namespace Azure.ResourceManager.ArcData
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-03-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

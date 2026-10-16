@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ArcData
         {
             TryGetApiVersion(ResourceType, out string sqlServerInstanceApiVersion);
             _sqlServerInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArcData", ResourceType.Namespace, Diagnostics);
-            _sqlServerInstancesRestClient = new SqlServerInstances(_sqlServerInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerInstanceApiVersion ?? "2026-03-01-preview");
+            _sqlServerInstancesRestClient = new SqlServerInstances(_sqlServerInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureArcData/sqlServerInstances", out string sqlServerInstancesApiVersionOverride) ? sqlServerInstancesApiVersionOverride : "2026-03-01-preview");
             _sqlServerAvailabilityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArcData", ResourceType.Namespace, Diagnostics);
             _sqlServerAvailabilityGroupsRestClient = new SqlServerAvailabilityGroups(_sqlServerAvailabilityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerInstanceApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);

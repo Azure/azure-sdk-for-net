@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.ArcData.Mocking
 
         private ClientDiagnostics SqlManagedInstancesClientDiagnostics => _sqlManagedInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ArcData.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SqlManagedInstances SqlManagedInstancesRestClient => _sqlManagedInstancesRestClient ??= new SqlManagedInstances(SqlManagedInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private SqlManagedInstances SqlManagedInstancesRestClient => _sqlManagedInstancesRestClient ??= new SqlManagedInstances(SqlManagedInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureArcData/sqlManagedInstances", out string apiVersion) ? apiVersion : "2026-03-01-preview");
 
         private ClientDiagnostics SqlServerInstancesClientDiagnostics => _sqlServerInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ArcData.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SqlServerInstances SqlServerInstancesRestClient => _sqlServerInstancesRestClient ??= new SqlServerInstances(SqlServerInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private SqlServerInstances SqlServerInstancesRestClient => _sqlServerInstancesRestClient ??= new SqlServerInstances(SqlServerInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureArcData/sqlServerInstances", out string apiVersion0) ? apiVersion0 : "2026-03-01-preview");
 
         private ClientDiagnostics SqlServerLicensesClientDiagnostics => _sqlServerLicensesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ArcData.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SqlServerLicenses SqlServerLicensesRestClient => _sqlServerLicensesRestClient ??= new SqlServerLicenses(SqlServerLicensesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private SqlServerLicenses SqlServerLicensesRestClient => _sqlServerLicensesRestClient ??= new SqlServerLicenses(SqlServerLicensesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureArcData/sqlServerLicenses", out string apiVersion1) ? apiVersion1 : "2026-03-01-preview");
 
         private ClientDiagnostics PostgresInstancesClientDiagnostics => _postgresInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ArcData.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PostgresInstances PostgresInstancesRestClient => _postgresInstancesRestClient ??= new PostgresInstances(PostgresInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private PostgresInstances PostgresInstancesRestClient => _postgresInstancesRestClient ??= new PostgresInstances(PostgresInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureArcData/postgresInstances", out string apiVersion2) ? apiVersion2 : "2026-03-01-preview");
 
         private ClientDiagnostics SqlServerEsuLicensesClientDiagnostics => _sqlServerEsuLicensesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ArcData.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SqlServerEsuLicenses SqlServerEsuLicensesRestClient => _sqlServerEsuLicensesRestClient ??= new SqlServerEsuLicenses(SqlServerEsuLicensesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private SqlServerEsuLicenses SqlServerEsuLicensesRestClient => _sqlServerEsuLicensesRestClient ??= new SqlServerEsuLicenses(SqlServerEsuLicensesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureArcData/sqlServerEsuLicenses", out string apiVersion3) ? apiVersion3 : "2026-03-01-preview");
 
         private ClientDiagnostics DataControllersClientDiagnostics => _dataControllersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ArcData.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DataControllers DataControllersRestClient => _dataControllersRestClient ??= new DataControllers(DataControllersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private DataControllers DataControllersRestClient => _dataControllersRestClient ??= new DataControllers(DataControllersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureArcData/dataControllers", out string apiVersion4) ? apiVersion4 : "2026-03-01-preview");
 
         /// <summary>
         /// List sqlManagedInstance resources in the subscription

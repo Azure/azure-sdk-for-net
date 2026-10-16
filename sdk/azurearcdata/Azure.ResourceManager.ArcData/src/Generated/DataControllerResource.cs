@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataControllerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dataControllerResourceApiVersion);
             _dataControllersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArcData", ResourceType.Namespace, Diagnostics);
-            _dataControllersRestClient = new DataControllers(_dataControllersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataControllerResourceApiVersion ?? "2026-03-01-preview");
+            _dataControllersRestClient = new DataControllers(_dataControllersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureArcData/dataControllers", out string dataControllersApiVersionOverride) ? dataControllersApiVersionOverride : "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

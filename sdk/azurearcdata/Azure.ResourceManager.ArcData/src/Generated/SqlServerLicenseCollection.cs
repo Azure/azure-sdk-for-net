@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlServerLicenseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SqlServerLicenseResource.ResourceType, out string sqlServerLicenseApiVersion);
             _sqlServerLicensesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArcData", SqlServerLicenseResource.ResourceType.Namespace, Diagnostics);
-            _sqlServerLicensesRestClient = new SqlServerLicenses(_sqlServerLicensesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerLicenseApiVersion ?? "2026-03-01-preview");
+            _sqlServerLicensesRestClient = new SqlServerLicenses(_sqlServerLicensesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureArcData/sqlServerLicenses", out string sqlServerLicensesApiVersionOverride) ? sqlServerLicensesApiVersionOverride : "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
