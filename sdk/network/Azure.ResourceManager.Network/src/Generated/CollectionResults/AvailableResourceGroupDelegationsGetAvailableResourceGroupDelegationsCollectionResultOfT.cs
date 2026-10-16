@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
         private readonly AvailableResourceGroupDelegations _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AvailableResourceGroupDelegationsGetAvailableResourceGroupDelegationsCollectionResultOfT(AvailableResourceGroupDelegations client, Guid subscriptionId, string resourceGroupName, string location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public AvailableResourceGroupDelegationsGetAvailableResourceGroupDelegationsCollectionResultOfT(AvailableResourceGroupDelegations client, Guid subscriptionId, string resourceGroupName, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

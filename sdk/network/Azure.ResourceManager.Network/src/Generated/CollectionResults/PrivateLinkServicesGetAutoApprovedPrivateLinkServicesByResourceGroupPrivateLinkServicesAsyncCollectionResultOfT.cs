@@ -15,33 +15,36 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class PrivateLinkServicesGetAutoApprovedPrivateLinkServicesAsyncCollectionResultOfT : AsyncPageable<AutoApprovedPrivateLinkService>
+    internal partial class PrivateLinkServicesGetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsyncCollectionResultOfT : AsyncPageable<AutoApprovedPrivateLinkService>
     {
         private readonly PrivateLinkServices _client;
         private readonly Guid _subscriptionId;
-        private readonly string _location;
+        private readonly string _resourceGroupName;
+        private readonly AzureLocation _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of PrivateLinkServicesGetAutoApprovedPrivateLinkServicesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of PrivateLinkServicesGetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivateLinkServices client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public PrivateLinkServicesGetAutoApprovedPrivateLinkServicesAsyncCollectionResultOfT(PrivateLinkServices client, Guid subscriptionId, string location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public PrivateLinkServicesGetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsyncCollectionResultOfT(PrivateLinkServices client, Guid subscriptionId, string resourceGroupName, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
             _location = location;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of PrivateLinkServicesGetAutoApprovedPrivateLinkServicesAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of PrivateLinkServicesGetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of PrivateLinkServicesGetAutoApprovedPrivateLinkServicesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of PrivateLinkServicesGetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<AutoApprovedPrivateLinkService>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAutoApprovedPrivateLinkServicesRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetAutoApprovedPrivateLinkServicesRequest(_subscriptionId, _location, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesRequest(nextLink, _subscriptionId, _resourceGroupName, _location, _context) : _client.CreateGetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesRequest(_subscriptionId, _resourceGroupName, _location, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

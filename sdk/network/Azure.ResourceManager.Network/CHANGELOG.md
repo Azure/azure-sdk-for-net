@@ -8,6 +8,7 @@
 
 ### Bugs Fixed
 
+- Restored native `AzureLocation` parameters for location-scoped subscription and resource-group operations, retaining the string overloads as obsolete compatibility methods hidden from IntelliSense.
 - Restored preferred management model property names while retaining obsolete forwarding aliases for the previous names.
 - Restored strongly typed `ResourceType` metadata and connected compatibility setters and typed model-factory inputs to the serialized values, retaining the string `Type` aliases present in 1.17.0. Generated legacy factory overloads accepting string `type` still discard that input; use the typed `resourceType` overloads instead.
 - Preserved resource-reference wire formats and deserialization of renamed required properties.

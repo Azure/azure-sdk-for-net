@@ -111,6 +111,24 @@ namespace Azure.ResourceManager.Network.Mocking
             return new ExpressRouteProviderPortResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="NetworkInterfaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkInterfaceResource"/> object. </returns>
+        public virtual NetworkInterfaceResource GetNetworkInterfaceResource(ResourceIdentifier id)
+        {
+            NetworkInterfaceResource.ValidateResourceId(id);
+            return new NetworkInterfaceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PublicIPAddressResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PublicIPAddressResource"/> object. </returns>
+        public virtual PublicIPAddressResource GetPublicIPAddressResource(ResourceIdentifier id)
+        {
+            PublicIPAddressResource.ValidateResourceId(id);
+            return new PublicIPAddressResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="DdosCustomPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DdosCustomPolicyResource"/> object. </returns>
