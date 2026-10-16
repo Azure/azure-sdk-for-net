@@ -171,7 +171,7 @@ public class ResponseSnapshotTests
         var original = new Models.ResponseObject("resp_snap7", "gpt-4o")
         {
             Status = ResponseStatus.Failed,
-            Error = ResponsesModelFactory.ResponseErrorInfo(
+            Error = new ResponseErrorInfo(
                 code: ResponseErrorCode.ServerError,
                 message: "Something went wrong"),
         };

@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             {
                 await CreateVirtualNetworkAsync();
             }
-            var outboundEndpointData = ArmDnsResolverModelFactory.DnsResolverOutboundEndpointData(
+            var outboundEndpointData = new DnsResolverOutboundEndpointData(
                 location: this.DefaultLocation,
                 subnet: new WritableSubResource { Id = new ResourceIdentifier(DefaultSubnetID) });
 
             //_vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
             //_subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{SubnetName}";
 
-            var dnsResolverData = ArmDnsResolverModelFactory.DnsResolverData(
+            var dnsResolverData = new DnsResolverData(
                 location: this.DefaultLocation,
                 virtualNetwork: new WritableSubResource { Id = new ResourceIdentifier(DefaultVnetID) });
 
