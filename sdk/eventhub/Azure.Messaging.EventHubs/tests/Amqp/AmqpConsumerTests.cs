@@ -267,6 +267,62 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies that retries made by <see cref="AmqpConsumer.ReceiveAsync" />
+        ///   honor the retry policy delay rather than the maximum event wait time.
+        /// </summary>
+        ///
+        [TestCase(10, 30_000)]
+        [TestCase(30_000, 10)]
+        public void ReceiveAsyncUsesTheShorterRetryOrRemainingWaitDelay(int retryDelayMilliseconds,
+                                                                        int maximumWaitTimeMilliseconds)
+        {
+            var retryDelay = TimeSpan.FromMilliseconds(retryDelayMilliseconds);
+            var maximumWaitTime = TimeSpan.FromMilliseconds(maximumWaitTimeMilliseconds);
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions
+            {
+                MaximumRetries = 1,
+                Delay = retryDelay,
+                MaximumDelay = retryDelay,
+                Mode = EventHubsRetryMode.Fixed
+            });
+            var retriableException = new EventHubsException(true, "Test");
+            var mockScope = new Mock<AmqpConnectionScope>();
+
+            mockScope
+                .Setup(scope => scope.OpenConsumerLinkAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<uint>(),
+                    It.IsAny<long?>(),
+                    It.IsAny<long?>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<string>(),
+                    It.IsAny<CancellationToken>()))
+                .Throws(retriableException);
+
+            var consumer = new AmqpConsumer("aHub", "$DEFAULT", "0", "test", EventPosition.Earliest, false, true, null, null, null, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy);
+            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+
+            Assert.That(async () => await consumer.ReceiveAsync(100, maximumWaitTime, cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));
+            mockScope.Verify(scope => scope.OpenConsumerLinkAsync(
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<EventPosition>(),
+                It.IsAny<TimeSpan>(),
+                It.IsAny<TimeSpan>(),
+                It.IsAny<uint>(),
+                It.IsAny<long?>(),
+                It.IsAny<long?>(),
+                It.IsAny<bool>(),
+                It.IsAny<string>(),
+                It.IsAny<CancellationToken>()),
+                Times.Exactly(2));
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpConsumer.ReceiveAsync" />
         ///   method.
         /// </summary>
