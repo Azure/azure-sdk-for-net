@@ -4,7 +4,7 @@
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\StorageMcp.Generator.csproj" />
+    <ProjectReference Include="..\src\Microsoft.TypeSpec.Generator.Mcp.csproj" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />

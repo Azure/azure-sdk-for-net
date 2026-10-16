@@ -1,0 +1,33 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Statements;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+
+namespace Microsoft.TypeSpec.Generator.Mcp;
+
+internal sealed class ToolOptionsProvider(McpManifest manifest, ToolSelection selection, InputServiceMethod method)
+    : McpProvider(manifest, selection.Types.Options)
+{
+    protected override PropertyProvider[] BuildProperties() => selection.Options.Select(option =>
+    {
+        var parameter = option.Source is null ? null : method.Parameters.Single(p => p.Name == option.Source);
+        var description = option.DescriptionMember is { } member
+            ? Static(ResolveType(member.Type)).Property(member.Member)
+            : (ValueExpression)Literal(option.Description ?? parameter?.Doc ?? parameter?.Summary ?? option.Source!);
+        return Option(option.Name, ResolveType(option.Type), description);
+    }).ToArray();
+
+    private PropertyProvider Option(string name, CSharpType type, ValueExpression description) =>
+        new(description: null, modifiers: MethodSignatureModifiers.Public, type: type, name: name,
+            body: new AutoPropertyBody(HasSetter: true), enclosingType: this,
+            attributes:
+            [
+                new AttributeStatement(ExistingType("Microsoft.Mcp.Core.Options", "OptionAttribute"),
+                    [], [new KeyValuePair<string, ValueExpression>("Description", description)])
+            ]);
+}

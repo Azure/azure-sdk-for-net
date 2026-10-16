@@ -11,13 +11,16 @@
     <Reference Include="Microsoft.CodeAnalysis.CSharp" HintPath="$(GeneratorDirectory)\Microsoft.CodeAnalysis.CSharp.dll" />
     <Reference Include="System.Memory.Data" HintPath="$(GeneratorDirectory)\System.Memory.Data.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Microsoft.TypeSpec.Generator.Mcp.Tests" Key="0024000004800000940000000602000000240000525341310004000001000100d15ddcb29688295338af4b7686603fe614abd555e09efba8fb88ee09e1f7b1ccaeed2e8f823fa9eef3fdd60217fc012ea67d2479751a0b8c087a4185541b851bd8b16f8d91b840e51b1cb0ba6fe647997e57429265e85ef62d565db50a69ae1647d54d7bd855e4db3d8a91510e5bcbd0edfbbecaa20a7bd9ae74593daa7b11b4" />
+  </ItemGroup>
   <Target Name="CheckEmitterDependencies" BeforeTargets="ResolveAssemblyReferences">
     <Error Condition="!Exists('$(GeneratorDirectory)\Microsoft.TypeSpec.Generator.dll')"
            Text="Run npm ci in eng/packages/http-client-csharp-mcp before building the MCP generator." />
   </Target>
   <Target Name="CopyForLocalExecution" AfterTargets="Build">
     <ItemGroup>
-      <PluginFiles Include="$(TargetDir)*.dll" />
+      <PluginFiles Include="$(TargetPath)" />
     </ItemGroup>
     <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" />
   </Target>

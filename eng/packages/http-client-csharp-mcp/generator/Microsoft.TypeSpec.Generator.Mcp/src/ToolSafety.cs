@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-namespace StorageMcp.Generator;
+namespace Microsoft.TypeSpec.Generator.Mcp;
 
 public sealed record ToolSafety(bool Destructive, bool Idempotent, bool ReadOnly, bool OpenWorld)
 {

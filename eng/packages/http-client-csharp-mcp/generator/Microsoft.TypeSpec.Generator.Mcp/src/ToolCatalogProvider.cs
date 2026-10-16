@@ -8,10 +8,10 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using System.Globalization;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
-namespace StorageMcp.Generator;
+namespace Microsoft.TypeSpec.Generator.Mcp;
 
-internal sealed class ContainerCatalogProvider(ToolSelection selection, InputServiceMethod method)
-    : McpProvider("ContainerCreateCatalog")
+internal sealed class ToolCatalogProvider(McpManifest manifest, ToolSelection selection, InputServiceMethod method)
+    : McpProvider(manifest, selection.Types.Catalog)
 {
     protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
         TypeSignatureModifiers.Internal | TypeSignatureModifiers.Class | TypeSignatureModifiers.Static;
@@ -19,7 +19,6 @@ internal sealed class ContainerCatalogProvider(ToolSelection selection, InputSer
     protected override FieldProvider[] BuildFields()
     {
         var flags = selection.Safety.Apply(ToolSafety.FromHttpMethod(method.Operation.HttpMethod.ToString()));
-        var command = ExistingType("Azure.Mcp.Tools.Storage.Commands.Blob.Container", "ContainerCreateCommand");
         return
         [
             Constant("Id", selection.Id),
@@ -29,8 +28,8 @@ internal sealed class ContainerCatalogProvider(ToolSelection selection, InputSer
             Constant("OperationId", selection.OperationId),
             Constant("DraftDescription", method.Documentation ?? method.Summary ?? method.Name),
             new FieldProvider(FieldModifiers.Public | FieldModifiers.Const, typeof(string), "Description", this,
-                initializationValue: selection.UseDescriptionOverride
-                    ? Static(command).Property("CustomizedDescription")
+                initializationValue: selection.DescriptionOverride is { } member
+                    ? Static(ResolveType(member.Type)).Property(member.Member)
                     : Literal(method.Documentation ?? method.Summary ?? method.Name)),
             Flag("Destructive", flags.Destructive),
             Flag("Idempotent", flags.Idempotent),
@@ -44,7 +43,7 @@ internal sealed class ContainerCatalogProvider(ToolSelection selection, InputSer
         var group = new ParameterProvider("group", $"The existing manifest-selected command group.",
             ExistingType("Microsoft.Mcp.Core.Commands", "CommandGroup"));
         var services = new ParameterProvider("services", $"The service provider.", typeof(IServiceProvider));
-        var command = ExistingType("Azure.Mcp.Tools.Storage.Commands.Blob.Container", "ContainerCreateCommand");
+        var command = ResolveType(selection.CommandType);
         var status = new ParameterProvider("status", $"The HTTP status code.", typeof(int));
         var message = new ParameterProvider("message", $"The SDK error detail.", typeof(string));
         return
@@ -56,7 +55,7 @@ internal sealed class ContainerCatalogProvider(ToolSelection selection, InputSer
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Static, typeof(string), null, [status, message]),
                 Static(typeof(string)).Invoke("Format",
                     [Static(typeof(CultureInfo)).Property("InvariantCulture"),
-                        Literal("Storage request failed (HTTP {0}): {1}"), status, message]), this)
+                        Literal(selection.ErrorMessage), status, message]), this)
         ];
     }
 

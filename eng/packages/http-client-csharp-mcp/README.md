@@ -1,24 +1,28 @@
-# Storage MCP generator prototype
+# TypeSpec MCP tools generator prototype
 
-This package owns the C# MCP tool generator and generator unit tests relocated
-from [microsoft/mcp#3964](https://github.com/microsoft/mcp/pull/3964)
-(source commit `53bb8567a7e31a1237b4e004e1b227eca798e2b5`).
-It is a bounded prototype for the existing `storage blob container create` tool,
-not a general Storage tool generator or another HTTP client.
+`@azure-tools/typespec-mcp` generates reviewed MCP tool scaffolding from
+TypeSpec HTTP operations. The schema, decorators, emitter, C# generator, and
+generator tests live here; service projections and runtime integration remain
+in the consuming MCP repository.
 
-The reviewed service manifest, TypeSpec operation projection, generated Storage
-output, opt-in integration, and comparison scripts remain in `microsoft/mcp`.
-The handwritten tool remains the default; generation does not enable
-`UseGeneratedStorageTools`.
+The generator is service-neutral: service namespaces, command identities,
+options, safety overrides, SDK calls, and result types are TypeSpec metadata,
+not hardcoded Storage behavior. The initial consumer is the bounded
+`storage blob container create` example from
+[microsoft/mcp#3964](https://github.com/microsoft/mcp/pull/3964)
+(original commit `53bb8567a7e31a1237b4e004e1b227eca798e2b5`).
+This is not automatic coverage of every Azure API shape. Unsupported mappings
+fail explicitly, and generation does not opt a consumer into generated tools.
+Handwritten tools remain the default.
 
 ## Build and test
 
 Prerequisites:
 
-- The .NET SDK selected by this repository's `global.json` (10.0.401 or a
-  compatible later feature band).
-- Node.js 22.18 or later in the 22.x line and npm.
-- PowerShell 7 for the MCP repository's generation/comparison scripts.
+- The .NET SDK selected by the repository's `global.json` (10.0.401 or a
+  compatible installed SDK).
+- Node.js 22.18 or later in the 22.x line, and npm.
+- PowerShell 7 for the MCP consumer's generation/comparison scripts.
 
 From this directory:
 
@@ -28,89 +32,172 @@ npm run build
 npm test
 ```
 
-`npm run build` builds
-`generator\StorageMcp.Generator\src\StorageMcp.Generator.csproj` in Release and
-copies the extension and its dependencies to `dist\generator`.
-Build intermediates and binaries use the repository's `artifacts` directories.
-The projects import repository build settings and use centrally managed NUnit,
-NUnit3TestAdapter, and Microsoft.NET.Test.Sdk dependencies for tests.
+The backend project is
+`generator\Microsoft.TypeSpec.Generator.Mcp\src\Microsoft.TypeSpec.Generator.Mcp.csproj`.
+Its MEF export is `McpGenerator`; its plugin is
+`dist\generator\Microsoft.TypeSpec.Generator.Mcp.dll`.
+The emitter selects that plugin automatically. Build intermediates use the
+repository's `artifacts` directories and tests use centrally managed NUnit
+dependencies. No MCP runtime project reference is required to build or test
+this package.
 
-The equivalent targeted test command, from the repository root, is:
+The equivalent test command from the repository root is:
 
 ```powershell
-dotnet test eng\packages\http-client-csharp-mcp\generator\StorageMcp.Generator\test\StorageMcp.Generator.Tests.csproj --configuration Release
+dotnet test eng\packages\http-client-csharp-mcp\generator\Microsoft.TypeSpec.Generator.Mcp\test\Microsoft.TypeSpec.Generator.Mcp.Tests.csproj --configuration Release
 ```
 
-The generator deliberately references assemblies shipped with the pinned
-`@typespec/http-client-csharp` npm package, rather than independently versioned
-NuGet generator assemblies: the frontend, generator host, and extension must
-agree on the provider/input model contract. Both repositories must use
-`@typespec/http-client-csharp` **1.0.0-alpha.20261014.5** with TypeSpec **1.17.0**.
-This package is private and has no publication/install contract.
+The frontend, generator host, and extension must agree on the input/provider
+contract: dependencies are pinned to `@typespec/http-client-csharp`
+**1.0.0-alpha.20261014.5**, TypeSpec **1.17.0**, and
+`@azure-tools/typespec-client-generator-core` **0.73.0**.
+The backend references the generator assemblies in that npm package, not
+independently versioned NuGet assemblies. This private prototype has no
+publication/install contract.
 
-## Consumer invocation contract
+## Author MCP metadata in TypeSpec
 
-Build this package first. In the MCP repository, build the Storage project in
-Debug, then compile its existing `generation\storage.tsp` with the stock C#
-frontend. Configure the frontend with:
+[`lib/main.tsp`](lib/main.tsp) is the authoritative schema.
+`@mcpService` decorates one service namespace and `@tool` decorates each selected
+HTTP operation within it. Operations in different interfaces/subnamespaces can
+share an output library; unselected operations do not become tools.
+
+```typespec
+using TypeSpec.Http;
+using Azure.Mcp;
+
+@service(#{ title: "Reviewed service tools" })
+@server("{endpoint}", "The service endpoint.", { endpoint: url })
+@mcpService(#{
+  outputNamespace: "Example.Generated",
+  metadataReferences: #[],
+  composites: #[
+    #{ path: "example resource list", reason: "Handwritten composition." }
+  ],
+})
+namespace ExampleService;
+```
+
+Each operation's `@tool(#{ ... })` supplies the following typed configuration.
+See the complete runnable, two-service example in
+[`GenerationTests.cs`](generator/Microsoft.TypeSpec.Generator.Mcp/test/GenerationTests.cs)
+and its metadata in
+[`ManifestFixtures.cs`](generator/Microsoft.TypeSpec.Generator.Mcp/test/ManifestFixtures.cs).
+
+| Configuration | Purpose |
+| --- | --- |
+| `id`, `group`, `name`, `title`, `commandType` | Stable tool GUID, command path, title, and existing command class. |
+| `types` | Five distinct generated class names: catalog, options, binding, result, JSON context. |
+| `wire` | Reviewed HTTP method, path, URI template, and typed constant parameters, checked against the frontend model. |
+| `options` | Primitive option types, requiredness, source parameter names, and explicit descriptions for ambient options. |
+| `binding` | Typed SDK parameters, explicit instance-call sequence, primitive/static-member arguments, awaited calls, and return variable. |
+| `result` | Explicit result properties and existing CLR types. |
+| `safety` | Reviewed destructive, idempotent, read-only, and open-world overrides; omitted flags retain conservative HTTP defaults. |
+| `descriptionOverride`, `errorMessage` | Optional existing description constant and required status/detail error format. |
+
+Operation identities are derived from their TypeSpec namespace, interface, and
+operation names. Do not author an `operationId`, a JSON manifest, or a
+service-specific generator subclass. Adding a service within the supported
+mapping subset requires TypeSpec metadata and existing consumer types, not
+generator changes.
+
+## External-checkout invocation
+
+The consumer supplies the .NET checkout as a runtime parameter and builds this
+package first. It also builds its own source and required metadata assemblies
+before generation. Missing types or references are errors, not stubbed
+fallbacks. `metadataReferences` are paths relative to the emitter output root;
+the consumer must include the assemblies that its existing MCP types require.
+
+The consumer wrapper preserves its complete existing YAML configuration,
+replaces `emit` with the **absolute package directory** from that checkout, and
+puts the preserved C# options under the stable key
+`@azure-tools/typespec-mcp`:
 
 ```yaml
 emit:
-  - "@typespec/http-client-csharp"
+  - 'C:\git\azure-sdk-for-net\eng\packages\http-client-csharp-mcp'
 options:
-  "@typespec/http-client-csharp":
+  "@azure-tools/typespec-mcp":
     emitter-output-dir: "{project-root}/.."
-    package-name: Azure.Mcp.Tools.Storage
+    package-name: Example.Mcp.Tools
     new-project: false
     save-inputs: true
-    unreferenced-types-handling: keepAll
-    generator-name: StorageMcpGenerator
-    plugins:
-      - 'C:\git\azure-sdk-for-net\eng\packages\http-client-csharp-mcp\dist\generator'
 ```
 
-Replace the example plugin directory with the **absolute** path to the local
-.NET checkout's `dist\generator`. Preserve the consumer's license configuration.
-TypeSpec 1.17 does not interpolate variables inside the `plugins` array; a
-consumer wrapper must supply the resolved path, for example through a temporary
-configuration file, rather than placing a configuration parameter in that array.
-Run `npx --no-install tsp compile storage.tsp` from the consumer's `generation`
-directory using that configuration.
+Preserve the consumer's license and other stock frontend settings. The emitter
+forces the generic plugin and `unreferenced-types-handling: keepAll` because MCP
+registration/options are externally consumed roots, not REST client dependencies.
+Do not use `emitter/index.js` as the emitter/configuration key. An `extends`
+configuration that overrides just part of the old emitter options can lose
+settings; preserve the complete parsed configuration instead.
 
-The emitter output directory is the MCP Storage tool root. The unchanged
-extension expects:
+Use the **external package's compiler**, not the consumer's local `npx tsp`.
+Import `lib\main.tsp` dynamically; do not put a machine-specific import or npm
+file dependency in authored source. The library owns its pinned HTTP import,
+so the consumer projection uses `TypeSpec.Http` without importing a second,
+consumer-local `@typespec/http`. Additional TypeSpec libraries must likewise
+come from the same compiler/dependency tree: equal versions in two installations
+can still produce incompatible typekit registries.
 
-| Input/output | Path relative to the Storage tool root |
-| --- | --- |
-| Reviewed manifest | `generation\storage.tools.json` |
-| Prebuilt MCP metadata references | `src\bin\Debug\net10.0\Microsoft.Mcp.Core.dll`, `src\bin\Debug\net10.0\Azure.Mcp.Core.dll` |
-| Existing command, model, SDK and customization types | Consumer source compilation and its references |
-| Generated output | `src\Generated\*.cs` |
+Example from the consumer generation directory, with `$generatorRoot` set to
+the absolute external package directory:
 
-No MCP runtime/project reference is needed to build the generator or run its
-unit tests. Real generation does require the consumer source and prerequisite
-build: missing types or assemblies are errors, not stubbed fallbacks.
+```powershell
+$previous = $env:TYPESPEC_SKIP_COMPILER_RESOLVE
+try {
+    $env:TYPESPEC_SKIP_COMPILER_RESOLVE = '1'
+    & node (Join-Path $generatorRoot 'node_modules\@typespec\compiler\cmd\tsp.js') `
+        compile .\service.tsp --config .\resolved-tspconfig.yaml `
+        --import (Join-Path $generatorRoot 'lib\main.tsp')
+    if ($LASTEXITCODE -ne 0) {
+        throw 'MCP tool generation failed.'
+    }
+}
+finally {
+    $env:TYPESPEC_SKIP_COMPILER_RESOLVE = $previous
+}
+```
 
-## Behavior and limits
+The environment flag prevents TypeSpec's runner from redirecting back to the
+consumer's nearest compiler. Keep its lifetime scoped to compilation.
 
-The extension exports `StorageMcpGenerator` through MEF as a
-`Microsoft.TypeSpec.Generator.CodeModelGenerator`. `StorageOutputLibrary`
-selects the manifest operation from the stock frontend's input model and emits
-five types using the existing `TypeProvider` APIs and C# writer:
-catalog/registration and safety metadata, options, a private-container SDK
-binding, a result wrapper, and an AOT-safe JSON context.
+## Output, lifecycle, and limits
 
-The original behavior is retained: required Account/Container options, optional
-Tenant, no subscription option, reviewed safety overrides, the human description
-override, `BlobContainerClient.CreateAsync(PublicAccessType.None)` with cancellation
-forwarding, and a generic status-code error default. Authentication, endpoint
-resolution, follow-up property reads, specialized errors, and output shaping
-remain handwritten in the consumer.
+The TypeSpec emitter validates metadata and delegates HTTP model construction
+to the stock C# frontend. It writes `tspMcpCodeModel.json` at the emitter output
+root solely as private transport for the C# backend. The emitter creates this
+reserved generated file and deletes it in `finally`, including on backend
+failure, unless `save-inputs: true` retains it for diagnostics. It is not
+hand-authored configuration and should not be committed. Stock frontend input
+files follow the same `save-inputs` policy.
 
-The manifest requires exactly one reviewed container-create selection. Unsupported
-bindings, ambiguous/missing selected operations, extra wire parameters, paging,
-LROs, and unexpected generated option shapes fail explicitly. Account/container/blob
-get-list composites remain handwritten. The unit tests preserve the original
-manifest/selection/safety/options cases using synthetic consumer data; the real
-reviewed manifest stays in the MCP repository. End-to-end regeneration and catalog
-parity belong to the consumer's `Generate.ps1 -Verify` and `Compare.ps1` workflows.
+For each selected operation, the backend uses existing `TypeProvider` APIs and
+the C# writer to produce five files under `src\Generated`: catalog/registration
+and safety metadata, options, an existing-SDK binding, a result wrapper, and an
+AOT-safe JSON context. It does not generate another HTTP client or change
+consumer registration/feature switches.
+
+Supported inputs are explicitly mapped primitive method parameters
+(`string`, `bool`, `int`, `long`, `float`, `double`, `decimal`) and reviewed
+wire constants. Bindings support qualified, nongeneric existing CLR types,
+primitive arguments including explicit null, static members, named arguments,
+and typed local results. Every awaited SDK call must forward a supplied
+cancellation token. SDK members and argument compatibility are ultimately
+checked by compiling the generated consumer; authoring metadata does not
+prove that an SDK method exists.
+
+Ambiguous/missing selections, mismatched wire shapes or constant types, extra
+parameters, unsupported parameter/type mappings, duplicate identities/output
+names, paging, LROs, and unexpected generated option syntax fail explicitly.
+Generic CLR type expressions, arbitrary expression snippets, automatic
+authentication/endpoint resolution, and inferred SDK workflows are not supported.
+Those workflows and composite tools stay handwritten.
+
+Tests exercise two service-shaped tools, generated C# compilation, consumer-local
+compiler/HTTP isolation, schema diagnostics, internal transport/null handling,
+typed constant rejection, safety, and options rewriting. The consumer's own
+`Generate.ps1 -Verify` must separately move aside old output, require fresh
+files, and compare inventory/raw hashes so stale files cannot masquerade as
+successful generation. The initial Storage example must retain its existing
+five files byte-for-byte and its handwritten-by-default behavior.

@@ -1,11 +1,20 @@
 {
-  "name": "http-client-csharp-mcp-prototype",
+  "name": "@azure-tools/typespec-mcp",
+  "type": "module",
+  "main": "emitter/index.js",
+  "tspMain": "lib/main.tsp",
+  "exports": {
+    ".": {
+      "typespec": "./lib/main.tsp",
+      "default": "./emitter/index.js"
+    }
+  },
   "private": true,
   "version": "0.0.0",
-  "description": "Bounded Storage MCP tool generator using the TypeSpec C# generator providers.",
+  "description": "Service-neutral Azure MCP tool generator using the TypeSpec C# generator providers.",
   "scripts": {
-    "build": "dotnet build generator/StorageMcp.Generator/src/StorageMcp.Generator.csproj --configuration Release",
-    "test": "dotnet test generator/StorageMcp.Generator/test/StorageMcp.Generator.Tests.csproj --configuration Release"
+    "build": "node --check emitter/index.js && dotnet build generator/Microsoft.TypeSpec.Generator.Mcp/src/Microsoft.TypeSpec.Generator.Mcp.csproj --configuration Release",
+    "test": "dotnet test generator/Microsoft.TypeSpec.Generator.Mcp/test/Microsoft.TypeSpec.Generator.Mcp.Tests.csproj --configuration Release"
   },
   "devDependencies": {
     "@azure-tools/typespec-client-generator-core": "0.73.0",

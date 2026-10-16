@@ -5,13 +5,14 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace StorageMcp.Generator;
+namespace Microsoft.TypeSpec.Generator.Mcp;
 
 public static class OptionsSyntaxAdapter
 {
-    public static void Rewrite(string path) => File.WriteAllText(path, RewriteSource(File.ReadAllText(path)));
+    public static void Rewrite(string path, OptionMapping[] options) =>
+        File.WriteAllText(path, RewriteSource(File.ReadAllText(path), options));
 
-    public static string RewriteSource(string source)
+    public static string RewriteSource(string source, OptionMapping[] options)
     {
         // The shared SDK writer predates nullable-reference and required-property syntax.
         var root = CSharpSyntaxTree.ParseText(source).GetRoot();
@@ -27,12 +28,13 @@ public static class OptionsSyntaxAdapter
                     SyntaxFactory.Token(SyntaxKind.EnableKeyword).WithTriviaFrom(directive.SettingToken)))
                 : trivia);
         var properties = root.DescendantNodes().OfType<PropertyDeclarationSyntax>().ToArray();
-        if (!properties.Select(p => p.Identifier.ValueText).Order().SequenceEqual(new[] { "Account", "Container", "Tenant" }))
+        if (!properties.Select(p => p.Identifier.ValueText).Order(StringComparer.Ordinal)
+            .SequenceEqual(options.Select(o => o.Name).Order(StringComparer.Ordinal)))
         {
             throw new InvalidOperationException("Unexpected generated options shape; refusing to change its requiredness.");
         }
 
-        root = root.ReplaceNodes(properties, (property, _) => property.Identifier.ValueText == "Tenant"
+        root = root.ReplaceNodes(properties, (property, _) => !options.Single(o => o.Name == property.Identifier.ValueText).Required
             ? property.Type is NullableTypeSyntax ? property
                 : property.WithType(SyntaxFactory.NullableType(property.Type.WithoutTrivia()).WithTriviaFrom(property.Type))
             : property.Modifiers.Any(SyntaxKind.RequiredKeyword) ? property
