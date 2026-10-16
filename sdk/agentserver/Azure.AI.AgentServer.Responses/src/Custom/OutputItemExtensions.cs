@@ -6,6 +6,9 @@ using System.ClientModel.Primitives;
 using System.IO;
 using System.Text.Json;
 
+// Maps Azure.AI.Extensions.OpenAI tool-call items that are still marked experimental upstream; the tag is owned and removed there.
+#pragma warning disable AAIP001, AAIP002
+
 namespace Azure.AI.AgentServer.Responses.Models;
 
 /// <summary>
@@ -84,21 +87,9 @@ public static class OutputItemExtensions
             case OutputItemReasoningItem m:
                 id = m.Id;
                 return true;
-            case OutputItemCompactionBody m:
-                id = m.Id;
-                return true;
-            case OutputItemLocalShellToolCall m:
-                id = m.Id;
-                return true;
-            case OutputItemLocalShellToolCallOutput m:
-                id = m.Id;
-                return true;
-            case OutputItemFunctionShellCall m:
-                id = m.Id;
-                return true;
-            case OutputItemFunctionShellCallOutput m:
-                id = m.Id;
-                return true;
+
+            // The shell and compaction items are request-side only (the ItemField union in the
+            // spec); they never appear as response output items.
             case OutputItemApplyPatchToolCall m:
                 id = m.Id;
                 return true;

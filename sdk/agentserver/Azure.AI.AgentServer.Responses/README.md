@@ -58,15 +58,15 @@ builder.Build().Run();
 
 ### ResponseHandler
 
-The core abstraction you implement. The library calls `CreateAsync` for each incoming request and delivers the returned `IAsyncEnumerable<ResponseStreamEvent>` to clients via SSE.
+The core abstraction you implement. The library calls `CreateAsync` for each incoming request and delivers the returned `IAsyncEnumerable<StreamingResponseUpdate>` to clients via SSE.
 
 **`TextResponse` — recommended for text-only responses:**
 
 ```C# Snippet:Responses_ReadMe_EchoHandler
 public class EchoHandler : ResponseHandler
 {
-    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         CancellationToken cancellationToken)
     {
@@ -87,8 +87,8 @@ When `TextResponse` is too simple but the full builder API is more than you need
 ```C# Snippet:Responses_ReadMe_EchoHandler_Convenience
 public class EchoHandlerConvenience : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -131,8 +131,8 @@ Use the full builder API only when you need fine-grained control over individual
 ```C# Snippet:Responses_ReadMe_EchoHandler_FullControl
 public class EchoHandlerFullControl : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -161,7 +161,7 @@ public class EchoHandlerFullControl : ResponseHandler
 Injected into every `CreateAsync` call, `ResponseContext` provides access to the client's input, conversation history, and request metadata:
 
 - **`GetInputItemsAsync(resolveReferences, cancellationToken)`** — returns the resolved input items from the request. Item references are resolved to their content by default; pass `resolveReferences: false` to receive them as-is. Computed once and cached.
-- **`GetInputTextAsync(resolveReferences, cancellationToken)`** — shorthand that resolves input items and concatenates all text content from `ItemMessage` entries.
+- **`GetInputTextAsync(resolveReferences, cancellationToken)`** — shorthand that resolves input items and concatenates all text content from `MessageResponseItem` entries.
 - **`GetHistoryAsync(cancellationToken)`** — returns output items from previous responses in the conversation chain (oldest-first). Uses `previous_response_id` to walk the conversation and resolves items via the provider. Limit controlled by `ResponsesServerOptions.DefaultFetchHistoryCount` (default: `-1`, unlimited). Positive values retain only the newest items.
 - **`ResponseId`** — the unique ID for this response, used to construct child item IDs.
 - **`ClientHeaders`** — forwarded HTTP headers from the original client request.
@@ -169,7 +169,7 @@ Injected into every `CreateAsync` call, `ResponseContext` provides access to the
 - **`RawBody`** — the raw request body as `BinaryData` for advanced scenarios.
 - **`Isolation`** — isolation context (tenant/session) extracted from request headers.
 
-For collections of `Item` objects, the `GetInputText()` extension method (on `IEnumerable<Item>`) extracts and joins text content without needing a `ResponseContext`.
+For collections of `ResponseItem` objects, the `GetInputText()` extension method (on `IEnumerable<ResponseItem>`) extracts and joins text content without needing a `ResponseContext`.
 
 See the [handler implementation guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md#responsecontext) for the full `ResponseContext` API reference.
 
@@ -280,8 +280,8 @@ public class MultiUserHandler : ResponseHandler
     public MultiUserHandler(IHttpClientFactory httpClientFactory) =>
         _httpClientFactory = httpClientFactory;
 
-    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         CancellationToken cancellationToken)
     {

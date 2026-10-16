@@ -96,9 +96,9 @@ public class ResponseContext
     /// for each <paramref name="resolveReferences"/> mode.
     /// </summary>
     /// <param name="resolveReferences">
-    /// When <c>true</c> (the default), <see cref="Models.ItemReferenceParam"/> items
+    /// When <c>true</c> (the default), <see cref="ItemReferenceParam"/> items
     /// are resolved via the provider and returned as their concrete <see cref="Item"/> subtype.
-    /// When <c>false</c>, item references are left as <see cref="Models.ItemReferenceParam"/>
+    /// When <c>false</c>, item references are left as <see cref="ItemReferenceParam"/>
     /// in the returned list.
     /// </param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
@@ -119,7 +119,7 @@ public class ResponseContext
 
     /// <summary>
     /// Resolves input items and extracts all text content as a single string.
-    /// Filters for <see cref="Models.ItemMessage"/> items, expands their content,
+    /// Filters for <see cref="ItemMessage"/> items, expands their content,
     /// and joins all text values with newline separators.
     /// </summary>
     /// <param name="resolveReferences">

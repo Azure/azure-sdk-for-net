@@ -16,20 +16,20 @@ namespace Azure.AI.AgentServer.Responses.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResponseIncompleteDetails"/>. </summary>
-        public ResponseIncompleteDetails()
+        internal ResponseIncompleteDetails()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseIncompleteDetails"/>. </summary>
         /// <param name="reason"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseIncompleteDetails(ResponseIncompleteDetailsReason? reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseIncompleteDetails(CreateResponseResponseIncompleteDetailsReason? reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Reason = reason;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Reason. </summary>
-        public ResponseIncompleteDetailsReason? Reason { get; set; }
+        /// <summary> Gets the Reason. </summary>
+        public CreateResponseResponseIncompleteDetailsReason? Reason { get; }
     }
 }

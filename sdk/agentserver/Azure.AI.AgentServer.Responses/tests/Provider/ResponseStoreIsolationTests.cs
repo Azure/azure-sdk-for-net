@@ -45,19 +45,20 @@ public class ResponseStoreIsolationTests
 
     private static ResponseObject Response(string id, string label)
     {
-        var response = new ResponseObject(id, label)
+        var response = new ResponseObject
         {
+            Id = id,
+            Model = label,
             Status = ResponseStatus.Completed,
-            Conversation = new ConversationReference("conv_shared"),
+            ConversationOptions = new ConversationReference("conv_shared"),
         };
-        response.Output.Add(new OutputItemMessage("msg_output", MessageStatus.Completed, MessageRole.Assistant,
-            new MessageContent[] { new MessageContentOutputTextContent(label, Array.Empty<Annotation>(), Array.Empty<LogProb>()) }));
+        response.OutputItems.Add(MessageItemFactory.OutputMessage("msg_output", MessageStatus.Completed, MessageRole.Assistant, new[] { ResponseContentPart.CreateOutputTextPart(label, Array.Empty<ResponseMessageAnnotation>()) }));
         return response;
     }
 
     private static Task CreateAsync(ResponsesProvider provider, PlatformContext context, string label, string id = "resp_shared") =>
-        provider.CreateResponseAsync(new CreateResponseRequest(Response(id, label),
-            new OutputItem[] { new OutputItemMessage("msg_input", MessageStatus.Completed, MessageRole.User, Array.Empty<MessageContent>()) },
+        provider.CreateResponseAsync(new CreateResponsePersistRequest(Response(id, label),
+            new OutputItem[] { MessageItemFactory.OutputMessage("msg_input", MessageStatus.Completed, MessageRole.User, Array.Empty<ResponseContentPart>()) },
             null), context);
 
     [TestCase("user-a", "user-b")]
@@ -111,8 +112,8 @@ public class ResponseStoreIsolationTests
         {
             Assert.That(await reader.GetHistoryItemIdsAsync(null, "conv_shared", 100, context),
                 Is.EqualTo(new[] { "msg_input", "msg_output" }));
-            var output = (OutputItemMessage)(await reader.GetItemsAsync(new[] { "msg_output" }, context)).Single()!;
-            Assert.That(((MessageContentOutputTextContent)output.Content.Single()).Text,
+            var output = (MessageResponseItem)(await reader.GetItemsAsync(new[] { "msg_output" }, context)).Single()!;
+            Assert.That(output.Content.Single().Text,
                 Is.EqualTo(context == first ? "updated" : "second"));
         }
     }
@@ -123,8 +124,8 @@ public class ResponseStoreIsolationTests
         var first = new PlatformContext("user-a", null);
         var second = new PlatformContext("user-b", null);
         await CreateAsync(_provider, first, "first");
-        await _provider.CreateResponseAsync(new CreateResponseRequest(
-            new ResponseObject("resp_other", "test"), null, new[] { "msg_input", "msg_output" }), second);
+        await _provider.CreateResponseAsync(new CreateResponsePersistRequest(
+            new ResponseObject { Id = "resp_other", Model = "test" }, null, new[] { "msg_input", "msg_output" }), second);
         Assert.That((await RestartIfDurable().GetInputItemsAsync("resp_other", second)).Data, Is.Empty);
     }
 
@@ -135,7 +136,7 @@ public class ResponseStoreIsolationTests
         await CreateAsync(_provider, context, "original");
         var cancelled = new CancellationToken(canceled: true);
         Assert.ThrowsAsync<OperationCanceledException>(() => _provider.CreateResponseAsync(
-            new CreateResponseRequest(Response("resp_new", "new"), null, null), context, cancelled));
+            new CreateResponsePersistRequest(Response("resp_new", "new"), null, null), context, cancelled));
         Assert.ThrowsAsync<OperationCanceledException>(() => _provider.UpdateResponseAsync(Response("resp_shared", "changed"), context, cancelled));
         Assert.ThrowsAsync<OperationCanceledException>(() => _provider.DeleteResponseAsync("resp_shared", context, cancelled));
         Assert.ThrowsAsync<OperationCanceledException>(() => _provider.GetResponseAsync("resp_shared", context, cancelled));
@@ -164,8 +165,8 @@ public class ResponseStoreIsolationTests
         Assert.That(results.Count(won => won), Is.EqualTo(1));
         var reader = RestartIfDurable();
         var response = await reader.GetResponseAsync("resp_shared", context);
-        var item = (OutputItemMessage)(await reader.GetItemsAsync(new[] { "msg_output" }, context)).Single()!;
-        Assert.That(((MessageContentOutputTextContent)item.Content.Single()).Text, Is.EqualTo(response.Model));
+        var item = (MessageResponseItem)(await reader.GetItemsAsync(new[] { "msg_output" }, context)).Single()!;
+        Assert.That(item.Content.Single().Text, Is.EqualTo(response.Model));
     }
 
     [Test]

@@ -3,6 +3,7 @@
 
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Builders;
 
@@ -154,7 +155,7 @@ public class ResponseEventStreamTests
 
         var evt = stream.EmitCreated();
 
-        // Models.ResponseObject is the stream-owned Models.ResponseObject
+        // ResponseObject is the stream-owned ResponseObject
         Assert.That(evt.Response, Is.SameAs(stream.Response));
     }
 
@@ -229,8 +230,8 @@ public class ResponseEventStreamTests
         var stream = new ResponseEventStream(context, request);
         var evt = stream.EmitCreated();
 
-        // The stream builds its own Models.ResponseObject — it's not the same as any externally-created instance
-        var externalResponse = new Models.ResponseObject("resp_ext", "gpt-4o");
+        // The stream builds its own ResponseObject — it's not the same as any externally-created instance
+        var externalResponse = new ResponseObject { Id = "resp_ext", Model = "gpt-4o" };
         Assert.That(evt.Response, Is.Not.SameAs(externalResponse));
     }
 
@@ -252,7 +253,7 @@ public class ResponseEventStreamTests
     public void EmitCompleted_WithUsage_SetsStatusCompletedAtAndUsage()
     {
         var stream = CreateStream();
-        var usage = new ResponseUsage(10, new ResponseUsageInputTokensDetails(0), 5, new ResponseUsageOutputTokensDetails(0), 15);
+        var usage = new ResponseUsage { InputTokenCount = (int)(10), InputTokenDetails = new ResponseUsageInputTokensDetails { CachedTokenCount = (int)(0) }, OutputTokenCount = (int)(5), OutputTokenDetails = new ResponseUsageOutputTokensDetails { ReasoningTokenCount = (int)(0) }, TotalTokenCount = (int)(15) };
 
         var before = DateTimeOffset.UtcNow;
         var evt = stream.EmitCompleted(usage);
@@ -282,17 +283,17 @@ public class ResponseEventStreamTests
         var stream = CreateStream();
 
         // Simulate accumulated output items
-        var textContent = new MessageContentOutputTextContent("Hello world", Array.Empty<Annotation>(), Array.Empty<LogProb>());
-        var item = new OutputItemMessage(
+        var textContent = ResponseContentPart.CreateOutputTextPart("Hello world", Array.Empty<Annotation>());
+        var item = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
-            new MessageContent[] { textContent });
+            new ResponseContentPart[] { textContent });
         stream.TrackCompletedOutputItem(item, 0);
 
         var evt = stream.EmitCompleted();
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(evt.Response.OutputText, Is.Null);
+        XAssert.DoesNotSerializeOutputText(evt.Response);
     }
 
     // ── T016: EmitFailed Tests ────────────────────────────────
@@ -329,17 +330,17 @@ public class ResponseEventStreamTests
     {
         var stream = CreateStream();
 
-        var textContent = new MessageContentOutputTextContent("partial", Array.Empty<Annotation>(), Array.Empty<LogProb>());
-        var item = new OutputItemMessage(
+        var textContent = ResponseContentPart.CreateOutputTextPart("partial", Array.Empty<Annotation>());
+        var item = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
-            new MessageContent[] { textContent });
+            new ResponseContentPart[] { textContent });
         stream.TrackCompletedOutputItem(item, 0);
 
         var evt = stream.EmitFailed(ResponseErrorCode.ServerError, "err");
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(evt.Response.OutputText, Is.Null);
+        XAssert.DoesNotSerializeOutputText(evt.Response);
     }
 
     // ── T017: EmitIncomplete Tests ────────────────────────────
@@ -352,8 +353,8 @@ public class ResponseEventStreamTests
         var evt = stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);
 
         Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Incomplete));
-        Assert.That(evt.Response.IncompleteDetails, Is.Not.Null);
-        Assert.That(evt.Response.IncompleteDetails.Reason, Is.EqualTo(ResponseIncompleteDetailsReason.MaxOutputTokens));
+        Assert.That(evt.Response.IncompleteStatusDetails, Is.Not.Null);
+        Assert.That(evt.Response.IncompleteStatusDetails.Reason, Is.EqualTo(ResponseIncompleteDetailsReason.MaxOutputTokens));
         Assert.That(evt.Response.CompletedAt, Is.Null);
     }
 
@@ -365,7 +366,7 @@ public class ResponseEventStreamTests
         var evt = stream.EmitIncomplete();
 
         Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Incomplete));
-        Assert.That(evt.Response.IncompleteDetails, Is.Null);
+        Assert.That(evt.Response.IncompleteStatusDetails, Is.Null);
         Assert.That(evt.Response.CompletedAt, Is.Null);
     }
 
@@ -374,16 +375,16 @@ public class ResponseEventStreamTests
     {
         var stream = CreateStream();
 
-        var textContent = new MessageContentOutputTextContent("so far", Array.Empty<Annotation>(), Array.Empty<LogProb>());
-        var item = new OutputItemMessage(
+        var textContent = ResponseContentPart.CreateOutputTextPart("so far", Array.Empty<Annotation>());
+        var item = MessageItemFactory.OutputMessage(
             "msg_1",
             MessageStatus.Completed,
-            new MessageContent[] { textContent });
+            new ResponseContentPart[] { textContent });
         stream.TrackCompletedOutputItem(item, 0);
 
         var evt = stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(evt.Response.OutputText, Is.Null);
+        XAssert.DoesNotSerializeOutputText(evt.Response);
     }
 }

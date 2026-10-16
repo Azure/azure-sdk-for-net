@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -103,7 +104,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            IList<OutputItem> data = default;
+            IList<ResponseItem> data = default;
             string firstId = default;
             string lastId = default;
             bool hasMore = default;
@@ -112,10 +113,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    List<OutputItem> array = new List<OutputItem>();
+                    List<ResponseItem> array = new List<ResponseItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OutputItem.DeserializeOutputItem(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseItem>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default));
+                        }
                     }
                     data = array;
                     continue;

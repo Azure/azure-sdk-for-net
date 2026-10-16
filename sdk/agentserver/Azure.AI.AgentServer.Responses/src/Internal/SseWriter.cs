@@ -48,7 +48,7 @@ internal sealed class SseWriter
     public static (string? EventType, string Data) SerializeEvent(
         ResponseStreamEvent evt, long sequenceNumber, JsonSerializerOptions jsonOptions)
     {
-        var eventType = evt.EventType.ToString();
+        var eventType = evt.Kind.ToString();
         var json = JsonSerializer.Serialize(evt, evt.GetType(), jsonOptions);
 
         // Inject the SDK-assigned sequence number into the serialized JSON and strip internal metadata

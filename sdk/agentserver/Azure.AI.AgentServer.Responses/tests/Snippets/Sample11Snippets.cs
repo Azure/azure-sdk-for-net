@@ -55,8 +55,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
             public NonStreamingUpstreamHandler(ResponsesClient upstream) => _upstream = upstream;
 
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
@@ -67,30 +67,27 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                     Instructions = request.Instructions,
                 };
 
-                // Translate every input item with full fidelity.
-                // Both model stacks share the same JSON wire contract, so
-                // .Translate().To<T>() round-trips through JSON to convert.
-                foreach (Item item in await context.GetInputItemsAsync(cancellationToken: cancellationToken))
+                // Input items are already OpenAI ResponseItem instances, so
+                // they can be forwarded to the upstream as-is.
+                foreach (ResponseItem item in await context.GetInputItemsAsync(cancellationToken: cancellationToken))
                 {
-                    options.InputItems.Add(item.Translate().To<ResponseItem>());
+                    options.InputItems.Add(item);
                 }
 
                 // Call upstream without streaming and get the complete response.
                 var result = await _upstream.CreateResponseAsync(options, cancellationToken);
 
-                // Build a standard SSE event stream, translating every output
-                // item back: OpenAI ResponseItem → our OutputItem.
+                // Build a standard SSE event stream, emitting every upstream
+                // output item.
                 var stream = new ResponseEventStream(context, request);
                 yield return stream.EmitCreated();
                 yield return stream.EmitInProgress();
 
                 foreach (ResponseItem upstreamItem in result.Value.OutputItems)
                 {
-                    OutputItem outputItem = upstreamItem.Translate().To<OutputItem>();
-
-                    var builder = stream.AddOutputItem<OutputItem>(upstreamItem.Id);
-                    yield return builder.EmitAdded(outputItem);
-                    yield return builder.EmitDone(outputItem);
+                    var builder = stream.AddOutputItem<ResponseItem>(upstreamItem.Id);
+                    yield return builder.EmitAdded(upstreamItem);
+                    yield return builder.EmitDone(upstreamItem);
                 }
 
                 yield return stream.EmitCompleted();

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -43,10 +44,11 @@ public class OutputItemImageGenCallBuilder : OutputItemBuilder<OutputItemImageGe
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this image generation call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemImageGenToolCall(
-            id: _itemId,
-            status: ItemImageGenToolCallStatus.InProgress,
-            result: "");
+        var item = new OutputItemImageGenToolCall(BinaryData.FromBytes(Array.Empty<byte>()))
+        {
+            Id = _itemId,
+            Status = ImageGenerationCallStatus.InProgress,
+        };
         return EmitAdded(item);
     }
 
@@ -56,8 +58,7 @@ public class OutputItemImageGenCallBuilder : OutputItemBuilder<OutputItemImageGe
     /// <returns>A <see cref="ResponseImageGenCallInProgressEvent"/>.</returns>
     public virtual ResponseImageGenCallInProgressEvent EmitInProgress()
     {
-        return new ResponseImageGenCallInProgressEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseImageGenCallInProgressEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId };
     }
 
     /// <summary>
@@ -66,8 +67,7 @@ public class OutputItemImageGenCallBuilder : OutputItemBuilder<OutputItemImageGe
     /// <returns>A <see cref="ResponseImageGenCallGeneratingEvent"/>.</returns>
     public virtual ResponseImageGenCallGeneratingEvent EmitGenerating()
     {
-        return new ResponseImageGenCallGeneratingEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseImageGenCallGeneratingEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId };
     }
 
     /// <summary>
@@ -82,8 +82,7 @@ public class OutputItemImageGenCallBuilder : OutputItemBuilder<OutputItemImageGe
     public virtual ResponseImageGenCallPartialImageEvent EmitPartialImage(string partialImageB64)
     {
         var index = _partialImageIndex++;
-        return new ResponseImageGenCallPartialImageEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId, index, partialImageB64);
+        return new ResponseImageGenCallPartialImageEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId, PartialImageIndex = (int)(index), PartialImageBytes = BinaryData.FromBytes(Convert.FromBase64String(partialImageB64)) };
     }
 
     /// <summary>
@@ -92,8 +91,7 @@ public class OutputItemImageGenCallBuilder : OutputItemBuilder<OutputItemImageGe
     /// <returns>A <see cref="ResponseImageGenCallCompletedEvent"/>.</returns>
     public virtual ResponseImageGenCallCompletedEvent EmitCompleted()
     {
-        return new ResponseImageGenCallCompletedEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseImageGenCallCompletedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId };
     }
 
     /// <summary>
@@ -115,10 +113,11 @@ public class OutputItemImageGenCallBuilder : OutputItemBuilder<OutputItemImageGe
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this image generation call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone(string result)
     {
-        var item = new OutputItemImageGenToolCall(
-            id: _itemId,
-            status: ItemImageGenToolCallStatus.Completed,
-            result: result);
+        var item = new OutputItemImageGenToolCall(BinaryData.FromBytes(Convert.FromBase64String(result)))
+        {
+            Id = _itemId,
+            Status = ImageGenerationCallStatus.Completed,
+        };
         return EmitDone(item);
     }
 }

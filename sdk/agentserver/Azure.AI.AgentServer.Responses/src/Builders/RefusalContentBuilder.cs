@@ -59,9 +59,8 @@ public class RefusalContentBuilder
             throw new InvalidOperationException($"Cannot call EmitAdded — builder is in '{_lifecycleState}' state.");
         _lifecycleState = BuilderLifecycleState.Added;
 
-        var part = new OutputContentRefusalContent(refusal: "");
-        return new ResponseContentPartAddedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, part);
+        var part = ResponseContentPart.CreateRefusalPart(string.Empty);
+        return new ResponseContentPartAddedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Part = part };
     }
 
     /// <summary>
@@ -76,8 +75,7 @@ public class RefusalContentBuilder
         if (_refusalDone)
             throw new InvalidOperationException("Cannot emit deltas after EmitRefusalDone has been called.");
 
-        return new ResponseRefusalDeltaEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, text);
+        return new ResponseRefusalDeltaEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Delta = text };
     }
 
     /// <summary>
@@ -95,8 +93,7 @@ public class RefusalContentBuilder
 
         _refusalDone = true;
         _finalRefusal = finalRefusal;
-        return new ResponseRefusalDoneEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, finalRefusal);
+        return new ResponseRefusalDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Refusal = finalRefusal };
     }
 
     /// <summary>
@@ -112,9 +109,7 @@ public class RefusalContentBuilder
             throw new InvalidOperationException("Must call EmitRefusalDone() before EmitDone().");
         _lifecycleState = BuilderLifecycleState.Done;
 
-        var part = new OutputContentRefusalContent(
-            refusal: _finalRefusal ?? string.Empty);
-        return new ResponseContentPartDoneEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, part);
+        var part = ResponseContentPart.CreateRefusalPart(_finalRefusal ?? string.Empty);
+        return new ResponseContentPartDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), ContentIndex = (int)(_contentIndex), Part = part };
     }
 }

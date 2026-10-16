@@ -15,8 +15,8 @@ Use `OutputItemReasoningItem()` and `OutputItemMessage()` to emit complete outpu
 ```C# Snippet:Responses_Sample6_MathSolverHandlerConvenience
 public class MathSolverHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -52,8 +52,8 @@ When you need multiple summary parts in a single reasoning item, set custom prop
 ```C# Snippet:Responses_Sample6_MathSolverHandler
 public class MathSolverHandlerFullControl : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {

@@ -67,8 +67,8 @@ public class KnowledgeHandler : ResponseHandler
 
     public KnowledgeHandler(IKnowledgeBase kb) => _kb = kb;
 
-    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         CancellationToken cancellationToken)
     {

@@ -10,11 +10,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The response data for a requested list of items. </summary>
-    public partial class AgentsPagedResultResponse : IJsonModel<AgentsPagedResultResponse>
+    internal partial class AgentsPagedResultResponse : IJsonModel<AgentsPagedResultResponse>
     {
         /// <summary> Initializes a new instance of <see cref="AgentsPagedResultResponse"/> for deserialization. </summary>
         internal AgentsPagedResultResponse()
@@ -89,8 +90,13 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("data"u8);
             writer.WriteStartArray();
-            foreach (ResponseObject item in Data)
+            foreach (ResponseResult item in Data)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
@@ -148,7 +154,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            IList<ResponseObject> data = default;
+            IList<ResponseResult> data = default;
             string firstId = default;
             string lastId = default;
             bool hasMore = default;
@@ -157,10 +163,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    List<ResponseObject> array = new List<ResponseObject>();
+                    List<ResponseResult> array = new List<ResponseResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResponseObject.DeserializeResponseObject(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseResult>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default));
+                        }
                     }
                     data = array;
                     continue;

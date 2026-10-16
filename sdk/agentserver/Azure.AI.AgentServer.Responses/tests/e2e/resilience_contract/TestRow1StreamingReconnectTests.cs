@@ -157,14 +157,14 @@ public sealed class TestRow1StreamingReconnectTests : IDisposable
     private static async IAsyncEnumerable<ResponseStreamEvent> SixEventStream(ResponseContext ctx)
     {
         await Task.CompletedTask;
-        var response = new ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
-        yield return new ResponseCreatedEvent(0, response);
-        yield return new ResponseOutputItemAddedEvent(1, outputIndex: 0, item: NewItem("msg_1"));
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test", Status = ResponseStatus.InProgress };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
+        yield return new ResponseOutputItemAddedEvent { OutputIndex = (int)(0), Item = NewItem("msg_1") };
         yield return new ResponseOutputItemDoneEvent();
-        yield return new ResponseOutputItemAddedEvent(1, outputIndex: 1, item: NewItem("msg_2"));
+        yield return new ResponseOutputItemAddedEvent { OutputIndex = (int)(1), Item = NewItem("msg_2") };
         yield return new ResponseOutputItemDoneEvent();
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> GatedTwoPhaseStream(
@@ -173,27 +173,24 @@ public sealed class TestRow1StreamingReconnectTests : IDisposable
         Task releasePhase2,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var response = new ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
-        yield return new ResponseCreatedEvent(0, response);              // seq 0
-        yield return new ResponseOutputItemAddedEvent(1, outputIndex: 0, item: NewItem("msg_1")); // seq 1
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test", Status = ResponseStatus.InProgress };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };              // seq 0
+        yield return new ResponseOutputItemAddedEvent { OutputIndex = (int)(0), Item = NewItem("msg_1") }; // seq 1
         yield return new ResponseOutputItemDoneEvent();                 // seq 2
 
         // Buffered prefix through seq 2 is now durably recorded; signal and wait for the reconnect.
         phase1Done.TrySetResult();
         await releasePhase2.WaitAsync(ct);
 
-        yield return new ResponseOutputItemAddedEvent(1, outputIndex: 1, item: NewItem("msg_2")); // seq 3
+        yield return new ResponseOutputItemAddedEvent { OutputIndex = (int)(1), Item = NewItem("msg_2") }; // seq 3
         yield return new ResponseOutputItemDoneEvent();                 // seq 4
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);           // seq 5
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };           // seq 5
     }
 
     private static OutputItemMessage NewItem(string id)
-        => new(
-            id: id,
-            content: new List<MessageContent>
+        => MessageItemFactory.OutputMessage(id, MessageStatus.Completed, MessageRole.Assistant, new List<ResponseContentPart>
             {
-                new MessageContentOutputTextContent("x", Array.Empty<Annotation>(), Array.Empty<LogProb>()),
-            },
-            status: MessageStatus.Completed);
+                ResponseContentPart.CreateOutputTextPart("x", Array.Empty<Annotation>()),
+            });
 }

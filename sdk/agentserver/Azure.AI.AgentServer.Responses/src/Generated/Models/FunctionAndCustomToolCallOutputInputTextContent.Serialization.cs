@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Input text. </summary>
-    public partial class FunctionAndCustomToolCallOutputInputTextContent : FunctionAndCustomToolCallOutput, IJsonModel<FunctionAndCustomToolCallOutputInputTextContent>
+    internal partial class FunctionAndCustomToolCallOutputInputTextContent : FunctionAndCustomToolCallOutput, IJsonModel<FunctionAndCustomToolCallOutputInputTextContent>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputTextContent"/> for deserialization. </summary>
         internal FunctionAndCustomToolCallOutputInputTextContent()

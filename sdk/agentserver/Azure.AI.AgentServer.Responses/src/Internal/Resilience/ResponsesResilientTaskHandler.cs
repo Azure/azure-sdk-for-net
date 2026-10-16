@@ -73,9 +73,9 @@ internal sealed class ResponsesResilientTaskHandler
         CreateResponse request = payload.Request;
         string responseId = payload.ResponseId;
 
-        bool isBackground = request.Background == true;
-        bool isStreaming = request.Stream == true;
-        bool store = request.Store != false;
+        bool isBackground = request.BackgroundModeEnabled == true;
+        bool isStreaming = request.StreamingEnabled == true;
+        bool store = request.StoredOutputEnabled != false;
         bool isRecovery = ctx.EntryMode == EntryMode.Recovered;
 
         var platformContext = new PlatformContext(payload.UserIdKey, payload.CallId);
@@ -182,7 +182,7 @@ internal sealed class ResponsesResilientTaskHandler
         execution.AgentSessionId = payload.AgentSessionId;
         if (persisted is not null)
         {
-            execution.RecoveredOutputWatermark = persisted.Output?.Count ?? 0;
+            execution.RecoveredOutputWatermark = persisted.OutputItems?.Count ?? 0;
         }
 
         ResponseContextImpl context = BuildContext();
