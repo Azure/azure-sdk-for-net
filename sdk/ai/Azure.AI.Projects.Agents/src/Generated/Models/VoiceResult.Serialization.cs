@@ -7,6 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
@@ -121,28 +122,17 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (Optional.IsDefined(Metadata, _metadataIsDefined))
             {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
+                if (Metadata != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WritePropertyName("metadata"u8);
+                    writer.WriteObjectValue(Metadata, options);
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("metadata"u8);
+                }
             }
             if (Optional.IsDefined(Usage))
             {
@@ -243,7 +233,8 @@ namespace Azure.AI.Projects.Agents
             RealtimeResponseStatus? status = default;
             RealtimeResponseStatusDetails statusDetails = default;
             IList<RealtimeItem> output = default;
-            IDictionary<string, BinaryData> metadata = default;
+            bool metadataIsDefined = false;
+            InternalMetadataContainer metadata = default;
             RealtimeResponseUsage usage = default;
             string conversationId = default;
             IList<RealtimeOutputModality> outputModalities = default;
@@ -310,23 +301,13 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("metadata"u8))
                 {
+                    metadataIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        metadata = null;
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
-                        }
-                    }
-                    metadata = dictionary;
+                    metadata = InternalMetadataContainer.DeserializeInternalMetadataContainer(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))
@@ -413,7 +394,7 @@ namespace Azure.AI.Projects.Agents
                 status,
                 statusDetails,
                 output ?? new ChangeTrackingList<RealtimeItem>(),
-                metadata ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                metadata,
                 usage,
                 conversationId,
                 outputModalities ?? new ChangeTrackingList<RealtimeOutputModality>(),
@@ -422,7 +403,10 @@ namespace Azure.AI.Projects.Agents
                 temperature,
                 createdOn,
                 completedOn,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _metadataIsDefined = metadataIsDefined
+            };
         }
     }
 }

@@ -69,4 +69,12 @@
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Azure.AI.Projects.Memory.MemoryStoreOperationUsage.get_OutputTokensDetails</Target>
   </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Memory.AIProjectMemoryStores.UpdateMemories(System.String,System.ClientModel.BinaryContent,System.ClientModel.Primitives.RequestOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Memory.AIProjectMemoryStores.UpdateMemoriesAsync(System.String,System.ClientModel.BinaryContent,System.ClientModel.Primitives.RequestOptions)</Target>
+  </Suppression>
 </Suppressions>

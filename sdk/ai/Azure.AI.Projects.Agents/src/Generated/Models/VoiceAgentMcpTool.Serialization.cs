@@ -7,7 +7,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
-using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -123,7 +122,14 @@ namespace Azure.AI.Projects.Agents
                 if (AllowedTools != null)
                 {
                     writer.WritePropertyName("allowed_tools"u8);
-                    writer.WriteObjectValue(AllowedTools, options);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(AllowedTools);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(AllowedTools))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {
@@ -225,7 +231,7 @@ namespace Azure.AI.Projects.Agents
             string serverDescription = default;
             IDictionary<string, string> headers = new ChangeTrackingDictionary<string, string>();
             bool allowedToolsIsDefined = false;
-            McpToolFilter allowedTools = default;
+            BinaryData allowedTools = default;
             IList<CallableToolAllowedCaller> allowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
             BinaryData requireApprovalInternal = default;
             bool? deferLoading = default;
@@ -293,7 +299,7 @@ namespace Azure.AI.Projects.Agents
                         allowedTools = null;
                         continue;
                     }
-                    allowedTools = ModelReaderWriter.Read<McpToolFilter>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
+                    allowedTools = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("allowed_callers"u8))
