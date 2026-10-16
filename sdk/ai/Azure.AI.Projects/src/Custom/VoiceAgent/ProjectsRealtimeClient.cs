@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Agents;
 using OpenAI.Realtime;
 
 namespace Azure.AI.Projects;
@@ -80,12 +81,12 @@ public class ProjectsRealtimeClient : RealtimeClient
     /// <param name="model">The name of the voice agent to connect to (used as the <c>{agentName}</c> path segment).</param>
     /// <param name="intent">The client intent.</param>
     /// <param name="options">
-    /// Additional connection options. <see cref="RealtimeSessionClientOptions.QueryString"/> is
-    /// used to pass Foundry's "store" option (a Foundry-only concept with no equivalent on this
-    /// method's own signature) as <c>"store=true"</c> or <c>"store=false"</c>; see
-    /// <see cref="ProjectsRealtimeSessionClient.ConnectAsync"/>, which merges it with api-version.
+    /// Additional connection options. Use <see cref="ProjectsRealtimeSessionClientOptions.Transport"/>
+    /// to select a Voice Agent transport, or <see cref="RealtimeSessionClientOptions.QueryString"/>
+    /// to pass Foundry's "store" option as <c>"store=true"</c> or <c>"store=false"</c>.
     /// </param>
     /// <param name="cancellationToken"></param>
+    /// <exception cref="ArgumentException">The selected transport has no value.</exception>
     /// <returns>
     /// An already-connected <see cref="ProjectsRealtimeSessionClient"/> (returned as the base
     /// <see cref="RealtimeSessionClient"/> type: <c>Task&lt;T&gt;</c> isn't covariant in <c>T</c>
@@ -99,10 +100,20 @@ public class ProjectsRealtimeClient : RealtimeClient
     {
         Argument.AssertNotNullOrEmpty(model, nameof(model));
 
+        VoiceAgentTransport? selectedTransport = (options as ProjectsRealtimeSessionClientOptions)?.Transport;
+        string transport = selectedTransport?.ToString();
+        if (selectedTransport.HasValue && string.IsNullOrWhiteSpace(transport))
+        {
+            throw new ArgumentException("The transport must have a non-empty value.", nameof(options));
+        }
+        string queryString = selectedTransport.HasValue
+            ? RealtimeClientHelper.WithTransportQuery(options?.QueryString, transport)
+            : options?.QueryString;
+
         ProjectsRealtimeSessionClient sessionClient = new(Endpoint, _tokenProvider, model, intent, _tokenProperties, _apiVersion, parentClient: this);
         try
         {
-            await sessionClient.ConnectInternalAsync(options?.QueryString, options?.Headers, cancellationToken).ConfigureAwait(false);
+            await sessionClient.ConnectInternalAsync(queryString, options?.Headers, cancellationToken).ConfigureAwait(false);
             RealtimeSessionClient result = sessionClient;
             sessionClient = null;
             return result;

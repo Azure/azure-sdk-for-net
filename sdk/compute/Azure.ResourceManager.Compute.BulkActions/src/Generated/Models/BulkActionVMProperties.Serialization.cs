@@ -154,6 +154,21 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Priority))
+            {
+                writer.WritePropertyName("priority"u8);
+                writer.WriteStringValue(Priority.Value.ToString());
+            }
+            if (Optional.IsDefined(BillingProfile))
+            {
+                writer.WritePropertyName("billingProfile"u8);
+                writer.WriteObjectValue(BillingProfile, options);
+            }
+            if (Optional.IsDefined(EvictionPolicy))
+            {
+                writer.WritePropertyName("evictionPolicy"u8);
+                writer.WriteStringValue(EvictionPolicy.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -211,6 +226,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             CapacityReservationProfile capacityReservation = default;
             ApplicationProfile applicationProfile = default;
             IList<BulkActionVMExtension> vmExtensions = default;
+            PriorityType? priority = default;
+            BillingProfile billingProfile = default;
+            EvictionPolicy? evictionPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -342,6 +360,33 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     vmExtensions = array;
                     continue;
                 }
+                if (prop.NameEquals("priority"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    priority = new PriorityType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("billingProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingProfile = BillingProfile.DeserializeBillingProfile(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("evictionPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    evictionPolicy = new EvictionPolicy(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -363,6 +408,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 capacityReservation,
                 applicationProfile,
                 vmExtensions ?? new ChangeTrackingList<BulkActionVMExtension>(),
+                priority,
+                billingProfile,
+                evictionPolicy,
                 additionalBinaryDataProperties);
         }
     }

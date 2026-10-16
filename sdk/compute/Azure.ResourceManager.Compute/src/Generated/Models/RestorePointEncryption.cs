@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         public RestorePointEncryptionType? EncryptionType { get; set; }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier DiskEncryptionSetId
+        public virtual ResourceIdentifier DiskEncryptionSetId
         {
             get
             {

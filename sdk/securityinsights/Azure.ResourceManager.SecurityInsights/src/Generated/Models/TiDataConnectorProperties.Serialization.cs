@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 throw new FormatException($"The model {nameof(TiDataConnectorProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_tipLookbackOnIsDefined || Optional.IsDefined(TipLookbackOn))
+            if (Optional.IsDefined(TipLookbackOn, _tipLookbackOnIsDefined))
             {
                 if (TipLookbackOn != null)
                 {

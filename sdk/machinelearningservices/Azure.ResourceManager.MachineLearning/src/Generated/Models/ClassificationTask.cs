@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class ClassificationTask : AutoMLVertical
     {
         private TableVerticalFeaturizationSettings _featurizationSettings;
-        internal bool _featurizationSettingsIsDefined;
+        private bool _featurizationSettingsIsDefined;
         private TableVerticalLimitSettings _limitSettings;
-        internal bool _limitSettingsIsDefined;
+        private bool _limitSettingsIsDefined;
         private NCrossValidations _nCrossValidations;
-        internal bool _nCrossValidationsIsDefined;
+        private bool _nCrossValidationsIsDefined;
         private MachineLearningTableJobInput _testData;
-        internal bool _testDataIsDefined;
+        private bool _testDataIsDefined;
         private double? _testDataSize;
-        internal bool _testDataSizeIsDefined;
+        private bool _testDataSizeIsDefined;
         private MachineLearningTableJobInput _validationData;
-        internal bool _validationDataIsDefined;
+        private bool _validationDataIsDefined;
         private double? _validationDataSize;
-        internal bool _validationDataSizeIsDefined;
+        private bool _validationDataSizeIsDefined;
         private string _weightColumnName;
-        internal bool _weightColumnNameIsDefined;
+        private bool _weightColumnNameIsDefined;
         private string _positiveLabel;
-        internal bool _positiveLabelIsDefined;
+        private bool _positiveLabelIsDefined;
         private ClassificationTrainingSettings _trainingSettings;
-        internal bool _trainingSettingsIsDefined;
+        private bool _trainingSettingsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ClassificationTask"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>

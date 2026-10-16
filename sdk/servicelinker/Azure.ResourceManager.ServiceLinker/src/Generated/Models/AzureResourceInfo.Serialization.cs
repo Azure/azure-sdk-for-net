@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (_resourcePropertiesIsDefined || Optional.IsDefined(ResourceProperties))
+            if (Optional.IsDefined(ResourceProperties, _resourcePropertiesIsDefined))
             {
                 if (ResourceProperties != null)
                 {

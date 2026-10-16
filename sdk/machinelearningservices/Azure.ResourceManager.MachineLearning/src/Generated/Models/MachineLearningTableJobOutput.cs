@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningTableJobOutput : MachineLearningJobOutput
     {
         private string _assetName;
-        internal bool _assetNameIsDefined;
+        private bool _assetNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningTableJobOutput"/>. </summary>
         public MachineLearningTableJobOutput() : base(JobOutputType.Mltable)

@@ -11,6 +11,9 @@
 
 ### Bugs Fixed
 
+- Uploading telemetry from offline storage (at startup, on retry, and at shutdown) is no longer recorded as an HTTP dependency by HttpClient instrumentation.
+  ([#63821](https://github.com/Azure/azure-sdk-for-net/issues/63821))
+
 ### Other Changes
 
 ## 1.10.0 (2026-10-05)

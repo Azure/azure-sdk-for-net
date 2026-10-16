@@ -75,6 +75,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [NonEvent]
         public void TransmissionFailed(int statusCode, TelemetryItemOrigin origin, bool isAadEnabled, bool willRetry, ConnectionVars connectionVars, string? requestEndpoint, Response? response)
         {
+            // Without a connection string these are placeholders, not a destination.
+            var instrumentationKey = connectionVars.IsUnconfigured ? "none" : connectionVars.InstrumentationKey;
+            var configuredEndpoint = connectionVars.IsUnconfigured ? "none" : connectionVars.IngestionEndpoint;
+
             if (IsEnabled(EventLevel.Verbose))
             {
                 var errorMessages = IngestionResponseHelper.GetErrorsFromResponse(response);
@@ -87,8 +91,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                         action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
                         origin: origin.ToString(),
                         isAadEnabled: isAadEnabled,
-                        instrumentationKey: connectionVars.InstrumentationKey,
-                        configuredEndpoint: connectionVars.IngestionEndpoint,
+                        instrumentationKey: instrumentationKey,
+                        configuredEndpoint: configuredEndpoint,
                         actualEndpoint: requestEndpoint ?? "null");
                 }
                 else
@@ -101,8 +105,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                             action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
                             origin: origin.ToString(),
                             isAadEnabled: isAadEnabled,
-                            instrumentationKey: connectionVars.InstrumentationKey,
-                            configuredEndpoint: connectionVars.IngestionEndpoint,
+                            instrumentationKey: instrumentationKey,
+                            configuredEndpoint: configuredEndpoint,
                             actualEndpoint: requestEndpoint ?? "null");
                     }
                 }
@@ -115,8 +119,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                     action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
                     origin: origin.ToString(),
                     isAadEnabled: isAadEnabled,
-                    instrumentationKey: connectionVars.InstrumentationKey,
-                    configuredEndpoint: connectionVars.IngestionEndpoint,
+                    instrumentationKey: instrumentationKey,
+                    configuredEndpoint: configuredEndpoint,
                     actualEndpoint: requestEndpoint ?? "null");
             }
         }
@@ -727,7 +731,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(83, Message = "Export {0}: dropped {1} telemetry items for route '{2}'. The telemetry is marked for Microsoft Entra ID, but this transmitter was built without a credential (see event 84 if this exporter's Credential is set), so it is neither sent without a token nor persisted.", Level = EventLevel.Warning)]
+        [Event(83, Message = "Export {0}: dropped {1} telemetry items for route '{2}'. The telemetry is marked for Microsoft Entra ID, but the shared connection was created without a Credential (see event 84 if this exporter's Credential is set), so it is neither sent without a token nor persisted.", Level = EventLevel.Warning)]
         public void RoutedAadTelemetryDroppedWithoutCredential(long exportSequence, int itemCount, string route)
         {
             if (IsEnabled(EventLevel.Warning))
@@ -751,6 +755,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             if (IsEnabled(EventLevel.Warning))
             {
                 CachedTransmitterCredentialMismatch(transmitterHasCredential ? "with" : "without", exporterHasCredential ? "with" : "without");
+            }
+        }
+
+        [Event(85, Message = "Ingestion rejected route '{0}' with status code {1}. {2}", Level = EventLevel.Warning)]
+        public void RoutedAuthenticationFailed(string route, int statusCode, string hint)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                WriteEvent(85, route, statusCode, hint);
+            }
+        }
+
+        [NonEvent]
+        public void RoutedAuthenticationFailed(string route, int statusCode, bool isAad)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                var hint = !isAad
+                    ? "This route sends no token. If the Application Insights resource has local authentication disabled, mark its telemetry with microsoft.ingestion_auth = \"aad\"."
+                    : statusCode == 403
+                        ? "The Credential's identity needs the Monitoring Metrics Publisher role on the Application Insights resource. New role assignments can take a few minutes to apply."
+                        : "The token was not accepted. Check the Credential, and for non-public clouds the Azure.Monitor.OpenTelemetry.Exporter.MultiEndpointAadAudience AppContext value.";
+
+                RoutedAuthenticationFailed(route, statusCode, hint);
             }
         }
     }

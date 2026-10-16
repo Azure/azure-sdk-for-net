@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("monitoringProperties"u8);
                 writer.WriteObjectValue(MonitoringProperties, options);
             }
-            if (_healthModelMonitoringPropertiesIsDefined || Optional.IsDefined(HealthModelMonitoringProperties))
+            if (Optional.IsDefined(HealthModelMonitoringProperties, _healthModelMonitoringPropertiesIsDefined))
             {
                 if (HealthModelMonitoringProperties != null)
                 {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     writer.WriteNull("healthModelMonitoringProperties"u8);
                 }
             }
-            if (_sliMonitoringPropertiesIsDefined || Optional.IsDefined(SliMonitoringProperties))
+            if (Optional.IsDefined(SliMonitoringProperties, _sliMonitoringPropertiesIsDefined))
             {
                 if (SliMonitoringProperties != null)
                 {

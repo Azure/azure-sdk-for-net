@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningFeaturizationSettings)} does not support writing '{format}' format.");
             }
-            if (_datasetLanguageIsDefined || Optional.IsDefined(DatasetLanguage))
+            if (Optional.IsDefined(DatasetLanguage, _datasetLanguageIsDefined))
             {
                 if (DatasetLanguage != null)
                 {

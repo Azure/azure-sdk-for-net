@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Results of a scheduled action operation for targeted resources. </summary>
+    /// <summary> Results of a recurring bulk action operation for targeted resources. </summary>
     public partial class ResourceOperationResponseResult : IJsonModel<ResourceOperationResponseResult>
     {
         /// <summary> Initializes a new instance of <see cref="ResourceOperationResponseResult"/> for deserialization. </summary>

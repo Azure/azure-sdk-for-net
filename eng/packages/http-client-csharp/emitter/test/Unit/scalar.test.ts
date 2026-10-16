@@ -39,4 +39,34 @@ describe("Test GetInputType for scalar", () => {
     strictEqual(type.baseType.name, "string");
     strictEqual(type.baseType.crossLanguageDefinitionId, "TypeSpec.string");
   });
+
+  it.each([
+    "armResourceIdentifier",
+    'armResourceIdentifier<[{ type: "Microsoft.App/sandboxes" }]>'
+  ])("%s scalar", async (scalar) => {
+    const program = await typeSpecCompile(
+      `
+        model ResourceModel {
+          id: ${scalar};
+        }
+        op test(@query resourceId: ${scalar}, @body body: ResourceModel): ResourceModel;
+      `,
+      runner
+    );
+    const context = await createCSharpSdkContext(createEmitterContext(program));
+    const [model] = createModel(context);
+    const parameter = model.clients[0].methods[0].operation.parameters.find(
+      (p) => p.name === "resourceId"
+    )!;
+    const property = model.models.find((m) => m.name === "ResourceModel")!
+      .properties[0];
+
+    for (const type of [parameter.type, property.type]) {
+      strictEqual(type.kind, "string");
+      strictEqual(
+        type.crossLanguageDefinitionId,
+        "Azure.Core.armResourceIdentifier"
+      );
+    }
+  });
 });
