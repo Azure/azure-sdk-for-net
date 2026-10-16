@@ -633,9 +633,15 @@ floor customers must satisfy and a node in their restore graph.
   detail of the package you actually depend on into your own contract — you now can't drop
   it when the package below you does. Nothing in the build catches this, so it is on the
   reviewer: ask what the direct reference is for 🟡
-- Wanting a newer version is not the reason. The version resolves from
-  `eng/centralpackagemanagement` either way, so a direct reference changes the published
-  contract without changing the version. That belongs in a per-package override file
+- Wanting a newer version is not the reason **when the package is already a direct
+  reference elsewhere** — the version resolves from `eng/centralpackagemanagement` either
+  way, so that belongs in a per-package override file, not a second direct reference. This
+  repo does not set `CentralPackageTransitivePinningEnabled`, though, so a central/override
+  version has no effect on a package that's transitive-only — raising its floor (a
+  security-patched `System.Text.Json`, for example) genuinely requires adding the direct
+  reference. Confirm the stated reason is a real minimum-version requirement, not just
+  "newer is nicer," before asking for it to be removed in favor of an override-file bump —
+  an override can't pin a package the project doesn't directly reference
 - A dependency that should never reach customers — analyzers, source generators, build-time
   tooling — needs `PrivateAssets="all"`. Without it, it ships as a real dependency 🟡
 - 🟡 A `src` project taking a `ProjectReference` on a shipping library **in a different
