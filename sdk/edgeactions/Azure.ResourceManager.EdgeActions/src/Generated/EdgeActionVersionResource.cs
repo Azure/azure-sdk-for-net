@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeActionVersionProperties>> DeployVersionCodeAsync(WaitUntil waitUntil, EdgeActionVersionCode content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EdgeActionVersionResource>> DeployVersionCodeAsync(WaitUntil waitUntil, EdgeActionVersionCode content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -446,8 +446,8 @@ namespace Azure.ResourceManager.EdgeActions
                 };
                 HttpMessage message = _edgeActionVersionsRestClient.CreateDeployVersionCodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeActionVersionCode.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                EdgeActionsArmOperation<EdgeActionVersionProperties> operation = new EdgeActionsArmOperation<EdgeActionVersionProperties>(
-                    new EdgeActionVersionPropertiesOperationSource(),
+                EdgeActionsArmOperation<EdgeActionVersionResource> operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(
+                    new EdgeActionVersionResourceOperationSource(Client),
                     _edgeActionVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<EdgeActionVersionProperties> DeployVersionCode(WaitUntil waitUntil, EdgeActionVersionCode content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EdgeActionVersionResource> DeployVersionCode(WaitUntil waitUntil, EdgeActionVersionCode content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -505,8 +505,8 @@ namespace Azure.ResourceManager.EdgeActions
                 };
                 HttpMessage message = _edgeActionVersionsRestClient.CreateDeployVersionCodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeActionVersionCode.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                EdgeActionsArmOperation<EdgeActionVersionProperties> operation = new EdgeActionsArmOperation<EdgeActionVersionProperties>(
-                    new EdgeActionVersionPropertiesOperationSource(),
+                EdgeActionsArmOperation<EdgeActionVersionResource> operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(
+                    new EdgeActionVersionResourceOperationSource(Client),
                     _edgeActionVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
