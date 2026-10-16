@@ -551,6 +551,7 @@ namespace Azure.Storage.Blobs.Test
         /// DownloadToInternal cleans up any remaining queued tasks.
         /// </summary>
         [Test]
+        [Ignore("Outstanding array pool rentals after destination write failure, see: https://github.com/Azure/azure-sdk-for-net/issues/63933")]
         public async Task ReturnsArrayPoolBuffersOnDestinationWriteFailure()
         {
             TrackingArrayPool trackingPool = new TrackingArrayPool();
