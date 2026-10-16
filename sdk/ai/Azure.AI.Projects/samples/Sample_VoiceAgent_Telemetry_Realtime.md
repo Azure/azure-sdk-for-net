@@ -147,19 +147,20 @@ voice_agent.sample.realtime
   voice_agents.realtime.session
     voice_agents.realtime.connect
     invoke_agent
-  voice_agents.conversations.delete
+  BetaVoiceAgentsConversations.DeleteAgentConversation
 ```
 
 The realtime source is `Azure.AI.Projects.ProjectsRealtimeClient`. Session, connection, and
 response Activities have `ActivityKind.Client` and share the application's trace ID.
 `invoke_agent` includes response status, model, token usage when returned by the service, and
 safe response/conversation identifiers. Session updates appear as events.
+The conversation deletion uses its existing SDK diagnostic scope rather than a new GenAI span.
 
 Dispose each session before disposing its tracer provider so session and response Activities
 are completed and exported. Updates are observed as the application consumes the receive loop.
 
 Raw audio, credentials, authentication headers, query strings, exception messages, and close
-reasons are not recorded by Voice Agent telemetry. Message content requires the existing
+reasons are not recorded by the realtime instrumentation. Message content requires the existing
 content-recording opt-in; keep it disabled unless you intend to export potentially sensitive
 content. Existing `AIProjectClientOptions.EnableDistributedTracing = false` disables Voice
 Agent tracing, and the existing client logging options control diagnostic logging.

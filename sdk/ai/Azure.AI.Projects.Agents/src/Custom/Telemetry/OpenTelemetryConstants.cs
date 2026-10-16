@@ -17,8 +17,6 @@ namespace Azure.AI.Projects.Agents.Telemetry
         public const string HttpResponseStatusCodeKey = "http.response.status_code";
         public const string VoiceAgentOperationKey = "az.ai.voice_agents.operation";
         public const string VoiceAgentCancelledKey = "az.ai.voice_agents.cancelled";
-        public const string VoiceAgentCallJobIdKey = "az.ai.voice_agents.telephony.call_job.id";
-        public const string VoiceAgentCallJobStatusKey = "az.ai.voice_agents.call_job.status";
         public const string VoiceAgentTelemetryErrorTypeKey = "az.ai.voice_agents.telemetry.error.type";
 
         public const string GenAiClientOperationDurationMetricName = "gen_ai.client.operation.duration";

@@ -139,7 +139,7 @@ public class VoiceAgentRestTelemetryTests
     }
 
     [TestCaseSource(nameof(MutationCases))]
-    public async Task MutationsHaveOnePrivateSafeClientSpan(string operation, bool isAsync, bool typed)
+    public async Task MutationsRetainExistingSdkDiagnostics(string operation, bool isAsync, bool typed)
     {
         int status = SuccessStatus(operation);
         AgentAdministrationClient client = CreateClient(isAsync, _ => new MockPipelineResponse(status).WithContent(ResponseBody));
@@ -148,9 +148,7 @@ public class VoiceAgentRestTelemetryTests
         ClientResult result = await Mutate(client, operation, isAsync, typed);
 
         Assert.That(result.GetRawResponse().Status, Is.EqualTo(status));
-        Activity span = GetOnlyGenAiSpan();
-        string name = operation == "delete" ? "voice_agents.conversations.delete" : "voice_agents.telephony." + operation;
-        AssertCommon(span, name, operation, status);
+        Activity span = GetOnlySdkSpan(MutationScopeName(operation));
         Assert.Multiple(() =>
         {
             Assert.That(span.TraceId, Is.EqualTo(parent.TraceId));
@@ -159,8 +157,8 @@ public class VoiceAgentRestTelemetryTests
             Assert.That(span.Status, Is.EqualTo(ActivityStatusCode.Unset));
             Assert.That(span.GetTagItem("error.type"), Is.Null);
             Assert.That(span.GetTagItem("az.ai.voice_agents.cancelled"), Is.Null);
-            Assert.That(span.GetTagItem("az.ai.voice_agents.telephony.call_job.id"), Is.EqualTo(operation == "create_call_job" ? "job_123" : null));
-            Assert.That(span.GetTagItem("az.ai.voice_agents.call_job.status"), Is.EqualTo(operation == "create_call_job" ? "queued" : null));
+            Assert.That(span.TagObjects.Any(tag => tag.Key.StartsWith("gen_ai.", StringComparison.Ordinal) ||
+                tag.Key.StartsWith("az.ai.voice_agents.", StringComparison.Ordinal)), Is.False);
         });
         AssertPrivateSafe(span);
     }
@@ -169,17 +167,18 @@ public class VoiceAgentRestTelemetryTests
     [TestCase(true, false, false)]
     [TestCase(false, true, true)]
     [TestCase(true, false, true)]
-    public async Task TracingRequiresBothGenAiOptInAndDistributedTracing(bool genAiEnabled, bool distributedTracing, bool fromSettings)
+    [TestCase(true, true, false)]
+    [TestCase(true, true, true)]
+    public async Task ExistingMutationTracingFollowsClientOptions(bool genAiEnabled, bool distributedTracing, bool fromSettings)
     {
         SetTracing(genAiEnabled);
         AgentAdministrationClient client = CreateClient(true, message =>
             new MockPipelineResponse(message.Request.Uri.AbsolutePath.EndsWith("/agents", StringComparison.Ordinal) ? 200 : 202).WithContent(ResponseBody), distributedTracing, fromSettings);
         await Mutate(client, "create_call_job", true, false);
-        using BinaryContent content = JsonContent("""{"name":"voice-agent","definition":{"kind":"voice","model":"gpt-realtime"}}""");
-        await client.CreateAgentAsync(content);
 
         Assert.That(_activities.Where(a => a.Source.Name == SourceName), Is.Empty);
         Assert.That(_activities.Any(a => a.OperationName == "BetaVoiceAgentsTelephony.CreateTelephonyCallJob"), Is.EqualTo(distributedTracing));
+        Assert.That(_activities, Has.Count.EqualTo(distributedTracing ? 1 : 0));
     }
 
     [TestCase("create", false)]
@@ -263,10 +262,11 @@ public class VoiceAgentRestTelemetryTests
     [Test]
     public void DefaultHttpsPortIsOmittedWithoutAuthentication()
     {
-        MockPipelineTransport transport = new(_ => new MockPipelineResponse(204)) { ExpectSyncPipeline = true };
+        MockPipelineTransport transport = new(_ => new MockPipelineResponse(200).WithContent(AgentResponse)) { ExpectSyncPipeline = true };
         AgentAdministrationClient client = new(new Uri("https://voice.example:443/api/projects/private-project?key=private-query"),
             new AgentAdministrationClientOptions { Transport = transport, EnableDistributedTracing = true });
-        client.GetBetaVoiceAgentEndpointConversations().DeleteAgentConversation(AgentName, "conv_123");
+        using BinaryContent content = JsonContent("{\"definition\":" + VoiceDefinition + "}");
+        client.CreateAgentVersion(AgentName, content);
 
         Activity span = GetOnlyGenAiSpan();
         Assert.That(span.GetTagItem("server.address"), Is.EqualTo("voice.example"));
@@ -318,7 +318,7 @@ public class VoiceAgentRestTelemetryTests
     [TestCase(false, true)]
     [TestCase(true, false)]
     [TestCase(true, true)]
-    public async Task HttpErrorsRecordOnlySafeStatusEvenWhenNoThrowIsRequested(bool isAsync, bool noThrow)
+    public async Task MutationHttpErrorsRetainExistingSdkBehavior(bool isAsync, bool noThrow)
     {
         AgentAdministrationClient client = CreateClient(isAsync, _ => new MockPipelineResponse(503).WithContent("{\"error\":{\"message\":\"" + PrivateError + "\"}}"));
         RequestOptions options = new() { ErrorOptions = noThrow ? ClientErrorBehaviors.NoThrow : ClientErrorBehaviors.Default };
@@ -335,16 +335,15 @@ public class VoiceAgentRestTelemetryTests
             Assert.That(error.Message, Does.Contain("private-rest-error"));
         }
 
-        Activity span = GetOnlyGenAiSpan();
-        AssertCommon(span, "voice_agents.telephony.create_call_job", "create_call_job", 503);
-        Assert.That(span.Status, Is.EqualTo(ActivityStatusCode.Error));
-        Assert.That(span.GetTagItem("error.type"), Is.EqualTo("503"));
-        AssertPrivateSafe(span);
+        Activity span = GetOnlySdkSpan("BetaVoiceAgentsTelephony.CreateTelephonyCallJob");
+        Assert.That(span.Status, Is.EqualTo(noThrow ? ActivityStatusCode.Unset : ActivityStatusCode.Error));
+        Assert.That(span.GetTagItem("error.type"), Is.EqualTo(noThrow ? null : "503"));
+        Assert.That(span.GetTagItem("az.ai.voice_agents.operation"), Is.Null);
     }
 
     [TestCase(false)]
     [TestCase(true)]
-    public async Task MetricsOnlyNoThrowFailuresRetainStatusWithoutAffectingTheNextCall(bool isAsync)
+    public async Task VoiceCreationMetricsRetainNoThrowStatusWithoutAffectingTheNextCall(bool isAsync)
     {
         _listener.Dispose();
         ConcurrentQueue<Dictionary<string, object>> measurements = new();
@@ -363,17 +362,17 @@ public class VoiceAgentRestTelemetryTests
         metrics.Start();
         int requests = 0;
         AgentAdministrationClient client = CreateClient(isAsync,
-            _ => new MockPipelineResponse(Interlocked.Increment(ref requests) == 1 ? 503 : 204));
+            _ => new MockPipelineResponse(Interlocked.Increment(ref requests) == 1 ? 503 : 200).WithContent(AgentResponse));
         RequestOptions options = new() { ErrorOptions = ClientErrorBehaviors.NoThrow };
 
-        ClientResult failed = await Mutate(client, "delete", isAsync, false, options);
-        ClientResult succeeded = await Mutate(client, "delete", isAsync, false, options);
+        ClientResult failed = await CreateVoiceVersion(client, isAsync, options);
+        ClientResult succeeded = await CreateVoiceVersion(client, isAsync, options);
 
         Dictionary<string, object>[] recorded = measurements.ToArray();
         Assert.Multiple(() =>
         {
             Assert.That(failed.GetRawResponse().Status, Is.EqualTo(503));
-            Assert.That(succeeded.GetRawResponse().Status, Is.EqualTo(204));
+            Assert.That(succeeded.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(recorded, Has.Length.EqualTo(2));
             Assert.That(_activities, Is.Empty, "Metrics-only listeners must not require SDK Activities.");
         });
@@ -386,7 +385,7 @@ public class VoiceAgentRestTelemetryTests
     public void TransportErrorsDoNotRecordExceptionMessages(bool isAsync)
     {
         AgentAdministrationClient client = CreateClient(isAsync, _ => throw new InvalidOperationException(PrivateError));
-        Assert.ThrowsAsync<InvalidOperationException>(() => Mutate(client, "create_call_job", isAsync, false));
+        Assert.ThrowsAsync<InvalidOperationException>(() => CreateVoiceVersion(client, isAsync));
 
         Activity span = GetOnlyGenAiSpan();
         Assert.That(span.Status, Is.EqualTo(ActivityStatusCode.Error));
@@ -400,7 +399,7 @@ public class VoiceAgentRestTelemetryTests
     public void CancellationIsNotAnError(bool isAsync)
     {
         AgentAdministrationClient client = CreateClient(isAsync, _ => throw new OperationCanceledException(PrivateError));
-        Assert.ThrowsAsync<OperationCanceledException>(() => Mutate(client, "create_call_job", isAsync, false));
+        Assert.ThrowsAsync<OperationCanceledException>(() => CreateVoiceVersion(client, isAsync));
 
         Activity span = GetOnlyGenAiSpan();
         Assert.That(span.GetTagItem("az.ai.voice_agents.cancelled"), Is.True);
@@ -446,7 +445,7 @@ public class VoiceAgentRestTelemetryTests
         AgentAdministrationClient client = CreateClient(isAsync, _ => new MockPipelineResponse(202).WithContent(ResponseBody));
         ClientResult result = await Mutate(client, "create_call_job", isAsync, false, new RequestOptions { BufferResponse = false });
 
-        Activity span = GetOnlyGenAiSpan();
+        Activity span = GetOnlySdkSpan("BetaVoiceAgentsTelephony.CreateTelephonyCallJob");
         Assert.That(span.GetTagItem("az.ai.voice_agents.telephony.call_job.id"), Is.Null);
         Assert.That(span.GetTagItem("az.ai.voice_agents.call_job.status"), Is.Null);
         BinaryData responseContent = isAsync
@@ -464,10 +463,10 @@ public class VoiceAgentRestTelemetryTests
         ClientResult result = await Mutate(client, "create_call_job", isAsync, false);
 
         Assert.That(result.GetRawResponse().Content.ToString(), Is.EqualTo("not-json-private-rest-content"));
-        Activity span = GetOnlyGenAiSpan();
+        Activity span = GetOnlySdkSpan("BetaVoiceAgentsTelephony.CreateTelephonyCallJob");
         Assert.That(span.Status, Is.EqualTo(ActivityStatusCode.Unset));
         Assert.That(span.GetTagItem("error.type"), Is.Null);
-        Assert.That(span.GetTagItem("az.ai.voice_agents.telemetry.error.type"), Is.EqualTo(typeof(System.Text.Json.JsonException).FullName));
+        Assert.That(span.GetTagItem("az.ai.voice_agents.telemetry.error.type"), Is.Null);
         AssertPrivateSafe(span);
     }
 
@@ -475,7 +474,7 @@ public class VoiceAgentRestTelemetryTests
     [TestCase(false, true)]
     [TestCase(true, false)]
     [TestCase(true, true)]
-    public async Task ConnectionProviderHonorsExplicitAgentsTracingOptions(bool isAsync, bool enabled)
+    public async Task ConnectionProviderRetainsExistingSdkAndGenAiScopes(bool isAsync, bool enabled)
     {
         MockPipelineTransport transport = new(message =>
             message.Request.Uri.AbsolutePath.EndsWith("/call_jobs", StringComparison.Ordinal)
@@ -505,8 +504,8 @@ public class VoiceAgentRestTelemetryTests
             client.UpdateAgent(AgentName, updateContent);
         }
 
-        Assert.That(_activities.Count(a => a.Source.Name == SourceName), Is.EqualTo(enabled ? 5 : 0));
-        Assert.That(_activities.Count, Is.EqualTo(enabled ? 5 : 0));
+        Assert.That(_activities.Count(a => a.Source.Name == SourceName), Is.EqualTo(3));
+        Assert.That(_activities.Count, Is.EqualTo(enabled ? 5 : 3));
         foreach (Activity span in _activities)
         {
             AssertPrivateSafe(span);
@@ -522,7 +521,7 @@ public class VoiceAgentRestTelemetryTests
         using Activity parent = new Activity("caller").SetIdFormat(ActivityIdFormat.W3C).Start();
         await Mutate(client, "create_call_job", isAsync, false);
 
-        Activity span = GetOnlyGenAiSpan();
+        Activity span = GetOnlySdkSpan("BetaVoiceAgentsTelephony.CreateTelephonyCallJob");
         Assert.That(span.IsAllDataRequested, Is.False);
         Assert.That(span.ParentSpanId, Is.EqualTo(parent.SpanId));
         Assert.That(Activity.Current, Is.SameAs(parent));
@@ -533,13 +532,10 @@ public class VoiceAgentRestTelemetryTests
     [TestCase(true, false)]
     [TestCase(false, true)]
     [TestCase(true, true)]
-    public async Task GenerateAgentUsesCreateAgentSpanWithoutRecordingPrompt(bool isAsync, bool fromSettings)
+    public async Task AgentGenerationRetainsExistingSdkDiagnostics(bool isAsync, bool fromSettings)
     {
-        AgentAdministrationClient client = CreateClient(isAsync, message =>
-        {
-            Assert.That(message.Request.Uri.Query, Does.Contain("api-version="));
-            return new MockPipelineResponse(200).WithContent(AgentResponse);
-        }, fromSettings: fromSettings);
+        AgentAdministrationClient client = CreateClient(isAsync, _ => new MockPipelineResponse(200).WithContent(AgentResponse),
+            fromSettings: fromSettings);
         using BinaryContent content = JsonContent("""{"kind":"voice","prompt":"private-rest-content"}""");
         if (isAsync)
         {
@@ -550,10 +546,9 @@ public class VoiceAgentRestTelemetryTests
             client.GenerateAgent(content, new RequestOptions());
         }
 
-        Activity span = GetOnlyGenAiSpan();
-        AssertCommon(span, "create_agent", "create_agent", 200);
-        Assert.That(span.GetTagItem("gen_ai.agent.name"), Is.EqualTo(AgentName));
-        Assert.That(span.GetTagItem("gen_ai.agent.id"), Is.EqualTo("agent_123"));
+        Activity span = GetOnlySdkSpan("AgentAdministrationClient.GenerateAgent");
+        Assert.That(span.GetTagItem("gen_ai.agent.name"), Is.Null);
+        Assert.That(span.GetTagItem("gen_ai.agent.id"), Is.Null);
         AssertPrivateSafe(span);
     }
 
@@ -579,9 +574,24 @@ public class VoiceAgentRestTelemetryTests
     private Activity GetOnlyGenAiSpan()
     {
         Activity[] activities = _activities.ToArray();
-        Assert.That(activities, Has.Length.EqualTo(1), "A mutation must not emit both a GenAI and a generic operation span.");
+        Assert.That(activities, Has.Length.EqualTo(1), "Agent creation must not emit both a GenAI and a generic operation span.");
         Assert.That(activities[0].Source.Name, Is.EqualTo(SourceName));
         return activities[0];
+    }
+
+    private Activity GetOnlySdkSpan(string operationName)
+    {
+        Activity[] activities = _activities.ToArray();
+        Assert.That(activities, Has.Length.EqualTo(1), "Existing REST operations must not gain duplicate GenAI spans.");
+        Activity span = activities[0];
+        Assert.Multiple(() =>
+        {
+            Assert.That(span.Source.Name, Is.EqualTo("Azure.AI.Projects.Agents." + operationName.Split('.')[0]));
+            Assert.That(span.OperationName, Is.EqualTo(operationName));
+            Assert.That(span.DisplayName, Is.EqualTo(operationName));
+            Assert.That(span.Kind, Is.EqualTo(ActivityKind.Internal));
+        });
+        return span;
     }
 
     private static void AssertCommon(Activity span, string name, string operation, int status)
@@ -660,7 +670,29 @@ public class VoiceAgentRestTelemetryTests
         _ => 200
     };
 
+    private static string MutationScopeName(string operation) => operation switch
+    {
+        "create_call_job" => "BetaVoiceAgentsTelephony.CreateTelephonyCallJob",
+        "cancel_call_job" => "BetaVoiceAgentsTelephony.CancelTelephonyCallJob",
+        "replace_transfer_targets" => "BetaVoiceAgentsTelephony.ReplaceTelephonyTransferTargets",
+        "end_call" => "BetaVoiceAgentsTelephony.EndTelephonyCall",
+        "transfer_call" => "BetaVoiceAgentsTelephony.TransferTelephonyCall",
+        "create_binding" => "BetaVoiceAgentsTelephony.CreateTelephonyBinding",
+        "update_binding" => "BetaVoiceAgentsTelephony.UpdateTelephonyBinding",
+        "delete_binding" => "BetaVoiceAgentsTelephony.DeleteTelephonyBinding",
+        "delete" => "BetaVoiceAgentsConversations.DeleteAgentConversation",
+        _ => throw new ArgumentOutOfRangeException(nameof(operation))
+    };
+
     private static BinaryContent JsonContent(string json) => BinaryContent.Create(BinaryData.FromString(json));
+
+    private static async Task<ClientResult> CreateVoiceVersion(AgentAdministrationClient client, bool isAsync, RequestOptions options = null)
+    {
+        using BinaryContent content = JsonContent("{\"definition\":" + VoiceDefinition + "}");
+        return isAsync
+            ? await client.CreateAgentVersionAsync(AgentName, content, options: options)
+            : client.CreateAgentVersion(AgentName, content, options: options);
+    }
 
     private static async Task<ClientResult> Mutate(AgentAdministrationClient client, string operation, bool isAsync, bool typed, RequestOptions options = null)
     {

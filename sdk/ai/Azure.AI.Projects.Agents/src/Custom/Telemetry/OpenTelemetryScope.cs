@@ -74,20 +74,6 @@ namespace Azure.AI.Projects.Agents.Telemetry
         private static readonly AsyncLocal<OpenTelemetryScope> s_currentVoiceAgentScope = new();
         private readonly OpenTelemetryScope _previousVoiceAgentScope;
         private readonly bool _isVoiceAgentOperation;
-        private readonly string _operationName;
-
-        internal static bool IsEnabled => s_enableTelemetry;
-
-        internal static OpenTelemetryScope StartVoiceAgentOperation(Uri endpoint, string operationName)
-        {
-            if (!s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled) ||
-                bool.TrueString.Equals(Activity.Current?.GetCustomProperty("scm.sdk.scope")))
-            {
-                return null;
-            }
-
-            return new OpenTelemetryScope(operationName, endpoint, operationName, isVoiceAgentOperation: true);
-        }
 
         internal static void RecordVoiceAgentResponse(PipelineMessage message)
         {
@@ -103,7 +89,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
             {
                 scope._errorType = response.Status.ToString(CultureInfo.InvariantCulture);
             }
-            else if ((scope._operationName == "voice_agents.telephony.create_call_job" || scope._operationName == OperationNameValueCreateAgent) && message.BufferResponse)
+            else if (message.BufferResponse)
             {
                 // Never buffer or consume a protocol caller's streaming response for telemetry.
                 try
@@ -112,20 +98,24 @@ namespace Azure.AI.Projects.Agents.Telemetry
                     JsonElement root = document.RootElement;
                     if (root.ValueKind == JsonValueKind.Object)
                     {
+                        scope._response = new RecordedResponse(false);
                         if (root.TryGetProperty("id", out JsonElement id) && id.ValueKind == JsonValueKind.String)
                         {
-                            scope.SetTagMaybe(scope._operationName == OperationNameValueCreateAgent ? GenAiAgentIdKey : VoiceAgentCallJobIdKey, id.GetString());
+                            scope._response.AgentId = id.GetString();
                         }
-                        if (scope._operationName == OperationNameValueCreateAgent)
+                        if (root.TryGetProperty("name", out JsonElement name) && name.ValueKind == JsonValueKind.String)
                         {
-                            if (root.TryGetProperty("name", out JsonElement name) && name.ValueKind == JsonValueKind.String)
-                            {
-                                scope.SetTagMaybe(GenAiAgentNameKey, name.GetString());
-                            }
+                            scope.SetTagMaybe(GenAiAgentNameKey, name.GetString());
                         }
-                        else if (root.TryGetProperty("status", out JsonElement status) && status.ValueKind == JsonValueKind.String)
+                        if (root.TryGetProperty("version", out JsonElement version) && version.ValueKind == JsonValueKind.String)
                         {
-                            scope.SetTagMaybe(VoiceAgentCallJobStatusKey, status.GetString());
+                            scope._response.Version = version.GetString();
+                        }
+                        else if (root.TryGetProperty("versions", out JsonElement versions) && versions.ValueKind == JsonValueKind.Object &&
+                            versions.TryGetProperty("latest", out JsonElement latest) && latest.ValueKind == JsonValueKind.Object &&
+                            latest.TryGetProperty("version", out version) && version.ValueKind == JsonValueKind.String)
+                        {
+                            scope._response.Version = version.GetString();
                         }
                     }
                 }
@@ -178,10 +168,9 @@ namespace Azure.AI.Projects.Agents.Telemetry
         /// <param name="endpoint">The endpoint being called.</param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="enableDistributedTracing">Whether the client enables distributed tracing.</param>
-        public static OpenTelemetryScope StartCreateAgent(Uri endpoint, BinaryContent content, RequestOptions options = null, bool enableDistributedTracing = true)
+        public static OpenTelemetryScope StartCreateAgent(Uri endpoint, BinaryContent content, RequestOptions options = null)
         {
-            if (!enableDistributedTracing || !s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled))
+            if (!s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled))
             {
                 return null;
             }
@@ -238,10 +227,9 @@ namespace Azure.AI.Projects.Agents.Telemetry
         /// <param name="agentName"> The name of the agent to create/modify. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="enableDistributedTracing">Whether the client enables distributed tracing.</param>
-        public static OpenTelemetryScope StartUpdateAgent(Uri endpoint, string agentName, BinaryContent content, RequestOptions options = null, bool enableDistributedTracing = true)
+        public static OpenTelemetryScope StartUpdateAgent(Uri endpoint, string agentName, BinaryContent content, RequestOptions options = null)
         {
-            if (!enableDistributedTracing || !s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled))
+            if (!s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled))
             {
                 return null;
             }
@@ -280,10 +268,9 @@ namespace Azure.AI.Projects.Agents.Telemetry
         /// <param name="agentName"> The name of the agent to create/modify. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="enableDistributedTracing">Whether the client enables distributed tracing.</param>
-        public static OpenTelemetryScope StartCreateAgentVersion(Uri endpoint, string agentName, BinaryContent content, RequestOptions options = null, bool enableDistributedTracing = true)
+        public static OpenTelemetryScope StartCreateAgentVersion(Uri endpoint, string agentName, BinaryContent content, RequestOptions options = null)
         {
-            if (!enableDistributedTracing || !s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled))
+            if (!s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled))
             {
                 return null;
             }
@@ -509,7 +496,6 @@ namespace Azure.AI.Projects.Agents.Telemetry
             {
                 operationName = activityName;
             }
-            _operationName = operationName;
 
             _activity = s_agentSource.StartActivity(activityName, ActivityKind.Client);
 
@@ -551,10 +537,10 @@ namespace Azure.AI.Projects.Agents.Telemetry
 
         public void RecordCreateAgentResponse(ClientResult response)
         {
-            if (s_enableTelemetry)
+            if (s_enableTelemetry && !_isVoiceAgentOperation)
             {
                 ProjectsAgentRecord agentClientResult = response.ToProjectAgentsResult<ProjectsAgentRecord>();
-                _response = new RecordedResponse(!_isVoiceAgentOperation && s_traceContent);
+                _response = new RecordedResponse(s_traceContent);
                 //var agentResponse = Response.FromValue(PersistentAgent.FromResponse(response), response);
                 _response.AgentId = agentClientResult.Id;
             }
@@ -562,10 +548,10 @@ namespace Azure.AI.Projects.Agents.Telemetry
 
         public void RecordUpdateAgentResponse(ClientResult response)
         {
-            if (s_enableTelemetry)
+            if (s_enableTelemetry && !_isVoiceAgentOperation)
             {
                 ProjectsAgentRecord agentClientResult = response.ToProjectAgentsResult<ProjectsAgentRecord>();
-                _response = new RecordedResponse(!_isVoiceAgentOperation && s_traceContent);
+                _response = new RecordedResponse(s_traceContent);
                 //var agentResponse = Response.FromValue(PersistentAgent.FromResponse(response), response);
                 _response.AgentId = agentClientResult.Id;
                 _response.Version = agentClientResult.Versions.Latest.Version;
@@ -574,10 +560,10 @@ namespace Azure.AI.Projects.Agents.Telemetry
 
         public void RecordCreateAgentVersionResponse(ClientResult response)
         {
-            if (s_enableTelemetry)
+            if (s_enableTelemetry && !_isVoiceAgentOperation)
             {
                 ProjectsAgentVersion agentVersion = response.ToProjectAgentsResult<ProjectsAgentVersion>();
-                _response = new RecordedResponse(!_isVoiceAgentOperation && s_traceContent);
+                _response = new RecordedResponse(s_traceContent);
                 //var agentResponse = Response.FromValue(PersistentAgent.FromResponse(response), response);
                 _response.AgentId = agentVersion.Id;
                 _response.Version = agentVersion.Version;

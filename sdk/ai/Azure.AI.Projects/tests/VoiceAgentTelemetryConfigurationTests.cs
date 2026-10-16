@@ -28,7 +28,7 @@ public class VoiceAgentTelemetryConfigurationTests
         List<Activity> activities = new();
         using ActivityListener listener = new()
         {
-            ShouldListenTo = source => source.Name == "Azure.AI.Projects.Agents.AgentsClient",
+            ShouldListenTo = source => source.Name == "Azure.AI.Projects.Agents.BetaVoiceAgentsConversations",
             Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
             ActivityStopped = activity => activities.Add(activity)
         };
@@ -52,7 +52,7 @@ public class VoiceAgentTelemetryConfigurationTests
                 .DeleteAgentConversationAsync("agent", "conversation");
 
             Assert.That(transport.Requests, Has.Count.EqualTo(1));
-            Assert.That(activities.FindAll(activity => activity.DisplayName == "voice_agents.conversations.delete"),
+            Assert.That(activities.FindAll(activity => activity.DisplayName == "BetaVoiceAgentsConversations.DeleteAgentConversation"),
                 Has.Count.EqualTo(enabled ? 1 : 0));
         }
         finally

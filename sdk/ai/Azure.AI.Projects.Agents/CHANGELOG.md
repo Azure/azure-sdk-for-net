@@ -3,7 +3,7 @@
 ## 3.0.0-beta.5 (Unreleased)
 
 ### Features Added
-- Added opt-in, privacy-safe GenAI tracing for VoiceAgents REST mutations and voice-agent creation metadata.
+- Enriched existing Foundry GenAI agent-creation traces with privacy-safe Voice Agent metadata. Other Voice Agent REST operations retain their existing SDK diagnostics.
 
 ### Breaking Changes
 

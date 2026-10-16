@@ -74,7 +74,24 @@ internal sealed class VoiceAgentRealtimeTelemetry
 
         bool captureContent = AppContextSwitchHelper.GetConfigValue(
             "Azure.Experimental.TraceGenAIMessageContent", "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT");
-        return new VoiceAgentRealtimeTelemetry(endpoint, agentName, RealtimeClientHelper.GetTransport(queryString), captureContent, enableLogging, session);
+        return new VoiceAgentRealtimeTelemetry(endpoint, agentName, GetTransport(queryString), captureContent, enableLogging, session);
+    }
+
+    private static string GetTransport(string queryString)
+    {
+        if (queryString != null)
+        {
+            foreach (string part in queryString.TrimStart('?').Split('&'))
+            {
+                int separator = part.IndexOf('=');
+                if (separator >= 0 && Uri.UnescapeDataString(part.Substring(0, separator)) == "transport")
+                {
+                    string value = Uri.UnescapeDataString(part.Substring(separator + 1));
+                    return value is "websocket" or "webrtc" ? value : "other";
+                }
+            }
+        }
+        return "websocket";
     }
 
     internal Activity ConnectionActivity => _connect;

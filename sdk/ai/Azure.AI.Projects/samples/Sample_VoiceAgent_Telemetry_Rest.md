@@ -110,9 +110,9 @@ These service identifiers are attributes, not replacements for OpenTelemetry tra
 Read and delete operations retain their existing diagnostics rather than gaining new GenAI
 operation names.
 
-Voice Agent REST telemetry does not record request or response bodies, instructions, credentials,
-authentication headers, or query strings. Registering a provider does not override the existing
-`AIProjectClientOptions.EnableDistributedTracing = false` opt-out.
+The enriched Voice Agent creation traces do not record request or response bodies, instructions,
+credentials, authentication headers, or query strings. They follow the existing Foundry GenAI
+enablement settings. Other REST operations retain their existing SDK diagnostic settings and scopes.
 
 To run the repository sample, set `CLIENTMODEL_TEST_MODE=Live` and the project/model variables,
 then run from the repository root:

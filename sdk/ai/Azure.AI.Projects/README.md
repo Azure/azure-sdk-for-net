@@ -1993,6 +1993,10 @@ Voice Agent tracing uses the existing GenAI tracing and content-recording settin
 No Voice Agent-specific option or environment variable is required. Register an `ActivityListener`
 or an OpenTelemetry provider for `Azure.AI.Projects.*` before starting operations.
 
+Voice Agent creation enriches the existing Foundry GenAI traces. Telephony operations, conversation
+operations, and high-level agent generation retain their original SDK diagnostic scopes and operation
+names; their REST implementations are unchanged.
+
 Realtime Activities use the source `Azure.AI.Projects.ProjectsRealtimeClient`. Connection and
 session Activities are named `voice_agents.realtime.connect` and `voice_agents.realtime.session`;
 each server-created response has an `invoke_agent` Activity parented to its session. These are
@@ -2012,9 +2016,9 @@ The `Azure-AI-Projects-Realtime` EventSource emits connection states and protoco
 with trace/span identifiers. It honors the existing logging enablement setting and can be consumed
 with an `AzureEventSourceListener`. It does not log protocol payloads or exception messages.
 Raw audio, credentials, authentication headers, query strings, and close reasons are never added
-to Voice Agent telemetry. Text, transcripts, and tool details are excluded unless the existing
-content-recording option is enabled; opted-in content is bounded. REST telemetry does not record
-request or response bodies.
+by the realtime instrumentation. Text, transcripts, and tool details are excluded unless the existing
+content-recording option is enabled; opted-in content is bounded. Enriched Voice Agent creation
+traces do not record request or response bodies. Other REST diagnostic scopes are unchanged.
 
 For complete runnable examples, see the
 [Voice Agent REST telemetry sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Telemetry_Rest.md)

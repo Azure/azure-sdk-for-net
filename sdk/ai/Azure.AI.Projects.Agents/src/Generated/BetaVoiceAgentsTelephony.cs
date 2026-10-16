@@ -42,6 +42,66 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
+        /// <summary>
+        /// [Protocol Method] Creates a telephony binding for the voice agent named in the path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult CreateTelephonyBinding(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.CreateTelephonyBinding");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateTelephonyBindingRequest(agentName, content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a telephony binding for the voice agent named in the path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> CreateTelephonyBindingAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.CreateTelephonyBinding");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateTelephonyBindingRequest(agentName, content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Creates a telephony binding for the voice agent named in the path. </summary>
         /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
         /// <param name="telephonyBinding"> The provider-specific binding to create. </param>
@@ -148,6 +208,132 @@ namespace Azure.AI.Projects.Agents
         {
             ClientResult result = await GetTelephonyBindingAsync(agentName, bindingId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TelephonyBinding)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates a telephony binding owned by the voice agent named in the path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
+        /// <param name="bindingId"> The service-generated binding identifier. </param>
+        /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult UpdateTelephonyBinding(string agentName, string bindingId, string ifMatch, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.UpdateTelephonyBinding");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateUpdateTelephonyBindingRequest(agentName, bindingId, ifMatch, content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates a telephony binding owned by the voice agent named in the path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
+        /// <param name="bindingId"> The service-generated binding identifier. </param>
+        /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> UpdateTelephonyBindingAsync(string agentName, string bindingId, string ifMatch, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.UpdateTelephonyBinding");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateUpdateTelephonyBindingRequest(agentName, bindingId, ifMatch, content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a telephony binding owned by the voice agent named in the path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
+        /// <param name="bindingId"> The service-generated binding identifier. </param>
+        /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult DeleteTelephonyBinding(string agentName, string bindingId, string ifMatch, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.DeleteTelephonyBinding");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteTelephonyBindingRequest(agentName, bindingId, ifMatch, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a telephony binding owned by the voice agent named in the path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
+        /// <param name="bindingId"> The service-generated binding identifier. </param>
+        /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> DeleteTelephonyBindingAsync(string agentName, string bindingId, string ifMatch, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.DeleteTelephonyBinding");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteTelephonyBindingRequest(agentName, bindingId, ifMatch, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes a telephony binding owned by the voice agent named in the path. </summary>
@@ -470,6 +656,68 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((TelephonyCallRecord)result, result.GetRawResponse());
         }
 
+        /// <summary>
+        /// [Protocol Method] Transfers an active inbound call to a configured target for the voice agent named in the path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the voice agent that owns the active call. </param>
+        /// <param name="callId"> The service-generated call identifier. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult TransferTelephonyCall(string agentName, string callId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.TransferTelephonyCall");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateTransferTelephonyCallRequest(agentName, callId, content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Transfers an active inbound call to a configured target for the voice agent named in the path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the voice agent that owns the active call. </param>
+        /// <param name="callId"> The service-generated call identifier. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> TransferTelephonyCallAsync(string agentName, string callId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.TransferTelephonyCall");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateTransferTelephonyCallRequest(agentName, callId, content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Transfers an active inbound call to a configured target for the voice agent named in the path. </summary>
         /// <param name="agentName"> The name of the voice agent that owns the active call. </param>
         /// <param name="callId"> The service-generated call identifier. </param>
@@ -496,6 +744,66 @@ namespace Azure.AI.Projects.Agents
             TransferTelephonyCallRequest spreadModel = new TransferTelephonyCallRequest(target, default);
             ClientResult result = await TransferTelephonyCallAsync(agentName, callId, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TelephonyCallRecord)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Ends an active inbound call owned by the voice agent named in the path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the voice agent that owns the active call. </param>
+        /// <param name="callId"> The service-generated call identifier. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult EndTelephonyCall(string agentName, string callId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.EndTelephonyCall");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateEndTelephonyCallRequest(agentName, callId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Ends an active inbound call owned by the voice agent named in the path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the voice agent that owns the active call. </param>
+        /// <param name="callId"> The service-generated call identifier. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> EndTelephonyCallAsync(string agentName, string callId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.EndTelephonyCall");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateEndTelephonyCallRequest(agentName, callId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Ends an active inbound call owned by the voice agent named in the path. </summary>
@@ -602,6 +910,68 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((TelephonyTransferTargets)result, result.GetRawResponse());
         }
 
+        /// <summary>
+        /// [Protocol Method] Replaces all transfer targets configured for the voice agent named in the path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the voice agent whose transfer targets are replaced. </param>
+        /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult ReplaceTelephonyTransferTargets(string agentName, string ifMatch, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.ReplaceTelephonyTransferTargets");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateReplaceTelephonyTransferTargetsRequest(agentName, ifMatch, content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Replaces all transfer targets configured for the voice agent named in the path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the voice agent whose transfer targets are replaced. </param>
+        /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> ReplaceTelephonyTransferTargetsAsync(string agentName, string ifMatch, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.ReplaceTelephonyTransferTargets");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateReplaceTelephonyTransferTargetsRequest(agentName, ifMatch, content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Replaces all transfer targets configured for the voice agent named in the path. </summary>
         /// <param name="agentName"> The name of the voice agent whose transfer targets are replaced. </param>
         /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
@@ -628,6 +998,68 @@ namespace Azure.AI.Projects.Agents
             ReplaceTelephonyTransferTargetsRequest spreadModel = new ReplaceTelephonyTransferTargetsRequest(transferTargets?.ToList() as IList<TelephonyTransferTarget> ?? new ChangeTrackingList<TelephonyTransferTarget>(), default);
             ClientResult result = await ReplaceTelephonyTransferTargetsAsync(agentName, ifMatch, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TelephonyTransferTargets)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates one durable direct outbound call job. The latest agent definition is resolved when each attempt executes.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the voice agent that executes the call. </param>
+        /// <param name="idempotencyKey"> A customer-generated idempotency key. Reusing it with an equivalent request returns the same call job. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult CreateTelephonyCallJob(string agentName, string idempotencyKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.CreateTelephonyCallJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateTelephonyCallJobRequest(agentName, idempotencyKey, content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates one durable direct outbound call job. The latest agent definition is resolved when each attempt executes.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the voice agent that executes the call. </param>
+        /// <param name="idempotencyKey"> A customer-generated idempotency key. Reusing it with an equivalent request returns the same call job. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> CreateTelephonyCallJobAsync(string agentName, string idempotencyKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.CreateTelephonyCallJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateTelephonyCallJobRequest(agentName, idempotencyKey, content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates one durable direct outbound call job. The latest agent definition is resolved when each attempt executes. </summary>
@@ -738,6 +1170,68 @@ namespace Azure.AI.Projects.Agents
         {
             ClientResult result = await GetTelephonyCallJobAsync(agentName, callJobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TelephonyCallJob)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Requests cancellation of a durable outbound call job. A connected call is allowed to finish.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="callJobId"></param>
+        /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult CancelTelephonyCallJob(string agentName, string callJobId, string ifMatch, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.CancelTelephonyCallJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCancelTelephonyCallJobRequest(agentName, callJobId, ifMatch, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Requests cancellation of a durable outbound call job. A connected call is allowed to finish.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="callJobId"></param>
+        /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> CancelTelephonyCallJobAsync(string agentName, string callJobId, string ifMatch, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.CancelTelephonyCallJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCancelTelephonyCallJobRequest(agentName, callJobId, ifMatch, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Requests cancellation of a durable outbound call job. A connected call is allowed to finish. </summary>

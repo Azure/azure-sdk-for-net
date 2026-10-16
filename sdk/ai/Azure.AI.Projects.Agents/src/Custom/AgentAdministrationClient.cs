@@ -56,8 +56,6 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetSessionLogStreamAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
 public partial class AgentAdministrationClient
 {
-    private bool IsDistributedTracingEnabled => ClientDiagnostics is not VoiceAgentClientDiagnostics diagnostics || diagnostics.IsDistributedTracingEnabled;
-
     private AgentToolboxes _cachedAgentsToolboxes;
     [Experimental("AAIP001")]
     private ProjectAgentSkills _cachedAgentSkills;
@@ -95,7 +93,7 @@ public partial class AgentAdministrationClient
             new FoundryFeaturesPolicy("MemoryStores=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview,DigitalWorker=V1Preview,GitHubCopilot=V1Preview,FineTuningSessions=V1Preview"),
         }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
-        ClientDiagnostics = new VoiceAgentClientDiagnostics(options, endpoint);
+        ClientDiagnostics = new ClientDiagnostics(options, true);
     }
 
     /// <summary> Initializes a new instance of AgentsClient. </summary>
@@ -111,21 +109,7 @@ public partial class AgentAdministrationClient
         _endpoint = endpoint;
         Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly) }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
-        ClientDiagnostics = new VoiceAgentClientDiagnostics(options, endpoint);
-    }
-
-    internal AgentAdministrationClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AgentAdministrationClientOptions options)
-    {
-        Argument.AssertNotNull(endpoint, nameof(endpoint));
-        options ??= new AgentAdministrationClientOptions();
-
-        _endpoint = endpoint;
-        _apiVersion = options.Version;
-        PipelinePolicy[] authenticationPolicies = authenticationPolicy == null
-            ? new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly) }
-            : new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly), authenticationPolicy };
-        Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), authenticationPolicies, Array.Empty<PipelinePolicy>());
-        ClientDiagnostics = new VoiceAgentClientDiagnostics(options, endpoint);
+        ClientDiagnostics = new ClientDiagnostics(options, true);
     }
 
     /// <summary> Retrieves the agent. </summary>

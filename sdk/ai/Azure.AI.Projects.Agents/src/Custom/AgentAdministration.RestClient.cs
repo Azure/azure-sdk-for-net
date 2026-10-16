@@ -31,7 +31,7 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ClientResult CreateAgent(BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
     {
-        using var otelScope = OpenTelemetryScope.StartCreateAgent(_endpoint, content, options, IsDistributedTracingEnabled);
+        using var otelScope = OpenTelemetryScope.StartCreateAgent(_endpoint, content, options);
         Argument.AssertNotNull(content, nameof(content));
 
         try
@@ -65,7 +65,7 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> CreateAgentAsync(BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
     {
-        using var otelScope = OpenTelemetryScope.StartCreateAgent(_endpoint, content, options, IsDistributedTracingEnabled);
+        using var otelScope = OpenTelemetryScope.StartCreateAgent(_endpoint, content, options);
         Argument.AssertNotNull(content, nameof(content));
 
         try
@@ -101,7 +101,7 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ClientResult CreateAgentVersion(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
     {
-        using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options, IsDistributedTracingEnabled);
+        using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options);
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNull(content, nameof(content));
 
@@ -138,7 +138,7 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> CreateAgentVersionAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
     {
-        using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options, IsDistributedTracingEnabled);
+        using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options);
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNull(content, nameof(content));
 
@@ -174,7 +174,7 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ClientResult CreateAgentVersionFromManifest(string agentName, BinaryContent content, RequestOptions options = null)
     {
-        using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options, IsDistributedTracingEnabled);
+        using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options);
 
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNull(content, nameof(content));
@@ -211,7 +211,7 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> CreateAgentVersionFromManifestAsync(string agentName, BinaryContent content, RequestOptions options = null)
     {
-        using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options, IsDistributedTracingEnabled);
+        using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options);
 
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNull(content, nameof(content));
@@ -246,7 +246,7 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ClientResult CreateAgentFromManifest(BinaryContent content, RequestOptions options = null)
     {
-        using var otelScope = OpenTelemetryScope.StartCreateAgent(_endpoint, content, options, IsDistributedTracingEnabled);
+        using var otelScope = OpenTelemetryScope.StartCreateAgent(_endpoint, content, options);
 
         Argument.AssertNotNull(content, nameof(content));
 
@@ -280,7 +280,7 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> CreateAgentFromManifestAsync(BinaryContent content, RequestOptions options = null)
     {
-        using var otelScope = OpenTelemetryScope.StartCreateAgent(_endpoint, content, options, IsDistributedTracingEnabled);
+        using var otelScope = OpenTelemetryScope.StartCreateAgent(_endpoint, content, options);
 
         Argument.AssertNotNull(content, nameof(content));
 
@@ -350,7 +350,7 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ClientResult UpdateAgent(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
     {
-        using var otelScope = OpenTelemetryScope.StartUpdateAgent(_endpoint, agentName, content, options, IsDistributedTracingEnabled);
+        using var otelScope = OpenTelemetryScope.StartUpdateAgent(_endpoint, agentName, content, options);
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNull(content, nameof(content));
 
@@ -388,7 +388,7 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> UpdateAgentAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
     {
-        using var otelScope = OpenTelemetryScope.StartUpdateAgent(_endpoint, agentName, content, options, IsDistributedTracingEnabled);
+        using var otelScope = OpenTelemetryScope.StartUpdateAgent(_endpoint, agentName, content, options);
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNull(content, nameof(content));
 
@@ -425,7 +425,7 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ClientResult UpdateAgentFromManifest(string agentName, BinaryContent content, RequestOptions options = null)
     {
-        using var otelScope = OpenTelemetryScope.StartUpdateAgent(_endpoint, agentName, content, options, IsDistributedTracingEnabled);
+        using var otelScope = OpenTelemetryScope.StartUpdateAgent(_endpoint, agentName, content, options);
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNull(content, nameof(content));
 
@@ -462,7 +462,7 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> UpdateAgentFromManifestAsync(string agentName, BinaryContent content, RequestOptions options = null)
     {
-        using var otelScope = OpenTelemetryScope.StartUpdateAgent(_endpoint, agentName, content, options, IsDistributedTracingEnabled);
+        using var otelScope = OpenTelemetryScope.StartUpdateAgent(_endpoint, agentName, content, options);
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNull(content, nameof(content));
 
