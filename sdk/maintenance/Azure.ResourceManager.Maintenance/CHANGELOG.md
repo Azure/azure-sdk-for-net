@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added models for deserializing scheduled-events list acknowledgement error responses.
+
 ### Breaking Changes
 
 ### Bugs Fixed

@@ -195,6 +195,36 @@ namespace Azure.ResourceManager.Maintenance.Models
             return new MaintenanceScheduledEventIdList((value ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> An error response received from the Azure Maintenance service. </summary>
+        /// <param name="error"></param>
+        /// <returns> A new <see cref="Models.ScheduledEventsListAcknowledgeError"/> instance for mocking. </returns>
+        public static ScheduledEventsListAcknowledgeError ScheduledEventsListAcknowledgeError(ScheduledEventsListAcknowledgeErrorDetails error = default)
+        {
+            return new ScheduledEventsListAcknowledgeError(error, default);
+        }
+
+        /// <summary> An error response details received from the Azure Maintenance service. </summary>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
+        /// <param name="details"></param>
+        /// <returns> A new <see cref="Models.ScheduledEventsListAcknowledgeErrorDetails"/> instance for mocking. </returns>
+        public static ScheduledEventsListAcknowledgeErrorDetails ScheduledEventsListAcknowledgeErrorDetails(string code = default, string message = default, IEnumerable<ScheduledEventsAcknowledgeErrorDetails> details = default)
+        {
+            details ??= new ChangeTrackingList<ScheduledEventsAcknowledgeErrorDetails>();
+
+            return new ScheduledEventsListAcknowledgeErrorDetails(code, message, (details ?? new ChangeTrackingList<ScheduledEventsAcknowledgeErrorDetails>()).ToList(), default);
+        }
+
+        /// <summary> An error response details received from the Azure Maintenance service for each ScheduledEvents. </summary>
+        /// <param name="target"></param>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="Models.ScheduledEventsAcknowledgeErrorDetails"/> instance for mocking. </returns>
+        public static ScheduledEventsAcknowledgeErrorDetails ScheduledEventsAcknowledgeErrorDetails(string target = default, string code = default, string message = default)
+        {
+            return new ScheduledEventsAcknowledgeErrorDetails(target, code, message, default);
+        }
+
         /// <param name="maintenanceScope"> The impact area. </param>
         /// <param name="impactType"> The impact type. </param>
         /// <param name="status"> The status. </param>
