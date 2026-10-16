@@ -10,10 +10,17 @@ steps:
       npmrcPath: $(Build.SourcesDirectory)/.npmrc
       CustomCondition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'))
 
-  - script: npm ci --omit=dev --ignore-scripts --userconfig "$(Build.SourcesDirectory)/.npmrc"
+  # Bootstrap only the pinned package manager with Node's bundled npm, as specs does.
+  # Isolate the archive install from any consuming repository's pnpm workspace.
+  - script: |
+      set -euo pipefail
+      npm install --prefix "$(Agent.TempDirectory)/eval-pnpm" --no-save --no-package-lock --ignore-scripts --no-audit --no-fund pnpm@12.6.0
+      node "$(Agent.TempDirectory)/eval-pnpm/node_modules/pnpm/bin/pnpm.mjs" --ignore-workspace install --pm-on-fail=ignore --frozen-lockfile --prod --ignore-scripts
     displayName: 'Install archive dependency'
     workingDirectory: eng/common/scripts/eval/publisher
     condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'))
+    env:
+      NPM_CONFIG_USERCONFIG: $(Build.SourcesDirectory)/.npmrc
 
   - script: |
       set -euo pipefail

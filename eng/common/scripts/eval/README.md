@@ -10,7 +10,7 @@ templates.
 - This evaluator package's only dependency is `@microsoft/vally-cli`, pinned to the version CI should evaluate with.
 - `package-lock.json` must be committed so `npm ci` is deterministic.
 - Optional Blob publication is isolated in [publisher](publisher/), with
-  its own package/lock for **fflate only** and CLI/PowerShell tests. Shard evaluator
+  its own pnpm package/lock for **fflate only** and CLI/PowerShell tests. Shard evaluator
   restores do not install it; publication adds no Node Azure SDK dependencies.
 
 ## Complete build results and direct Blob publishing
@@ -25,14 +25,25 @@ successful artifacts. A separate step reads the current-build timeline with
 evidence beside the summary. Rendering reads that file and needs no token or network.
 Unverified or ambiguous attempts cannot authorize publication. The legacy JUnit-only
 summary remains supported. No historical build download or reconstruction is involved.
+The bundler accepts exactly one already-selected attempt per expected shard; it
+does not repeat Summary's selection or accept an ambiguous list of attempts.
 
 The [publishing step](../../pipelines/templates/steps/eval-publish-results.yml) restores
-the archive dependency from the **default JavaScript feed**, prepares one saved ZIP
+the archive dependency with **pnpm 12.6.0** from the **default JavaScript feed**, prepares one saved ZIP
 and a checksum/identity descriptor, then runs [Publish-EvalResults.ps1](publisher/Publish-EvalResults.ps1)
 under `AzureCLI@2` using `eval-dashboard-sc`. The script uses `az storage blob upload`,
 not a custom SDK transport. There is no enterprise checkout, dashboard file upload,
 evaluator rerun or container creation. Bundle metadata is passed explicitly by YAML;
 neither bundling nor upload interprets DevOps environment variables or publishing policy.
+Shard/Summary jobs and publisher CI use Node 24; the publisher requires **24.14.1+**,
+matching the specs repository. Its frozen `pnpm-lock.yaml` retains the reviewed
+SHA512 checksum and no private registry URLs. `--ignore-workspace` prevents a
+consumer's workspace from changing the install or pulling in unrelated packages.
+The pipeline uses Node's bundled npm only to bootstrap the exact pnpm version into
+the agent's temporary directory, with lifecycle scripts disabled. The same
+authenticated `.npmrc` is used by both commands; no global tools are changed.
+`--pm-on-fail=ignore` avoids pnpm resolving/downloading itself again after that
+explicit bootstrap, without changing dependency checks or the frozen lock.
 
 | Control | Current use |
 | --- | --- |
@@ -88,6 +99,11 @@ Reader limits are **32 MiB ZIP, 128 MiB expanded, 10,000 entries and 100,000 tri
 Canonical identities, UTC calendar dates, safe entries and counts are validated
 before upload. Blob metadata records schema, SHA-256, hashed publisher identity and
 the original storage time; Azure RBAC remains the authorization boundary.
+Construction checks every required non-empty input, merged byte/trial limits and
+the total entry count, including merged JSONL, before creating the ZIP. The final
+compressed-size cap is checked afterward. Full ZIP decoding remains in contract
+tests rather than reopening the archive in production. JSONL is decoded once and
+parsed directly as text, with byte limits on both source and serialized records.
 
 Uploads use `--auth-mode login --overwrite false --if-none-match '*'` with the **same
 saved ZIP**; Azure CLI owns transport retries, without another script/task retry loop.
@@ -120,8 +136,11 @@ Do not replace viewer authentication or network restrictions to make a signal su
 
 ### Publisher tests and diagnostics
 
-Run `npm ci --ignore-scripts` and `npm test` from `publisher` (`npm.cmd` on Windows),
-then `npm test` from this directory. Publisher tests require **PowerShell 7.4+ and
+With **Node 24.14.1+ and pnpm 12.6.0**, run `pnpm --ignore-workspace install
+--pm-on-fail=ignore --frozen-lockfile --prod --ignore-scripts` and
+`pnpm --ignore-workspace --pm-on-fail=ignore test` from `publisher`,
+then `node --experimental-strip-types --test` from this directory.
+Publisher tests require **PowerShell 7.4+ and
 Pester 5**; pipeline upload uses the agent's authenticated Azure CLI. The existing
 common-tests PR pipeline runs all shared/archive Node tests and discovers the tagged
 PowerShell suite under `eng/common-tests/eval`; failures fail the CI job.
@@ -129,6 +148,8 @@ CI restores only the locked archive dependency, not the Vally evaluator.
 Regression coverage includes the actual HTTP
 cmdlet against loopback, invalid collision metadata, upload-before-notification
 ordering and publication without local status files.
+Construction regressions exercise the exact entry/trial boundaries, aggregate
+expanded bytes, final compressed bytes, required inputs and UTF-8 JSONL limits.
 The loopback fixture selects the first Node application when CI has multiple Node
 installations on `PATH`. Configuration tests use synthetic hosts/resources and
 prove invalid targets cannot request or receive notification tokens.
@@ -147,10 +168,10 @@ relax TLS or broaden permissions to hide a failed request.
 ## TypeScript (no build step)
 
 The `*.ts` sources run directly through Node's native type stripping (erasable syntax only —
-no `enum`/`namespace`/parameter properties, no emit). CI pins Node `22.x`, which strips types
-unflagged on `>=22.18`; the pipeline `node` invocations and the `npm test` script pass
-`--experimental-strip-types` so the same sources also run on older local Node (`>=22.6`), which
-prints a harmless `ExperimentalWarning`. Relative imports use explicit `.ts` specifiers, as Node requires.
+no `enum`/`namespace`/parameter properties, no emit). Shard/Summary jobs and publisher
+CI use Node `24.x`; the publisher requires `>=24.14.1`. The older dependency-free
+glue still supports its declared Node 22 minimum, but that is not the publisher's
+runtime requirement. Relative imports use explicit `.ts` specifiers, as Node requires.
 The standalone Blob publisher uses the same execution model; it adds no compiler or TypeScript runtime dependency.
 
 ## Vendored files

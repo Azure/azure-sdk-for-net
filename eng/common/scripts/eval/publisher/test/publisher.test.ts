@@ -1,14 +1,15 @@
 // Verifies the saved archive contract and pipeline-owned publication policy, without Azure requests.
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { randomBytes } from "node:crypto";
+import { mkdtemp, mkdir, readFile, rm, truncate, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { test } from "node:test";
 import { runInNewContext } from "node:vm";
 import { zipSync, strToU8 } from "fflate";
-import { blobName, boundedFile, isUtcTimestamp, prepareBundle, selectAttempts, sha256, validateBundle, validateManifest } from "../bundle.ts";
+import { MAX_EXPANDED_BYTES, MAX_ZIP_BYTES, blobName, boundedFile, isUtcTimestamp, prepareBundle, validateSelectedAttempts, sha256, validateBundle, validateManifest } from "../bundle.ts";
 
 const manifest = { schemaVersion: 1, adoOrganization: "azure-sdk", adoProject: "internal", repo: "Azure/azure-sdk-tools",
     pipeline: "synthetic", pipelineDefinitionId: "8255", buildId: "1001", summaryAttempt: 1, runTimestamp: "2026-09-21T00:00:00.000Z" };
@@ -22,6 +23,19 @@ async function fixture(t) {
     t.after(() => rm(root, { recursive: true, force: true }));
     const path = join(root, "saved.zip"); await writeFile(path, zip());
     return { root, path };
+}
+
+async function constructionFixture(t) {
+    const f = await fixture(t), artifact = join(f.root, "eval-result-a-2"), junit = join(artifact, "junit");
+    await mkdir(junit, { recursive: true });
+    await writeFile(join(artifact, "results.jsonl"), JSON.stringify(trial) + "\n");
+    await writeFile(join(artifact, "shard.json"), JSON.stringify({ schemaVersion: 1, shard: "a", attempt: 2, complete: true, trials: 1 }));
+    await writeFile(join(junit, "0.junit.xml"), "<testsuite><testcase/></testsuite>");
+    const indexPath = join(f.root, "shard-index.json"), summaryPath = join(f.root, "summary.md"), outputPath = join(f.root, "bundle.zip");
+    await writeFile(indexPath, JSON.stringify({ schemaVersion: 1, complete: true, expectedShards: ["a"],
+        attempts: [{ shard: "a", attempt: 2, directory: "eval-result-a-2" }] }));
+    await writeFile(summaryPath, "# Complete build\n");
+    return { ...f, artifact, junit, indexPath, summaryPath, outputPath, manifest };
 }
 
 function run(script, args, env = {}, preload = []) {
@@ -116,12 +130,104 @@ test("skips remain in raw artifacts/JUnit, not fabricated as dashboard execution
     assert.match(await readFile(join(artifact, "results.jsonl"), "utf8"), /"status":"skipped"/);
 });
 
-test("latest attempts, missing inputs, duplicate attempts and unsafe paths fail closed", () => {
-    const base = { schemaVersion: 1, complete: true, expectedShards: ["a"], attempts: [{ shard: "a", attempt: 1, directory: "eval-result-a-1" }, { shard: "a", attempt: 2, directory: "eval-result-a-2" }] };
-    assert.equal(selectAttempts(base)[0].attempt, 2);
-    for (const source of [{ ...base, complete: false }, { ...base, expectedShards: ["a", "b"] }, { ...base, expectedShards: ["a", "a"] },
-        { ...base, attempts: [base.attempts[0], base.attempts[0]] }, { ...base, attempts: [{ ...base.attempts[0], directory: "../elsewhere" }] }]) {
-        assert.throws(() => selectAttempts(source), { code: "invalid_bundle" });
+test("the bundler validates one already-selected attempt per expected shard without reselecting", () => {
+    const a = { shard: "a", attempt: 2, directory: "eval-result-a-2" }, b = { shard: "b", attempt: 3, directory: "eval-result-b-3" };
+    const base = { schemaVersion: 1, complete: true, expectedShards: ["a", "b"], attempts: [b, a] };
+    assert.deepEqual(validateSelectedAttempts(base), [a, b]); assert.deepEqual(base.attempts, [b, a]);
+    for (const source of [{ ...base, complete: false }, { ...base, expectedShards: ["a", "b", "c"] }, { ...base, expectedShards: ["a", "a"] },
+        { ...base, attempts: [a] }, { ...base, attempts: [a, a] }, { ...base, attempts: [a, { ...a, attempt: 1, directory: "eval-result-a-1" }, b] },
+        ...[0, -1, 1.5, "2"].map(attempt => ({ ...base, attempts: [{ ...a, attempt }, b] })),
+        { ...base, expectedShards: ["a", "../b"] }, { ...base, attempts: [a, { ...b, shard: "unexpected" }] },
+        { ...base, attempts: [{ ...a, directory: "../elsewhere" }, b] }, { ...base, attempts: [null, b] }]) {
+        assert.throws(() => validateSelectedAttempts(source), { code: "invalid_bundle" });
+    }
+});
+
+test("construction keeps nonempty required inputs and shard completion checks before saving", async (t) => {
+    for (const input of ["results.jsonl", "junit/0.junit.xml", "summary.md"]) await t.test(`empty ${input}`, async (t) => {
+        const f = await constructionFixture(t);
+        await writeFile(input === "summary.md" ? f.summaryPath : join(f.artifact, input), "");
+        await assert.rejects(prepareBundle(f), { code: "invalid_bundle" });
+        await assert.rejects(readFile(f.outputPath), { code: "ENOENT" });
+    });
+    for (const patch of [{ complete: false }, { shard: "other" }, { attempt: 1 }, { trials: 2 }]) await t.test(`metadata ${JSON.stringify(patch)}`, async (t) => {
+        const f = await constructionFixture(t), path = join(f.artifact, "shard.json");
+        await writeFile(path, JSON.stringify({ ...JSON.parse(await readFile(path, "utf8")), ...patch }));
+        await assert.rejects(prepareBundle(f), { code: "invalid_bundle" });
+        await assert.rejects(readFile(f.outputPath), { code: "ENOENT" });
+    });
+    const f = await constructionFixture(t);
+    await rm(join(f.junit, "0.junit.xml"));
+    await assert.rejects(prepareBundle(f), { code: "invalid_bundle" });
+});
+
+test("construction counts all 10,000 entries including merged JSONL and rejects one more", async (t) => {
+    const f = await constructionFixture(t);
+    // 9,997 JUnit files plus manifest, JSONL and Markdown reach the exact limit.
+    for (let start = 1; start < 9_997; start += 100) {
+        await Promise.all(Array.from({ length: Math.min(100, 9_997 - start) }, (_, offset) =>
+            writeFile(join(f.junit, `${start + offset}.junit.xml`), "<testsuite/>")));
+    }
+    await prepareBundle(f);
+    assert.equal(Object.keys(validateBundle(await readFile(f.outputPath)).entries).length, 10_000);
+    await writeFile(join(f.junit, "9997.junit.xml"), "<testsuite/>");
+    const outputPath = join(f.root, "too-many-entries.zip");
+    await assert.rejects(prepareBundle({ ...f, outputPath }), { code: "invalid_bundle" });
+    await assert.rejects(readFile(outputPath), { code: "ENOENT" });
+});
+
+test("construction enforces the aggregate expanded budget including trials before reading oversized input", async (t) => {
+    const f = await constructionFixture(t);
+    const used = Buffer.byteLength(JSON.stringify(manifest, null, 2) + "\n") + Buffer.byteLength(JSON.stringify(trial) + "\n") +
+        (await readFile(join(f.junit, "0.junit.xml"))).length;
+    await truncate(f.summaryPath, MAX_EXPANDED_BYTES - used + 1);
+    await assert.rejects(prepareBundle(f), { code: "invalid_bundle" });
+    await assert.rejects(readFile(f.outputPath), { code: "ENOENT" });
+});
+
+test("construction keeps the final compressed-size cap without decoding the newly created ZIP", async (t) => {
+    const f = await constructionFixture(t);
+    await writeFile(join(f.junit, "0.junit.xml"), randomBytes(MAX_ZIP_BYTES + 1024));
+    await assert.rejects(prepareBundle(f), { code: "invalid_bundle" });
+    await assert.rejects(readFile(f.outputPath), { code: "ENOENT" });
+    const source = await readFile(resolve(import.meta.dirname, "../bundle.ts"), "utf8");
+    assert.doesNotMatch(source.slice(source.indexOf("export async function prepareBundle")), /validateBundle\(|unzipSync\(/);
+});
+
+test("construction permits 100,000 trials but rejects a merged build with more", async (t) => {
+    const f = await constructionFixture(t), record = '{"status":"error"}\n';
+    const metadata = { schemaVersion: 1, shard: "a", attempt: 2, complete: true, trials: 100_000 };
+    await writeFile(join(f.artifact, "results.jsonl"), record.repeat(100_000));
+    await writeFile(join(f.artifact, "shard.json"), JSON.stringify(metadata));
+    const result = await prepareBundle(f); assert.equal(result.trials, 100_000);
+    assert.equal(validateBundle(await readFile(f.outputPath)).trials, 100_000);
+    const other = join(f.root, "eval-result-b-1"); await mkdir(join(other, "junit"), { recursive: true });
+    await writeFile(join(other, "results.jsonl"), record);
+    await writeFile(join(other, "shard.json"), JSON.stringify({ ...metadata, shard: "b", attempt: 1, trials: 1 }));
+    await writeFile(join(other, "junit/0.junit.xml"), "<testsuite/>");
+    const index = JSON.parse(await readFile(f.indexPath, "utf8"));
+    index.expectedShards.push("b"); index.attempts.push({ shard: "b", attempt: 1, directory: "eval-result-b-1" });
+    await writeFile(f.indexPath, JSON.stringify(index));
+    const outputPath = join(f.root, "too-many-trials.zip");
+    await assert.rejects(prepareBundle({ ...f, outputPath }), { code: "invalid_bundle" });
+    await assert.rejects(readFile(outputPath), { code: "ENOENT" });
+});
+
+test("direct JSON string parsing preserves UTF-8, byte limits and sanitized errors", async (t) => {
+    const f = await constructionFixture(t), path = join(f.artifact, "results.jsonl");
+    await writeFile(path, JSON.stringify({ ...trial, itemId: "UTF-8 界" }) + "\r\n");
+    await prepareBundle(f);
+    assert.match(Buffer.from(validateBundle(await readFile(f.outputPath)).entries["results.jsonl"]).toString("utf8"), /UTF-8 界/);
+    for (const raw of [JSON.stringify({ status: "error", itemId: "界".repeat(Math.ceil(8 * 1024 * 1024 / 3)) }),
+        '{"status":"error","values":[' + Array(940_000).fill("1e-6").join(",") + "]}"]) {
+        await writeFile(path, raw);
+        await assert.rejects(prepareBundle({ ...f, outputPath: join(f.root, "oversized-record.zip") }), { code: "invalid_bundle" });
+    }
+    for (const path of [f.indexPath, join(f.artifact, "shard.json"), join(f.artifact, "results.jsonl")]) {
+        const previous = await readFile(path);
+        await writeFile(path, '{"secret":"PRIVATE_RESULT_CONTENT"');
+        await assert.rejects(prepareBundle(f), error => error.code === "invalid_bundle" && !error.message.includes("PRIVATE_RESULT_CONTENT"));
+        await writeFile(path, previous);
     }
 });
 
@@ -154,13 +260,15 @@ test("canonical identity and UTC calendar validation match the reader", () => {
     }
 });
 
-test("the archive package has one locked public dependency, not an Azure SDK transport", async () => {
+test("the archive package pins Node 24/pnpm and one portable SHA512-locked dependency", async () => {
     const packageJson = JSON.parse(await readFile(resolve(import.meta.dirname, "../package.json"), "utf8"));
-    const lock = JSON.parse(await readFile(resolve(import.meta.dirname, "../package-lock.json"), "utf8"));
+    const lock = await readFile(resolve(import.meta.dirname, "../pnpm-lock.yaml"), "utf8");
+    assert.equal(packageJson.engines.node, ">=24.14.1"); assert.equal(packageJson.packageManager, "pnpm@12.6.0");
     assert.deepEqual(packageJson.dependencies, { fflate: "0.8.3" });
-    assert.deepEqual(Object.keys(lock.packages), ["", "node_modules/fflate"]);
-    assert.equal(lock.packages["node_modules/fflate"].resolved, "https://registry.npmjs.org/fflate/-/fflate-0.8.3.tgz");
-    assert.match(lock.packages["node_modules/fflate"].integrity, /^sha512-[A-Za-z0-9+/]{86}==$/);
+    assert.deepEqual([...lock.matchAll(/^  ([^\s]+@[^:]+):/gm)].map(match => match[1]), ["fflate@0.8.3", "fflate@0.8.3"]);
+    assert.match(lock, /specifier: 0\.8\.3\s+version: 0\.8\.3/);
+    assert.match(lock, /integrity: sha512-tbZNuJrLwGUp3zshBtdy4W\+ORxZuIh8a5ilyIEQDC5rY1f3U20JMry0Ll3WBzU58EZKsEuJFXhb5gwv8CsPvgA==/);
+    assert.doesNotMatch(lock, /https?:|tarball:|sha1-|packageManagerDependencies/);
 });
 
 test("PR CI runs every lightweight Node suite and discovers tagged publisher PowerShell tests", async () => {
@@ -171,8 +279,11 @@ test("PR CI runs every lightweight Node suite and discovers tagged publisher Pow
     assert.match(ci, /CustomTestSteps:[\s\S]*config.Filter.Tag = @\('UnitTest', 'IntegrationTest'\)/);
     assert.match(ci, /if \(\$result.FailedCount -gt 0\) \{ throw/);
     assert.match(ci, /node --experimental-strip-types --test test\/\*\.test\.ts publisher\/test\/\*\.test\.ts/);
-    assert.match(ci, /npm ci --prefix publisher --omit=dev --ignore-scripts/);
-    assert.doesNotMatch(ci, /vally eval|azureSubscription:|npm ci --userconfig/);
+    assert.match(ci, /version: 24\.x/);
+    assert.match(ci, /npm install --prefix.*pnpm@12\.6\.0/);
+    assert.match(ci, /pnpm\/bin\/pnpm\.mjs.*--dir publisher --ignore-workspace install --pm-on-fail=ignore --frozen-lockfile --prod --ignore-scripts/);
+    assert.match(ci, /NPM_CONFIG_USERCONFIG: \$\(Agent.TempDirectory\)\/eval-unit-tests\.npmrc/);
+    assert.doesNotMatch(ci, /vally eval|azureSubscription:|npm ci/);
     const pester = await readFile(join(root, "common-tests/eval/Publish-EvalResults.Tests.ps1"), "utf8");
     assert.match(pester, /Describe 'Azure CLI evaluation publication' -Tag 'UnitTest'/);
     assert.match(pester, /Microsoft.PowerShell.Utility\\Invoke-WebRequest/);
@@ -190,6 +301,12 @@ test("pipeline separates token-bearing attempt verification from rendering and u
     assert.match(rendering, /--attempts-file/); assert.doesNotMatch(rendering, /SYSTEM_ACCESSTOKEN/);
     assert.ok(summary.indexOf("../steps/eval-publish-results.yml") < summary.indexOf("task: PublishTestResults@2"));
     const steps = await readFile(join(root, "pipelines/templates/steps/eval-publish-results.yml"), "utf8");
+    assert.match(steps, /pnpm\/bin\/pnpm\.mjs.*--ignore-workspace install --pm-on-fail=ignore --frozen-lockfile --prod --ignore-scripts/);
+    assert.match(steps, /NPM_CONFIG_USERCONFIG: \$\(Build.SourcesDirectory\)\/\.npmrc/);
+    assert.doesNotMatch(steps, /npm ci/);
+    for (const job of ["eval-shard.yml", "eval-summarize.yml"]) {
+        assert.match(await readFile(join(root, "pipelines/templates/jobs", job), "utf8"), /version: 24\.x/);
+    }
     assert.doesNotMatch(steps, /registryUrl:|azure-sdk-tools\/npm\/registry/);
     assert.match(steps, /scriptType: pscore[\s\S]*scriptLocation: inlineScript[\s\S]*Publish-EvalResults\.ps1/);
     assert.match(steps, /azureSubscription: eval-dashboard-sc/);

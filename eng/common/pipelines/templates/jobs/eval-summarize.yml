@@ -36,9 +36,9 @@ jobs:
         fetchDepth: 1
 
       - task: UseNode@1
-        displayName: 'Use Node.js 22.x'
+        displayName: 'Use Node.js 24.x'
         inputs:
-          version: 22.x
+          version: 24.x
 
       # Allowlist result data only, excluding debug, MCP, SDL and signing artifacts.
       - task: DownloadPipelineArtifact@2

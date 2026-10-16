@@ -20,8 +20,8 @@ function requireValue(condition, message) {
     if (!condition) throw new PublicationError("invalid_bundle", message);
 }
 
-function parseJson(bytes) {
-    try { return JSON.parse(Buffer.from(bytes).toString("utf8")); }
+function parseJson(text) {
+    try { return JSON.parse(text); }
     catch { throw new PublicationError("invalid_bundle", "Invalid result JSON; raw evaluation content was not logged."); }
 }
 
@@ -72,21 +72,20 @@ export function blobName(manifest) {
     return name;
 }
 
-export function selectAttempts(index) {
+export function validateSelectedAttempts(index) {
     requireValue(index?.schemaVersion === 1 && index.complete === true && Array.isArray(index.expectedShards) &&
         index.expectedShards.length > 0 && Array.isArray(index.attempts), "Only a complete expected-shard index can be published.");
-    const expected = new Set(index.expectedShards), selected = new Map(), seen = new Set();
+    // Summary already selected the latest attempts against the current-build timeline.
+    // Accept exactly that selection, not an unselected list that could hide ambiguity.
+    const expected = new Set(index.expectedShards);
     requireValue(expected.size === index.expectedShards.length && [...expected].every(name => typeof name === "string" &&
         /^[A-Za-z0-9_][A-Za-z0-9_-]{0,199}$/.test(name)), "Expected shard names must be valid and unique.");
+    requireValue(index.attempts.length === expected.size, "Exactly one selected attempt per expected shard is required.");
     for (const item of index.attempts) {
-        requireValue(expected.has(item.shard) && Number.isSafeInteger(item.attempt) && item.attempt > 0 &&
+        requireValue(item && expected.delete(item.shard) && Number.isSafeInteger(item.attempt) && item.attempt > 0 &&
             item.directory === `eval-result-${item.shard}-${item.attempt}`, "Invalid shard directory or attempt.");
-        const key = `${item.shard}:${item.attempt}`;
-        requireValue(!seen.has(key), "Duplicate shard attempt."); seen.add(key);
-        if (!selected.has(item.shard) || selected.get(item.shard).attempt < item.attempt) selected.set(item.shard, item);
     }
-    requireValue([...expected].every(name => selected.has(name)), "An expected shard is missing.");
-    return [...selected.values()].sort((a, b) => a.shard.localeCompare(b.shard));
+    return [...index.attempts].sort((a, b) => a.shard.localeCompare(b.shard));
 }
 
 function trialsFrom(bytes, { onSkipped } = {}) {
@@ -94,7 +93,7 @@ function trialsFrom(bytes, { onSkipped } = {}) {
     for (const [line] of Buffer.from(bytes).toString("utf8").matchAll(/[^\n]+/g)) {
         if (!line.trim()) continue;
         requireValue(Buffer.byteLength(line) <= 8 * 1024 * 1024, "A JSONL record exceeds the size limit.");
-        const item = parseJson(Buffer.from(line));
+        const item = parseJson(line);
         requireValue(item && typeof item === "object" && !Array.isArray(item), "Invalid trial object.");
         if (["log", "run-summary"].includes(item.type)) continue;
         if (onSkipped && item.status === "skipped" && !item.experiment && [undefined, "trial-result"].includes(item.type)) {
@@ -102,7 +101,9 @@ function trialsFrom(bytes, { onSkipped } = {}) {
         }
         requireValue((item.type === undefined || item.type === "trial-result") && !item.experiment &&
             ["success", "error"].includes(item.status), "Only plain-eval trial records are supported.");
-        trials.push(JSON.stringify(item) + "\n");
+        const serialized = JSON.stringify(item);
+        requireValue(Buffer.byteLength(serialized) <= 8 * 1024 * 1024, "A serialized JSONL record exceeds the size limit.");
+        trials.push(serialized + "\n");
         requireValue(trials.length <= MAX_TRIALS, "Too many trial records.");
     }
     requireValue(trials.length > 0, "Every selected shard must contain trial records.");
@@ -125,7 +126,7 @@ export function validateBundle(bytes) {
         for (const name of ["manifest.json", "results.jsonl", "eval-summary.md"]) requireValue(entries[name]?.length > 0, "Required ZIP entry is missing.");
         requireValue(Object.keys(entries).some(name => name.startsWith("junit/")), "JUnit results are missing.");
         for (const [name, content] of Object.entries(entries)) requireValue(content.length === sizes.get(name.toLowerCase()), "ZIP size mismatch.");
-        const manifest = validateManifest(parseJson(entries["manifest.json"]));
+        const manifest = validateManifest(parseJson(Buffer.from(entries["manifest.json"]).toString("utf8")));
         return { manifest, trials: trialsFrom(entries["results.jsonl"]).length, entries };
     } catch (error) {
         if (error instanceof PublicationError) throw error;
@@ -136,18 +137,19 @@ export function validateBundle(bytes) {
 export async function prepareBundle({ indexPath, summaryPath, outputPath, manifest }) {
     const name = blobName(manifest);
     const root = await realpath(dirname(resolve(indexPath)));
-    const selected = selectAttempts(parseJson(await boundedFile(indexPath, 2 * 1024 * 1024)));
-    const entries = { "manifest.json": strToU8(JSON.stringify(manifest, null, 2) + "\n") };
-    const trials = []; let expanded = entries["manifest.json"].length, skipped = 0;
+    const selected = validateSelectedAttempts(parseJson((await boundedFile(indexPath, 2 * 1024 * 1024)).toString("utf8")));
+    const entries = {}, trials = [];
+    let expanded = 0, trialBytes = 0, entryCount = 0, skipped = 0;
     const add = (name, bytes) => {
         expanded += bytes.length;
-        requireValue(expanded <= MAX_EXPANDED_BYTES && Object.keys(entries).length < MAX_ENTRIES, "Merged results exceed the bundle budget.");
+        requireValue(bytes.length > 0 && expanded <= MAX_EXPANDED_BYTES && ++entryCount <= MAX_ENTRIES, "Merged results exceed the bundle budget.");
         entries[name] = bytes;
     };
+    add("manifest.json", strToU8(JSON.stringify(manifest, null, 2) + "\n"));
     for (const [number, item] of selected.entries()) {
         const directory = join(root, item.directory), info = await lstat(directory);
         requireValue(info.isDirectory() && (await realpath(directory)).startsWith(root + sep), "Shard directory must remain inside the artifact root.");
-        const metadata = parseJson(await boundedFile(join(directory, "shard.json"), 64 * 1024));
+        const metadata = parseJson((await boundedFile(join(directory, "shard.json"), 64 * 1024)).toString("utf8"));
         requireValue(metadata.schemaVersion === 1 && metadata.complete === true && metadata.shard === item.shard &&
             metadata.attempt === item.attempt, "Selected shard is incomplete or has mismatched metadata.");
         // The current dashboard imports executed trials (success/error). Vally's
@@ -156,20 +158,22 @@ export async function prepareBundle({ indexPath, summaryPath, outputPath, manife
         const shardTrials = trialsFrom(await boundedFile(join(directory, "results.jsonl")), { onSkipped: () => { skipped++; } });
         requireValue(shardTrials.length === metadata.trials, "Shard trial count differs from its completion marker.");
         for (const text of shardTrials) {
-            expanded += Buffer.byteLength(text); trials.push(text);
-            requireValue(expanded <= MAX_EXPANDED_BYTES && trials.length <= MAX_TRIALS, "Merged trials exceed the bundle budget.");
+            trialBytes += Buffer.byteLength(text); trials.push(text);
+            requireValue(expanded + trialBytes <= MAX_EXPANDED_BYTES && trials.length <= MAX_TRIALS, "Merged trials exceed the bundle budget.");
         }
         const junitRoot = join(directory, "junit");
         requireValue((await lstat(junitRoot)).isDirectory(), "JUnit path must not be a symbolic link.");
         const files = (await readdir(junitRoot)).filter(name => name.endsWith(".junit.xml")).sort();
         requireValue(files.length > 0, "A selected shard has no JUnit.");
-        for (const [fileNumber, name] of files.entries()) add(`junit/${number}-${fileNumber}.xml`, await boundedFile(join(junitRoot, name), MAX_EXPANDED_BYTES - expanded));
+        for (const [fileNumber, name] of files.entries()) add(`junit/${number}-${fileNumber}.xml`, await boundedFile(join(junitRoot, name), MAX_EXPANDED_BYTES - expanded - trialBytes));
     }
-    entries["results.jsonl"] = strToU8(trials.join(""));
+    add("results.jsonl", strToU8(trials.join("")));
     add("eval-summary.md", await boundedFile(summaryPath, MAX_EXPANDED_BYTES - expanded));
     // Stable timestamps prevent packaging metadata from changing otherwise equal bytes.
     const bytes = zipSync(entries, { level: 6, mtime: new Date("2020-01-01T00:00:00Z") });
-    validateBundle(bytes);
+    // Inputs, required non-empty entries and merged budgets were checked during
+    // construction. Full ZIP decoding remains an archive-contract test, not a second pass.
+    requireValue(bytes.length > 0 && bytes.length <= MAX_ZIP_BYTES, "Bundle exceeds the 32 MiB archive limit.");
     await mkdir(dirname(resolve(outputPath)), { recursive: true });
     await writeFile(outputPath, bytes, { flag: "wx" });
     return { shards: selected.length, trials: trials.length, skipped, bytes: bytes.length, sha256: sha256(bytes), blobName: name };
