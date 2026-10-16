@@ -68,6 +68,9 @@ param(
     # Existing secret-redacted, uploaded agent log directory for oversized reports.
     [string]$CommandArtifactDir = '',
 
+    # Name of the artifact that uploads CommandArtifactDir.
+    [string]$CommandArtifactName = 'agent',
+
     # Identity fields (default to GitHub Actions env; overridable for tests).
     [string]$Repo = $env:GITHUB_REPOSITORY,
     [int]$Pr = 0,
@@ -572,7 +575,7 @@ if ($body.Length -gt 65000) {
     Set-Content -LiteralPath (Join-Path $CommandArtifactDir 'repair-report-full.md') -Value $body -NoNewline -Encoding utf8
     $compact = $sb.ToString(0, $summaryEnd).Replace('See exact invocation below', 'See full invocation in workflow artifacts')
     $compact += "The full report exceeds the 65,000-character comment limit. No command or engine argument was truncated.`n`n"
-    $compact += "Inspect ``repair-report-full.md``$(if ($engineCommand) { ' and `engine-command.txt`' }) in the workflow's ``agent`` artifact for the complete record.`n`n"
+    $compact += "Inspect ``repair-report-full.md``$(if ($engineCommand) { ' and `engine-command.txt`' }) in the workflow's ``$CommandArtifactName`` artifact for the complete record.`n`n"
     if ($RunId -match '^gha-(\d+)-\d+$') {
         $server = if ($env:GITHUB_SERVER_URL) { $env:GITHUB_SERVER_URL.TrimEnd('/') } else { 'https://github.com' }
         $compact += "[Workflow artifacts]($server/$Repo/actions/runs/$($Matches[1])#artifacts)`n`n"

@@ -91,6 +91,7 @@ permissions:
 env:
   AZSDK_COPILOT_CLI_PATH: /usr/local/bin/copilot
   AZSDK_COPILOT_GITHUB_TOKEN: ${{ github.token }}
+  AZSDK_REPAIR_RESULTS_DIR: /tmp/gh-aw/sandbox/agent/logs/repair-results
 
 network:
   allowed:
@@ -102,14 +103,8 @@ network:
     # The nested azsdk Copilot client calls this API directly, unlike the outer managed-proxy agent.
     - api.githubcopilot.com
 
-# Toolchain: the SDK build + the azsdk engine both require the .NET 10 SDK.
-runtimes:
-  dotnet:
-    version: "10.0.x"
-
-# Install the shared azsdk CLI (the engine) onto PATH before the agent runs. The agent
-# then invokes `azsdk tsp client customized-update` from bash. (gh-aw cannot host the
-# stdio azsdk MCP server directly; see header.)
+# Keep the repository installer and its sourced helpers on the initial checkout.
+# On manual requests this is the trusted default branch, before PR-head checkout.
 steps:
   - name: Install azsdk CLI
     shell: pwsh
@@ -120,6 +115,25 @@ steps:
       Add-Content -Path $env:GITHUB_PATH -Value $dir
       & (Join-Path $dir 'azsdk') --version
 
+# Only SDK setup follows PR-head checkout, so installation and the baseline read
+# the same global.json without executing PR-controlled repository scripts.
+pre-agent-steps:
+  - name: Configure isolated .NET installation
+    shell: pwsh
+    run: |
+      # gh-aw mounts tool-cache bins in the sandbox. Only this job's approved SDK
+      # is installed here; rollForward cannot select a newer hosted SDK.
+      $root = Join-Path $env:RUNNER_TOOL_CACHE "repair-dotnet/$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT/bin"
+      @(
+        "DOTNET_INSTALL_DIR=$root"
+        "DOTNET_ROOT=$root"
+        "DOTNET_HOST_PATH=$root/dotnet"
+        "DOTNET_MULTILEVEL_LOOKUP=0"
+      ) | Add-Content -LiteralPath $env:GITHUB_ENV
+  - name: Install approved .NET SDK
+    uses: actions/setup-dotnet@v6.0.0
+    with:
+      global-json-file: global.json
 tools:
   github:
     toolsets: [context, repos, pull_requests]
@@ -127,12 +141,39 @@ tools:
   edit:
 
 safe-outputs:
+  # Deterministic report recovery requires the hosted runner's PowerShell.
+  runs-on: ubuntu-latest
   # Preserve the exact recorded command's URLs inside its code block.
   urls: allowed-or-code-region
   steps:
     - name: Disable implicit tag fetching
       if: ${{ (!cancelled()) && needs.agent.result != 'skipped' && contains(needs.agent.outputs.output_types, 'push_to_pull_request_branch') }}
       run: git config remote.origin.tagOpt --no-tags
+    - name: Checkout reporting helpers
+      if: ${{ !contains(needs.agent.outputs.output_types, 'push_to_pull_request_branch') }}
+      uses: actions/checkout@v7.0.1
+      with:
+        persist-credentials: false
+    - name: Complete terminal repair report
+      shell: pwsh
+      env:
+        REPAIR_AGENT_OUTPUT: ${{ steps.setup-agent-output-env.outputs.GH_AW_AGENT_OUTPUT }}
+        REPAIR_AGENT_OUTCOME: ${{ needs.agent.result }}
+        REPAIR_PR: ${{ github.event.pull_request.number || github.event.issue.number }}
+        REPAIR_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      run: |
+        ./.github/skills/auto-build-repair/complete-repair-report.ps1 `
+          -AgentOutputFile $env:REPAIR_AGENT_OUTPUT `
+          -ResultsDir /tmp/gh-aw/sandbox/agent/logs/repair-results `
+          -Pr $env:REPAIR_PR -HeadSha $env:REPAIR_HEAD_SHA `
+          -AgentOutcome $env:REPAIR_AGENT_OUTCOME
+    - name: Upload recovered repair report
+      if: always()
+      uses: actions/upload-artifact@v7.0.1
+      with:
+        name: repair-report
+        path: /tmp/gh-aw/sandbox/agent/logs/repair-results/
+        if-no-files-found: ignore
   # Commit a successful repair (custom-code edits + regenerated Generated/) to the PR branch.
   # Forks are refused by this safe output; the label is re-checked at apply time; the
   # protected-files denylist blocks .github/, dot-dirs, manifests and instruction files.
@@ -169,16 +210,17 @@ Follow the checked-in skill **exactly** — it is the source of truth for the pr
 The skill drives the shared **`azsdk_customized_code_update`** engine. In this workflow the engine is the **`azsdk` CLI** (installed onto PATH by the setup step), not the MCP server. Read `maxIterations` from `repair-config.yml` and invoke the engine **exactly once**, passing that value as `--max-attempts`. The engine retains one conversation across its validation retries. Capture its single final `CustomizedCodeUpdateResponse` with the global `-o json` flag:
 
 ```bash
-mkdir -p "$RUNNER_TEMP/repair-results"
-rm -f "$RUNNER_TEMP/repair-results/engine-command.txt"
+export PATH="$DOTNET_ROOT:$PATH"
+mkdir -p "$AZSDK_REPAIR_RESULTS_DIR"
+rm -f "$AZSDK_REPAIR_RESULTS_DIR/engine-command.txt"
 if ! azsdk tsp client customized-update --help \
-  > "$RUNNER_TEMP/repair-results/capability.txt" \
-  2> "$RUNNER_TEMP/repair-results/engine-errors.txt"; then
+  > "$AZSDK_REPAIR_RESULTS_DIR/capability.txt" \
+  2> "$AZSDK_REPAIR_RESULTS_DIR/engine-errors.txt"; then
   exit 1
 fi
-if ! grep -Fq -- '--max-attempts' "$RUNNER_TEMP/repair-results/capability.txt"; then
+if ! grep -Fq -- '--max-attempts' "$AZSDK_REPAIR_RESULTS_DIR/capability.txt"; then
   printf '%s\n' 'Installed azsdk does not support --max-attempts; the bounded engine release is required.' \
-    > "$RUNNER_TEMP/repair-results/engine-errors.txt"
+    > "$AZSDK_REPAIR_RESULTS_DIR/engine-errors.txt"
   exit 1
 fi
 engine_command=(
@@ -197,17 +239,17 @@ for engine_argument in "${engine_command[@]}"; do
   engine_command_text+="$engine_argument_text "
 done
 printf '%s\n' "${engine_command_text% }" \
-  > "$RUNNER_TEMP/repair-results/engine-command.txt" || exit 1
+  > "$AZSDK_REPAIR_RESULTS_DIR/engine-command.txt" || exit 1
 if "${engine_command[@]}" \
-  > "$RUNNER_TEMP/repair-results/engine-stdout.txt" \
-  2> "$RUNNER_TEMP/repair-results/engine-stderr.txt"; then
+  > "$AZSDK_REPAIR_RESULTS_DIR/engine-stdout.txt" \
+  2> "$AZSDK_REPAIR_RESULTS_DIR/engine-stderr.txt"; then
   engine_exit=0
 else
   engine_exit=$?
 fi
-printf '%s\n' "$engine_exit" > "$RUNNER_TEMP/repair-results/engine-exit-code.txt"
+printf '%s\n' "$engine_exit" > "$AZSDK_REPAIR_RESULTS_DIR/engine-exit-code.txt"
 pwsh "$GITHUB_WORKSPACE/.github/skills/auto-build-repair/capture-engine-result.ps1" \
-  -ResultsDir "$RUNNER_TEMP/repair-results" \
+  -ResultsDir "$AZSDK_REPAIR_RESULTS_DIR" \
   -MaxIterations "<maxIterations from repair-config.yml>"
 ```
 
@@ -260,9 +302,16 @@ pwsh .github/skills/auto-build-repair/emit-repair-report.ps1 \
 
 ## Steps
 
-> **Before any step, `cd "$GITHUB_WORKSPACE"`.** Your current working directory is *not* the checkout. Run every `git`, build, and script command from `$GITHUB_WORKSPACE` (or address files by absolute `$GITHUB_WORKSPACE/...` paths). Relative paths like `.github/skills/...` or `repair-results/...` will otherwise resolve outside the repo and fail. Keep all scratch output under `$RUNNER_TEMP` (never the agent working dir), so it is not swept into the run artifacts.
+> **Before any step, `cd "$GITHUB_WORKSPACE"`.** Your current working directory is *not* the checkout. Run every `git`, build, and script command from `$GITHUB_WORKSPACE` (or address files by absolute `$GITHUB_WORKSPACE/...` paths). Relative paths like `.github/skills/...` or `repair-results/...` will otherwise resolve outside the repo and fail. Keep repair evidence in `$AZSDK_REPAIR_RESULTS_DIR`, the writable, secret-redacted and uploaded agent log directory. Other scratch output stays under `$RUNNER_TEMP`, never the agent working dir.
 
-1. Identify the single failing SDK package path from the PR diff. **Record the current PR head sha** (`git rev-parse HEAD`) as the pre-repair sha — the summary in Step 5 uses it to diff changed files. Create `$RUNNER_TEMP/repair-results` and collect the package's build errors by building the changed package, **redirecting the raw build output to `$RUNNER_TEMP/repair-results/pre-repair-errors.txt`** — the Step 5 emitter parses this to list the errors it fixed (a first-try success leaves no `buildResult` in the engine result, so this capture is the only source for the "Build Errors Fixed" list). This is a mechanical redirect, not authored content. **If the package already builds cleanly (no errors), there is nothing to repair: skip Steps 2–4, render the already-green summary using the `skipped_already_green` invocation in Step 5, post it, and end.**
+1. Identify the single failing SDK package path from the PR diff. Run the deterministic baseline helper once:
+
+   ```bash
+   pwsh "$GITHUB_WORKSPACE/.github/skills/auto-build-repair/invoke-repair-baseline.ps1" \
+     -PackagePath "<failing SDK package dir>" -ResultsDir "$AZSDK_REPAIR_RESULTS_DIR"
+   ```
+
+   It verifies the selected SDK against `global.json`, records the checkout SHA in `context.json`, and captures the raw build output as `pre-repair-errors.txt` and its exit code as `baseline-exit-code.txt`. Read these files; never author them. The captured SHA is the pre-repair SHA for Step 5. **If the package already builds cleanly (no errors), there is nothing to repair: skip Steps 2–4, render the already-green summary using the `skipped_already_green` invocation in Step 5, post it, and end.** If restore, SDK selection, or other infrastructure prevents the baseline build, skip the engine and render the failure report in Step 5. Do not alter feeds, dependencies, or toolchain versions to work around it.
 2. Apply the skill once: call the engine with `--edit-scope CustomCode`, `--max-attempts <configured maxIterations>`, the `--package-path`, and build errors as `--customization-request`. Record the executed argument array as `engine-command.txt`, both raw streams, and the process exit code, then run the checked-in capture helper to produce `result.json` and `engine-errors.txt`, as shown above. **Never run an outer retry loop**, even if the error set shrinks.
 3. Inspect the final response and process outcome. Stop on success or any failure (`SpecChangeRequired`, failed regeneration/build, no progress, exhausted attempts, cancellation, or infrastructure error). Surface the actual diagnostics and guidance; do not retry or escalate to a human prompt.
 4. **Gate the push on a green build.** Inspect `result.json` and invoke the `push-to-pull-request-branch` safe output (custom-code edits + regenerated `Generated/`) **only when the process succeeded and its `success` property is exactly `true`**. In the bounded CustomCode engine this means the final package build passed. Do not infer a green build from tool completion, a smaller error set, applied patches, or exhausted iterations. For every other terminal state, including missing/unparseable JSON or a non-Boolean success value, **do not invoke `push-to-pull-request-branch`**. Render and post the failure report with `add-comment` only; attempted changes remain uncommitted in the ephemeral workspace.
@@ -270,9 +319,9 @@ pwsh .github/skills/auto-build-repair/emit-repair-report.ps1 \
 
    ```bash
    pwsh "$GITHUB_WORKSPACE/.github/skills/auto-build-repair/emit-repair-report.ps1" \
-     -ResultsDir "$RUNNER_TEMP/repair-results" \
-     -PreRepairErrorsFile "$RUNNER_TEMP/repair-results/pre-repair-errors.txt" \
-     -EngineErrorsFile "$RUNNER_TEMP/repair-results/engine-errors.txt" \
+     -ResultsDir "$AZSDK_REPAIR_RESULTS_DIR" \
+     -PreRepairErrorsFile "$AZSDK_REPAIR_RESULTS_DIR/pre-repair-errors.txt" \
+     -EngineErrorsFile "$AZSDK_REPAIR_RESULTS_DIR/engine-errors.txt" \
      -PackagePath "<failing SDK package dir>" \
      -PreRepairSha "<pre-repair sha from Step 1>" \
      -Pr <pr-number> -HeadSha "<pr-head-sha>" -Repo "$GITHUB_REPOSITORY" \
@@ -282,6 +331,13 @@ pwsh .github/skills/auto-build-repair/emit-repair-report.ps1 \
    ```
 
    Then pass the **exact contents** of `$RUNNER_TEMP/repair-comment.md` as the `add-comment` body — unedited, unsummarized, unreordered. The emitter already appends `--generated by Copilot`. Emit this comment on **every** terminal outcome (repaired, still-failing/stop-condition, already-green) so no run silently degrades.
+
+   If the agent aborts or returns incomplete output, the existing safe-output job
+   runs `complete-repair-report.ps1` against the downloaded, secret-redacted evidence
+   before the native `add-comment` handler. It produces a deterministic comment
+   and removes every push request. It does not invoke the engine or manufacture
+   a response. The original artifact is still validated, so infrastructure and
+   incomplete-output failures remain visible as failed Actions runs.
 
    If the report would exceed the safe-output body's 65,000-character limit,
    the emitter saves the full command and report as `engine-command.txt` and

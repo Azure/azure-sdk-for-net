@@ -134,7 +134,7 @@ test("posted command code preserves URLs without changing the network allowlist"
   const lock = fs.readFileSync(path.resolve(__dirname, "../../../workflows/sdk-build-repair.lock.yml"), "utf8");
   assert.equal((lock.match(/GH_AW_SAFE_OUTPUTS_URLS: "allowed-or-code-region"/g) || []).length, 2);
 });
-const invocation = /```bash\r?\n(mkdir -p "\$RUNNER_TEMP\/repair-results"[\s\S]*?)```/.exec(workflow)[1].replace(/\r\n/g, "\n");
+const invocation = /```bash\r?\n(export PATH="\$DOTNET_ROOT:\$PATH"[\s\S]*?)```/.exec(workflow)[1].replace(/\r\n/g, "\n");
 const bash = process.env.BASH || "bash";
 let sanitizeContent;
 test.before(async () => {
@@ -222,6 +222,8 @@ azsdk() {
     const requestFile = path.join(root, "request.txt");
     fs.writeFileSync(requestFile, request);
     const environment = { ...process.env, RUNNER_TEMP: root.replace(/\\/g, "/"),
+      AZSDK_REPAIR_RESULTS_DIR: path.join(root, "repair-results").replace(/\\/g, "/"),
+      DOTNET_ROOT: root.replace(/\\/g, "/"),
       GITHUB_WORKSPACE: path.resolve(__dirname, "../../../..").replace(/\\/g, "/"), MODE: mode, BOUND: String(bound),
       TEST_PACKAGE_PATH: packagePath, TEST_CUSTOMIZATION_REQUEST_FILE: requestFile.replace(/\\/g, "/"), LC_ALL: "C.UTF-8" };
     const command = invocation.replaceAll("<maxIterations from repair-config.yml>", String(bound))
