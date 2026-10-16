@@ -2017,7 +2017,7 @@ content-recording option is enabled; opted-in content is bounded. REST telemetry
 request or response bodies.
 
 For complete runnable examples, see the
-[Voice Agent REST telemetry sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/VoiceAgent/Sample_VoiceAgent_Telemetry.cs)
+[Voice Agent REST telemetry sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Telemetry_Rest.md)
 and the
 [Voice Agent realtime telemetry sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Telemetry_Realtime.md).
 Both use the existing Foundry enablement settings and OpenTelemetry console exporter.

@@ -171,5 +171,5 @@ then run from the repository root:
 dotnet test sdk\ai\Azure.AI.Projects\tests\Azure.AI.Projects.Tests.csproj -f net8.0 --filter "FullyQualifiedName~Sample_VoiceAgent_Telemetry&Name~VoiceAgentRealtimeTelemetryAsync"
 ```
 
-This calls the real service and may incur charges. It does not create WebSocket recordings or
-implement WebRTC peer/media handling.
+This calls the real service and may incur charges. It temporarily persists a text conversation
+and deletes it during cleanup. It does not implement WebRTC peer/media handling.
