@@ -319,7 +319,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             },
             ToolType.BrowserAutomationGA => new BrowserAutomationToolboxTool(
             new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_MCP_CONNECTION_NAME)
+                new BrowserAutomationToolConnectionOptions(TestEnvironment.BROWSER_AUTOMATION_NAME)
             ))
             {
                 Name = "browser-automation",
