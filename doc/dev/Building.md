@@ -62,4 +62,20 @@ If you're working on engineering system changes for the .NET repo within one of 
 
       Same as above: common pipelines get included and passed various objects here too.
 
+### Sparse checkouts
+
+Jobs that do not need all SDK sources use `sparseCheckoutPatterns` together with a partial fetch:
+
+* [Engineering-script CI](../../eng/scripts/ci.yml) checks out root files, `eng`, `.config`, and `.github`. The selected test categories use engineering fixtures; `.github` is needed by workflow regression tests.
+* [Release tagging](../../eng/pipelines/templates/stages/archetype-net-release.yml) checks out root files, `eng`, `.config`, and the selected service. Test pipelines also include `sdk/template`. Tag fetching is unchanged because test-pipeline version selection reads release tags.
+* [Emitter regeneration initialization](../../eng/pipelines/templates/archetype-typespec-emitter.yml) checks out root files, `eng`, `.config`, all `sdk/**/tsp-location.yaml` files, and caller-supplied `SparseCheckoutPaths` when `OnlyGenerateTypespec` is true. This preserves package discovery without downloading unrelated SDK sources. Other regeneration initialization runs retain the full tree.
+
+Non-cone patterns are ordered: `/* !/*/` selects only root files, but adding another `/*` later includes every subtree again. Do not narrow jobs that validate repository-wide paths or discover packages without preserving their complete input set.
+
+Checkout regression tests apply the pipeline patterns to a Git fixture and exercise the regeneration matrix script:
+
+```powershell
+Invoke-Pester eng/scripts/tests/TypeSpec-Emitter-PullRequest.Tests.ps1
+```
+
 Any changes to the _eng_ directory outside of the _common_ subdirectory are owned by the Azure SDK for .NET team, but you should still coordinate with the central Engineering Systems team to discuss how your changes will work, go over any problems they might think of, and determine whether the changes should actually be common. Any changes within the _eng/common_ subdirectory should be discussed with the central EngSys team and should be made in the <https://github.com/Azure/azure-sdk-tools/tree/main/eng/common> directory. See [here](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md) for more information.
