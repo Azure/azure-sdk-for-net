@@ -1,0 +1,751 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ClientModel;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Net.WebSockets;
+using System.Text.Json;
+using Azure.Core;
+
+namespace Azure.AI.Projects;
+
+internal sealed class VoiceAgentRealtimeTelemetry
+{
+    internal const string SourceName = "Azure.AI.Projects.ProjectsRealtimeClient";
+    internal const string Prefix = "az.ai.voice_agents.";
+    private const int MaxMessageBytes = 1024 * 1024;
+    private const int MaxResponses = 64;
+    private const int MaxContentLength = 4096;
+    private static readonly ActivitySource s_source = new(SourceName, typeof(VoiceAgentRealtimeTelemetry).Assembly.GetName().Version?.ToString());
+    private readonly object _gate = new();
+    private readonly Dictionary<string, ResponseActivity> _responses = new();
+    private readonly Uri _endpoint;
+    private readonly string _agentName;
+    private readonly bool _captureContent;
+    private readonly bool _enableLogging;
+    private readonly Activity _session;
+    private Activity _connect;
+    private MemoryStream _sendBuffer;
+    private MemoryStream _receiveBuffer;
+    private bool _skipSendMessage;
+    private bool _skipReceiveMessage;
+    private bool _ended;
+    private string _model;
+    private string _conversationId;
+    private string _lastInput;
+    private long _inputAudioBytes;
+    private int _responsesFinished;
+    private int _responsesUntracked;
+    private int _eventsRecorded;
+    private int _eventsUntracked;
+
+    private VoiceAgentRealtimeTelemetry(Uri endpoint, string agentName, string transport, bool captureContent, bool enableLogging, Activity session)
+    {
+        _endpoint = endpoint;
+        _agentName = agentName;
+        _captureContent = captureContent;
+        _enableLogging = enableLogging;
+        _session = session;
+        SetCommonTags(session);
+        session.SetTag(Prefix + "connection.transport", transport);
+        session.SetTag(Prefix + "connected", false);
+        _connect = StartDetachedActivity("voice_agents.realtime.connect", session.Context);
+        SetCommonTags(_connect);
+        _connect?.SetTag(Prefix + "connection.transport", transport);
+        LogConnection("connecting");
+    }
+
+    internal static VoiceAgentRealtimeTelemetry Start(Uri endpoint, string agentName, string queryString, bool enabled, bool enableLogging)
+    {
+        if (!enabled || !s_source.HasListeners() ||
+            !AppContextSwitchHelper.GetConfigValue("Azure.Experimental.EnableGenAITracing", "AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING"))
+        {
+            return null;
+        }
+
+        Activity session = StartDetachedActivity("voice_agents.realtime.session", Activity.Current?.Context ?? default);
+        if (session is null)
+        {
+            return null;
+        }
+
+        bool captureContent = AppContextSwitchHelper.GetConfigValue(
+            "Azure.Experimental.TraceGenAIMessageContent", "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT");
+        return new VoiceAgentRealtimeTelemetry(endpoint, agentName, RealtimeClientHelper.GetTransport(queryString), captureContent, enableLogging, session);
+    }
+
+    internal Activity ConnectionActivity => _connect;
+
+    internal void AddTraceHeaders(IDictionary<string, string> headers)
+    {
+        if (_connect?.IdFormat != ActivityIdFormat.W3C)
+        {
+            return;
+        }
+
+        bool hasTraceParent = false;
+        bool hasTraceState = false;
+        foreach (string name in headers.Keys)
+        {
+            hasTraceParent |= string.Equals(name, "traceparent", StringComparison.OrdinalIgnoreCase);
+            hasTraceState |= string.Equals(name, "tracestate", StringComparison.OrdinalIgnoreCase);
+        }
+        if (!hasTraceParent)
+        {
+            headers["traceparent"] = _connect.Id;
+            if (!hasTraceState && !string.IsNullOrEmpty(_connect.TraceStateString))
+            {
+                headers["tracestate"] = _connect.TraceStateString;
+            }
+        }
+    }
+
+    internal void Connected()
+    {
+        lock (_gate)
+        {
+            StopDetachedActivity(_connect);
+            _connect = null;
+            _session.SetTag(Prefix + "connected", true);
+            LogConnection("connected");
+        }
+    }
+
+    internal void ConnectionFailed(Exception exception)
+    {
+        lock (_gate)
+        {
+            SetFailure(_connect, exception);
+            SetFailure(_session, exception);
+            AddEvent(_session, "voice_agents.connection.failed",
+                new ActivityTagsCollection { { "error.type", SafeErrorType(exception) } });
+            if (exception is not OperationCanceledException)
+            {
+                LogFailure(SafeErrorType(exception));
+            }
+            StopDetachedActivity(_connect);
+            _connect = null;
+            EndCore(null, false);
+        }
+    }
+
+    internal void TransportFailed(Exception exception, bool isSend)
+    {
+        lock (_gate)
+        {
+            if (_ended)
+            {
+                return;
+            }
+            if (isSend)
+            {
+                AddEvent(_session, "voice_agents.send.failed", new ActivityTagsCollection
+                {
+                    { "error.type", SafeErrorType(exception) }
+                });
+                if (exception is not OperationCanceledException)
+                {
+                    LogFailure(SafeErrorType(exception));
+                }
+            }
+            else if (exception is not OperationCanceledException)
+            {
+                SetFailure(_session, exception);
+                AddEvent(_session, "voice_agents.receive.failed",
+                    new ActivityTagsCollection { { "error.type", SafeErrorType(exception) } });
+                LogFailure(SafeErrorType(exception));
+                EndCore(null, false);
+            }
+            else
+            {
+                AddEvent(_session, "voice_agents.receive.cancelled");
+            }
+        }
+    }
+
+    internal void Close(WebSocketCloseStatus? status, bool wasClean)
+    {
+        lock (_gate)
+        {
+            EndCore(status, wasClean);
+        }
+    }
+
+    internal void ObserveFrame(ArraySegment<byte> bytes, bool endOfMessage, bool isSend)
+    {
+        lock (_gate)
+        {
+            if (_ended)
+            {
+                return;
+            }
+            ref MemoryStream buffer = ref (isSend ? ref _sendBuffer : ref _receiveBuffer);
+            ref bool skipMessage = ref (isSend ? ref _skipSendMessage : ref _skipReceiveMessage);
+            if (skipMessage)
+            {
+                if (endOfMessage)
+                {
+                    skipMessage = false;
+                }
+                return;
+            }
+            if (bytes.Count + (buffer?.Length ?? 0) > MaxMessageBytes)
+            {
+                buffer?.Dispose();
+                buffer = null;
+                skipMessage = !endOfMessage;
+                AddEvent(_session, "voice_agents.warning");
+                return;
+            }
+
+            if (!endOfMessage || buffer != null)
+            {
+                buffer ??= new MemoryStream();
+                buffer.Write(bytes.Array, bytes.Offset, bytes.Count);
+                if (!endOfMessage)
+                {
+                    return;
+                }
+                ObserveMessage(new ReadOnlyMemory<byte>(buffer.GetBuffer(), 0, (int)buffer.Length), isSend);
+                buffer.Dispose();
+                buffer = null;
+            }
+            else
+            {
+                ObserveMessage(new ReadOnlyMemory<byte>(bytes.Array, bytes.Offset, bytes.Count), isSend);
+            }
+        }
+    }
+
+    private void ObserveMessage(ReadOnlyMemory<byte> bytes, bool isSend)
+    {
+        try
+        {
+            using JsonDocument document = JsonDocument.Parse(bytes);
+            JsonElement root = document.RootElement;
+            string type = String(root, "type");
+            if (isSend)
+            {
+                ObserveSent(root, type);
+            }
+            else
+            {
+                ObserveReceived(root, type);
+            }
+        }
+        catch (JsonException)
+        {
+            // Invalid protocol data remains the responsibility of the existing realtime reader.
+            AddEvent(_session, "voice_agents.warning");
+        }
+        catch (FormatException)
+        {
+            AddEvent(_session, "voice_agents.warning");
+        }
+    }
+
+    private void ObserveSent(JsonElement root, string type)
+    {
+        switch (type)
+        {
+            case "input_audio_buffer.append":
+                _inputAudioBytes += AudioBytes(root, "audio");
+                _lastInput = "[{\"role\":\"user\",\"parts\":[{\"type\":\"audio\"}]}]";
+                break;
+            case "conversation.item.create":
+                if (root.TryGetProperty("item", out JsonElement item) && item.ValueKind == JsonValueKind.Object)
+                {
+                    if (String(item, "type") == "function_call_output")
+                    {
+                        AddEvent(_session, "voice_agents.tool.output_sent", new ActivityTagsCollection
+                        {
+                            { "gen_ai.tool.call.id", Identifier(item, "call_id") }
+                        });
+                        _lastInput = MessageSummary("tool", "tool_call_response", _captureContent ? String(item, "output") : null,
+                            Identifier(item, "call_id"));
+                    }
+                    else
+                    {
+                        _lastInput = InputSummary(item);
+                    }
+                }
+                else
+                {
+                    AddEvent(_session, "voice_agents.warning");
+                }
+                break;
+            case "response.cancel":
+                AddEvent(_session, "voice_agents.response.cancel_requested");
+                break;
+            case "session.update":
+                if (_captureContent && root.TryGetProperty("session", out JsonElement session) && String(session, "instructions") is string instructions)
+                {
+                    _session.SetTag("gen_ai.system_instructions", MessageSummary("system", "text", instructions));
+                }
+                AddEvent(_session, "session.update");
+                break;
+            case "input_audio_buffer.clear":
+                AddEvent(_session, "input_audio_buffer.clear");
+                break;
+            case "input_audio_buffer.commit":
+                AddEvent(_session, "input_audio_buffer.commit");
+                break;
+        }
+    }
+
+    private void ObserveReceived(JsonElement root, string type)
+    {
+        switch (type)
+        {
+            case "session.created":
+            case "session.updated":
+                if (root.TryGetProperty("session", out JsonElement session))
+                {
+                    _session.SetTag(Prefix + "session.id", Identifier(session, "id"));
+                    _model = Identifier(session, "model") ?? _model;
+                    _conversationId = Identifier(session, "conversation_id") ?? _conversationId;
+                    _session.SetTag("gen_ai.request.model", _model);
+                    _session.SetTag("gen_ai.conversation.id", _conversationId);
+                }
+                AddEvent(_session, type);
+                break;
+            case "response.created":
+                if (root.TryGetProperty("response", out JsonElement created))
+                {
+                    StartResponse(created);
+                }
+                break;
+            case "response.output_audio.delta":
+            case "response.audio.delta":
+                ResponseActivity audioResponse = FindResponse(root);
+                if (audioResponse != null)
+                {
+                    long count = AudioBytes(root, "delta");
+                    if (count > 0 && audioResponse.OutputAudioBytes == 0)
+                    {
+                        audioResponse.Activity?.SetTag(Prefix + "response.time_to_first_audio_seconds",
+                            (Stopwatch.GetTimestamp() - audioResponse.StartTimestamp) / (double)Stopwatch.Frequency);
+                    }
+                    audioResponse.OutputAudioBytes += count;
+                }
+                break;
+            case "response.done":
+                if (root.TryGetProperty("response", out JsonElement response))
+                {
+                    FinishResponse(response);
+                }
+                break;
+            case "response.function_call_arguments.done":
+                ActivityTagsCollection toolTags = new()
+                {
+                    { "gen_ai.tool.call.id", Identifier(root, "call_id") },
+                    { Prefix + "tool.kind", "function" }
+                };
+                if (_captureContent)
+                {
+                    toolTags.Add("gen_ai.tool.name", Limit(String(root, "name")));
+                    toolTags.Add(Prefix + "tool.arguments", Limit(String(root, "arguments")));
+                }
+                AddEvent(FindResponse(root)?.Activity ?? _session, "voice_agents.tool.requested", toolTags);
+                break;
+            case "error":
+            case "rtc.call.error":
+                ActivityTagsCollection errorTags = new() { { "error.type", "service_error" } };
+                if (root.TryGetProperty("error", out JsonElement error) && String(error, "code") is string code &&
+                    code is "invalid_event" or "invalid_parameter" or "invalid_request_error" or "invalid_value" or
+                        "response_cancel_not_active" or "input_audio_buffer_commit_empty" or "conversation_item_not_found" or
+                        "rate_limit_exceeded" or "server_error" or "audio_unintelligible" or "authentication_error" or
+                        "session_expired" or "unsupported_value" or "unsupported_parameter")
+                {
+                    errorTags.Add(Prefix + "error.code", code);
+                }
+                AddEvent(_session, type == "error" ? "voice_agents.server_error" : type, errorTags);
+                LogFailure("service_error");
+                break;
+            case "warning":
+                AddEvent(_session, "voice_agents.warning");
+                break;
+            case "conversation.item.input_audio_transcription.completed":
+                AddEvent(_session, "voice_agents.transcription.completed");
+                break;
+            case "conversation.item.input_audio_transcription.failed":
+                AddEvent(_session, "voice_agents.transcription.failed");
+                break;
+            case "response.mcp_call.completed":
+            case "response.mcp_call.failed":
+                AddEvent(_session, type, new ActivityTagsCollection { { Prefix + "item.id", Identifier(root, "item_id") } });
+                break;
+            case "session.subagent.started":
+            case "session.subagent.completed":
+            case "session.subagent.aborted":
+                ActivityTagsCollection subagentTags = new()
+                {
+                    { Prefix + "subagent.consultation.id", Identifier(root, "consultation_id") }
+                };
+                if (String(root, "abort_reason") is string reason &&
+                    reason is "unknown_target" or "timeout" or "cancelled" or "stopped_by_user" or "superseded" or "failed")
+                {
+                    subagentTags.Add(Prefix + "subagent.abort_reason", reason);
+                }
+                AddEvent(_session, type, subagentTags);
+                break;
+            case "input_audio_buffer.cleared":
+            case "input_audio_buffer.committed":
+            case "conversation.item.deleted":
+                AddEvent(_session, type);
+                break;
+        }
+    }
+
+    private void StartResponse(JsonElement response)
+    {
+        string id = Identifier(response, "id");
+        if (id == null || _responses.ContainsKey(id))
+        {
+            return;
+        }
+        if (_responses.Count == MaxResponses)
+        {
+            _responsesUntracked++;
+            return;
+        }
+        Activity activity = StartDetachedActivity("invoke_agent", _session.Context);
+        SetCommonTags(activity);
+        activity?.SetTag("gen_ai.operation.name", "invoke_agent");
+        activity?.SetTag("gen_ai.response.id", id);
+        activity?.SetTag("gen_ai.request.model", _model);
+        activity?.SetTag("gen_ai.conversation.id", Identifier(response, "conversation_id") ?? _conversationId);
+        if (_lastInput != null)
+        {
+            activity?.SetTag("gen_ai.input.messages", _lastInput);
+        }
+        _responses.Add(id, new ResponseActivity(activity));
+    }
+
+    private void FinishResponse(JsonElement response)
+    {
+        string id = Identifier(response, "id");
+        if (id == null || !_responses.TryGetValue(id, out ResponseActivity state))
+        {
+            return;
+        }
+        _responses.Remove(id);
+        string status = String(response, "status");
+        string safeStatus = status is "completed" or "cancelled" or "failed" or "incomplete" ? status : "unknown";
+        state.Activity?.SetTag(Prefix + "response.status", safeStatus);
+        state.Activity?.SetTag(Prefix + "output.audio.bytes", state.OutputAudioBytes);
+        _conversationId = Identifier(response, "conversation_id") ?? _conversationId;
+        state.Activity?.SetTag("gen_ai.conversation.id", _conversationId);
+        state.Activity?.SetTag("gen_ai.response.model", Identifier(response, "model") ?? _model);
+        if (response.TryGetProperty("output_modalities", out JsonElement modalities) && modalities.ValueKind == JsonValueKind.Array)
+        {
+            List<string> outputModalities = new();
+            foreach (JsonElement modality in modalities.EnumerateArray())
+            {
+                if (modality.ValueKind == JsonValueKind.String && modality.GetString() is string value && value is "text" or "audio")
+                {
+                    if (!outputModalities.Contains(value))
+                    {
+                        outputModalities.Add(value);
+                    }
+                }
+            }
+            state.Activity?.SetTag(Prefix + "response.output_modalities", outputModalities.ToArray());
+        }
+        if (safeStatus == "completed")
+        {
+            state.Activity?.SetStatus(ActivityStatusCode.Ok);
+        }
+        else if (safeStatus == "failed")
+        {
+            state.Activity?.SetStatus(ActivityStatusCode.Error);
+            state.Activity?.SetTag("error.type", "response_failed");
+        }
+        if (response.TryGetProperty("usage", out JsonElement usage))
+        {
+            SetNumberTag(state.Activity, usage, "input_tokens", "gen_ai.usage.input_tokens");
+            SetNumberTag(state.Activity, usage, "output_tokens", "gen_ai.usage.output_tokens");
+        }
+        if (response.TryGetProperty("output", out JsonElement output) && output.ValueKind == JsonValueKind.Array)
+        {
+            using MemoryStream buffer = new();
+            using Utf8JsonWriter writer = new(buffer);
+            writer.WriteStartArray();
+            int messageCount = 0;
+            foreach (JsonElement item in output.EnumerateArray())
+            {
+                if (messageCount == 32)
+                {
+                    break;
+                }
+                if (String(item, "type") == "function_call")
+                {
+                    WriteMessage(writer, "assistant", "tool_call", null, Identifier(item, "call_id"));
+                    messageCount++;
+                }
+                if (item.ValueKind == JsonValueKind.Object && item.TryGetProperty("content", out JsonElement content) && content.ValueKind == JsonValueKind.Array)
+                {
+                    foreach (JsonElement part in content.EnumerateArray())
+                    {
+                        string type = String(part, "type");
+                        if (type is "text" or "output_text" or "audio" or "output_audio" && messageCount < 32)
+                        {
+                            string text = _captureContent ? String(part, "text") ?? String(part, "transcript") : null;
+                            WriteMessage(writer, "assistant", type is "audio" or "output_audio" ? "audio" : "text", text);
+                            messageCount++;
+                        }
+                    }
+                }
+            }
+            writer.WriteEndArray();
+            writer.Flush();
+            state.Activity?.SetTag("gen_ai.output.messages", new BinaryData(buffer.ToArray()).ToString());
+        }
+        StopDetachedActivity(state.Activity);
+        _responsesFinished++;
+    }
+
+    private ResponseActivity FindResponse(JsonElement root)
+    {
+        string id = Identifier(root, "response_id");
+        return id != null && _responses.TryGetValue(id, out ResponseActivity result) ? result : null;
+    }
+
+    private string InputSummary(JsonElement item)
+    {
+        string summary = null;
+        string role = String(item, "role") is "assistant" ? "assistant" : "user";
+        if (item.TryGetProperty("content", out JsonElement content) && content.ValueKind == JsonValueKind.Array)
+        {
+            foreach (JsonElement part in content.EnumerateArray())
+            {
+                string type = String(part, "type");
+                if (type is "input_audio" or "audio")
+                {
+                    _inputAudioBytes += AudioBytes(part, "audio");
+                    summary ??= MessageSummary(role, "audio", null);
+                }
+                if (type is "input_text" or "text")
+                {
+                    summary ??= MessageSummary(role, "text", _captureContent ? String(part, "text") : null);
+                }
+            }
+        }
+        return summary;
+    }
+
+    private static string MessageSummary(string role, string type, string content, string callId = null)
+    {
+        using MemoryStream buffer = new();
+        using Utf8JsonWriter writer = new(buffer);
+        writer.WriteStartArray();
+        WriteMessage(writer, role, type, content, callId);
+        writer.WriteEndArray();
+        writer.Flush();
+        return new BinaryData(buffer.ToArray()).ToString();
+    }
+
+    private static void WriteMessage(Utf8JsonWriter writer, string role, string type, string content, string callId = null)
+    {
+        writer.WriteStartObject();
+        writer.WriteString("role", role);
+        writer.WriteStartArray("parts");
+        writer.WriteStartObject();
+        writer.WriteString("type", type);
+        if (callId != null)
+        {
+            writer.WriteString("id", callId);
+        }
+        if (content != null)
+        {
+            writer.WriteString(type == "tool_call_response" ? "response" : "content", Limit(content));
+        }
+        writer.WriteEndObject();
+        writer.WriteEndArray();
+        writer.WriteEndObject();
+    }
+
+    private void EndCore(WebSocketCloseStatus? code, bool wasClean)
+    {
+        if (_ended)
+        {
+            return;
+        }
+        _ended = true;
+        foreach (ResponseActivity response in _responses.Values)
+        {
+            response.Activity?.SetTag(Prefix + "response.status", "interrupted");
+            response.Activity?.SetTag(Prefix + "output.audio.bytes", response.OutputAudioBytes);
+            StopDetachedActivity(response.Activity);
+        }
+        _responses.Clear();
+        _sendBuffer?.Dispose();
+        _receiveBuffer?.Dispose();
+        _sendBuffer = null;
+        _receiveBuffer = null;
+        _session.SetTag(Prefix + "input.audio.bytes", _inputAudioBytes);
+        _session.SetTag(Prefix + "responses.finished", _responsesFinished);
+        _session.SetTag("gen_ai.conversation.id", _conversationId);
+        if (_lastInput != null)
+        {
+            _session.SetTag("gen_ai.input.messages", _lastInput);
+        }
+        if (_responsesUntracked > 0)
+        {
+            _session.SetTag(Prefix + "responses.untracked", _responsesUntracked);
+        }
+        if (_eventsUntracked > 0)
+        {
+            _session.SetTag(Prefix + "events.untracked", _eventsUntracked);
+        }
+        if (code.HasValue)
+        {
+            _session.SetTag(Prefix + "close.code", (int)code.Value);
+            if ((int)code.Value >= 1002)
+            {
+                _session.SetStatus(ActivityStatusCode.Error);
+                _session.SetTag("error.type", "websocket_close");
+            }
+        }
+        _session.SetTag(Prefix + "close.was_clean", wasClean);
+        LogConnection("closed");
+        StopDetachedActivity(_session);
+    }
+
+    private void SetCommonTags(Activity activity)
+    {
+        activity?.SetTag("gen_ai.provider.name", "microsoft.foundry");
+        activity?.SetTag("az.namespace", "Microsoft.CognitiveServices");
+        activity?.SetTag("server.address", _endpoint.Host);
+        if (_endpoint.Port != 443 && !_endpoint.IsDefaultPort)
+        {
+            activity?.SetTag("server.port", _endpoint.Port);
+        }
+        activity?.SetTag("gen_ai.agent.name", _agentName);
+    }
+
+    private void AddEvent(Activity activity, string name, ActivityTagsCollection tags = null)
+    {
+        if (activity?.IsAllDataRequested == true)
+        {
+            if (_eventsRecorded < 256)
+            {
+                activity.AddEvent(new ActivityEvent(name, tags: tags));
+                _eventsRecorded++;
+            }
+            else
+            {
+                _eventsUntracked++;
+            }
+        }
+        if (_enableLogging && VoiceAgentRealtimeEventSource.Log.IsEnabled())
+        {
+            VoiceAgentRealtimeEventSource.Log.ProtocolEvent(name, _session.TraceId.ToString(), activity?.SpanId.ToString());
+        }
+    }
+
+    private void LogConnection(string state)
+    {
+        if (_enableLogging && VoiceAgentRealtimeEventSource.Log.IsEnabled())
+        {
+            VoiceAgentRealtimeEventSource.Log.ConnectionState(state, _session.TraceId.ToString(), _session.SpanId.ToString());
+        }
+    }
+
+    private void LogFailure(string errorType)
+    {
+        if (_enableLogging && VoiceAgentRealtimeEventSource.Log.IsEnabled())
+        {
+            VoiceAgentRealtimeEventSource.Log.Failure(errorType, _session.TraceId.ToString(), _session.SpanId.ToString());
+        }
+    }
+
+    private static Activity StartDetachedActivity(string name, ActivityContext parent)
+    {
+        Activity previous = Activity.Current;
+        try
+        {
+            return s_source.StartActivity(name, ActivityKind.Client, parent);
+        }
+        finally
+        {
+            // Session/response lifetimes must not become the caller's ambient Activity.
+            Activity.Current = previous;
+        }
+    }
+
+    private static void StopDetachedActivity(Activity activity)
+    {
+        Activity previous = Activity.Current;
+        try
+        {
+            activity?.Stop();
+        }
+        finally
+        {
+            if (!ReferenceEquals(previous, activity))
+            {
+                Activity.Current = previous;
+            }
+        }
+    }
+
+    private static void SetFailure(Activity activity, Exception exception)
+    {
+        if (exception is OperationCanceledException)
+        {
+            activity?.SetTag(Prefix + "cancelled", true);
+            return;
+        }
+        activity?.SetStatus(ActivityStatusCode.Error);
+        activity?.SetTag("error.type", SafeErrorType(exception));
+        if (exception is ClientResultException responseException)
+        {
+            activity?.SetTag("http.response.status_code", responseException.Status);
+        }
+    }
+
+    private static string SafeErrorType(Exception exception) => exception switch
+    {
+        OperationCanceledException => nameof(OperationCanceledException),
+        WebSocketException => nameof(WebSocketException),
+        ClientResultException => nameof(ClientResultException),
+        TimeoutException => nameof(TimeoutException),
+        _ => nameof(Exception)
+    };
+
+    private static string String(JsonElement parent, string name)
+        => parent.ValueKind == JsonValueKind.Object && parent.TryGetProperty(name, out JsonElement value) && value.ValueKind == JsonValueKind.String
+            ? value.GetString() : null;
+
+    private static string Identifier(JsonElement parent, string name)
+    {
+        string value = String(parent, name);
+        return value?.Length <= 256 ? value : null;
+    }
+
+    private static string Limit(string value) => value?.Length > MaxContentLength ? value.Substring(0, MaxContentLength) : value;
+
+    private static long AudioBytes(JsonElement parent, string name)
+        => parent.ValueKind == JsonValueKind.Object && parent.TryGetProperty(name, out JsonElement value) && value.ValueKind == JsonValueKind.String
+            ? value.GetBytesFromBase64().LongLength : 0;
+
+    private static void SetNumberTag(Activity activity, JsonElement parent, string property, string tag)
+    {
+        if (parent.ValueKind == JsonValueKind.Object && parent.TryGetProperty(property, out JsonElement value) &&
+            value.ValueKind == JsonValueKind.Number && value.TryGetInt64(out long number))
+        {
+            activity?.SetTag(tag, number);
+        }
+    }
+
+    private sealed class ResponseActivity(Activity activity)
+    {
+        internal Activity Activity { get; } = activity;
+        internal long StartTimestamp { get; } = Stopwatch.GetTimestamp();
+        internal long OutputAudioBytes { get; set; }
+    }
+}

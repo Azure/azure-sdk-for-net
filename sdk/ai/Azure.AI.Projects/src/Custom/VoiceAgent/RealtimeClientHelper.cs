@@ -85,6 +85,23 @@ internal class RealtimeClientHelper
         return query.ToString();
     }
 
+    internal static string GetTransport(string queryString)
+    {
+        if (queryString != null)
+        {
+            foreach (string part in queryString.TrimStart('?').Split('&'))
+            {
+                int separator = part.IndexOf('=');
+                if (separator >= 0 && Uri.UnescapeDataString(part.Substring(0, separator)) == "transport")
+                {
+                    string value = Uri.UnescapeDataString(part.Substring(separator + 1));
+                    return value is "websocket" or "webrtc" ? value : "other";
+                }
+            }
+        }
+        return "websocket";
+    }
+
     internal static ClientPipeline CreatePipeline(Uri endpoint, AuthenticationTokenProvider tokenProvider, string experimentalHeaders, string authorizationScope, RealtimeClientOptions options = null)
     {
         options ??= new RealtimeClientOptions();
