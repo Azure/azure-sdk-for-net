@@ -738,6 +738,12 @@ analyzer suppressions: the expected outcome is using the repo-standard central v
 - When a PR flips a version to stable, resolve every dependency that project actually uses —
   the central entries it consumes plus its `overrides/<Package>.Packages.props` file — and
   confirm none is a prerelease. A stable package cannot ship on one 🔴
+- **This check is about what ships, not everything the project references.** Build-time-only
+  tooling marked `PrivateAssets="All"` — analyzers, source generators, API-generation
+  packages like `Microsoft.Azure.AutoRest.CSharp` — never reaches the published dependency
+  list, so a prerelease pin on one of those is not a violation. The automated prerelease
+  guard in `eng/Directory.Build.Common.targets` excludes the same packages for the same
+  reason — don't flag them just because the central file lists a prerelease version
 - This is a deliberate exception to reviewing only what the diff touches. The prerelease pin
   will usually be older than the PR and untouched by it; the GA flip is what changed its
   status, so raise it and say that is why

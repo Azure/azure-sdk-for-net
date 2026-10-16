@@ -68,6 +68,23 @@ stimuli:
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
 
+  - name: allow-privateassets-build-tooling-prerelease-on-ga-flip
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic
+      csproj diff and return findings only. A shipping library's `<Version>` changes from
+      `1.0.0-beta.3` to `1.0.0`. Its only package references are a shipped dependency already
+      pinned to a stable version, plus build-time-only tooling — `Microsoft.Azure.AutoRest.CSharp`
+      and `Azure.ClientSdk.Analyzers` — each centrally versioned to a prerelease and marked
+      `PrivateAssets="All"`, so neither appears in the published dependency list. There are no
+      other changes. If there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+
   - name: ignore-unrelated-unchanged-code
     prompt: >-
       First invoke the code-review skill. Then use it to review this synthetic PR
