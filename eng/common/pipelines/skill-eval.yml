@@ -12,6 +12,9 @@ trigger:
       - eng/common/pipelines/skill-eval.yml
       - eng/common/pipelines/templates/jobs/**
       - eng/common/pipelines/templates/steps/eval-invoke.yml
+      - eng/common/pipelines/templates/steps/login-to-copilot.yml
+      - eng/common/pipelines/templates/steps/login-to-github.yml
+      - eng/common/scripts/login-to-github.ps1
       - eng/common/pipelines/templates/steps/eval-mcp-setup.yml
       - eng/common/pipelines/templates/stages/archetype-eval.yml
       - eng/common/scripts/eval/**
@@ -21,8 +24,6 @@ pr: none
 variables:
   # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
   - template: /eng/pipelines/templates/variables/image.yml
-  # Provides the secret azuresdk-copilot-github-pat, mapped into GITHUB_TOKEN in the invoke step.
-  - group: AzSDK_Eval_Variable_group
 
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
