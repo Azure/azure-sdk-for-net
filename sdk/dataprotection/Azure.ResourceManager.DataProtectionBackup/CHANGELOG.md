@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed deserialization of backup job durations returned in .NET constant format.
+
 ### Other Changes
 
 ## 1.9.0 (2026-09-10)

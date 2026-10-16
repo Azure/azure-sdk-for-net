@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
-                writer.WriteStringValue(Duration.Value, "P");
+                writer.WriteStringValue(Duration.Value, "c");
             }
             if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    duration = prop.Value.GetTimeSpan("P");
+                    duration = prop.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
