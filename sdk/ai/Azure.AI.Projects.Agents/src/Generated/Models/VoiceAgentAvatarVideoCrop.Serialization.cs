@@ -77,16 +77,26 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("bottom_right"u8);
             writer.WriteStartArray();
-            foreach (uint item in BottomRight)
+            foreach (object item in BottomRight)
             {
-                writer.WriteObjectValue(item, options);
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteObjectValue<object>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("top_left"u8);
             writer.WriteStartArray();
-            foreach (uint item in TopLeft)
+            foreach (object item in TopLeft)
             {
-                writer.WriteObjectValue(item, options);
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteObjectValue<object>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -131,27 +141,41 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            IList<uint> bottomRight = default;
-            IList<uint> topLeft = default;
+            IList<object> bottomRight = default;
+            IList<object> topLeft = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("bottom_right"u8))
                 {
-                    List<uint> array = new List<uint>();
+                    List<object> array = new List<object>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ModelReaderWriter.Read<uint>(item.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetObject());
+                        }
                     }
                     bottomRight = array;
                     continue;
                 }
                 if (prop.NameEquals("top_left"u8))
                 {
-                    List<uint> array = new List<uint>();
+                    List<object> array = new List<object>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ModelReaderWriter.Read<uint>(item.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetObject());
+                        }
                     }
                     topLeft = array;
                     continue;
@@ -161,7 +185,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VoiceAgentAvatarVideoCrop(bottomRight ?? new ChangeTrackingList<uint>(), topLeft ?? new ChangeTrackingList<uint>(), additionalBinaryDataProperties);
+            return new VoiceAgentAvatarVideoCrop(bottomRight ?? new ChangeTrackingList<object>(), topLeft ?? new ChangeTrackingList<object>(), additionalBinaryDataProperties);
         }
     }
 }

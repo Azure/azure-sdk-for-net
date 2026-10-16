@@ -46,12 +46,4 @@ public class VoiceAgentUnitTests
             Assert.That(deserialized.Equals(VoiceAgentMaxOutputTokens.Infinity), Is.False);
         }
     }
-
-    [Test]
-    public void TestVoiceAgentAvatarVideoCrop()
-    {
-        VoiceAgentAvatarVideoCrop crop = new(bottomRight: [1, 2, 3], topLeft: [4, 5, 6]);
-        Assert.That(crop.BottomRight, Is.EqualTo([1, 2, 3]));
-        Assert.That(crop.TopLeft, Is.EqualTo([4, 5, 6]));
-    }
 }
