@@ -78,6 +78,11 @@ safe-outputs:
           required: true
           type: string
       steps:
+        - name: Checkout routing parser
+          uses: actions/checkout@v7.0.1
+          with:
+            ref: ${{ github.sha }}
+            persist-credentials: false
         - name: Post mention comment
           uses: actions/github-script@v9.0.0
           env:
@@ -85,6 +90,8 @@ safe-outputs:
           with:
             script: |
               const fs = require('fs');
+              const path = require('path');
+              const { findCodeownersRouting } = require(path.join(process.env.GITHUB_WORKSPACE, '.github', 'scripts', 'codeowners-routing.cjs'));
               const outputFile = process.env.GH_AW_AGENT_OUTPUT;
 
               function resolveIssueNumber() {
@@ -192,27 +199,8 @@ safe-outputs:
                 if ((data.encoding !== 'base64') || (typeof data.content !== 'string')) {
                   throw new Error('CODEOWNERS response did not contain base64 file content');
                 }
-                const blocks = Buffer.from(data.content, 'base64').toString('utf8').split(/\r?\n\s*\r?\n/);
-                for (const block of blocks.reverse()) {
-                  const entries = [...block.matchAll(/^#[ \t]*ServiceLabel:[ \t]*(.+)$/gm)];
-                  if (entries.length === 0) continue;
-                  if (entries.length !== 1) {
-                    throw new Error('CODEOWNERS block contains multiple ServiceLabel entries');
-                  }
-                  const entryLabels = entries[0][1].split('%').slice(1).map(label => label.trim());
-                  if ((entryLabels.length === 0) || (entryLabels.some(label => !label))) {
-                    throw new Error('CODEOWNERS ServiceLabel entry has invalid labels');
-                  }
-                  if (!entryLabels.every(label => finalLabels.has(label))) continue;
-                  const readOwners = name => [...block.matchAll(new RegExp(`^#[ \\t]*${name}:[ \\t]*(.*)$`, 'gm'))]
-                    .flatMap(match => match[1].trim().split(/\s+/)).filter(Boolean)
-                    .map(value => value.replace(/^@/, '').toLowerCase());
-                  matchedOwners = {
-                    azureSdk: readOwners('AzureSdkOwners'),
-                    service: readOwners('ServiceOwners')
-                  };
-                  break;
-                }
+                const content = Buffer.from(data.content, 'base64').toString('utf8');
+                matchedOwners = findCodeownersRouting(content, finalLabels);
               } catch (lookupError) {
                 await failSafe(`Unable to resolve notification owners: ${lookupError.message}`);
                 return;
