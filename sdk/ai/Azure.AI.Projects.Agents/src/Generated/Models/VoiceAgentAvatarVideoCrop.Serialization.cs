@@ -77,26 +77,16 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("bottom_right"u8);
             writer.WriteStartArray();
-            foreach (object item in BottomRight)
+            foreach (uint item in BottomRight)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteObjectValue<object>(item, options);
+                writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("top_left"u8);
             writer.WriteStartArray();
-            foreach (object item in TopLeft)
+            foreach (uint item in TopLeft)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteObjectValue<object>(item, options);
+                writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -141,41 +131,27 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            IList<object> bottomRight = default;
-            IList<object> topLeft = default;
+            IList<uint> bottomRight = default;
+            IList<uint> topLeft = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("bottom_right"u8))
                 {
-                    List<object> array = new List<object>();
+                    List<uint> array = new List<uint>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetObject());
-                        }
+                        array.Add(item.GetUInt32());
                     }
                     bottomRight = array;
                     continue;
                 }
                 if (prop.NameEquals("top_left"u8))
                 {
-                    List<object> array = new List<object>();
+                    List<uint> array = new List<uint>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetObject());
-                        }
+                        array.Add(item.GetUInt32());
                     }
                     topLeft = array;
                     continue;
@@ -185,7 +161,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VoiceAgentAvatarVideoCrop(bottomRight ?? new ChangeTrackingList<object>(), topLeft ?? new ChangeTrackingList<object>(), additionalBinaryDataProperties);
+            return new VoiceAgentAvatarVideoCrop(bottomRight ?? new ChangeTrackingList<uint>(), topLeft ?? new ChangeTrackingList<uint>(), additionalBinaryDataProperties);
         }
     }
 }
