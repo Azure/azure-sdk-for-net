@@ -13,6 +13,6 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <summary>
         /// The UTC timestamp when the event occurred.
         /// </summary>
-        DateTimeOffset EventTime { get; }
+        DateTimeOffset EventOccurredOn { get; }
     }
 }

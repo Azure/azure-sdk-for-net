@@ -64,7 +64,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 
             // Assert
             Assert.AreEqual(1L, evt.SchemaVersion);
-            Assert.AreEqual(ShareChangeFeedReasonType.SmbCreate, evt.Reason);
+            Assert.AreEqual(ShareChangeFeedReasonKind.SmbCreate, evt.Reason);
             Assert.AreEqual(ShareChangeFeedProtocol.Smb, evt.Protocol);
             Assert.AreEqual("62616073-8020-0000-00ff-233467060cc0", evt.Id);
             Assert.AreEqual(100L, evt.ContainerVersionNumber);
@@ -113,20 +113,20 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 
             ShareChangeFeedEvent evt = new ShareChangeFeedEvent(record);
 
-            Assert.AreEqual(ShareChangeFeedReasonType.RestCreate, evt.Reason);
+            Assert.AreEqual(ShareChangeFeedReasonKind.RestCreate, evt.Reason);
             Assert.AreEqual(ShareChangeFeedProtocol.Rest, evt.Protocol);
             Assert.IsTrue(evt.EventData.IsDirectory);
         }
 
         /// <summary>
-        /// Verifies equality and inequality operators on <see cref="ShareChangeFeedReasonType"/> extensible enum values.
+        /// Verifies equality and inequality operators on <see cref="ShareChangeFeedReasonKind"/> extensible enum values.
         /// </summary>
         [Test]
         public void ReasonType_Equality()
         {
-            Assert.AreEqual(ShareChangeFeedReasonType.SmbCreate, new ShareChangeFeedReasonType("SmbCreate"));
-            Assert.AreNotEqual(ShareChangeFeedReasonType.SmbCreate, ShareChangeFeedReasonType.SmbDelete);
-            Assert.IsTrue(ShareChangeFeedReasonType.RestWrite == new ShareChangeFeedReasonType("RestWrite"));
+            Assert.AreEqual(ShareChangeFeedReasonKind.SmbCreate, new ShareChangeFeedReasonKind("SmbCreate"));
+            Assert.AreNotEqual(ShareChangeFeedReasonKind.SmbCreate, ShareChangeFeedReasonKind.SmbDelete);
+            Assert.IsTrue(ShareChangeFeedReasonKind.RestWrite == new ShareChangeFeedReasonKind("RestWrite"));
         }
 
         /// <summary>
@@ -261,8 +261,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         public void ReasonType_IsCaseSensitive()
         {
             // Reason equality is Ordinal — case matters for matching well-known values.
-            Assert.AreNotEqual(ShareChangeFeedReasonType.SmbCreate, new ShareChangeFeedReasonType("smbcreate"));
-            Assert.AreNotEqual(ShareChangeFeedReasonType.SmbCreate, new ShareChangeFeedReasonType("SMBCREATE"));
+            Assert.AreNotEqual(ShareChangeFeedReasonKind.SmbCreate, new ShareChangeFeedReasonKind("smbcreate"));
+            Assert.AreNotEqual(ShareChangeFeedReasonKind.SmbCreate, new ShareChangeFeedReasonKind("SMBCREATE"));
         }
 
         [Test]
@@ -277,15 +277,15 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         [Test]
         public void ReasonType_NotEqualOperator()
         {
-            Assert.IsTrue(ShareChangeFeedReasonType.SmbCreate != ShareChangeFeedReasonType.SmbDelete);
-            Assert.IsFalse(ShareChangeFeedReasonType.SmbCreate != new ShareChangeFeedReasonType("SmbCreate"));
+            Assert.IsTrue(ShareChangeFeedReasonKind.SmbCreate != ShareChangeFeedReasonKind.SmbDelete);
+            Assert.IsFalse(ShareChangeFeedReasonKind.SmbCreate != new ShareChangeFeedReasonKind("SmbCreate"));
         }
 
         [Test]
         public void ReasonType_GetHashCode_ConsistentForEqualInstances()
         {
-            ShareChangeFeedReasonType a = ShareChangeFeedReasonType.SmbCreate;
-            ShareChangeFeedReasonType b = new ShareChangeFeedReasonType("SmbCreate");
+            ShareChangeFeedReasonKind a = ShareChangeFeedReasonKind.SmbCreate;
+            ShareChangeFeedReasonKind b = new ShareChangeFeedReasonKind("SmbCreate");
             Assert.AreEqual(a, b);
             Assert.AreEqual(a.GetHashCode(), b.GetHashCode());
         }
@@ -295,16 +295,16 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         {
             // A future service version may emit an unknown reason. The struct must accept and
             // round-trip the value without throwing, so callers can switch on ToString().
-            ShareChangeFeedReasonType future = new ShareChangeFeedReasonType("FutureUnknownOp");
+            ShareChangeFeedReasonKind future = new ShareChangeFeedReasonKind("FutureUnknownOp");
             Assert.AreEqual("FutureUnknownOp", future.ToString());
-            Assert.AreEqual(future, new ShareChangeFeedReasonType("FutureUnknownOp"));
-            Assert.AreNotEqual(future, ShareChangeFeedReasonType.SmbCreate);
+            Assert.AreEqual(future, new ShareChangeFeedReasonKind("FutureUnknownOp"));
+            Assert.AreNotEqual(future, ShareChangeFeedReasonKind.SmbCreate);
         }
 
         [Test]
         public void ReasonType_NullValue_Throws()
         {
-            Assert.Throws<ArgumentNullException>(() => new ShareChangeFeedReasonType(null));
+            Assert.Throws<ArgumentNullException>(() => new ShareChangeFeedReasonKind(null));
         }
     }
 }

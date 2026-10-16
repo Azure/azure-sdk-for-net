@@ -24,7 +24,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             ShareChangeFeedClient client,
             long? maxTransferSize,
             bool includeNonFinalizedEvents,
-            ShareChangeFeedResetPolicy policy = ShareChangeFeedResetPolicy.ContinueOnReset,
+            ShareChangeFeedResetPolicy? policy = default,
             DateTimeOffset? startTime = default,
             DateTimeOffset? endTime = default,
             string continuation = default,
@@ -33,7 +33,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             _client = client;
             _maxTransferSize = maxTransferSize;
             _includeNonFinalizedEvents = includeNonFinalizedEvents;
-            _policy = policy;
+            _policy = policy ?? ShareChangeFeedResetPolicy.ContinueOnReset;
             _startTime = startTime;
             _endTime = endTime;
             _continuation = continuation;
@@ -156,7 +156,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();
                 foreach (ShareChangeFeedEvent evt in rawPage.Values)
                 {
-                    if (!resetEmitted && resetToEmit != null && evt.EventTime >= resetTime)
+                    if (!resetEmitted && resetToEmit != null && evt.EventOccurredOn >= resetTime)
                     {
                         events.Add(resetToEmit);
                         resetEmitted = true;

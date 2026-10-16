@@ -71,7 +71,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             CollectionAssert.IsNotEmpty(events);
             foreach (BlobChangeFeedEvent e in events)
             {
-                Assert.AreNotEqual(default(DateTimeOffset), e.EventTime);
+                Assert.AreNotEqual(default(DateTimeOffset), e.EventOccurredOn);
                 Assert.AreNotEqual(default(Guid), e.Id);
                 Assert.IsNotNull(e.EventData);
             }
@@ -115,8 +115,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             // Assert - all events should fall within the hour-rounded range
             foreach (BlobChangeFeedEvent e in events)
             {
-                Assert.GreaterOrEqual(e.EventTime, roundedStart, "Event time should be within the rounded window");
-                Assert.Less(e.EventTime, roundedEnd, "Event time should be within the rounded window");
+                Assert.GreaterOrEqual(e.EventOccurredOn, roundedStart, "Event time should be within the rounded window");
+                Assert.Less(e.EventOccurredOn, roundedEnd, "Event time should be within the rounded window");
             }
         }
 

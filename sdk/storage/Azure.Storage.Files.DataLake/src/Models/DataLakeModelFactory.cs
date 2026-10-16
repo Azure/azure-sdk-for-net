@@ -1106,6 +1106,122 @@ namespace Azure.Storage.Files.DataLake.Models
             };
         #endregion GetPathTagResult
 
+        #region DataLakeFileLayoutEndpoint
+        /// <summary>
+        /// Creates a new <see cref="Models.DataLakeFileLayoutEndpoint"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileLayoutEndpoint DataLakeFileLayoutEndpoint(
+            int index = default,
+            Uri value = default)
+            => new DataLakeFileLayoutEndpoint()
+            {
+                Index = index,
+                Value = value
+            };
+        #endregion DataLakeFileLayoutEndpoint
+
+        #region DataLakeFileLayoutRange
+        /// <summary>
+        /// Creates a new <see cref="Models.DataLakeFileLayoutRange"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileLayoutRange DataLakeFileLayoutRange(
+            long start = default,
+            long end = default,
+            int endpointIndex = default)
+            => new DataLakeFileLayoutRange()
+            {
+                Start = start,
+                End = end,
+                EndpointIndex = endpointIndex
+            };
+        #endregion DataLakeFileLayoutRange
+
+        #region DataLakeFileLayoutInfo
+        /// <summary>
+        /// Creates a new <see cref="Models.DataLakeFileLayoutInfo"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileLayoutInfo DataLakeFileLayoutInfo(
+            IEnumerable<DataLakeFileLayoutRange> ranges = default,
+            IEnumerable<DataLakeFileLayoutEndpoint> endpoints = default,
+            DateTimeOffset lastModifiedOn = default,
+            DateTimeOffset createdOn = default,
+            IDictionary<string, string> metadata = default,
+            DateTimeOffset copyCompletedOn = default,
+            string copyStatusDescription = default,
+            string copyId = default,
+            string copyProgress = default,
+            Uri copySource = default,
+            CopyStatus? fileCopyStatus = default,
+            bool isIncrementalCopy = default,
+            DataLakeLeaseDuration leaseDuration = default,
+            DataLakeLeaseState leaseState = default,
+            DataLakeLeaseStatus leaseStatus = default,
+            long contentLength = default,
+            string contentType = default,
+            ETag eTag = default,
+            byte[] contentHash = default,
+            string contentEncoding = default,
+            string contentDisposition = default,
+            string contentLanguage = default,
+            string cacheControl = default,
+            string acceptRanges = default,
+            bool isServerEncrypted = default,
+            string encryptionKeySha256 = default,
+            string encryptionScope = default,
+            string accessTier = default,
+            bool accessTierInferred = default,
+            string smartAccessTier = default,
+            string archiveStatus = default,
+            DateTimeOffset accessTierChangedOn = default,
+            DateTimeOffset expiresOn = default,
+            long fileContentLength = default,
+            string fileContentType = default,
+            string fileContentEncoding = default,
+            byte[] fileContentMD5 = default,
+            DateTimeOffset fileCreatedOn = default)
+            => new DataLakeFileLayoutInfo()
+            {
+                Ranges = ranges == null ? null : new List<DataLakeFileLayoutRange>(ranges),
+                Endpoints = endpoints == null ? null : new List<DataLakeFileLayoutEndpoint>(endpoints),
+                LastModifiedOn = lastModifiedOn,
+                CreatedOn = createdOn,
+                Metadata = metadata,
+                CopyCompletedOn = copyCompletedOn,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = fileCopyStatus,
+                IsIncrementalCopy = isIncrementalCopy,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ETag = eTag,
+                ContentHash = contentHash,
+                ContentEncoding = contentEncoding,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CacheControl = cacheControl,
+                AcceptRanges = acceptRanges,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                AccessTier = accessTier,
+                AccessTierInferred = accessTierInferred,
+                SmartAccessTier = smartAccessTier,
+                ArchiveStatus = archiveStatus,
+                AccessTierChangedOn = accessTierChangedOn,
+                ExpiresOn = expiresOn,
+                FileContentLength = fileContentLength,
+                FileContentType = fileContentType,
+                FileContentEncoding = fileContentEncoding,
+                FileContentMD5 = fileContentMD5,
+                FileCreatedOn = fileCreatedOn
+            };
+        #endregion DataLakeFileLayoutInfo
+
         #region FileSystemAccessPolicy
         /// <summary>
         /// Creates a new <see cref="Models.FileSystemAccessPolicy"/> instance for mocking.
