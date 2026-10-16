@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed deserialization of numeric rule IDs in `ManagedRuleSetRuleGroup.Rules` when retrieving web application firewall policies.
+
 ### Other Changes
 
 ## 1.18.0-beta.1 (2026-09-20)
