@@ -110,6 +110,29 @@ extends:
 
         - ${{ parameters.InitializationSteps }}
 
+        - ${{ if in(parameters.EmitterPackagePath, 'eng/packages/http-client-csharp', 'eng/packages/http-client-csharp-mgmt') }}:
+          - pwsh: |
+              $ErrorActionPreference = "Stop"
+              . "$(Build.SourcesDirectory)/eng/scripts/typespec/CodeGen-Helpers.ps1"
+              $packageJson = "$(Build.SourcesDirectory)/${{ parameters.EmitterPackagePath }}/package.json"
+              $generators = @{ "@typespec/http-client-csharp" = "eng/http-client-csharp-emitter-package.json" }
+              if ("${{ parameters.EmitterPackagePath }}" -eq "eng/packages/http-client-csharp-mgmt") {
+                $generators["@azure-typespec/http-client-csharp"] = "eng/azure-typespec-http-client-csharp-emitter-package.json"
+              }
+              foreach ($generator in $generators.GetEnumerator()) {
+                $descriptorPath = Join-Path "$(Build.SourcesDirectory)" $generator.Value
+                $version = Get-NpmDependencyVersion $packageJson $generator.Key -DependenciesOnly
+                $approved = Get-NpmDependencyVersion $descriptorPath $generator.Key -DependenciesOnly
+                Assert-VersionNotNewerThanApproved "${{ parameters.EmitterPackagePath }} dependency '$($generator.Key)'" $version $approved $descriptorPath
+              }
+            displayName: Validate emitter dependency versions
+
+          - pwsh: |
+              . "$(Build.SourcesDirectory)/eng/common/scripts/Helpers/PSModule-Helpers.ps1"
+              Install-ModuleIfNotInstalled "Pester" "5.3.3" | Import-Module
+              Invoke-Pester -Path "$(Build.SourcesDirectory)/eng/scripts/tests/Validate-EmitterDependencies.tests.ps1" -CI
+            displayName: Test emitter dependency validation
+
         - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
           parameters:
             npmrcPath: $(emitterNpmrcPath)
