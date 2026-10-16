@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net10.0</TargetFrameworks>
+    <GeneratorDirectory>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\..\..\node_modules\@typespec\http-client-csharp\dist\generator'))</GeneratorDirectory>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.TypeSpec.Generator" HintPath="$(GeneratorDirectory)\Microsoft.TypeSpec.Generator.dll" />
+    <Reference Include="Microsoft.TypeSpec.Generator.Input" HintPath="$(GeneratorDirectory)\Microsoft.TypeSpec.Generator.Input.dll" />
+    <Reference Include="System.ComponentModel.Composition" HintPath="$(GeneratorDirectory)\System.ComponentModel.Composition.dll" />
+    <Reference Include="Microsoft.CodeAnalysis" HintPath="$(GeneratorDirectory)\Microsoft.CodeAnalysis.dll" />
+    <Reference Include="Microsoft.CodeAnalysis.CSharp" HintPath="$(GeneratorDirectory)\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Reference Include="System.Memory.Data" HintPath="$(GeneratorDirectory)\System.Memory.Data.dll" />
+  </ItemGroup>
+  <Target Name="CheckEmitterDependencies" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('$(GeneratorDirectory)\Microsoft.TypeSpec.Generator.dll')"
+           Text="Run npm ci in eng/packages/http-client-csharp-mcp before building the MCP generator." />
+  </Target>
+  <Target Name="CopyForLocalExecution" AfterTargets="Build">
+    <ItemGroup>
+      <PluginFiles Include="$(TargetDir)*.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" />
+  </Target>
+</Project>

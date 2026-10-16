@@ -1,0 +1,16 @@
+{
+  "name": "http-client-csharp-mcp-prototype",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Bounded Storage MCP tool generator using the TypeSpec C# generator providers.",
+  "scripts": {
+    "build": "dotnet build generator/StorageMcp.Generator/src/StorageMcp.Generator.csproj --configuration Release",
+    "test": "dotnet test generator/StorageMcp.Generator/test/StorageMcp.Generator.Tests.csproj --configuration Release"
+  },
+  "devDependencies": {
+    "@azure-tools/typespec-client-generator-core": "0.73.0",
+    "@typespec/compiler": "1.17.0",
+    "@typespec/http": "1.17.0",
+    "@typespec/http-client-csharp": "1.0.0-alpha.20261014.5"
+  }
+}
