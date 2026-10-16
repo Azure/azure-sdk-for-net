@@ -250,11 +250,11 @@ stages:
                     os: linux
 
                   steps:
-                    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-                      parameters:
-                        Paths:
-                          - sdk/**/*.md
-                          - .github/CODEOWNERS
+                    - checkout: self
+                      fetchFilter: tree:0
+                      fetchTags: false
+                      fetchDepth: 0
+                      sparseCheckoutPatterns: '/* !/*/ /eng /.config sdk/**/*.md .github/CODEOWNERS'
                     - download: current
                       displayName: Download ${{parameters.ArtifactName}}
                       artifact: ${{parameters.ArtifactName}}
@@ -282,7 +282,11 @@ stages:
                   dependsOn: PublishPackage
 
                   steps:
-                    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+                    - checkout: self
+                      fetchFilter: tree:0
+                      fetchTags: false
+                      fetchDepth: 0
+                      sparseCheckoutPatterns: '/* !/*/ /eng /.config'
                     - download: current
                       displayName: Download ${{parameters.ArtifactName}}
                       artifact: ${{parameters.ArtifactName}}
@@ -299,10 +303,11 @@ stages:
                   dependsOn: PublishPackage
 
                   steps:
-                    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-                      parameters:
-                        paths:
-                          - /sdk
+                    - checkout: self
+                      fetchFilter: tree:0
+                      fetchTags: false
+                      fetchDepth: 0
+                      sparseCheckoutPatterns: '/* !/*/ /eng /.config /sdk'
 
                     - template: /eng/pipelines/templates/steps/install-dotnet.yml
                       parameters:
@@ -401,11 +406,11 @@ stages:
           image: $(LINUXVMIMAGE)
           os: linux
         steps:
-          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-            parameters:
-              Paths:
-                - sdk/**/*.md
-                - .github/CODEOWNERS
+          - checkout: self
+            fetchFilter: tree:0
+            fetchTags: false
+            fetchDepth: 0
+            sparseCheckoutPatterns: '/* !/*/ /eng /.config sdk/**/*.md .github/CODEOWNERS'
           - download: current
             displayName: Download ${{parameters.ArtifactName}}
             artifact: ${{parameters.ArtifactName}}
