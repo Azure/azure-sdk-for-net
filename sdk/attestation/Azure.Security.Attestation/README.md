@@ -118,7 +118,7 @@ the certificate issued by the server can be verified using the [oe_verify_attest
 
 The [`AttestationResponse`][attestation_response] object contains two main properties: [`Token`][attestation_response_token] and [`Value`][attestation_response_value]. The `Token` property contains the complete token returned by the attestation service, the `Value` property contains the body of the JSON Web Token response.
 
-By default, the clients validate every token the service returns, including that it was issued by the client's endpoint. When you validate a token yourself, for example in a relying party, with `AttestationToken.ValidateToken`, pass the signing certificates retrieved with `GetSigningCertificates` from the attestation provider the token must come from, and set `AttestationTokenValidationOptions.ExpectedIssuer` to that provider's base URI. A token is never trusted because of certificates it carries itself. See [Validate an attestation token in a relying party](#validate-an-attestation-token-in-a-relying-party).
+By default, the clients validate every token the service returns, including that it was issued by the client's endpoint. The exception is `AttestAzureGuest`: the service encrypts its token to the virtual machine's TPM, so the client can't decrypt or validate it, and you must validate the token yourself after decrypting it inside the virtual machine. When you validate a token yourself, for example in a relying party, with `AttestationToken.ValidateToken`, pass the signing certificates retrieved with `GetSigningCertificates` from the attestation provider the token must come from, and set `AttestationTokenValidationOptions.ExpectedIssuer` to that provider's base URI. A token is never trusted because of certificates it carries itself. See [Validate an attestation token in a relying party](#validate-an-attestation-token-in-a-relying-party).
 
 ### Policy Management
 
@@ -147,7 +147,7 @@ Currently, MAA supports the following Trusted Execution environments:
 * Tpm - A Virtualization Based Security environment where the Trusted Platform Module of the processor is used to provide the attestation evidence.
 * SevSnpVm - A confidential virtual machine protected by AMD SEV-SNP. Attested with `AttestSevSnpVm`.
 * TdxVm - A confidential virtual machine protected by Intel(tm) TDX. Attested with `AttestTdxVm`, which requires service version `V2025_06_01` (the default) or later.
-* AzureGuest - An Azure confidential or Trusted Launch virtual machine. Attested with `AttestAzureGuest`, which sends the attestation information collected inside the virtual machine, for example by the [guest attestation library](https://github.com/Azure/confidential-computing-cvm-guest-attestation), and returns the token sealed to the virtual machine's TPM. Only that virtual machine can decrypt the token; the decrypted token can then be validated and read with `AttestationToken`.
+* AzureGuest - An Azure confidential or Trusted Launch virtual machine. Attested with `AttestAzureGuest`, which sends the attestation information collected inside the virtual machine, for example by the [guest attestation library](https://github.com/Azure/confidential-computing-cvm-guest-attestation), and returns the token sealed to the virtual machine's TPM. Only that virtual machine can decrypt the token; the decrypted token must then be validated with `AttestationToken.ValidateToken`, and can be read with `AttestationToken`.
 
 ### Runtime Data and Inittime Data
 
