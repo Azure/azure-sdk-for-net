@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> The hostname for the Exadata VM cluster on Exascale Infrastructure in earlier API versions. </summary>
         // Retain the legacy property for compatibility without replacing or aliasing HostnameV2.
-        public string Hostname { get; set; }
+        public string Hostname { get => HostnameV2; set => HostnameV2 = value; }
 
         /// <summary> Initializes a new instance of <see cref="ExadbVmClusterProperties"/>. </summary>
         /// <param name="vnetId"> VNET for network connectivity. </param>
