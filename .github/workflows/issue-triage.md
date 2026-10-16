@@ -158,6 +158,19 @@ safe-outputs:
                 return;
               }
 
+              const labelRepo = labelItems[0].repo;
+              if ((labelRepo !== undefined) && (typeof labelRepo !== 'string')) {
+                core.setFailed('Owner notification requires a valid label decision repository');
+                return;
+              }
+              const currentRepo = `${owner}/${repo}`;
+              const requestedRepo = labelRepo?.trim() || currentRepo;
+              const qualifiedRepo = requestedRepo.includes('/') ? requestedRepo : `${owner}/${requestedRepo}`;
+              if (qualifiedRepo.toLowerCase() !== currentRepo.toLowerCase()) {
+                core.setFailed('Owner notification requires a label decision for the triggering repository');
+                return;
+              }
+
               const labels = labelItems[0].labels.map(label => typeof label === 'string' ? label : label?.name);
               if (labels.some(label => typeof label !== 'string' || !label.trim())) {
                 core.setFailed('Owner notification requires valid label names');
@@ -638,7 +651,7 @@ ELSE:
     - It must contain exactly one service label
 ```
 
-Make exactly one `add_labels` call for the complete final label set
+Make exactly one `add_labels` call for the complete final label set on the triggering issue in the current repository
 
 Every label object must include:
 - `confidence: "HIGH"` because confidence describes certainty that the final label belongs on the issue
