@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (_taxiiLookbackOnIsDefined || Optional.IsDefined(TaxiiLookbackOn))
+            if (Optional.IsDefined(TaxiiLookbackOn, _taxiiLookbackOnIsDefined))
             {
                 if (TaxiiLookbackOn != null)
                 {

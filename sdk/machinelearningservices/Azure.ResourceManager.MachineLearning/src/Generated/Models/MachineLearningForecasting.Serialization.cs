@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cvSplitColumnNames"u8);
                 }
             }
-            if (_featurizationSettingsIsDefined || Optional.IsDefined(FeaturizationSettings))
+            if (Optional.IsDefined(FeaturizationSettings, _featurizationSettingsIsDefined))
             {
                 if (FeaturizationSettings != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featurizationSettings"u8);
                 }
             }
-            if (_limitSettingsIsDefined || Optional.IsDefined(LimitSettings))
+            if (Optional.IsDefined(LimitSettings, _limitSettingsIsDefined))
             {
                 if (LimitSettings != null)
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("limitSettings"u8);
                 }
             }
-            if (_nCrossValidationsIsDefined || Optional.IsDefined(NCrossValidations))
+            if (Optional.IsDefined(NCrossValidations, _nCrossValidationsIsDefined))
             {
                 if (NCrossValidations != null)
                 {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nCrossValidations"u8);
                 }
             }
-            if (_testDataIsDefined || Optional.IsDefined(TestData))
+            if (Optional.IsDefined(TestData, _testDataIsDefined))
             {
                 if (TestData != null)
                 {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("testData"u8);
                 }
             }
-            if (_testDataSizeIsDefined || Optional.IsDefined(TestDataSize))
+            if (Optional.IsDefined(TestDataSize, _testDataSizeIsDefined))
             {
                 if (TestDataSize != null)
                 {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("testDataSize"u8);
                 }
             }
-            if (_validationDataIsDefined || Optional.IsDefined(ValidationData))
+            if (Optional.IsDefined(ValidationData, _validationDataIsDefined))
             {
                 if (ValidationData != null)
                 {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData"u8);
                 }
             }
-            if (_validationDataSizeIsDefined || Optional.IsDefined(ValidationDataSize))
+            if (Optional.IsDefined(ValidationDataSize, _validationDataSizeIsDefined))
             {
                 if (ValidationDataSize != null)
                 {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationDataSize"u8);
                 }
             }
-            if (_weightColumnNameIsDefined || Optional.IsDefined(WeightColumnName))
+            if (Optional.IsDefined(WeightColumnName, _weightColumnNameIsDefined))
             {
                 if (WeightColumnName != null)
                 {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("weightColumnName"u8);
                 }
             }
-            if (_forecastingSettingsIsDefined || Optional.IsDefined(ForecastingSettings))
+            if (Optional.IsDefined(ForecastingSettings, _forecastingSettingsIsDefined))
             {
                 if (ForecastingSettings != null)
                 {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (_trainingSettingsIsDefined || Optional.IsDefined(TrainingSettings))
+            if (Optional.IsDefined(TrainingSettings, _trainingSettingsIsDefined))
             {
                 if (TrainingSettings != null)
                 {

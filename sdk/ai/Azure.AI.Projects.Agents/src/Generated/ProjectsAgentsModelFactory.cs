@@ -952,10 +952,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="topLeft"></param>
         /// <returns> A new <see cref="Agents.VoiceAgentAvatarVideoCrop"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAvatarVideoCrop VoiceAgentAvatarVideoCrop(IEnumerable<object> bottomRight = default, IEnumerable<object> topLeft = default)
+        public static VoiceAgentAvatarVideoCrop VoiceAgentAvatarVideoCrop(IEnumerable<uint> bottomRight = default, IEnumerable<uint> topLeft = default)
         {
-            bottomRight ??= new ChangeTrackingList<object>();
-            topLeft ??= new ChangeTrackingList<object>();
+            bottomRight ??= new ChangeTrackingList<uint>();
+            topLeft ??= new ChangeTrackingList<uint>();
 
             return new VoiceAgentAvatarVideoCrop(bottomRight.ToList(), topLeft.ToList(), additionalBinaryDataProperties: null);
         }

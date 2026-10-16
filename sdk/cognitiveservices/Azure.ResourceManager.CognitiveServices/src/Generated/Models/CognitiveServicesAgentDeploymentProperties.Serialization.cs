@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 throw new FormatException($"The model {nameof(CognitiveServicesAgentDeploymentProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_displayNameIsDefined || Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName, _displayNameIsDefined))
             {
                 if (DisplayName != null)
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteNull("displayName"u8);
                 }
             }
-            if (_deploymentIdIsDefined || Optional.IsDefined(DeploymentId))
+            if (Optional.IsDefined(DeploymentId, _deploymentIdIsDefined))
             {
                 if (DeploymentId != null)
                 {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteNull("deploymentId"u8);
                 }
             }
-            if (_stateIsDefined || Optional.IsDefined(State))
+            if (Optional.IsDefined(State, _stateIsDefined))
             {
                 if (State != null)
                 {

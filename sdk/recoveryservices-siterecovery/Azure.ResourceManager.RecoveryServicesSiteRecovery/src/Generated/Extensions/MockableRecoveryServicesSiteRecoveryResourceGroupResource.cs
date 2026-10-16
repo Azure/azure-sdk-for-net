@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteRecoveryReplicationProtectionClusterData, SiteRecoveryReplicationProtectionClusterResource>(new ReplicationProtectionClustersListBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteRecoveryReplicationProtectionClusterData, SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterDataAsync0CollectionResultOfT(
                 ReplicationProtectionClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteRecoveryReplicationProtectionClusterData, SiteRecoveryReplicationProtectionClusterResource>(new ReplicationProtectionClustersListBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<SiteRecoveryReplicationProtectionClusterData, SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterData0CollectionResultOfT(
                 ReplicationProtectionClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1196,7 +1196,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProtectionContainerMappingData, ProtectionContainerMappingResource>(new ReplicationProtectionContainerMappingsListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ProtectionContainerMappingData, ProtectionContainerMappingResource>(new ProtectionContainerMappingDataAsync0CollectionResultOfT(
                 ReplicationProtectionContainerMappingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1235,7 +1235,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProtectionContainerMappingData, ProtectionContainerMappingResource>(new ProtectionContainerMappingDataCollectionResultOfT(
+            return new PageableWrapper<ProtectionContainerMappingData, ProtectionContainerMappingResource>(new ProtectionContainerMappingData0CollectionResultOfT(
                 ReplicationProtectionContainerMappingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1274,7 +1274,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteRecoveryServicesProviderData, SiteRecoveryServicesProviderResource>(new ReplicationRecoveryServicesProvidersListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteRecoveryServicesProviderData, SiteRecoveryServicesProviderResource>(new SiteRecoveryServicesProviderDataAsync0CollectionResultOfT(
                 ReplicationRecoveryServicesProvidersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1430,7 +1430,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageClassificationMappingData, StorageClassificationMappingResource>(new ReplicationStorageClassificationMappingsListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StorageClassificationMappingData, StorageClassificationMappingResource>(new StorageClassificationMappingDataAsync0CollectionResultOfT(
                 ReplicationStorageClassificationMappingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1469,7 +1469,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageClassificationMappingData, StorageClassificationMappingResource>(new StorageClassificationMappingDataCollectionResultOfT(
+            return new PageableWrapper<StorageClassificationMappingData, StorageClassificationMappingResource>(new StorageClassificationMappingData0CollectionResultOfT(
                 ReplicationStorageClassificationMappingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

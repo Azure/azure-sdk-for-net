@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningKubernetesOnlineDeployment : MachineLearningOnlineDeploymentProperties
     {
         private MachineLearningContainerResourceRequirements _containerResourceRequirements;
-        internal bool _containerResourceRequirementsIsDefined;
+        private bool _containerResourceRequirementsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningKubernetesOnlineDeployment"/>. </summary>
         public MachineLearningKubernetesOnlineDeployment() : base(MachineLearningEndpointComputeType.Kubernetes)

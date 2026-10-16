@@ -101,10 +101,40 @@ Describe "Azure data-plane Spector discovery" -Tag "UnitTest" {
 
     It "discovers supported data-plane scenarios while excluding unsupported scenarios" {
         $statusCodeRange = New-SpectorSpec $standardSpecsDirectory @("response", "status-code-range")
-        New-SpectorSpec $azureSpecsDirectory @("azure", "client-generator-core", "alternate-type") | Out-Null
+        $alternateType = New-SpectorSpec $azureSpecsDirectory @("azure", "client-generator-core", "alternate-type")
+        New-SpectorSpec $azureSpecsDirectory @("azure", "client-generator-core", "flatten-property") | Out-Null
 
         @(Get-Sorted-Specs) | Should -Be @(
+            (Join-Path $alternateType "main.tsp")
             (Join-Path $statusCodeRange "main.tsp")
+        )
+    }
+
+    It "excludes the unsupported data-plane scenario <Scenario> even when client.tsp is present" -TestCases @(
+        @{ Scenario = "file"; Azure = $false; Segments = @("type", "file") }
+        @{ Scenario = "deserialize-empty-string-as-null"; Azure = $true; Segments = @("azure", "client-generator-core", "deserialize-empty-string-as-null") }
+        @{ Scenario = "flatten-property"; Azure = $true; Segments = @("azure", "client-generator-core", "flatten-property") }
+        @{ Scenario = "noauth-union"; Azure = $false; Segments = @("authentication", "noauth", "union") }
+        @{ Scenario = "discriminated-union"; Azure = $false; Segments = @("type", "union", "discriminated") }
+    ) {
+        param($Scenario, $Azure, $Segments)
+
+        $root = if ($Azure) { $azureSpecsDirectory } else { $standardSpecsDirectory }
+        New-SpectorSpec $root $Segments -ClientSpec | Out-Null
+
+        @(Get-Sorted-Specs) | Should -BeNullOrEmpty
+    }
+
+    It "discovers alternate-type using <EntryPoint>" -TestCases @(
+        @{ EntryPoint = "main.tsp"; ClientSpec = $false }
+        @{ EntryPoint = "client.tsp"; ClientSpec = $true }
+    ) {
+        param($EntryPoint, $ClientSpec)
+
+        $alternateType = New-SpectorSpec $azureSpecsDirectory @("azure", "client-generator-core", "alternate-type") -ClientSpec:$ClientSpec
+
+        @(Get-Sorted-Specs) | Should -Be @(
+            (Join-Path $alternateType $EntryPoint)
         )
     }
 
@@ -137,6 +167,21 @@ Describe "Azure data-plane Spector discovery" -Tag "UnitTest" {
 
         @(Get-Sorted-Specs | Where-Object { Compare-Paths (Get-SubPath $_) $Filter }) | Should -Be @(
             (Join-Path $azureCore "main.tsp")
+        )
+    }
+
+    It "selects alternate-type with the explicit filter <Filter>" -TestCases @(
+        @{ Filter = "http/azure/client-generator-core/alternate-type" }
+        @{ Filter = "http\azure\client-generator-core\alternate-type" }
+    ) {
+        param($Filter)
+
+        $alternateType = New-SpectorSpec $azureSpecsDirectory @("azure", "client-generator-core", "alternate-type") -ClientSpec
+        New-SpectorSpec $azureSpecsDirectory @("azure", "client-generator-core", "flatten-property") -ClientSpec | Out-Null
+        New-SpectorSpec $standardSpecsDirectory @("response", "status-code-range") | Out-Null
+
+        @(Get-Sorted-Specs | Where-Object { Compare-Paths (Get-SubPath $_) $Filter }) | Should -Be @(
+            (Join-Path $alternateType "client.tsp")
         )
     }
 }

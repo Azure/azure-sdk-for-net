@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public partial class SecretAuthInfo : AuthBaseInfo
     {
         private string _name;
-        internal bool _nameIsDefined;
+        private bool _nameIsDefined;
         private SecretBaseInfo _secretInfo;
-        internal bool _secretInfoIsDefined;
+        private bool _secretInfoIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SecretAuthInfo"/>. </summary>
         public SecretAuthInfo() : base(LinkerAuthType.Secret)

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(ManagedIdentityPatchDefinition)} does not support writing '{format}' format.");
             }
-            if (_clientIdIsDefined || Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId, _clientIdIsDefined))
             {
                 if (ClientId != null)
                 {

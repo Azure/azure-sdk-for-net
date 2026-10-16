@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class ManagedIdentityCredential : DataReferenceCredential
     {
         private string _managedIdentityType;
-        internal bool _managedIdentityTypeIsDefined;
+        private bool _managedIdentityTypeIsDefined;
         private string _userManagedIdentityClientId;
-        internal bool _userManagedIdentityClientIdIsDefined;
+        private bool _userManagedIdentityClientIdIsDefined;
         private string _userManagedIdentityPrincipalId;
-        internal bool _userManagedIdentityPrincipalIdIsDefined;
+        private bool _userManagedIdentityPrincipalIdIsDefined;
         private string _userManagedIdentityResourceId;
-        internal bool _userManagedIdentityResourceIdIsDefined;
+        private bool _userManagedIdentityResourceIdIsDefined;
         private string _userManagedIdentityTenantId;
-        internal bool _userManagedIdentityTenantIdIsDefined;
+        private bool _userManagedIdentityTenantIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ManagedIdentityCredential"/>. </summary>
         internal ManagedIdentityCredential() : base(DataReferenceCredentialType.ManagedIdentity)

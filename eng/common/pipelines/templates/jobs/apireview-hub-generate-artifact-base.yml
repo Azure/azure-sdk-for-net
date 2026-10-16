@@ -1,0 +1,201 @@
+parameters:
+  - name: jobName
+    type: string
+  - name: kind
+    type: string
+    values:
+      - base
+      - target
+  - name: requestMode
+    type: string
+    values:
+      - create
+      - update
+  - name: language
+    type: string
+  - name: repositoryFullName
+    type: string
+  - name: ref
+    type: string
+  - name: packageName
+    type: string
+  - name: operationId
+    type: string
+  - name: poolName
+    type: string
+    default: 'azsdk-pool'
+  - name: imageOverride
+    type: string
+    default: 'ubuntu-24.04'
+  - name: stepList
+    type: stepList
+    default: []
+
+jobs:
+  - job: ${{ parameters.jobName }}
+    displayName: Generate ${{ parameters.kind }} API review artifact
+    pool:
+      name: ${{ parameters.poolName }}
+      demands: ImageOverride -equals ${{ parameters.imageOverride }}
+    variables:
+      - template: /eng/pipelines/templates/variables/globals.yml
+      - name: BinDirectory
+        value: $(Pipeline.Workspace)/bin
+      - name: ApiReviewSourceCommit
+        value: ''
+      - name: ArtifactOutputDirectory
+        value: $(Build.ArtifactStagingDirectory)/${{ parameters.kind }}
+    steps:
+      - checkout: none
+
+      - bash: |
+          set -Eeuo pipefail
+
+          if [[ "$REF" != refs/heads/* && "$REF" != refs/tags/* ]]; then
+            echo "ref must be a fully-qualified branch or tag ref." >&2
+            exit 1
+          fi
+          if [[ ! "$REPOSITORY_FULL_NAME" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]]; then
+            echo "repositoryFullName must be in owner/repository form." >&2
+            exit 1
+          fi
+          if [ -z "$PACKAGE_NAME" ] || [ -z "$OPERATION_ID" ] || [ -z "$LANGUAGE" ]; then
+            echo "packageName, operationId, and language are required." >&2
+            exit 1
+          fi
+
+          if [[ -z "$SOURCE_DIRECTORY" || "$SOURCE_DIRECTORY" == "/" ]]; then
+            echo "SOURCE_DIRECTORY must be a non-root path." >&2
+            exit 1
+          fi
+          rm -rf -- "$SOURCE_DIRECTORY"
+          mkdir -p "$SOURCE_DIRECTORY"
+          git -C "$SOURCE_DIRECTORY" init
+          git -C "$SOURCE_DIRECTORY" remote add origin "https://github.com/$REPOSITORY_FULL_NAME.git"
+          git -C "$SOURCE_DIRECTORY" fetch --depth=1 origin "$REF"
+          git -C "$SOURCE_DIRECTORY" checkout --detach FETCH_HEAD
+          git -C "$SOURCE_DIRECTORY" clean -ffd
+
+          source_commit=$(git -C "$SOURCE_DIRECTORY" rev-parse HEAD)
+          echo "ref=$REF sourceCommit=$source_commit"
+          echo "##vso[task.setvariable variable=ApiReviewSourceCommit]$source_commit"
+        displayName: Clone ${{ parameters.kind }} source ref
+        env:
+          REF: ${{ parameters.ref }}
+          REPOSITORY_FULL_NAME: ${{ parameters.repositoryFullName }}
+          SOURCE_DIRECTORY: $(Build.SourcesDirectory)
+          PACKAGE_NAME: ${{ parameters.packageName }}
+          OPERATION_ID: ${{ parameters.operationId }}
+          LANGUAGE: ${{ parameters.language }}
+
+      - download: current
+        artifact: bin
+        displayName: Download built tools
+
+      - pwsh: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Force -Path $env:ARTIFACT_OUTPUT_DIRECTORY | Out-Null
+        displayName: Prepare artifact output directory
+        env:
+          ARTIFACT_OUTPUT_DIRECTORY: $(ArtifactOutputDirectory)
+
+      # Run the language-specific API review generation steps.
+      - ${{ parameters.stepList }}
+
+      - pwsh: |
+          $ErrorActionPreference = 'Stop'
+
+          $apiPath = Join-Path $env:ARTIFACT_OUTPUT_DIRECTORY 'api.md'
+          $metadataPath = Join-Path $env:ARTIFACT_OUTPUT_DIRECTORY 'api.metadata.yml'
+          if (!(Test-Path $apiPath -PathType Leaf)) {
+            throw "Expected api.md was not produced at $apiPath."
+          }
+          if (!(Test-Path $metadataPath -PathType Leaf)) {
+            throw "Expected api.metadata.yml was not produced at $metadataPath."
+          }
+
+          $metadata = @{}
+          foreach ($line in Get-Content $metadataPath) {
+            if ($line -match '^\s*([^#][^:]*):\s*(.*?)\s*$') {
+              $metadata[$matches[1].Trim()] = $matches[2].Trim().Trim('"', "'")
+            }
+          }
+          foreach ($field in 'apiHash', 'packageVersion', 'packageRelativePath') {
+            if ([string]::IsNullOrWhiteSpace($metadata[$field])) {
+              throw "api.metadata.yml must contain a non-empty $field field."
+            }
+          }
+
+          $sourceRoot = [IO.Path]::GetFullPath($env:SOURCE_DIRECTORY)
+          $packagePath = [IO.Path]::GetFullPath((Join-Path $sourceRoot $metadata['packageRelativePath']))
+          $sourcePrefix = $sourceRoot.TrimEnd([IO.Path]::DirectorySeparatorChar) + [IO.Path]::DirectorySeparatorChar
+          if (!$packagePath.StartsWith($sourcePrefix, [StringComparison]::OrdinalIgnoreCase) -or
+              !(Test-Path $packagePath -PathType Container)) {
+            throw "packageRelativePath must resolve to an existing directory below the source root."
+          }
+        displayName: Validate ${{ parameters.kind }} API review bundle
+        env:
+          ARTIFACT_OUTPUT_DIRECTORY: $(ArtifactOutputDirectory)
+          SOURCE_DIRECTORY: $(Build.SourcesDirectory)
+
+      - publish: $(ArtifactOutputDirectory)
+        artifact: ${{ parameters.kind }}-$(System.JobAttempt)
+        displayName: Publish ${{ parameters.kind }} API review artifact
+
+      - task: AzurePowerShell@5
+        displayName: Report ${{ parameters.kind }} completion
+        condition: always()
+        retryCountOnTaskFailure: 3
+        inputs:
+          azureSubscription: $(CompletionCallbackAzureSubscription)
+          azurePowerShellVersion: LatestVersion
+          ScriptType: InlineScript
+          Inline: |
+            $ErrorActionPreference = 'Stop'
+
+            if ([string]::IsNullOrWhiteSpace($env:CALLBACK_PROOF)) {
+              throw 'The callback proof is required.'
+            }
+            $tokenResponse = Get-AzAccessToken -ResourceUrl $env:CALLBACK_RESOURCE_URL -AsSecureString
+            $token = [System.Net.NetworkCredential]::new('', $tokenResponse.Token).Password
+            if ([string]::IsNullOrWhiteSpace($token)) {
+              throw 'The API Review Hub access token was empty.'
+            }
+
+            $body = @{
+              operationId = $env:OPERATION_ID
+              mode = $env:REQUEST_MODE
+              language = $env:LANGUAGE
+              kind = $env:KIND
+              ref = $env:REF
+              sourceCommit = $env:SOURCE_COMMIT
+              result = $env:JOB_RESULT
+              artifactName = $env:ARTIFACT_NAME
+              buildId = $env:BUILD_ID
+              project = $env:PROJECT
+            } | ConvertTo-Json -Compress
+            $headers = @{
+              Authorization = "Bearer $token"
+              'x-arh-callback-proof' = $env:CALLBACK_PROOF
+            }
+            $callbackUrl = "$($env:API_REVIEW_HUB_ENDPOINT.TrimEnd('/'))/api/operations/$($env:OPERATION_ID)"
+            Write-Host "Completion callback URL: $callbackUrl"
+            Write-Host "Completion callback body: $body"
+            Invoke-WebRequest -Method Post -Uri $callbackUrl -Headers $headers -ContentType 'application/json' -Body $body | Out-Null
+        env:
+          ${{ if eq(parameters.kind, 'base') }}:
+            CALLBACK_PROOF: $(BaseCallbackProof)
+          ${{ if eq(parameters.kind, 'target') }}:
+            CALLBACK_PROOF: $(TargetCallbackProof)
+          CALLBACK_RESOURCE_URL: $(CompletionCallbackResourceUrl)
+          API_REVIEW_HUB_ENDPOINT: $(ApiReviewHubEndpoint)
+          OPERATION_ID: ${{ parameters.operationId }}
+          REQUEST_MODE: ${{ parameters.requestMode }}
+          LANGUAGE: ${{ parameters.language }}
+          KIND: ${{ parameters.kind }}
+          REF: ${{ parameters.ref }}
+          SOURCE_COMMIT: $(ApiReviewSourceCommit)
+          JOB_RESULT: $(Agent.JobStatus)
+          ARTIFACT_NAME: ${{ parameters.kind }}-$(System.JobAttempt)
+          BUILD_ID: $(Build.BuildId)
+          PROJECT: $(System.TeamProject)

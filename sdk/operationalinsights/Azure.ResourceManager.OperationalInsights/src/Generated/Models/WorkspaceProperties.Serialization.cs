@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
-            if (_retentionInDaysIsDefined || Optional.IsDefined(RetentionInDays))
+            if (Optional.IsDefined(RetentionInDays, _retentionInDaysIsDefined))
             {
                 if (RetentionInDays != null)
                 {

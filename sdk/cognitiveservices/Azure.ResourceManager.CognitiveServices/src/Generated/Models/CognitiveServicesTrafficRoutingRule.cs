@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _ruleId;
-        internal bool _ruleIdIsDefined;
+        private bool _ruleIdIsDefined;
         private string _description;
-        internal bool _descriptionIsDefined;
+        private bool _descriptionIsDefined;
         private string _deploymentId;
-        internal bool _deploymentIdIsDefined;
+        private bool _deploymentIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesTrafficRoutingRule"/>. </summary>
         public CognitiveServicesTrafficRoutingRule()

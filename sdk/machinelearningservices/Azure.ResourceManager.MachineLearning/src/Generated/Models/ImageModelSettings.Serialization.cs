@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(ImageModelSettings)} does not support writing '{format}' format.");
             }
-            if (_advancedSettingsIsDefined || Optional.IsDefined(AdvancedSettings))
+            if (Optional.IsDefined(AdvancedSettings, _advancedSettingsIsDefined))
             {
                 if (AdvancedSettings != null)
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("advancedSettings"u8);
                 }
             }
-            if (_amsGradientIsDefined || Optional.IsDefined(AmsGradient))
+            if (Optional.IsDefined(AmsGradient, _amsGradientIsDefined))
             {
                 if (AmsGradient != null)
                 {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("amsGradient"u8);
                 }
             }
-            if (_augmentationsIsDefined || Optional.IsDefined(Augmentations))
+            if (Optional.IsDefined(Augmentations, _augmentationsIsDefined))
             {
                 if (Augmentations != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("augmentations"u8);
                 }
             }
-            if (_beta1IsDefined || Optional.IsDefined(Beta1))
+            if (Optional.IsDefined(Beta1, _beta1IsDefined))
             {
                 if (Beta1 != null)
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("beta1"u8);
                 }
             }
-            if (_beta2IsDefined || Optional.IsDefined(Beta2))
+            if (Optional.IsDefined(Beta2, _beta2IsDefined))
             {
                 if (Beta2 != null)
                 {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("beta2"u8);
                 }
             }
-            if (_checkpointFrequencyIsDefined || Optional.IsDefined(CheckpointFrequency))
+            if (Optional.IsDefined(CheckpointFrequency, _checkpointFrequencyIsDefined))
             {
                 if (CheckpointFrequency != null)
                 {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("checkpointFrequency"u8);
                 }
             }
-            if (_checkpointModelIsDefined || Optional.IsDefined(CheckpointModel))
+            if (Optional.IsDefined(CheckpointModel, _checkpointModelIsDefined))
             {
                 if (CheckpointModel != null)
                 {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("checkpointModel"u8);
                 }
             }
-            if (_checkpointRunIdIsDefined || Optional.IsDefined(CheckpointRunId))
+            if (Optional.IsDefined(CheckpointRunId, _checkpointRunIdIsDefined))
             {
                 if (CheckpointRunId != null)
                 {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("checkpointRunId"u8);
                 }
             }
-            if (_distributedIsDefined || Optional.IsDefined(Distributed))
+            if (Optional.IsDefined(Distributed, _distributedIsDefined))
             {
                 if (Distributed != null)
                 {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("distributed"u8);
                 }
             }
-            if (_earlyStoppingIsDefined || Optional.IsDefined(EarlyStopping))
+            if (Optional.IsDefined(EarlyStopping, _earlyStoppingIsDefined))
             {
                 if (EarlyStopping != null)
                 {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("earlyStopping"u8);
                 }
             }
-            if (_earlyStoppingDelayIsDefined || Optional.IsDefined(EarlyStoppingDelay))
+            if (Optional.IsDefined(EarlyStoppingDelay, _earlyStoppingDelayIsDefined))
             {
                 if (EarlyStoppingDelay != null)
                 {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("earlyStoppingDelay"u8);
                 }
             }
-            if (_earlyStoppingPatienceIsDefined || Optional.IsDefined(EarlyStoppingPatience))
+            if (Optional.IsDefined(EarlyStoppingPatience, _earlyStoppingPatienceIsDefined))
             {
                 if (EarlyStoppingPatience != null)
                 {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("earlyStoppingPatience"u8);
                 }
             }
-            if (_enableOnnxNormalizationIsDefined || Optional.IsDefined(EnableOnnxNormalization))
+            if (Optional.IsDefined(EnableOnnxNormalization, _enableOnnxNormalizationIsDefined))
             {
                 if (EnableOnnxNormalization != null)
                 {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("enableOnnxNormalization"u8);
                 }
             }
-            if (_evaluationFrequencyIsDefined || Optional.IsDefined(EvaluationFrequency))
+            if (Optional.IsDefined(EvaluationFrequency, _evaluationFrequencyIsDefined))
             {
                 if (EvaluationFrequency != null)
                 {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("evaluationFrequency"u8);
                 }
             }
-            if (_gradientAccumulationStepIsDefined || Optional.IsDefined(GradientAccumulationStep))
+            if (Optional.IsDefined(GradientAccumulationStep, _gradientAccumulationStepIsDefined))
             {
                 if (GradientAccumulationStep != null)
                 {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("gradientAccumulationStep"u8);
                 }
             }
-            if (_layersToFreezeIsDefined || Optional.IsDefined(LayersToFreeze))
+            if (Optional.IsDefined(LayersToFreeze, _layersToFreezeIsDefined))
             {
                 if (LayersToFreeze != null)
                 {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("layersToFreeze"u8);
                 }
             }
-            if (_learningRateIsDefined || Optional.IsDefined(LearningRate))
+            if (Optional.IsDefined(LearningRate, _learningRateIsDefined))
             {
                 if (LearningRate != null)
                 {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("learningRateScheduler"u8);
                 writer.WriteStringValue(LearningRateScheduler.Value.ToString());
             }
-            if (_modelNameIsDefined || Optional.IsDefined(ModelName))
+            if (Optional.IsDefined(ModelName, _modelNameIsDefined))
             {
                 if (ModelName != null)
                 {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelName"u8);
                 }
             }
-            if (_momentumIsDefined || Optional.IsDefined(Momentum))
+            if (Optional.IsDefined(Momentum, _momentumIsDefined))
             {
                 if (Momentum != null)
                 {
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("momentum"u8);
                 }
             }
-            if (_nesterovIsDefined || Optional.IsDefined(Nesterov))
+            if (Optional.IsDefined(Nesterov, _nesterovIsDefined))
             {
                 if (Nesterov != null)
                 {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nesterov"u8);
                 }
             }
-            if (_numberOfEpochsIsDefined || Optional.IsDefined(NumberOfEpochs))
+            if (Optional.IsDefined(NumberOfEpochs, _numberOfEpochsIsDefined))
             {
                 if (NumberOfEpochs != null)
                 {
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("numberOfEpochs"u8);
                 }
             }
-            if (_numberOfWorkersIsDefined || Optional.IsDefined(NumberOfWorkers))
+            if (Optional.IsDefined(NumberOfWorkers, _numberOfWorkersIsDefined))
             {
                 if (NumberOfWorkers != null)
                 {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("optimizer"u8);
                 writer.WriteStringValue(Optimizer.Value.ToString());
             }
-            if (_randomSeedIsDefined || Optional.IsDefined(RandomSeed))
+            if (Optional.IsDefined(RandomSeed, _randomSeedIsDefined))
             {
                 if (RandomSeed != null)
                 {
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("randomSeed"u8);
                 }
             }
-            if (_stepLRGammaIsDefined || Optional.IsDefined(StepLRGamma))
+            if (Optional.IsDefined(StepLRGamma, _stepLRGammaIsDefined))
             {
                 if (StepLRGamma != null)
                 {
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stepLRGamma"u8);
                 }
             }
-            if (_stepLRStepSizeIsDefined || Optional.IsDefined(StepLRStepSize))
+            if (Optional.IsDefined(StepLRStepSize, _stepLRStepSizeIsDefined))
             {
                 if (StepLRStepSize != null)
                 {
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stepLRStepSize"u8);
                 }
             }
-            if (_trainingBatchSizeIsDefined || Optional.IsDefined(TrainingBatchSize))
+            if (Optional.IsDefined(TrainingBatchSize, _trainingBatchSizeIsDefined))
             {
                 if (TrainingBatchSize != null)
                 {
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("trainingBatchSize"u8);
                 }
             }
-            if (_validationBatchSizeIsDefined || Optional.IsDefined(ValidationBatchSize))
+            if (Optional.IsDefined(ValidationBatchSize, _validationBatchSizeIsDefined))
             {
                 if (ValidationBatchSize != null)
                 {
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationBatchSize"u8);
                 }
             }
-            if (_warmupCosineLRCyclesIsDefined || Optional.IsDefined(WarmupCosineLRCycles))
+            if (Optional.IsDefined(WarmupCosineLRCycles, _warmupCosineLRCyclesIsDefined))
             {
                 if (WarmupCosineLRCycles != null)
                 {
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("warmupCosineLRCycles"u8);
                 }
             }
-            if (_warmupCosineLRWarmupEpochsIsDefined || Optional.IsDefined(WarmupCosineLRWarmupEpochs))
+            if (Optional.IsDefined(WarmupCosineLRWarmupEpochs, _warmupCosineLRWarmupEpochsIsDefined))
             {
                 if (WarmupCosineLRWarmupEpochs != null)
                 {
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("warmupCosineLRWarmupEpochs"u8);
                 }
             }
-            if (_weightDecayIsDefined || Optional.IsDefined(WeightDecay))
+            if (Optional.IsDefined(WeightDecay, _weightDecayIsDefined))
             {
                 if (WeightDecay != null)
                 {

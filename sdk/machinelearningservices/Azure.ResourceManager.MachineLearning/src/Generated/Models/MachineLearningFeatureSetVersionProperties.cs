@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningFeatureSetVersionProperties : MachineLearningAssetBase
     {
         private MaterializationSettings _materializationSettings;
-        internal bool _materializationSettingsIsDefined;
+        private bool _materializationSettingsIsDefined;
         private FeaturesetSpecification _specification;
-        internal bool _specificationIsDefined;
+        private bool _specificationIsDefined;
         private string _stage;
-        internal bool _stageIsDefined;
+        private bool _stageIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureSetVersionProperties"/>. </summary>
         public MachineLearningFeatureSetVersionProperties()

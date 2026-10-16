@@ -1603,6 +1603,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         CustomB6 = 2,
         CustomC42 = 3,
         CustomC10 = 4,
+        StandardB1v2 = 5,
+        StandardB5v2 = 6,
+        StandardB10v2 = 7,
+        StandardB15v2 = 8,
+        StandardB20v2 = 9,
     }
     public partial class ManagedHsmVirtualNetworkRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule>
     {

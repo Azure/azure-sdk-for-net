@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningFeatureStoreEntityVersionProperties : MachineLearningAssetBase
     {
         private string _stage;
-        internal bool _stageIsDefined;
+        private bool _stageIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureStoreEntityVersionProperties"/>. </summary>
         public MachineLearningFeatureStoreEntityVersionProperties()
