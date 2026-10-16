@@ -4,12 +4,11 @@
 
 ### Features Added
 
-- Stable release of the Azure Storage provisioning updates introduced in `1.2.0-beta.1` and `1.2.0-beta.2`, including the default resource API version `2026-06-01`, advanced platform metrics, context caches, storage connectors, data shares, and the Storage File Data SMB MI Admin role (`StorageBuiltInRole.StorageFileDataSmbMIAdmin`). Previously supported explicit API versions and compatibility aliases remain available.
+- Stable release of the features previously introduced in `1.2.0-beta.1` and `1.2.0-beta.2`.
 
 ### Bugs Fixed
 
-- Restored the 3-63 character, lowercase letter, number, and hyphen naming constraints for `FileShare` and `BlobContainer`. Automatically generated names once again lowercase mixed-case identifiers and remove underscores and unsupported punctuation.
-- Includes the fix for `StorageActiveDirectoryProperties.DomainGuid` to share its value with `ActiveDirectoryDomainGuid`, preventing conflicting assignments from emitting an outdated domain GUID.
+- Restored automatic name generation for `FileShare` and `BlobContainer` to use 3-63 characters consisting of lowercase letters, numbers, and hyphens. Mixed-case identifiers are lowercased, and underscores and unsupported punctuation are removed.
 
 ## 1.2.0-beta.2 (2026-10-13)
 
