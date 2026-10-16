@@ -1,23 +1,5 @@
 namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
 {
-    public partial class KubernetesConfigurationPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public KubernetesConfigurationPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateLinkScope Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
-        public Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_11_01_PREVIEW;
-        }
-    }
     public partial class KubernetesConfigurationPrivateLinkResource : Azure.Provisioning.Primitives.ProvisionableResource
     {
         internal KubernetesConfigurationPrivateLinkResource() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -53,11 +35,29 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
             public static readonly string V2024_11_01_PREVIEW;
         }
     }
+    public partial class KubernetesConfigurationPrivateLinkScopeKubernetesConfigurationPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public KubernetesConfigurationPrivateLinkScopeKubernetesConfigurationPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateLinkScope Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
+        public Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateLinkScopeKubernetesConfigurationPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2024_11_01_PREVIEW;
+        }
+    }
     public partial class KubernetesConfigurationPrivateLinkScopeProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KubernetesConfigurationPrivateLinkScopeProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ClusterResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateLinkScopeKubernetesConfigurationPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> PrivateLinkScopeId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateLinkScopeProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType> PublicNetworkAccess { get { throw null; } set { } }

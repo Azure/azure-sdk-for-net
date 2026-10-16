@@ -124,7 +124,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<MonitorPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<MonitorPrivateLinkScopeMonitorPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {

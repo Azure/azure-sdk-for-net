@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Storage
         {
         }
 
-        /// <summary> Gets or sets the StartsOn. </summary>
+        /// <summary> Gets the StartsOn. </summary>
         public BicepValue<DateTimeOffset> StartsOn
         {
             get
@@ -31,14 +31,9 @@ namespace Azure.Provisioning.Storage
                 Initialize();
                 return _startsOn;
             }
-            set
-            {
-                Initialize();
-                _startsOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ExpireOn. </summary>
+        /// <summary> Gets the ExpireOn. </summary>
         public BicepValue<DateTimeOffset> ExpireOn
         {
             get
@@ -46,25 +41,15 @@ namespace Azure.Provisioning.Storage
                 Initialize();
                 return _expireOn;
             }
-            set
-            {
-                Initialize();
-                _expireOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Permission. </summary>
+        /// <summary> Gets the Permission. </summary>
         public BicepValue<string> Permission
         {
             get
             {
                 Initialize();
                 return _permission;
-            }
-            set
-            {
-                Initialize();
-                _permission.Assign(value);
             }
         }
 
@@ -74,7 +59,7 @@ namespace Azure.Provisioning.Storage
             base.DefineProvisionableProperties();
             _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, format: "O");
             _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expiryTime" }, format: "O");
-            _permission = DefineProperty<string>(nameof(Permission), new string[] { "permission" }, isRequired: true);
+            _permission = DefineProperty<string>(nameof(Permission), new string[] { "permission" });
             DefineAdditionalProperties();
         }
 

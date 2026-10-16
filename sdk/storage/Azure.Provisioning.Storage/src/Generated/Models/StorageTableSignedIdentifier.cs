@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Storage
         {
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<string> Id
         {
             get
@@ -29,14 +29,9 @@ namespace Azure.Provisioning.Storage
                 Initialize();
                 return _id;
             }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AccessPolicy. </summary>
+        /// <summary> Gets the AccessPolicy. </summary>
         public StorageTableAccessPolicy AccessPolicy
         {
             get
@@ -44,18 +39,13 @@ namespace Azure.Provisioning.Storage
                 Initialize();
                 return _accessPolicy;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _accessPolicy, value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for StorageTableSignedIdentifier. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isRequired: true);
+            _id = DefineProperty<string>(nameof(Id), new string[] { "id" });
             _accessPolicy = DefineModelProperty<StorageTableAccessPolicy>(nameof(AccessPolicy), new string[] { "accessPolicy" });
             DefineAdditionalProperties();
         }

@@ -20,7 +20,9 @@
     }
   },
   "scripts": {
+    "preinstall": "npm --prefix ../http-client-csharp-mgmt ci --ignore-scripts",
     "clean": "rimraf ./dist ./emitter/temp && dotnet clean ./generator",
+    "prebuild:emitter": "npm --prefix ../http-client-csharp-mgmt run build:emitter && rimraf ./node_modules/@azure-typespec/http-client-csharp-mgmt && npm install --ignore-scripts --no-audit --no-fund",
     "build:emitter": "tsc -p ./emitter/tsconfig.build.json",
     "build:generator": "dotnet build ./generator",
     "build": "npm run build:emitter && npm run build:generator",
@@ -36,15 +38,15 @@
     "dist/**"
   ],
   "dependencies": {
-    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20261009.2",
-    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20261012.2",
-    "@typespec/http-client-csharp": "1.0.0-alpha.20261008.5",
+    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20261013.2",
+    "@azure-typespec/http-client-csharp-mgmt": "file:../http-client-csharp-mgmt",
+    "@typespec/http-client-csharp": "1.0.0-alpha.20261013.2",
     "pluralize": "^8.0.0"
   },
   "devDependencies": {
     "@azure-tools/typespec-autorest": "0.73.0",
     "@azure-tools/typespec-azure-core": "0.73.0",
-    "@azure-tools/typespec-azure-resource-manager": "0.73.0",
+    "@azure-tools/typespec-azure-resource-manager": "https://pkg.pr.new/@azure-tools/typespec-azure-resource-manager@0ecb06a18ccab45b5320bc4fb52ad0f76af029a3",
     "@azure-tools/typespec-azure-rulesets": "0.73.0",
     "@azure-tools/typespec-client-generator-core": "0.73.0",
     "@azure-tools/typespec-liftr-base": "0.14.0",
@@ -69,6 +71,9 @@
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.62.0",
     "vitest": "^4.1.9"
+  },
+  "overrides": {
+    "@azure-tools/typespec-azure-resource-manager": "$@azure-tools/typespec-azure-resource-manager"
   },
   "azure-sdk/emitter-package-json-pinning": [
     "@azure-tools/typespec-autorest",

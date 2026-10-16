@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Monitor
     internal partial class AzureMonitorPrivateLinkScopeProperties : ProvisionableConstruct
     {
         private BicepValue<MonitorPrivateLinkScopeProvisioningState> _privateLinkScopeProvisioningState;
-        private BicepList<MonitorPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<MonitorPrivateLinkScopeMonitorPrivateEndpointConnection> _privateEndpointConnections;
         private MonitorPrivateLinkAccessModeSettings _accessModeSettings;
 
         /// <summary> Creates a new AzureMonitorPrivateLinkScopeProperties. </summary>
@@ -33,7 +33,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<MonitorPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<MonitorPrivateLinkScopeMonitorPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -62,7 +62,7 @@ namespace Azure.Provisioning.Monitor
         {
             base.DefineProvisionableProperties();
             _privateLinkScopeProvisioningState = DefineProperty<MonitorPrivateLinkScopeProvisioningState>(nameof(PrivateLinkScopeProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _privateEndpointConnections = DefineListProperty<MonitorPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<MonitorPrivateLinkScopeMonitorPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _accessModeSettings = DefineModelProperty<MonitorPrivateLinkAccessModeSettings>(nameof(AccessModeSettings), new string[] { "accessModeSettings" }, isRequired: true);
             DefineAdditionalProperties();
         }

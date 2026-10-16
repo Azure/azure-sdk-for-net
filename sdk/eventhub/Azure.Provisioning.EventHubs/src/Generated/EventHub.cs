@@ -22,7 +22,7 @@ namespace Azure.Provisioning.EventHubs
         private SystemData _systemData;
         private EventhubProperties _properties;
         private BicepValue<AzureLocation> _location;
-        private ResourceReference<EventHubsNamespace> _parent;
+        private ResourceReference<EHNamespace> _parent;
 
         /// <summary> Creates a new EventHub. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -92,7 +92,7 @@ namespace Azure.Provisioning.EventHubs
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public EventHubsNamespace Parent
+        public EHNamespace Parent
         {
             get
             {
@@ -286,7 +286,7 @@ namespace Azure.Provisioning.EventHubs
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<EventhubProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _parent = DefineResource<EventHubsNamespace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<EHNamespace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -22,7 +22,7 @@ namespace Azure.Provisioning.RedisEnterprise
         private BicepValue<RedisEnterpriseRedundancyMode> _redundancyMode;
         private BicepValue<RedisEnterpriseClusterResourceState> _resourceState;
         private BicepValue<string> _redisVersion;
-        private BicepList<RedisEnterprisePrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<RedisEnterpriseClusterRedisEnterprisePrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<string> _migratedEndpoint;
 
         /// <summary> Creates a new ClusterProperties. </summary>
@@ -141,7 +141,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<RedisEnterprisePrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<RedisEnterpriseClusterRedisEnterprisePrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -207,7 +207,7 @@ namespace Azure.Provisioning.RedisEnterprise
             _redundancyMode = DefineProperty<RedisEnterpriseRedundancyMode>(nameof(RedundancyMode), new string[] { "redundancyMode" }, isOutput: true);
             _resourceState = DefineProperty<RedisEnterpriseClusterResourceState>(nameof(ResourceState), new string[] { "resourceState" }, isOutput: true);
             _redisVersion = DefineProperty<string>(nameof(RedisVersion), new string[] { "redisVersion" }, isOutput: true);
-            _privateEndpointConnections = DefineListProperty<RedisEnterprisePrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<RedisEnterpriseClusterRedisEnterprisePrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _migratedEndpoint = DefineProperty<string>(nameof(MigratedEndpoint), new string[] { "migratedEndpoint" }, isOutput: true);
             DefineAdditionalProperties();
         }

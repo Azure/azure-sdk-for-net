@@ -124,7 +124,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<SecurityCenterPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<SecurityCenterSecurityCenterPrivateLinkResourcePrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {

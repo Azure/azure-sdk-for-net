@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Batch
         private ApplicationProperties _properties;
         private BicepValue<ETag> _eTag;
         private BicepDictionary<string> _tags;
-        private ResourceReference<BatchAccount> _parent;
+        private ResourceReference<BatchAccountRenamed> _parent;
 
         /// <summary> Creates a new BatchApplication. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -108,7 +108,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public BatchAccount Parent
+        public BatchAccountRenamed Parent
         {
             get
             {
@@ -183,7 +183,7 @@ namespace Azure.Provisioning.Batch
             _properties = DefineModelProperty<ApplicationProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<BatchAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<BatchAccountRenamed>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
