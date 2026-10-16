@@ -5,6 +5,12 @@
 ### Features Added
 
 ### Breaking Changes
+- `OtlpTelemetryEndpoint.Endpoint` type was changed from `string` to `System.Uri`.
+- `VoiceAgentAvatarVideoCrop.BottomRight` and `VoiceAgentAvatarVideoCrop.TopLeft` types were changed from `IList<object>` to `IList<uint>`.
+- `VoiceAgentAzureSemanticVadEnTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadEnTurnDetection.IdleTimeout`.
+- `VoiceAgentAzureSemanticVadMultilingualTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadMultilingualTurnDetection.IdleTimeout`.
+- `VoiceAgentAzureSemanticVadTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadTurnDetection.IdleTimeout`.
+- `VoiceAgentSubagent.InvokeTimeoutSeconds` was renamed to `VoiceAgentSubagent.InvokeTimeout`.
 
 - Changed `VoiceAgentAvatarVideoCrop.BottomRight` and `TopLeft` from `IList<object>` to `IList<uint>`. Its constructor and `ProjectsAgentsModelFactory.VoiceAgentAvatarVideoCrop` now accept `IEnumerable<uint>` instead of `IEnumerable<object>`.
 

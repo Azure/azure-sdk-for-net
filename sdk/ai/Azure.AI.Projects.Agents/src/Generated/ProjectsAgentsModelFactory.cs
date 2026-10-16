@@ -254,7 +254,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="endpoint"> The OTLP collector endpoint URL. </param>
         /// <param name="protocol"> The transport protocol for the OTLP endpoint. </param>
         /// <returns> A new <see cref="Agents.OtlpTelemetryEndpoint"/> instance for mocking. </returns>
-        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<ExportedDataTypes> exportedDataTypes = default, TelemetryEndpointAuthentication authentication = default, string endpoint = default, TelemetryTransportProtocol protocol = default)
+        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<ExportedDataTypes> exportedDataTypes = default, TelemetryEndpointAuthentication authentication = default, Uri endpoint = default, TelemetryTransportProtocol protocol = default)
         {
             exportedDataTypes ??= new ChangeTrackingList<ExportedDataTypes>();
 
@@ -632,7 +632,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="threshold"> Activation threshold for voice activity detection, from 0 to 1. </param>
         /// <param name="prefixPaddingMs"> Audio to include before detected speech, in milliseconds. </param>
         /// <param name="silenceDurationMs"> Silence required to end speech detection, in milliseconds. </param>
-        /// <param name="idleTimeoutMs"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
+        /// <param name="idleTimeout"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
         /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="removeFillerWords"> Whether filler words are removed from transcription. </param>
@@ -641,7 +641,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="languages"> BCP-47 language codes used for speech detection. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentAzureSemanticVadTurnDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAzureSemanticVadTurnDetection VoiceAgentAzureSemanticVadTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeoutMs = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default, IEnumerable<string> languages = default)
+        public static VoiceAgentAzureSemanticVadTurnDetection VoiceAgentAzureSemanticVadTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeout = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default, IEnumerable<string> languages = default)
         {
             languages ??= new ChangeTrackingList<string>();
 
@@ -652,7 +652,7 @@ namespace Azure.AI.Projects.Agents
                 threshold,
                 prefixPaddingMs,
                 silenceDurationMs,
-                idleTimeoutMs,
+                idleTimeout,
                 endOfUtteranceDetection,
                 speechDurationMs,
                 removeFillerWords,
@@ -666,7 +666,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="threshold"> Activation threshold for voice activity detection, from 0 to 1. </param>
         /// <param name="prefixPaddingMs"> Audio to include before detected speech, in milliseconds. </param>
         /// <param name="silenceDurationMs"> Silence required to end speech detection, in milliseconds. </param>
-        /// <param name="idleTimeoutMs"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
+        /// <param name="idleTimeout"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
         /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="removeFillerWords"> Whether filler words are removed from transcription. </param>
@@ -674,7 +674,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="interruptResponse"> Whether user speech may interrupt the agent's response. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentAzureSemanticVadEnTurnDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAzureSemanticVadEnTurnDetection VoiceAgentAzureSemanticVadEnTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeoutMs = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default)
+        public static VoiceAgentAzureSemanticVadEnTurnDetection VoiceAgentAzureSemanticVadEnTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeout = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default)
         {
             return new VoiceAgentAzureSemanticVadEnTurnDetection(
                 VoiceAgentTurnDetectionType.AzureSemanticVadEn,
@@ -683,7 +683,7 @@ namespace Azure.AI.Projects.Agents
                 threshold,
                 prefixPaddingMs,
                 silenceDurationMs,
-                idleTimeoutMs,
+                idleTimeout,
                 endOfUtteranceDetection,
                 speechDurationMs,
                 removeFillerWords,
@@ -696,7 +696,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="threshold"> Activation threshold for voice activity detection, from 0 to 1. </param>
         /// <param name="prefixPaddingMs"> Audio to include before detected speech, in milliseconds. </param>
         /// <param name="silenceDurationMs"> Silence required to end speech detection, in milliseconds. </param>
-        /// <param name="idleTimeoutMs"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
+        /// <param name="idleTimeout"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
         /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="removeFillerWords"> Whether filler words are removed from transcription. </param>
@@ -705,7 +705,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="languages"> BCP-47 language codes used for speech detection. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAzureSemanticVadMultilingualTurnDetection VoiceAgentAzureSemanticVadMultilingualTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeoutMs = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default, IEnumerable<string> languages = default)
+        public static VoiceAgentAzureSemanticVadMultilingualTurnDetection VoiceAgentAzureSemanticVadMultilingualTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeout = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default, IEnumerable<string> languages = default)
         {
             languages ??= new ChangeTrackingList<string>();
 
@@ -716,7 +716,7 @@ namespace Azure.AI.Projects.Agents
                 threshold,
                 prefixPaddingMs,
                 silenceDurationMs,
-                idleTimeoutMs,
+                idleTimeout,
                 endOfUtteranceDetection,
                 speechDurationMs,
                 removeFillerWords,
@@ -1127,17 +1127,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentVersion"> The version of the subagent. When omitted, the active version is used. </param>
         /// <param name="agentCapabilities"> A description of the subagent's capabilities, used by the voice agent to decide whether to forward a query. </param>
         /// <param name="responsePolicy"> Policy for acknowledging forwarded requests and filling gaps while waiting for this subagent's response. </param>
-        /// <param name="invokeTimeoutSeconds"> The wall-clock timeout, in seconds, for each invocation of this subagent. When omitted, the service timeout is used. </param>
+        /// <param name="invokeTimeout"> The wall-clock timeout, in seconds, for each invocation of this subagent. When omitted, the service timeout is used. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentSubagent"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentSubagent VoiceAgentSubagent(string agentName = default, string agentVersion = default, string agentCapabilities = default, VoiceAgentSubagentResponsePolicy responsePolicy = default, TimeSpan? invokeTimeoutSeconds = default)
+        public static VoiceAgentSubagent VoiceAgentSubagent(string agentName = default, string agentVersion = default, string agentCapabilities = default, VoiceAgentSubagentResponsePolicy responsePolicy = default, TimeSpan? invokeTimeout = default)
         {
             return new VoiceAgentSubagent(
                 agentName,
                 agentVersion,
                 agentCapabilities,
                 responsePolicy,
-                invokeTimeoutSeconds,
+                invokeTimeout,
                 additionalBinaryDataProperties: null);
         }
 
