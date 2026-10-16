@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(DockerSetting)} does not support writing '{format}' format.");
             }
-            if (_privilegedIsDefined || Optional.IsDefined(Privileged))
+            if (Optional.IsDefined(Privileged, _privilegedIsDefined))
             {
                 if (Privileged != null)
                 {

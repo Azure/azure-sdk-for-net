@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _relayConnectionString;
-        internal bool _relayConnectionStringIsDefined;
+        private bool _relayConnectionStringIsDefined;
         private string _serviceBusConnectionString;
-        internal bool _serviceBusConnectionStringIsDefined;
+        private bool _serviceBusConnectionStringIsDefined;
         private string _extensionPrincipalId;
-        internal bool _extensionPrincipalIdIsDefined;
+        private bool _extensionPrincipalIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningKubernetesProperties"/>. </summary>
         public MachineLearningKubernetesProperties()

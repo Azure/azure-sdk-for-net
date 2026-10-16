@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningBatchEndpointProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_defaultsIsDefined || Optional.IsDefined(Defaults))
+            if (Optional.IsDefined(Defaults, _defaultsIsDefined))
             {
                 if (Defaults != null)
                 {

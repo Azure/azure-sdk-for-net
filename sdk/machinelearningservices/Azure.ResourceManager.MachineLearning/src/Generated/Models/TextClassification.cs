@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class TextClassification : AutoMLVertical
     {
         private NlpVerticalFeaturizationSettings _featurizationSettings;
-        internal bool _featurizationSettingsIsDefined;
+        private bool _featurizationSettingsIsDefined;
         private NlpVerticalLimitSettings _limitSettings;
-        internal bool _limitSettingsIsDefined;
+        private bool _limitSettingsIsDefined;
         private MachineLearningTableJobInput _validationData;
-        internal bool _validationDataIsDefined;
+        private bool _validationDataIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="TextClassification"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>

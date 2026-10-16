@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private OnUploadFilters _filters;
-        internal bool _filtersIsDefined;
+        private bool _filtersIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="OnUploadProperties"/>. </summary>
         public OnUploadProperties()

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private MachineLearningInferenceContainerRoute _startupRoute;
-        internal bool _startupRouteIsDefined;
+        private bool _startupRouteIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningInferenceContainerProperties"/>. </summary>
         public MachineLearningInferenceContainerProperties()

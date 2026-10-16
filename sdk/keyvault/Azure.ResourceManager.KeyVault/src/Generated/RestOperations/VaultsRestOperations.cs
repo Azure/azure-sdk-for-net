@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.KeyVault/vaults/", false);
             uri.AppendPath(vaultName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-02-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.KeyVault/vaults/", false);
             uri.AppendPath(vaultName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-02-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.KeyVault/vaults/", false);
             uri.AppendPath(vaultName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-02-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.KeyVault/vaults/", false);
             uri.AppendPath(vaultName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-02-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.KeyVault/vaults", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-02-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-15", true);
             if (top != null)
             {
                 uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-02-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-05-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.KeyVault/vaults", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-02-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-15", true);
             if (top != null)
             {
                 uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-02-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-05-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/accessPolicies/", false);
             uri.AppendPath(operationKind, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-02-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath("/providers/Microsoft.KeyVault/vaults/", false);
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/privateLinkResources", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-02-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 throw new FormatException($"The model {nameof(ValidateResult)} does not support writing '{format}' format.");
             }
-            if (_linkerNameIsDefined || Optional.IsDefined(LinkerName))
+            if (Optional.IsDefined(LinkerName, _linkerNameIsDefined))
             {
                 if (LinkerName != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("linkerName"u8);
                 }
             }
-            if (_isConnectionAvailableIsDefined || Optional.IsDefined(IsConnectionAvailable))
+            if (Optional.IsDefined(IsConnectionAvailable, _isConnectionAvailableIsDefined))
             {
                 if (IsConnectionAvailable != null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("isConnectionAvailable"u8);
                 }
             }
-            if (_reportStartsOnIsDefined || Optional.IsDefined(ReportStartsOn))
+            if (Optional.IsDefined(ReportStartsOn, _reportStartsOnIsDefined))
             {
                 if (ReportStartsOn != null)
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("reportStartTimeUtc"u8);
                 }
             }
-            if (_reportEndsOnIsDefined || Optional.IsDefined(ReportEndsOn))
+            if (Optional.IsDefined(ReportEndsOn, _reportEndsOnIsDefined))
             {
                 if (ReportEndsOn != null)
                 {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("targetId"u8);
                 writer.WriteStringValue(TargetId);
             }
-            if (_authTypeIsDefined || Optional.IsDefined(AuthType))
+            if (Optional.IsDefined(AuthType, _authTypeIsDefined))
             {
                 if (AuthType != null)
                 {

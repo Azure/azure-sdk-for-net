@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class AutoMLJob : MachineLearningJobProperties
     {
         private string _environmentId;
-        internal bool _environmentIdIsDefined;
+        private bool _environmentIdIsDefined;
         private QueueSettings _queueSettings;
-        internal bool _queueSettingsIsDefined;
+        private bool _queueSettingsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AutoMLJob"/>. </summary>
         /// <param name="taskDetails"> [Required] This represents scenario which can be one of Tables/NLP/Image. </param>

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpiresOn.Value, "O");
             }
-            if (_lastInvokedOnIsDefined || Optional.IsDefined(LastInvokedOn))
+            if (Optional.IsDefined(LastInvokedOn, _lastInvokedOnIsDefined))
             {
                 if (LastInvokedOn != null)
                 {

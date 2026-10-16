@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (_pathIsDefined || Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path, _pathIsDefined))
             {
                 if (Path != null)
                 {

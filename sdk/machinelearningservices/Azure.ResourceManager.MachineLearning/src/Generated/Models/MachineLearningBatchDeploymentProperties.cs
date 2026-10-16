@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningBatchDeploymentProperties : MachineLearningEndpointDeploymentProperties
     {
         private string _compute;
-        internal bool _computeIsDefined;
+        private bool _computeIsDefined;
         private BatchDeploymentConfiguration _deploymentConfiguration;
-        internal bool _deploymentConfigurationIsDefined;
+        private bool _deploymentConfigurationIsDefined;
         private MachineLearningAssetReferenceBase _model;
-        internal bool _modelIsDefined;
+        private bool _modelIsDefined;
         private MachineLearningDeploymentResourceConfiguration _resources;
-        internal bool _resourcesIsDefined;
+        private bool _resourcesIsDefined;
         private MachineLearningBatchRetrySettings _retrySettings;
-        internal bool _retrySettingsIsDefined;
+        private bool _retrySettingsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningBatchDeploymentProperties"/>. </summary>
         public MachineLearningBatchDeploymentProperties()

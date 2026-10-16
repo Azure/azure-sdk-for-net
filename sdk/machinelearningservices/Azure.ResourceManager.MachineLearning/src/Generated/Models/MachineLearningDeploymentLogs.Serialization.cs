@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningDeploymentLogs)} does not support writing '{format}' format.");
             }
-            if (_contentIsDefined || Optional.IsDefined(Content))
+            if (Optional.IsDefined(Content, _contentIsDefined))
             {
                 if (Content != null)
                 {

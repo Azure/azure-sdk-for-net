@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (_privateIPAddressPrefixLengthIsDefined || Optional.IsDefined(PrivateIPAddressPrefixLength))
+            if (Optional.IsDefined(PrivateIPAddressPrefixLength, _privateIPAddressPrefixLengthIsDefined))
             {
                 if (PrivateIPAddressPrefixLength != null)
                 {
