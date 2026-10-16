@@ -1,12 +1,14 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
@@ -28,11 +30,9 @@ namespace Azure.Search.Documents.Tests.Samples
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Tests_FieldBuilderIgnore_CreateIndex
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
             // Define client options to use camelCase when serializing property names.
             SearchClientOptions options = new SearchClientOptions(ServiceVersion)
@@ -45,7 +45,10 @@ namespace Azure.Search.Documents.Tests.Samples
             };
 
             // Create a service client.
-            AzureKeyCredential credential = new AzureKeyCredential(key);
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential, options);
 #if !SNIPPET
             indexClient = resources.GetIndexClient(options);

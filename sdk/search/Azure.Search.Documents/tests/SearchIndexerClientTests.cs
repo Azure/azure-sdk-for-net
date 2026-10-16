@@ -660,8 +660,8 @@ namespace Azure.Search.Documents.Tests
 
                     Type _ when t == typeof(TextTranslationSkill) => new TextTranslationSkill(inputs, outputs, TextTranslationSkillLanguage.En),
                     Type _ when t == typeof(WebApiSkill) => new WebApiSkill(inputs, outputs, "https://microsoft.com"),
-                    Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => new AzureOpenAIEmbeddingSkill(inputs, outputs) { ResourceUri = new Uri(TestEnvironment.OpenAIEndpoint), ApiKey = TestEnvironment.OpenAIKey, DeploymentName = "text-embedding-3-large", ModelName = "text-embedding-3-large" },
-                    Type _ when t == typeof(ChatCompletionSkill) => new ChatCompletionSkill(inputs, outputs, new Uri(TestEnvironment.OpenAIEndpoint)) { ApiKey = TestEnvironment.OpenAIKey },
+                    Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => new AzureOpenAIEmbeddingSkill(inputs, outputs) { ResourceUri = new Uri(TestEnvironment.OpenAIEndpoint), DeploymentName = "text-embedding-3-large", ModelName = "text-embedding-3-large" },
+                    Type _ when t == typeof(ChatCompletionSkill) => new ChatCompletionSkill(inputs, outputs, new Uri(TestEnvironment.OpenAIEndpoint)),
 #if AZURE_SEARCH_PREVIEW
                     Type _ when t == typeof(VisionVectorizeSkill) => new VisionVectorizeSkill(inputs, outputs, "2024-02-01"),
                     Type _ when t == typeof(AzureMachineLearningSkill) => new AzureMachineLearningSkill(inputs, outputs) { ScoringUri = new Uri("https://microsoft.com") },

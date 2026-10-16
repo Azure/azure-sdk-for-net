@@ -1,9 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Identity;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
@@ -309,12 +311,13 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             #endregion
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchUsingVectorizedQuery_Create_Index
             Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
-            AzureKeyCredential credential = new(key);
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
 
             SearchIndexClient indexClient = new(endpoint, credential);
 #if !SNIPPET
@@ -329,8 +332,10 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         private async Task<SearchClient> UploadDocuments(SearchResources resources, string indexName)
         {
             Uri endpoint = resources.Endpoint;
-            string key = resources.PrimaryApiKey;
-            AzureKeyCredential credential = new AzureKeyCredential(key);
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchUsingVectorizedQuery_Upload_Documents
             SearchClient searchClient = new(endpoint, indexName, credential);

@@ -1,12 +1,18 @@
 # Knowledge Base Configuration
 
-This sample demonstrates how to configure a knowledge base with CORS options, an Azure OpenAI model, retrieval and answer instructions, output mode, and reasoning effort.
+This sample demonstrates how to configure a knowledge base with an Azure OpenAI model, retrieval and answer instructions, output mode, and reasoning effort using the `2026-10-01` API version.
+
+Set `SEARCH_ENDPOINT`, `SEARCH_INDEX`, and `OPENAI_ENDPOINT` before running the create example. The search index must already exist, contain hotel documents, and have a default semantic configuration. Deploy `gpt-5.4-mini` in the configured Azure OpenAI resource and grant the Search service's managed identity the **Cognitive Services OpenAI User** role on that resource. The caller needs **Search Service Contributor** on the Search service.
+
+These settings define the defaults for subsequent retrievals. `AnswerSynthesis` uses the configured model to generate an answer; `ExtractiveData` returns retrieved content without answer synthesis. Retrieval instructions guide model-based query planning, while answer instructions guide synthesis. Requests with explicit intents bypass model query planning.
 
 For more information, see the [agentic retrieval documentation](https://learn.microsoft.com/azure/search/agentic-retrieval-overview).
 
 ## Required Namespaces
 
 ```C# Snippet:Azure_Search_Tests_Samples_KnowledgeBaseConfiguration_Namespaces
+using Azure.Identity;
+using Azure.Core;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases.Models;
@@ -14,12 +20,11 @@ using Azure.Search.Documents.KnowledgeBases.Models;
 
 ## Create a Knowledge Base
 
-Create a knowledge base with CORS options, retrieval and answer instructions, answer synthesis, and low reasoning effort.
+Create a knowledge base that synthesizes concise hotel answers with low reasoning effort and custom retrieval and answer instructions.
 
 ```C# Snippet:Azure_Search_Tests_Samples_KnowledgeBaseConfiguration_Create
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -58,18 +63,16 @@ KnowledgeBase knowledgeBase = new KnowledgeBase(
     RetrievalReasoningEffort = new KnowledgeRetrievalLowReasoningEffort()
 };
 
-// Add an Azure OpenAI model using a GPT-5.4 deployment
+// The deployment must exist and allow the Search service's managed identity.
 string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
-string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
-    knowledgeBase.Models.Add(
-        new KnowledgeBaseAzureOpenAIModel(
-            new AzureOpenAIVectorizerParameters
-            {
-                ResourceUri = new Uri(openAIEndpoint),
-                ApiKey = openAIKey,
-                DeploymentName = "gpt-5.4-mini",
-                ModelName = AzureOpenAIModelName.Gpt54Mini
-            }));
+knowledgeBase.Models.Add(
+    new KnowledgeBaseAzureOpenAIModel(
+        new AzureOpenAIVectorizerParameters
+        {
+            ResourceUri = new Uri(openAIEndpoint),
+            DeploymentName = "gpt-5.4-mini",
+            ModelName = AzureOpenAIModelName.Gpt54Mini
+        }));
 
 KnowledgeBase createdBase = await indexClient.CreateKnowledgeBaseAsync(knowledgeBase);
 Console.WriteLine($"Created knowledge base '{createdBase.Name}'");
@@ -81,12 +84,11 @@ Console.WriteLine($"  Retrieval instructions: {createdBase.RetrievalInstructions
 
 ## Update a Knowledge Base
 
-Get an existing knowledge base and update its CORS origins, output mode, and retrieval instructions.
+Set `KNOWLEDGE_BASE_NAME` to an existing knowledge base. Change its default output mode to extracted content and update its query-planning instructions without replacing its knowledge sources or model configuration.
 
 ```C# Snippet:Azure_Search_Tests_Samples_KnowledgeBaseConfiguration_Update
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -94,13 +96,13 @@ SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 // Get the existing knowledge base
 KnowledgeBase knowledgeBase = await indexClient.GetKnowledgeBaseAsync(knowledgeBaseName);
 
-// Update configuration: add CORS options and change output mode
-knowledgeBase.CorsOptions = new CorsOptions(new[] { "*" })
+knowledgeBase.CorsOptions = new CorsOptions(new[] { "https://myapp.example.com" })
 {
     MaxAgeInSeconds = 600
 };
+// Update the default retrieval mode and query-planning instructions.
 knowledgeBase.OutputMode = KnowledgeRetrievalOutputMode.ExtractiveData;
-knowledgeBase.RetrievalInstructions = "Return raw data without summarization.";
+knowledgeBase.RetrievalInstructions = "Prioritize hotels with lower nightly rates.";
 
 KnowledgeBase updatedBase = await indexClient.CreateOrUpdateKnowledgeBaseAsync(knowledgeBase);
 Console.WriteLine($"Updated knowledge base '{updatedBase.Name}'");

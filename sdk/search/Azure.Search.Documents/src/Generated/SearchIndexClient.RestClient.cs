@@ -106,7 +106,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetSynonymMapsWithSelectedPropertiesRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateGetPagedSynonymMapsRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -142,7 +142,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetSynonymMapsWithSelectedPropertiesRequest(Uri nextPage, int? pageSize, RequestContext context)
+        internal HttpMessage CreateNextGetPagedSynonymMapsRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -997,7 +997,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetKnowledgeSourceFilesRequest(string sourceName, string prefix, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateGetPagedKnowledgeSourceFilesRequest(string sourceName, string prefix, string search, int? pageSize, string searchType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1035,7 +1035,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetKnowledgeSourceFilesRequest(Uri nextPage, int? pageSize, RequestContext context)
+        internal HttpMessage CreateNextGetPagedKnowledgeSourceFilesRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1132,7 +1132,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetIndexStatsSummaryRequest(string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateGetPagedIndexStatsSummaryRequest(string search, int? pageSize, string searchType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1164,7 +1164,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetIndexStatsSummaryRequest(Uri nextPage, int? pageSize, RequestContext context)
+        internal HttpMessage CreateNextGetPagedIndexStatsSummaryRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

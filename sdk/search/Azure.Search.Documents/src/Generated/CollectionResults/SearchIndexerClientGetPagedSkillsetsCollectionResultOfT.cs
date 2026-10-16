@@ -6,35 +6,36 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Indexes
 {
-    internal partial class SearchIndexClientGetIndexStatsSummaryCollectionResult : Pageable<BinaryData>
+    internal partial class SearchIndexerClientGetPagedSkillsetsCollectionResultOfT : Pageable<SearchIndexerSkillset>
     {
-        private readonly SearchIndexClient _client;
+        private readonly SearchIndexerClient _client;
+        private readonly IEnumerable<string> _select;
         private readonly string _search;
         private readonly int? _pageSize;
         private readonly string _searchType;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of SearchIndexClientGetIndexStatsSummaryCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The SearchIndexClient client used to send requests. </param>
+        /// <summary> Initializes a new instance of SearchIndexerClientGetPagedSkillsetsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The SearchIndexerClient client used to send requests. </param>
+        /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
         /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SearchIndexClientGetIndexStatsSummaryCollectionResult(SearchIndexClient client, string search, int? pageSize, string searchType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SearchIndexerClientGetPagedSkillsetsCollectionResultOfT(SearchIndexerClient client, IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
+            _select = @select;
             _search = search;
             _pageSize = pageSize;
             _searchType = searchType;
@@ -42,11 +43,11 @@ namespace Azure.Search.Documents.Indexes
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of SearchIndexClientGetIndexStatsSummaryCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of SearchIndexerClientGetPagedSkillsetsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of SearchIndexClientGetIndexStatsSummaryCollectionResult as an enumerable collection. </returns>
-        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of SearchIndexerClientGetPagedSkillsetsCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<SearchIndexerSkillset>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -56,15 +57,10 @@ namespace Azure.Search.Documents.Indexes
                 {
                     yield break;
                 }
-                ListIndexStatsSummary result = (ListIndexStatsSummary)response;
-                string nextPageString = result.NextLink;
+                ListSkillsetsResult result = (ListSkillsetsResult)response;
+                string nextPageString = result.OdataNextLink;
                 nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
-                List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in result.Value)
-                {
-                    items.Add(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureSearchDocumentsContext.Default));
-                }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<SearchIndexerSkillset>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -78,7 +74,7 @@ namespace Azure.Search.Documents.Indexes
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _pageSize;
-            HttpMessage message = nextLink != null ? _client.CreateNextGetIndexStatsSummaryRequest(nextLink, pageSize, _context) : _client.CreateGetIndexStatsSummaryRequest(_search, pageSize, _searchType, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetPagedSkillsetsRequest(nextLink, pageSize, _context) : _client.CreateGetPagedSkillsetsRequest(_select, _search, pageSize, _searchType, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

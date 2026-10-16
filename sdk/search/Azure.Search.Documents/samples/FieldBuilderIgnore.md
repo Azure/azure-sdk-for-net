@@ -65,7 +65,6 @@ to a string, and define the `genre` index field ourselves.
 
 ```C# Snippet:Azure_Search_Tests_FieldBuilderIgnore_CreateIndex
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
 // Define client options to use camelCase when serializing property names.
 SearchClientOptions options = new SearchClientOptions(ServiceVersion)
@@ -78,7 +77,7 @@ SearchClientOptions options = new SearchClientOptions(ServiceVersion)
 };
 
 // Create a service client.
-AzureKeyCredential credential = new AzureKeyCredential(key);
+TokenCredential credential = new DefaultAzureCredential();
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential, options);
 
 // Create the FieldBuilder using the same serializer.

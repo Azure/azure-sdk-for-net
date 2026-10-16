@@ -390,7 +390,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual AsyncPageable<string> GetIndexNamesAsync(
             CancellationToken cancellationToken = default) =>
             new AsyncPageableWrapper<SearchIndexResponse, string>(
-                GetIndexesWithSelectedPropertiesAsync([Constants.NameKey], cancellationToken: cancellationToken),
+                GetIndexesWithSelectedPropertiesAsync([Constants.NameKey], search: default, pageSize: default, searchType: default, cancellationToken: cancellationToken),
                 response => response.Name,
                 supportsContinuationToken: true,
                 ClientDiagnostics,
@@ -429,7 +429,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Pageable<BinaryData> GetIndexesWithSelectedProperties(
             IEnumerable<string> @select,
             RequestContext context) =>
-            GetIndexesWithSelectedProperties(@select, context: context);
+            GetIndexesWithSelectedProperties(@select, search: null, pageSize: null, searchType: null, context: context);
 
         /// <summary>
         /// Gets a list of all indexes with selected properties.
@@ -442,7 +442,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual AsyncPageable<BinaryData> GetIndexesWithSelectedPropertiesAsync(
             IEnumerable<string> @select,
             RequestContext context) =>
-            GetIndexesWithSelectedPropertiesAsync(@select, context: context);
+            GetIndexesWithSelectedPropertiesAsync(@select, search: null, pageSize: null, searchType: null, context: context);
 
         #endregion
 
@@ -589,10 +589,12 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SynonymMap"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to avoid ambiguous overload
         public virtual Response<IReadOnlyList<SynonymMap>> GetSynonymMaps(
             CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002
         {
-            return GetSynonymMapsWithSelectedProperties(select: null, cancellationToken: cancellationToken).ToBufferedList();
+            return GetPagedSynonymMaps(cancellationToken: cancellationToken).ToBufferedList();
         }
 
         /// <summary>
@@ -602,10 +604,12 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SynonymMap"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to avoid ambiguous overload
         public virtual async Task<Response<IReadOnlyList<SynonymMap>>> GetSynonymMapsAsync(
             CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002
         {
-            return await GetSynonymMapsWithSelectedPropertiesAsync(select: null, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
+            return await GetPagedSynonymMapsAsync(cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -618,7 +622,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<string>> GetSynonymMapNames(
             CancellationToken cancellationToken = default)
         {
-            Response<IReadOnlyList<SynonymMap>> response = GetSynonymMapsWithSelectedProperties(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedList();
+            Response<IReadOnlyList<SynonymMap>> response = GetPagedSynonymMaps(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedList();
             return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 
@@ -632,7 +636,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<string>>> GetSynonymMapNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<IReadOnlyList<SynonymMap>> response = await GetSynonymMapsWithSelectedPropertiesAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
+            Response<IReadOnlyList<SynonymMap>> response = await GetPagedSynonymMapsAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
             return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 

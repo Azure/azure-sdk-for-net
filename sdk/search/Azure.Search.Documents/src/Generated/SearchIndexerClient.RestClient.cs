@@ -109,7 +109,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetDataSourceConnectionsWithSelectedPropertiesRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateGetPagedDataSourceConnectionsRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -145,7 +145,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetDataSourceConnectionsWithSelectedPropertiesRequest(Uri nextPage, int? pageSize, RequestContext context)
+        internal HttpMessage CreateNextGetPagedDataSourceConnectionsRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -342,7 +342,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetIndexersWithSelectedPropertiesRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateGetPagedIndexersRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -378,7 +378,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetIndexersWithSelectedPropertiesRequest(Uri nextPage, int? pageSize, RequestContext context)
+        internal HttpMessage CreateNextGetPagedIndexersRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -529,7 +529,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetSkillsetsWithSelectedPropertiesRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateGetPagedSkillsetsRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -565,7 +565,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetSkillsetsWithSelectedPropertiesRequest(Uri nextPage, int? pageSize, RequestContext context)
+        internal HttpMessage CreateNextGetPagedSkillsetsRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

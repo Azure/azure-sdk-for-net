@@ -13,6 +13,8 @@ For more information, see the [agentic retrieval documentation](https://learn.mi
 ## Required Namespaces
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeBaseRetrieval_Namespaces
+using Azure.Identity;
+using Azure.Core;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases;
@@ -25,10 +27,9 @@ using Azure.Search.Documents.Models;
 First, create a search index with semantic search configured. The semantic configuration helps the knowledge base understand field relevance.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeBaseRetrieval_CreateIndex
-// Get the service endpoint and API key from the environment
+// Get the service endpoint and authenticate with Microsoft Entra ID
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 
 // Create a SearchIndexClient
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -130,13 +131,11 @@ KnowledgeBase knowledgeBase = new KnowledgeBase(
 
 // Optionally add an Azure OpenAI model for query planning
 string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
-string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
     knowledgeBase.Models.Add(
         new KnowledgeBaseAzureOpenAIModel(
             new AzureOpenAIVectorizerParameters
             {
                 ResourceUri = new Uri(openAIEndpoint),
-                ApiKey = openAIKey,
                 DeploymentName = "gpt-5.4-mini",
                 ModelName = AzureOpenAIModelName.Gpt54Mini
             }));
@@ -185,10 +184,9 @@ foreach (KnowledgeBaseReference reference in retrievalResponse.References)
 If you already have a knowledge base set up, you can retrieve from it directly:
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeBaseRetrieval_Retrieve
-// Get the service endpoint and API key from the environment
+// Get the service endpoint and authenticate with Microsoft Entra ID
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
 
 // Create a KnowledgeBaseRetrievalClient to query the knowledge base

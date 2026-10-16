@@ -61,8 +61,7 @@ After creating an instance of the `SearchIndex`, we need to instantiate the `Sea
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchSemanticHybridSearch_Create_Index
 Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
-AzureKeyCredential credential = new(key);
+TokenCredential credential = new DefaultAzureCredential();
 
 SearchIndexClient indexClient = new(endpoint, credential);
 await indexClient.CreateIndexAsync(searchIndex);
@@ -92,8 +91,7 @@ Next, we will create sample hotel documents. The vector field requires submittin
 public static ReadOnlyMemory<float> GetEmbeddings(string input)
 {
     Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
-    string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
-    AzureKeyCredential credential = new AzureKeyCredential(key);
+    TokenCredential credential = new DefaultAzureCredential();
 
     AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
     EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-ada-002");

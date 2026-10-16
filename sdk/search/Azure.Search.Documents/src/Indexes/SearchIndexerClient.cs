@@ -355,10 +355,11 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexer"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<IReadOnlyList<SearchIndexer>> GetIndexers(
             CancellationToken cancellationToken = default)
         {
-            return GetIndexersWithSelectedProperties(new[] { Constants.All }, cancellationToken: cancellationToken).ToBufferedList();
+            return GetPagedIndexers(new[] { Constants.All }, cancellationToken: cancellationToken).ToBufferedList();
         }
 
         /// <summary>
@@ -368,10 +369,11 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexer"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<IReadOnlyList<SearchIndexer>>> GetIndexersAsync(
             CancellationToken cancellationToken = default)
         {
-            return await GetIndexersWithSelectedPropertiesAsync(new[] { Constants.All }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
+            return await GetPagedIndexersAsync(new[] { Constants.All }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -384,7 +386,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<string>> GetIndexerNames(
             CancellationToken cancellationToken = default)
         {
-            Response<IReadOnlyList<SearchIndexer>> response = GetIndexersWithSelectedProperties(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedList();
+            Response<IReadOnlyList<SearchIndexer>> response = GetPagedIndexers(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedList();
             return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 
@@ -398,7 +400,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<string>>> GetIndexerNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<IReadOnlyList<SearchIndexer>> response = await GetIndexersWithSelectedPropertiesAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
+            Response<IReadOnlyList<SearchIndexer>> response = await GetPagedIndexersAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
             return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 

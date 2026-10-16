@@ -1,12 +1,18 @@
 # File Knowledge Source
 
-This sample demonstrates how to create and use a File knowledge source. File sources support direct document upload and indexing without needing an external data store like Azure Blob Storage. You can configure ingestion parameters including content extraction mode and an embedding model for vectorization, then upload, list, and delete files in the source.
+This sample demonstrates the stable File knowledge source workflow in the `2026-10-01` API: create a source, check capacity, upload a file with metadata, update its content, list it by prefix, retrieve it through a knowledge base, and delete it. File sources support direct upload and indexing without an external data store such as Azure Blob Storage.
+
+The caller needs **Search Service Contributor** to manage the source and knowledge base. The Search service's system-assigned managed identity needs **Cognitive Services OpenAI User** on the Azure OpenAI resource for the `text-embedding-3-large` and `gpt-5.4-mini` deployments. Uploads go directly to Search, so this workflow does not require a Storage role.
+
+The SDK's typed multipart request helpers are currently marked experimental (`SCME0004`), and the sample suppresses that warning around those calls.
 
 For more information, see the [agentic retrieval documentation](https://learn.microsoft.com/azure/search/agentic-retrieval-overview).
 
 ## Required Namespaces
 
 ```C# Snippet:Azure_Search_Tests_Samples_FileKnowledgeSource_Namespaces
+using Azure.Identity;
+using Azure.Core;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases;
@@ -19,8 +25,7 @@ Create a File knowledge source with ingestion parameters specifying the content 
 
 ```C# Snippet:Azure_Search_Tests_Samples_FileKnowledgeSource_Create
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 
@@ -31,7 +36,6 @@ string knowledgeSourceName = "my-file-source";
 
 // Configure ingestion parameters with content extraction mode and embedding model
 string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
-string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
 
 FileKnowledgeSource fileSource = new FileKnowledgeSource(
     knowledgeSourceName,
@@ -45,7 +49,6 @@ FileKnowledgeSource fileSource = new FileKnowledgeSource(
                 AzureOpenAIParameters = new AzureOpenAIVectorizerParameters
                 {
                     ResourceUri = new Uri(openAIEndpoint),
-                    ApiKey = openAIKey,
                     DeploymentName = "text-embedding-3-large",
                     ModelName = "text-embedding-3-large"
                 }
@@ -58,6 +61,8 @@ FileKnowledgeSource fileSource = new FileKnowledgeSource(
 
 KnowledgeSource createdSource = await indexClient.CreateKnowledgeSourceAsync(fileSource);
 Console.WriteLine($"Created file knowledge source '{createdSource.Name}'");
+KnowledgeSourceStatus sourceStatus = await indexClient.GetKnowledgeSourceStatusAsync(knowledgeSourceName);
+Console.WriteLine($"Remaining File capacity: {sourceStatus.FileCapacity?.RemainingFileCount}");
 ```
 
 ## Upload Files to the Knowledge Source
@@ -107,12 +112,14 @@ Upload documents directly to the File knowledge source, list uploaded files, and
                     }
                 };
 #pragma warning disable SCME0004 // Multipart file request types are experimental.
+                BinaryData updatedFileData = BinaryData.FromString(
+                    "Azure AI Search indexes content and uses semantic ranking to retrieve relevant information.");
                 UpdateKnowledgeSourceFileRequest updateRequest = new UpdateKnowledgeSourceFileRequest(
                     updatedMetadata,
-                    fileData);
+                    updatedFileData);
                 KnowledgeSourceFile updatedFile = await indexClient.UpdateKnowledgeSourceFileAsync(
-                    uploadedFile.FileId,
                     knowledgeSourceName,
+                    uploadedFile.FileId,
                     updateRequest);
 #pragma warning restore SCME0004
                 Console.WriteLine($"Updated file metadata category: {updatedFile.Metadata["category"]}");
@@ -120,7 +127,7 @@ Upload documents directly to the File knowledge source, list uploaded files, and
                 // Prefixes are derived from relative paths. The pageable handles
                 // continuation tokens internally; callers should not parse them.
                 HashSet<string> listedFileIds = new HashSet<string>();
-                await foreach (KnowledgeSourceFile file in indexClient.GetKnowledgeSourceFilesAsync(
+                await foreach (KnowledgeSourceFile file in indexClient.GetPagedKnowledgeSourceFilesAsync(
                     knowledgeSourceName,
                     prefix: "guides/",
                     pageSize: 1))
@@ -171,7 +178,15 @@ KnowledgeBase knowledgeBase = new KnowledgeBase(
     RetrievalReasoningEffort = new KnowledgeRetrievalMinimalReasoningEffort()
 };
 
-// Add an Azure OpenAI model for query planning
+// The Search service identity needs access to both configured deployments.
+knowledgeBase.Models.Add(
+    new KnowledgeBaseAzureOpenAIModel(
+        new AzureOpenAIVectorizerParameters
+        {
+            ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
+            DeploymentName = "gpt-5.4-mini",
+            ModelName = AzureOpenAIModelName.Gpt54Mini
+        }));
 
 KnowledgeBase createdBase = await indexClient.CreateKnowledgeBaseAsync(knowledgeBase);
 Console.WriteLine($"Created knowledge base '{createdBase.Name}' with file source");
@@ -188,9 +203,14 @@ KnowledgeBaseRetrievalClient retrievalClient = new KnowledgeBaseRetrievalClient(
 
 KnowledgeBaseRetrievalRequest request = new KnowledgeBaseRetrievalRequest
 {
-    IncludeActivity = true
+    IncludeActivity = true,
+    OutputMode = KnowledgeRetrievalOutputMode.ExtractiveData
 };
 request.Intents.Add(new KnowledgeRetrievalSemanticIntent("What is Azure AI Search?"));
+request.KnowledgeSourceParams.Add(new FileKnowledgeSourceParams(knowledgeSourceName)
+{
+    IncludeReferences = true
+});
 
 Response<KnowledgeBaseRetrievalResponse> response = await retrievalClient.RetrieveAsync(request);
 KnowledgeBaseRetrievalResponse retrievalResponse = response.Value;
@@ -218,6 +238,6 @@ Delete the uploaded file after retrieval and other file operations are complete.
 
 ```C# Snippet:Azure_Search_Tests_Samples_FileKnowledgeSource_DeleteFile
 // Delete the uploaded file after retrieval is complete.
-await indexClient.DeleteKnowledgeSourceFileAsync(uploadedFile.FileId, knowledgeSourceName);
+await indexClient.DeleteKnowledgeSourceFileAsync(knowledgeSourceName, uploadedFile.FileId);
 Console.WriteLine($"Deleted file '{uploadedFile.FileName}'");
 ```

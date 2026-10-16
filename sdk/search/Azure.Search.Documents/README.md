@@ -88,17 +88,20 @@ to get started exploring APIs, but it should be managed carefully.*
 
 #### Create a SearchClient
 
-To instantiate the `SearchClient`, you'll need the **endpoint**, **API key** and **index name**:
+To instantiate the `SearchClient` using Microsoft Entra ID, you'll need the
+**endpoint**, **index name**, and a token credential from the `Azure.Identity`
+package. Grant the identity Search Index Data Reader for queries, or Search
+Index Data Contributor for uploading documents. The following snippet uses
+`Azure.Core.TokenCredential` and `Azure.Identity.DefaultAzureCredential`:
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
 string indexName = "nycjobs";
 
-// Get the service endpoint and API key from the environment
+// Get the service endpoint and authenticate with Microsoft Entra ID
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
 // Create a client
-AzureKeyCredential credential = new AzureKeyCredential(key);
+TokenCredential credential = new DefaultAzureCredential();
 SearchClient client = new SearchClient(endpoint, indexName, credential);
 ```
 
@@ -302,13 +305,12 @@ using Azure.Core.GeoJson;
 We'll then create a `SearchClient` to access our hotels search index.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Client
-// Get the service endpoint and API key from the environment
+// Get the service endpoint and authenticate with Microsoft Entra ID
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 string indexName = "hotels";
 
 // Create a client
-AzureKeyCredential credential = new AzureKeyCredential(key);
+TokenCredential credential = new DefaultAzureCredential();
 SearchClient client = new SearchClient(endpoint, indexName, credential);
 ```
 
@@ -415,10 +417,9 @@ which defines both simple and complex fields:
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
 // Create a service client
-AzureKeyCredential credential = new AzureKeyCredential(key);
+TokenCredential credential = new DefaultAzureCredential();
 SearchIndexClient client = new SearchIndexClient(endpoint, credential);
 
 // Create the index using FieldBuilder.
@@ -479,6 +480,12 @@ an index in a single batched request.  There are
 to be aware of.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Index
+// Merge requires an existing document, so seed the key before batching the merge.
+client.UploadDocuments(new[]
+{
+    new Hotel { Id = "12", Name = "Existing Ranch" }
+});
+
 IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Create(
     IndexDocumentsAction.Upload(new Hotel { Id = "783", Name = "Upload Inn" }),
     IndexDocumentsAction.Merge(new Hotel { Id = "12", Name = "Renovated Ranch" }));
@@ -528,6 +535,7 @@ Use `KnowledgeBaseRetrievalClient` to retrieve grounded responses from a knowled
 - [Configure a knowledge base](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/KnowledgeBaseConfiguration.md)
 - [Inspect retrieval responses](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/KnowledgeRetrievalResponse.md)
 - [Upload and manage files in a knowledge source](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/FileKnowledgeSource.md)
+- [Stream typed knowledge base retrieval events](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/KnowledgeBaseRetrievalStreaming.md)
 
 ### Authenticate in a National Cloud
 

@@ -48,7 +48,6 @@ SearchIndex searchIndex = new(indexName)
                 Parameters  = new AzureOpenAIVectorizerParameters()
                 {
                     ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
-                    ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
                     DeploymentName = deploymentName,
                     ModelName = AzureOpenAIModelName.TextEmbedding3Large
                 }
@@ -62,8 +61,7 @@ After creating an instance of the `SearchIndex`, we need to instantiate the `Sea
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchUsingReducedEmbeddings_Create_Index
 Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
-AzureKeyCredential credential = new(key);
+TokenCredential credential = new DefaultAzureCredential();
 
 SearchIndexClient indexClient = new(endpoint, credential);
 await indexClient.CreateIndexAsync(searchIndex);
@@ -97,8 +95,7 @@ For more details about how to generate embeddings, refer to the [documentation](
 public static ReadOnlyMemory<float> GetEmbeddings(string input)
 {
     Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
-    string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
-    AzureKeyCredential credential = new AzureKeyCredential(key);
+    TokenCredential credential = new DefaultAzureCredential();
 
     AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
     EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-3-large");

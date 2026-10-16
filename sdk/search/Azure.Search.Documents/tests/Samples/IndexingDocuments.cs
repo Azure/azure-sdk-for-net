@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.TestFramework;
+using Azure.Identity;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
@@ -75,14 +77,15 @@ namespace Azure.Search.Documents.Tests.Samples
         private async Task<SearchClient> CreateIndexAsync(SearchResources resources)
         {
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_IndexingDocuments_CreateIndex_Connect
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
             // Create a client for manipulating search indexes
-            AzureKeyCredential credential = new AzureKeyCredential(key);
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
             #endregion
 

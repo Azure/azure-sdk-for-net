@@ -16,8 +16,7 @@ reflect changes caused by recent indexing operations.
 ```C# Snippet:Azure_Search_Tests_Samples_GetStatisticsAsync
 // Create a new SearchIndexClient
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 
 // Get and report the Search Service statistics
@@ -27,16 +26,15 @@ Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} of {
 
 ## List Resources with Paging Controls
 
-Use `GetIndexersWithSelectedProperties`, `GetDataSourceConnectionsWithSelectedProperties`, or
-`GetSkillsetsWithSelectedProperties` on `SearchIndexerClient`, or `GetSynonymMapsWithSelectedProperties`
-on `SearchIndexClient`, to select properties, narrow a listing by name prefix, and process one page at a time.
+Use `GetPagedIndexers`, `GetPagedDataSourceConnections`, or `GetPagedSkillsets` on `SearchIndexerClient`, or
+`GetPagedSynonymMaps` on `SearchIndexClient`, to select properties, narrow a listing by name prefix, and process one page at a time.
 Each method also has an async counterpart. The existing list-returning methods remain available and continue
 to buffer all pages.
 
 Given a `SearchIndexerClient` named `indexerClient`:
 
-```C# Snippet:Azure_Search_Tests_Samples_ListIndexersWithSelectedProperties
-await foreach (Page<SearchIndexer> page in indexerClient.GetIndexersWithSelectedPropertiesAsync(
+```C# Snippet:Azure_Search_Tests_Samples_ListIndexers
+await foreach (Page<SearchIndexer> page in indexerClient.GetPagedIndexersAsync(
     select: new[] { "name" },
     search: "hotel",
     pageSize: 10,
@@ -82,8 +80,7 @@ a file you may have downloaded or have stored elsewhere.
 ```C# Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_CreateSynonymMap
 // Create a new SearchIndexClient
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 
 // Create a synonym map from a file containing country names and abbreviations
@@ -233,8 +230,8 @@ SearchIndexerSkillset skillset = new SearchIndexerSkillset(
     skillsetName,
     new SearchIndexerSkill[] { translationSkill, conditionalSkill })
 {
-    CognitiveServicesAccount = new CognitiveServicesAccountKey(
-        Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_KEY")),
+    CognitiveServicesAccount = new AIServicesAccountIdentity(
+        new Uri(Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_ENDPOINT"))),
     KnowledgeStore = new KnowledgeStore(
         Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING"),
         new List<KnowledgeStoreProjection>()),

@@ -1,9 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.ClientModel;
 using Azure.AI.OpenAI;
+using Azure.Core;
+using Azure.Identity;
 using OpenAI.Embeddings;
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -15,8 +17,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         public static ReadOnlyMemory<float> GetEmbeddings(string input)
         {
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
-            string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
-            AzureKeyCredential credential = new AzureKeyCredential(key);
+            TokenCredential credential = new DefaultAzureCredential();
 
             AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
             EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-ada-002");

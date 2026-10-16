@@ -1,12 +1,14 @@
 # Stream Knowledge Base Retrieval
 
-This sample demonstrates how to consume typed server-sent events from a knowledge base retrieval using one streaming connection. The streaming API is asynchronous and available with the `2026-08-01-preview` service version.
+This sample demonstrates how to consume typed server-sent events from a knowledge base retrieval using one streaming connection. Streaming retrieval is included in the stable `2026-10-01` API.
 
 The stream reports retrieval and activity progress, completed answers and references, and one terminal event. A successful terminal event can report either complete (`200`) or partial (`206`) results. An `error` event is also terminal. The service does not emit token-delta events.
 
 ## Required Namespaces
 
 ```C# Snippet:Azure_Search_Tests_Samples_KnowledgeBaseRetrievalStreaming_Namespaces
+using Azure.Identity;
+using Azure.Core;
 using System.Net.ServerSentEvents;
 using Azure.Search.Documents.KnowledgeBases;
 using Azure.Search.Documents.KnowledgeBases.Models;
@@ -14,7 +16,7 @@ using Azure.Search.Documents.KnowledgeBases.Models;
 
 ## Consume Typed Streaming Events
 
-Set `SEARCH_ENDPOINT`, `SEARCH_API_KEY`, and `KNOWLEDGE_BASE_NAME` before running the sample. The knowledge base and its sources must already exist.
+Set `SEARCH_ENDPOINT` and `KNOWLEDGE_BASE_NAME` before running the sample. Authenticate with Microsoft Entra ID using `DefaultAzureCredential`; the knowledge base and its sources must already exist.
 
 The SDK handles SSE framing and comment heartbeats. Enumerate the stream once, correlate activity events by their activity IDs, and continue until the SDK delivers a terminal completion or error event. Pass a cancellation token to stop the request and close the connection.
 
@@ -25,8 +27,7 @@ events. Unknown events retain their event name and raw JSON payload in
 
 ```C# Snippet:Azure_Search_Tests_Samples_KnowledgeBaseRetrievalStreaming_Retrieve
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
 
 KnowledgeBaseRetrievalClient client = new KnowledgeBaseRetrievalClient(

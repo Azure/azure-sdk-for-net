@@ -11,6 +11,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 #region Snippet:Azure_Search_Tests_Samples_KnowledgeBaseRetrievalStreaming_Namespaces
+using Azure.Identity;
+using Azure.Core;
 using System.Net.ServerSentEvents;
 using Azure.Search.Documents.KnowledgeBases;
 using Azure.Search.Documents.KnowledgeBases.Models;
@@ -38,13 +40,14 @@ namespace Azure.Search.Documents.Tests.Samples
             await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("KNOWLEDGE_BASE_NAME", resources.KnowledgeBaseName);
 
             #region Snippet:Azure_Search_Tests_Samples_KnowledgeBaseRetrievalStreaming_Retrieve
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(
-                Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
 
             KnowledgeBaseRetrievalClient client = new KnowledgeBaseRetrievalClient(

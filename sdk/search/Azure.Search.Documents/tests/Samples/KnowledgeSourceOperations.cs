@@ -8,6 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 #region Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_Namespaces
+using Azure.Identity;
+using Azure.Core;
 using System.IO;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
@@ -26,13 +28,11 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task CreateSearchIndexKnowledgeSource()
         {
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("SEARCH_INDEX", resources.IndexName);
 
             string testSourceName = Recording.Random.GetName();
@@ -40,8 +40,10 @@ namespace Azure.Search.Documents.Tests.Samples
             {
                 #region Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_CreateSearchIndex
                 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-                AzureKeyCredential credential = new AzureKeyCredential(
-                    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+                TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+                credential = TestEnvironment.Credential;
+#endif
                 string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
 
                 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -124,13 +126,10 @@ namespace Azure.Search.Documents.Tests.Samples
                 isSample: true);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("STORAGE_CONNECTION_STRING", resources.StorageAccountConnectionString);
             Environment.SetEnvironmentVariable("STORAGE_CONTAINER_NAME", resources.BlobContainerName);
             Environment.SetEnvironmentVariable("AI_SERVICES_ENDPOINT", resources.CognitiveServicesEndpoint);
-            Environment.SetEnvironmentVariable("AI_SERVICES_KEY", resources.CognitiveServicesKey);
             Environment.SetEnvironmentVariable("OPENAI_ENDPOINT", TestEnvironment.OpenAIEndpoint);
-            Environment.SetEnvironmentVariable("OPENAI_KEY", TestEnvironment.OpenAIKey);
 
             string testSourceName = Recording.Random.GetName();
             SearchIndexClient testClient = null;
@@ -139,8 +138,10 @@ namespace Azure.Search.Documents.Tests.Samples
             {
                 #region Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_PrivateBlob
                 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-                AzureKeyCredential credential = new AzureKeyCredential(
-                    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+                TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+                credential = TestEnvironment.Credential;
+#endif
                 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 #if !SNIPPET
                 indexClient = InstrumentClient(new SearchIndexClient(endpoint, credential, GetSearchClientOptions()));
@@ -154,9 +155,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 string storageConnectionString = Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING");
                 string containerName = Environment.GetEnvironmentVariable("STORAGE_CONTAINER_NAME");
                 string aiServicesEndpoint = Environment.GetEnvironmentVariable("AI_SERVICES_ENDPOINT");
-                string aiServicesKey = Environment.GetEnvironmentVariable("AI_SERVICES_KEY");
                 string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
-                string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
 
                 KnowledgeSourceIngestionParameters ingestion = new KnowledgeSourceIngestionParameters
                 {
@@ -165,14 +164,12 @@ namespace Azure.Search.Documents.Tests.Samples
                     ContentExtractionMode = KnowledgeSourceContentExtractionMode.Minimal,
                     AiServices = new AIServices(new Uri(aiServicesEndpoint))
                     {
-                        ApiKey = aiServicesKey
                     },
                     EmbeddingModel = new KnowledgeSourceAzureOpenAIVectorizer
                     {
                         AzureOpenAIParameters = new AzureOpenAIVectorizerParameters
                         {
                             ResourceUri = new Uri(openAIEndpoint),
-                            ApiKey = openAIKey,
                             DeploymentName = "text-embedding-3-large",
                             ModelName = "text-embedding-3-large"
                         }
@@ -247,15 +244,16 @@ namespace Azure.Search.Documents.Tests.Samples
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             string testSourceName = Recording.Random.GetName();
             try
             {
                 #region Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_CreateWeb
                 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-                AzureKeyCredential credential = new AzureKeyCredential(
-                    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+                TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+                credential = TestEnvironment.Credential;
+#endif
 
                 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 #if !SNIPPET
@@ -300,19 +298,19 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task GetKnowledgeSource()
         {
             await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME", resources.KnowledgeSourceName);
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_Get
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(
-                Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             string knowledgeSourceName = Environment.GetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME");
 
             SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -334,18 +332,18 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task ListKnowledgeSources()
         {
             await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_List
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(
-                Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
 
             SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 #if !SNIPPET
@@ -370,20 +368,18 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task UpdateKnowledgeSource()
         {
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("SEARCH_INDEX", resources.IndexName);
 
             string testSourceName = Recording.Random.GetName();
             try
             {
                 SearchIndexClient testClient = InstrumentClient(
-                    new SearchIndexClient(resources.Endpoint, new AzureKeyCredential(resources.PrimaryApiKey), GetSearchClientOptions()));
+                    new SearchIndexClient(resources.Endpoint, TestEnvironment.Credential, GetSearchClientOptions()));
 
                 // Create a knowledge source first
                 SearchIndexKnowledgeSource source = new SearchIndexKnowledgeSource(
@@ -397,8 +393,10 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 #region Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_Update
                 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-                AzureKeyCredential credential = new AzureKeyCredential(
-                    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+                TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+                credential = TestEnvironment.Credential;
+#endif
                 string knowledgeSourceName = Environment.GetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME");
 
                 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -428,18 +426,16 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task DeleteKnowledgeSource()
         {
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             string testSourceName = Recording.Random.GetName();
 
             SearchIndexClient testClient = InstrumentClient(
-                new SearchIndexClient(resources.Endpoint, new AzureKeyCredential(resources.PrimaryApiKey), GetSearchClientOptions()));
+                new SearchIndexClient(resources.Endpoint, TestEnvironment.Credential, GetSearchClientOptions()));
 
             // Create a knowledge source to delete
             SearchIndexKnowledgeSource source = new SearchIndexKnowledgeSource(
@@ -453,8 +449,10 @@ namespace Azure.Search.Documents.Tests.Samples
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_Delete
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(
-                Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             string knowledgeSourceName = Environment.GetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME");
 
             SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -476,19 +474,19 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task GetKnowledgeSourceStatus()
         {
             await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME", resources.KnowledgeSourceName);
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_GetStatus
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(
-                Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             string knowledgeSourceName = Environment.GetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME");
 
             SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);

@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 #region Snippet:Azure_Search_Tests_Samples_KnowledgeBaseConfiguration_Namespaces
+using Azure.Identity;
+using Azure.Core;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases.Models;
@@ -15,24 +17,21 @@ using NUnit.Framework;
 namespace Azure.Search.Documents.Tests.Samples
 {
     [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_10_01)]
-    public partial class KnowledgeBasePreviewConfiguration : SearchTestBase
+    public partial class KnowledgeBaseConfiguration : SearchTestBase
     {
-        public KnowledgeBasePreviewConfiguration(bool async, SearchClientOptions.ServiceVersion serviceVersion)
+        public KnowledgeBaseConfiguration(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
-        public async Task CreateKnowledgeBaseWithPreviewConfiguration()
+        public async Task CreateKnowledgeBaseWithConfiguration()
         {
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("SEARCH_INDEX", resources.IndexName);
             Environment.SetEnvironmentVariable("OPENAI_ENDPOINT", TestEnvironment.OpenAIEndpoint);
-            Environment.SetEnvironmentVariable("OPENAI_KEY", TestEnvironment.OpenAIKey);
 
             string testSourceName = Recording.Random.GetName();
             string testBaseName = Recording.Random.GetName();
@@ -42,8 +41,10 @@ namespace Azure.Search.Documents.Tests.Samples
             {
                 #region Snippet:Azure_Search_Tests_Samples_KnowledgeBaseConfiguration_Create
                 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-                AzureKeyCredential credential = new AzureKeyCredential(
-                    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+                TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+                credential = TestEnvironment.Credential;
+#endif
                 string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
 
                 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -92,25 +93,16 @@ namespace Azure.Search.Documents.Tests.Samples
                     RetrievalReasoningEffort = new KnowledgeRetrievalLowReasoningEffort()
                 };
 
-                // Add an Azure OpenAI model using a GPT-5.4 deployment
+                // The deployment must exist and allow the Search service's managed identity.
                 string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
-                string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
-#if !SNIPPET
-                if (!string.IsNullOrEmpty(openAIEndpoint))
-                {
-#endif
-                    knowledgeBase.Models.Add(
-                        new KnowledgeBaseAzureOpenAIModel(
-                            new AzureOpenAIVectorizerParameters
-                            {
-                                ResourceUri = new Uri(openAIEndpoint),
-                                ApiKey = openAIKey,
-                                DeploymentName = "gpt-5.4-mini",
-                                ModelName = AzureOpenAIModelName.Gpt54Mini
-                            }));
-#if !SNIPPET
-                }
-#endif
+                knowledgeBase.Models.Add(
+                    new KnowledgeBaseAzureOpenAIModel(
+                        new AzureOpenAIVectorizerParameters
+                        {
+                            ResourceUri = new Uri(openAIEndpoint),
+                            DeploymentName = "gpt-5.4-mini",
+                            ModelName = AzureOpenAIModelName.Gpt54Mini
+                        }));
 
                 KnowledgeBase createdBase = await indexClient.CreateKnowledgeBaseAsync(knowledgeBase);
                 Console.WriteLine($"Created knowledge base '{createdBase.Name}'");
@@ -122,6 +114,10 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 Assert.AreEqual(testBaseName, createdBase.Name);
                 Assert.IsNotNull(createdBase.CorsOptions);
+                Assert.AreEqual(knowledgeSourceName, createdBase.KnowledgeSources[0].Name);
+                Assert.AreEqual(1, createdBase.Models.Count);
+                Assert.AreEqual(knowledgeBase.RetrievalInstructions, createdBase.RetrievalInstructions);
+                Assert.AreEqual(knowledgeBase.AnswerInstructions, createdBase.AnswerInstructions);
                 Assert.IsInstanceOf<KnowledgeRetrievalLowReasoningEffort>(createdBase.RetrievalReasoningEffort);
                 Assert.AreEqual(KnowledgeRetrievalOutputMode.AnswerSynthesis, createdBase.OutputMode);
             }
@@ -140,19 +136,19 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
-        public async Task UpdateKnowledgeBasePreviewConfiguration()
+        public async Task UpdateKnowledgeBaseConfiguration()
         {
             await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("KNOWLEDGE_BASE_NAME", resources.KnowledgeBaseName);
 
             #region Snippet:Azure_Search_Tests_Samples_KnowledgeBaseConfiguration_Update
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(
-                Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
 
             SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -163,13 +159,13 @@ namespace Azure.Search.Documents.Tests.Samples
             // Get the existing knowledge base
             KnowledgeBase knowledgeBase = await indexClient.GetKnowledgeBaseAsync(knowledgeBaseName);
 
-            // Update configuration: add CORS options and change output mode
-            knowledgeBase.CorsOptions = new CorsOptions(new[] { "*" })
+            knowledgeBase.CorsOptions = new CorsOptions(new[] { "https://myapp.example.com" })
             {
                 MaxAgeInSeconds = 600
             };
+            // Update the default retrieval mode and query-planning instructions.
             knowledgeBase.OutputMode = KnowledgeRetrievalOutputMode.ExtractiveData;
-            knowledgeBase.RetrievalInstructions = "Return raw data without summarization.";
+            knowledgeBase.RetrievalInstructions = "Prioritize hotels with lower nightly rates.";
 
             KnowledgeBase updatedBase = await indexClient.CreateOrUpdateKnowledgeBaseAsync(knowledgeBase);
             Console.WriteLine($"Updated knowledge base '{updatedBase.Name}'");
@@ -177,6 +173,8 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_KnowledgeBaseConfiguration_Update
 
             Assert.AreEqual(KnowledgeRetrievalOutputMode.ExtractiveData, updatedBase.OutputMode);
+            Assert.AreEqual(knowledgeBase.RetrievalInstructions, updatedBase.RetrievalInstructions);
+            Assert.AreEqual(resources.KnowledgeBaseName, updatedBase.Name);
         }
     }
 }

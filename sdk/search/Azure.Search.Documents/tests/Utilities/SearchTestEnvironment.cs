@@ -1,7 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.Search.Documents.Tests
 {
@@ -10,6 +15,79 @@ namespace Azure.Search.Documents.Tests
     /// </summary>
     public class SearchTestEnvironment : TestEnvironment
     {
+        public string StorageResourceId => GetRecordedVariable("SEARCH_STORAGE_RESOURCE_ID");
+
+        public bool RunDoubleEncryptedIndex =>
+            IsDoubleEncryptedIndexEnabled(GetOptionalVariable("RUN_DOUBLE_ENCRYPTED_INDEX"));
+
+        internal static bool IsDoubleEncryptedIndexEnabled(string value) =>
+            string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
+
+        public void ValidateDoubleEncryptedIndexConfiguration() =>
+            ValidateDoubleEncryptedIndexConfiguration(GetOptionalVariable);
+
+        internal static void ValidateDoubleEncryptedIndexConfiguration(Func<string, string> getVariable)
+        {
+            string serviceName = getVariable("SEARCH_SERVICE_NAME");
+            string storageName = getVariable("SEARCH_STORAGE_NAME");
+            string storageResourceId = getVariable("SEARCH_STORAGE_RESOURCE_ID");
+            string keyVaultUrl = getVariable("SEARCH_KEYVAULT_URL");
+            List<string> errors = new List<string>();
+
+            Require(serviceName, "SEARCH_SEARCH_SERVICE_NAME");
+            Require(storageName, "SEARCH_SEARCH_STORAGE_NAME");
+            Require(storageResourceId, "SEARCH_SEARCH_STORAGE_RESOURCE_ID");
+            Require(keyVaultUrl, "SEARCH_SEARCH_KEYVAULT_URL");
+
+            if (!string.IsNullOrWhiteSpace(keyVaultUrl) &&
+                (!Uri.TryCreate(keyVaultUrl, UriKind.Absolute, out Uri vaultUri) || vaultUri.Scheme != Uri.UriSchemeHttps))
+            {
+                errors.Add("SEARCH_SEARCH_KEYVAULT_URL must be an absolute HTTPS vault URL.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(storageResourceId))
+            {
+                Match match = Regex.Match(
+                    storageResourceId,
+                    @"^/subscriptions/[^/]+/resourceGroups/[^/]+/providers/Microsoft\.Storage/storageAccounts/([^/]+)$",
+                    RegexOptions.IgnoreCase);
+                if (!match.Success)
+                {
+                    errors.Add("SEARCH_SEARCH_STORAGE_RESOURCE_ID must be the full ARM resource ID of a storage account.");
+                }
+                else if (!string.IsNullOrWhiteSpace(storageName) &&
+                    !string.Equals(match.Groups[1].Value, storageName, StringComparison.OrdinalIgnoreCase))
+                {
+                    errors.Add("SEARCH_SEARCH_STORAGE_RESOURCE_ID must identify SEARCH_SEARCH_STORAGE_NAME.");
+                }
+            }
+
+            if (errors.Count > 0)
+            {
+                throw new InvalidOperationException(
+                    "CreateDoubleEncryptedIndex configuration is invalid:" + Environment.NewLine +
+                    string.Join(Environment.NewLine, errors) + Environment.NewLine +
+                    "Load the package .env into the test process using tests\\Set-RecordingEnvironment.ps1. " +
+                    "See tests\\README.md#customer-managed-encryption-test for resources, role scopes, and recording commands. " +
+                    "No test resources have been created.");
+            }
+
+            void Require(string value, string name)
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    errors.Add($"Missing {name}.");
+                }
+            }
+        }
+
+        public override TokenCredential Credential => Mode != RecordedTestMode.Playback && !GlobalIsRunningInCI
+            ? CreateDeveloperCredential()
+            : base.Credential;
+
+        protected override TokenCredential CreateDeveloperCredential() =>
+            new AzureCliCredential(new AzureCliCredentialOptions { TenantId = GetOptionalVariable("TENANT_ID") });
+
         /// <summary>
         /// The name of the variable for <see cref="RecordedClientSecret"/>.
         /// </summary>
@@ -99,11 +177,6 @@ namespace Azure.Search.Documents.Tests
         /// Gets the recorded value for the CLIENT_ID, which gets sanitized as part of the payload.
         /// </summary>
         public string RecordedClientSecret => GetRecordedVariable(ClientSecretVariableName, options => options.IsSecret());
-
-        /// <summary>
-        /// Gets the optional OpenAI key
-        /// </summary>
-        public string OpenAIKey => GetRecordedOptionalVariable(OpenAIKeyVariableName, options => options.IsSecret());
 
         /// <summary>
         /// Gets the optional OpenAI URL used used for Vector Search.

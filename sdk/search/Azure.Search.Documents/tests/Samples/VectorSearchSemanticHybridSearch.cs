@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
@@ -23,7 +24,6 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         }
 
         [Test]
-        [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
         public async Task SemanticHybridSearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -159,12 +159,13 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             #endregion
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchSemanticHybridSearch_Create_Index
             Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
-            AzureKeyCredential credential = new(key);
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
 
             SearchIndexClient indexClient = new(endpoint, credential);
 #if !SNIPPET
@@ -179,8 +180,10 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         private async Task<SearchClient> UploadDocuments(SearchResources resources, string indexName)
         {
             Uri endpoint = resources.Endpoint;
-            string key = resources.PrimaryApiKey;
-            AzureKeyCredential credential = new AzureKeyCredential(key);
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchSemanticHybridSearch_Upload_Documents
             SearchClient searchClient = new(endpoint, indexName, credential);

@@ -4,10 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 #region Snippet:Azure_Search_Tests_Samples_FileKnowledgeSource_Namespaces
+using Azure.Identity;
+using Azure.Core;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases;
@@ -18,23 +21,25 @@ using NUnit.Framework;
 namespace Azure.Search.Documents.Tests.Samples
 {
     [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_10_01)]
-    public partial class KnowledgeSourceFilePreview : SearchTestBase
+    public partial class FileKnowledgeSourceSamples : SearchTestBase
     {
-        public KnowledgeSourceFilePreview(bool async, SearchClientOptions.ServiceVersion serviceVersion)
+        public FileKnowledgeSourceSamples(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task CreateAndUseFileKnowledgeSource()
         {
+            if (string.IsNullOrEmpty(TestEnvironment.OpenAIEndpoint))
+            {
+                Assert.Ignore("An Azure OpenAI endpoint with the required deployments is needed for File knowledge source ingestion.");
+            }
+
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("OPENAI_ENDPOINT", TestEnvironment.OpenAIEndpoint);
-            Environment.SetEnvironmentVariable("OPENAI_KEY", TestEnvironment.OpenAIKey);
 
             string testSourceName = Recording.Random.GetName();
             string testBaseName = Recording.Random.GetName();
@@ -44,8 +49,10 @@ namespace Azure.Search.Documents.Tests.Samples
             {
                 #region Snippet:Azure_Search_Tests_Samples_FileKnowledgeSource_Create
                 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-                AzureKeyCredential credential = new AzureKeyCredential(
-                    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+                TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+                credential = TestEnvironment.Credential;
+#endif
 
                 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 #if !SNIPPET
@@ -63,7 +70,6 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 // Configure ingestion parameters with content extraction mode and embedding model
                 string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
-                string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
 
                 FileKnowledgeSource fileSource = new FileKnowledgeSource(
                     knowledgeSourceName,
@@ -77,7 +83,6 @@ namespace Azure.Search.Documents.Tests.Samples
                                 AzureOpenAIParameters = new AzureOpenAIVectorizerParameters
                                 {
                                     ResourceUri = new Uri(openAIEndpoint),
-                                    ApiKey = openAIKey,
                                     DeploymentName = "text-embedding-3-large",
                                     ModelName = "text-embedding-3-large"
                                 }
@@ -90,6 +95,8 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 KnowledgeSource createdSource = await indexClient.CreateKnowledgeSourceAsync(fileSource);
                 Console.WriteLine($"Created file knowledge source '{createdSource.Name}'");
+                KnowledgeSourceStatus sourceStatus = await indexClient.GetKnowledgeSourceStatusAsync(knowledgeSourceName);
+                Console.WriteLine($"Remaining File capacity: {sourceStatus.FileCapacity?.RemainingFileCount}");
                 #endregion Snippet:Azure_Search_Tests_Samples_FileKnowledgeSource_Create
 
                 Assert.AreEqual(testSourceName, createdSource.Name);
@@ -143,12 +150,14 @@ namespace Azure.Search.Documents.Tests.Samples
                     }
                 };
 #pragma warning disable SCME0004 // Multipart file request types are experimental.
+                BinaryData updatedFileData = BinaryData.FromString(
+                    "Azure AI Search indexes content and uses semantic ranking to retrieve relevant information.");
                 UpdateKnowledgeSourceFileRequest updateRequest = new UpdateKnowledgeSourceFileRequest(
                     updatedMetadata,
-                    fileData);
+                    updatedFileData);
                 KnowledgeSourceFile updatedFile = await indexClient.UpdateKnowledgeSourceFileAsync(
-                    uploadedFile.FileId,
                     knowledgeSourceName,
+                    uploadedFile.FileId,
                     updateRequest);
 #pragma warning restore SCME0004
                 Console.WriteLine($"Updated file metadata category: {updatedFile.Metadata["category"]}");
@@ -156,7 +165,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 // Prefixes are derived from relative paths. The pageable handles
                 // continuation tokens internally; callers should not parse them.
                 HashSet<string> listedFileIds = new HashSet<string>();
-                await foreach (KnowledgeSourceFile file in indexClient.GetKnowledgeSourceFilesAsync(
+                await foreach (KnowledgeSourceFile file in indexClient.GetPagedKnowledgeSourceFilesAsync(
                     knowledgeSourceName,
                     prefix: "guides/",
                     pageSize: 1))
@@ -212,23 +221,15 @@ namespace Azure.Search.Documents.Tests.Samples
                     RetrievalReasoningEffort = new KnowledgeRetrievalMinimalReasoningEffort()
                 };
 
-                // Add an Azure OpenAI model for query planning
-#if !SNIPPET
-                string openAIEndpoint2 = TestEnvironment.OpenAIEndpoint;
-                string openAIKey2 = TestEnvironment.OpenAIKey;
-                if (!string.IsNullOrEmpty(openAIEndpoint2))
-                {
-                    knowledgeBase.Models.Add(
-                        new KnowledgeBaseAzureOpenAIModel(
-                            new AzureOpenAIVectorizerParameters
-                            {
-                                ResourceUri = new Uri(openAIEndpoint2),
-                                ApiKey = openAIKey2,
-                                DeploymentName = "gpt-5.4-mini",
-                                ModelName = AzureOpenAIModelName.Gpt54Mini
-                            }));
-                }
-#endif
+                // The Search service identity needs access to both configured deployments.
+                knowledgeBase.Models.Add(
+                    new KnowledgeBaseAzureOpenAIModel(
+                        new AzureOpenAIVectorizerParameters
+                        {
+                            ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
+                            DeploymentName = "gpt-5.4-mini",
+                            ModelName = AzureOpenAIModelName.Gpt54Mini
+                        }));
 
                 KnowledgeBase createdBase = await indexClient.CreateKnowledgeBaseAsync(knowledgeBase);
                 Console.WriteLine($"Created knowledge base '{createdBase.Name}' with file source");
@@ -247,9 +248,14 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 KnowledgeBaseRetrievalRequest request = new KnowledgeBaseRetrievalRequest
                 {
-                    IncludeActivity = true
+                    IncludeActivity = true,
+                    OutputMode = KnowledgeRetrievalOutputMode.ExtractiveData
                 };
                 request.Intents.Add(new KnowledgeRetrievalSemanticIntent("What is Azure AI Search?"));
+                request.KnowledgeSourceParams.Add(new FileKnowledgeSourceParams(knowledgeSourceName)
+                {
+                    IncludeReferences = true
+                });
 
                 Response<KnowledgeBaseRetrievalResponse> response = await retrievalClient.RetrieveAsync(request);
                 KnowledgeBaseRetrievalResponse retrievalResponse = response.Value;
@@ -271,11 +277,12 @@ namespace Azure.Search.Documents.Tests.Samples
                 }
                 #endregion Snippet:Azure_Search_Tests_Samples_FileKnowledgeSource_Retrieve
 
-                Assert.IsNotNull(retrievalResponse);
+                Assert.That(retrievalResponse.Response, Is.Not.Empty);
+                Assert.That(retrievalResponse.References.OfType<KnowledgeBaseFileReference>(), Is.Not.Empty);
 
                 #region Snippet:Azure_Search_Tests_Samples_FileKnowledgeSource_DeleteFile
                 // Delete the uploaded file after retrieval is complete.
-                await indexClient.DeleteKnowledgeSourceFileAsync(uploadedFile.FileId, knowledgeSourceName);
+                await indexClient.DeleteKnowledgeSourceFileAsync(knowledgeSourceName, uploadedFile.FileId);
                 Console.WriteLine($"Deleted file '{uploadedFile.FileName}'");
                 #endregion Snippet:Azure_Search_Tests_Samples_FileKnowledgeSource_DeleteFile
             }

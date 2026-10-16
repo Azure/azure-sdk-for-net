@@ -62,10 +62,9 @@ We need to get that data into the service so let's create a `SearchIndexClient`:
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_IndexingDocuments_CreateIndex_Connect
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
 // Create a client for manipulating search indexes
-AzureKeyCredential credential = new AzureKeyCredential(key);
+TokenCredential credential = new DefaultAzureCredential();
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 ```
 

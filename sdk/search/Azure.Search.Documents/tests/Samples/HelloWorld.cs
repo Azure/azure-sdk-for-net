@@ -7,6 +7,8 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 #region Snippet:Azure_Search_Tests_Samples_Namespaces
+using Azure.Identity;
+using Azure.Core;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
@@ -32,13 +34,14 @@ namespace Azure.Search.Documents.Tests.Samples
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Tests_Samples_CreateClient
-            // Get the service endpoint and API key from the environment
+            // Get the service endpoint and authenticate with Microsoft Entra ID
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(
-                Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
 
             // Create a new SearchIndexClient
             SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -60,13 +63,14 @@ namespace Azure.Search.Documents.Tests.Samples
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Tests_Samples_CreateClientAsync
-            // Get the service endpoint and API key from the environment
+            // Get the service endpoint and authenticate with Microsoft Entra ID
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(
-                Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
 
             // Create a new SearchIndexClient
             SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -88,12 +92,13 @@ namespace Azure.Search.Documents.Tests.Samples
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Tests_Samples_HandleErrors
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(
-                Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
 
             // Create an invalid SearchClient
             string fakeIndexName = "doesnotexist";
@@ -118,12 +123,13 @@ namespace Azure.Search.Documents.Tests.Samples
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Tests_Samples_HandleErrorsAsync
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(
-                Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
 
             // Create an invalid SearchClient
             string fakeIndexName = "doesnotexist";
@@ -147,13 +153,14 @@ namespace Azure.Search.Documents.Tests.Samples
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Tests_Samples_GetStatisticsAsync
             // Create a new SearchIndexClient
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(
-                Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 #if !SNIPPET
             indexClient = InstrumentClient(new SearchIndexClient(endpoint, credential, GetSearchClientOptions()));
@@ -171,10 +178,9 @@ namespace Azure.Search.Documents.Tests.Samples
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAsync(this, populate: true, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("STORAGE_CONNECTION_STRING", resources.StorageAccountConnectionString);
             Environment.SetEnvironmentVariable("STORAGE_CONTAINER", resources.BlobContainerName);
-            Environment.SetEnvironmentVariable("COGNITIVE_SERVICES_KEY", resources.CognitiveServicesKey);
+            Environment.SetEnvironmentVariable("COGNITIVE_SERVICES_ENDPOINT", resources.CognitiveServicesEndpoint);
 
             // Define clean up tasks to be invoked in reverse order added.
             Stack<Func<Task>> cleanUpTasks = new Stack<Func<Task>>();
@@ -183,8 +189,10 @@ namespace Azure.Search.Documents.Tests.Samples
                 #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_CreateSynonymMap
                 // Create a new SearchIndexClient
                 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-                AzureKeyCredential credential = new AzureKeyCredential(
-                    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+                TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+                credential = TestEnvironment.Credential;
+#endif
                 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 #if !SNIPPET
                 indexClient = resources.GetIndexClient(new SearchClientOptions(ServiceVersion));
@@ -345,8 +353,8 @@ namespace Azure.Search.Documents.Tests.Samples
                     skillsetName,
                     new SearchIndexerSkill[] { translationSkill, conditionalSkill })
                 {
-                    CognitiveServicesAccount = new CognitiveServicesAccountKey(
-                        Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_KEY")),
+                    CognitiveServicesAccount = new AIServicesAccountIdentity(
+                        new Uri(Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_ENDPOINT"))),
                     KnowledgeStore = new KnowledgeStore(
                         Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING"),
                         new List<KnowledgeStoreProjection>()),
@@ -448,14 +456,15 @@ namespace Azure.Search.Documents.Tests.Samples
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("SEARCH_INDEX", resources.IndexName);
 
             #region Snippet:Azure_Search_Tests_Samples_GetCountAsync
             // Create a SearchClient
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(
-                Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
             SearchClient searchClient = new SearchClient(endpoint, indexName, credential);
 #if !SNIPPET
@@ -469,12 +478,51 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_10_01)]
+        public async Task FindSimilarDocuments()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
+            Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
+            Environment.SetEnvironmentVariable("SEARCH_INDEX", resources.IndexName);
+
+            #region Snippet:Azure_Search_Tests_Samples_FindSimilarDocuments
+            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
+            string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
+            SearchClient searchClient = new SearchClient(endpoint, indexName, credential);
+#if !SNIPPET
+            searchClient = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));
+#endif
+
+            // Find documents similar to hotel "1" without supplying search text.
+            SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
+                options: new SearchOptions
+                {
+                    MoreLikeThis = "1",
+                    SearchFields = { "HotelName", "Description" },
+                    Size = 5
+                });
+
+            int resultCount = 0;
+            await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
+            {
+                resultCount++;
+                Console.WriteLine($"{result.Document.HotelId}: {result.Document.HotelName}");
+            }
+            #endregion Snippet:Azure_Search_Tests_Samples_FindSimilarDocuments
+
+            Assert.Greater(resultCount, 0);
+        }
+
+        [Test]
         public async Task QuerySession()
         {
             const int size = 150;
             await using SearchResources resources = await SearchResources.CreateLargeHotelsIndexAsync(this, size, false, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("SEARCH_INDEX", resources.IndexName);
 
             HashSet<string> uniqueDocuments = new HashSet<string>();
@@ -482,7 +530,10 @@ namespace Azure.Search.Documents.Tests.Samples
 
             #region Snippet:Azure_Search_Tests_Samples_QuerySession
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
 
             SearchClient searchClient = new SearchClient(endpoint, indexName, credential);

@@ -54,8 +54,7 @@ After creating an instance of the `SearchIndex`, we need to instantiate the `Sea
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchUsingFieldBuilder_Create_Index
 Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
-AzureKeyCredential credential = new(key);
+TokenCredential credential = new DefaultAzureCredential();
 
 SearchIndexClient indexClient = new(endpoint, credential);
 await indexClient.CreateIndexAsync(searchIndex);

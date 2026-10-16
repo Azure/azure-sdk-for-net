@@ -7,6 +7,8 @@ For more information, see the [agentic retrieval documentation](https://learn.mi
 ## Required Namespaces
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_Namespaces
+using Azure.Identity;
+using Azure.Core;
 using System.IO;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
@@ -19,8 +21,7 @@ Create a knowledge source backed by a search index, with specific fields include
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_CreateSearchIndex
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -53,17 +54,14 @@ This live-only scenario requires a supported indexed Blob source, private connec
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_PrivateBlob
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 
 string knowledgeSourceName = "my-private-blob-source";
 string storageConnectionString = Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING");
 string containerName = Environment.GetEnvironmentVariable("STORAGE_CONTAINER_NAME");
 string aiServicesEndpoint = Environment.GetEnvironmentVariable("AI_SERVICES_ENDPOINT");
-string aiServicesKey = Environment.GetEnvironmentVariable("AI_SERVICES_KEY");
 string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
-string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
 
 KnowledgeSourceIngestionParameters ingestion = new KnowledgeSourceIngestionParameters
 {
@@ -72,14 +70,12 @@ KnowledgeSourceIngestionParameters ingestion = new KnowledgeSourceIngestionParam
     ContentExtractionMode = KnowledgeSourceContentExtractionMode.Minimal,
     AiServices = new AIServices(new Uri(aiServicesEndpoint))
     {
-        ApiKey = aiServicesKey
     },
     EmbeddingModel = new KnowledgeSourceAzureOpenAIVectorizer
     {
         AzureOpenAIParameters = new AzureOpenAIVectorizerParameters
         {
             ResourceUri = new Uri(openAIEndpoint),
-            ApiKey = openAIKey,
             DeploymentName = "text-embedding-3-large",
             ModelName = "text-embedding-3-large"
         }
@@ -138,8 +134,7 @@ Create a web knowledge source with allowed and blocked domain lists.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_CreateWeb
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 
@@ -168,8 +163,7 @@ Retrieve a specific knowledge source by name.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_Get
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 string knowledgeSourceName = Environment.GetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -190,8 +184,7 @@ Enumerate all knowledge sources in a search service.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_List
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 
@@ -215,8 +208,7 @@ Get an existing knowledge source, modify it, and save the changes back.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_Update
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 string knowledgeSourceName = Environment.GetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -237,8 +229,7 @@ Delete a knowledge source by name.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_Delete
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 string knowledgeSourceName = Environment.GetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -254,8 +245,7 @@ Retrieve the synchronization status and history of a knowledge source.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeSourceOperations_GetStatus
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 string knowledgeSourceName = Environment.GetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME");
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);

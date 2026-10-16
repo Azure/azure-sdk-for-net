@@ -8,6 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 #region Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeBaseRetrieval_Namespaces
+using Azure.Identity;
+using Azure.Core;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases;
@@ -27,20 +29,20 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task SetupAndRetrieveFromKnowledgeBase()
         {
             await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("KNOWLEDGE_BASE_NAME", resources.KnowledgeBaseName);
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeBaseRetrieval_Retrieve
-            // Get the service endpoint and API key from the environment
+            // Get the service endpoint and authenticate with Microsoft Entra ID
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(
-                Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
 
             // Create a KnowledgeBaseRetrievalClient to query the knowledge base
@@ -83,15 +85,12 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task EndToEndKnowledgeBase()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("OPENAI_ENDPOINT", TestEnvironment.OpenAIEndpoint);
-            Environment.SetEnvironmentVariable("OPENAI_KEY", TestEnvironment.OpenAIKey);
 
             SearchIndexClient testIndexClient = null;
             string testIndexName = Recording.Random.GetName();
@@ -101,10 +100,12 @@ namespace Azure.Search.Documents.Tests.Samples
             try
             {
                 #region Snippet:Azure_Search_Documents_Tests_Samples_KnowledgeBaseRetrieval_CreateIndex
-                // Get the service endpoint and API key from the environment
+                // Get the service endpoint and authenticate with Microsoft Entra ID
                 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-                AzureKeyCredential credential = new AzureKeyCredential(
-                    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+                TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+                credential = TestEnvironment.Credential;
+#endif
 
                 // Create a SearchIndexClient
                 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
@@ -214,7 +215,6 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 // Optionally add an Azure OpenAI model for query planning
                 string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
-                string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
 #if !SNIPPET
                 if (!string.IsNullOrEmpty(openAIEndpoint))
                 {
@@ -224,7 +224,6 @@ namespace Azure.Search.Documents.Tests.Samples
                             new AzureOpenAIVectorizerParameters
                             {
                                 ResourceUri = new Uri(openAIEndpoint),
-                                ApiKey = openAIKey,
                                 DeploymentName = "gpt-5.4-mini",
                                 ModelName = AzureOpenAIModelName.Gpt54Mini
                             }));

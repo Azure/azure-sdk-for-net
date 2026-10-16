@@ -4,9 +4,13 @@ This sample demonstrates how to limit returned documents with `MaxOutputDocument
 
 For more information, see the [agentic retrieval documentation](https://learn.microsoft.com/azure/search/agentic-retrieval-overview).
 
+Set `SEARCH_ENDPOINT` and `KNOWLEDGE_BASE_NAME` to an existing knowledge base backed by a populated hotel search index with semantic search configured. For answer synthesis, configure a model deployment on the knowledge base and grant the Search service's managed identity access to that model, as shown in [Knowledge Base Configuration](./KnowledgeBaseConfiguration.md). The caller needs **Search Index Data Reader** on the Search service.
+
 ## Required Namespaces
 
 ```C# Snippet:Azure_Search_Tests_Samples_KnowledgeRetrievalResponse_Namespaces
+using Azure.Identity;
+using Azure.Core;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases;
@@ -15,13 +19,12 @@ using Azure.Search.Documents.KnowledgeBases.Models;
 
 ## Retrieve with Activity Records
 
-Enable `IncludeActivity` to inspect query-planning and answer-synthesis activity records, including model names and token counts, alongside references to the source documents.
+Enable `IncludeActivity` to inspect search-index retrieval and answer-synthesis activity records alongside references to the source documents. This example supplies an explicit semantic intent, which bypasses model query planning. It reports the knowledge source and relevant document count, plus the synthesis model and token usage.
 
 ```C# Snippet:Azure_Search_Tests_Samples_KnowledgeRetrievalResponse_WithActivity
-// Get the service endpoint and API key from the environment
+// Get the service endpoint and authenticate with Microsoft Entra ID
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
 
 // Create a KnowledgeBaseRetrievalClient
@@ -61,10 +64,10 @@ foreach (KnowledgeBaseActivityRecord activity in retrievalResponse.Activity)
 {
     Console.WriteLine($"Activity ID: {activity.Id}, Elapsed: {activity.ElapsedMs}ms");
 
-    if (activity is KnowledgeBaseModelQueryPlanningActivityRecord queryPlanning)
+    if (activity is KnowledgeBaseSearchIndexActivityRecord searchIndex)
     {
-        Console.WriteLine($"  Query Planning - Model: {queryPlanning.Model?.ModelName}");
-        Console.WriteLine($"  Input tokens: {queryPlanning.InputTokens}, Output tokens: {queryPlanning.OutputTokens}");
+        Console.WriteLine($"  Knowledge source: {searchIndex.KnowledgeSourceName}");
+        Console.WriteLine($"  Relevant documents: {searchIndex.Count}");
     }
     else if (activity is KnowledgeBaseModelAnswerSynthesisActivityRecord answerSynthesis)
     {
@@ -87,13 +90,13 @@ foreach (KnowledgeBaseReference reference in retrievalResponse.References)
 
 ## Retrieve with Extractive Data Mode
 
-Use `ExtractiveData` output mode to return raw extracted content without LLM synthesis for further processing.
+Use `ExtractiveData` output mode to return raw extracted content without LLM synthesis for further processing. Set `KNOWLEDGE_SOURCE_NAME` to the search-index knowledge source attached to the knowledge base. Request both references and their structured source data explicitly so the example can inspect the returned document fields.
 
 ```C# Snippet:Azure_Search_Tests_Samples_KnowledgeRetrievalResponse_ExtractiveData
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
+string knowledgeSourceName = Environment.GetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME");
 
 KnowledgeBaseRetrievalClient retrievalClient = new KnowledgeBaseRetrievalClient(
     endpoint, knowledgeBaseName, credential);
@@ -106,6 +109,11 @@ KnowledgeBaseRetrievalRequest request = new KnowledgeBaseRetrievalRequest
     OutputMode = KnowledgeRetrievalOutputMode.ExtractiveData
 };
 request.Intents.Add(new KnowledgeRetrievalSemanticIntent("Find budget hotels"));
+request.KnowledgeSourceParams.Add(new SearchIndexKnowledgeSourceParams(knowledgeSourceName)
+{
+    IncludeReferences = true,
+    IncludeReferenceSourceData = true
+});
 
 Response<KnowledgeBaseRetrievalResponse> response = await retrievalClient.RetrieveAsync(request);
 KnowledgeBaseRetrievalResponse retrievalResponse = response.Value;
@@ -135,14 +143,11 @@ foreach (KnowledgeBaseReference reference in retrievalResponse.References)
 
 ## Read Search-Owned Citation URLs
 
-Search Index, Azure Blob, indexed SharePoint, indexed OneLake, File, and indexed SQL references can expose an absolute `CitationUrl`. This URL points to the Search-owned backing document, not directly to the original source URL. Callers must use the required Search authorization when following it.
-
-The File citation case requires a package generated from a release input containing hotfix `ce948aaf`; do not claim or test File citation URLs against an unpatched release tip.
+Search Index, Azure Blob, File, indexed SharePoint, indexed OneLake, and indexed SQL references can expose an absolute `CitationUrl`. This URL points to the Search-owned backing document, not directly to the original source URL. Callers must use the required Search authorization when following it.
 
 ```C# Snippet:Azure_Search_Tests_Samples_KnowledgeRetrievalResponse_CitationUrls
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-AzureKeyCredential credential = new AzureKeyCredential(
-    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+TokenCredential credential = new DefaultAzureCredential();
 string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
 
 KnowledgeBaseRetrievalClient retrievalClient = new KnowledgeBaseRetrievalClient(

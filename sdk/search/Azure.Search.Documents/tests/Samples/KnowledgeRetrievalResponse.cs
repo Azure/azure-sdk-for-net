@@ -9,6 +9,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 #region Snippet:Azure_Search_Tests_Samples_KnowledgeRetrievalResponse_Namespaces
+using Azure.Identity;
+using Azure.Core;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases;
@@ -19,28 +21,28 @@ using NUnit.Framework;
 namespace Azure.Search.Documents.Tests.Samples
 {
     [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_10_01)]
-    public partial class KnowledgeRetrievalPreviewResponse : SearchTestBase
+    public partial class KnowledgeRetrievalResponse : SearchTestBase
     {
-        public KnowledgeRetrievalPreviewResponse(bool async, SearchClientOptions.ServiceVersion serviceVersion)
+        public KnowledgeRetrievalResponse(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
-        public async Task RetrieveWithPreviewResponseFeatures()
+        public async Task RetrieveWithActivityRecords()
         {
             await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("KNOWLEDGE_BASE_NAME", resources.KnowledgeBaseName);
 
             #region Snippet:Azure_Search_Tests_Samples_KnowledgeRetrievalResponse_WithActivity
-            // Get the service endpoint and API key from the environment
+            // Get the service endpoint and authenticate with Microsoft Entra ID
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(
-                Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
 
             // Create a KnowledgeBaseRetrievalClient
@@ -84,10 +86,10 @@ namespace Azure.Search.Documents.Tests.Samples
             {
                 Console.WriteLine($"Activity ID: {activity.Id}, Elapsed: {activity.ElapsedMs}ms");
 
-                if (activity is KnowledgeBaseModelQueryPlanningActivityRecord queryPlanning)
+                if (activity is KnowledgeBaseSearchIndexActivityRecord searchIndex)
                 {
-                    Console.WriteLine($"  Query Planning - Model: {queryPlanning.Model?.ModelName}");
-                    Console.WriteLine($"  Input tokens: {queryPlanning.InputTokens}, Output tokens: {queryPlanning.OutputTokens}");
+                    Console.WriteLine($"  Knowledge source: {searchIndex.KnowledgeSourceName}");
+                    Console.WriteLine($"  Relevant documents: {searchIndex.Count}");
                 }
                 else if (activity is KnowledgeBaseModelAnswerSynthesisActivityRecord answerSynthesis)
                 {
@@ -109,24 +111,29 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_KnowledgeRetrievalResponse_WithActivity
 
             Assert.IsNotNull(retrievalResponse);
-            Assert.IsNotNull(retrievalResponse.Response);
+            Assert.That(retrievalResponse.Response.SelectMany(message => message.Content)
+                .OfType<KnowledgeBaseMessageTextContent>().Select(content => content.Text), Has.Some.Not.Empty);
+            Assert.That(retrievalResponse.Activity, Is.Not.Empty);
+            Assert.That(retrievalResponse.Activity.OfType<KnowledgeBaseSearchIndexActivityRecord>(), Is.Not.Empty);
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task RetrieveWithExtractiveDataMode()
         {
             await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("KNOWLEDGE_BASE_NAME", resources.KnowledgeBaseName);
+            Environment.SetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME", resources.KnowledgeSourceName);
 
             #region Snippet:Azure_Search_Tests_Samples_KnowledgeRetrievalResponse_ExtractiveData
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(
-                Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
+            string knowledgeSourceName = Environment.GetEnvironmentVariable("KNOWLEDGE_SOURCE_NAME");
 
             KnowledgeBaseRetrievalClient retrievalClient = new KnowledgeBaseRetrievalClient(
                 endpoint, knowledgeBaseName, credential);
@@ -143,6 +150,11 @@ namespace Azure.Search.Documents.Tests.Samples
                 OutputMode = KnowledgeRetrievalOutputMode.ExtractiveData
             };
             request.Intents.Add(new KnowledgeRetrievalSemanticIntent("Find budget hotels"));
+            request.KnowledgeSourceParams.Add(new SearchIndexKnowledgeSourceParams(knowledgeSourceName)
+            {
+                IncludeReferences = true,
+                IncludeReferenceSourceData = true
+            });
 
             Response<KnowledgeBaseRetrievalResponse> response = await retrievalClient.RetrieveAsync(request);
             KnowledgeBaseRetrievalResponse retrievalResponse = response.Value;
@@ -171,19 +183,22 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_KnowledgeRetrievalResponse_ExtractiveData
 
             Assert.IsNotNull(retrievalResponse);
+            Assert.That(retrievalResponse.References.Count, Is.InRange(1, 3));
+            Assert.That(retrievalResponse.References.Select(reference => reference.SourceData.Count), Has.Some.GreaterThan(0));
         }
 
         [Test]
         public async Task ReadSearchOwnedCitationUrls()
         {
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", "https://fake-search.search.windows.net");
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", "fake-api-key");
             Environment.SetEnvironmentVariable("KNOWLEDGE_BASE_NAME", "fake-knowledge-base");
 
             #region Snippet:Azure_Search_Tests_Samples_KnowledgeRetrievalResponse_CitationUrls
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            AzureKeyCredential credential = new AzureKeyCredential(
-                Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
             string knowledgeBaseName = Environment.GetEnvironmentVariable("KNOWLEDGE_BASE_NAME");
 
             KnowledgeBaseRetrievalClient retrievalClient = new KnowledgeBaseRetrievalClient(
@@ -199,7 +214,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     {"type":"azureBlob","id":"blob-1","activitySource":2,"blobUrl":"https://storage.example.com/docs/blob-1","citationUrl":"https://fake-search.search.windows.net/citations/blob-1"},
                     {"type":"indexedSharePoint","id":"sharepoint-1","activitySource":3,"docUrl":"https://sharepoint.example.com/docs/1","citationUrl":"https://fake-search.search.windows.net/citations/sharepoint-1"},
                     {"type":"indexedOneLake","id":"onelake-1","activitySource":4,"docUrl":"https://onelake.example.com/docs/1","citationUrl":"https://fake-search.search.windows.net/citations/onelake-1"},
-                    {"type":"file","id":"file-1","activitySource":5,"docName":"guides/overview.txt","citationUrl":"https://fake-search.search.windows.net/citations/file-1"},
+                    {"type":"file","id":"file-1","activitySource":5,"docName":"guides/search.txt","citationUrl":"https://fake-search.search.windows.net/citations/file-1"},
                     {"type":"indexedSql","id":"sql-1","activitySource":6,"docUrl":"sql://documents/1","citationUrl":"https://fake-search.search.windows.net/citations/sql-1"}
                   ]
                 }
@@ -228,6 +243,9 @@ namespace Azure.Search.Documents.Tests.Samples
                     _ => null
                 };
 
+#if !SNIPPET
+                Assert.IsNotNull(citationUrl, $"Missing citation URL for {reference.GetType().Name}.");
+#endif
                 if (citationUrl is null)
                 {
                     // Some reference kinds do not provide citation URLs.

@@ -1,10 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
@@ -20,7 +22,6 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task SingleVectorSearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -66,7 +67,6 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task SingleVectorSearchWithFilter()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -113,7 +113,6 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task SimpleHybridSearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -160,7 +159,6 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task MultiVectorQuerySearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -206,7 +204,6 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task MultiFieldVectorQuerySearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -252,14 +249,12 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         private async Task<SearchIndexClient> CreateIndex(SearchResources resources, string name)
         {
             string openAIEndpoint = TestEnvironment.OpenAIEndpoint;
-            string openAIKey = TestEnvironment.OpenAIKey;
-            if (string.IsNullOrEmpty(openAIEndpoint) || string.IsNullOrEmpty(openAIKey))
+            if (string.IsNullOrEmpty(openAIEndpoint))
             {
                 Assert.Ignore("OpenAI was not deployed");
             }
 
             Environment.SetEnvironmentVariable("OPENAI_ENDPOINT", openAIEndpoint);
-            Environment.SetEnvironmentVariable("OPENAI_KEY", openAIKey);
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchUsingVectorizableTextQuery_Index
             string vectorSearchProfileName = "my-vector-profile";
@@ -302,7 +297,6 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                             Parameters  = new AzureOpenAIVectorizerParameters()
                             {
                                 ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
-                                ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
                                 DeploymentName = deploymentName,
                                 ModelName = AzureOpenAIModelName.TextEmbeddingAda002
                             }
@@ -313,12 +307,13 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             #endregion
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
-            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchUsingVectorizableTextQuery_Create_Index
             Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
-            AzureKeyCredential credential = new(key);
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
 
             SearchIndexClient indexClient = new(endpoint, credential);
 #if !SNIPPET
@@ -333,8 +328,10 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         private async Task<SearchClient> UploadDocuments(SearchResources resources, string indexName)
         {
             Uri endpoint = resources.Endpoint;
-            string key = resources.PrimaryApiKey;
-            AzureKeyCredential credential = new AzureKeyCredential(key);
+            TokenCredential credential = new DefaultAzureCredential();
+#if !SNIPPET
+            credential = TestEnvironment.Credential;
+#endif
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_VectorSearchUsingVectorizableTextQuery_Upload_Documents
             SearchClient searchClient = new(endpoint, indexName, credential);

@@ -162,10 +162,11 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSourceConnection"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<IReadOnlyList<SearchIndexerDataSourceConnection>> GetDataSourceConnections(
             CancellationToken cancellationToken = default)
         {
-            return GetDataSourceConnectionsWithSelectedProperties(new[] { Constants.All }, cancellationToken: cancellationToken).ToBufferedList();
+            return GetPagedDataSourceConnections(new[] { Constants.All }, search: null, cancellationToken: cancellationToken).ToBufferedList();
         }
 
         /// <summary>
@@ -175,10 +176,11 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSourceConnection"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<IReadOnlyList<SearchIndexerDataSourceConnection>>> GetDataSourceConnectionsAsync(
             CancellationToken cancellationToken = default)
         {
-            return await GetDataSourceConnectionsWithSelectedPropertiesAsync(new[] { Constants.All }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
+            return await GetPagedDataSourceConnectionsAsync(new[] { Constants.All }, search: null, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -191,7 +193,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<string>> GetDataSourceConnectionNames(
             CancellationToken cancellationToken = default)
         {
-            Response<IReadOnlyList<SearchIndexerDataSourceConnection>> response = GetDataSourceConnectionsWithSelectedProperties(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedList();
+            Response<IReadOnlyList<SearchIndexerDataSourceConnection>> response = GetPagedDataSourceConnections(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedList();
             return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 
@@ -205,7 +207,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<string>>> GetDataSourceConnectionNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<IReadOnlyList<SearchIndexerDataSourceConnection>> response = await GetDataSourceConnectionsWithSelectedPropertiesAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
+            Response<IReadOnlyList<SearchIndexerDataSourceConnection>> response = await GetPagedDataSourceConnectionsAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
             return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 
