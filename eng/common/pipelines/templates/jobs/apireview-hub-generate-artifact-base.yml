@@ -138,6 +138,19 @@ jobs:
           ARTIFACT_OUTPUT_DIRECTORY: $(ArtifactOutputDirectory)
           SOURCE_DIRECTORY: $(Build.SourcesDirectory)
 
+      - task: PowerShell@2
+        displayName: Record ${{ parameters.kind }} generation metadata
+        inputs:
+          pwsh: true
+          targetType: filePath
+          filePath: $(BinDirectory)/api-review-hub/Write-ApiReviewGenerationMetadata.ps1
+        env:
+          ARTIFACT_OUTPUT_DIRECTORY: $(ArtifactOutputDirectory)
+          OPERATION_ID: ${{ parameters.operationId }}
+          KIND: ${{ parameters.kind }}
+          REF: ${{ parameters.ref }}
+          SOURCE_COMMIT: $(ApiReviewSourceCommit)
+
       - publish: $(ArtifactOutputDirectory)
         artifact: ${{ parameters.kind }}-$(System.JobAttempt)
         displayName: Publish ${{ parameters.kind }} API review artifact
