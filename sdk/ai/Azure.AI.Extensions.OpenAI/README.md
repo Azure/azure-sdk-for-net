@@ -1501,7 +1501,7 @@ Follow [Set up Browser Automation in Microsoft Foundry](https://learn.microsoft.
 3. Under **Tools**, select **Add**, choose **Browser Automation**, and select **Add tool**.
 4. Enter a connection name, select your **Playwright Workspace**, and choose the authentication method.
 5. Select **Connect**, then **Publish** to save the toolbox.
-6. Copy the **Project connection ID** from the tool's details page and set `BROWSER_AUTOMATION_PROJECT_CONNECTION_ID` to that full resource ID.
+6. Set `BROWSER_AUTOMATION_NAME` to the connection name you entered. The sample looks up the connection and passes its ID to the tool.
 
 Prefer Microsoft Entra ID authentication when supported; never include workspace access tokens in source code, prompts, or logs.
 
@@ -1509,12 +1509,12 @@ Prefer Microsoft Entra ID authentication when supported; never include workspace
 
 Please note that Browser automation operations may take longer than typical calls to process. Using background mode for Responses or applying a network timeout of at least five minutes for non-background calls is highly recommended.
 `BrowserAutomationTool` uses a Browser Automation project connection as opposed to `BrowserAutomationPreviewTool`, which uses a Serverless connection type.
-Set `FOUNDRY_PROJECT_ENDPOINT` to your project endpoint, `FOUNDRY_MODEL_NAME` to your model deployment name, and `BROWSER_AUTOMATION_PROJECT_CONNECTION_ID` to the Browser Automation project connection ID.
+Set `FOUNDRY_PROJECT_ENDPOINT` to your project endpoint, `FOUNDRY_MODEL_NAME` to your model deployment name, and `BROWSER_AUTOMATION_NAME` to the Browser Automation project connection name.
 
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-var playwrightConnectionId = System.Environment.GetEnvironmentVariable("BROWSER_AUTOMATION_PROJECT_CONNECTION_ID");
+var playwrightConnectionName = System.Environment.GetEnvironmentVariable("BROWSER_AUTOMATION_NAME");
 AIProjectClientOptions options = new()
 {
     NetworkTimeout = TimeSpan.FromMinutes(5)
@@ -1525,9 +1525,10 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 To use Azure Playwright workspace we need to create an agent with `BrowserAutomationTool`.
 
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
+AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
 BrowserAutomationTool playwrightTool = new(
     new BrowserAutomationToolOptions(
-        new BrowserAutomationToolConnectionOptions(playwrightConnectionId)
+        new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
     ));
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
