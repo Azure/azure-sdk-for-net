@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NginxDeploymentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NginxDeploymentResource.ResourceType, out string nginxDeploymentApiVersion);
             _nginxDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", NginxDeploymentResource.ResourceType.Namespace, Diagnostics);
-            _nginxDeploymentsRestClient = new NginxDeployments(_nginxDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nginxDeploymentApiVersion ?? "2025-11-01");
+            _nginxDeploymentsRestClient = new NginxDeployments(_nginxDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Nginx.NginxPlus/nginxDeployments", out string nginxDeploymentsApiVersionOverride) ? nginxDeploymentsApiVersionOverride : "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -292,7 +291,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentsGetByResourceGroupAsyncCollectionResultOfT(_nginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NginxDeploymentCollection.GetAll"), data => new NginxDeploymentResource(Client, data));
+            return new AsyncPageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentDataAsyncCollectionResultOfT(_nginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NginxDeploymentCollection.GetAll"), data => new NginxDeploymentResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +319,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentsGetByResourceGroupCollectionResultOfT(_nginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NginxDeploymentCollection.GetAll"), data => new NginxDeploymentResource(Client, data));
+            return new PageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentDataCollectionResultOfT(_nginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NginxDeploymentCollection.GetAll"), data => new NginxDeploymentResource(Client, data));
         }
 
         /// <summary>

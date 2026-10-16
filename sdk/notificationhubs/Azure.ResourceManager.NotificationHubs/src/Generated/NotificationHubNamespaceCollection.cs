@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             TryGetApiVersion(NotificationHubNamespaceResource.ResourceType, out string notificationHubNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, notificationHubNamespaceApiVersion ?? "2023-10-01-preview");
+            _namespacesRestClient = new Namespaces(
+                _namespacesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                notificationHubNamespaceApiVersion ?? "2023-10-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -296,7 +302,7 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NotificationHubNamespaceData, NotificationHubNamespaceResource>(new NamespacesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NotificationHubNamespaceData, NotificationHubNamespaceResource>(new NotificationHubNamespaceDataAsyncCollectionResultOfT(
                 _namespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +339,7 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NotificationHubNamespaceData, NotificationHubNamespaceResource>(new NamespacesGetAllCollectionResultOfT(
+            return new PageableWrapper<NotificationHubNamespaceData, NotificationHubNamespaceResource>(new NotificationHubNamespaceDataCollectionResultOfT(
                 _namespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

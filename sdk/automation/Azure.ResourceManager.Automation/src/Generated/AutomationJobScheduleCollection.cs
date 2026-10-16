@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationJobScheduleData, AutomationJobScheduleResource>(new JobScheduleGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationJobScheduleData, AutomationJobScheduleResource>(new AutomationJobScheduleDataAsyncCollectionResultOfT(
                 _jobScheduleRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationJobScheduleData, AutomationJobScheduleResource>(new JobScheduleGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationJobScheduleData, AutomationJobScheduleResource>(new AutomationJobScheduleDataCollectionResultOfT(
                 _jobScheduleRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -92,19 +92,26 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(Configuration))
             {
-                writer.WritePropertyName("configuration"u8);
-                writer.WriteStartObject();
-                foreach (var item in Configuration)
+                if (Configuration != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("configuration"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Configuration)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteObjectValue<object>(item.Value, options);
                     }
-                    writer.WriteObjectValue<object>(item.Value, options);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("configuration"u8);
+                }
             }
         }
 
@@ -142,7 +149,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BlobIndexerParsingMode? parsingMode = default;
             BlobIndexerDataToExtract? dataToExtract = default;
-            IDictionary<string, object> configuration = default;
+            IDictionary<string, object> configuration = new ChangeTrackingDictionary<string, object>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -207,6 +214,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        configuration = null;
                         continue;
                     }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
@@ -234,12 +242,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 context,
-                inputs,
-                outputs,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                outputs ?? new ChangeTrackingList<OutputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
                 parsingMode,
                 dataToExtract,
-                configuration ?? new ChangeTrackingDictionary<string, object>());
+                configuration);
         }
     }
 }

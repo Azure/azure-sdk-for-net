@@ -166,7 +166,7 @@ namespace Azure.Security.ConfidentialLedger.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LedgerUserMultipleRoles(assignedRoles, userId, additionalBinaryDataProperties);
+            return new LedgerUserMultipleRoles(assignedRoles ?? new ChangeTrackingList<ConfidentialLedgerUserRoleName>(), userId, additionalBinaryDataProperties);
         }
     }
 }

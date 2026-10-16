@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2026-10-15)
+
+### Features Added
+
+- Upgraded API version to `2026-05-15`.
+- Added `StandardB1v2`, `StandardB5v2`, `StandardB10v2`, `StandardB15v2` and `StandardB20v2` values to `ManagedHsmSkuName` for the new Managed HSM SKUs.
 
 ## 1.4.0 (2026-04-01)
 

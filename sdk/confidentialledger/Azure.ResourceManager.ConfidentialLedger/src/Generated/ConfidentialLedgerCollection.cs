@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ConfidentialLedgerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ConfidentialLedgerResource.ResourceType, out string confidentialLedgerApiVersion);
             _ledgerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger", ConfidentialLedgerResource.ResourceType.Namespace, Diagnostics);
-            _ledgerRestClient = new Ledger(_ledgerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confidentialLedgerApiVersion ?? "2026-02-23");
+            _ledgerRestClient = new Ledger(_ledgerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ConfidentialLedger/ledgers", out string ledgerApiVersionOverride) ? ledgerApiVersionOverride : "2026-02-23");
             ValidateResourceId(id);
         }
 
@@ -295,7 +294,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new LedgerGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new ConfidentialLedgerDataAsyncCollectionResultOfT(
                 _ledgerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -330,7 +329,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new LedgerGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new ConfidentialLedgerDataCollectionResultOfT(
                 _ledgerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

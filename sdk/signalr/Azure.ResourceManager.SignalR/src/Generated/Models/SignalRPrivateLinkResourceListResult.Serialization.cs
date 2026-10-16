@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SignalRPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SignalRPrivateLinkResourceListResult(value ?? new ChangeTrackingList<SignalRPrivateLinkResource>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

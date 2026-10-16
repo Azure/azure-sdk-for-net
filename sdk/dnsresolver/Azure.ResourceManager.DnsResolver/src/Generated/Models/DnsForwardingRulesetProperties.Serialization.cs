@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DnsForwardingRulesetProperties(dnsResolverOutboundEndpoints, provisioningState, resourceGuid, additionalBinaryDataProperties);
+            return new DnsForwardingRulesetProperties(dnsResolverOutboundEndpoints ?? new ChangeTrackingList<WritableSubResource>(), provisioningState, resourceGuid, additionalBinaryDataProperties);
         }
     }
 }

@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.ArtifactSigning.Mocking
 
         private ClientDiagnostics CodeSigningAccountsClientDiagnostics => _codeSigningAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ArtifactSigning.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CodeSigningAccounts CodeSigningAccountsRestClient => _codeSigningAccountsRestClient ??= new CodeSigningAccounts(CodeSigningAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-15-preview");
+        private CodeSigningAccounts CodeSigningAccountsRestClient => _codeSigningAccountsRestClient ??= new CodeSigningAccounts(
+            CodeSigningAccountsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-05-15-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Lists artifact signing accounts within a subscription.
@@ -65,7 +71,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArtifactSigningAccountData, ArtifactSigningAccountResource>(new CodeSigningAccountsGetBySubscriptionAsyncCollectionResultOfT(CodeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableArtifactSigningSubscriptionResource.GetArtifactSigningAccounts"), data => new ArtifactSigningAccountResource(Client, data));
+            return new AsyncPageableWrapper<ArtifactSigningAccountData, ArtifactSigningAccountResource>(new ArtifactSigningAccountDataAsync0CollectionResultOfT(CodeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableArtifactSigningSubscriptionResource.GetArtifactSigningAccounts"), data => new ArtifactSigningAccountResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +99,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArtifactSigningAccountData, ArtifactSigningAccountResource>(new CodeSigningAccountsGetBySubscriptionCollectionResultOfT(CodeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableArtifactSigningSubscriptionResource.GetArtifactSigningAccounts"), data => new ArtifactSigningAccountResource(Client, data));
+            return new PageableWrapper<ArtifactSigningAccountData, ArtifactSigningAccountResource>(new ArtifactSigningAccountData0CollectionResultOfT(CodeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableArtifactSigningSubscriptionResource.GetArtifactSigningAccounts"), data => new ArtifactSigningAccountResource(Client, data));
         }
 
         /// <summary>

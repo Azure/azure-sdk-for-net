@@ -146,7 +146,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PeopleResult(values, additionalBinaryDataProperties);
+            return new PeopleResult(values ?? new ChangeTrackingList<DetectedPerson>(), additionalBinaryDataProperties);
         }
     }
 }

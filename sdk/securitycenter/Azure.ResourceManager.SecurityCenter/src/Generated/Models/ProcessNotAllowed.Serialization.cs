@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 ruleType,
                 additionalBinaryDataProperties,
                 valueType,
-                allowlistValues);
+                allowlistValues ?? new ChangeTrackingList<string>());
         }
     }
 }

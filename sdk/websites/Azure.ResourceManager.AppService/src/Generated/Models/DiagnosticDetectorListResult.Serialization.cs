@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DiagnosticDetectorListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DiagnosticDetectorListResult(value ?? new ChangeTrackingList<DetectorDefinitionResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NatGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NatGatewayResource.ResourceType, out string natGatewayApiVersion);
             _natGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NatGatewayResource.ResourceType.Namespace, Diagnostics);
-            _natGatewaysRestClient = new NatGateways(_natGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, natGatewayApiVersion ?? "2026-01-01");
+            _natGatewaysRestClient = new NatGateways(_natGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NatGatewayData, NatGatewayResource>(new NatGatewaysListAsyncCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NatGatewayCollection.GetAll"), data => new NatGatewayResource(Client, data));
+            return new AsyncPageableWrapper<NatGatewayData, NatGatewayResource>(new NatGatewayDataAsyncCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NatGatewayCollection.GetAll"), data => new NatGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NatGatewayData, NatGatewayResource>(new NatGatewaysListCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NatGatewayCollection.GetAll"), data => new NatGatewayResource(Client, data));
+            return new PageableWrapper<NatGatewayData, NatGatewayResource>(new NatGatewayDataCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NatGatewayCollection.GetAll"), data => new NatGatewayResource(Client, data));
         }
 
         /// <summary>

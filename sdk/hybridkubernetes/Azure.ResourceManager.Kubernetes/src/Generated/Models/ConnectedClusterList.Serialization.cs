@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConnectedClusterList(value, nextLink, additionalBinaryDataProperties);
+            return new ConnectedClusterList(value ?? new ChangeTrackingList<ConnectedClusterData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

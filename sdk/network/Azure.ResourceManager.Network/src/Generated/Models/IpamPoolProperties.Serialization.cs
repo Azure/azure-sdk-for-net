@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Network.Models
                 displayName,
                 ipAddressType ?? new ChangeTrackingList<IpamIPType>(),
                 parentPoolName,
-                addressPrefixes,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
                 provisioningState,
                 minAllocationSize,
                 maxAllocationSize,

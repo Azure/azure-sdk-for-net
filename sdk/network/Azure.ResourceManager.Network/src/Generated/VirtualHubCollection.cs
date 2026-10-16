@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualHubCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(VirtualHubResource.ResourceType, out string virtualHubApiVersion);
             _virtualHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualHubResource.ResourceType.Namespace, Diagnostics);
-            _virtualHubsRestClient = new VirtualHubs(_virtualHubsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualHubApiVersion ?? "2026-01-01");
+            _virtualHubsRestClient = new VirtualHubs(_virtualHubsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualHubData, VirtualHubResource>(new VirtualHubsGetByResourceGroupAsyncCollectionResultOfT(_virtualHubsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualHubCollection.GetAll"), data => new VirtualHubResource(Client, data));
+            return new AsyncPageableWrapper<VirtualHubData, VirtualHubResource>(new VirtualHubDataAsyncCollectionResultOfT(_virtualHubsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualHubCollection.GetAll"), data => new VirtualHubResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualHubData, VirtualHubResource>(new VirtualHubsGetByResourceGroupCollectionResultOfT(_virtualHubsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualHubCollection.GetAll"), data => new VirtualHubResource(Client, data));
+            return new PageableWrapper<VirtualHubData, VirtualHubResource>(new VirtualHubDataCollectionResultOfT(_virtualHubsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualHubCollection.GetAll"), data => new VirtualHubResource(Client, data));
         }
 
         /// <summary>

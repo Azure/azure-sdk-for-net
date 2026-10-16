@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerAppJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ContainerAppJobResource.ResourceType, out string containerAppJobApiVersion);
             _containerAppJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobResource.ResourceType.Namespace, Diagnostics);
-            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobApiVersion ?? "2026-07-01");
+            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppJobData, ContainerAppJobResource>(new ContainerAppJobsGetByResourceGroupAsyncCollectionResultOfT(_containerAppJobsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppJobCollection.GetAll"), data => new ContainerAppJobResource(Client, data));
+            return new AsyncPageableWrapper<ContainerAppJobData, ContainerAppJobResource>(new ContainerAppJobDataAsyncCollectionResultOfT(_containerAppJobsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppJobCollection.GetAll"), data => new ContainerAppJobResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppJobData, ContainerAppJobResource>(new ContainerAppJobsGetByResourceGroupCollectionResultOfT(_containerAppJobsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppJobCollection.GetAll"), data => new ContainerAppJobResource(Client, data));
+            return new PageableWrapper<ContainerAppJobData, ContainerAppJobResource>(new ContainerAppJobDataCollectionResultOfT(_containerAppJobsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppJobCollection.GetAll"), data => new ContainerAppJobResource(Client, data));
         }
 
         /// <summary>

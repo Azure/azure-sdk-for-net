@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicySetDefinitionData, PolicySetDefinitionResource>(new PolicySetDefinitionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PolicySetDefinitionData, PolicySetDefinitionResource>(new PolicySetDefinitionDataAsyncCollectionResultOfT(
                 _policySetDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicySetDefinitionData, PolicySetDefinitionResource>(new PolicySetDefinitionsGetAllCollectionResultOfT(
+            return new PageableWrapper<PolicySetDefinitionData, PolicySetDefinitionResource>(new PolicySetDefinitionDataCollectionResultOfT(
                 _policySetDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,

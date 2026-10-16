@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApplicationInsightsComponentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ApplicationInsightsComponentResource.ResourceType, out string applicationInsightsComponentApiVersion);
             _componentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ApplicationInsightsComponentResource.ResourceType.Namespace, Diagnostics);
-            _componentsRestClient = new Components(_componentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentApiVersion ?? "2020-02-02");
+            _componentsRestClient = new Components(_componentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationInsightsComponentData, ApplicationInsightsComponentResource>(new ComponentsGetByResourceGroupAsyncCollectionResultOfT(_componentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationInsightsComponentCollection.GetAll"), data => new ApplicationInsightsComponentResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationInsightsComponentData, ApplicationInsightsComponentResource>(new ApplicationInsightsComponentDataAsyncCollectionResultOfT(_componentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationInsightsComponentCollection.GetAll"), data => new ApplicationInsightsComponentResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationInsightsComponentData, ApplicationInsightsComponentResource>(new ComponentsGetByResourceGroupCollectionResultOfT(_componentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationInsightsComponentCollection.GetAll"), data => new ApplicationInsightsComponentResource(Client, data));
+            return new PageableWrapper<ApplicationInsightsComponentData, ApplicationInsightsComponentResource>(new ApplicationInsightsComponentDataCollectionResultOfT(_componentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationInsightsComponentCollection.GetAll"), data => new ApplicationInsightsComponentResource(Client, data));
         }
 
         /// <summary>

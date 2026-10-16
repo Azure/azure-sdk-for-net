@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Relay
         {
             TryGetApiVersion(RelayClusterResource.ResourceType, out string relayClusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", RelayClusterResource.ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, relayClusterApiVersion ?? "2026-07-01-preview");
+            _clustersRestClient = new Clusters(
+                _clustersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                relayClusterApiVersion ?? "2026-07-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayClusterData, RelayClusterResource>(new ClustersGetByResourceGroupAsyncCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RelayClusterCollection.GetAll"), data => new RelayClusterResource(Client, data));
+            return new AsyncPageableWrapper<RelayClusterData, RelayClusterResource>(new RelayClusterDataAsyncCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RelayClusterCollection.GetAll"), data => new RelayClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayClusterData, RelayClusterResource>(new ClustersGetByResourceGroupCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RelayClusterCollection.GetAll"), data => new RelayClusterResource(Client, data));
+            return new PageableWrapper<RelayClusterData, RelayClusterResource>(new RelayClusterDataCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RelayClusterCollection.GetAll"), data => new RelayClusterResource(Client, data));
         }
 
         /// <summary>

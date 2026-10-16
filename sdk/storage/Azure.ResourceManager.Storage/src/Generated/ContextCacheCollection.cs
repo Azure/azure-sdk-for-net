@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Storage
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContextCacheCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ContextCacheResource.ResourceType, out string contextCacheApiVersion);
             _contextCachesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ContextCacheResource.ResourceType.Namespace, Diagnostics);
-            _contextCachesRestClient = new ContextCaches(_contextCachesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, contextCacheApiVersion ?? "2026-06-01");
+            _contextCachesRestClient = new ContextCaches(_contextCachesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Storage/contextCaches", out string contextCachesApiVersionOverride) ? contextCachesApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContextCacheData, ContextCacheResource>(new ContextCachesGetByResourceGroupAsyncCollectionResultOfT(_contextCachesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContextCacheCollection.GetAll"), data => new ContextCacheResource(Client, data));
+            return new AsyncPageableWrapper<ContextCacheData, ContextCacheResource>(new ContextCacheDataAsyncCollectionResultOfT(_contextCachesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContextCacheCollection.GetAll"), data => new ContextCacheResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContextCacheData, ContextCacheResource>(new ContextCachesGetByResourceGroupCollectionResultOfT(_contextCachesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContextCacheCollection.GetAll"), data => new ContextCacheResource(Client, data));
+            return new PageableWrapper<ContextCacheData, ContextCacheResource>(new ContextCacheDataCollectionResultOfT(_contextCachesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContextCacheCollection.GetAll"), data => new ContextCacheResource(Client, data));
         }
 
         /// <summary>

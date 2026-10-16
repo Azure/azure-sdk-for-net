@@ -183,7 +183,7 @@ namespace Azure.AI.DocumentIntelligence
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DocumentSection(spans, elements ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new DocumentSection(spans ?? new ChangeTrackingList<DocumentSpan>(), elements ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

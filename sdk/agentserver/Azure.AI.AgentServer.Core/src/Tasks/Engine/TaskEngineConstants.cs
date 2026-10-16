@@ -19,6 +19,14 @@ internal static class TaskEngineConstants
     public const int RecoveryScanIntervalSeconds = 300;
 
     /// <summary>
+    /// The maximum number of passes the one-shot cold-start orphan-stream sweep makes before giving
+    /// up. A transient close/read failure on the first pass is retried in-place (still before any
+    /// in-process producer exists) rather than permanently leaving that orphan open, without ever
+    /// re-running after the engine starts dispatching work.
+    /// </summary>
+    public const int OrphanSweepMaxAttempts = 3;
+
+    /// <summary>
     /// The maximum time graceful shutdown waits for in-flight turns to checkpoint (call
     /// <c>ExitForRecovery</c> / wind down) before force-expiring their leases so a restarted
     /// process reclaims immediately instead of waiting the lease TTL (Python parity:

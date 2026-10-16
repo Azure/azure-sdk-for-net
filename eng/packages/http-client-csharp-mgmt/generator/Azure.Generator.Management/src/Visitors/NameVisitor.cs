@@ -16,7 +16,6 @@ namespace Azure.Generator.Management.Visitors;
 
 internal class NameVisitor : ScmLibraryVisitor
 {
-    private const string ResourceTypeName = "ResourceType";
     private static readonly HashSet<string> _knownTypes = new HashSet<string>()
         {
             "Sku",
@@ -40,6 +39,12 @@ internal class NameVisitor : ScmLibraryVisitor
             "PrivateEndpointConnectionListResult",
             "PrivateLinkResourceListResult"
         };
+
+    protected override TypeProvider? VisitType(TypeProvider type)
+    {
+        ManagementClientGenerator.Instance.OutputLibrary.ApplyRegularCollectionResultName(type);
+        return base.VisitType(type);
+    }
 
     protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
     {
@@ -111,33 +116,26 @@ internal class NameVisitor : ScmLibraryVisitor
             ManagementClientGenerator.Instance.DateTimePropertyMatcher.RegisterSourceProperty(propertyProvider, property);
         }
 
-        DoPreVisitPropertyForResourceTypeName(property, propertyProvider);
+        DoPreVisitArmResourceProperty(property, propertyProvider);
         DoPreVisitPropertyForUrlPropertyName(property, propertyProvider);
         DoPreVisitPropertyNameRenaming(property, propertyProvider);
         return base.PreVisitProperty(property, propertyProvider);
     }
 
-    private void DoPreVisitPropertyForResourceTypeName(InputProperty property, PropertyProvider? propertyProvider)
+    private static void DoPreVisitArmResourceProperty(InputProperty property, PropertyProvider? propertyProvider)
     {
-        if (propertyProvider == null || property is not InputModelProperty)
+        if (property is InputModelProperty modelProperty &&
+            propertyProvider?.EnclosingType is SystemObjectModelProvider modelProvider &&
+            modelProvider.CrossLanguageDefinitionId == KnownManagementTypes.ArmResourceId &&
+            propertyProvider.Type.Equals(_nullableResourceType) &&
+            ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(modelProperty.Type) is { } currentType &&
+            ArmResourcePropertyProjection.TryGetName(modelProperty, currentType, out var name))
         {
-            return;
-        }
-        var enclosingType = propertyProvider.EnclosingType;
-        if (enclosingType is not SystemObjectModelProvider modelProvider
-            || modelProvider.CrossLanguageDefinitionId?.Equals(KnownManagementTypes.ArmResourceId) != true)
-        {
-            return;
-        }
-        // the Azure.ResourceManager.CommonTypes.Resource defines its `type` property as an optional `armResourceType`
-        // therefore here we need to change it to required because our common types define it as required
-        if (propertyProvider.Type.Equals(_nullableResourceType))
-        {
-            propertyProvider.Update(name: ResourceTypeName, type: typeof(ResourceType));
+            propertyProvider.Update(name: name, type: currentType);
         }
     }
 
-    private readonly CSharpType _nullableResourceType = new CSharpType(typeof(ResourceType), isNullable: true);
+    private static readonly CSharpType _nullableResourceType = new(typeof(ResourceType), isNullable: true);
 
     private void DoPreVisitPropertyForUrlPropertyName(InputProperty property, PropertyProvider? propertyProvider)
     {

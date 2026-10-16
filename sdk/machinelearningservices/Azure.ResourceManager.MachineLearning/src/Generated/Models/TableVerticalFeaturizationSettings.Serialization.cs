@@ -77,29 +77,43 @@ namespace Azure.ResourceManager.MachineLearning.Models
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(BlockedTransformers))
             {
-                writer.WritePropertyName("blockedTransformers"u8);
-                writer.WriteStartArray();
-                foreach (BlockedTransformer item in BlockedTransformers)
+                if (BlockedTransformers != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("blockedTransformers"u8);
+                    writer.WriteStartArray();
+                    foreach (BlockedTransformer item in BlockedTransformers)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("blockedTransformers"u8);
+                }
             }
             if (Optional.IsCollectionDefined(ColumnNameAndTypes))
             {
-                writer.WritePropertyName("columnNameAndTypes"u8);
-                writer.WriteStartObject();
-                foreach (var item in ColumnNameAndTypes)
+                if (ColumnNameAndTypes != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("columnNameAndTypes"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in ColumnNameAndTypes)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("columnNameAndTypes"u8);
+                }
             }
             if (Optional.IsDefined(EnableDnnFeaturization))
             {
@@ -113,24 +127,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(TransformerParams))
             {
-                writer.WritePropertyName("transformerParams"u8);
-                writer.WriteStartObject();
-                foreach (var item in TransformerParams)
+                if (TransformerParams != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("transformerParams"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in TransformerParams)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStartArray();
+                        foreach (ColumnTransformer item0 in item.Value)
+                        {
+                            writer.WriteObjectValue(item0, options);
+                        }
+                        writer.WriteEndArray();
                     }
-                    writer.WriteStartArray();
-                    foreach (ColumnTransformer item0 in item.Value)
-                    {
-                        writer.WriteObjectValue(item0, options);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("transformerParams"u8);
+                }
             }
         }
 
@@ -159,17 +180,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool datasetLanguageIsDefined = false;
             string datasetLanguage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<BlockedTransformer> blockedTransformers = default;
-            IDictionary<string, string> columnNameAndTypes = default;
+            IList<BlockedTransformer> blockedTransformers = new ChangeTrackingList<BlockedTransformer>();
+            IDictionary<string, string> columnNameAndTypes = new ChangeTrackingDictionary<string, string>();
             bool? enableDnnFeaturization = default;
             MachineLearningFeaturizationMode? mode = default;
-            IDictionary<string, IList<ColumnTransformer>> transformerParams = default;
+            IDictionary<string, IList<ColumnTransformer>> transformerParams = new ChangeTrackingDictionary<string, IList<ColumnTransformer>>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("datasetLanguage"u8))
                 {
+                    datasetLanguageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         datasetLanguage = null;
@@ -182,6 +205,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        blockedTransformers = null;
                         continue;
                     }
                     List<BlockedTransformer> array = new List<BlockedTransformer>();
@@ -196,6 +220,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        columnNameAndTypes = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -235,6 +260,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        transformerParams = null;
                         continue;
                     }
                     Dictionary<string, IList<ColumnTransformer>> dictionary = new Dictionary<string, IList<ColumnTransformer>>();
@@ -265,11 +291,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new TableVerticalFeaturizationSettings(
                 datasetLanguage,
                 additionalBinaryDataProperties,
-                blockedTransformers ?? new ChangeTrackingList<BlockedTransformer>(),
-                columnNameAndTypes ?? new ChangeTrackingDictionary<string, string>(),
+                blockedTransformers,
+                columnNameAndTypes,
                 enableDnnFeaturization,
                 mode,
-                transformerParams ?? new ChangeTrackingDictionary<string, IList<ColumnTransformer>>());
+                transformerParams)
+            {
+                _datasetLanguageIsDefined = datasetLanguageIsDefined
+            };
         }
     }
 }

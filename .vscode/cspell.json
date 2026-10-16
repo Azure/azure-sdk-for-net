@@ -1118,6 +1118,12 @@
       ]
     },
     {
+      "filename": "**/sdk/platformvalidation/**/*.cs",
+      "words": [
+        "mobo"
+      ]
+    },
+    {
       "filename": "**/sdk/policyinsights/**/*.cs",
       "words": [
         "remediations"
@@ -1135,14 +1141,6 @@
       "words": [
         "cname",
         "ptrdname"
-      ]
-    },
-    {
-      "filename": "**/sdk/providerhub/**/*.cs",
-      "words": [
-        "checkin",
-        "dsts",
-        "regionality"
       ]
     },
     {

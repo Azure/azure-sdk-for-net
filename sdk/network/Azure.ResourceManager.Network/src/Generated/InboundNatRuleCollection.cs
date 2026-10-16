@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InboundNatRuleData, InboundNatRuleResource>(new InboundNatRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<InboundNatRuleData, InboundNatRuleResource>(new InboundNatRuleDataAsyncCollectionResultOfT(
                 _inboundNatRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InboundNatRuleData, InboundNatRuleResource>(new InboundNatRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<InboundNatRuleData, InboundNatRuleResource>(new InboundNatRuleDataCollectionResultOfT(
                 _inboundNatRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

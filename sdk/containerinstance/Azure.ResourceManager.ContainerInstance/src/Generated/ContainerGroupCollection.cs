@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ContainerGroupResource.ResourceType, out string containerGroupApiVersion);
             _containerGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ContainerGroupResource.ResourceType.Namespace, Diagnostics);
-            _containerGroupsRestClient = new ContainerGroups(_containerGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupApiVersion ?? "2026-07-01");
+            _containerGroupsRestClient = new ContainerGroups(_containerGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerInstance/containerGroups", out string containerGroupsApiVersionOverride) ? containerGroupsApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupsGetByResourceGroupAsyncCollectionResultOfT(_containerGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupCollection.GetAll"), data => new ContainerGroupResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupDataAsync0CollectionResultOfT(_containerGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupCollection.GetAll"), data => new ContainerGroupResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupsGetByResourceGroupCollectionResultOfT(_containerGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupCollection.GetAll"), data => new ContainerGroupResource(Client, data));
+            return new PageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupData0CollectionResultOfT(_containerGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupCollection.GetAll"), data => new ContainerGroupResource(Client, data));
         }
 
         /// <summary>
