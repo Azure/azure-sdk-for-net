@@ -7,7 +7,7 @@ Azure AI Search automatically encrypts indexed content at rest with [service-man
 This sample uses the Search service's system-assigned managed identity for
 Key Vault access. Grant it Key Vault Crypto Service Encryption User on the
 vault. The test runner needs Key Vault Crypto Officer to create the key,
-along with the Search and Storage data-plane roles described in the test setup.
+along with Search and Storage roles specified in this document - [Configure customer-managed keys for Azure AI Search encrypted data](https://learn.microsoft.com/en-us/azure/search/search-security-manage-encryption-keys?tabs=azure-key-vault%2Cmanaged-id-sys%2Cportal%2Cmgmt-rest-create%2Cmgmt-rest-update).
 Application IDs and application secrets are not required for this identity path.
 
 Use a Basic-or-higher Search service and a Key Vault with Azure RBAC, soft delete,

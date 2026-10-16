@@ -51,6 +51,7 @@ namespace Azure.Search.Documents.Tests
                     key => configuration.TryGetValue(key, out string value) ? value : null));
             StringAssert.Contains($"Missing SEARCH_{name}.", exception.Message);
             StringAssert.Contains("Set-RecordingEnvironment.ps1", exception.Message);
+            StringAssert.Contains(".env.example", exception.Message);
             StringAssert.Contains("No test resources have been created.", exception.Message);
         }
 

@@ -68,7 +68,7 @@ namespace Azure.Search.Documents.Tests
                     "CreateDoubleEncryptedIndex configuration is invalid:" + Environment.NewLine +
                     string.Join(Environment.NewLine, errors) + Environment.NewLine +
                     "Load the package .env into the test process using tests\\Set-RecordingEnvironment.ps1. " +
-                    "See tests\\README.md#customer-managed-encryption-test for resources, role scopes, and recording commands. " +
+                    "See the CreateDoubleEncryptedIndex section in .env.example for prerequisites and the test filter. " +
                     "No test resources have been created.");
             }
 

@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 {
                     Assert.Ignore(
                         "Set SEARCH_RUN_DOUBLE_ENCRYPTED_INDEX=true to allow creating and deleting encryption test objects. " +
-                        "See tests/README.md#customer-managed-encryption-test for prerequisites.");
+                        "See the CreateDoubleEncryptedIndex section in .env.example for prerequisites.");
                 }
 
                 TestEnvironment.ValidateDoubleEncryptedIndexConfiguration();
