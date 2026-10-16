@@ -14,15 +14,16 @@ namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
 public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
 {
-    private AIProjectClient _projectClient;
-    private ProjectsAgentVersion _agentVersion;
-
     #region Snippet:Sample_ParseResponse_BrowserAutomotion
     private static void ParseResponse(StreamingResponseUpdate streamResponse)
     {
         if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
         {
             Console.WriteLine($"Stream response created with ID: {createUpdate.Response.Id}");
+        }
+        else if (streamResponse is StreamingResponseOutputTextDeltaUpdate textDelta)
+        {
+            Console.WriteLine($"Delta: {textDelta.Delta}");
         }
         else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
         {
@@ -38,7 +39,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         }
         else if (streamResponse is StreamingResponseIncompleteUpdate incompleteUpdate)
         {
-            throw new InvalidOperationException($"The response is incomplete: {incompleteUpdate.Response.Id}");
+            throw new InvalidOperationException($"The response cannot be completed. Check the request for safety or guardrail requirements and review response {incompleteUpdate.Response.Id} for details, including output limits.");
         }
     }
     #endregion
@@ -82,8 +83,6 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
-        _projectClient = projectClient;
-        _agentVersion = agentVersion;
         #region Snippet:Sample_CreateResponse_BrowserAutomotion_Async
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
             new AgentReference(agentVersion.Name, agentVersion.Version));
@@ -93,16 +92,22 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             StreamingEnabled = true,
             InputItems =
             {
-                ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://finance.yahoo.com/quote/MSFT/performance/. " +
-                    "Read the YTD return shown on the page for Microsoft (MSFT) and report the percentage with its label. " +
-                    "Use the visible page content, not prior knowledge. Do not use the search bar or interact with charts. " +
-                    "If the value is unavailable or access is blocked, say so rather than guessing.")
+                ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
+                    "To do that, go to the website finance.yahoo.com.\n" +
+                    "At the top of the page, you will find a search bar.\n" +
+                    "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
+                    "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
+                    "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
             }
         };
         await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
         {
             ParseResponse(update);
         }
+        #endregion
+
+        #region Snippet:Sample_Cleanup_BrowserAutomotion_Async
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -142,8 +147,6 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
-        _projectClient = projectClient;
-        _agentVersion = agentVersion;
         #region Snippet:Sample_CreateResponse_BrowserAutomotion_Sync
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
             new AgentReference(agentVersion.Name, agentVersion.Version));
@@ -153,10 +156,12 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             StreamingEnabled = true,
             InputItems =
             {
-                ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://finance.yahoo.com/quote/MSFT/performance/. " +
-                    "Read the YTD return shown on the page for Microsoft (MSFT) and report the percentage with its label. " +
-                    "Use the visible page content, not prior knowledge. Do not use the search bar or interact with charts. " +
-                    "If the value is unavailable or access is blocked, say so rather than guessing.")
+                ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
+                    "To do that, go to the website finance.yahoo.com.\n" +
+                    "At the top of the page, you will find a search bar.\n" +
+                    "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
+                    "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
+                    "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
             }
         };
         foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(responseOptions))
@@ -164,18 +169,10 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             ParseResponse(update);
         }
         #endregion
-    }
 
-    [TearDown]
-    public override void Cleanup()
-    {
-        if (_agentVersion is not null)
-        {
-            _projectClient.AgentAdministrationClient.DeleteAgentVersion(
-                agentName: _agentVersion.Name, agentVersion: _agentVersion.Version);
-            _agentVersion = null;
-        }
-        base.Cleanup();
+        #region Snippet:Sample_Cleanup_BrowserAutomotion_Sync
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        #endregion
     }
 
     public Sample_BrowserAutomotion(bool isAsync) : base(isAsync)

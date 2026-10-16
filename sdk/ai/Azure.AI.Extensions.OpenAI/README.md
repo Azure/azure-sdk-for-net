@@ -1508,8 +1508,8 @@ Prefer Microsoft Entra ID authentication when supported; never include workspace
 #### Using Browser automation tool
 
 Please note that Browser automation operations may take longer than typical calls to process. Using background mode for Responses or applying a network timeout of at least five minutes for non-background calls is highly recommended.
-`BrowserAutomationTool` uses a `PlaywrightWorkspace` project connection whose target is the Playwright Workspaces remote MCP endpoint. `PlaywrightWorkspace` is the connection's resource category; MCP is the communication protocol. `BrowserAutomationPreviewTool` uses a Serverless Model connection.
-Set `FOUNDRY_PROJECT_ENDPOINT` to your project endpoint, `FOUNDRY_MODEL_NAME` to your model deployment name, and `BROWSER_AUTOMATION_PROJECT_CONNECTION_ID` to the full project connection resource ID, not just the connection name.
+`BrowserAutomationTool` uses a Browser Automation project connection as opposed to `BrowserAutomationPreviewTool`, which uses a Serverless connection type.
+Set `FOUNDRY_PROJECT_ENDPOINT` to your project endpoint, `FOUNDRY_MODEL_NAME` to your model deployment name, and `BROWSER_AUTOMATION_PROJECT_CONNECTION_ID` to the Browser Automation project connection ID.
 
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
@@ -1542,9 +1542,9 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
-Stream browser automation responses using the exact agent version created above. Require tool use with `ResponseToolChoice.CreateRequiredChoice()`, and ask the agent to open Microsoft's Yahoo Finance performance page directly and report the labeled YTD return, without using search controls or interacting with charts. The value changes over time; the agent should say when it is unavailable or access is blocked rather than guess. Print complete text messages once, not token-by-token. The [browser automation sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/samples/Sample23_BrowserAutomationTool.md) includes the `ParseResponse` helper and synchronous equivalent.
+Create a streaming response. Require the agent to use a tool by setting `ToolChoice = ResponseToolChoice.CreateRequiredChoice()` on `CreateResponseOptions`. The [browser automation sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/samples/Sample23_BrowserAutomationTool.md) includes the `ParseResponse` helper and synchronous equivalent.
 
-**Warning:** Complete messages may contain sensitive browser live-view URLs. Use these only in a trusted local terminal and redact them from saved logs or shared output.
+**Warning:** Streaming text and complete messages may contain sensitive browser live-view URLs. Use these only in a trusted local terminal and redact them from saved logs or shared output.
 
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Async
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
@@ -1555,10 +1555,12 @@ CreateResponseOptions responseOptions = new()
     StreamingEnabled = true,
     InputItems =
     {
-        ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://finance.yahoo.com/quote/MSFT/performance/. " +
-            "Read the YTD return shown on the page for Microsoft (MSFT) and report the percentage with its label. " +
-            "Use the visible page content, not prior knowledge. Do not use the search bar or interact with charts. " +
-            "If the value is unavailable or access is blocked, say so rather than guessing.")
+        ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
+            "To do that, go to the website finance.yahoo.com.\n" +
+            "At the top of the page, you will find a search bar.\n" +
+            "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
+            "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
+            "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
     }
 };
 await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
@@ -1567,14 +1569,18 @@ await foreach (StreamingResponseUpdate update in responseClient.CreateResponseSt
 }
 ```
 
-Agents can be reused across responses. Delete an agent version only when it is no longer needed; administration operations may require different permissions from invoking an agent. The live sample tests clean up their created version in test teardown, outside the customer-facing snippets.
+After the sample completes, delete the agent version that you created. Agents can be reused across responses. Delete an agent version only when it is no longer needed.
+
+```C# Snippet:Sample_Cleanup_BrowserAutomotion_Async
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+```
 
 #### Browser automation preview tool
 
 Along with `BrowserAutomationTool`, Azure.AI.Extensions.OpenAI contain `BrowserAutomationPreviewTool`, which has the same functionality as `BrowserAutomationTool`.
 This tool was released to preview the functionality, please use the stable version of the tool.
 
-`BrowserAutomationPreviewTool` uses a Serverless Model connection as opposed to the `PlaywrightWorkspace` connection used by `BrowserAutomationTool`. Please follow the steps below to create it.
+`BrowserAutomationPreviewTool` uses a Serverless Model connection as opposed to the Browser Automation connection used by `BrowserAutomationTool`. Please follow the steps below to create it.
 
 1. On the left panel select **Management center**.
 2. Choose **Connected resources**.

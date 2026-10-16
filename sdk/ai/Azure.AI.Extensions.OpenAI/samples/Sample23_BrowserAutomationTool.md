@@ -11,11 +11,11 @@ Playwright is an open-source framework for end-to-end testing and browser automa
 5. Enter a name and expiration date, and then generate the token.
 6. Copy the token immediately. You can't retrieve its value later.
 
-> **Warning:** Prefer Microsoft Entra ID authentication when supported by the PlaywrightWorkspace connection. Workspace access tokens are less secure and are disabled by default. Treat an access token like a password, and never commit it to source control or include it in prompts or logs.
+> **Warning:** Prefer Microsoft Entra ID authentication when supported by the Browser Automation connection. Workspace access tokens are less secure and are disabled by default. Treat an access token like a password, and never commit it to source control or include it in prompts or logs.
 
 ## Configure Microsoft Foundry
 
-**Note:** `BrowserAutomationTool` uses a `PlaywrightWorkspace` project connection whose target is the Playwright Workspaces remote MCP endpoint. `PlaywrightWorkspace` is the connection's resource category; MCP is the communication protocol. `BrowserAutomationPreviewTool` uses a Serverless Model connection.
+**Note:** `BrowserAutomationTool` uses a Browser Automation project connection as opposed to `BrowserAutomationPreviewTool`, which uses a Serverless connection type.
 
 Follow [Set up Browser Automation in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/browser-automation#set-up-browser-automation) to connect your Playwright workspace:
 
@@ -28,7 +28,7 @@ Follow [Set up Browser Automation in Microsoft Foundry](https://learn.microsoft.
 
 ## Run this sample.
 
-1. Create an `AIProjectClient` and read the required environment variables: `FOUNDRY_PROJECT_ENDPOINT`, `FOUNDRY_MODEL_NAME`, and `BROWSER_AUTOMATION_PROJECT_CONNECTION_ID`. Set `BROWSER_AUTOMATION_PROJECT_CONNECTION_ID` to the full project connection resource ID, not just the connection name. Browser automation operations can take longer than other requests, so configure a network timeout of at least five minutes.
+1. Create an `AIProjectClient` and read the required environment variables. Browser automation operations can take longer than other requests, so configure a network timeout of at least five minutes.
 
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
@@ -41,7 +41,7 @@ AIProjectClientOptions options = new()
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
 
-2. Create an agent with `BrowserAutomationTool`, and pass the full project connection resource ID to `BrowserAutomationToolConnectionOptions`.
+2. Create an agent with a `BrowserAutomationTool`, and pass the Browser Automation connection ID to `BrowserAutomationToolConnectionOptions`.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
@@ -81,9 +81,9 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
-3. Create a `ParseResponse` helper method to process streaming response updates from the agent. Print each complete message once, rather than printing text deltas. Handle failed or incomplete responses using the SDK's typed updates.
+3. Create a `ParseResponse` helper method to process streaming response updates from the agent. Handle failed or incomplete responses using the SDK's typed updates.
 
-> **Warning:** Complete text messages can include a live-view URL that grants access to the browser session. Treat that URL as sensitive: use it only in a trusted local terminal and redact it before sharing output or saving logs.
+> **Warning:** Streaming text and complete messages can include a live-view URL that grants access to the browser session. Treat that URL as sensitive: use it only in a trusted local terminal and redact it before sharing output or saving logs.
 
 ```C# Snippet:Sample_ParseResponse_BrowserAutomotion
 private static void ParseResponse(StreamingResponseUpdate streamResponse)
@@ -91,6 +91,10 @@ private static void ParseResponse(StreamingResponseUpdate streamResponse)
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
     {
         Console.WriteLine($"Stream response created with ID: {createUpdate.Response.Id}");
+    }
+    else if (streamResponse is StreamingResponseOutputTextDeltaUpdate textDelta)
+    {
+        Console.WriteLine($"Delta: {textDelta.Delta}");
     }
     else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
     {
@@ -106,12 +110,12 @@ private static void ParseResponse(StreamingResponseUpdate streamResponse)
     }
     else if (streamResponse is StreamingResponseIncompleteUpdate incompleteUpdate)
     {
-        throw new InvalidOperationException($"The response is incomplete: {incompleteUpdate.Response.Id}");
+        throw new InvalidOperationException($"The response cannot be completed. Check the request for safety or guardrail requirements and review response {incompleteUpdate.Response.Id} for details, including output limits.");
     }
 }
 ```
 
-4. Create a streaming response using the exact agent version created above. Set `ToolChoice = ResponseToolChoice.CreateRequiredChoice()` to require tool use. Ask the agent to open Microsoft's Yahoo Finance performance page directly and report the labeled YTD return. This read-only task avoids search controls and chart interactions. The value changes over time, and the agent should report when the value is unavailable or access is blocked rather than guess.
+4. Create a streaming response. Require the agent to use a tool by setting `ToolChoice = ResponseToolChoice.CreateRequiredChoice()` on `CreateResponseOptions`.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Sync
@@ -123,10 +127,12 @@ CreateResponseOptions responseOptions = new()
     StreamingEnabled = true,
     InputItems =
     {
-        ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://finance.yahoo.com/quote/MSFT/performance/. " +
-            "Read the YTD return shown on the page for Microsoft (MSFT) and report the percentage with its label. " +
-            "Use the visible page content, not prior knowledge. Do not use the search bar or interact with charts. " +
-            "If the value is unavailable or access is blocked, say so rather than guessing.")
+        ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
+            "To do that, go to the website finance.yahoo.com.\n" +
+            "At the top of the page, you will find a search bar.\n" +
+            "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
+            "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
+            "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
     }
 };
 foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(responseOptions))
@@ -145,10 +151,12 @@ CreateResponseOptions responseOptions = new()
     StreamingEnabled = true,
     InputItems =
     {
-        ResponseItem.CreateUserMessageItem("Use the Browser Automation tool to visit https://finance.yahoo.com/quote/MSFT/performance/. " +
-            "Read the YTD return shown on the page for Microsoft (MSFT) and report the percentage with its label. " +
-            "Use the visible page content, not prior knowledge. Do not use the search bar or interact with charts. " +
-            "If the value is unavailable or access is blocked, say so rather than guessing.")
+        ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
+            "To do that, go to the website finance.yahoo.com.\n" +
+            "At the top of the page, you will find a search bar.\n" +
+            "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
+            "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
+            "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
     }
 };
 await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
@@ -157,4 +165,14 @@ await foreach (StreamingResponseUpdate update in responseClient.CreateResponseSt
 }
 ```
 
-Agents can be reused across responses. Delete an agent version only when it is no longer needed; administration operations may require different permissions from invoking an agent. The live sample tests clean up their created version in test teardown, outside the customer-facing snippets.
+5. After the sample completes, delete the agent version that you created. Agents can be reused across responses. Delete an agent version only when it is no longer needed.
+
+Synchronous sample:
+```C# Snippet:Sample_Cleanup_BrowserAutomotion_Sync
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+```
+
+Asynchronous sample:
+```C# Snippet:Sample_Cleanup_BrowserAutomotion_Async
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+```
