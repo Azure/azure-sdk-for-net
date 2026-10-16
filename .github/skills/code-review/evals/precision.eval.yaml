@@ -85,6 +85,23 @@ stimuli:
         config:
           pattern: '(?m)^No findings\.$'
 
+  - name: same-type-different-concept-parameters-are-not-flagged
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic new
+      public API and return findings only. A new method adds the signature
+      `GetOperationStatus(string widgetName, string operationId, CancellationToken
+      cancellationToken = default)`. Both `widgetName` and `operationId` are type `string`, but
+      they name different concepts — a widget's name and an operation's identifier — and each
+      name is already used consistently for that same concept elsewhere in the client. There is
+      no other naming inconsistency. If there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+
   - name: ignore-unrelated-unchanged-code
     prompt: >-
       First invoke the code-review skill. Then use it to review this synthetic PR

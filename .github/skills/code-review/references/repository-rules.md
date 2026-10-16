@@ -394,8 +394,12 @@ What they cover:
     Check whether the un-suffixed twin is even used; often it is silently dead.
   - A **public** parameter named `internal*` is 🔴 — it names an implementation detail the
     caller can't reason about.
-  - Cheap mechanical check: parse the checked-in `api/*.cs` listing, group parameters by type,
-    and flag any type bound to more than one parameter name.
+  - Cheap mechanical check: within one scope (one method's overloads, one client's methods,
+    one type's constructors + factory), parse the checked-in `api/*.cs` listing and group
+    that scope's parameters by CLR type — a type bound to more than one name is a candidate
+    to look at, not a finding by itself. Different parameters of the same type in one
+    signature (`string widgetName, string operationId`) are a normal, correct pattern; only
+    escalate when the names actually name the same semantic concept.
 
 Apply these to **new or renamed** public API only. Pre-existing names on untouched lines are out
 of scope (see the changed-code scope in `review-quality.md`) — but a name on a line the PR is
