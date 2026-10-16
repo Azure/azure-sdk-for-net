@@ -152,26 +152,28 @@ safe-outputs:
                 return;
               }
 
+              const currentRepo = `${owner}/${repo}`;
               const labelItems = agentOutput.items.filter(i => i.type === 'add_labels');
-              if ((labelItems.length !== 1) || (Number(labelItems[0].item_number ?? issueNumber) !== issueNumber) || (!Array.isArray(labelItems[0].labels))) {
+              const [labelItem] = labelItems;
+              const labelRepo = labelItem?.repo ?? currentRepo;
+
+              if ((labelItems.length !== 1) || (Number(labelItem.item_number ?? issueNumber) !== issueNumber) || (!Array.isArray(labelItem.labels))) {
                 core.setFailed('Owner notification requires one final label decision for the triggering issue');
                 return;
               }
 
-              const labelRepo = labelItems[0].repo;
-              if ((labelRepo !== undefined) && (typeof labelRepo !== 'string')) {
+              if (typeof labelRepo !== 'string') {
                 core.setFailed('Owner notification requires a valid label decision repository');
                 return;
               }
-              const currentRepo = `${owner}/${repo}`;
-              const requestedRepo = labelRepo?.trim() || currentRepo;
+              const requestedRepo = labelRepo.trim() || currentRepo;
               const qualifiedRepo = requestedRepo.includes('/') ? requestedRepo : `${owner}/${requestedRepo}`;
               if (qualifiedRepo.toLowerCase() !== currentRepo.toLowerCase()) {
                 core.setFailed('Owner notification requires a label decision for the triggering repository');
                 return;
               }
 
-              const labels = labelItems[0].labels.map(label => typeof label === 'string' ? label : label?.name);
+              const labels = labelItem.labels.map(label => typeof label === 'string' ? label : label?.name);
               if (labels.some(label => typeof label !== 'string' || !label.trim())) {
                 core.setFailed('Owner notification requires valid label names');
                 return;
