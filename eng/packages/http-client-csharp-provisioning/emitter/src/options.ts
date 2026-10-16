@@ -14,6 +14,12 @@ export const AzureProvisioningEmitterOptionsSchema: JSONSchemaType<AzureProvisio
     type: "object",
     additionalProperties: false,
     properties: {
-      ...AzureMgmtEmitterOptionsSchema.properties
+      ...AzureMgmtEmitterOptionsSchema.properties,
+      "use-legacy-resource-detection": {
+        ...AzureMgmtEmitterOptionsSchema.properties[
+          "use-legacy-resource-detection"
+        ],
+        default: false
+      }
     }
   };

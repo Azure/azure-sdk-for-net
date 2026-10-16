@@ -35,6 +35,7 @@ import {
 import {
   ResolvedResource,
   ResourceType,
+  isArmProviderNamespace,
   resolveArmResources as resolveArmResourcesFromLibrary
 } from "@azure-tools/typespec-azure-resource-manager";
 import {
@@ -60,6 +61,7 @@ import {
 import type { CSharpEmitterContext } from "./code-model-types.js";
 import {
   getCrossLanguageDefinitionId,
+  getLibraryName,
   getClientType,
   SdkModelType,
   SdkHttpOperation,
@@ -93,7 +95,16 @@ export function resolveArmResources(
   program: Program,
   sdkContext: CSharpEmitterContext
 ): ArmProviderSchema {
-  const provider = resolveArmResourcesFromLibrary(program);
+  const versions = Array.from(sdkContext.getPackageVersions()).find(
+    ([namespace]) => isArmProviderNamespace(program, namespace)
+  )?.[1];
+  const provider = resolveArmResourcesFromLibrary(program, {
+    version: sdkContext.apiVersion === "all" ? undefined : versions?.at(-1),
+    nameResolver: ({ kind, type }) =>
+      kind === "resource" || type === undefined
+        ? undefined
+        : getLibraryName(sdkContext, type)
+  });
 
   // Convert resources
   const resources: ArmResourceSchema[] = [];

@@ -34,6 +34,14 @@ The migration is being done incrementally:
 - All 27 tests pass, validating the converter produces identical results to the existing implementation
 - The converter maintains full compatibility with existing code while using the standardized API internally
 
+The converter selects the API version resolved by TCGC for the ARM service,
+including the default latest version. With `api-version: all`, it preserves the
+multi-version declaration view. Its `nameResolver` uses TCGC's `getLibraryName`
+for model, operation, and operation-group names so that scoped `@clientName`
+customizations apply to resource metadata. Complete resource names are left to
+the ARM library, preserving explicit names and composed names for extension
+resources.
+
 ### Step 2: Add Feature Flag (✅ Complete)
 
 - Added a configuration option `use-legacy-resource-detection` as a feature flag to control resource detection behavior

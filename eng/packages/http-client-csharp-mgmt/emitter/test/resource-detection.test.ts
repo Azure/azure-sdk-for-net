@@ -23,6 +23,170 @@ describe("Resource Detection", () => {
     runner = await createEmitterTestHost();
   });
 
+  it.each([
+    { version: "2024-01-01", resources: ["ClientWidget"], widgetMethods: 1 },
+    {
+      version: "2025-01-01",
+      resources: ["ClientGadget", "ClientTemporary", "ClientWidget"],
+      widgetMethods: 3
+    },
+    {
+      version: "2026-01-01",
+      resources: ["ClientGadget", "ClientWidget"],
+      widgetMethods: 2
+    },
+    {
+      version: undefined,
+      resources: ["ClientGadget", "ClientWidget"],
+      widgetMethods: 2
+    },
+    {
+      version: "all",
+      resources: ["ClientGadget", "ClientTemporary", "ClientWidget"],
+      widgetMethods: 3
+    }
+  ])(
+    "resolves ARM resource client names for API version $version",
+    async ({ version, resources, widgetMethods }) => {
+      const program = await typeSpecCompile(
+        `
+@clientName("ClientWidget", "csharp")
+model Widget is TrackedResource<WidgetProperties> {
+  ...ResourceNameParameter<Widget>;
+}
+
+model WidgetProperties {
+  value?: string;
+}
+
+@added(Versions.\`2025-01-01\`)
+@clientName("ClientGadget", "csharp")
+@parentResource(Widget)
+model Gadget is ProxyResource<{}> {
+  ...ResourceNameParameter<Gadget>;
+}
+
+@added(Versions.\`2025-01-01\`)
+@removed(Versions.\`2026-01-01\`)
+@clientName("ClientTemporary", "csharp")
+model Temporary is ProxyResource<{}> {
+  ...ResourceNameParameter<Temporary>;
+}
+
+@clientName("ClientWidgets", "csharp")
+@armResourceOperations
+interface Widgets {
+  @clientName("fetchWidget", "csharp")
+  get is ArmResourceRead<Widget>;
+  @added(Versions.\`2025-01-01\`)
+  createOrUpdate is ArmResourceCreateOrReplaceSync<Widget>;
+  @added(Versions.\`2025-01-01\`)
+  @removed(Versions.\`2026-01-01\`)
+  update is ArmCustomPatchSync<
+    Widget,
+    Azure.ResourceManager.Foundations.ResourceUpdateModel<Widget, WidgetProperties>
+  >;
+}
+
+@added(Versions.\`2025-01-01\`)
+@armResourceOperations
+interface Gadgets {
+  get is ArmResourceRead<Gadget>;
+}
+
+@added(Versions.\`2025-01-01\`)
+@removed(Versions.\`2026-01-01\`)
+@armResourceOperations
+interface Temporaries {
+  get is ArmResourceRead<Temporary>;
+}
+`,
+        runner,
+        { versions: ["2024-01-01", "2025-01-01", "2026-01-01"] }
+      );
+      const context = createEmitterContext(program);
+      context.options["api-version"] = version;
+      const sdkContext = await createCSharpSdkContext(context);
+      createModel(sdkContext);
+
+      const schema = resolveArmResources(program, sdkContext);
+      deepStrictEqual(
+        schema.resources
+          .map((resource) => resource.metadata.resourceName)
+          .sort(),
+        resources
+      );
+      const widget = schema.resources.find(
+        (resource) => resource.metadata.resourceName === "ClientWidget"
+      );
+      ok(widget);
+      strictEqual(widget.metadata.methods.length, widgetMethods);
+      strictEqual(
+        widget.metadata.resourceType,
+        "Microsoft.ContosoProviderHub/widgets"
+      );
+      const gadget = schema.resources.find(
+        (resource) => resource.metadata.resourceName === "ClientGadget"
+      );
+      if (gadget) {
+        strictEqual(
+          gadget.metadata.parentResourceModelId,
+          widget.resourceModelId
+        );
+      }
+    }
+  );
+
+  it("composes resource client names and preserves explicit resource names", async () => {
+    const program = await typeSpecCompile(
+      `
+@clientName("ClientWidget", "csharp")
+model Widget is TrackedResource<{}> {
+  ...ResourceNameParameter<Widget>;
+}
+
+model Department is TrackedResource<{}> {
+  ...ResourceNameParameter<Department>;
+}
+
+@clientName("ClientConnection", "csharp")
+model PrivateEndpointConnection is PrivateEndpointConnectionResource;
+alias DefaultPrivateEndpoints = PrivateEndpoints<PrivateEndpointConnection>;
+alias ExplicitPrivateEndpoints = PrivateEndpoints<
+  PrivateEndpointConnection,
+  ResourceName = "DepartmentConnection"
+>;
+
+@armResourceOperations
+interface Widgets {
+  get is ArmResourceRead<Widget>;
+  getConnection is DefaultPrivateEndpoints.Read<Widget>;
+}
+
+@armResourceOperations
+interface Departments {
+  get is ArmResourceRead<Department>;
+  getConnection is ExplicitPrivateEndpoints.Read<Department>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    createModel(sdkContext);
+
+    const schema = resolveArmResources(program, sdkContext);
+    deepStrictEqual(
+      schema.resources.map((resource) => resource.metadata.resourceName).sort(),
+      [
+        "ClientWidget",
+        "ClientWidgetClientConnection",
+        "Department",
+        "DepartmentConnection"
+      ]
+    );
+  });
+
   it("resource group resource", async () => {
     const program = await typeSpecCompile(
       `
