@@ -13,7 +13,8 @@ param(
         return $true
     })]
     [string]$ReleasePlanId = '0',
-    [string]$SdkPullRequest = ''
+    [string]$SdkPullRequest = '',
+    [string]$PipelineUrl = ''
 )
 
 <#
@@ -23,7 +24,7 @@ param(
 .DESCRIPTION
     Uses the requester-supplied release-plan ID for manual releases, or the triggering SDK PR
     for automatic releases. azsdk resolves the existing ADO plan and validates the language/package.
-    TRANSITIONAL: when neither is supplied, the original package-name lookup is used and a warning is logged
+    TRANSITIONAL: when neither is supplied, the original package-name lookup is used and an informational message is logged
     so pipelines that do not yet forward the association keep working. Remove once every pipeline forwards one.
 
 .PARAMETER PackageInfoFilePath
@@ -37,6 +38,9 @@ param(
 
 .PARAMETER SdkPullRequest
     The unambiguous SDK PR that triggered the automatic release. Not a spec PR or a previous package PR.
+
+.PARAMETER PipelineUrl
+    The current release pipeline URL, recorded for manual and automatic releases.
 #>
 
 Set-StrictMode -Version 4
@@ -77,7 +81,7 @@ function Process-Package([string]$packageInfoPath)
     $isLegacyLookup = ($suppliedPlanId -eq 0 -and [string]::IsNullOrWhiteSpace($SdkPullRequest))
     if ($isLegacyLookup)
     {
-        Write-Warning "LEGACY_RELEASE_PLAN_LOOKUP: Package '$PackageName' has no release-plan ID or triggering SDK PR; using the legacy package lookup. Forward ReleasePlanId or SdkPullRequest from the release pipeline."
+        Write-Host "LEGACY_RELEASE_PLAN_LOOKUP: Package '$PackageName' has no release-plan ID or triggering SDK PR; using the legacy package lookup. Forward ReleasePlanId or SdkPullRequest from the release pipeline."
     }
 
     # Do not inherit plan IDs from package metadata; unrelated bug-fix builds can reuse those files.
@@ -91,33 +95,30 @@ function Process-Package([string]$packageInfoPath)
     {
         $releaseArgs += @("--sdk-pull-request", $SdkPullRequest)
     }
-    $PackageVersion = $pkgInfo['Version']
-    if ($null -ne $PackageVersion -and -not [string]::IsNullOrWhiteSpace([string]$PackageVersion))
+    if (-not [string]::IsNullOrWhiteSpace($PipelineUrl))
     {
-        if ($PackageVersion -isnot [string])
-        {
-            Write-Warning "Package '$PackageName' has invalid package-version metadata. No release plan was updated."
-            return
-        }
+        $releaseArgs += @("--release-pipeline", $PipelineUrl)
+    }
+    $PackageVersion = $pkgInfo['Version']
+    $version = $null
+    if ($PackageVersion -is [string] -and -not [string]::IsNullOrWhiteSpace($PackageVersion))
+    {
         $version = [AzureEngSemanticVersion]::ParseVersionString($PackageVersion)
-        if (!$version)
-        {
-            Write-Warning "Failed to parse version '$PackageVersion' for package '$PackageName'. No release plan was updated."
-            return
-        }
+    }
+    if ($version)
+    {
         $sdkReleaseType = if ($version.IsPrerelease) { 'beta' } else { 'stable' }
         $releaseArgs += @("--package-version", $PackageVersion, "--sdk-release-type", $sdkReleaseType)
     }
-    elseif ($isLegacyLookup)
+    else
     {
-        Write-Host "Package version is not available for package '$PackageName'. Skipping the release plan status update."
-        return
+        Write-Host "Package version is missing or invalid for '$PackageName'. Updating release status without version metadata."
     }
     $releaseInfo = & $AzsdkExePath @releaseArgs
     if ($LASTEXITCODE -ne 0)
     {
         ## Not all releases have a release plan. So we should not fail the script even if a release plan is missing.
-        Write-Warning "Failed to mark release completion for package '$PackageName' using azsdk. Exit code: $LASTEXITCODE. Investigate the correlation error; do not republish the package."
+        Write-Host "Release plan status was not updated for package '$PackageName'. Exit code: $LASTEXITCODE. Not all packages have a release plan."
     }
     Write-Host "Details: $releaseInfo"
     return
@@ -137,3 +138,6 @@ foreach ($packageInfoFile in Get-ChildItem -Path $PackageInfoFilePath -Filter "*
         Write-Warning "Failed to update release status for '$packageInfoFile': $($_.Exception.Message)"
     }
 }
+
+# Status reporting must not change the outcome of an already completed package release.
+exit 0
