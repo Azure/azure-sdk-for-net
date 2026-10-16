@@ -3,7 +3,6 @@
 ## 3.0.0-beta.5 (2026-10-16)
 
 ### Breaking Changes
-- `OtlpTelemetryEndpoint.Endpoint` type was changed from `string` to `System.Uri`.
 - `VoiceAgentAvatarVideoCrop.BottomRight` and `VoiceAgentAvatarVideoCrop.TopLeft` types were changed from `IList<object>` to `IList<uint>`.
 - `VoiceAgentAzureSemanticVadEnTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadEnTurnDetection.IdleTimeout`.
 - `VoiceAgentAzureSemanticVadMultilingualTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadMultilingualTurnDetection.IdleTimeout`.
