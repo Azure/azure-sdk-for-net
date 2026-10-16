@@ -164,10 +164,9 @@ entries that no longer match a real diff accumulate silently and nothing will fl
 - Service clients are named `<Service>Client`, are **classes** (not structs), are
   **immutable**, and live in the package's root namespace
 - Service methods are `public virtual` — non-virtual public methods block mocking → 🔴
-- Every service method has both sync and async variants with matching signatures; the async
-  one is suffixed `Async` and returns `Task<Response<T>>`/`Task<Response>`
-- `CancellationToken cancellationToken = default` is the **last** parameter of every service
-  method
+- Convenience methods return `Task<Response<T>>`/`Task<Response>` on `Azure.Core` or
+  `Task<ClientResult<T>>`/`Task<ClientResult>` on `System.ClientModel` — match whichever stack
+  the library already uses, never mix them
 - A `protected` parameterless constructor exists for mocking on clients **and** subclients
 - Simplest constructor takes only what's needed to connect and uses **no default parameter
   values**
@@ -544,10 +543,12 @@ manually; that is the intended reading of the in-repo-analyzer rule above, not a
 
 ## Implementation
 
-- All calls to Azure REST services go through `HttpPipeline` from `Azure.Core`. Hand-rolled
-  `HttpClient` usage in a client library → 🔴
-- Failed service calls throw `RequestFailedException` (or a derived type), never a generic
-  exception
+- All calls to the service go through the stack's pipeline type — `HttpPipeline` on
+  `Azure.Core`, `ClientPipeline` on `System.ClientModel`. Hand-rolled `HttpClient` usage in a
+  client library → 🔴
+- Failed service calls throw the stack's failure exception — `RequestFailedException` (or a
+  derived type) on `Azure.Core`, `ClientResultException` on `System.ClientModel` — never a
+  generic exception
 - LROs return `Operation<T>`/`Operation`; long-starting LRO methods are prefixed `Start`
 - Paging methods return `Pageable<T>`/`AsyncPageable<T>` and are named `Get<Resource>s`
 - Model factories: `<Namespace>ModelFactory` static class for constructing otherwise
