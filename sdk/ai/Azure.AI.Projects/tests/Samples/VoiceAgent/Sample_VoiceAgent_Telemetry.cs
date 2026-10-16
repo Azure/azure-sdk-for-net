@@ -291,7 +291,7 @@ public class Sample_VoiceAgent_Telemetry : SamplesBase
             Assert.That(connectSpan.ParentSpanId, Is.EqualTo(sessionSpan.SpanId));
             Assert.That(responseSpan.ParentSpanId, Is.EqualTo(sessionSpan.SpanId));
             Assert.That(responseSpan.Status, Is.EqualTo(ActivityStatusCode.Ok));
-            Assert.That(sessionSpan.Events.Select(activityEvent => activityEvent.Name), Does.Contain("session.updated"));
+            Assert.That(sessionSpan.Events.Select(activityEvent => activityEvent.Name), Does.Contain("voice_agents.session.updated"));
             Assert.That(spans.Count(activity => activity.DisplayName == "BetaVoiceAgentsConversations.DeleteAgentConversation"), Is.EqualTo(1));
         });
     }

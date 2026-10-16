@@ -22,6 +22,8 @@ namespace Azure.AI.Projects.Agents.Telemetry
 {
     internal class OpenTelemetryScope : IDisposable
     {
+        private const int MaxVoiceAgentInstructionsLength = 4096;
+
         internal enum OpenTelemetryScopeType
         {
             Unknown,
@@ -302,7 +304,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
         }
 
         /// <summary>
-        /// Sets telemetry tags and events for agent definition, handling PromptAgentDefinition, WorkflowAgentDefinition, and HostedAgentDefinition.
+        /// Sets telemetry tags and events for the agent definition.
         /// </summary>
         /// <param name="scope">The OpenTelemetryScope instance to set tags on.</param>
         /// <param name="agentDefinition">The agent definition to process.</param>
@@ -329,36 +331,19 @@ namespace Azure.AI.Projects.Agents.Telemetry
                     scope.SetTagMaybe(GenAiRequestReasoningSummary, reasoningOptions.ReasoningSummaryVerbosity);
                 }
 
-                // Add instructions event or attribute (if instructions exist)
-                if (!string.IsNullOrEmpty(promptAgentDefinition.Instructions))
-                {
-                    string instructionsJson = JsonSerializer.Serialize(
-                        new[] { new EventContent(s_traceContent ? promptAgentDefinition.Instructions : null) },
-                        EventsContext.Default.EventContentArray
-                    );
-
-                    if (s_useMessageEvents)
-                    {
-                        ActivityTagsCollection messageTags = new() {
-                            { GenAiProviderNameKey, GenAiProviderNameValue},
-                            { GenAiEventContent, instructionsJson }
-                        };
-
-                        scope._activity?.AddEvent(
-                            new ActivityEvent(EventNameSystemMessage, tags: messageTags)
-                        );
-                    }
-                    else
-                    {
-                        // Attribute-based: set system instructions as a span attribute
-                        scope._activity?.SetTag(EventNameSystemMessage, instructionsJson);
-                    }
-                }
+                RecordSystemInstructions(scope, promptAgentDefinition.Instructions);
             }
 #pragma warning disable AAIP001
             else if (agentDefinition is VoiceAgentDefinition voiceAgentDefinition)
             {
                 scope.SetTagMaybe(GenAiRequestModelKey, voiceAgentDefinition.Model);
+                if (s_traceContent && !string.IsNullOrEmpty(voiceAgentDefinition.Instructions))
+                {
+                    string instructions = voiceAgentDefinition.Instructions;
+                    RecordSystemInstructions(scope, instructions.Length > MaxVoiceAgentInstructionsLength
+                        ? instructions.Substring(0, MaxVoiceAgentInstructionsLength)
+                        : instructions);
+                }
             }
             else if (agentDefinition is WorkflowAgentDefinition workflowAgentDefinition)
             {
@@ -439,6 +424,35 @@ namespace Azure.AI.Projects.Agents.Telemetry
             {
                 // Unknown agent type - set minimal attributes
                 scope.SetTagMaybe(GenAiRequestModelKey, "unknown");
+            }
+        }
+
+        private static void RecordSystemInstructions(OpenTelemetryScope scope, string instructions)
+        {
+            if (string.IsNullOrEmpty(instructions))
+            {
+                return;
+            }
+
+            string instructionsJson = JsonSerializer.Serialize(
+                new[] { new EventContent(s_traceContent ? instructions : null) },
+                EventsContext.Default.EventContentArray
+            );
+
+            if (s_useMessageEvents)
+            {
+                ActivityTagsCollection messageTags = new() {
+                    { GenAiProviderNameKey, GenAiProviderNameValue},
+                    { GenAiEventContent, instructionsJson }
+                };
+
+                scope._activity?.AddEvent(
+                    new ActivityEvent(EventNameSystemMessage, tags: messageTags)
+                );
+            }
+            else
+            {
+                scope._activity?.SetTag(EventNameSystemMessage, instructionsJson);
             }
         }
 

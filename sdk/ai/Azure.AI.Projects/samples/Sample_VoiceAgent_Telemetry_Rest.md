@@ -110,9 +110,12 @@ These service identifiers are attributes, not replacements for OpenTelemetry tra
 Read and delete operations retain their existing diagnostics rather than gaining new GenAI
 operation names.
 
-The enriched Voice Agent creation traces do not record request or response bodies, instructions,
-credentials, authentication headers, or query strings. They follow the existing Foundry GenAI
-enablement settings. Other REST operations retain their existing SDK diagnostic settings and scopes.
+The enriched Voice Agent creation traces do not record HTTP request/response bodies, credentials,
+authentication headers, or query strings. Instruction text is excluded with the sample's existing
+content-recording setting. If content recording is explicitly enabled, up to 4096 characters of
+Voice Agent instructions can be exported through `gen_ai.system_instructions`, following the
+existing Foundry instruction schema and attribute/event configuration.
+Other REST operations retain their existing SDK diagnostic settings and scopes.
 
 To run the repository sample, set `CLIENTMODEL_TEST_MODE=Live` and the project/model variables,
 then run from the repository root:

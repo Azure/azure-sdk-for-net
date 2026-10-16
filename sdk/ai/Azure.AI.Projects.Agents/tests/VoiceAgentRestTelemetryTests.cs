@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework.Mocks;
@@ -25,8 +26,10 @@ public class VoiceAgentRestTelemetryTests
     private const string SourceName = "Azure.AI.Projects.Agents.AgentsClient";
     private const string EnableSwitch = "Azure.Experimental.EnableGenAITracing";
     private const string ContentSwitch = "Azure.Experimental.TraceGenAIMessageContent";
+    private const string MessageEventsSwitch = "Azure.Experimental.UseMessageEvents";
     private const string EnableEnvironment = "AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING";
     private const string ContentEnvironment = "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT";
+    private const string MessageEventsEnvironment = "AZURE_EXPERIMENTAL_TRACING_GEN_AI_USE_MESSAGE_EVENTS";
     private const string Endpoint = "https://private-user:private-password@voice.example:8443/api/projects/private-project?key=private-query";
     private const string AgentName = "voice-agent";
     private const string PrivateContent = "private-rest-content";
@@ -60,10 +63,13 @@ public class VoiceAgentRestTelemetryTests
     private ActivityListener _listener;
     private string _originalEnableEnvironment;
     private string _originalContentEnvironment;
+    private string _originalMessageEventsEnvironment;
     private bool _hadEnableSwitch;
     private bool _hadContentSwitch;
+    private bool _hadMessageEventsSwitch;
     private bool _originalEnableSwitch;
     private bool _originalContentSwitch;
+    private bool _originalMessageEventsSwitch;
     private bool _originalActivitySourceSwitch;
 
     [SetUp]
@@ -74,16 +80,13 @@ public class VoiceAgentRestTelemetryTests
         }
         _originalEnableEnvironment = Environment.GetEnvironmentVariable(EnableEnvironment);
         _originalContentEnvironment = Environment.GetEnvironmentVariable(ContentEnvironment);
+        _originalMessageEventsEnvironment = Environment.GetEnvironmentVariable(MessageEventsEnvironment);
         _hadEnableSwitch = AppContext.TryGetSwitch(EnableSwitch, out _originalEnableSwitch);
         _hadContentSwitch = AppContext.TryGetSwitch(ContentSwitch, out _originalContentSwitch);
+        _hadMessageEventsSwitch = AppContext.TryGetSwitch(MessageEventsSwitch, out _originalMessageEventsSwitch);
         AppContext.TryGetSwitch("Azure.Experimental.EnableActivitySource", out _originalActivitySourceSwitch);
         SetTracing(true);
-        Environment.SetEnvironmentVariable(ContentEnvironment, "true");
-        if (_hadContentSwitch)
-        {
-            AppContext.SetSwitch(ContentSwitch, true);
-        }
-        ReinitializeConfiguration();
+        SetContentRecording(false);
 
         _listener = new ActivityListener
         {
@@ -101,6 +104,7 @@ public class VoiceAgentRestTelemetryTests
         _listener.Dispose();
         Environment.SetEnvironmentVariable(EnableEnvironment, _originalEnableEnvironment);
         Environment.SetEnvironmentVariable(ContentEnvironment, _originalContentEnvironment);
+        Environment.SetEnvironmentVariable(MessageEventsEnvironment, _originalMessageEventsEnvironment);
         if (_hadEnableSwitch)
         {
             AppContext.SetSwitch(EnableSwitch, _originalEnableSwitch);
@@ -108,6 +112,10 @@ public class VoiceAgentRestTelemetryTests
         if (_hadContentSwitch)
         {
             AppContext.SetSwitch(ContentSwitch, _originalContentSwitch);
+        }
+        if (_hadMessageEventsSwitch)
+        {
+            AppContext.SetSwitch(MessageEventsSwitch, _originalMessageEventsSwitch);
         }
         ReinitializeConfiguration();
         AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", _originalActivitySourceSwitch);
@@ -191,18 +199,7 @@ public class VoiceAgentRestTelemetryTests
     {
         AgentAdministrationClient client = CreateClient(isAsync, _ => new MockPipelineResponse(200).WithContent(AgentResponse));
         using Activity parent = new Activity("caller").SetIdFormat(ActivityIdFormat.W3C).Start();
-        string request = operation == "create"
-            ? "{\"name\":\"voice-agent\",\"definition\":" + VoiceDefinition + "}"
-            : "{\"definition\":" + VoiceDefinition + "}";
-        using BinaryContent content = JsonContent(request);
-
-        _ = operation switch
-        {
-            "create" => isAsync ? await client.CreateAgentAsync(content) : client.CreateAgent(content),
-            "version" => isAsync ? await client.CreateAgentVersionAsync(AgentName, content) : client.CreateAgentVersion(AgentName, content),
-            "update" => isAsync ? await client.UpdateAgentAsync(AgentName, content) : client.UpdateAgent(AgentName, content),
-            _ => throw new ArgumentOutOfRangeException(nameof(operation))
-        };
+        await CreateVoiceDefinition(client, operation, isAsync, VoiceDefinition);
 
         Activity span = GetOnlyGenAiSpan();
         AssertCommon(span, "create_agent", "create_agent", 200);
@@ -216,6 +213,91 @@ public class VoiceAgentRestTelemetryTests
             Assert.That(span.ParentSpanId, Is.EqualTo(parent.SpanId));
         });
         AssertPrivateSafe(span);
+    }
+
+    [TestCase("create", false)]
+    [TestCase("create", true)]
+    [TestCase("version", false)]
+    [TestCase("version", true)]
+    [TestCase("update", false)]
+    [TestCase("update", true)]
+    public async Task VoiceInstructionsUseExistingContentSchema(string operation, bool isAsync)
+    {
+        SetContentRecording(true);
+        const string instructions = "Voice instructions \"quoted\"\nUnicode: \u65e5\u672c\u8a9e";
+        string definition = VoiceDefinition.Replace("\"instructions\": \"" + PrivateContent + "\"",
+            "\"instructions\": " + JsonSerializer.Serialize(instructions));
+        AgentAdministrationClient client = CreateClient(isAsync, _ => new MockPipelineResponse(200).WithContent(AgentResponse));
+
+        await CreateVoiceDefinition(client, operation, isAsync, definition);
+
+        Activity span = GetOnlyGenAiSpan();
+        AssertCommon(span, "create_agent", "create_agent", 200);
+        AssertSystemInstructions(span, false, instructions);
+        Assert.That(string.Join(" ", span.TagObjects.Select(tag => tag.Value)), Does.Not.Contain(PrivateContent),
+            "Opting into instructions must not also capture the greeting.");
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task VoiceInstructionsFollowExistingMessageEventMode(bool recordContent)
+    {
+        SetContentRecording(recordContent, useMessageEvents: true);
+        AgentAdministrationClient client = CreateClient(true, _ => new MockPipelineResponse(200).WithContent(AgentResponse));
+
+        await CreateVoiceVersion(client, true);
+
+        Activity span = GetOnlyGenAiSpan();
+        if (recordContent)
+        {
+            AssertSystemInstructions(span, true, PrivateContent);
+        }
+        else
+        {
+            AssertPrivateSafe(span);
+        }
+    }
+
+    [TestCase(false, 4095)]
+    [TestCase(false, 4096)]
+    [TestCase(false, 4097)]
+    [TestCase(true, 4097)]
+    public async Task VoiceInstructionsAreBoundedOnlyInTelemetry(bool useMessageEvents, int instructionLength)
+    {
+        SetContentRecording(true, useMessageEvents);
+        string instructions = new('v', instructionLength);
+        VoiceAgentDefinition definition = new()
+        {
+            ModelType = VoiceModelType.Managed,
+            Model = "gpt-realtime",
+            Instructions = instructions
+        };
+        AgentAdministrationClient client = CreateClient(true, _ => new MockPipelineResponse(200).WithContent(AgentResponse));
+
+        await client.CreateAgentVersionAsync(AgentName, new ProjectsAgentVersionCreationOptions(definition));
+
+        AssertSystemInstructions(GetOnlyGenAiSpan(), useMessageEvents, instructions.Substring(0, Math.Min(4096, instructionLength)));
+        Assert.That(definition.Instructions, Is.EqualTo(instructions), "Telemetry must not truncate the agent definition.");
+    }
+
+    [TestCase(false, null)]
+    [TestCase(true, null)]
+    [TestCase(false, "")]
+    [TestCase(true, "")]
+    public async Task AbsentVoiceInstructionsDoNotAddContent(bool useMessageEvents, string instructions)
+    {
+        SetContentRecording(true, useMessageEvents);
+        AgentAdministrationClient client = CreateClient(true, _ => new MockPipelineResponse(200).WithContent(AgentResponse));
+        ProjectsAgentVersionCreationOptions options = new(new VoiceAgentDefinition
+        {
+            ModelType = VoiceModelType.Managed,
+            Model = "gpt-realtime",
+            Instructions = instructions
+        });
+
+        await client.CreateAgentVersionAsync(AgentName, options);
+
+        AssertPrivateSafe(GetOnlyGenAiSpan());
     }
 
     [TestCase(false)]
@@ -244,6 +326,7 @@ public class VoiceAgentRestTelemetryTests
     [Test]
     public void NonVoiceCreateMetadataAndNameAreUnchanged()
     {
+        SetContentRecording(true);
         AgentAdministrationClient client = CreateClient(false, _ => new MockPipelineResponse(200).WithContent(AgentResponse));
         using BinaryContent content = JsonContent("""{"definition":{"kind":"prompt","model":"text-model","instructions":"original instructions"}}""");
         client.CreateAgentVersion("prompt-agent", content);
@@ -256,6 +339,59 @@ public class VoiceAgentRestTelemetryTests
             Assert.That(span.GetTagItem("gen_ai.request.model"), Is.EqualTo("text-model"));
             Assert.That(span.GetTagItem("az.ai.voice_agents.operation"), Is.Null);
             Assert.That(span.GetTagItem("gen_ai.system_instructions"), Does.Contain("original instructions"));
+        });
+    }
+
+    [TestCase(false, false)]
+    [TestCase(false, true)]
+    [TestCase(true, false)]
+    [TestCase(true, true)]
+    public void NonVoiceInstructionsKeepExistingContentAndEventBehavior(bool recordContent, bool useMessageEvents)
+    {
+        SetContentRecording(recordContent, useMessageEvents);
+        string instructions = new string('p', 4097) + PrivateContent;
+        AgentAdministrationClient client = CreateClient(false, _ => new MockPipelineResponse(200).WithContent(AgentResponse));
+        using BinaryContent content = JsonContent("{\"definition\":{\"kind\":\"prompt\",\"model\":\"text-model\",\"instructions\":" +
+            JsonSerializer.Serialize(instructions) + "}}");
+
+        client.CreateAgentVersion("prompt-agent", content);
+
+        Activity span = GetOnlyGenAiSpan();
+        Assert.That(span.DisplayName, Is.EqualTo("create_agent prompt-agent"));
+        AssertSystemInstructions(span, useMessageEvents, recordContent ? instructions : null);
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task VoiceInstructionsAreExcludedFromMetrics(bool useMessageEvents)
+    {
+        SetContentRecording(true, useMessageEvents);
+        ConcurrentQueue<Dictionary<string, object>> measurements = new();
+        using MeterListener metrics = new()
+        {
+            InstrumentPublished = (instrument, listener) =>
+            {
+                if (instrument.Meter.Name == SourceName && instrument.Name == "gen_ai.client.operation.duration")
+                {
+                    listener.EnableMeasurementEvents(instrument);
+                }
+            }
+        };
+        metrics.SetMeasurementEventCallback<double>((instrument, measurement, tags, state) =>
+            measurements.Enqueue(tags.ToArray().ToDictionary(tag => tag.Key, tag => tag.Value)));
+        metrics.Start();
+        AgentAdministrationClient client = CreateClient(true, _ => new MockPipelineResponse(200).WithContent(AgentResponse));
+
+        await CreateVoiceVersion(client, true);
+
+        AssertSystemInstructions(GetOnlyGenAiSpan(), useMessageEvents, PrivateContent);
+        Assert.That(measurements, Has.Count.EqualTo(1));
+        Dictionary<string, object> tags = measurements.Single();
+        Assert.Multiple(() =>
+        {
+            Assert.That(tags.ContainsKey("gen_ai.system_instructions"), Is.False);
+            Assert.That(tags.ContainsKey("gen_ai.event.content"), Is.False);
+            Assert.That(string.Join(" ", tags.Select(tag => tag.Key + "=" + tag.Value)), Does.Not.Contain(PrivateContent));
         });
     }
 
@@ -629,6 +765,43 @@ public class VoiceAgentRestTelemetryTests
         }));
     }
 
+    private static void AssertSystemInstructions(Activity span, bool useMessageEvents, string expectedInstructions)
+    {
+        string content;
+        if (useMessageEvents)
+        {
+            Assert.That(span.GetTagItem("gen_ai.system_instructions"), Is.Null);
+            Assert.That(span.Events.Count(), Is.EqualTo(1));
+            ActivityEvent message = span.Events.Single();
+            Assert.That(message.Name, Is.EqualTo("gen_ai.system_instructions"));
+            Dictionary<string, object> tags = message.Tags.ToDictionary(tag => tag.Key, tag => tag.Value);
+            Assert.That(tags.Keys, Is.EquivalentTo(new[] { "gen_ai.provider.name", "gen_ai.event.content" }));
+            Assert.That(tags["gen_ai.provider.name"], Is.EqualTo("microsoft.foundry"));
+            content = tags["gen_ai.event.content"] as string;
+        }
+        else
+        {
+            Assert.That(span.Events, Is.Empty);
+            content = span.GetTagItem("gen_ai.system_instructions") as string;
+        }
+
+        Assert.That(content, Is.Not.Null);
+        using JsonDocument document = JsonDocument.Parse(content);
+        Assert.That(document.RootElement.ValueKind, Is.EqualTo(JsonValueKind.Array));
+        Assert.That(document.RootElement.GetArrayLength(), Is.EqualTo(1));
+        JsonElement instruction = document.RootElement[0];
+        Assert.That(instruction.GetProperty("type").GetString(), Is.EqualTo("text"));
+        if (expectedInstructions == null)
+        {
+            Assert.That(instruction.EnumerateObject().Select(property => property.Name), Is.EqualTo(new[] { "type" }));
+        }
+        else
+        {
+            Assert.That(instruction.EnumerateObject().Select(property => property.Name), Is.EquivalentTo(new[] { "type", "content" }));
+            Assert.That(instruction.GetProperty("content").GetString(), Is.EqualTo(expectedInstructions));
+        }
+    }
+
     private static AgentAdministrationClient CreateClient(bool isAsync, Func<PipelineMessage, MockPipelineResponse> response, bool tracing = true, bool fromSettings = false)
     {
         MockPipelineTransport transport = new(message => response(message)) { ExpectSyncPipeline = !isAsync };
@@ -649,6 +822,21 @@ public class VoiceAgentRestTelemetryTests
         if (_hadEnableSwitch)
         {
             AppContext.SetSwitch(EnableSwitch, enabled);
+        }
+        ReinitializeConfiguration();
+    }
+
+    private void SetContentRecording(bool enabled, bool useMessageEvents = false)
+    {
+        Environment.SetEnvironmentVariable(ContentEnvironment, enabled ? "true" : "false");
+        Environment.SetEnvironmentVariable(MessageEventsEnvironment, useMessageEvents ? "true" : "false");
+        if (_hadContentSwitch)
+        {
+            AppContext.SetSwitch(ContentSwitch, enabled);
+        }
+        if (_hadMessageEventsSwitch)
+        {
+            AppContext.SetSwitch(MessageEventsSwitch, useMessageEvents);
         }
         ReinitializeConfiguration();
     }
@@ -685,6 +873,21 @@ public class VoiceAgentRestTelemetryTests
     };
 
     private static BinaryContent JsonContent(string json) => BinaryContent.Create(BinaryData.FromString(json));
+
+    private static async Task<ClientResult> CreateVoiceDefinition(AgentAdministrationClient client, string operation, bool isAsync, string definition)
+    {
+        string request = operation == "create"
+            ? "{\"name\":\"voice-agent\",\"definition\":" + definition + "}"
+            : "{\"definition\":" + definition + "}";
+        using BinaryContent content = JsonContent(request);
+        return operation switch
+        {
+            "create" => isAsync ? await client.CreateAgentAsync(content) : client.CreateAgent(content),
+            "version" => isAsync ? await client.CreateAgentVersionAsync(AgentName, content) : client.CreateAgentVersion(AgentName, content),
+            "update" => isAsync ? await client.UpdateAgentAsync(AgentName, content) : client.UpdateAgent(AgentName, content),
+            _ => throw new ArgumentOutOfRangeException(nameof(operation))
+        };
+    }
 
     private static async Task<ClientResult> CreateVoiceVersion(AgentAdministrationClient client, bool isAsync, RequestOptions options = null)
     {

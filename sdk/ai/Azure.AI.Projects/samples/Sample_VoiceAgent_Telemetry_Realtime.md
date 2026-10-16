@@ -153,7 +153,11 @@ voice_agent.sample.realtime
 The realtime source is `Azure.AI.Projects.ProjectsRealtimeClient`. Session, connection, and
 response Activities have `ActivityKind.Client` and share the application's trace ID.
 `invoke_agent` includes response status, model, token usage when returned by the service, and
-safe response/conversation identifiers. Session updates appear as events.
+safe response/conversation identifiers, `gen_ai.agent.type=voice`, and time to the first nonempty
+text or audio delta. Session spans include total input/output audio bytes and the audio
+format/sample rate when reported by the service. Session lifecycle events use the
+`voice_agents.session.created`, `voice_agents.session.updated`, and `voice_agents.session.update`
+names.
 The conversation deletion uses its existing SDK diagnostic scope rather than a new GenAI span.
 
 Dispose each session before disposing its tracer provider so session and response Activities
@@ -162,7 +166,9 @@ are completed and exported. Updates are observed as the application consumes the
 Raw audio, credentials, authentication headers, query strings, exception messages, and close
 reasons are not recorded by the realtime instrumentation. Message content requires the existing
 content-recording opt-in; keep it disabled unless you intend to export potentially sensitive
-content. Existing `AIProjectClientOptions.EnableDistributedTracing = false` disables Voice
+content. With that opt-in, bounded input transcripts are associated with their audio items,
+and tool-call message parts include names and arguments. Tool result message parts retain
+OpenTelemetry's `response` field. Existing `AIProjectClientOptions.EnableDistributedTracing = false` disables Voice
 Agent tracing, and the existing client logging options control diagnostic logging.
 
 To run the repository sample, set `CLIENTMODEL_TEST_MODE=Live` and the project/model variables,

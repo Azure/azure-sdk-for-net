@@ -251,6 +251,7 @@ public class VoiceAgentRealtimeTelemetryTests
                 Assert.That(activity.TraceId, Is.EqualTo(caller.TraceId));
                 Assert.That(Tag(activity, "gen_ai.provider.name"), Is.EqualTo("microsoft.foundry"));
                 Assert.That(Tag(activity, "gen_ai.agent.name"), Is.EqualTo("voice-agent"));
+                Assert.That(Tag(activity, "gen_ai.agent.type"), Is.EqualTo("voice"));
                 Assert.That(Tag(activity, "server.address"), Is.EqualTo("voice.example.test"));
                 Assert.That(Tag(activity, "server.port"), Is.EqualTo(8443));
             }
@@ -451,7 +452,7 @@ public class VoiceAgentRealtimeTelemetryTests
         {
             Assert.That(Tag(Span(SessionName), Prefix + "session.id"), Is.EqualTo("accepted-session"));
             Assert.That(Span(SessionName).Events.Count(item => item.Name == "voice_agents.warning"), Is.EqualTo(1));
-            Assert.That(Span(SessionName).Events.Count(item => item.Name == "session.created"), Is.EqualTo(1));
+            Assert.That(Span(SessionName).Events.Count(item => item.Name == "voice_agents.session.created"), Is.EqualTo(1));
             Assert.That(Span(SessionName).Status, Is.Not.EqualTo(ActivityStatusCode.Error));
         });
     }
@@ -503,6 +504,326 @@ public class VoiceAgentRealtimeTelemetryTests
             Assert.That(_activities.Count, Is.EqualTo(stoppedCount));
         });
         AssertPrivate(ExceptionSecret, MessageSecret, MetadataSecret);
+    }
+
+    [TestCase(false, false)]
+    [TestCase(false, true)]
+    [TestCase(true, false)]
+    [TestCase(true, true)]
+    public void FirstTextLatencyUsesOnlyTheFirstNonemptyDelta(bool captureContent, bool legacy)
+    {
+        SetContentCapture(captureContent);
+        Activity response = null;
+        _listener.ActivityStarted = activity =>
+        {
+            if (activity.OperationName == ResponseName)
+            {
+                response = activity;
+            }
+        };
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        string type = legacy ? "response.text.delta" : "response.output_text.delta";
+        Observe(telemetry, new { type = "response.created", response = new { id = "text-latency" } });
+        Observe(telemetry, new { type, response_id = "text-latency", delta = "" });
+        Observe(telemetry, new { type, response_id = "unknown", delta = MessageSecret });
+        Assert.That(Tag(response, Prefix + "response.time_to_first_text_seconds"), Is.Null);
+
+        Observe(telemetry, new { type, response_id = "text-latency", delta = MessageSecret });
+        object first = Tag(response, Prefix + "response.time_to_first_text_seconds");
+        Observe(telemetry, new { type = legacy ? "response.output_text.delta" : "response.text.delta", response_id = "text-latency", delta = MetadataSecret });
+        Observe(telemetry, new { type = "response.done", response = new { id = "text-latency", status = "completed" } });
+        telemetry.Close(WebSocketCloseStatus.NormalClosure, true);
+
+        Assert.That(first, Is.GreaterThanOrEqualTo(0d));
+        Assert.That(Tag(response, Prefix + "response.time_to_first_text_seconds"), Is.EqualTo(first));
+        AssertPrivate(MessageSecret, MetadataSecret);
+    }
+
+    [Test]
+    public void SessionInstructionsUseBoundedInstructionParts()
+    {
+        SetContentCapture(true);
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        Observe(telemetry, new { type = "session.update", session = new { instructions = new string('x', 5000) } }, isSend: true);
+        telemetry.Close(WebSocketCloseStatus.NormalClosure, true);
+
+        using JsonDocument instructions = JsonDocument.Parse((string)Tag(Span(SessionName), "gen_ai.system_instructions"));
+        JsonElement part = instructions.RootElement[0];
+        Assert.That(part.GetProperty("type").GetString(), Is.EqualTo("text"));
+        Assert.That(part.GetProperty("content").GetString(), Has.Length.EqualTo(4096));
+        Assert.That(part.TryGetProperty("role", out _), Is.False);
+        Assert.That(part.TryGetProperty("parts", out _), Is.False);
+        AssertLogPrivate(new string('x', 100));
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public void SessionAudioMetadataUsesSafeReportedFormatsAndPreservesPartialUpdates(bool legacy)
+    {
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        ObserveJson(telemetry, legacy
+            ? """{"type":"session.created","session":{"input_audio_format":"pcm16","input_audio_sample_rate":24000,"output_audio_format":"g711_ulaw","output_audio_sample_rate":8000}}"""
+            : """{"type":"session.created","session":{"audio":{"input":{"format":{"type":"audio/pcm","rate":24000}},"output":{"format":{"type":"audio/pcmu","rate":8000}}}}}""");
+        ObserveJson(telemetry, """{"type":"session.updated","session":{"audio":{"output":{"format":{"type":"audio/pcma","rate":8000}}}}}""");
+        telemetry.Close(WebSocketCloseStatus.NormalClosure, true);
+
+        Activity session = Span(SessionName);
+        Assert.Multiple(() =>
+        {
+            Assert.That(Tag(session, Prefix + "input.audio.format"), Is.EqualTo("audio/pcm"));
+            Assert.That(Tag(session, Prefix + "input.audio.sample_rate"), Is.EqualTo(24000));
+            Assert.That(Tag(session, Prefix + "output.audio.format"), Is.EqualTo("audio/pcma"));
+            Assert.That(Tag(session, Prefix + "output.audio.sample_rate"), Is.EqualTo(8000));
+            Assert.That(session.Events.Select(item => item.Name),
+                Does.Contain("voice_agents.session.created").And.Contain("voice_agents.session.updated"));
+        });
+    }
+
+    [Test]
+    public void InvalidAudioMetadataDoesNotLeakOrRetainStaleRates()
+    {
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        ObserveJson(telemetry, """{"type":"session.created","session":{"audio":{"input":{"format":{"type":"audio/pcm","rate":24000}},"output":{"format":{"type":"audio/pcm","rate":24000}}}}}""");
+        Observe(telemetry, new
+        {
+            type = "session.updated",
+            session = new
+            {
+                audio = new
+                {
+                    input = new { format = new { type = MetadataSecret, rate = 15555550101L } },
+                    output = new { format = new { type = "audio/pcmu" } }
+                }
+            }
+        });
+        ObserveJson(telemetry, """{"type":"session.updated","session":null}""");
+        telemetry.Close(WebSocketCloseStatus.NormalClosure, true);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(Tag(Span(SessionName), Prefix + "input.audio.format"), Is.Null);
+            Assert.That(Tag(Span(SessionName), Prefix + "input.audio.sample_rate"), Is.Null);
+            Assert.That(Tag(Span(SessionName), Prefix + "output.audio.format"), Is.EqualTo("audio/pcmu"));
+            Assert.That(Tag(Span(SessionName), Prefix + "output.audio.sample_rate"), Is.Null);
+        });
+        AssertPrivate(MetadataSecret, "15555550101");
+    }
+
+    [Test]
+    public void SessionOutputAudioCountsCompletedInterruptedAndUntrackedResponses()
+    {
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        string audio = Convert.ToBase64String(new byte[] { 140, 151, 22, 33 });
+        Observe(telemetry, new { type = "response.created", response = new { id = "audio-completed" } });
+        Observe(telemetry, new { type = "response.output_audio.delta", response_id = "audio-completed", delta = audio });
+        Observe(telemetry, new { type = "response.done", response = new { id = "audio-completed", status = "completed" } });
+        Observe(telemetry, new { type = "response.output_audio.delta", response_id = "untracked", delta = audio });
+        Observe(telemetry, new { type = "response.created", response = new { id = "audio-interrupted" } });
+        Observe(telemetry, new { type = "response.audio.delta", response_id = "audio-interrupted", delta = audio });
+        telemetry.Close(WebSocketCloseStatus.NormalClosure, true);
+
+        Assert.That(Tag(Span(SessionName), Prefix + "output.audio.bytes"), Is.EqualTo(12L));
+        Assert.That(_activities.Where(item => item.OperationName == ResponseName)
+            .Select(item => Tag(item, Prefix + "output.audio.bytes")), Is.EquivalentTo(new[] { 4L, 4L }));
+        AssertPrivate(audio);
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public void AudioTranscriptsFollowCommitOrderNotCompletionOrder(bool captureContent)
+    {
+        SetContentCapture(captureContent);
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        string audio = Convert.ToBase64String(new byte[] { 140, 151, 22, 33 });
+        foreach (int _ in new[] { 1, 2 })
+        {
+            Observe(telemetry, new { type = "input_audio_buffer.append", audio }, isSend: true);
+            Observe(telemetry, new { type = "input_audio_buffer.commit" }, isSend: true);
+        }
+        Observe(telemetry, new { type = "input_audio_buffer.committed", item_id = "first-audio" });
+        Observe(telemetry, new { type = "input_audio_buffer.committed", item_id = "second-audio" });
+        Observe(telemetry, new { type = "response.created", response = new { id = "second-audio-response" } });
+        Observe(telemetry, new { type = "conversation.item.input_audio_transcription.completed", item_id = "second-audio", transcript = MessageSecret });
+        Observe(telemetry, new { type = "conversation.item.input_audio_transcription.completed", item_id = "first-audio", transcript = MetadataSecret });
+        Observe(telemetry, new { type = "response.done", response = new { id = "second-audio-response", status = "completed" } });
+        telemetry.Close(WebSocketCloseStatus.NormalClosure, true);
+
+        foreach (Activity activity in new[] { Span(SessionName), Span(ResponseName) })
+        {
+            using JsonDocument input = JsonDocument.Parse((string)Tag(activity, "gen_ai.input.messages"));
+            JsonElement part = input.RootElement[0].GetProperty("parts")[0];
+            Assert.That(part.GetProperty("type").GetString(), Is.EqualTo("audio"));
+            Assert.That(part.TryGetProperty("content", out _), Is.EqualTo(captureContent));
+            if (captureContent)
+            {
+                Assert.That(part.GetProperty("content").GetString(), Is.EqualTo(MessageSecret));
+            }
+        }
+        AssertPrivate(audio, MetadataSecret);
+        AssertLogPrivate(MessageSecret);
+        if (!captureContent)
+        {
+            AssertPrivate(MessageSecret);
+        }
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public void LateTranscriptionCannotReplaceNewerTextOrToolInput(bool tool)
+    {
+        SetContentCapture(true);
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        Observe(telemetry, new { type = "input_audio_buffer.append", audio = "AQID" }, isSend: true);
+        Observe(telemetry, new { type = "input_audio_buffer.commit" }, isSend: true);
+        Observe(telemetry, new { type = "input_audio_buffer.committed", item_id = "older-audio" });
+        if (tool)
+        {
+            Observe(telemetry, new { type = "conversation.item.create", item = new { type = "function_call_output", call_id = "tool-call", output = MessageSecret } }, isSend: true);
+        }
+        else
+        {
+            Observe(telemetry, new { type = "conversation.item.create", item = new { type = "message", role = "user", content = new[] { new { type = "input_text", text = MessageSecret } } } }, isSend: true);
+        }
+        Observe(telemetry, new { type = "response.created", response = new { id = "newer-response" } });
+        Observe(telemetry, new { type = "conversation.item.input_audio_transcription.completed", item_id = "older-audio", transcript = MetadataSecret });
+        Observe(telemetry, new { type = "response.done", response = new { id = "newer-response", status = "completed" } });
+        telemetry.Close(WebSocketCloseStatus.NormalClosure, true);
+
+        foreach (Activity activity in new[] { Span(SessionName), Span(ResponseName) })
+        {
+            using JsonDocument input = JsonDocument.Parse((string)Tag(activity, "gen_ai.input.messages"));
+            JsonElement message = input.RootElement[0];
+            Assert.That(message.GetProperty("role").GetString(), Is.EqualTo(tool ? "tool" : "user"));
+            Assert.That(message.GetProperty("parts")[0].GetProperty(tool ? "response" : "content").GetString(), Is.EqualTo(MessageSecret));
+        }
+        AssertPrivate(MetadataSecret, "AQID");
+        AssertLogPrivate(MessageSecret);
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public void AudioItemAcknowledgementsCorrelateTranscripts(bool explicitId)
+    {
+        SetContentCapture(true);
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        Observe(telemetry, new
+        {
+            type = "conversation.item.create",
+            item = new { type = "message", role = "user", id = explicitId ? "audio-item" : null, content = new[] { new { type = "input_audio", audio = "AQID" } } }
+        }, isSend: true);
+        Observe(telemetry, new { type = "conversation.item.added", item = new { id = "audio-item", role = "user", content = new[] { new { type = "input_audio" } } } });
+        Observe(telemetry, new { type = "conversation.item.input_audio_transcription.completed", item_id = "audio-item", transcript = MessageSecret });
+        telemetry.Close(WebSocketCloseStatus.NormalClosure, true);
+
+        using JsonDocument input = JsonDocument.Parse((string)Tag(Span(SessionName), "gen_ai.input.messages"));
+        Assert.That(input.RootElement[0].GetProperty("parts")[0].GetProperty("content").GetString(), Is.EqualTo(MessageSecret));
+        AssertPrivate("AQID");
+        AssertLogPrivate(MessageSecret);
+    }
+
+    [Test]
+    public void UnsupportedNewInputCannotExposeAnOlderAudioTranscript()
+    {
+        SetContentCapture(true);
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        Observe(telemetry, new { type = "input_audio_buffer.append", audio = "AQID" }, isSend: true);
+        Observe(telemetry, new { type = "input_audio_buffer.commit" }, isSend: true);
+        Observe(telemetry, new { type = "input_audio_buffer.committed", item_id = "older-audio" });
+        Observe(telemetry, new { type = "conversation.item.create", item = new { type = "message", role = "user", content = new[] { new { type = "future-part", content = MessageSecret } } } }, isSend: true);
+        Observe(telemetry, new { type = "conversation.item.input_audio_transcription.completed", item_id = "older-audio", transcript = MetadataSecret });
+        Observe(telemetry, new { type = "response.created", response = new { id = "future-input" } });
+        Observe(telemetry, new { type = "response.done", response = new { id = "future-input", status = "completed" } });
+        telemetry.Close(WebSocketCloseStatus.NormalClosure, true);
+
+        Assert.That(Tag(Span(SessionName), "gen_ai.input.messages"), Is.Null);
+        Assert.That(Tag(Span(ResponseName), "gen_ai.input.messages"), Is.Null);
+        AssertPrivate(MessageSecret, MetadataSecret, "AQID");
+    }
+
+    [Test]
+    public void VadAndClearAcknowledgementsDoNotReassignNewerAudio()
+    {
+        SetContentCapture(true);
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        Observe(telemetry, new { type = "input_audio_buffer.append", audio = "AQID" }, isSend: true);
+        Observe(telemetry, new { type = "input_audio_buffer.speech_started", item_id = "cleared-audio" });
+        Observe(telemetry, new { type = "input_audio_buffer.clear" }, isSend: true);
+        Observe(telemetry, new { type = "input_audio_buffer.append", audio = "AQID" }, isSend: true);
+        Observe(telemetry, new { type = "input_audio_buffer.cleared" });
+        Observe(telemetry, new { type = "input_audio_buffer.speech_started", item_id = "current-audio" });
+        Observe(telemetry, new { type = "input_audio_buffer.committed", item_id = "current-audio" });
+        Observe(telemetry, new { type = "conversation.item.input_audio_transcription.completed", item_id = "current-audio", transcript = MessageSecret });
+        Observe(telemetry, new { type = "conversation.item.input_audio_transcription.completed", item_id = "cleared-audio", transcript = MetadataSecret });
+        telemetry.Close(WebSocketCloseStatus.NormalClosure, true);
+
+        using JsonDocument input = JsonDocument.Parse((string)Tag(Span(SessionName), "gen_ai.input.messages"));
+        Assert.That(input.RootElement[0].GetProperty("parts")[0].GetProperty("content").GetString(), Is.EqualTo(MessageSecret));
+        AssertPrivate(MetadataSecret, "AQID");
+    }
+
+    [Test]
+    public void BoundedAudioTrackingDoesNotShiftSkippedAcknowledgements()
+    {
+        SetContentCapture(true);
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        for (int i = 0; i < 65; i++)
+        {
+            Observe(telemetry, new { type = "input_audio_buffer.append", audio = "AQID" }, isSend: true);
+            Observe(telemetry, new { type = "input_audio_buffer.commit" }, isSend: true);
+        }
+        for (int i = 0; i < 65; i++)
+        {
+            Observe(telemetry, new { type = "input_audio_buffer.committed", item_id = "audio-" + i });
+        }
+        Observe(telemetry, new { type = "input_audio_buffer.append", audio = "AQID" }, isSend: true);
+        Observe(telemetry, new { type = "input_audio_buffer.commit" }, isSend: true);
+        Observe(telemetry, new { type = "input_audio_buffer.committed", item_id = "latest-audio" });
+        Observe(telemetry, new { type = "conversation.item.input_audio_transcription.completed", item_id = "audio-64", transcript = MetadataSecret });
+        Observe(telemetry, new { type = "conversation.item.input_audio_transcription.completed", item_id = "latest-audio", transcript = new string('x', 5000) });
+        telemetry.Close(WebSocketCloseStatus.NormalClosure, true);
+
+        using JsonDocument input = JsonDocument.Parse((string)Tag(Span(SessionName), "gen_ai.input.messages"));
+        Assert.That(input.RootElement[0].GetProperty("parts")[0].GetProperty("content").GetString(), Has.Length.EqualTo(4096));
+        Assert.That(Tag(Span(SessionName), Prefix + "input.items.untracked"), Is.EqualTo(1L));
+        AssertPrivate(MetadataSecret, "AQID");
+    }
+
+    [TestCase("[]")]
+    [TestCase("""[{"type":"function_call","call_id":"bounded-call"}]""")]
+    public void ToolMessageDetailsAreBoundedAndSurviveCompactedFinalOutput(string finalOutput)
+    {
+        SetContentCapture(true);
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        Observe(telemetry, new { type = "response.created", response = new { id = "bounded-tool" } });
+        Observe(telemetry, new
+        {
+            type = "response.function_call_arguments.done",
+            response_id = "bounded-tool",
+            call_id = "bounded-call",
+            name = new string('n', 5000),
+            arguments = new string('a', 5000)
+        });
+        ObserveJson(telemetry, "{\"type\":\"response.done\",\"response\":{\"id\":\"bounded-tool\",\"status\":\"completed\",\"output\":" + finalOutput + "}}");
+        telemetry.Close(WebSocketCloseStatus.NormalClosure, true);
+
+        using JsonDocument output = JsonDocument.Parse((string)Tag(Span(ResponseName), "gen_ai.output.messages"));
+        Assert.That(output.RootElement.GetArrayLength(), Is.EqualTo(1));
+        JsonElement part = output.RootElement[0].GetProperty("parts")[0];
+        Assert.That(part.GetProperty("name").GetString(), Has.Length.EqualTo(4096));
+        Assert.That(part.GetProperty("arguments").GetString(), Has.Length.EqualTo(4096));
+        Assert.That(part.GetProperty("id").GetString(), Is.EqualTo("bounded-call"));
     }
 
     [TestCase(false)]
@@ -572,6 +893,7 @@ public class VoiceAgentRealtimeTelemetryTests
             Assert.That(response.Status, Is.EqualTo(ActivityStatusCode.Ok));
             Assert.That(Tag(session, Prefix + "input.audio.bytes"), Is.EqualTo(9L));
             Assert.That(Tag(response, Prefix + "output.audio.bytes"), Is.EqualTo(7L));
+            Assert.That(Tag(session, Prefix + "output.audio.bytes"), Is.EqualTo(7L));
             Assert.That(Tag(response, Prefix + "response.time_to_first_audio_seconds"), Is.GreaterThanOrEqualTo(0d));
             Assert.That(Tag(response, "gen_ai.usage.input_tokens"), Is.EqualTo(11L));
             Assert.That(Tag(response, "gen_ai.usage.output_tokens"), Is.EqualTo(7L));
@@ -667,7 +989,8 @@ public class VoiceAgentRealtimeTelemetryTests
             Assert.That(toolCall.RootElement[0].GetProperty("role").GetString(), Is.EqualTo("assistant"));
             Assert.That(toolCallPart.GetProperty("type").GetString(), Is.EqualTo("tool_call"));
             Assert.That(toolCallPart.GetProperty("id").GetString(), Is.EqualTo("call-1"));
-            Assert.That(toolCallPart.EnumerateObject().Select(property => property.Name), Is.EquivalentTo(new[] { "type", "id" }));
+            Assert.That(toolCallPart.EnumerateObject().Select(property => property.Name),
+                Is.EquivalentTo(captureContent ? new[] { "type", "id", "name", "arguments" } : new[] { "type", "id" }));
             Assert.That(input.RootElement[0].GetProperty("role").GetString(), Is.EqualTo("tool"));
             Assert.That(toolPart.GetProperty("type").GetString(), Is.EqualTo("tool_call_response"));
             Assert.That(toolPart.GetProperty("id").GetString(), Is.EqualTo("call-1"));
@@ -682,6 +1005,8 @@ public class VoiceAgentRealtimeTelemetryTests
         {
             Assert.That(userInput.RootElement[0].GetProperty("parts")[0].GetProperty("content").GetString(), Is.EqualTo(MessageSecret));
             Assert.That(toolPart.GetProperty("response").GetString(), Is.EqualTo(toolOutput));
+            Assert.That(toolCallPart.GetProperty("name").GetString(), Is.EqualTo(toolName));
+            Assert.That(toolCallPart.GetProperty("arguments").GetString(), Is.EqualTo(arguments));
         }
     }
 
@@ -1013,7 +1338,7 @@ public class VoiceAgentRealtimeTelemetryTests
             Assert.That(_activities, Has.Count.EqualTo(3));
             Assert.That(Tag(Span(SessionName), Prefix + "session.id"), Is.EqualTo("session-after-unknown"));
             Assert.That(Span(SessionName).Status, Is.Not.EqualTo(ActivityStatusCode.Error));
-            Assert.That(Span(SessionName).Events.Select(item => item.Name), Is.EquivalentTo(new[] { "voice_agents.warning", "session.created" }));
+            Assert.That(Span(SessionName).Events.Select(item => item.Name), Is.EquivalentTo(new[] { "voice_agents.warning", "voice_agents.session.created" }));
             Assert.That(Span(ResponseName).Status, Is.EqualTo(ActivityStatusCode.Ok));
             Assert.That(Tag(Span(ResponseName), "gen_ai.request.model"), Is.EqualTo("known-model"));
         });

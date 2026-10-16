@@ -2001,10 +2001,15 @@ Realtime Activities use the source `Azure.AI.Projects.ProjectsRealtimeClient`. C
 session Activities are named `voice_agents.realtime.connect` and `voice_agents.realtime.session`;
 each server-created response has an `invoke_agent` Activity parented to its session. These are
 client Activities. They include endpoint hostname, agent/session/response identifiers, token usage
-when returned by the service, transferred audio byte counts, and time to first output audio.
+when returned by the service, reported audio formats/sample rates, transferred audio byte counts,
+and time to first nonempty text or output-audio delta. Session spans aggregate input and output
+audio bytes; response spans retain their own output-audio counts. Realtime spans identify the
+agent type as `voice`.
 Tool requests, tool outputs, cancellation requests, session updates, and safe error notifications
 are events rather than separate spans for every message or audio chunk. The SDK does not create
 tool-execution spans because the application, not the SDK, executes client-side functions.
+Session lifecycle events are named `voice_agents.session.created`, `voice_agents.session.updated`,
+and `voice_agents.session.update`.
 
 Realtime tracing respects `AIProjectClientOptions.EnableDistributedTracing = false`. When GenAI
 tracing is disabled or no listener is registered, the realtime connection is not wrapped for
@@ -2017,8 +2022,11 @@ with trace/span identifiers. It honors the existing logging enablement setting a
 with an `AzureEventSourceListener`. It does not log protocol payloads or exception messages.
 Raw audio, credentials, authentication headers, query strings, and close reasons are never added
 by the realtime instrumentation. Text, transcripts, and tool details are excluded unless the existing
-content-recording option is enabled; opted-in content is bounded. Enriched Voice Agent creation
-traces do not record request or response bodies. Other REST diagnostic scopes are unchanged.
+content-recording option is enabled; opted-in content is bounded. This includes Voice Agent
+creation instructions, input-audio transcripts correlated to their items, and tool message details.
+Tool results use the OpenTelemetry `tool_call_response` part's `response` field.
+Enriched Voice Agent creation traces do not record request or response bodies. Other REST
+diagnostic scopes are unchanged.
 
 For complete runnable examples, see the
 [Voice Agent REST telemetry sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Telemetry_Rest.md)

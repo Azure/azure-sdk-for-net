@@ -18,10 +18,14 @@ internal sealed class VoiceAgentRealtimeTelemetry
     internal const string Prefix = "az.ai.voice_agents.";
     private const int MaxMessageBytes = 1024 * 1024;
     private const int MaxResponses = 64;
+    private const int MaxInputItems = 64;
     private const int MaxContentLength = 4096;
     private static readonly ActivitySource s_source = new(SourceName, typeof(VoiceAgentRealtimeTelemetry).Assembly.GetName().Version?.ToString());
     private readonly object _gate = new();
     private readonly Dictionary<string, ResponseActivity> _responses = new();
+    private readonly Dictionary<string, InputAudio> _inputAudioItems = new();
+    private readonly PendingAudio _pendingAudioCommits = new();
+    private readonly PendingAudio _pendingAudioMessages = new();
     private readonly Uri _endpoint;
     private readonly string _agentName;
     private readonly bool _captureContent;
@@ -36,7 +40,12 @@ internal sealed class VoiceAgentRealtimeTelemetry
     private string _model;
     private string _conversationId;
     private string _lastInput;
+    private InputAudio _inputAudioBuffer;
+    private long _inputSequence;
     private long _inputAudioBytes;
+    private long _outputAudioBytes;
+    private long _untrackedInputItems;
+    private int _pendingAudioClears;
     private int _responsesFinished;
     private int _responsesUntracked;
     private int _eventsRecorded;
@@ -280,7 +289,15 @@ internal sealed class VoiceAgentRealtimeTelemetry
         {
             case "input_audio_buffer.append":
                 _inputAudioBytes += AudioBytes(root, "audio");
-                _lastInput = "[{\"role\":\"user\",\"parts\":[{\"type\":\"audio\"}]}]";
+                if (_inputAudioBuffer == null)
+                {
+                    _inputAudioBuffer = StartInputAudio();
+                }
+                else if (_inputAudioBuffer.Sequence != _inputSequence)
+                {
+                    _inputAudioBuffer.Sequence = ++_inputSequence;
+                    SetInputAudioSummary(_inputAudioBuffer);
+                }
                 break;
             case "conversation.item.create":
                 if (root.TryGetProperty("item", out JsonElement item) && item.ValueKind == JsonValueKind.Object)
@@ -293,11 +310,29 @@ internal sealed class VoiceAgentRealtimeTelemetry
                         });
                         _lastInput = MessageSummary("tool", "tool_call_response", _captureContent ? String(item, "output") : null,
                             Identifier(item, "call_id"));
+                        _inputSequence++;
                     }
                     else
                     {
                         _lastInput = InputSummary(item);
+                        long sequence = ++_inputSequence;
+                        if (_lastInput != null)
+                        {
+                            if (String(item, "role") is not "assistant" and not "system" && HasAudioPart(item))
+                            {
+                                InputAudio input = new() { Sequence = sequence };
+                                if (Identifier(item, "id") is string itemId)
+                                {
+                                    RememberInputAudio(itemId, input);
+                                }
+                                else
+                                {
+                                    EnqueueInputAudio(_pendingAudioMessages, input);
+                                }
+                            }
+                        }
                     }
+                    _session.SetTag("gen_ai.input.messages", _lastInput);
                 }
                 else
                 {
@@ -310,14 +345,21 @@ internal sealed class VoiceAgentRealtimeTelemetry
             case "session.update":
                 if (_captureContent && root.TryGetProperty("session", out JsonElement session) && String(session, "instructions") is string instructions)
                 {
-                    _session.SetTag("gen_ai.system_instructions", MessageSummary("system", "text", instructions));
+                    _session.SetTag("gen_ai.system_instructions", InstructionSummary(instructions));
                 }
-                AddEvent(_session, "session.update");
+                AddEvent(_session, "voice_agents.session.update");
                 break;
             case "input_audio_buffer.clear":
+                ClearInputAudio();
+                _pendingAudioClears++;
                 AddEvent(_session, "input_audio_buffer.clear");
                 break;
             case "input_audio_buffer.commit":
+                if (_inputAudioBuffer != null)
+                {
+                    EnqueueInputAudio(_pendingAudioCommits, _inputAudioBuffer);
+                    _inputAudioBuffer = null;
+                }
                 AddEvent(_session, "input_audio_buffer.commit");
                 break;
         }
@@ -336,8 +378,55 @@ internal sealed class VoiceAgentRealtimeTelemetry
                     _conversationId = Identifier(session, "conversation_id") ?? _conversationId;
                     _session.SetTag("gen_ai.request.model", _model);
                     _session.SetTag("gen_ai.conversation.id", _conversationId);
+                    RecordAudioFormat(session, "input");
+                    RecordAudioFormat(session, "output");
+                }
+                AddEvent(_session, "voice_agents." + type);
+                break;
+            case "input_audio_buffer.speech_started":
+                if (Identifier(root, "item_id") is string speechItem && !_inputAudioItems.ContainsKey(speechItem))
+                {
+                    InputAudio input = _inputAudioBuffer != null && _inputAudioBuffer.ItemId == null
+                        ? _inputAudioBuffer : StartInputAudio();
+                    RememberInputAudio(speechItem, input);
+                    _inputAudioBuffer = input;
+                }
+                break;
+            case "input_audio_buffer.committed":
+                if (Identifier(root, "item_id") is string committedItem)
+                {
+                    bool pending = _pendingAudioCommits.Items.Count > 0 || _pendingAudioCommits.Skipped > 0;
+                    InputAudio input = MatchInputAudio(_pendingAudioCommits, committedItem);
+                    if (input == null && !pending)
+                    {
+                        input = _inputAudioBuffer ?? StartInputAudio();
+                        RememberInputAudio(committedItem, input);
+                    }
+                    if (ReferenceEquals(_inputAudioBuffer, input))
+                    {
+                        _inputAudioBuffer = null;
+                    }
                 }
                 AddEvent(_session, type);
+                break;
+            case "input_audio_buffer.cleared":
+                if (_pendingAudioClears > 0)
+                {
+                    _pendingAudioClears--;
+                }
+                else
+                {
+                    ClearInputAudio();
+                }
+                AddEvent(_session, type);
+                break;
+            case "conversation.item.added":
+            case "conversation.item.created":
+                if (root.TryGetProperty("item", out JsonElement item) && String(item, "role") == "user" &&
+                    Identifier(item, "id") is string itemId && HasAudioPart(item))
+                {
+                    MatchInputAudio(_pendingAudioMessages, itemId);
+                }
                 break;
             case "response.created":
                 if (root.TryGetProperty("response", out JsonElement created))
@@ -347,16 +436,27 @@ internal sealed class VoiceAgentRealtimeTelemetry
                 break;
             case "response.output_audio.delta":
             case "response.audio.delta":
+                long count = AudioBytes(root, "delta");
+                _outputAudioBytes += count;
                 ResponseActivity audioResponse = FindResponse(root);
                 if (audioResponse != null)
                 {
-                    long count = AudioBytes(root, "delta");
                     if (count > 0 && audioResponse.OutputAudioBytes == 0)
                     {
                         audioResponse.Activity?.SetTag(Prefix + "response.time_to_first_audio_seconds",
                             (Stopwatch.GetTimestamp() - audioResponse.StartTimestamp) / (double)Stopwatch.Frequency);
                     }
                     audioResponse.OutputAudioBytes += count;
+                }
+                break;
+            case "response.output_text.delta":
+            case "response.text.delta":
+                ResponseActivity textResponse = FindResponse(root);
+                if (textResponse != null && !textResponse.FirstTextReceived && !string.IsNullOrEmpty(String(root, "delta")))
+                {
+                    textResponse.FirstTextReceived = true;
+                    textResponse.Activity?.SetTag(Prefix + "response.time_to_first_text_seconds",
+                        (Stopwatch.GetTimestamp() - textResponse.StartTimestamp) / (double)Stopwatch.Frequency);
                 }
                 break;
             case "response.done":
@@ -377,6 +477,16 @@ internal sealed class VoiceAgentRealtimeTelemetry
                     toolTags.Add(Prefix + "tool.arguments", Limit(String(root, "arguments")));
                 }
                 AddEvent(FindResponse(root)?.Activity ?? _session, "voice_agents.tool.requested", toolTags);
+                if (FindResponse(root) is ResponseActivity toolResponse && Identifier(root, "call_id") is string callId)
+                {
+                    toolResponse.ToolCalls ??= new Dictionary<string, ToolCall>();
+                    if (toolResponse.ToolCalls.Count < 32 || toolResponse.ToolCalls.ContainsKey(callId))
+                    {
+                        toolResponse.ToolCalls[callId] = new ToolCall(
+                            _captureContent ? Limit(String(root, "name")) : null,
+                            _captureContent ? Limit(String(root, "arguments")) : null);
+                    }
+                }
                 break;
             case "error":
             case "rtc.call.error":
@@ -396,6 +506,11 @@ internal sealed class VoiceAgentRealtimeTelemetry
                 AddEvent(_session, "voice_agents.warning");
                 break;
             case "conversation.item.input_audio_transcription.completed":
+                if (Identifier(root, "item_id") is string transcriptItem &&
+                    _inputAudioItems.TryGetValue(transcriptItem, out InputAudio transcribed))
+                {
+                    SetInputAudioSummary(transcribed, _captureContent ? Limit(String(root, "transcript")) : null);
+                }
                 AddEvent(_session, "voice_agents.transcription.completed");
                 break;
             case "conversation.item.input_audio_transcription.failed":
@@ -419,12 +534,163 @@ internal sealed class VoiceAgentRealtimeTelemetry
                 }
                 AddEvent(_session, type, subagentTags);
                 break;
-            case "input_audio_buffer.cleared":
-            case "input_audio_buffer.committed":
             case "conversation.item.deleted":
                 AddEvent(_session, type);
                 break;
         }
+    }
+
+    private static bool HasAudioPart(JsonElement item)
+    {
+        if (item.ValueKind == JsonValueKind.Object && item.TryGetProperty("content", out JsonElement content) &&
+            content.ValueKind == JsonValueKind.Array)
+        {
+            foreach (JsonElement part in content.EnumerateArray())
+            {
+                if (String(part, "type") is "audio" or "input_audio")
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private InputAudio StartInputAudio()
+    {
+        InputAudio input = new() { Sequence = ++_inputSequence };
+        SetInputAudioSummary(input);
+        return input;
+    }
+
+    private void SetInputAudioSummary(InputAudio input, string transcript = null)
+    {
+        string summary = MessageSummary("user", "audio", _captureContent ? transcript : null);
+        if (input.Sequence == _inputSequence)
+        {
+            _lastInput = summary;
+            _session.SetTag("gen_ai.input.messages", summary);
+        }
+        foreach (ResponseActivity response in _responses.Values)
+        {
+            if (response.InputSequence == input.Sequence)
+            {
+                response.Activity?.SetTag("gen_ai.input.messages", summary);
+            }
+        }
+    }
+
+    private void ClearInputAudio()
+    {
+        if (_inputAudioBuffer?.Sequence == _inputSequence)
+        {
+            _inputSequence++;
+            _lastInput = null;
+            _session.SetTag("gen_ai.input.messages", null);
+        }
+        _inputAudioBuffer = null;
+    }
+
+    private void EnqueueInputAudio(PendingAudio pending, InputAudio input)
+    {
+        input.Pending = pending;
+        // Preserve overflow positions until their acknowledgements arrive.
+        if (pending.Items.Count >= MaxInputItems || pending.Skipped > 0)
+        {
+            input.Skipped = true;
+            pending.Skipped++;
+            _untrackedInputItems++;
+        }
+        else
+        {
+            pending.Items.Add(input);
+        }
+    }
+
+    private InputAudio MatchInputAudio(PendingAudio pending, string itemId)
+    {
+        if (_inputAudioItems.TryGetValue(itemId, out InputAudio known))
+        {
+            if (ReferenceEquals(known.Pending, pending))
+            {
+                if (!pending.Items.Remove(known) && known.Skipped && pending.Skipped > 0)
+                {
+                    pending.Skipped--;
+                }
+                known.Pending = null;
+                known.Skipped = false;
+            }
+            return known;
+        }
+        if (pending.Items.Count > 0)
+        {
+            InputAudio input = pending.Items[0];
+            pending.Items.RemoveAt(0);
+            input.Pending = null;
+            RememberInputAudio(itemId, input);
+            return input;
+        }
+        if (pending.Skipped > 0)
+        {
+            pending.Skipped--;
+        }
+        return null;
+    }
+
+    private void RememberInputAudio(string itemId, InputAudio input)
+    {
+        input.ItemId = itemId;
+        _inputAudioItems[itemId] = input;
+        if (_inputAudioItems.Count > MaxInputItems)
+        {
+            foreach (KeyValuePair<string, InputAudio> tracked in _inputAudioItems)
+            {
+                if (tracked.Value.Sequence != _inputSequence || tracked.Key != itemId)
+                {
+                    _inputAudioItems.Remove(tracked.Key);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void RecordAudioFormat(JsonElement session, string direction)
+    {
+        if (session.ValueKind != JsonValueKind.Object)
+        {
+            return;
+        }
+        JsonElement format;
+        JsonElement rate = default;
+        if (session.TryGetProperty("audio", out JsonElement audio) && audio.ValueKind == JsonValueKind.Object &&
+            audio.TryGetProperty(direction, out JsonElement settings) && settings.ValueKind == JsonValueKind.Object &&
+            settings.TryGetProperty("format", out format))
+        {
+            if (format.ValueKind == JsonValueKind.Object && !format.TryGetProperty("rate", out rate))
+            {
+                format.TryGetProperty("sample_rate", out rate);
+            }
+        }
+        else if (session.TryGetProperty(direction + "_audio_format", out format))
+        {
+            session.TryGetProperty(direction + "_audio_sample_rate", out rate);
+        }
+        else
+        {
+            return;
+        }
+        string value = format.ValueKind == JsonValueKind.String ? format.GetString() : String(format, "type");
+        string safeFormat = value switch
+        {
+            "audio/pcm" or "pcm16" => "audio/pcm",
+            "audio/pcmu" or "g711_ulaw" => "audio/pcmu",
+            "audio/pcma" or "g711_alaw" => "audio/pcma",
+            _ => null
+        };
+        _session.SetTag(Prefix + direction + ".audio.format", safeFormat);
+        _session.SetTag(Prefix + direction + ".audio.sample_rate",
+            safeFormat != null && rate.ValueKind == JsonValueKind.Number && rate.TryGetInt32(out int sampleRate) &&
+            sampleRate >= 8000 && sampleRate <= 384000 ? sampleRate : (int?)null);
     }
 
     private void StartResponse(JsonElement response)
@@ -449,7 +715,7 @@ internal sealed class VoiceAgentRealtimeTelemetry
         {
             activity?.SetTag("gen_ai.input.messages", _lastInput);
         }
-        _responses.Add(id, new ResponseActivity(activity));
+        _responses.Add(id, new ResponseActivity(activity) { InputSequence = _inputSequence });
     }
 
     private void FinishResponse(JsonElement response)
@@ -496,13 +762,25 @@ internal sealed class VoiceAgentRealtimeTelemetry
             SetNumberTag(state.Activity, usage, "input_tokens", "gen_ai.usage.input_tokens");
             SetNumberTag(state.Activity, usage, "output_tokens", "gen_ai.usage.output_tokens");
         }
-        if (response.TryGetProperty("output", out JsonElement output) && output.ValueKind == JsonValueKind.Array)
+        RecordOutputMessages(state, response);
+        StopDetachedActivity(state.Activity);
+        _responsesFinished++;
+    }
+
+    private void RecordOutputMessages(ResponseActivity state, JsonElement response)
+    {
+        bool hasOutput = response.ValueKind == JsonValueKind.Object &&
+            response.TryGetProperty("output", out JsonElement outputValue) && outputValue.ValueKind == JsonValueKind.Array;
+        if (hasOutput || state.ToolCalls?.Count > 0)
         {
             using MemoryStream buffer = new();
             using Utf8JsonWriter writer = new(buffer);
             writer.WriteStartArray();
             int messageCount = 0;
-            foreach (JsonElement item in output.EnumerateArray())
+            HashSet<string> observedCalls = new();
+            if (hasOutput)
+            {
+            foreach (JsonElement item in response.GetProperty("output").EnumerateArray())
             {
                 if (messageCount == 32)
                 {
@@ -510,7 +788,16 @@ internal sealed class VoiceAgentRealtimeTelemetry
                 }
                 if (String(item, "type") == "function_call")
                 {
-                    WriteMessage(writer, "assistant", "tool_call", null, Identifier(item, "call_id"));
+                    string callId = Identifier(item, "call_id");
+                    ToolCall observed = null;
+                    if (callId != null)
+                    {
+                        observedCalls.Add(callId);
+                        state.ToolCalls?.TryGetValue(callId, out observed);
+                    }
+                    WriteMessage(writer, "assistant", "tool_call", null, callId,
+                        _captureContent ? Limit(String(item, "name")) ?? observed?.Name : null,
+                        _captureContent ? Limit(String(item, "arguments")) ?? observed?.Arguments : null);
                     messageCount++;
                 }
                 if (item.ValueKind == JsonValueKind.Object && item.TryGetProperty("content", out JsonElement content) && content.ValueKind == JsonValueKind.Array)
@@ -527,12 +814,26 @@ internal sealed class VoiceAgentRealtimeTelemetry
                     }
                 }
             }
+            }
+            if (state.ToolCalls != null)
+            {
+                foreach (KeyValuePair<string, ToolCall> call in state.ToolCalls)
+                {
+                    if (messageCount >= 32)
+                    {
+                        break;
+                    }
+                    if (observedCalls.Add(call.Key))
+                    {
+                        WriteMessage(writer, "assistant", "tool_call", null, call.Key, call.Value.Name, call.Value.Arguments);
+                        messageCount++;
+                    }
+                }
+            }
             writer.WriteEndArray();
             writer.Flush();
             state.Activity?.SetTag("gen_ai.output.messages", new BinaryData(buffer.ToArray()).ToString());
         }
-        StopDetachedActivity(state.Activity);
-        _responsesFinished++;
     }
 
     private ResponseActivity FindResponse(JsonElement root)
@@ -580,11 +881,31 @@ internal sealed class VoiceAgentRealtimeTelemetry
         return new BinaryData(buffer.ToArray()).ToString();
     }
 
-    private static void WriteMessage(Utf8JsonWriter writer, string role, string type, string content, string callId = null)
+    private static void WriteMessage(Utf8JsonWriter writer, string role, string type, string content, string callId = null,
+        string toolName = null, string arguments = null)
     {
         writer.WriteStartObject();
         writer.WriteString("role", role);
         writer.WriteStartArray("parts");
+        WritePart(writer, type, content, callId, toolName, arguments);
+        writer.WriteEndArray();
+        writer.WriteEndObject();
+    }
+
+    private static string InstructionSummary(string instructions)
+    {
+        using MemoryStream buffer = new();
+        using Utf8JsonWriter writer = new(buffer);
+        writer.WriteStartArray();
+        WritePart(writer, "text", instructions);
+        writer.WriteEndArray();
+        writer.Flush();
+        return new BinaryData(buffer.ToArray()).ToString();
+    }
+
+    private static void WritePart(Utf8JsonWriter writer, string type, string content, string callId = null,
+        string toolName = null, string arguments = null)
+    {
         writer.WriteStartObject();
         writer.WriteString("type", type);
         if (callId != null)
@@ -595,8 +916,14 @@ internal sealed class VoiceAgentRealtimeTelemetry
         {
             writer.WriteString(type == "tool_call_response" ? "response" : "content", Limit(content));
         }
-        writer.WriteEndObject();
-        writer.WriteEndArray();
+        if (toolName != null)
+        {
+            writer.WriteString("name", toolName);
+        }
+        if (arguments != null)
+        {
+            writer.WriteString("arguments", arguments);
+        }
         writer.WriteEndObject();
     }
 
@@ -611,14 +938,24 @@ internal sealed class VoiceAgentRealtimeTelemetry
         {
             response.Activity?.SetTag(Prefix + "response.status", "interrupted");
             response.Activity?.SetTag(Prefix + "output.audio.bytes", response.OutputAudioBytes);
+            RecordOutputMessages(response, default);
             StopDetachedActivity(response.Activity);
         }
         _responses.Clear();
+        _inputAudioItems.Clear();
+        _pendingAudioCommits.Items.Clear();
+        _pendingAudioMessages.Items.Clear();
+        _inputAudioBuffer = null;
         _sendBuffer?.Dispose();
         _receiveBuffer?.Dispose();
         _sendBuffer = null;
         _receiveBuffer = null;
         _session.SetTag(Prefix + "input.audio.bytes", _inputAudioBytes);
+        _session.SetTag(Prefix + "output.audio.bytes", _outputAudioBytes);
+        if (_untrackedInputItems > 0)
+        {
+            _session.SetTag(Prefix + "input.items.untracked", _untrackedInputItems);
+        }
         _session.SetTag(Prefix + "responses.finished", _responsesFinished);
         _session.SetTag("gen_ai.conversation.id", _conversationId);
         if (_lastInput != null)
@@ -657,6 +994,7 @@ internal sealed class VoiceAgentRealtimeTelemetry
             activity?.SetTag("server.port", _endpoint.Port);
         }
         activity?.SetTag("gen_ai.agent.name", _agentName);
+        activity?.SetTag("gen_ai.agent.type", "voice");
     }
 
     private void AddEvent(Activity activity, string name, ActivityTagsCollection tags = null)
@@ -779,5 +1117,28 @@ internal sealed class VoiceAgentRealtimeTelemetry
         internal Activity Activity { get; } = activity;
         internal long StartTimestamp { get; } = Stopwatch.GetTimestamp();
         internal long OutputAudioBytes { get; set; }
+        internal bool FirstTextReceived { get; set; }
+        internal long InputSequence { get; set; }
+        internal Dictionary<string, ToolCall> ToolCalls { get; set; }
+    }
+
+    private sealed class ToolCall(string name, string arguments)
+    {
+        internal string Name { get; } = name;
+        internal string Arguments { get; } = arguments;
+    }
+
+    private sealed class InputAudio
+    {
+        internal long Sequence { get; set; }
+        internal string ItemId { get; set; }
+        internal PendingAudio Pending { get; set; }
+        internal bool Skipped { get; set; }
+    }
+
+    private sealed class PendingAudio
+    {
+        internal List<InputAudio> Items { get; } = new();
+        internal long Skipped { get; set; }
     }
 }
