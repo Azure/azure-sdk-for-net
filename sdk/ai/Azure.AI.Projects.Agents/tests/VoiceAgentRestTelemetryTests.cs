@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 
-#pragma warning disable AAIP001
+#pragma warning disable AAIP001, SCME0002
 
 namespace Azure.AI.Projects.Agents.Tests;
 
@@ -69,7 +69,9 @@ public class VoiceAgentRestTelemetryTests
     [SetUp]
     public void SetUp()
     {
-        _activities.Clear();
+        while (_activities.TryDequeue(out _))
+        {
+        }
         _originalEnableEnvironment = Environment.GetEnvironmentVariable(EnableEnvironment);
         _originalContentEnvironment = Environment.GetEnvironmentVariable(ContentEnvironment);
         _hadEnableSwitch = AppContext.TryGetSwitch(EnableSwitch, out _originalEnableSwitch);
@@ -163,13 +165,15 @@ public class VoiceAgentRestTelemetryTests
         AssertPrivateSafe(span);
     }
 
-    [TestCase(false, true)]
-    [TestCase(true, false)]
-    public async Task TracingRequiresBothGenAiOptInAndDistributedTracing(bool genAiEnabled, bool distributedTracing)
+    [TestCase(false, true, false)]
+    [TestCase(true, false, false)]
+    [TestCase(false, true, true)]
+    [TestCase(true, false, true)]
+    public async Task TracingRequiresBothGenAiOptInAndDistributedTracing(bool genAiEnabled, bool distributedTracing, bool fromSettings)
     {
         SetTracing(genAiEnabled);
         AgentAdministrationClient client = CreateClient(true, message =>
-            new MockPipelineResponse(message.Request.Uri.AbsolutePath.EndsWith("/agents", StringComparison.Ordinal) ? 200 : 202).WithContent(ResponseBody), distributedTracing);
+            new MockPipelineResponse(message.Request.Uri.AbsolutePath.EndsWith("/agents", StringComparison.Ordinal) ? 200 : 202).WithContent(ResponseBody), distributedTracing, fromSettings);
         await Mutate(client, "create_call_job", true, false);
         using BinaryContent content = JsonContent("""{"name":"voice-agent","definition":{"kind":"voice","model":"gpt-realtime"}}""");
         await client.CreateAgentAsync(content);
@@ -525,11 +529,17 @@ public class VoiceAgentRestTelemetryTests
         Assert.That(span.Duration, Is.GreaterThan(TimeSpan.Zero));
     }
 
-    [TestCase(false)]
-    [TestCase(true)]
-    public async Task GenerateAgentUsesCreateAgentSpanWithoutRecordingPrompt(bool isAsync)
+    [TestCase(false, false)]
+    [TestCase(true, false)]
+    [TestCase(false, true)]
+    [TestCase(true, true)]
+    public async Task GenerateAgentUsesCreateAgentSpanWithoutRecordingPrompt(bool isAsync, bool fromSettings)
     {
-        AgentAdministrationClient client = CreateClient(isAsync, _ => new MockPipelineResponse(200).WithContent(AgentResponse));
+        AgentAdministrationClient client = CreateClient(isAsync, message =>
+        {
+            Assert.That(message.Request.Uri.Query, Does.Contain("api-version="));
+            return new MockPipelineResponse(200).WithContent(AgentResponse);
+        }, fromSettings: fromSettings);
         using BinaryContent content = JsonContent("""{"kind":"voice","prompt":"private-rest-content"}""");
         if (isAsync)
         {
@@ -609,11 +619,18 @@ public class VoiceAgentRestTelemetryTests
         }));
     }
 
-    private static AgentAdministrationClient CreateClient(bool isAsync, Func<PipelineMessage, MockPipelineResponse> response, bool tracing = true)
+    private static AgentAdministrationClient CreateClient(bool isAsync, Func<PipelineMessage, MockPipelineResponse> response, bool tracing = true, bool fromSettings = false)
     {
         MockPipelineTransport transport = new(message => response(message)) { ExpectSyncPipeline = !isAsync };
         AgentAdministrationClientOptions options = new() { Transport = transport, EnableDistributedTracing = tracing, RetryPolicy = new ClientRetryPolicy(0) };
-        return new AgentAdministrationClient(new Uri(Endpoint), new FakeTokenProvider(), options);
+        return fromSettings
+            ? new AgentAdministrationClient(new AgentAdministrationClientSettings
+            {
+                Endpoint = new Uri(Endpoint),
+                Options = options,
+                Credential = new CredentialSettings(null) { CredentialSource = "ApiKey", Key = "private-token" }
+            })
+            : new AgentAdministrationClient(new Uri(Endpoint), new FakeTokenProvider(), options);
     }
 
     private void SetTracing(bool enabled)
