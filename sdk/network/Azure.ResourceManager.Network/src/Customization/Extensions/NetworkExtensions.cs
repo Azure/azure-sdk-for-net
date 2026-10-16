@@ -385,51 +385,99 @@ namespace Azure.ResourceManager.Network
             return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAllServiceTagInformation(location, noAddressPrefixes, tagName, cancellationToken);
         }
 
+        // Keep the previously released, misleading names for binary compatibility.
+        // These operations list policies across the subscription; GetServiceEndpointPolicies[Async] correctly describes that scope.
         /// <summary> Gets service endpoint policies. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use GetServiceEndpointPoliciesAsync instead.")]
         public static AsyncPageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
             => GetMockableNetworkSubscriptionResource(subscriptionResource).GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(cancellationToken);
 
         /// <summary> Gets service endpoint policies. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use GetServiceEndpointPolicies instead.")]
         public static Pageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicy(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
             => GetMockableNetworkSubscriptionResource(subscriptionResource).GetServiceEndpointPoliciesByServiceEndpointPolicy(cancellationToken);
 
+        // Keep the shorter names released in 1.16.1 and 1.17 for binary compatibility.
+        // Generated names again identify this metadata as application-gateway-specific; keep dispatch through the mockable aliases.
         /// <summary> Gets available request headers. </summary>
-        public static AsyncPageable<string> GetAvailableRequestHeadersApplicationGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableRequestHeadersApplicationGatewaysAsync(cancellationToken);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use GetAvailableRequestHeadersApplicationGatewaysAsync instead.")]
+        public static AsyncPageable<string> GetAvailableRequestHeadersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableRequestHeadersAsync(cancellationToken);
+        }
 
         /// <summary> Gets available request headers. </summary>
-        public static Pageable<string> GetAvailableRequestHeadersApplicationGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableRequestHeadersApplicationGateways(cancellationToken);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use GetAvailableRequestHeadersApplicationGateways instead.")]
+        public static Pageable<string> GetAvailableRequestHeaders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableRequestHeaders(cancellationToken);
+        }
 
         /// <summary> Gets available response headers. </summary>
-        public static AsyncPageable<string> GetAvailableResponseHeadersApplicationGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableResponseHeadersApplicationGatewaysAsync(cancellationToken);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use GetAvailableResponseHeadersApplicationGatewaysAsync instead.")]
+        public static AsyncPageable<string> GetAvailableResponseHeadersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableResponseHeadersAsync(cancellationToken);
+        }
 
         /// <summary> Gets available response headers. </summary>
-        public static Pageable<string> GetAvailableResponseHeadersApplicationGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableResponseHeadersApplicationGateways(cancellationToken);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use GetAvailableResponseHeadersApplicationGateways instead.")]
+        public static Pageable<string> GetAvailableResponseHeaders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableResponseHeaders(cancellationToken);
+        }
 
         /// <summary> Gets available server variables. </summary>
-        public static AsyncPageable<string> GetAvailableServerVariablesApplicationGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableServerVariablesApplicationGatewaysAsync(cancellationToken);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use GetAvailableServerVariablesApplicationGatewaysAsync instead.")]
+        public static AsyncPageable<string> GetAvailableServerVariablesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableServerVariablesAsync(cancellationToken);
+        }
 
         /// <summary> Gets available server variables. </summary>
-        public static Pageable<string> GetAvailableServerVariablesApplicationGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableServerVariablesApplicationGateways(cancellationToken);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use GetAvailableServerVariablesApplicationGateways instead.")]
+        public static Pageable<string> GetAvailableServerVariables(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableServerVariables(cancellationToken);
+        }
 
+        // Keep the released historical names for binary compatibility.
+        // The PrivateLinkService suffix repeats what is already in the name; prefer the shorter generated names for the same operations.
         /// <summary> Checks private link service visibility by resource group. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibilityByResourceGroupAsync instead.")]
         public static Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken)
             => GetMockableNetworkResourceGroupResource(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(waitUntil, location, content, cancellationToken);
 
         /// <summary> Checks private link service visibility by resource group. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibilityByResourceGroup instead.")]
         public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken)
             => GetMockableNetworkResourceGroupResource(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(waitUntil, location, content, cancellationToken);
 
         /// <summary> Checks private link service visibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibilityAsync instead.")]
         public static Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken)
             => GetMockableNetworkSubscriptionResource(subscriptionResource).CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(waitUntil, location, content, cancellationToken);
 
         /// <summary> Checks private link service visibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibility instead.")]
         public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken)
             => GetMockableNetworkSubscriptionResource(subscriptionResource).CheckPrivateLinkServiceVisibilityPrivateLinkService(waitUntil, location, content, cancellationToken);
 

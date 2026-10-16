@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAvailableServerVariablesRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetAvailableServerVariablesApplicationGatewaysRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAvailableRequestHeadersRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetAvailableRequestHeadersApplicationGatewaysRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAvailableResponseHeadersRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetAvailableResponseHeadersApplicationGatewaysRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

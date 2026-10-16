@@ -17,19 +17,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class MockableNetworkSubscriptionResourceGetAvailableServerVariablesAsyncCollectionResultOfT : AsyncPageable<string>
+    internal partial class MockableNetworkSubscriptionResourceGetAvailableServerVariablesApplicationGatewaysAsyncCollectionResultOfT : AsyncPageable<string>
     {
         private readonly ApplicationGateways _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MockableNetworkSubscriptionResourceGetAvailableServerVariablesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of MockableNetworkSubscriptionResourceGetAvailableServerVariablesApplicationGatewaysAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ApplicationGateways client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MockableNetworkSubscriptionResourceGetAvailableServerVariablesAsyncCollectionResultOfT(ApplicationGateways client, Guid subscriptionId, RequestContext context, string diagnosticScope)
+        public MockableNetworkSubscriptionResourceGetAvailableServerVariablesApplicationGatewaysAsyncCollectionResultOfT(ApplicationGateways client, Guid subscriptionId, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Network
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MockableNetworkSubscriptionResourceGetAvailableServerVariablesAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MockableNetworkSubscriptionResourceGetAvailableServerVariablesApplicationGatewaysAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MockableNetworkSubscriptionResourceGetAvailableServerVariablesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of MockableNetworkSubscriptionResourceGetAvailableServerVariablesApplicationGatewaysAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<string>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetAvailableServerVariablesRequest(_subscriptionId, _context);
+            HttpMessage message = _client.CreateGetAvailableServerVariablesApplicationGatewaysRequest(_subscriptionId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

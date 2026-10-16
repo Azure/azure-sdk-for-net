@@ -3480,13 +3480,13 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<string> GetAvailableServerVariablesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<string> GetAvailableServerVariablesApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new MockableNetworkSubscriptionResourceGetAvailableServerVariablesAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableServerVariables");
+            return new MockableNetworkSubscriptionResourceGetAvailableServerVariablesApplicationGatewaysAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableServerVariablesApplicationGateways");
         }
 
         /// <summary>
@@ -3508,13 +3508,13 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<string> GetAvailableServerVariables(CancellationToken cancellationToken = default)
+        public virtual Pageable<string> GetAvailableServerVariablesApplicationGateways(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new MockableNetworkSubscriptionResourceGetAvailableServerVariablesCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableServerVariables");
+            return new MockableNetworkSubscriptionResourceGetAvailableServerVariablesApplicationGatewaysCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableServerVariablesApplicationGateways");
         }
 
         /// <summary>
@@ -3536,13 +3536,13 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<string> GetAvailableRequestHeadersAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<string> GetAvailableRequestHeadersApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new MockableNetworkSubscriptionResourceGetAvailableRequestHeadersAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableRequestHeaders");
+            return new MockableNetworkSubscriptionResourceGetAvailableRequestHeadersApplicationGatewaysAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableRequestHeadersApplicationGateways");
         }
 
         /// <summary>
@@ -3564,13 +3564,13 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<string> GetAvailableRequestHeaders(CancellationToken cancellationToken = default)
+        public virtual Pageable<string> GetAvailableRequestHeadersApplicationGateways(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new MockableNetworkSubscriptionResourceGetAvailableRequestHeadersCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableRequestHeaders");
+            return new MockableNetworkSubscriptionResourceGetAvailableRequestHeadersApplicationGatewaysCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableRequestHeadersApplicationGateways");
         }
 
         /// <summary>
@@ -3592,13 +3592,13 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<string> GetAvailableResponseHeadersAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<string> GetAvailableResponseHeadersApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new MockableNetworkSubscriptionResourceGetAvailableResponseHeadersAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableResponseHeaders");
+            return new MockableNetworkSubscriptionResourceGetAvailableResponseHeadersApplicationGatewaysAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableResponseHeadersApplicationGateways");
         }
 
         /// <summary>
@@ -3620,13 +3620,13 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<string> GetAvailableResponseHeaders(CancellationToken cancellationToken = default)
+        public virtual Pageable<string> GetAvailableResponseHeadersApplicationGateways(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new MockableNetworkSubscriptionResourceGetAvailableResponseHeadersCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableResponseHeaders");
+            return new MockableNetworkSubscriptionResourceGetAvailableResponseHeadersApplicationGatewaysCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableResponseHeadersApplicationGateways");
         }
 
         /// <summary>

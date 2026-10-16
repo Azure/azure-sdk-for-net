@@ -23,7 +23,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <summary> Invokes the SwapPublicIPAddressesLoadBalancer compatibility operation. </summary>
         public virtual ArmOperation SwapPublicIPAddressesLoadBalancer(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken)
             => SwapPublicIpAddresses(waitUntil, location, content, cancellationToken);
+        // Keep the released historical names for binary compatibility.
+        // The PrivateLinkService suffix is redundant; these aliases forward to the preferred shorter generated names.
         /// <summary> Invokes the CheckPrivateLinkServiceVisibilityPrivateLinkService compatibility operation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibility instead.")]
         public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken)
             => CheckPrivateLinkServiceVisibility(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
         /// <summary> Invokes the GetApplicationGatewayWafDynamicManifests compatibility operation. </summary>
@@ -71,6 +75,8 @@ namespace Azure.ResourceManager.Network.Mocking
             return Response.FromValue(NetworkExtensions.NormalizeApplicationGatewaySslPredefinedPolicy(response.Value, Id.SubscriptionId), response.GetRawResponse());
         }
         /// <summary> Invokes the CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync compatibility operation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibilityAsync instead.")]
         public virtual Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken)
             => CheckPrivateLinkServiceVisibilityAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
         /// <summary> Invokes the SwapPublicIPAddressesLoadBalancerAsync compatibility operation. </summary>
@@ -294,36 +300,56 @@ namespace Azure.ResourceManager.Network.Mocking
             return GetAllServiceTagInformation(new AzureLocation(location), noAddressPrefixes, tagName, cancellationToken);
         }
 
+        // Keep the previously released, misleading names for binary compatibility.
+        // These operations list policies across the subscription; GetServiceEndpointPolicies[Async] correctly describes that scope.
         /// <summary> Invokes the GetServiceEndpointPoliciesByServiceEndpointPolicyAsync compatibility operation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use GetServiceEndpointPoliciesAsync instead.")]
         public virtual AsyncPageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(CancellationToken cancellationToken)
             => GetServiceEndpointPoliciesAsync(cancellationToken);
 
         /// <summary> Invokes the GetServiceEndpointPoliciesByServiceEndpointPolicy compatibility operation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use GetServiceEndpointPolicies instead.")]
         public virtual Pageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicy(CancellationToken cancellationToken)
             => GetServiceEndpointPolicies(cancellationToken);
 
-        /// <summary> Invokes the GetAvailableRequestHeadersApplicationGatewaysAsync compatibility operation. </summary>
-        public virtual AsyncPageable<string> GetAvailableRequestHeadersApplicationGatewaysAsync(CancellationToken cancellationToken)
-            => GetAvailableRequestHeadersAsync(cancellationToken);
+        // Keep the shorter names released in 1.16.1 and 1.17 for binary compatibility.
+        // Generated names again identify this metadata as application-gateway-specific.
+        /// <summary> Invokes the GetAvailableRequestHeadersAsync compatibility operation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use GetAvailableRequestHeadersApplicationGatewaysAsync instead.")]
+        public virtual AsyncPageable<string> GetAvailableRequestHeadersAsync(CancellationToken cancellationToken = default)
+            => GetAvailableRequestHeadersApplicationGatewaysAsync(cancellationToken);
 
-        /// <summary> Invokes the GetAvailableRequestHeadersApplicationGateways compatibility operation. </summary>
-        public virtual Pageable<string> GetAvailableRequestHeadersApplicationGateways(CancellationToken cancellationToken)
-            => GetAvailableRequestHeaders(cancellationToken);
+        /// <summary> Invokes the GetAvailableRequestHeaders compatibility operation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use GetAvailableRequestHeadersApplicationGateways instead.")]
+        public virtual Pageable<string> GetAvailableRequestHeaders(CancellationToken cancellationToken = default)
+            => GetAvailableRequestHeadersApplicationGateways(cancellationToken);
 
-        /// <summary> Invokes the GetAvailableResponseHeadersApplicationGatewaysAsync compatibility operation. </summary>
-        public virtual AsyncPageable<string> GetAvailableResponseHeadersApplicationGatewaysAsync(CancellationToken cancellationToken)
-            => GetAvailableResponseHeadersAsync(cancellationToken);
+        /// <summary> Invokes the GetAvailableResponseHeadersAsync compatibility operation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use GetAvailableResponseHeadersApplicationGatewaysAsync instead.")]
+        public virtual AsyncPageable<string> GetAvailableResponseHeadersAsync(CancellationToken cancellationToken = default)
+            => GetAvailableResponseHeadersApplicationGatewaysAsync(cancellationToken);
 
-        /// <summary> Invokes the GetAvailableResponseHeadersApplicationGateways compatibility operation. </summary>
-        public virtual Pageable<string> GetAvailableResponseHeadersApplicationGateways(CancellationToken cancellationToken)
-            => GetAvailableResponseHeaders(cancellationToken);
+        /// <summary> Invokes the GetAvailableResponseHeaders compatibility operation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use GetAvailableResponseHeadersApplicationGateways instead.")]
+        public virtual Pageable<string> GetAvailableResponseHeaders(CancellationToken cancellationToken = default)
+            => GetAvailableResponseHeadersApplicationGateways(cancellationToken);
 
-        /// <summary> Invokes the GetAvailableServerVariablesApplicationGatewaysAsync compatibility operation. </summary>
-        public virtual AsyncPageable<string> GetAvailableServerVariablesApplicationGatewaysAsync(CancellationToken cancellationToken)
-            => GetAvailableServerVariablesAsync(cancellationToken);
+        /// <summary> Invokes the GetAvailableServerVariablesAsync compatibility operation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use GetAvailableServerVariablesApplicationGatewaysAsync instead.")]
+        public virtual AsyncPageable<string> GetAvailableServerVariablesAsync(CancellationToken cancellationToken = default)
+            => GetAvailableServerVariablesApplicationGatewaysAsync(cancellationToken);
 
-        /// <summary> Invokes the GetAvailableServerVariablesApplicationGateways compatibility operation. </summary>
-        public virtual Pageable<string> GetAvailableServerVariablesApplicationGateways(CancellationToken cancellationToken)
-            => GetAvailableServerVariables(cancellationToken);
+        /// <summary> Invokes the GetAvailableServerVariables compatibility operation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated. Please use GetAvailableServerVariablesApplicationGateways instead.")]
+        public virtual Pageable<string> GetAvailableServerVariables(CancellationToken cancellationToken = default)
+            => GetAvailableServerVariablesApplicationGateways(cancellationToken);
     }
 }
