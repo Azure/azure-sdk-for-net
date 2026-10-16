@@ -14,6 +14,12 @@ namespace Azure.AI.Projects.Agents.Telemetry
         public const string AzNamespaceKey = "az.namespace";
         public const string ServerAddressKey = "server.address";
         public const string ServerPortKey = "server.port";
+        public const string HttpResponseStatusCodeKey = "http.response.status_code";
+        public const string VoiceAgentOperationKey = "az.ai.voice_agents.operation";
+        public const string VoiceAgentCancelledKey = "az.ai.voice_agents.cancelled";
+        public const string VoiceAgentCallJobIdKey = "az.ai.voice_agents.telephony.call_job.id";
+        public const string VoiceAgentCallJobStatusKey = "az.ai.voice_agents.call_job.status";
+        public const string VoiceAgentTelemetryErrorTypeKey = "az.ai.voice_agents.telemetry.error.type";
 
         public const string GenAiClientOperationDurationMetricName = "gen_ai.client.operation.duration";
         public const string GenAiClientTokenUsageMetricName = "gen_ai.client.token.usage";
@@ -83,6 +89,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
         public const string AgentTypePrompt = "prompt";
         public const string AgentTypeWorkflow = "workflow";
         public const string AgentTypeHosted = "hosted";
+        public const string AgentTypeVoice = "voice";
         public const string AgentTypeUnknown = "unknown";
 
         // Hosted agent specific attributes

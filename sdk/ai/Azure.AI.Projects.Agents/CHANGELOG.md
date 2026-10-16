@@ -3,6 +3,7 @@
 ## 3.0.0-beta.5 (Unreleased)
 
 ### Features Added
+- Added opt-in, privacy-safe GenAI tracing for VoiceAgents REST mutations and voice-agent creation metadata.
 
 ### Breaking Changes
 
