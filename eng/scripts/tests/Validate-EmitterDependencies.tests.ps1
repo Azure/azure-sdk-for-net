@@ -203,7 +203,7 @@ Describe "Emitter CI integration" {
         $pipeline | Should -Match "Invoke-Pester -Path.*Validate-EmitterDependencies.tests.ps1"
     }
 
-    It "triggers both CI pipelines for dependencies, validators, tests and approvals" {
+    It "triggers both CI pipelines for dependencies, validators, tests and their consumed approval descriptors" {
         foreach ($emitter in @("http-client-csharp", "http-client-csharp-mgmt")) {
             $pipeline = Get-Content (Join-Path $repoRoot "eng/packages/$emitter/ci.yml") -Raw | ConvertFrom-Yaml
             foreach ($trigger in @("trigger", "pr")) {
@@ -212,10 +212,16 @@ Describe "Emitter CI integration" {
                     "eng/scripts/typespec",
                     "eng/scripts/tests/Validate-EmitterDependencies.tests.ps1",
                     "eng/http-client-csharp-emitter-package.json",
-                    "eng/azure-typespec-http-client-csharp-emitter-package.json",
                     "eng/pipelines/templates/archetype-typespec-emitter.yml"
                 )) {
                     $pipeline[$trigger].paths.include | Should -Contain $path
+                }
+                $azureDescriptor = "eng/azure-typespec-http-client-csharp-emitter-package.json"
+                if ($emitter -eq "http-client-csharp-mgmt") {
+                    $pipeline[$trigger].paths.include | Should -Contain $azureDescriptor
+                }
+                else {
+                    $pipeline[$trigger].paths.include | Should -Not -Contain $azureDescriptor
                 }
             }
         }
