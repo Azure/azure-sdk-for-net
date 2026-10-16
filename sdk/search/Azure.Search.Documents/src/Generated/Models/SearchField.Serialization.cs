@@ -130,20 +130,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("permissionFilter"u8);
                 }
             }
-            if (Optional.IsDefined(SensitivityLabelId))
+            if (Optional.IsDefined(OrganizationAccessExpiration))
             {
-                writer.WritePropertyName("sensitivityLabelId"u8);
-                writer.WriteBooleanValue(SensitivityLabelId.Value);
-            }
-            if (Optional.IsDefined(SensitivityLabelName))
-            {
-                writer.WritePropertyName("sensitivityLabelName"u8);
-                writer.WriteBooleanValue(SensitivityLabelName.Value);
-            }
-            if (Optional.IsDefined(SourceDocumentId))
-            {
-                writer.WritePropertyName("sourceDocumentId"u8);
-                writer.WriteBooleanValue(SourceDocumentId.Value);
+                writer.WritePropertyName("organizationAccessExpiration"u8);
+                writer.WriteBooleanValue(OrganizationAccessExpiration.Value);
             }
             if (Optional.IsDefined(SharepointSiteUrl))
             {
@@ -277,9 +267,7 @@ namespace Azure.Search.Documents.Indexes.Models
             bool? isFacetable = default;
             bool permissionFilterIsDefined = false;
             PermissionFilter? permissionFilter = default;
-            bool? sensitivityLabelId = default;
-            bool? sensitivityLabelName = default;
-            bool? sourceDocumentId = default;
+            bool? organizationAccessExpiration = default;
             bool? sharepointSiteUrl = default;
             LexicalAnalyzerName? analyzerName = default;
             LexicalAnalyzerName? searchAnalyzerName = default;
@@ -379,31 +367,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     permissionFilter = new PermissionFilter(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("sensitivityLabelId"u8))
+                if (prop.NameEquals("organizationAccessExpiration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sensitivityLabelId = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("sensitivityLabelName"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sensitivityLabelName = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("sourceDocumentId"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceDocumentId = prop.Value.GetBoolean();
+                    organizationAccessExpiration = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("sharepointSiteUrl"u8))
@@ -537,9 +507,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 isSortable,
                 isFacetable,
                 permissionFilter,
-                sensitivityLabelId,
-                sensitivityLabelName,
-                sourceDocumentId,
+                organizationAccessExpiration,
                 sharepointSiteUrl,
                 analyzerName,
                 searchAnalyzerName,

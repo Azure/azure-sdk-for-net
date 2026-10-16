@@ -9,10 +9,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public sealed class UnknownKnowledgeBaseRetrievalStreamEvent : KnowledgeBaseRetrievalStreamEvent
     {
         internal UnknownKnowledgeBaseRetrievalStreamEvent(string eventName, BinaryData data)
-            : base(eventName)
         {
+            EventName = eventName;
             Data = data ?? throw new ArgumentNullException(nameof(data));
         }
+
+        /// <summary> Gets the wire name of the unrecognized server-sent event. </summary>
+        public string EventName { get; }
 
         /// <summary> Gets the raw JSON payload for the unknown event. </summary>
         public BinaryData Data { get; }

@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// search-preview:2026-05-01-preview (entire class)
+// Query rewrites are not supported by the GA API.
+#if false
 
 using System;
 using System.Text;
@@ -89,3 +90,4 @@ namespace Azure.Search.Documents.Models
         }
     }
 }
+#endif

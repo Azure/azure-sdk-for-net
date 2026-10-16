@@ -54,6 +54,11 @@ namespace Azure.Search.Documents.Tests
         /// </summary>
         public static IEnumerable<TestCaseData> SearchOptionProperties()
         {
+            yield return new TestCaseData(
+                (Action<SearchOptions>)(o => o.MoreLikeThis = "hotel-1"),
+                "\"moreLikeThis\":\"hotel-1\"")
+                .SetName("Serializes_MoreLikeThis");
+
             // Filter
             yield return new TestCaseData(
                 (Action<SearchOptions>)(o => o.Filter = "rating gt 4"),
@@ -183,7 +188,7 @@ namespace Azure.Search.Documents.Tests
             configure(searchOptions);
 
             // Act: trigger the search request
-            await client.SearchAsync<SearchDocument>("*", searchOptions);
+            await client.SearchAsync<SearchDocument>(searchOptions.MoreLikeThis is null ? "*" : null, searchOptions);
 
             // Assert: check the request body contains the expected JSON fragment
             var request = transport.Requests.Single();

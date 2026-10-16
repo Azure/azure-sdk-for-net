@@ -91,50 +91,6 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        public async Task GetDocumentSendsQuerySourceAuthorizationHeader()
-        {
-            var mockResponse = new MockResponse(200);
-            mockResponse.SetContent("{\"id\":\"1\",\"title\":\"Test\"}");
-            var transport = new MockTransport(new[] { mockResponse });
-            var client = CreateTestClient(transport);
-
-            await client.GetDocumentAsync<SearchDocument>(
-                "1",
-                querySourceAuthorization: "my-auth-token",
-                enableElevatedRead: true);
-
-            MockRequest request = transport.Requests.Single();
-            Assert.IsTrue(
-                request.Headers.TryGetValue("x-ms-query-source-authorization", out string authValue),
-                "Expected x-ms-query-source-authorization header.");
-            Assert.AreEqual("my-auth-token", authValue);
-
-            Assert.IsTrue(
-                request.Headers.TryGetValue("x-ms-enable-elevated-read", out string elevatedValue),
-                "Expected x-ms-enable-elevated-read header.");
-            Assert.AreEqual("true", elevatedValue);
-        }
-
-        [Test]
-        public async Task GetDocumentOmitsHeadersWhenNull()
-        {
-            var mockResponse = new MockResponse(200);
-            mockResponse.SetContent("{\"id\":\"1\",\"title\":\"Test\"}");
-            var transport = new MockTransport(new[] { mockResponse });
-            var client = CreateTestClient(transport);
-
-            await client.GetDocumentAsync<SearchDocument>("1");
-
-            MockRequest request = transport.Requests.Single();
-            Assert.IsFalse(
-                request.Headers.TryGetValue("x-ms-query-source-authorization", out _),
-                "x-ms-query-source-authorization header should not be present when null.");
-            Assert.IsFalse(
-                request.Headers.TryGetValue("x-ms-enable-elevated-read", out _),
-                "x-ms-enable-elevated-read header should not be present when null.");
-        }
-
-        [Test]
         public async Task SearchPaginationCarriesSecurityHeaders()
         {
             // First page: includes @search.nextPageParameters to trigger a second request

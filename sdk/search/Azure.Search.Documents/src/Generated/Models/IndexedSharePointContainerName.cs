@@ -21,6 +21,12 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string AllSiteLibrariesValue = "allSiteLibraries";
         /// <summary> Use a query to filter SharePoint content. </summary>
         private const string UseQueryValue = "useQuery";
+        /// <summary> Index content from every list in the site. </summary>
+        private const string AllSiteListsValue = "allSiteLists";
+        /// <summary> Index content from every page in the site. </summary>
+        private const string AllSitePagesValue = "allSitePages";
+        /// <summary> Index content from all supported libraries, lists, and pages in the site. </summary>
+        private const string AllSiteContentValue = "allSiteContent";
 
         /// <summary> Initializes a new instance of <see cref="IndexedSharePointContainerName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +46,15 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Use a query to filter SharePoint content. </summary>
         public static IndexedSharePointContainerName UseQuery { get; } = new IndexedSharePointContainerName(UseQueryValue);
+
+        /// <summary> Index content from every list in the site. </summary>
+        public static IndexedSharePointContainerName AllSiteLists { get; } = new IndexedSharePointContainerName(AllSiteListsValue);
+
+        /// <summary> Index content from every page in the site. </summary>
+        public static IndexedSharePointContainerName AllSitePages { get; } = new IndexedSharePointContainerName(AllSitePagesValue);
+
+        /// <summary> Index content from all supported libraries, lists, and pages in the site. </summary>
+        public static IndexedSharePointContainerName AllSiteContent { get; } = new IndexedSharePointContainerName(AllSiteContentValue);
 
         /// <summary> Determines if two <see cref="IndexedSharePointContainerName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

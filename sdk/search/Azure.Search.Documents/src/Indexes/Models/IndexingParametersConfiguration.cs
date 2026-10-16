@@ -14,6 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexingParametersConfiguration : IDictionary<string, object>
     {
         private const string QueryTimeoutFormat = @"hh\:mm\:ss";
+        private IDictionary<string, object> _additionalProperties;
 
         [CodeGenMember("QueryTimeout")]
         private string _queryTimeout;
@@ -36,6 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
             bool? allowSkillsetToReadFileData,
             BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm,
             IndexerExecutionEnvironment? executionEnvironment,
+            bool? refreshAllAcls,
             string queryTimeout,
             IDictionary<string, object> additionalProperties)
         {
@@ -56,11 +58,38 @@ namespace Azure.Search.Documents.Indexes.Models
             AllowSkillsetToReadFileData = allowSkillsetToReadFileData;
             PdfTextRotationAlgorithm = pdfTextRotationAlgorithm;
             ExecutionEnvironment = executionEnvironment;
+            RefreshAllAcls = refreshAllAcls;
             _queryTimeout = queryTimeout;
-            AdditionalProperties = additionalProperties;
+            _additionalProperties = additionalProperties;
         }
 
-        internal IDictionary<string, object> AdditionalProperties { get; } = new ChangeTrackingDictionary<string, object>();
+        internal IDictionary<string, object> AdditionalProperties
+        {
+            get
+            {
+                if (_additionalProperties == null)
+                {
+                    IDictionary<string, object> additionalProperties = new ChangeTrackingDictionary<string, object>();
+                    if (_additionalBinaryDataProperties != null)
+                    {
+                        foreach (KeyValuePair<string, BinaryData> property in _additionalBinaryDataProperties)
+                        {
+                            if (property.Value == null)
+                            {
+                                additionalProperties.Add(property.Key, null);
+                            }
+                            else
+                            {
+                                using JsonDocument document = JsonDocument.Parse(property.Value);
+                                additionalProperties.Add(property.Key, document.RootElement.GetObject());
+                            }
+                        }
+                    }
+                    _additionalProperties = additionalProperties;
+                }
+                return _additionalProperties;
+            }
+        }
 
         /// <summary>
         /// Increases the timeout beyond the 5-minute default for Azure SQL database data sources.
@@ -99,12 +128,15 @@ namespace Azure.Search.Documents.Indexes.Models
                 { "delimitedTextHeaders", (o => o.DelimitedTextHeaders, (o, v) => o.DelimitedTextHeaders = (string) v) },
                 { "delimitedTextDelimiter", (o => o.DelimitedTextDelimiter, (o, v) => o.DelimitedTextDelimiter = (string) v) },
                 { "firstLineContainsHeaders", (o => o.FirstLineContainsHeaders, (o, v) => o.FirstLineContainsHeaders = (bool?) v) },
+                { "markdownParsingSubmode", (o => o.MarkdownParsingSubmode, (o, v) => o.MarkdownParsingSubmode = ConvertTo(v, s => new MarkdownParsingSubmode(s))) },
+                { "markdownHeaderDepth", (o => o.MarkdownHeaderDepth, (o, v) => o.MarkdownHeaderDepth = ConvertTo(v, s => new MarkdownHeaderDepth(s))) },
                 { "documentRoot", (o => o.DocumentRoot, (o, v) => o.DocumentRoot = (string) v) },
                 { "dataToExtract", (o => o.DataToExtract, (o, v) => o.DataToExtract = ConvertTo(v, s => new BlobIndexerDataToExtract(s))) },
                 { "imageAction", (o => o.ImageAction, (o, v) => o.ImageAction = ConvertTo(v, s => new BlobIndexerImageAction(s))) },
                 { "allowSkillsetToReadFileData", (o => o.AllowSkillsetToReadFileData, (o, v) => o.AllowSkillsetToReadFileData = (bool?) v) },
                 { "pdfTextRotationAlgorithm", (o => o.PdfTextRotationAlgorithm, (o, v) => o.PdfTextRotationAlgorithm = ConvertTo(v, s => new BlobIndexerPdfTextRotationAlgorithm(s))) },
                 { "executionEnvironment", (o => o.ExecutionEnvironment, (o, v) => o.ExecutionEnvironment = ConvertTo(v, s => new IndexerExecutionEnvironment(s))) },
+                { "refreshAllAcls", (o => o.RefreshAllAcls, (o, v) => o.RefreshAllAcls = (bool?) v) },
                 { "queryTimeout", (o => o.QueryTimeout, (o, v) => o.QueryTimeout = ConvertTo(v, s => TimeSpan.ParseExact(s, QueryTimeoutFormat, CultureInfo.InvariantCulture))) },
             };
 
@@ -168,6 +200,132 @@ namespace Azure.Search.Documents.Indexes.Models
             set => AdditionalProperties[key] = value;
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IndexingParametersConfiguration)} does not support writing '{format}' format.");
+            }
+            if (Optional.IsDefined(ParsingMode))
+            {
+                writer.WritePropertyName("parsingMode"u8);
+                writer.WriteStringValue(ParsingMode.Value.ToString());
+            }
+            if (Optional.IsDefined(ExcludedFileNameExtensions))
+            {
+                writer.WritePropertyName("excludedFileNameExtensions"u8);
+                writer.WriteStringValue(ExcludedFileNameExtensions);
+            }
+            if (Optional.IsDefined(IndexedFileNameExtensions))
+            {
+                writer.WritePropertyName("indexedFileNameExtensions"u8);
+                writer.WriteStringValue(IndexedFileNameExtensions);
+            }
+            if (Optional.IsDefined(FailOnUnsupportedContentType))
+            {
+                writer.WritePropertyName("failOnUnsupportedContentType"u8);
+                writer.WriteBooleanValue(FailOnUnsupportedContentType.Value);
+            }
+            if (Optional.IsDefined(FailOnUnprocessableDocument))
+            {
+                writer.WritePropertyName("failOnUnprocessableDocument"u8);
+                writer.WriteBooleanValue(FailOnUnprocessableDocument.Value);
+            }
+            if (Optional.IsDefined(IndexStorageMetadataOnlyForOversizedDocuments))
+            {
+                writer.WritePropertyName("indexStorageMetadataOnlyForOversizedDocuments"u8);
+                writer.WriteBooleanValue(IndexStorageMetadataOnlyForOversizedDocuments.Value);
+            }
+            if (Optional.IsDefined(DelimitedTextHeaders))
+            {
+                writer.WritePropertyName("delimitedTextHeaders"u8);
+                writer.WriteStringValue(DelimitedTextHeaders);
+            }
+            if (Optional.IsDefined(DelimitedTextDelimiter))
+            {
+                writer.WritePropertyName("delimitedTextDelimiter"u8);
+                writer.WriteStringValue(DelimitedTextDelimiter);
+            }
+            if (Optional.IsDefined(FirstLineContainsHeaders))
+            {
+                writer.WritePropertyName("firstLineContainsHeaders"u8);
+                writer.WriteBooleanValue(FirstLineContainsHeaders.Value);
+            }
+            if (Optional.IsDefined(MarkdownParsingSubmode, _markdownParsingSubmodeIsDefined))
+            {
+                if (MarkdownParsingSubmode != null)
+                {
+                    writer.WritePropertyName("markdownParsingSubmode"u8);
+                    writer.WriteStringValue(MarkdownParsingSubmode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("markdownParsingSubmode"u8);
+                }
+            }
+            if (Optional.IsDefined(MarkdownHeaderDepth, _markdownHeaderDepthIsDefined))
+            {
+                if (MarkdownHeaderDepth != null)
+                {
+                    writer.WritePropertyName("markdownHeaderDepth"u8);
+                    writer.WriteStringValue(MarkdownHeaderDepth.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("markdownHeaderDepth"u8);
+                }
+            }
+            if (Optional.IsDefined(DocumentRoot))
+            {
+                writer.WritePropertyName("documentRoot"u8);
+                writer.WriteStringValue(DocumentRoot);
+            }
+            if (Optional.IsDefined(DataToExtract))
+            {
+                writer.WritePropertyName("dataToExtract"u8);
+                writer.WriteStringValue(DataToExtract.Value.ToString());
+            }
+            if (Optional.IsDefined(ImageAction))
+            {
+                writer.WritePropertyName("imageAction"u8);
+                writer.WriteStringValue(ImageAction.Value.ToString());
+            }
+            if (Optional.IsDefined(AllowSkillsetToReadFileData))
+            {
+                writer.WritePropertyName("allowSkillsetToReadFileData"u8);
+                writer.WriteBooleanValue(AllowSkillsetToReadFileData.Value);
+            }
+            if (Optional.IsDefined(PdfTextRotationAlgorithm))
+            {
+                writer.WritePropertyName("pdfTextRotationAlgorithm"u8);
+                writer.WriteStringValue(PdfTextRotationAlgorithm.Value.ToString());
+            }
+            if (Optional.IsDefined(ExecutionEnvironment))
+            {
+                writer.WritePropertyName("executionEnvironment"u8);
+                writer.WriteStringValue(ExecutionEnvironment.Value.ToString());
+            }
+            if (Optional.IsDefined(RefreshAllAcls))
+            {
+                writer.WritePropertyName("refreshAllAcls"u8);
+                writer.WriteBooleanValue(RefreshAllAcls.Value);
+            }
+            if (Optional.IsDefined(_queryTimeout))
+            {
+                writer.WritePropertyName("queryTimeout"u8);
+                writer.WriteStringValue(_queryTimeout);
+            }
+            // Configuration entries are service inputs even when their keys are not modeled by the SDK.
+            foreach (KeyValuePair<string, object> property in AdditionalProperties)
+            {
+                writer.WritePropertyName(property.Key);
+                writer.WriteObjectValue(property.Value, options);
+            }
+        }
+
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static IndexingParametersConfiguration DeserializeIndexingParametersConfiguration(JsonElement element, ModelReaderWriterOptions options)
@@ -193,6 +351,7 @@ namespace Azure.Search.Documents.Indexes.Models
             bool? allowSkillsetToReadFileData = default;
             BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm = default;
             IndexerExecutionEnvironment? executionEnvironment = default;
+            bool? refreshAllAcls = default;
             string queryTimeout = default;
             IDictionary<string, object> additionalProperties = new ChangeTrackingDictionary<string, object>();
             foreach (var prop in element.EnumerateObject())
@@ -337,10 +496,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     queryTimeout = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if (prop.NameEquals("refreshAllAcls"u8))
                 {
-                    additionalProperties.Add(prop.Name, prop.Value.GetObject());
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    refreshAllAcls = prop.Value.GetBoolean();
+                    continue;
                 }
+                additionalProperties.Add(prop.Name, prop.Value.GetObject());
             }
             return new IndexingParametersConfiguration(
                 parsingMode,
@@ -360,6 +525,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 allowSkillsetToReadFileData,
                 pdfTextRotationAlgorithm,
                 executionEnvironment,
+                refreshAllAcls,
                 queryTimeout,
                 additionalProperties);
         }

@@ -1,173 +1,109 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#if AZURE_SEARCH_PREVIEW
-
+using System.Linq;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    public class SimpleFieldPermissionTests
+    public partial class SimpleFieldPermissionTests
     {
-        [Test]
-        public void SimpleFieldSetsPermissionFilter()
+        [TestCase("userIds")]
+        [TestCase("groupIds")]
+        [TestCase("rbacScope")]
+        public void SimpleFieldSetsPermissionFilter(string permissionFilter)
         {
             var simpleField = new SimpleField("myField", SearchFieldDataType.String)
             {
-                PermissionFilter = PermissionFilter.GroupIds,
+                PermissionFilter = permissionFilter,
             };
 
             SearchField field = simpleField;
-            Assert.AreEqual(PermissionFilter.GroupIds, field.PermissionFilter);
+            Assert.AreEqual(new PermissionFilter(permissionFilter), field.PermissionFilter);
         }
 
-        [Test]
-        public void SimpleFieldSetsSensitivityLabelId()
-        {
-            var simpleField = new SimpleField("myField", SearchFieldDataType.String)
-            {
-                SensitivityLabelId = true,
-            };
-
-            SearchField field = simpleField;
-            Assert.IsTrue(field.SensitivityLabelId);
-        }
-
-        [Test]
-        public void SimpleFieldSetsSensitivityLabelName()
-        {
-            var simpleField = new SimpleField("myField", SearchFieldDataType.String)
-            {
-                SensitivityLabelName = true,
-            };
-
-            SearchField field = simpleField;
-            Assert.IsTrue(field.SensitivityLabelName);
-        }
-
-        [Test]
-        public void SimpleFieldDefaultsPermissionPropertiesToNull()
-        {
-            var simpleField = new SimpleField("myField", SearchFieldDataType.String);
-
-            SearchField field = simpleField;
-            Assert.IsNull(field.PermissionFilter);
-            Assert.IsNull(field.SensitivityLabelId);
-            Assert.IsNull(field.SensitivityLabelName);
-        }
-
-        [Test]
-        public void SimpleFieldSetsAllPermissionProperties()
-        {
-            var simpleField = new SimpleField("myField", SearchFieldDataType.String)
-            {
-                PermissionFilter = PermissionFilter.UserIds,
-                SensitivityLabelId = true,
-                SensitivityLabelName = true,
-            };
-
-            SearchField field = simpleField;
-            Assert.AreEqual(PermissionFilter.UserIds, field.PermissionFilter);
-            Assert.IsTrue(field.SensitivityLabelId);
-            Assert.IsTrue(field.SensitivityLabelName);
-        }
-
-        [Test]
-        public void SimpleFieldAttributeSetsPermissionFilter()
+        [TestCase("userIds")]
+        [TestCase("groupIds")]
+        [TestCase("rbacScope")]
+        public void SimpleFieldAttributeSetsPermissionFilter(string permissionFilter)
         {
             var attribute = new SimpleFieldAttribute
             {
-                PermissionFilter = "groupIds",
+                PermissionFilter = permissionFilter,
             };
 
             SearchField field = new SearchField("myField", SearchFieldDataType.String);
             ((ISearchFieldAttribute)attribute).SetField(field);
 
-            Assert.AreEqual(PermissionFilter.GroupIds, field.PermissionFilter);
-        }
-
-        [Test]
-        public void SimpleFieldAttributeSetsSensitivityLabels()
-        {
-            var attribute = new SimpleFieldAttribute
-            {
-                SensitivityLabelId = true,
-                SensitivityLabelName = true,
-            };
-
-            SearchField field = new SearchField("myField", SearchFieldDataType.String);
-            ((ISearchFieldAttribute)attribute).SetField(field);
-
-            Assert.IsTrue(field.SensitivityLabelId);
-            Assert.IsTrue(field.SensitivityLabelName);
+            Assert.AreEqual(new PermissionFilter(permissionFilter), field.PermissionFilter);
         }
 
         [Test]
         public void SimpleFieldAttributeDoesNotSetPermissionFilterWhenNull()
         {
-            // First set a value on the field directly.
             SearchField field = new SearchField("myField", SearchFieldDataType.String)
             {
                 PermissionFilter = PermissionFilter.RbacScope,
             };
 
-            // Attribute with no PermissionFilter should NOT clear the existing value.
-            var attribute = new SimpleFieldAttribute();
-            ((ISearchFieldAttribute)attribute).SetField(field);
+            ((ISearchFieldAttribute)new SimpleFieldAttribute()).SetField(field);
 
             Assert.AreEqual(PermissionFilter.RbacScope, field.PermissionFilter);
         }
 
         [Test]
-        public void SimpleFieldAttributeDoesNotSetSensitivityLabelIdWhenNull()
+        public void SimpleFieldDefaultsPermissionFilterToNull()
         {
-            SearchField field = new SearchField("myField", SearchFieldDataType.String)
-            {
-                SensitivityLabelId = true,
-            };
+            SearchField field = new SimpleField("myField", SearchFieldDataType.String);
 
-            var attribute = new SimpleFieldAttribute();
-            ((ISearchFieldAttribute)attribute).SetField(field);
-
-            Assert.IsTrue(field.SensitivityLabelId);
+            Assert.IsNull(field.PermissionFilter);
         }
 
-        [Test]
-        public void SearchableFieldInheritsPermissionProperties()
+        [TestCase("userIds")]
+        [TestCase("groupIds")]
+        [TestCase("rbacScope")]
+        public void SearchableFieldSetsPermissionFilter(string permissionFilter)
+        {
+            SearchField field = new SearchableField("myField")
+            {
+                PermissionFilter = permissionFilter,
+            };
+
+            Assert.AreEqual(new PermissionFilter(permissionFilter), field.PermissionFilter);
+            Assert.IsTrue(field.IsSearchable);
+        }
+
+        [TestCase("userIds")]
+        [TestCase("groupIds")]
+        [TestCase("rbacScope")]
+        public void SearchableFieldAttributeInheritsPermissionFilter(string permissionFilter)
         {
             var attribute = new SearchableFieldAttribute
             {
-                PermissionFilter = "userIds",
-                SensitivityLabelId = true,
-                SensitivityLabelName = true,
+                PermissionFilter = permissionFilter,
             };
 
             SearchField field = new SearchField("myField", SearchFieldDataType.String);
             ((ISearchFieldAttribute)attribute).SetField(field);
 
-            Assert.AreEqual(PermissionFilter.UserIds, field.PermissionFilter);
-            Assert.IsTrue(field.SensitivityLabelId);
-            Assert.IsTrue(field.SensitivityLabelName);
+            Assert.AreEqual(new PermissionFilter(permissionFilter), field.PermissionFilter);
+            Assert.IsTrue(field.IsSearchable);
         }
 
         [Test]
-        public void SearchableFieldSetsPermissionProperties()
+        public void FieldBuilderCopiesPermissionFilter()
         {
-            var searchableField = new SearchableField("myField")
-            {
-                PermissionFilter = PermissionFilter.GroupIds,
-                SensitivityLabelId = true,
-                SensitivityLabelName = true,
-            };
+            SearchField field = new FieldBuilder().Build(typeof(PermissionFilteredDocument)).Single();
 
-            SearchField field = searchableField;
             Assert.AreEqual(PermissionFilter.GroupIds, field.PermissionFilter);
-            Assert.IsTrue(field.SensitivityLabelId);
-            Assert.IsTrue(field.SensitivityLabelName);
+        }
+
+        private class PermissionFilteredDocument
+        {
+            [SimpleField(PermissionFilter = "groupIds")]
+            public string GroupIds { get; set; }
         }
     }
 }
-
-#endif

@@ -1,5 +1,52 @@
 # Release History
 
+## 12.1.0 (Unreleased)
+
+### Features Added
+
+- Added support for the `2026-10-01` service version, which is now the default.
+- Added `SearchOptions.MoreLikeThis` to search for documents similar to an existing document.
+- Added `querySourceAuthorization` and `enableElevatedRead` overloads for document search, `GetDocumentOptions.QuerySourceAuthorization` and `EnableElevatedRead` for document retrieval, and `querySourceAuthorization` on knowledge base retrieval.
+- Added document-level permission configuration through `SearchField.PermissionFilter`, `OrganizationAccessExpiration`, and `SharepointSiteUrl`; `SearchIndex.PermissionFilterOption`; and `SharePointConnectorAppRegistration`. Permission filters can also be configured through `SimpleField` and `SimpleFieldAttribute`.
+- Added `SearchIndexerDataSourceConnection.IndexerPermissionOptions`, `IndexingParametersConfiguration.RefreshAllAcls`, and `SearchIndexerDataUserAssignedIdentity.FederatedIdentityClientId` for permission ingestion and federated identity configuration.
+- Added `SearchIndexerClient.Resync` and `ResyncAsync`, with `IndexerResyncBody` and `IndexerResyncOption.Permissions`, to resynchronize indexed permissions.
+- Added `SearchIndexerStatus.Runtime` and `SearchServiceStatistics.IndexersRuntime`, exposing used and remaining runtime and the associated reporting period.
+- Added `GetAllIndexers`, `GetAllDataSourceConnections`, `GetAllSkillsets`, and `GetAllSynonymMaps`, with async counterparts, to expose pageable resource listings with property selection, prefix search, and page-size controls without changing the existing list-returning APIs.
+- Added `GetAllIndexStatsSummary` and `GetAllKnowledgeSourceFiles`, with async counterparts, for pageable index statistics and knowledge source file listings.
+- Added `search`, `pageSize`, and `searchType` controls to the existing pageable `GetIndexes`, `GetIndexesWithSelectedProperties`, `GetAliases`, `GetKnowledgeBases`, and `GetKnowledgeSources` methods, with async counterparts. `ListingSearchType.Prefix` supports filtering listings by name prefix.
+- Added file knowledge sources through `FileKnowledgeSource`, `FileKnowledgeSourceParameters`, and `FileKnowledgeSourceParams`, including ingestion and CORS configuration.
+- Added multipart file upload, update, and deletion through `UploadKnowledgeSourceFileMultipart`, `UpdateKnowledgeSourceFile`, and `DeleteKnowledgeSourceFile`, with async counterparts. `FileUploadMetadata` and `KnowledgeSourceFile` expose file metadata, prefixes, parsing and extraction modes, timestamps, and processing errors. Multipart request constructors and content properties are experimental (`SCME0004`).
+- Added `KnowledgeSourceFileCapacity` and `KnowledgeSourceStatus.FileCapacity` for maximum file size, maximum file count, and remaining file count.
+- Added indexed SQL and indexed SharePoint knowledge sources, their retrieval parameter and reference models, SQL content and embedding column mappings, and SharePoint container selection.
+- Added `KnowledgeSourceIngestionParameters.IngestionPermissionOptions` and `NetworkAccessMode`, and `SearchIndexKnowledgeSourceParameters.BaseFilter`, to configure knowledge source access and filtering.
+- Added low and medium retrieval reasoning effort, answer-synthesis and extractive-data output modes, retrieval and answer instructions, and CORS configuration on knowledge bases. Retrieval requests now support messages, reasoning effort, output mode, and maximum output document counts.
+- Added `AlwaysQuerySource`, `FailOnError`, and `MaxOutputDocuments` controls to knowledge source retrieval parameters, and `Language`, `Market`, `Count`, and `Freshness` to web knowledge source configuration.
+- Added typed knowledge base retrieval activity records for search index, Azure Blob, indexed OneLake, web, file, indexed SharePoint, and indexed SQL sources; model query-planning and answer-synthesis activity records; activity timestamps and warnings; model and deployment details; and citation URLs on supported references.
+- Added `KnowledgeBaseRetrievalClient.RetrieveStreamAsync` for typed or protocol server-sent event streaming, with retrieval, activity, answer, reference, response-completion, error, and unknown-event models sharing `KnowledgeBaseRetrievalStreamEvent`.
+- Added `ContentUnderstandingSkill.ModelName`, `ModelDeployment`, and chunking method selection through `ContentUnderstandingSkillChunkingProperties.Method` and `ContentUnderstandingSkillChunkingMethod`, including fixed-size and semantic chunking. Chunking units now include tokens.
+- Added `Gpt54`, `Gpt55`, `Gpt56Sol`, `Gpt56Terra`, and `Gpt56Luna` to `AzureOpenAIModelName`.
+
+### Bugs Fixed
+
+- Resource listing methods now honor `AsPages(pageSizeHint)` on initial and continuation requests while preserving the service-provided cursor.
+- Fixed indexing configuration round trips, including `RefreshAllAcls`, markdown settings, custom dictionary entries, and the legacy `IndexingParameters.Configuration` adapter on deserialized models.
+- Fixed semantic and vector search options being lost during deserialization and continuation-token round trips.
+- Fixed query-answer thresholds using culture-dependent formatting and parsing, and value facets failing to convert compatible numeric types.
+- Fixed settings-based clients ignoring custom document serializers and the `QueryAnswerResult` model factory rejecting read-only-only dictionaries.
+
+### Breaking Changes
+
+Relative to the previous GA release, `12.0.0`:
+
+- Removed the public `AIFoundryModelCatalogName`, `AzureMachineLearningParameters`, `AzureMachineLearningVectorizer`, `VectorizableImageBinaryQuery`, and `VectorizableImageUrlQuery` types. These types were present in `12.0.0`, even though their service functionality is not supported by the current GA API.
+- Removed the `SearchModelFactory.AzureMachineLearningParameters`, `AzureMachineLearningVectorizer`, `VectorizableImageBinaryQuery`, and `VectorizableImageUrlQuery` factory methods.
+- Removed `KnowledgeBaseAgenticReasoningActivityRecord.RetrievalReasoningEffort`.
+
+### Other Changes
+
+- Added experimental (`SCME0002`) generic-host registration extensions, including keyed registration, for `SearchClient`, `SearchIndexClient`, `SearchIndexerClient`, and `KnowledgeBaseRetrievalClient`.
+- Added a parameterless `SearchResourceEncryptionKey` constructor and setters for `KeyName`, `KeyVersion`, and `VaultUri`. Added constructors and setters that allow knowledge base message roles, text content, image content, and image URLs to be updated.
+
 ## 12.1.0-beta.3 (2026-09-14)
 
 ### Breaking Changes
@@ -51,7 +98,7 @@
 - Added MCP server knowledge source types: `McpServerKnowledgeSource`, `McpServerKnowledgeSourceParameters`, `McpServerAuthentication`, `McpServerFoundryConnectionAuthentication`, `McpServerStoredHeadersAuthentication`, `McpServerHeaders`, `McpServerTool`, `McpServerToolInclusionMode`, `McpServerOutputParsing`, `McpServerAutoOutputParsing`, `McpServerJsonOutputParsing`, `McpServerSplitOutputParsing`, `McpServerNoneOutputParsing`, and related configuration models.
 - Added knowledge source types: `FabricDataAgentKnowledgeSource`, `FabricOntologyKnowledgeSource`, `FileKnowledgeSource`, `IndexedSqlKnowledgeSource`, and `WorkIQKnowledgeSource` with associated parameters and retrieval params.
 - Added knowledge base reference types: `KnowledgeBaseFabricDataAgentReference`, `KnowledgeBaseFabricOntologyReference`, `KnowledgeBaseWorkIQReference`, `KnowledgeBaseMcpServerReference`, `KnowledgeBaseFileReference`, `KnowledgeBaseRemoteSharePointReference`, `KnowledgeBaseIndexedSharePointReference`, and `KnowledgeBaseIndexedSqlReference`.
-- Added knowledge source file management operations: `UploadKnowledgeSourceFileAsync`, `GetKnowledgeSourceFilesAsync`, and `DeleteKnowledgeSourceFileAsync` on `SearchIndexClient`, along with the `KnowledgeSourceFile` model.
+- Added knowledge source file management operations: `UploadKnowledgeSourceFileAsync`, `GetPagedKnowledgeSourceFilesAsync`, and `DeleteKnowledgeSourceFileAsync` on `SearchIndexClient`, along with the `KnowledgeSourceFile` model.
 - Added `FreshnessPolicy` for freshness-based document boosting, and `EnableFreshness` property on `KnowledgeSourceReference` for per-source freshness opt-in.
 - Added `AIServices` class for configuring AI Services resources on `KnowledgeSourceIngestionParameters`.
 - Added `KnowledgeSourceContentExtractionMode` for specifying content extraction behavior during ingestion.
@@ -311,8 +358,8 @@
 ## 11.5.0 (2023-11-10)
 
 ### Features Added
-- Added support for [Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md).
-- Added support for [Semantic Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample08_SemanticSearch.md).
+- Added support for [Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/VectorSearch.md).
+- Added support for [Semantic Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/SemanticSearch.md).
 - Added support for [`PiiDetectionSkill`](https://learn.microsoft.com/azure/search/cognitive-search-skill-pii-detection). It allows you extracts personal information from an input text and gives you the option of masking it using the Text Analytics API.
 - Added new languages for `OcrSkill` and `ImageAnalysisSkill` as we have upgraded them to use Cognitive Services Computer Vision v3.2, which now includes support for additional languages. Refer to the language lists [here](https://learn.microsoft.com/azure/cognitive-services/computer-vision/language-support).
 - Added new languages for ` SplitSkill`. Language lists can be found [here](https://learn.microsoft.com/azure/search/cognitive-search-skill-textsplit#skill-parameters).
@@ -345,7 +392,7 @@
 ## 11.5.0-beta.3 (2023-07-11)
 
 ### Features Added
-- Added support for [Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md).
+- Added support for [Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/VectorSearch.md).
 
 ### Bugs Fixed
 - Fixed issue with `QueryCaptionsType.None` in semantic search, resolving an invalid response to the service ([#37164](https://github.com/Azure/azure-sdk-for-net/issues/37164)).

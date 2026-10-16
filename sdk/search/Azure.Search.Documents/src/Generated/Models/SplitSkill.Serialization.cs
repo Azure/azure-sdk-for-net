@@ -126,30 +126,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maximumPagesToTake"u8);
                 }
             }
-            if (Optional.IsDefined(Unit, _unitIsDefined))
-            {
-                if (Unit != null)
-                {
-                    writer.WritePropertyName("unit"u8);
-                    writer.WriteStringValue(Unit.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("unit"u8);
-                }
-            }
-            if (Optional.IsDefined(AzureOpenAITokenizerParameters, _azureOpenAITokenizerParametersIsDefined))
-            {
-                if (AzureOpenAITokenizerParameters != null)
-                {
-                    writer.WritePropertyName("azureOpenAITokenizerParameters"u8);
-                    writer.WriteObjectValue(AzureOpenAITokenizerParameters, options);
-                }
-                else
-                {
-                    writer.WriteNull("azureOpenAITokenizerParameters"u8);
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -192,10 +168,6 @@ namespace Azure.Search.Documents.Indexes.Models
             int? pageOverlapLength = default;
             bool maximumPagesToTakeIsDefined = false;
             int? maximumPagesToTake = default;
-            bool unitIsDefined = false;
-            SplitSkillUnit? unit = default;
-            bool azureOpenAITokenizerParametersIsDefined = false;
-            AzureOpenAITokenizerParameters azureOpenAITokenizerParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -289,28 +261,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     maximumPagesToTake = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("unit"u8))
-                {
-                    unitIsDefined = true;
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        unit = null;
-                        continue;
-                    }
-                    unit = new SplitSkillUnit(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("azureOpenAITokenizerParameters"u8))
-                {
-                    azureOpenAITokenizerParametersIsDefined = true;
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        azureOpenAITokenizerParameters = null;
-                        continue;
-                    }
-                    azureOpenAITokenizerParameters = AzureOpenAITokenizerParameters.DeserializeAzureOpenAITokenizerParameters(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -328,15 +278,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 textSplitMode,
                 maximumPageLength,
                 pageOverlapLength,
-                maximumPagesToTake,
-                unit,
-                azureOpenAITokenizerParameters)
+                maximumPagesToTake)
             {
                 _maximumPageLengthIsDefined = maximumPageLengthIsDefined,
                 _pageOverlapLengthIsDefined = pageOverlapLengthIsDefined,
-                _maximumPagesToTakeIsDefined = maximumPagesToTakeIsDefined,
-                _unitIsDefined = unitIsDefined,
-                _azureOpenAITokenizerParametersIsDefined = azureOpenAITokenizerParametersIsDefined
+                _maximumPagesToTakeIsDefined = maximumPagesToTakeIsDefined
             };
         }
     }

@@ -169,16 +169,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     writer.WriteNull("aiServices"u8);
                 }
             }
-            if (Optional.IsDefined(AssetStore))
-            {
-                writer.WritePropertyName("assetStore"u8);
-                writer.WriteObjectValue(AssetStore, options);
-            }
-            if (Optional.IsDefined(FreshnessPolicy))
-            {
-                writer.WritePropertyName("freshnessPolicy"u8);
-                writer.WriteObjectValue(FreshnessPolicy, options);
-            }
             if (Optional.IsDefined(NetworkAccessMode))
             {
                 writer.WritePropertyName("networkAccessMode"u8);
@@ -240,8 +230,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             KnowledgeSourceContentExtractionMode? contentExtractionMode = default;
             bool aiServicesIsDefined = false;
             AIServices aiServices = default;
-            AssetStore assetStore = default;
-            FreshnessPolicy freshnessPolicy = default;
             KnowledgeSourceNetworkAccessMode? networkAccessMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -336,24 +324,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     aiServices = AIServices.DeserializeAIServices(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("assetStore"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    assetStore = AssetStore.DeserializeAssetStore(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("freshnessPolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    freshnessPolicy = FreshnessPolicy.DeserializeFreshnessPolicy(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("networkAccessMode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -377,8 +347,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 ingestionPermissionOptions,
                 contentExtractionMode,
                 aiServices,
-                assetStore,
-                freshnessPolicy,
                 networkAccessMode,
                 additionalBinaryDataProperties)
             {

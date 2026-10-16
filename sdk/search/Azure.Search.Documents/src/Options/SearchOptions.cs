@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -23,7 +23,7 @@ namespace Azure.Search.Documents
         {
             Facets = new ChangeTrackingList<string>();
             ScoringParameters = new ChangeTrackingList<string>();
-            SemanticFields = new ChangeTrackingList<string>(); // search-preview:2026-05-01-preview
+
             VectorQueries = new ChangeTrackingList<VectorQuery>();
         }
 
@@ -79,6 +79,9 @@ namespace Azure.Search.Documents
 
         /// <summary> A number between 0 and 100 indicating the percentage of the index that must be covered by a search query in order for the query to be reported as a success. This parameter can be useful for ensuring search availability even for services with only one replica. The default is 100. </summary>
         public double? MinimumCoverage { get; set; }
+
+        /// <summary> The key of the document to use as the basis for finding similar documents. This parameter cannot be used together with search text. </summary>
+        public string MoreLikeThis { get; set; }
 
         /// <summary> A value that specifies the syntax of the search query. The default is 'simple'. Use 'full' if your query uses the Lucene query syntax. </summary>
         public SearchQueryType? QueryType { get; set; }
@@ -210,6 +213,10 @@ namespace Azure.Search.Documents
             get { return SemanticSearch?.SemanticConfigurationName; }
             set
             {
+                if (value != null)
+                {
+                    SemanticSearch ??= new SemanticSearchOptions();
+                }
                 if (SemanticSearch != null)
                 {
                     SemanticSearch.SemanticConfigurationName = value;
@@ -254,6 +261,10 @@ namespace Azure.Search.Documents
             get { return SemanticSearch?.SemanticQuery; }
             set
             {
+                if (value != null)
+                {
+                    SemanticSearch ??= new SemanticSearchOptions();
+                }
                 if (SemanticSearch != null)
                 {
                     SemanticSearch.SemanticQuery = value;
@@ -268,6 +279,10 @@ namespace Azure.Search.Documents
             get { return SemanticSearch?.ErrorMode; }
             set
             {
+                if (value != null)
+                {
+                    SemanticSearch ??= new SemanticSearchOptions();
+                }
                 if (SemanticSearch != null)
                 {
                     SemanticSearch.ErrorMode = value;
@@ -284,6 +299,10 @@ namespace Azure.Search.Documents
             }
             set
             {
+                if (value != null)
+                {
+                    SemanticSearch ??= new SemanticSearchOptions();
+                }
                 if (SemanticSearch != null)
                 {
                     SemanticSearch.MaxWait = value.HasValue ? TimeSpan.FromMilliseconds(value.Value) : null;
@@ -297,6 +316,10 @@ namespace Azure.Search.Documents
             get { return VectorSearch?.Queries != null ? VectorSearch.Queries : new ChangeTrackingList<VectorQuery>(); }
             set
             {
+                if (value != null && value.Count > 0)
+                {
+                    VectorSearch ??= new VectorSearchOptions();
+                }
                 if (VectorSearch != null)
                 {
                     VectorSearch.Queries = value;
@@ -311,6 +334,10 @@ namespace Azure.Search.Documents
             get { return VectorSearch?.FilterMode; }
             set
             {
+                if (value != null)
+                {
+                    VectorSearch ??= new VectorSearchOptions();
+                }
                 if (VectorSearch != null)
                 {
                     VectorSearch.FilterMode = value;
@@ -318,7 +345,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        // search-preview:2026-05-01-preview {
+        /* Preview-only bridges are not supported by the GA API.
         /// <summary> The query parameters to configure hybrid search behaviors. </summary>
         [CodeGenMember("HybridSearch")]
         private HybridSearch HybridSearch
@@ -405,7 +432,7 @@ namespace Azure.Search.Documents
                 }
             }
         }
-        // search-preview:2026-05-01-preview }
+        */
 
         /// <summary>
         /// Shallow copy one SearchOptions instance to another.
@@ -424,6 +451,7 @@ namespace Azure.Search.Documents
             destination.HighlightPreTag = source.HighlightPreTag;
             destination.IncludeTotalCount = source.IncludeTotalCount;
             destination.MinimumCoverage = source.MinimumCoverage;
+            destination.MoreLikeThis = source.MoreLikeThis;
             destination.OrderBy = source.OrderBy;
             destination.QueryType = source.QueryType;
             destination.ScoringParameters = source.ScoringParameters;

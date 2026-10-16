@@ -245,18 +245,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("permissionFilterOption"u8);
                 }
             }
-            if (Optional.IsDefined(PurviewEnabled, _purviewEnabledIsDefined))
-            {
-                if (PurviewEnabled != null)
-                {
-                    writer.WritePropertyName("purviewEnabled"u8);
-                    writer.WriteBooleanValue(PurviewEnabled.Value);
-                }
-                else
-                {
-                    writer.WriteNull("purviewEnabled"u8);
-                }
-            }
             if (Optional.IsDefined(SharePointConnectorAppRegistration))
             {
                 writer.WritePropertyName("sharePointConnectorAppRegistration"u8);
@@ -337,8 +325,6 @@ namespace Azure.Search.Documents.Indexes.Models
             VectorSearch vectorSearch = default;
             bool permissionFilterOptionIsDefined = false;
             SearchIndexPermissionFilterOption? permissionFilterOption = default;
-            bool purviewEnabledIsDefined = false;
-            bool? purviewEnabled = default;
             SharePointConnectorAppRegistration sharePointConnectorAppRegistration = default;
             IList<SearchField> fields = default;
             string etag = default;
@@ -522,17 +508,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     permissionFilterOption = new SearchIndexPermissionFilterOption(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("purviewEnabled"u8))
-                {
-                    purviewEnabledIsDefined = true;
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        purviewEnabled = null;
-                        continue;
-                    }
-                    purviewEnabled = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (prop.NameEquals("sharePointConnectorAppRegistration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -579,7 +554,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 semanticSearch,
                 vectorSearch,
                 permissionFilterOption,
-                purviewEnabled,
                 sharePointConnectorAppRegistration,
                 fields,
                 etag,
@@ -589,8 +563,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 _encryptionKeyIsDefined = encryptionKeyIsDefined,
                 _semanticSearchIsDefined = semanticSearchIsDefined,
                 _vectorSearchIsDefined = vectorSearchIsDefined,
-                _permissionFilterOptionIsDefined = permissionFilterOptionIsDefined,
-                _purviewEnabledIsDefined = purviewEnabledIsDefined
+                _permissionFilterOptionIsDefined = permissionFilterOptionIsDefined
             };
         }
     }

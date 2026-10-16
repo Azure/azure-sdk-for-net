@@ -109,6 +109,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("chunkingProperties"u8);
                 }
             }
+            if (Optional.IsDefined(ModelName))
+            {
+                writer.WritePropertyName("modelName"u8);
+                writer.WriteStringValue(ModelName);
+            }
+            if (Optional.IsDefined(ModelDeployment))
+            {
+                writer.WritePropertyName("modelDeployment"u8);
+                writer.WriteStringValue(ModelDeployment);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -146,6 +156,8 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<ContentUnderstandingSkillExtractionOptions> extractionOptions = new ChangeTrackingList<ContentUnderstandingSkillExtractionOptions>();
             bool chunkingPropertiesIsDefined = false;
             ContentUnderstandingSkillChunkingProperties chunkingProperties = default;
+            string modelName = default;
+            string modelDeployment = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -214,6 +226,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     chunkingProperties = ContentUnderstandingSkillChunkingProperties.DeserializeContentUnderstandingSkillChunkingProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("modelName"u8))
+                {
+                    modelName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("modelDeployment"u8))
+                {
+                    modelDeployment = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -228,7 +250,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 outputs ?? new ChangeTrackingList<OutputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
                 extractionOptions,
-                chunkingProperties)
+                chunkingProperties,
+                modelName,
+                modelDeployment)
             {
                 _chunkingPropertiesIsDefined = chunkingPropertiesIsDefined
             };

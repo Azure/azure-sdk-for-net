@@ -58,6 +58,34 @@ namespace Azure.Search.Documents.Tests.Models
     [Category("ModelSerialization")]
     public class ModelSerializationMockTests
     {
+        [Test]
+        public void FileCapacityDeserializesAndPersists()
+        {
+            BinaryData data = BinaryData.FromString("""
+                {
+                  "kind": "file",
+                  "synchronizationStatus": "active",
+                  "fileCapacity": {
+                    "maxFileCount": 100,
+                    "remainingFileCount": 75,
+                    "maxFileSizeBytes": 5000000000
+                  }
+                }
+                """);
+
+            KnowledgeSourceStatus status = ModelReaderWriter.Read<KnowledgeSourceStatus>(data, SearchTestHelpers.WireOptions);
+            Assert.IsNotNull(status.FileCapacity);
+            Assert.AreEqual(100, status.FileCapacity.MaxFileCount);
+            Assert.AreEqual(75, status.FileCapacity.RemainingFileCount);
+            Assert.AreEqual(5000000000L, status.FileCapacity.MaxFileSizeBytes);
+
+            BinaryData persisted = ModelReaderWriter.Write(status, ModelReaderWriterOptions.Json);
+            KnowledgeSourceStatus restored = ModelReaderWriter.Read<KnowledgeSourceStatus>(persisted, ModelReaderWriterOptions.Json);
+            Assert.AreEqual(status.FileCapacity.MaxFileCount, restored.FileCapacity.MaxFileCount);
+            Assert.AreEqual(status.FileCapacity.RemainingFileCount, restored.FileCapacity.RemainingFileCount);
+            Assert.AreEqual(status.FileCapacity.MaxFileSizeBytes, restored.FileCapacity.MaxFileSizeBytes);
+        }
+
         /// <summary>
         /// Data source for model serialization roundtrip tests.
         /// Each entry: (modelType, jsonPayload).
