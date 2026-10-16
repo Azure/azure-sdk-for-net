@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public partial class CloudVmClusterProperties
     {
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterProperties"/>. </summary>
-        /// <param name="hostnameV2"> The hostname for the cloud VM cluster. </param>
+        /// <param name="hostname"> The hostname for the cloud VM cluster. </param>
         /// <param name="cpuCoreCount"> The number of CPU cores enabled on the cloud VM cluster. </param>
         /// <param name="cloudExadataInfrastructureId"> Cloud Exadata Infrastructure ID. </param>
         /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </param>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="giVersion"> Oracle Grid Infrastructure (GI) software version. </param>
         /// <param name="subnetId"> Client subnet. </param>
         /// <param name="displayName"> Display Name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostnameV2"/>, <paramref name="cloudExadataInfrastructureId"/>, <paramref name="sshPublicKeys"/>, <paramref name="vnetId"/>, <paramref name="giVersion"/>, <paramref name="subnetId"/> or <paramref name="displayName"/> is null. </exception>
-        public CloudVmClusterProperties(string hostnameV2, int cpuCoreCount, ResourceIdentifier cloudExadataInfrastructureId, IEnumerable<string> sshPublicKeys, ResourceIdentifier vnetId, string giVersion, ResourceIdentifier subnetId, string displayName)
+        /// <exception cref="ArgumentNullException"> <paramref name="hostname"/>, <paramref name="cloudExadataInfrastructureId"/>, <paramref name="sshPublicKeys"/>, <paramref name="vnetId"/>, <paramref name="giVersion"/>, <paramref name="subnetId"/> or <paramref name="displayName"/> is null. </exception>
+        public CloudVmClusterProperties(string hostname, int cpuCoreCount, ResourceIdentifier cloudExadataInfrastructureId, IEnumerable<string> sshPublicKeys, ResourceIdentifier vnetId, string giVersion, ResourceIdentifier subnetId, string displayName)
         {
-            Argument.AssertNotNull(hostnameV2, nameof(hostnameV2));
+            Argument.AssertNotNull(hostname, nameof(hostname));
             Argument.AssertNotNull(cloudExadataInfrastructureId, nameof(cloudExadataInfrastructureId));
             Argument.AssertNotNull(sshPublicKeys, nameof(sshPublicKeys));
             Argument.AssertNotNull(vnetId, nameof(vnetId));
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Argument.AssertNotNull(displayName, nameof(displayName));
 
             FileSystemConfigurationDetails = new ChangeTrackingList<FileSystemConfigurationDetails>();
-            HostnameV2 = hostnameV2;
+            Hostname = hostname;
             CpuCoreCount = cpuCoreCount;
             CloudExadataInfrastructureId = cloudExadataInfrastructureId;
             SshPublicKeys = sshPublicKeys.ToList();
@@ -55,9 +55,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("ScanDnsNameV2")]
         public string ScanDnsName { get; }
 
-        /// <summary> The hostname for the cloud VM cluster. </summary>
-        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("HostnameV2")]
-        public string HostnameV2 { get; set; }
+        /// <summary> The hostname for the cloud VM cluster in earlier API versions. </summary>
+        // Retain the legacy property for compatibility without replacing or aliasing HostnameV2.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string Hostname { get => HostnameV2; set => HostnameV2 = value; }
+
         /// <summary> Cloud VM Cluster ocid. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]

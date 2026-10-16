@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.OracleDatabase.Models;
@@ -13,12 +14,16 @@ namespace Azure.ResourceManager.OracleDatabase.Tests
     public class ModelCustomizationTests
     {
         [Test]
-        public void CloudVmClusterHostnameV2RoundTripsWireHostname()
+        public void CloudVmClusterHostnameV2RoundTripsIndependentlyOfLegacyHostname()
         {
             var model = ModelReaderWriter.Read<CloudVmClusterProperties>(BinaryData.FromString("{\"cloudExadataInfrastructureId\":\"/subscriptions/sub/resourceGroups/rg/providers/Oracle.Database/cloudExadataInfrastructures/infra\",\"sshPublicKeys\":[],\"vnetId\":\"/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet\",\"subnetId\":\"/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet\",\"hostname\":\"cloud-host\",\"scanDnsName\":\"scan.example.com\"}"));
             Assert.That(model.HostnameV2, Is.EqualTo("cloud-host"));
+            Assert.That(model.Hostname, Is.Null);
             Assert.That(model.ScanDnsName, Is.EqualTo("scan.example.com"));
+            model.Hostname = "legacy-host";
+            Assert.That(model.HostnameV2, Is.EqualTo("cloud-host"));
             model.HostnameV2 = "updated-host";
+            Assert.That(model.Hostname, Is.EqualTo("legacy-host"));
             using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(model));
             Assert.That(json.RootElement.GetProperty("hostname").GetString(), Is.EqualTo("updated-host"));
             Assert.That(json.RootElement.GetProperty("scanDnsName").GetString(), Is.EqualTo("scan.example.com"));
@@ -26,12 +31,16 @@ namespace Azure.ResourceManager.OracleDatabase.Tests
         }
 
         [Test]
-        public void ExadbVmClusterHostnameV2RoundTripsWireHostname()
+        public void ExadbVmClusterHostnameV2RoundTripsIndependentlyOfLegacyHostname()
         {
             var model = ModelReaderWriter.Read<ExadbVmClusterProperties>(BinaryData.FromString("{\"sshPublicKeys\":[],\"vnetId\":\"/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet\",\"subnetId\":\"/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet\",\"exascaleDbStorageVaultId\":\"/subscriptions/sub/resourceGroups/rg/providers/Oracle.Database/exascaleDbStorageVaults/vault\",\"hostname\":\"exadb-host\",\"scanDnsName\":\"scan.example.com\"}"));
             Assert.That(model.HostnameV2, Is.EqualTo("exadb-host"));
+            Assert.That(model.Hostname, Is.Null);
             Assert.That(model.ScanDnsName, Is.EqualTo("scan.example.com"));
+            model.Hostname = "legacy-host";
+            Assert.That(model.HostnameV2, Is.EqualTo("exadb-host"));
             model.HostnameV2 = "updated-host";
+            Assert.That(model.Hostname, Is.EqualTo("legacy-host"));
             using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(model));
             Assert.That(json.RootElement.GetProperty("hostname").GetString(), Is.EqualTo("updated-host"));
             Assert.That(json.RootElement.GetProperty("scanDnsName").GetString(), Is.EqualTo("scan.example.com"));
@@ -39,16 +48,77 @@ namespace Azure.ResourceManager.OracleDatabase.Tests
         }
 
         [Test]
-        public void ExadbConstructorAssignsAndValidatesHostnameV2()
+        public void ExadbConstructorAssignsAndValidatesHostname()
         {
             var vnet = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet");
             var subnet = new ResourceIdentifier(vnet + "/subnets/subnet");
             var vault = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Oracle.Database/exascaleDbStorageVaults/vault");
             var storage = new ExadbVmClusterStorageDetails(100);
-            var model = new ExadbVmClusterProperties(vnet, subnet, "cluster", 8, vault, hostnameV2: "exadb-host", 2, "shape", new[] { "ssh-key" }, 16, storage);
-            Assert.That(model.HostnameV2, Is.EqualTo("exadb-host"));
-            var error = Assert.Throws<ArgumentNullException>(() => new ExadbVmClusterProperties(vnet, subnet, "cluster", 8, vault, hostnameV2: null, 2, "shape", new[] { "ssh-key" }, 16, storage));
-            Assert.That(error.ParamName, Is.EqualTo("hostnameV2"));
+            var model = new ExadbVmClusterProperties(vnet, subnet, "cluster", 8, vault, hostname: "exadb-host", 2, "shape", new[] { "ssh-key" }, 16, storage);
+            Assert.That(model.Hostname, Is.EqualTo("exadb-host"));
+            Assert.That(model.HostnameV2, Is.Null);
+            var error = Assert.Throws<ArgumentNullException>(() => new ExadbVmClusterProperties(vnet, subnet, "cluster", 8, vault, hostname: null, 2, "shape", new[] { "ssh-key" }, 16, storage));
+            Assert.That(error.ParamName, Is.EqualTo("hostname"));
+        }
+
+        [Test]
+        public void CloudVmClusterConstructorAssignsAndValidatesHostname()
+        {
+            var vnet = new ResourceIdentifier("/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet");
+            var subnet = new ResourceIdentifier(vnet + "/subnets/subnet");
+            var infrastructure = new ResourceIdentifier("/subscriptions/sub/resourceGroups/rg/providers/Oracle.Database/cloudExadataInfrastructures/infra");
+            var model = new CloudVmClusterProperties(hostname: "cloud-host", 8, infrastructure, new[] { "ssh-key" }, vnet, "23", subnet, "cluster");
+            Assert.That(model.Hostname, Is.EqualTo("cloud-host"));
+            Assert.That(model.HostnameV2, Is.Null);
+            var error = Assert.Throws<ArgumentNullException>(() => new CloudVmClusterProperties(hostname: null, 8, infrastructure, new[] { "ssh-key" }, vnet, "23", subnet, "cluster"));
+            Assert.That(error.ParamName, Is.EqualTo("hostname"));
+        }
+
+        [TestCase(nameof(ArmOracleDatabaseModelFactory.CloudVmClusterProperties))]
+        [TestCase(nameof(ArmOracleDatabaseModelFactory.ExadbVmClusterProperties))]
+        public void ModelFactoriesPreserveLegacyHostnameParameter(string methodName)
+        {
+            var methods = typeof(ArmOracleDatabaseModelFactory).GetMethods()
+                .Where(method => method.Name == methodName && method.GetParameters().Any(parameter => parameter.Name == "hostname"))
+                .ToArray();
+            Assert.That(methods, Is.Not.Empty);
+            foreach (var method in methods)
+            {
+                Assert.That(method.GetParameters().Any(parameter => parameter.Name == "hostname"), Is.True, method.ToString());
+                Assert.That(method.GetParameters().Any(parameter => parameter.Name == "hostnameV2"), Is.False, method.ToString());
+            }
+        }
+
+        [Test]
+        public void CloudVmClusterFactoryInitializesHostnameV2IndependentlyOfLegacyHostname()
+        {
+            var model = ArmOracleDatabaseModelFactory.CloudVmClusterProperties(
+                cloudVmClusterOcid: null, resourceAnchorId: null, networkAnchorId: null,
+                listenerPort: null, nodeCount: null, storageSizeInGbs: null, fileSystemConfigurationDetails: null,
+                dataStorageSizeInTbs: null, dbNodeStorageSizeInGbs: null, memorySizeInGbs: null,
+                createdOn: null, lifecycleDetails: null, timeZone: null, zoneOcid: null, hostnameV2: "cloud-host");
+            Assert.That(model.HostnameV2, Is.EqualTo("cloud-host"));
+            Assert.That(model.Hostname, Is.Null);
+        }
+
+        [Test]
+        public void LegacyModelFactoriesInitializeHostnameIndependentlyOfHostnameV2()
+        {
+            var cloud = ArmOracleDatabaseModelFactory.CloudVmClusterProperties(hostname: "legacy-cloud-host");
+            Assert.That(cloud.Hostname, Is.EqualTo("legacy-cloud-host"));
+            Assert.That(cloud.HostnameV2, Is.Null);
+#pragma warning disable CS0618 // Exercise the legacy factory retained for compatibility.
+            var exadb = ArmOracleDatabaseModelFactory.ExadbVmClusterProperties(hostname: "legacy-exadb-host");
+#pragma warning restore CS0618
+            Assert.That(exadb.Hostname, Is.EqualTo("legacy-exadb-host"));
+            Assert.That(exadb.HostnameV2, Is.Null);
+        }
+
+        [Test]
+        public void MongoDbConnectionPreservesWireValue()
+        {
+            Assert.That(ConnectionType.MongoDbConnection, Is.EqualTo(ConnectionType.MongoDBConnection));
+            Assert.That(ConnectionType.MongoDbConnection.ToString(), Is.EqualTo("MONGODB"));
         }
 
         [Test]

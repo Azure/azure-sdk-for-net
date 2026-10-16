@@ -4,18 +4,12 @@
 
 ### Features Added
 
-- Added support for API version 2026-06-01.
-
-### Breaking Changes
-
-- Renamed `Hostname` to `HostnameV2` on `CloudVmClusterProperties` and `ExadbVmClusterProperties`, including the corresponding constructor and model factory parameters. The JSON property remains `hostname`.
+- Upgraded API version to 2026-06-01.
 
 ### Bugs Fixed
 
 - Fixed hostname deserialization for cloud VM clusters.
 - Fixed base database model factories to return concrete mock instances while preserving discriminator values.
-
-### Other Changes
 
 ## 1.2.1 (2026-06-23)
 

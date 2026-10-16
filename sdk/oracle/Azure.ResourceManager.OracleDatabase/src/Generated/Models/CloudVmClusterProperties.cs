@@ -182,6 +182,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The OCID of the zone the cloud VM cluster is associated with. </summary>
         public string ZoneOcid { get; set; }
 
+        /// <summary> The hostname for the cloud VM cluster. </summary>
+        public string HostnameV2 { get; set; }
+
         /// <summary> The domain name for the cloud VM cluster. </summary>
         public string Domain { get; set; }
 

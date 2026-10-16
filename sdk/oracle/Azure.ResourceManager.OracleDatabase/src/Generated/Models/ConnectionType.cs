@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> An Oracle NoSQL Connection. </summary>
         private const string OracleNoSQLValue = "ORACLE_NOSQL";
         /// <summary> A MongoDB Connection. </summary>
-        private const string MongoDBConnectionValue = "MONGODB";
+        private const string MongoDbConnectionValue = "MONGODB";
         /// <summary> An Amazon Kinesis Connection. </summary>
         private const string AmazonKinesisValue = "AMAZON_KINESIS";
         /// <summary> An Amazon Redshift Connection. </summary>
@@ -126,9 +126,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> An Oracle NoSQL Connection. </summary>
         public static ConnectionType OracleNoSQL { get; } = new ConnectionType(OracleNoSQLValue);
-
-        /// <summary> A MongoDB Connection. </summary>
-        public static ConnectionType MongoDBConnection { get; } = new ConnectionType(MongoDBConnectionValue);
 
         /// <summary> An Amazon Kinesis Connection. </summary>
         public static ConnectionType AmazonKinesis { get; } = new ConnectionType(AmazonKinesisValue);
