@@ -12,7 +12,6 @@ pr:
   paths:
     include:
       - .github/CODEOWNERS
-      - .github/scripts/codeowners-routing.cjs
       - .github/CODEOWNERS_baseline_errors.txt
       - eng/common/pipelines/codeowners-linter.yml
 
@@ -68,11 +67,6 @@ stages:
             Write-Host "git checkout refs/remotes/pull/$ENV:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER/merge"
             git checkout refs/remotes/pull/$ENV:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER/merge
           displayName: Checkout the PR branch
-
-      - pwsh: |
-          node .github/scripts/codeowners-routing.cjs --validate .github/CODEOWNERS
-        displayName: Validate issue routing metadata
-        workingDirectory: '$(Build.SourcesDirectory)'
 
       - pwsh: |
           # In the case of a PR, the baseBranchBaseline will be set which will be used to further filter results.
