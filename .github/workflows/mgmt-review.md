@@ -148,7 +148,7 @@ safe-outputs:
                 if (start < 0 || end < 0) {
                   throw new Error('TypeSpec checklist status markers are missing; refusing to overwrite author edits');
                 }
-                // Preserve checked boxes, notes, and the original author mention outside the managed status.
+                // Preserve instructions, notes, and the original author mention outside the managed status.
                 body = existing.body.slice(0, start) + status + existing.body.slice(end + statusEnd.length);
                 body = body.replace(/\n\n&#45; by copilot(?=\n|$)/g, '').trimEnd() + '\n\n&#45; by copilot';
                 if (body === existing.body) return;
@@ -160,11 +160,11 @@ safe-outputs:
                   '',
                   `@${pr.user.login}, follow this **TypeSpec resolution checklist** before merging the spec PR. Do not manually edit generated C# files.`,
                   '',
-                  '- [ ] Open a separate spec PR in `azure-rest-api-specs`, or update the existing spec PR for this SDK change.',
-                  '- [ ] Before the spec PR merges, update `tsp-location.yaml` to its latest commit, regenerate the SDK, and rerun this review.',
-                  '- [ ] Address any new findings in the same spec PR, update the SDK from its latest commit, and repeat regeneration and review until no findings remain.',
-                  '- [ ] Only after the review reports no more findings, merge the spec PR.',
-                  '- [ ] After the spec PR merges, update `tsp-location.yaml` to the latest specs `main` commit containing the changes, then regenerate the SDK.',
+                  '1. Open a separate spec PR in `azure-rest-api-specs`, or update the existing spec PR for this SDK change.',
+                  '2. Before the spec PR merges, update `tsp-location.yaml` to its latest commit, regenerate the SDK, and rerun this review.',
+                  '3. Address any new findings in the same spec PR, update the SDK from its latest commit, and repeat regeneration and review until no findings remain.',
+                  '4. Only after the review reports no more findings, merge the spec PR.',
+                  '5. After the spec PR merges, update `tsp-location.yaml` to the latest specs `main` commit containing the changes, then regenerate the SDK.',
                   '',
                   '&#45; by copilot'
                 ].join('\n');
@@ -440,6 +440,6 @@ After that optional alert, the review body should contain:
 
 If there are no findings, submit a neutral `COMMENT` review with a short body indicating that no blocking management SDK review issues were found.
 
-After submitting every complete review, request the `update_typespec_guidance` custom safe-output tool. It creates a separate, author-addressed TypeSpec resolution checklist only when the review contains the exact visible alert above. On subsequent runs it updates only that comment's status and latest-review link, preserving checkbox progress and author notes. A clean review refreshes an existing checklist to clear the action-required notice; it does not create a checklist on a clean PR.
+After submitting every complete review, request the `update_typespec_guidance` custom safe-output tool. It creates a separate, author-addressed TypeSpec resolution checklist only when the review contains the exact visible alert above. On subsequent runs it updates only that comment's status and latest-review link, preserving the numbered instructions and author notes. A clean review refreshes an existing checklist to clear the action-required notice; it does not create a checklist on a clean PR.
 
-Do not append the full checklist to the review body or post it with `add_comment`. Keep review summaries and inline findings as separate historical reviews; never edit a previous review, resolve its threads, or reset the author's checklist progress as part of updating the guidance. The existing stale-change-request dismissal guard remains a separate operation.
+Do not append the full checklist to the review body or post it with `add_comment`. Keep review summaries and inline findings as separate historical reviews; never edit a previous review, resolve its threads, or overwrite the author's instructions or notes as part of updating the guidance. The existing stale-change-request dismissal guard remains a separate operation.

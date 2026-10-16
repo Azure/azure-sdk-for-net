@@ -85,7 +85,8 @@ test("creates a separate author-addressed checklist even for duplicate-suppresse
   assert.match(args.body, /@sdk-author/);
   assert.match(args.body, /\[!IMPORTANT\]/);
   assert.match(args.body, /Do not merge the spec PR/);
-  assert.equal((args.body.match(/^- \[ \]/gm) || []).length, 5);
+  assert.doesNotMatch(args.body, /^- \[[ xX]\]/m);
+  assert.deepEqual([...args.body.matchAll(/^(\d)\. /gm)].map(match => match[1]), ["1", "2", "3", "4", "5"]);
   assert.ok(args.body.includes(review.html_url));
   assert.ok(args.body.endsWith("\n\n&#45; by copilot"));
 });
@@ -96,15 +97,15 @@ test("creates guidance after gh-aw strips HTML comments from the outgoing review
 test("also creates guidance for a blocking review", async () => {
   assert.equal((await run({ reviews: [{ ...review, state: "CHANGES_REQUESTED" }] }))[0][0], "create");
 });
-test("reuses the marked bot comment and preserves checked boxes and author edits", async () => {
+test("reuses the marked bot comment and preserves instructions and author edits", async () => {
   const [[, first]] = await run();
-  const body = first.body.replace("- [ ]", "- [x]") + "\nAuthor note: spec PR #12345.";
+  const body = first.body.replace("Open a separate spec PR", "Open or update the spec PR") + "\nAuthor note: spec PR #12345.";
   const [[action, args]] = await run({ comments: [{ id: 77, user: author, body }],
     reviews: [{ ...review, id: 11, html_url: review.html_url.replace("-10", "-11") }] });
   assert.equal(action, "update");
   assert.equal(args.comment_id, 77);
   assert.ok(args.body.includes("pullrequestreview-11"));
-  assert.ok(args.body.includes("- [x]"));
+  assert.ok(args.body.includes("Open or update the spec PR"));
   assert.ok(args.body.includes("Author note: spec PR #12345."));
   assert.ok(args.body.endsWith("\n\n&#45; by copilot"));
   assert.equal((args.body.match(/&#45; by copilot/g) || []).length, 1);
