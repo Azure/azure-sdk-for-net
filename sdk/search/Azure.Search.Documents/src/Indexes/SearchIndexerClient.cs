@@ -359,7 +359,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<SearchIndexer>> GetIndexers(
             CancellationToken cancellationToken = default)
         {
-            return GetPagedIndexers(new[] { Constants.All }, cancellationToken: cancellationToken).ToBufferedList();
+            return GetAllIndexers(new[] { Constants.All }, cancellationToken: cancellationToken).ToBufferedList();
         }
 
         /// <summary>
@@ -373,7 +373,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<SearchIndexer>>> GetIndexersAsync(
             CancellationToken cancellationToken = default)
         {
-            return await GetPagedIndexersAsync(new[] { Constants.All }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
+            return await GetAllIndexersAsync(new[] { Constants.All }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<string>> GetIndexerNames(
             CancellationToken cancellationToken = default)
         {
-            Response<IReadOnlyList<SearchIndexer>> response = GetPagedIndexers(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedList();
+            Response<IReadOnlyList<SearchIndexer>> response = GetAllIndexers(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedList();
             return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 
@@ -400,7 +400,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<string>>> GetIndexerNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<IReadOnlyList<SearchIndexer>> response = await GetPagedIndexersAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
+            Response<IReadOnlyList<SearchIndexer>> response = await GetAllIndexersAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
             return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 

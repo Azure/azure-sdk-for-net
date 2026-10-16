@@ -26,15 +26,15 @@ Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} of {
 
 ## List Resources with Paging Controls
 
-Use `GetPagedIndexers`, `GetPagedDataSourceConnections`, or `GetPagedSkillsets` on `SearchIndexerClient`, or
-`GetPagedSynonymMaps` on `SearchIndexClient`, to select properties, narrow a listing by name prefix, and process one page at a time.
+Use `GetAllIndexers`, `GetAllDataSourceConnections`, or `GetAllSkillsets` on `SearchIndexerClient`, or
+`GetAllSynonymMaps` on `SearchIndexClient`, to select properties, narrow a listing by name prefix, and process one page at a time.
 Each method also has an async counterpart. The existing list-returning methods remain available and continue
 to buffer all pages.
 
 Given a `SearchIndexerClient` named `indexerClient`:
 
 ```C# Snippet:Azure_Search_Tests_Samples_ListIndexers
-await foreach (Page<SearchIndexer> page in indexerClient.GetPagedIndexersAsync(
+await foreach (Page<SearchIndexer> page in indexerClient.GetAllIndexersAsync(
     select: new[] { "name" },
     search: "hotel",
     pageSize: 10,

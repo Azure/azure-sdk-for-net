@@ -239,7 +239,7 @@ namespace Azure.Search.Documents.Tests
             int count = 0;
 
             #region Snippet:Azure_Search_Tests_Samples_ListIndexers
-            await foreach (Page<SearchIndexer> page in indexerClient.GetPagedIndexersAsync(
+            await foreach (Page<SearchIndexer> page in indexerClient.GetAllIndexersAsync(
                 select: new[] { "name" },
                 search: "hotel",
                 pageSize: 10,
@@ -284,17 +284,17 @@ namespace Azure.Search.Documents.Tests
                 return resource switch
                 {
                     "indexers" => Pages(
-                        () => indexers.GetPagedIndexers(select, search, pageSize, "prefix", context),
-                        () => indexers.GetPagedIndexersAsync(select, search, pageSize, "prefix", context)),
+                        () => indexers.GetAllIndexers(select, search, pageSize, "prefix", context),
+                        () => indexers.GetAllIndexersAsync(select, search, pageSize, "prefix", context)),
                     "datasources" => Pages(
-                        () => indexers.GetPagedDataSourceConnections(select, search, pageSize, "prefix", context),
-                        () => indexers.GetPagedDataSourceConnectionsAsync(select, search, pageSize, "prefix", context)),
+                        () => indexers.GetAllDataSourceConnections(select, search, pageSize, "prefix", context),
+                        () => indexers.GetAllDataSourceConnectionsAsync(select, search, pageSize, "prefix", context)),
                     "skillsets" => Pages(
-                        () => indexers.GetPagedSkillsets(select, search, pageSize, "prefix", context),
-                        () => indexers.GetPagedSkillsetsAsync(select, search, pageSize, "prefix", context)),
+                        () => indexers.GetAllSkillsets(select, search, pageSize, "prefix", context),
+                        () => indexers.GetAllSkillsetsAsync(select, search, pageSize, "prefix", context)),
                     "synonymmaps" => Pages(
-                        () => indexes.GetPagedSynonymMaps(select, search, pageSize, "prefix", context),
-                        () => indexes.GetPagedSynonymMapsAsync(select, search, pageSize, "prefix", context)),
+                        () => indexes.GetAllSynonymMaps(select, search, pageSize, "prefix", context),
+                        () => indexes.GetAllSynonymMapsAsync(select, search, pageSize, "prefix", context)),
                     "aliases" => Pages(
                         () => indexes.GetAliases(search, pageSize, "prefix", context),
                         () => indexes.GetAliasesAsync(search, pageSize, "prefix", context)),
@@ -305,8 +305,8 @@ namespace Azure.Search.Documents.Tests
                         () => indexes.GetIndexesWithSelectedProperties(select, search, pageSize, "prefix", context),
                         () => indexes.GetIndexesWithSelectedPropertiesAsync(select, search, pageSize, "prefix", context)),
                     "indexstats" => Pages(
-                        () => indexes.GetPagedIndexStatsSummary(search, pageSize, "prefix", context),
-                        () => indexes.GetPagedIndexStatsSummaryAsync(search, pageSize, "prefix", context)),
+                        () => indexes.GetAllIndexStatsSummary(search, pageSize, "prefix", context),
+                        () => indexes.GetAllIndexStatsSummaryAsync(search, pageSize, "prefix", context)),
                     "knowledgebases" => Pages(
                         () => indexes.GetKnowledgeBases(search, pageSize, "prefix", context),
                         () => indexes.GetKnowledgeBasesAsync(search, pageSize, "prefix", context)),
@@ -314,8 +314,8 @@ namespace Azure.Search.Documents.Tests
                         () => indexes.GetKnowledgeSources(search, pageSize, "prefix", context),
                         () => indexes.GetKnowledgeSourcesAsync(search, pageSize, "prefix", context)),
                     "files" => Pages(
-                        () => indexes.GetPagedKnowledgeSourceFiles("source", null, search, pageSize, "prefix", context),
-                        () => indexes.GetPagedKnowledgeSourceFilesAsync("source", null, search, pageSize, "prefix", context)),
+                        () => indexes.GetAllKnowledgeSourceFiles("source", null, search, pageSize, "prefix", context),
+                        () => indexes.GetAllKnowledgeSourceFilesAsync("source", null, search, pageSize, "prefix", context)),
                     _ => throw new ArgumentOutOfRangeException(nameof(resource), resource, "Unknown listing resource.")
                 };
             }
@@ -323,17 +323,17 @@ namespace Azure.Search.Documents.Tests
             return resource switch
             {
                 "indexers" => Pages(
-                    () => indexers.GetPagedIndexers(select, search, pageSize, ListingSearchType.Prefix),
-                    () => indexers.GetPagedIndexersAsync(select, search, pageSize, ListingSearchType.Prefix)),
+                    () => indexers.GetAllIndexers(select, search, pageSize, ListingSearchType.Prefix),
+                    () => indexers.GetAllIndexersAsync(select, search, pageSize, ListingSearchType.Prefix)),
                 "datasources" => Pages(
-                    () => indexers.GetPagedDataSourceConnections(select, search, pageSize, ListingSearchType.Prefix),
-                    () => indexers.GetPagedDataSourceConnectionsAsync(select, search, pageSize, ListingSearchType.Prefix)),
+                    () => indexers.GetAllDataSourceConnections(select, search, pageSize, ListingSearchType.Prefix),
+                    () => indexers.GetAllDataSourceConnectionsAsync(select, search, pageSize, ListingSearchType.Prefix)),
                 "skillsets" => Pages(
-                    () => indexers.GetPagedSkillsets(select, search, pageSize, ListingSearchType.Prefix),
-                    () => indexers.GetPagedSkillsetsAsync(select, search, pageSize, ListingSearchType.Prefix)),
+                    () => indexers.GetAllSkillsets(select, search, pageSize, ListingSearchType.Prefix),
+                    () => indexers.GetAllSkillsetsAsync(select, search, pageSize, ListingSearchType.Prefix)),
                 "synonymmaps" => Pages(
-                    () => indexes.GetPagedSynonymMaps(select, search, pageSize, ListingSearchType.Prefix),
-                    () => indexes.GetPagedSynonymMapsAsync(select, search, pageSize, ListingSearchType.Prefix)),
+                    () => indexes.GetAllSynonymMaps(select, search, pageSize, ListingSearchType.Prefix),
+                    () => indexes.GetAllSynonymMapsAsync(select, search, pageSize, ListingSearchType.Prefix)),
                 "aliases" => Pages(
                     () => indexes.GetAliases(search, pageSize, ListingSearchType.Prefix),
                     () => indexes.GetAliasesAsync(search, pageSize, ListingSearchType.Prefix)),
@@ -344,8 +344,8 @@ namespace Azure.Search.Documents.Tests
                     () => indexes.GetIndexesWithSelectedProperties(select, search, pageSize, ListingSearchType.Prefix),
                     () => indexes.GetIndexesWithSelectedPropertiesAsync(select, search, pageSize, ListingSearchType.Prefix)),
                 "indexstats" => Pages(
-                    () => indexes.GetPagedIndexStatsSummary(search, pageSize, ListingSearchType.Prefix),
-                    () => indexes.GetPagedIndexStatsSummaryAsync(search, pageSize, ListingSearchType.Prefix)),
+                    () => indexes.GetAllIndexStatsSummary(search, pageSize, ListingSearchType.Prefix),
+                    () => indexes.GetAllIndexStatsSummaryAsync(search, pageSize, ListingSearchType.Prefix)),
                 "knowledgebases" => Pages(
                     () => indexes.GetKnowledgeBases(search, pageSize, ListingSearchType.Prefix),
                     () => indexes.GetKnowledgeBasesAsync(search, pageSize, ListingSearchType.Prefix)),
@@ -353,8 +353,8 @@ namespace Azure.Search.Documents.Tests
                     () => indexes.GetKnowledgeSources(search, pageSize, ListingSearchType.Prefix),
                     () => indexes.GetKnowledgeSourcesAsync(search, pageSize, ListingSearchType.Prefix)),
                 "files" => Pages(
-                    () => indexes.GetPagedKnowledgeSourceFiles("source", search: search, pageSize: pageSize, searchType: ListingSearchType.Prefix),
-                    () => indexes.GetPagedKnowledgeSourceFilesAsync("source", search: search, pageSize: pageSize, searchType: ListingSearchType.Prefix)),
+                    () => indexes.GetAllKnowledgeSourceFiles("source", search: search, pageSize: pageSize, searchType: ListingSearchType.Prefix),
+                    () => indexes.GetAllKnowledgeSourceFilesAsync("source", search: search, pageSize: pageSize, searchType: ListingSearchType.Prefix)),
                 _ => throw new ArgumentOutOfRangeException(nameof(resource), resource, "Unknown listing resource.")
             };
         }

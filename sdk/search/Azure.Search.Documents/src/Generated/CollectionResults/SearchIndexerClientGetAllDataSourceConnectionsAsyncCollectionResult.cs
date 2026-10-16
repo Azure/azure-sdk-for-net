@@ -8,6 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -16,7 +19,7 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Indexes
 {
-    internal partial class SearchIndexerClientGetPagedDataSourceConnectionsCollectionResult : Pageable<BinaryData>
+    internal partial class SearchIndexerClientGetAllDataSourceConnectionsAsyncCollectionResult : AsyncPageable<BinaryData>
     {
         private readonly SearchIndexerClient _client;
         private readonly IEnumerable<string> _select;
@@ -26,7 +29,7 @@ namespace Azure.Search.Documents.Indexes
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of SearchIndexerClientGetPagedDataSourceConnectionsCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of SearchIndexerClientGetAllDataSourceConnectionsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SearchIndexerClient client used to send requests. </param>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
@@ -34,7 +37,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SearchIndexerClientGetPagedDataSourceConnectionsCollectionResult(SearchIndexerClient client, IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SearchIndexerClientGetAllDataSourceConnectionsAsyncCollectionResult(SearchIndexerClient client, IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _select = @select;
@@ -45,16 +48,24 @@ namespace Azure.Search.Documents.Indexes
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of SearchIndexerClientGetPagedDataSourceConnectionsCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of SearchIndexerClientGetAllDataSourceConnectionsAsyncCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of SearchIndexerClientGetPagedDataSourceConnectionsCollectionResult as an enumerable collection. </returns>
-        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of SearchIndexerClientGetAllDataSourceConnectionsAsyncCollectionResult as an enumerable collection. </returns>
+        public override IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        {
+            return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
+        }
+
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async IAsyncEnumerable<Page<BinaryData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage, cancellationToken).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -78,15 +89,24 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _pageSize;
-            HttpMessage message = nextLink != null ? _client.CreateNextGetPagedDataSourceConnectionsRequest(nextLink, pageSize, _context) : _client.CreateGetPagedDataSourceConnectionsRequest(_select, _search, pageSize, _searchType, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllDataSourceConnectionsRequest(nextLink, pageSize, _context) : _client.CreateGetAllDataSourceConnectionsRequest(_select, _search, pageSize, _searchType, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                ErrorOptions errorOptions = _context?.ErrorOptions ?? ErrorOptions.Default;
+                await _client.Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
+                if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+                {
+                    throw new RequestFailedException(message.Response);
+                }
+
+                return message.Response;
             }
             catch (Exception e)
             {

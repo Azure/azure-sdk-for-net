@@ -165,7 +165,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 // Prefixes are derived from relative paths. The pageable handles
                 // continuation tokens internally; callers should not parse them.
                 HashSet<string> listedFileIds = new HashSet<string>();
-                await foreach (KnowledgeSourceFile file in indexClient.GetPagedKnowledgeSourceFilesAsync(
+                await foreach (KnowledgeSourceFile file in indexClient.GetAllKnowledgeSourceFilesAsync(
                     knowledgeSourceName,
                     prefix: "guides/",
                     pageSize: 1))

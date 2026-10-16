@@ -327,16 +327,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetPagedSynonymMaps(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        public virtual Pageable<BinaryData> GetAllSynonymMaps(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexClientGetPagedSynonymMapsCollectionResult(
+            return new SearchIndexClientGetAllSynonymMapsCollectionResult(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexClient.GetPagedSynonymMaps");
+                "SearchIndexClient.GetAllSynonymMaps");
         }
 
         /// <summary>
@@ -354,16 +354,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetPagedSynonymMapsAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetAllSynonymMapsAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexClientGetPagedSynonymMapsAsyncCollectionResult(
+            return new SearchIndexClientGetAllSynonymMapsAsyncCollectionResult(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexClient.GetPagedSynonymMaps");
+                "SearchIndexClient.GetAllSynonymMaps");
         }
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
@@ -373,16 +373,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<SynonymMap> GetPagedSynonymMaps(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SynonymMap> GetAllSynonymMaps(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetPagedSynonymMapsCollectionResultOfT(
+            return new SearchIndexClientGetAllSynonymMapsCollectionResultOfT(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexClient.GetPagedSynonymMaps");
+                "SearchIndexClient.GetAllSynonymMaps");
         }
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
@@ -392,16 +392,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<SynonymMap> GetPagedSynonymMapsAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SynonymMap> GetAllSynonymMapsAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetPagedSynonymMapsAsyncCollectionResultOfT(
+            return new SearchIndexClientGetAllSynonymMapsAsyncCollectionResultOfT(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexClient.GetPagedSynonymMaps");
+                "SearchIndexClient.GetAllSynonymMaps");
         }
 
         /// <summary>
@@ -2684,11 +2684,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetPagedKnowledgeSourceFiles(string sourceName, string prefix, string search, int? pageSize, string searchType, RequestContext context)
+        public virtual Pageable<BinaryData> GetAllKnowledgeSourceFiles(string sourceName, string prefix, string search, int? pageSize, string searchType, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-            return new SearchIndexClientGetPagedKnowledgeSourceFilesCollectionResult(
+            return new SearchIndexClientGetAllKnowledgeSourceFilesCollectionResult(
                 this,
                 sourceName,
                 prefix,
@@ -2696,7 +2696,7 @@ namespace Azure.Search.Documents.Indexes
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexClient.GetPagedKnowledgeSourceFiles");
+                "SearchIndexClient.GetAllKnowledgeSourceFiles");
         }
 
         /// <summary>
@@ -2717,11 +2717,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetPagedKnowledgeSourceFilesAsync(string sourceName, string prefix, string search, int? pageSize, string searchType, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetAllKnowledgeSourceFilesAsync(string sourceName, string prefix, string search, int? pageSize, string searchType, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-            return new SearchIndexClientGetPagedKnowledgeSourceFilesAsyncCollectionResult(
+            return new SearchIndexClientGetAllKnowledgeSourceFilesAsyncCollectionResult(
                 this,
                 sourceName,
                 prefix,
@@ -2729,7 +2729,7 @@ namespace Azure.Search.Documents.Indexes
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexClient.GetPagedKnowledgeSourceFiles");
+                "SearchIndexClient.GetAllKnowledgeSourceFiles");
         }
 
         /// <summary> Lists all files in a File knowledge source. </summary>
@@ -2742,11 +2742,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<KnowledgeSourceFile> GetPagedKnowledgeSourceFiles(string sourceName, string prefix = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<KnowledgeSourceFile> GetAllKnowledgeSourceFiles(string sourceName, string prefix = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-            return new SearchIndexClientGetPagedKnowledgeSourceFilesCollectionResultOfT(
+            return new SearchIndexClientGetAllKnowledgeSourceFilesCollectionResultOfT(
                 this,
                 sourceName,
                 prefix,
@@ -2754,7 +2754,7 @@ namespace Azure.Search.Documents.Indexes
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexClient.GetPagedKnowledgeSourceFiles");
+                "SearchIndexClient.GetAllKnowledgeSourceFiles");
         }
 
         /// <summary> Lists all files in a File knowledge source. </summary>
@@ -2767,11 +2767,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<KnowledgeSourceFile> GetPagedKnowledgeSourceFilesAsync(string sourceName, string prefix = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<KnowledgeSourceFile> GetAllKnowledgeSourceFilesAsync(string sourceName, string prefix = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-            return new SearchIndexClientGetPagedKnowledgeSourceFilesAsyncCollectionResultOfT(
+            return new SearchIndexClientGetAllKnowledgeSourceFilesAsyncCollectionResultOfT(
                 this,
                 sourceName,
                 prefix,
@@ -2779,7 +2779,7 @@ namespace Azure.Search.Documents.Indexes
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexClient.GetPagedKnowledgeSourceFiles");
+                "SearchIndexClient.GetAllKnowledgeSourceFiles");
         }
 
         /// <summary>
@@ -3084,15 +3084,15 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetPagedIndexStatsSummary(string search, int? pageSize, string searchType, RequestContext context)
+        public virtual Pageable<BinaryData> GetAllIndexStatsSummary(string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexClientGetPagedIndexStatsSummaryCollectionResult(
+            return new SearchIndexClientGetAllIndexStatsSummaryCollectionResult(
                 this,
                 search,
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexClient.GetPagedIndexStatsSummary");
+                "SearchIndexClient.GetAllIndexStatsSummary");
         }
 
         /// <summary>
@@ -3109,15 +3109,15 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetPagedIndexStatsSummaryAsync(string search, int? pageSize, string searchType, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetAllIndexStatsSummaryAsync(string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexClientGetPagedIndexStatsSummaryAsyncCollectionResult(
+            return new SearchIndexClientGetAllIndexStatsSummaryAsyncCollectionResult(
                 this,
                 search,
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexClient.GetPagedIndexStatsSummary");
+                "SearchIndexClient.GetAllIndexStatsSummary");
         }
 
         /// <summary> Retrieves a summary of statistics for all indexes in the search service. </summary>
@@ -3126,15 +3126,15 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<IndexStatisticsSummary> GetPagedIndexStatsSummary(string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<IndexStatisticsSummary> GetAllIndexStatsSummary(string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetPagedIndexStatsSummaryCollectionResultOfT(
+            return new SearchIndexClientGetAllIndexStatsSummaryCollectionResultOfT(
                 this,
                 search,
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexClient.GetPagedIndexStatsSummary");
+                "SearchIndexClient.GetAllIndexStatsSummary");
         }
 
         /// <summary> Retrieves a summary of statistics for all indexes in the search service. </summary>
@@ -3143,15 +3143,15 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<IndexStatisticsSummary> GetPagedIndexStatsSummaryAsync(string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IndexStatisticsSummary> GetAllIndexStatsSummaryAsync(string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetPagedIndexStatsSummaryAsyncCollectionResultOfT(
+            return new SearchIndexClientGetAllIndexStatsSummaryAsyncCollectionResultOfT(
                 this,
                 search,
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexClient.GetPagedIndexStatsSummary");
+                "SearchIndexClient.GetAllIndexStatsSummary");
         }
 
         /// <summary> Lists all indexes available for a search service. </summary>

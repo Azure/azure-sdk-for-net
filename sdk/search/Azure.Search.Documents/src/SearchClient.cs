@@ -651,109 +651,11 @@ namespace Azure.Search.Documents
                 cancellationToken)
                 .ConfigureAwait(false);
 
-        // search-preview:2026-05-01-preview {
-        /// <summary>
-        /// Retrieves a specific document from the search index, with support
-        /// for document-level security via <paramref name="querySourceAuthorization"/>.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document">Lookup Document</see>
-        /// </summary>
-        /// <typeparam name="T">
-        /// The .NET type that maps to the index schema. Instances of this type
-        /// can be retrieved as documents from the index.
-        /// </typeparam>
-        /// <param name="key">The key of the document to retrieve.</param>
-        /// <param name="querySourceAuthorization">
-        /// Token identifying the user for whom the query is being executed.
-        /// This token is used to enforce document-level security restrictions.
-        /// </param>
-        /// <param name="enableElevatedRead">
-        /// A value that enables elevated read access that bypasses document-level
-        /// permission checks for the query operation.
-        /// </param>
-        /// <param name="options">
-        /// Options to customize the operation's behavior.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// The document corresponding to the <paramref name="key"/> as a
-        /// <typeparamref name="T"/>.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        public virtual Response<T> GetDocument<T>(
-            string key,
-            string querySourceAuthorization,
-            bool? enableElevatedRead = null,
-            GetDocumentOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            GetDocumentInternal<T>(
-                key,
-                options,
-                async: false,
-                cancellationToken,
-                querySourceAuthorization,
-                enableElevatedRead)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// Retrieves a specific document from the search index, with support
-        /// for document-level security via <paramref name="querySourceAuthorization"/>.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document">Lookup Document</see>
-        /// </summary>
-        /// <typeparam name="T">
-        /// The .NET type that maps to the index schema. Instances of this type
-        /// can be retrieved as documents from the index.
-        /// </typeparam>
-        /// <param name="key">The key of the document to retrieve.</param>
-        /// <param name="querySourceAuthorization">
-        /// Token identifying the user for whom the query is being executed.
-        /// This token is used to enforce document-level security restrictions.
-        /// </param>
-        /// <param name="enableElevatedRead">
-        /// A value that enables elevated read access that bypasses document-level
-        /// permission checks for the query operation.
-        /// </param>
-        /// <param name="options">
-        /// Options to customize the operation's behavior.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// The document corresponding to the <paramref name="key"/> as a
-        /// <typeparamref name="T"/>.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        public virtual async Task<Response<T>> GetDocumentAsync<T>(
-            string key,
-            string querySourceAuthorization,
-            bool? enableElevatedRead = null,
-            GetDocumentOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await GetDocumentInternal<T>(
-                key,
-                options,
-                async: true,
-                cancellationToken,
-                querySourceAuthorization,
-                enableElevatedRead)
-                .ConfigureAwait(false);
-        // search-preview:2026-05-01-preview }
-
         private async Task<Response<T>> GetDocumentInternal<T>(
             string key,
             GetDocumentOptions options,
             bool async,
-            CancellationToken cancellationToken,
-            string querySourceAuthorization = null,
-            bool? enableElevatedRead = null)
+            CancellationToken cancellationToken)
         {
             if (key == null)
             { throw new ArgumentNullException(nameof(key)); }
@@ -761,7 +663,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDocumentRequest(key, querySourceAuthorization, enableElevatedRead, options?.SelectedFieldsOrNull, cancellationToken.ToRequestContext());
+                using HttpMessage message = CreateGetDocumentRequest(key, options?.QuerySourceAuthorization, options?.EnableElevatedRead, options?.SelectedFieldsOrNull, cancellationToken.ToRequestContext());
                 if (async)
                 {
                     await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);

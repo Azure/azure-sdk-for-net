@@ -15,12 +15,6 @@ and purge protection enabled. Configure network access for both the caller and
 the Search service. See [configure customer-managed keys for data encryption](https://learn.microsoft.com/azure/search/search-security-manage-encryption-keys)
 for the service requirements.
 
-For the executable sample, follow the [encryption test setup](../tests/README.md#customer-managed-encryption-test).
-It lists the required resources, each role's principal and scope, `.env` settings,
-and the explicitly opted-in `net10.0` recording command. The test creates its own
-RSA-2048 key with wrap/unwrap operations and soft-deletes it during cleanup; it
-does not purge keys or provision the Search service, storage account, or vault.
-
 ## Using the encryption key
 
 Once you have a Key Vault key you can use for wrapping and unwrapping service keys, you can create a `SearchResourceEncryptionKey` with the information about the key and credentials for your service principal if not using Managed Identity.
