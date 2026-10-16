@@ -89,7 +89,13 @@ stages:
 
                 steps:
                   - checkout: self
+                    fetchTags: ${{ eq(parameters.TestPipeline, true) }}
+                    fetchFilter: tree:0
                     fetchDepth: 1
+                    ${{ if eq(parameters.TestPipeline, true) }}:
+                      sparseCheckoutPatterns: '/* !/*/ /eng /.config /sdk/${{ parameters.ServiceDirectory }} /sdk/template'
+                    ${{ else }}:
+                      sparseCheckoutPatterns: '/* !/*/ /eng /.config /sdk/${{ parameters.ServiceDirectory }}'
                   - download: current
                     displayName: Download ${{parameters.ArtifactName}}-signed
                     artifact: ${{parameters.ArtifactName}}-signed
@@ -461,4 +467,3 @@ stages:
               SparseCheckoutPaths:
                 - /api/overview/azure/
                 - /metadata/
-

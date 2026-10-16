@@ -314,6 +314,9 @@ extends:
           - checkout: self
             fetchDepth: 1
             fetchTags: false
+            ${{ if eq(parameters.OnlyGenerateTypespec, true) }}:
+              fetchFilter: tree:0
+              sparseCheckoutPatterns: "/* !/*/ /eng /.config /sdk/**/tsp-location.yaml ${{ join(' ', parameters.SparseCheckoutPaths) }}"
 
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml
             parameters:

@@ -36,8 +36,10 @@ extends:
       # The tests do not consume repository history or tags. Declaring checkout here replaces
       # the implicit checkout performed by Azure Pipelines rather than adding another fetch.
       - checkout: self
+        fetchFilter: tree:0
         fetchDepth: 1
         fetchTags: false
+        sparseCheckoutPatterns: '/* !/*/ /eng /.config /.github'
 
       - task: UseDotNet@2
         displayName: 'Use .NET SDK'
