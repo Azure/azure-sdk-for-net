@@ -38,11 +38,16 @@ neither bundling nor upload interprets DevOps environment variables or publishin
 | --- | --- |
 | `publishDashboardResults` | The only checkbox; defaults to `true` in the three tools entrypoints. Set `false` to disable both upload and Azure Storage egress |
 | `EvalStorageAccountName` | Pipeline-owner configuration. Upload is skipped when absent; set it to `evaltestsummary` for this dashboard |
+| `EvalDashboardRefreshUrl` | Pipeline-owner configuration: `https://azsdk-eval-bue6a7dwanatgpb3.westus3-01.azurewebsites.net/api/refresh` |
+| `EvalDashboardResource` | Pipeline-owner configuration: `api://258998df-81ec-460c-bdd7-56a9bdde1e48` (resource URI, not a `/.default` scope) |
 | `createDashboardBundle` | Shared-template artifact-only mode; enabled for all three tools entrypoints |
 
-The pipeline owner must set **`EvalStorageAccountName=evaltestsummary`** in each
-onboarded DevOps pipeline's variables, with **queue-time override disabled** and
-edit permissions restricted. This source change does not configure DevOps or grant
+The pipeline owner must set **`EvalStorageAccountName=evaltestsummary`** and the two
+dashboard variables above in each onboarded DevOps pipeline, with **queue-time
+override disabled** and edit permissions restricted. These settings are trusted
+deployment configuration: the owner must verify the dashboard URL/API pairing.
+The task passes values through environment mapping, never by evaluating their contents
+as script code. This source change does not configure DevOps or grant
 access. The dashboard reads that account's existing `vally-results` container;
 publishing to another account does not redirect the reader. Service-connection
 authorization, approved branch checks and existing RBAC remain required.
@@ -94,9 +99,16 @@ notification/status-save failures cannot erase the retained successful storage r
 
 ### Notification and recovery
 
-Every successful publication sends only `{blobName, sha256}` to the reviewed
-`https://azsdk-eval-bue6a7dwanatgpb3.westus3-01.azurewebsites.net/api/refresh` endpoint.
-The publisher requests `api://258998df-81ec-460c-bdd7-56a9bdde1e48/.default`; the dashboard
+Every successful publication attempts to send only `{blobName, sha256}` to
+`EvalDashboardRefreshUrl`, using a token for `EvalDashboardResource`. No production
+dashboard URL or API ID is hardcoded in the script. The URL must be a canonical
+HTTPS App Service address ending exactly in `/api/refresh`, with no credentials,
+nondefault port, query or fragment; the resource must be `api://<API-client-ID>`.
+Validation happens before requesting a notification token. Missing or invalid
+configuration preserves the successful storage receipt, sends no token and warns.
+The storage OAuth resource `https://storage.azure.com/` remains a platform constant,
+not a deployment destination. For the values above, Azure CLI requests a token for
+`api://258998df-81ec-460c-bdd7-56a9bdde1e48`; the dashboard
 validates the Entra v2 token's GUID `aud`, not the `api://` resource string.
 The application needs `Dashboard.Refresh` permission and the receiver's Easy Auth
 client allowlist. Blob permission alone does not grant notification access.
@@ -116,6 +128,9 @@ PowerShell suite under `eng/common-tests/eval`; failures fail the CI job.
 CI restores only the locked archive dependency, not the Vally evaluator.
 Regression coverage includes the actual HTTP
 cmdlet against loopback, invalid collision metadata and receipt-path aliases.
+The loopback fixture selects the first Node application when CI has multiple Node
+installations on `PATH`. Configuration tests use synthetic hosts/resources and
+prove invalid targets cannot request or receive notification tokens.
 Tests use synthetic fixtures and fake Azure transports;
 they do not evaluate models or contact production services. A real-run test remains
 separate from local checks and should use an already approved evaluation run.

@@ -4,7 +4,9 @@
 param(
     [Parameter(Mandatory)] [ValidatePattern('^[a-z0-9]{3,24}$')] [string] $StorageAccountName,
     [Parameter(Mandatory)] [string] $BundlePath,
-    [Parameter(Mandatory)] [string] $ResultPath
+    [Parameter(Mandatory)] [string] $ResultPath,
+    [string] $DashboardRefreshUrl = '',
+    [string] $DashboardResource = ''
 )
 
 Set-StrictMode -Version 4
@@ -49,6 +51,17 @@ try {
         throw 'Archive identity or checksum differs from its preparation receipt.'
     }
     [System.IO.Directory]::CreateDirectory([System.IO.Path]::GetDirectoryName($ResultPath)) | Out-Null
+
+    # Deployment values belong to protected pipeline configuration, not queue-time input.
+    # Never acquire a notification token for a noncanonical or non-App-Service destination.
+    $refreshUri = $null
+    $notificationValid = $DashboardRefreshUrl.Length -le 2048 -and
+        [Uri]::TryCreate($DashboardRefreshUrl, [UriKind]::Absolute, [ref]$refreshUri) -and
+        $refreshUri.Scheme -ceq 'https' -and $refreshUri.IsDefaultPort -and
+        $refreshUri.Host -match '^[a-z0-9][a-z0-9.-]*\.azurewebsites\.net$' -and
+        !$refreshUri.UserInfo -and !$refreshUri.Query -and !$refreshUri.Fragment -and
+        $refreshUri.AbsolutePath -ceq '/api/refresh' -and $refreshUri.AbsoluteUri -ceq $DashboardRefreshUrl -and
+        $DashboardResource -cmatch '^api://[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}\z'
 
     $operation = 'acquire_storage_identity'
     $failureCode = 'storage_identity'
@@ -96,12 +109,12 @@ try {
 
     $body = @{ blobName = $name; sha256 = $hash } | ConvertTo-Json -Compress
     if ([System.Text.Encoding]::UTF8.GetByteCount($body) -gt 2048) { throw 'Invalid refresh signal.' }
-    $receipt.notification = @{ status = 'failed'; errorCode = 'notification_failed' }
-    for ($attempt = 0; $attempt -lt 4; $attempt++) {
+    $receipt.notification = @{ status = 'failed'; errorCode = $(if ($notificationValid) { 'notification_failed' } else { 'notification_configuration' }) }
+    for ($attempt = 0; $notificationValid -and $attempt -lt 4; $attempt++) {
         $status = 0; $headers = @{}
         try {
-            $token = (Invoke-AzJson -Arguments @('account', 'get-access-token', '--resource', 'api://258998df-81ec-460c-bdd7-56a9bdde1e48')).GetProperty('accessToken').GetString()
-            $response = Invoke-WebRequest -Uri 'https://azsdk-eval-bue6a7dwanatgpb3.westus3-01.azurewebsites.net/api/refresh' `
+            $token = (Invoke-AzJson -Arguments @('account', 'get-access-token', '--resource', $DashboardResource)).GetProperty('accessToken').GetString()
+            $response = Invoke-WebRequest -Uri $refreshUri `
                 -Method Post -ContentType 'application/json' -Body $body -Headers @{ Authorization = "Bearer $token" } `
                 -MaximumRedirection 0 -TimeoutSec 180 -OperationTimeoutSeconds 180 -SkipHttpErrorCheck
             $status = [int]$response.StatusCode; $headers = $response.Headers
@@ -129,7 +142,8 @@ try {
     try { Save-Receipt $receipt }
     catch { Write-Warning 'Archive stored; notification status could not be saved. The original storage receipt is retained.' }
     Write-Host "Result archive stored: $name (duplicate: $duplicate)."
-    if ($receipt.notification.status -eq 'failed') { Write-Warning 'Archive stored; dashboard refresh failed. Reload/startup/daily reconciliation can recover it.' }
+    if (!$notificationValid) { Write-Warning 'Archive stored; dashboard notification configuration is missing or invalid. Reload/startup/daily reconciliation can recover it.' }
+    elseif ($receipt.notification.status -eq 'failed') { Write-Warning 'Archive stored; dashboard refresh failed. Reload/startup/daily reconciliation can recover it.' }
 } catch {
     # Preserve an existing stored receipt. Raw CLI output and exceptions can contain tokens.
     if (!$stored -and $operation -ne 'validate_inputs') {

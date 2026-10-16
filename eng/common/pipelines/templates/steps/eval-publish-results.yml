@@ -36,12 +36,18 @@ steps:
       displayName: 'Publish saved build bundle directly to Blob'
       condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'), ne(variables['EvalStorageAccountName'], ''), eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-tools'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual'))
       timeoutInMinutes: 20
+      env:
+        EVAL_STORAGE_ACCOUNT_NAME: $(EvalStorageAccountName)
+        EVAL_DASHBOARD_REFRESH_URL: $(EvalDashboardRefreshUrl)
+        EVAL_DASHBOARD_RESOURCE: $(EvalDashboardResource)
       inputs:
         azureSubscription: eval-dashboard-sc
         scriptType: pscore
-        scriptLocation: scriptPath
-        scriptPath: $(Build.SourcesDirectory)/eng/common/scripts/eval/publisher/Publish-EvalResults.ps1
-        arguments: >-
-          -StorageAccountName "$(EvalStorageAccountName)"
-          -BundlePath "$(Build.ArtifactStagingDirectory)/eval-summary/dashboard-bundle.zip"
-          -ResultPath "$(Build.ArtifactStagingDirectory)/eval-summary/storage-publication-result.json"
+        scriptLocation: inlineScript
+        # Environment mapping passes values literally, without parsing variable contents as code.
+        inlineScript: |
+          & "$(Build.SourcesDirectory)/eng/common/scripts/eval/publisher/Publish-EvalResults.ps1" `
+            -StorageAccountName $env:EVAL_STORAGE_ACCOUNT_NAME `
+            -BundlePath "$(Build.ArtifactStagingDirectory)/eval-summary/dashboard-bundle.zip" `
+            -ResultPath "$(Build.ArtifactStagingDirectory)/eval-summary/storage-publication-result.json" `
+            -DashboardRefreshUrl $env:EVAL_DASHBOARD_REFRESH_URL -DashboardResource $env:EVAL_DASHBOARD_RESOURCE

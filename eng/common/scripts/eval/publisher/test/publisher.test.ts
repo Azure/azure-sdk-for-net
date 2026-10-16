@@ -191,9 +191,14 @@ test("pipeline separates token-bearing attempt verification from rendering and u
     assert.ok(summary.indexOf("../steps/eval-publish-results.yml") < summary.indexOf("task: PublishTestResults@2"));
     const steps = await readFile(join(root, "pipelines/templates/steps/eval-publish-results.yml"), "utf8");
     assert.doesNotMatch(steps, /registryUrl:|azure-sdk-tools\/npm\/registry/);
-    assert.match(steps, /scriptType: pscore[\s\S]*scriptLocation: scriptPath[\s\S]*Publish-EvalResults\.ps1/);
+    assert.match(steps, /scriptType: pscore[\s\S]*scriptLocation: inlineScript[\s\S]*Publish-EvalResults\.ps1/);
     assert.match(steps, /azureSubscription: eval-dashboard-sc/);
-    assert.match(steps, /-StorageAccountName "\$\(EvalStorageAccountName\)"/);
+    assert.match(steps, /EVAL_STORAGE_ACCOUNT_NAME: \$\(EvalStorageAccountName\)/);
+    assert.match(steps, /EVAL_DASHBOARD_REFRESH_URL: \$\(EvalDashboardRefreshUrl\)/);
+    assert.match(steps, /EVAL_DASHBOARD_RESOURCE: \$\(EvalDashboardResource\)/);
+    assert.match(steps, /-DashboardRefreshUrl \$env:EVAL_DASHBOARD_REFRESH_URL -DashboardResource \$env:EVAL_DASHBOARD_RESOURCE/);
+    assert.doesNotMatch(steps, /258998df|azsdk-eval-bue6/);
+    assert.doesNotMatch(await readFile(resolve(import.meta.dirname, "../Publish-EvalResults.ps1"), "utf8"), /258998df|azsdk-eval-bue6/);
     assert.doesNotMatch(await readFile(resolve(import.meta.dirname, "../Publish-EvalResults.ps1"), "utf8"), /TF_BUILD|SYSTEM_|BUILD_|System\.DefinitionId/);
 });
 
