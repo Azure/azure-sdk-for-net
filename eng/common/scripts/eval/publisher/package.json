@@ -4,8 +4,9 @@
   "private": true,
   "description": "Data-only Vally result bundling; Azure CLI performs publication. No evaluator or dashboard runtime.",
   "type": "module",
+  "packageManager": "pnpm@12.6.0",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=24.14.1"
   },
   "scripts": {
     "test": "node --experimental-strip-types --test test/*.test.ts && pwsh -NoProfile -Command \"Invoke-Pester -Path ../../../../common-tests/eval/Publish-EvalResults.Tests.ps1 -CI\""
