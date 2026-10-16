@@ -34,7 +34,7 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public void HeaderIsSanitized()
         {
-            var sanitizer = new PipelineMessageSanitizer([], [ "header-1" ], "*");
+            var sanitizer = new PipelineMessageSanitizer([], ["header-1"], "*");
 
             Assert.AreEqual("value1", sanitizer.SanitizeHeader("header-1", "value1"));
             Assert.AreEqual("*", sanitizer.SanitizeHeader("header-2", "value2"));
