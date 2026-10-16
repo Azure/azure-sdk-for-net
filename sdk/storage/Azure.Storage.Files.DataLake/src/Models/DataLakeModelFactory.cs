@@ -1111,8 +1111,8 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Creates a new <see cref="Models.DataLakeFileLayoutEndpoint"/> instance for mocking.
         /// </summary>
         public static DataLakeFileLayoutEndpoint DataLakeFileLayoutEndpoint(
-            int index,
-            Uri value)
+            int index = default,
+            Uri value = default)
             => new DataLakeFileLayoutEndpoint()
             {
                 Index = index,
@@ -1125,9 +1125,9 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Creates a new <see cref="Models.DataLakeFileLayoutRange"/> instance for mocking.
         /// </summary>
         public static DataLakeFileLayoutRange DataLakeFileLayoutRange(
-            long start,
-            long end,
-            int endpointIndex)
+            long start = default,
+            long end = default,
+            int endpointIndex = default)
             => new DataLakeFileLayoutRange()
             {
                 Start = start,
@@ -1141,44 +1141,44 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Creates a new <see cref="Models.DataLakeFileLayoutInfo"/> instance for mocking.
         /// </summary>
         public static DataLakeFileLayoutInfo DataLakeFileLayoutInfo(
-            IEnumerable<DataLakeFileLayoutRange> ranges,
-            IEnumerable<DataLakeFileLayoutEndpoint> endpoints,
-            DateTimeOffset lastModifiedOn,
-            DateTimeOffset createdOn,
-            IDictionary<string, string> metadata,
-            DateTimeOffset copyCompletedOn,
-            string copyStatusDescription,
-            string copyId,
-            string copyProgress,
-            Uri copySource,
-            CopyStatus? fileCopyStatus,
-            bool isIncrementalCopy,
-            DataLakeLeaseDuration leaseDuration,
-            DataLakeLeaseState leaseState,
-            DataLakeLeaseStatus leaseStatus,
-            long contentLength,
-            string contentType,
-            ETag eTag,
-            byte[] contentHash,
-            string contentEncoding,
-            string contentDisposition,
-            string contentLanguage,
-            string cacheControl,
-            string acceptRanges,
-            bool isServerEncrypted,
-            string encryptionKeySha256,
-            string encryptionScope,
-            string accessTier,
-            bool accessTierInferred,
-            string smartAccessTier,
-            string archiveStatus,
-            DateTimeOffset accessTierChangedOn,
-            DateTimeOffset expiresOn,
-            long fileContentLength,
-            string fileContentType,
-            string fileContentEncoding,
-            byte[] fileContentMD5,
-            DateTimeOffset fileCreatedOn)
+            IEnumerable<DataLakeFileLayoutRange> ranges = default,
+            IEnumerable<DataLakeFileLayoutEndpoint> endpoints = default,
+            DateTimeOffset lastModifiedOn = default,
+            DateTimeOffset createdOn = default,
+            IDictionary<string, string> metadata = default,
+            DateTimeOffset copyCompletedOn = default,
+            string copyStatusDescription = default,
+            string copyId = default,
+            string copyProgress = default,
+            Uri copySource = default,
+            CopyStatus? fileCopyStatus = default,
+            bool isIncrementalCopy = default,
+            DataLakeLeaseDuration leaseDuration = default,
+            DataLakeLeaseState leaseState = default,
+            DataLakeLeaseStatus leaseStatus = default,
+            long contentLength = default,
+            string contentType = default,
+            ETag eTag = default,
+            byte[] contentHash = default,
+            string contentEncoding = default,
+            string contentDisposition = default,
+            string contentLanguage = default,
+            string cacheControl = default,
+            string acceptRanges = default,
+            bool isServerEncrypted = default,
+            string encryptionKeySha256 = default,
+            string encryptionScope = default,
+            string accessTier = default,
+            bool accessTierInferred = default,
+            string smartAccessTier = default,
+            string archiveStatus = default,
+            DateTimeOffset accessTierChangedOn = default,
+            DateTimeOffset expiresOn = default,
+            long fileContentLength = default,
+            string fileContentType = default,
+            string fileContentEncoding = default,
+            byte[] fileContentMD5 = default,
+            DateTimeOffset fileCreatedOn = default)
             => new DataLakeFileLayoutInfo()
             {
                 Ranges = ranges == null ? null : new List<DataLakeFileLayoutRange>(ranges),
