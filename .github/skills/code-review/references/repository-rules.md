@@ -549,7 +549,11 @@ manually; that is the intended reading of the in-repo-analyzer rule above, not a
 - Failed service calls throw the stack's failure exception — `RequestFailedException` (or a
   derived type) on `Azure.Core`, `ClientResultException` on `System.ClientModel` — never a
   generic exception
-- LROs return `Operation<T>`/`Operation`; long-starting LRO methods are prefixed `Start`
+- LROs return `Operation<T>`/`Operation` (`ArmOperation<T>`/`ArmOperation` on management
+  libraries). The current convention is a required `WaitUntil` first parameter with no
+  `Start` prefix (e.g. `CreateOrUpdateAsync(WaitUntil, ...)`); the older `Start`-prefixed,
+  no-`WaitUntil` form remains valid on already-published methods — don't flag it just for
+  predating the newer convention
 - Paging methods return `Pageable<T>`/`AsyncPageable<T>` and are named `Get<Resource>s`
 - Model factories: `<Namespace>ModelFactory` static class for constructing otherwise
   read-only models in tests; new optional parameters go on a new overload, with the old one
