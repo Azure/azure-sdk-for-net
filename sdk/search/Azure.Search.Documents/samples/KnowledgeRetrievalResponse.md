@@ -4,7 +4,7 @@ This sample demonstrates how to limit returned documents with `MaxOutputDocument
 
 For more information, see the [agentic retrieval documentation](https://learn.microsoft.com/azure/search/agentic-retrieval-overview).
 
-Set `SEARCH_ENDPOINT` and `KNOWLEDGE_BASE_NAME` to an existing knowledge base backed by a populated hotel search index with semantic search configured. For answer synthesis, configure a model deployment on the knowledge base and grant the Search service's managed identity access to that model, as shown in [Knowledge Base Configuration](./KnowledgeBaseConfiguration.md). The caller needs **Search Index Data Reader** on the Search service.
+Set `SEARCH_ENDPOINT` and `KNOWLEDGE_BASE_NAME` to an existing knowledge base backed by a populated hotel search index with semantic search configured. For answer synthesis, configure a model deployment on the knowledge base and grant the Search service's managed identity access to that model, as shown in "**Knowledge Base Configuration**" Sample. The caller needs **Search Index Data Reader** on the Search service.
 
 ## Required Namespaces
 
