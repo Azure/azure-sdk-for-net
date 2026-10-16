@@ -115,7 +115,7 @@ namespace Azure.Provisioning.PostgreSql
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AdvancedThreatProtectionSettingsProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<PostgreSqlFlexibleServer>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<PostgreSqlFlexibleServer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

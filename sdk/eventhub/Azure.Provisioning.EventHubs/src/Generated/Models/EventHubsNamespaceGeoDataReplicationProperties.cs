@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.EventHubs
 {
     /// <summary> GeoDR Replication properties. </summary>
-    internal partial class EventHubsNamespaceGeoDataReplicationProperties : ProvisionableConstruct
+    public partial class EventHubsNamespaceGeoDataReplicationProperties : ProvisionableConstruct
     {
         private BicepValue<int> _maxReplicationLagDurationInSeconds;
         private BicepList<EventHubsNamespaceReplicaLocation> _locations;

@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ApiManagement
         private BicepValue<string> _name;
         private SystemData _systemData;
         private IssueAttachmentContractProperties _properties;
-        private ResourceReference<ApiIssue> _parent;
+        private ResourceReference<ApisIssues> _parent;
 
         /// <summary> Creates a new ApiIssueAttachment. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -81,7 +81,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public ApiIssue Parent
+        public ApisIssues Parent
         {
             get
             {
@@ -154,7 +154,7 @@ namespace Azure.Provisioning.ApiManagement
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<IssueAttachmentContractProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ApiIssue>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ApisIssues>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

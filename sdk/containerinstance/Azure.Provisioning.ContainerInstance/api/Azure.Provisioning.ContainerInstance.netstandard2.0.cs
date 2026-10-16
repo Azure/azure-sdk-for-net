@@ -58,53 +58,6 @@ namespace Azure.Provisioning.ContainerInstance
         P100 = 1,
         V100 = 2,
     }
-    public partial class ContainerGroup : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public ContainerGroup(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> ConfidentialComputeCcePolicy { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerInstanceOperatingSystemType> ContainerGroupOSType { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerInstance.ContainerGroupProfileReferenceDefinition ContainerGroupProfile { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerInstanceContainer> Containers { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerInstance.ContainerGroupLogAnalytics DiagnosticsLogAnalytics { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerInstance.ContainerGroupDnsConfiguration DnsConfig { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerInstance.ContainerGroupEncryptionProperties EncryptionProperties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.DeploymentExtensionSpec> Extensions { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerInstance.ContainerGroupIdentityAccessControlLevels IdentityAcls { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerGroupImageRegistryCredential> ImageRegistryCredentials { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.InitContainerDefinitionContent> InitContainers { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerInstance.ContainerGroupInstanceView InstanceView { get { throw null; } }
-        public Azure.Provisioning.ContainerInstance.ContainerGroupIPAddress IPAddress { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsCreatedFromStandbyPool { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerGroupPriority> Priority { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerGroupRestartPolicy> RestartPolicy { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerGroupSecretReference> SecretReferences { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerGroupSku> Sku { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerInstance.StandbyPoolProfileDefinition StandbyPoolProfile { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerGroupSubnetId> SubnetIds { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerVolume> Volumes { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> Zones { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ContainerInstance.ContainerGroup FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_09_01;
-        }
-    }
-    public partial class ContainerGroupDnsConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ContainerGroupDnsConfiguration() { }
-        public Azure.Provisioning.BicepList<string> NameServers { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Options { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SearchDomains { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
     public partial class ContainerGroupElasticProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerGroupElasticProfile() { }
@@ -138,26 +91,6 @@ namespace Azure.Provisioning.ContainerInstance
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.AzureFileShareAccessType> ShareAccessType { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ContainerGroupIdentityAccessControl : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ContainerGroupIdentityAccessControl() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerGroupIdentityAccessLevel> Access { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Identity { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class ContainerGroupIdentityAccessControlLevels : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ContainerGroupIdentityAccessControlLevels() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerGroupIdentityAccessControl> Acls { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerGroupIdentityAccessLevel> DefaultAccess { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum ContainerGroupIdentityAccessLevel
-    {
-        All = 0,
-        System = 1,
-        User = 2,
-    }
     public partial class ContainerGroupImageRegistryCredential : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerGroupImageRegistryCredential() { }
@@ -167,13 +100,6 @@ namespace Azure.Provisioning.ContainerInstance
         public Azure.Provisioning.BicepValue<string> PasswordReference { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Server { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Username { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class ContainerGroupInstanceView : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ContainerGroupInstanceView() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerEvent> Events { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> State { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ContainerGroupIPAddress : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -269,13 +195,6 @@ namespace Azure.Provisioning.ContainerInstance
             public static readonly string V2025_09_01;
         }
     }
-    public partial class ContainerGroupProfileReferenceDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ContainerGroupProfileReferenceDefinition() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> Revision { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
     public partial class ContainerGroupProfileRevision : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerGroupProfileRevision(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -328,14 +247,6 @@ namespace Azure.Provisioning.ContainerInstance
         Always = 0,
         OnFailure = 1,
         Never = 2,
-    }
-    public partial class ContainerGroupSecretReference : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ContainerGroupSecretReference() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Identity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Uri> SecretReferenceUri { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
     }
     public enum ContainerGroupSku
     {
@@ -639,13 +550,6 @@ namespace Azure.Provisioning.ContainerInstance
         public NGroupUpdateProfile() { }
         public Azure.Provisioning.ContainerInstance.NGroupRollingUpdateProfile RollingUpdateProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.NGroupUpdateMode> UpdateMode { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class StandbyPoolProfileDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public StandbyPoolProfileDefinition() { }
-        public Azure.Provisioning.BicepValue<bool> FailContainerGroupCreateOnReuseFailure { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
 }

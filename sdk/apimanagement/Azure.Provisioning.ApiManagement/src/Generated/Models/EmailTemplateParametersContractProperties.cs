@@ -22,7 +22,7 @@ namespace Azure.Provisioning.ApiManagement
         {
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.ApiManagement
                 Initialize();
                 return _name;
             }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Title. </summary>
+        /// <summary> Gets the Title. </summary>
         public BicepValue<string> Title
         {
             get
@@ -45,25 +40,15 @@ namespace Azure.Provisioning.ApiManagement
                 Initialize();
                 return _title;
             }
-            set
-            {
-                Initialize();
-                _title.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Description. </summary>
+        /// <summary> Gets the Description. </summary>
         public BicepValue<string> Description
         {
             get
             {
                 Initialize();
                 return _description;
-            }
-            set
-            {
-                Initialize();
-                _description.Assign(value);
             }
         }
 
