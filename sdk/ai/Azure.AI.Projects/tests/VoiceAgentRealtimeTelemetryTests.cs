@@ -66,8 +66,12 @@ public class VoiceAgentRealtimeTelemetryTests
         _hadContentSwitch = AppContext.TryGetSwitch(ContentSwitch, out _previousContentSwitch);
         SetTracing("true");
         SetContentCapture(false);
-        _activities.Clear();
-        _logs.Clear();
+        while (_activities.TryDequeue(out _))
+        {
+        }
+        while (_logs.TryDequeue(out _))
+        {
+        }
         _telemetries.Clear();
         _listener = new ActivityListener
         {
@@ -348,13 +352,25 @@ public class VoiceAgentRealtimeTelemetryTests
         byte[] buffer = new byte[512];
         Activity caller = Activity.Current;
 
+#if FullNetFx
+        await socket.SendAsync(new ArraySegment<byte>(sent, 1, split - 1), WebSocketMessageType.Text, false, CancellationToken.None);
+#else
         await socket.SendAsync(new ReadOnlyMemory<byte>(sent, 1, split - 1), WebSocketMessageType.Text, false, CancellationToken.None);
+#endif
         WebSocketReceiveResult first = await socket.ReceiveAsync(new ArraySegment<byte>(buffer, 7, 400), CancellationToken.None);
+#if FullNetFx
+        await socket.SendAsync(new ArraySegment<byte>(sent, split, sent.Length - split - 1), WebSocketMessageType.Text, true, CancellationToken.None);
+#else
         await socket.SendAsync(new ReadOnlyMemory<byte>(sent, split, sent.Length - split - 1), WebSocketMessageType.Text, true, CancellationToken.None);
+#endif
         WebSocketReceiveResult last = await socket.ReceiveAsync(new ArraySegment<byte>(buffer, 7, 400), CancellationToken.None);
         Observe(telemetry, new { type = "response.created", response = new { id = "response-fragmented" } });
         Observe(telemetry, new { type = "response.done", response = new { id = "response-fragmented", status = "completed" } });
+#if FullNetFx
+        await socket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(MessageSecret)), WebSocketMessageType.Binary, true, CancellationToken.None);
+#else
         await socket.SendAsync(new ReadOnlyMemory<byte>(Encoding.UTF8.GetBytes(MessageSecret)), WebSocketMessageType.Binary, true, CancellationToken.None);
+#endif
         socket.Dispose();
 
         using JsonDocument input = JsonDocument.Parse((string)Tag(Span(ResponseName), "gen_ai.input.messages"));
@@ -370,6 +386,50 @@ public class VoiceAgentRealtimeTelemetryTests
             Assert.That(Activity.Current, Is.SameAs(caller));
         });
         AssertPrivate(MessageSecret);
+    }
+
+    [TestCase("system", false)]
+    [TestCase("system", true)]
+    [TestCase("assistant", false)]
+    [TestCase("assistant", true)]
+    [TestCase("user", false)]
+    [TestCase("user", true)]
+    [TestCase("future-role", false)]
+    [TestCase("future-role", true)]
+    public void InputMessageSummariesPreserveSupportedRoles(string role, bool captureContent)
+    {
+        SetContentCapture(captureContent);
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        Observe(telemetry, new
+        {
+            type = "conversation.item.create",
+            item = new { type = "message", role, content = new[] { new { type = "input_text", text = MessageSecret } } }
+        }, isSend: true);
+        Observe(telemetry, new { type = "response.created", response = new { id = "response-message-role" } });
+        Observe(telemetry, new { type = "response.done", response = new { id = "response-message-role", status = "completed" } });
+        telemetry.Close(WebSocketCloseStatus.NormalClosure, true);
+
+        foreach (Activity activity in new[] { Span(SessionName), Span(ResponseName) })
+        {
+            using JsonDocument input = JsonDocument.Parse((string)Tag(activity, "gen_ai.input.messages"));
+            JsonElement message = input.RootElement[0];
+            JsonElement part = message.GetProperty("parts")[0];
+            Assert.Multiple(() =>
+            {
+                Assert.That(message.GetProperty("role").GetString(), Is.EqualTo(role == "future-role" ? "user" : role));
+                Assert.That(part.TryGetProperty("content", out _), Is.EqualTo(captureContent));
+            });
+            if (captureContent)
+            {
+                Assert.That(part.GetProperty("content").GetString(), Is.EqualTo(MessageSecret));
+            }
+        }
+        AssertLogPrivate(MessageSecret);
+        if (!captureContent)
+        {
+            AssertPrivate(MessageSecret);
+        }
     }
 
     [Test]
@@ -760,6 +820,63 @@ public class VoiceAgentRealtimeTelemetryTests
         AssertPrivate(ExceptionSecret);
     }
 
+    [TestCase(false, false, WebSocketState.Aborted)]
+    [TestCase(false, false, WebSocketState.Closed)]
+    [TestCase(false, true, WebSocketState.Aborted)]
+    [TestCase(false, true, WebSocketState.Closed)]
+    [TestCase(true, false, WebSocketState.Aborted)]
+    [TestCase(true, false, WebSocketState.Closed)]
+    [TestCase(true, true, WebSocketState.Aborted)]
+    [TestCase(true, true, WebSocketState.Closed)]
+    public async Task TerminalTransportFailuresEndActivitiesBeforeDisposal(bool isSend, bool cancelled, WebSocketState state)
+    {
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        Observe(telemetry, new { type = "response.created", response = new { id = "response-terminal-transport" } });
+        Exception failure = cancelled ? new OperationCanceledException(ExceptionSecret) : new WebSocketException(ExceptionSecret);
+        StubWebSocket inner = new()
+        {
+            StateAfterFailure = state,
+            SendFailure = isSend ? failure : null,
+            ReceiveFailure = isSend ? null : failure
+        };
+        using WebSocket socket = telemetry.CreateWebSocket(inner);
+        Activity caller = Activity.Current;
+
+        async Task ExchangeAsync()
+        {
+            if (isSend)
+            {
+                await socket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"type\":\"response.cancel\"}")),
+                    WebSocketMessageType.Text, true, CancellationToken.None);
+            }
+            else
+            {
+                await socket.ReceiveAsync(new ArraySegment<byte>(new byte[512]), CancellationToken.None);
+            }
+        }
+        Exception actual = cancelled
+            ? Assert.ThrowsAsync<OperationCanceledException>(ExchangeAsync)
+            : Assert.ThrowsAsync<WebSocketException>(ExchangeAsync);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual, Is.SameAs(failure));
+            Assert.That(inner.State, Is.EqualTo(state));
+            Assert.That(inner.DisposeCount, Is.EqualTo(0), "Terminal socket failure must end telemetry without waiting for caller disposal.");
+            Assert.That(_activities, Has.Count.EqualTo(3));
+            Assert.That(Span(SessionName).Status, Is.EqualTo(cancelled ? ActivityStatusCode.Unset : ActivityStatusCode.Error));
+            Assert.That(Tag(Span(SessionName), "error.type"), Is.EqualTo(cancelled ? null : nameof(WebSocketException)));
+            Assert.That(Tag(Span(ResponseName), Prefix + "response.status"), Is.EqualTo("interrupted"));
+            Assert.That(Span(ResponseName).Duration, Is.GreaterThan(TimeSpan.Zero));
+            Assert.That(Activity.Current, Is.SameAs(caller));
+        });
+        socket.Dispose();
+        Assert.That(_activities, Has.Count.EqualTo(3), "Disposal must not end a terminal session twice.");
+        AssertPrivate(ExceptionSecret);
+        await Task.CompletedTask;
+    }
+
     [Test]
     public async Task SendFailureIsRethrownWithoutEndingSessionOrExposingMessage()
     {
@@ -1011,7 +1128,7 @@ public class VoiceAgentRealtimeTelemetryTests
         private static readonly MethodInfo s_start = GetMethod("Start", typeof(Uri), typeof(string), typeof(string), typeof(bool), typeof(bool));
         private static readonly MethodInfo s_connected = GetMethod("Connected");
         private static readonly MethodInfo s_connectionFailed = GetMethod("ConnectionFailed", typeof(Exception));
-        private static readonly MethodInfo s_transportFailed = GetMethod("TransportFailed", typeof(Exception), typeof(bool));
+        private static readonly MethodInfo s_transportFailed = GetMethod("TransportFailed", typeof(Exception), typeof(bool), typeof(WebSocketState));
         private static readonly MethodInfo s_close = GetMethod("Close", typeof(WebSocketCloseStatus?), typeof(bool));
         private static readonly MethodInfo s_observeFrame = GetMethod("ObserveFrame", typeof(ArraySegment<byte>), typeof(bool), typeof(bool));
         private static readonly MethodInfo s_addTraceHeaders = GetMethod("AddTraceHeaders", typeof(IDictionary<string, string>));
@@ -1035,7 +1152,8 @@ public class VoiceAgentRealtimeTelemetryTests
 
         internal void ConnectionFailed(Exception exception) => s_connectionFailed.Invoke(_instance, new object[] { exception });
 
-        internal void TransportFailed(Exception exception, bool isSend) => s_transportFailed.Invoke(_instance, new object[] { exception, isSend });
+        internal void TransportFailed(Exception exception, bool isSend, WebSocketState state = WebSocketState.Open)
+            => s_transportFailed.Invoke(_instance, new object[] { exception, isSend, state });
 
         internal void Close(WebSocketCloseStatus? status, bool wasClean) => s_close.Invoke(_instance, new object[] { status, wasClean });
 
@@ -1076,6 +1194,7 @@ public class VoiceAgentRealtimeTelemetryTests
 
         internal Exception SendFailure { get; set; }
         internal Exception ReceiveFailure { get; set; }
+        internal WebSocketState? StateAfterFailure { get; set; }
         internal int DisposeCount { get; private set; }
         internal int SendCount { get; private set; }
 
@@ -1123,6 +1242,7 @@ public class VoiceAgentRealtimeTelemetryTests
         {
             if (SendFailure != null)
             {
+                _state = StateAfterFailure ?? _state;
                 return Task.FromException(SendFailure);
             }
             cancellationToken.ThrowIfCancellationRequested();
@@ -1134,6 +1254,7 @@ public class VoiceAgentRealtimeTelemetryTests
         {
             if (ReceiveFailure != null)
             {
+                _state = StateAfterFailure ?? _state;
                 return Task.FromException<WebSocketReceiveResult>(ReceiveFailure);
             }
             cancellationToken.ThrowIfCancellationRequested();

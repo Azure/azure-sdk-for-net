@@ -132,7 +132,7 @@ internal sealed class VoiceAgentRealtimeTelemetry
         }
     }
 
-    internal void TransportFailed(Exception exception, bool isSend)
+    internal void TransportFailed(Exception exception, bool isSend, WebSocketState socketState)
     {
         lock (_gate)
         {
@@ -150,6 +150,11 @@ internal sealed class VoiceAgentRealtimeTelemetry
                 {
                     LogFailure(SafeErrorType(exception));
                 }
+                if (socketState is WebSocketState.Aborted or WebSocketState.Closed)
+                {
+                    SetFailure(_session, exception);
+                    EndCore(null, false);
+                }
             }
             else if (exception is not OperationCanceledException)
             {
@@ -162,6 +167,11 @@ internal sealed class VoiceAgentRealtimeTelemetry
             else
             {
                 AddEvent(_session, "voice_agents.receive.cancelled");
+                if (socketState is WebSocketState.Aborted or WebSocketState.Closed)
+                {
+                    SetFailure(_session, exception);
+                    EndCore(null, false);
+                }
             }
         }
     }
@@ -517,7 +527,12 @@ internal sealed class VoiceAgentRealtimeTelemetry
     private string InputSummary(JsonElement item)
     {
         string summary = null;
-        string role = String(item, "role") is "assistant" ? "assistant" : "user";
+        string role = String(item, "role") switch
+        {
+            "assistant" => "assistant",
+            "system" => "system",
+            _ => "user"
+        };
         if (item.TryGetProperty("content", out JsonElement content) && content.ValueKind == JsonValueKind.Array)
         {
             foreach (JsonElement part in content.EnumerateArray())

@@ -56,7 +56,7 @@ internal sealed class TelemetryWebSocket(WebSocket inner, VoiceAgentRealtimeTele
         }
         catch (Exception exception)
         {
-            telemetry.TransportFailed(exception, false);
+            telemetry.TransportFailed(exception, false, inner.State);
             throw;
         }
     }
@@ -69,7 +69,7 @@ internal sealed class TelemetryWebSocket(WebSocket inner, VoiceAgentRealtimeTele
         }
         catch (Exception exception)
         {
-            telemetry.TransportFailed(exception, false);
+            telemetry.TransportFailed(exception, false, inner.State);
             throw;
         }
     }
@@ -83,7 +83,7 @@ internal sealed class TelemetryWebSocket(WebSocket inner, VoiceAgentRealtimeTele
         }
         catch (Exception exception)
         {
-            telemetry.TransportFailed(exception, false);
+            telemetry.TransportFailed(exception, false, inner.State);
             throw;
         }
         if (result.MessageType == WebSocketMessageType.Close)
@@ -105,7 +105,7 @@ internal sealed class TelemetryWebSocket(WebSocket inner, VoiceAgentRealtimeTele
         }
         catch (Exception exception)
         {
-            telemetry.TransportFailed(exception, true);
+            telemetry.TransportFailed(exception, true, inner.State);
             throw;
         }
         if (messageType == WebSocketMessageType.Text)
