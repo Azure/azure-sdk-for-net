@@ -13,6 +13,7 @@ using NUnit.Framework.Internal.Commands;
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
+        KeyClientOptions.ServiceVersion.V2026_07_01_Preview,
         KeyClientOptions.ServiceVersion.V2026_01_01_Preview,
         KeyClientOptions.ServiceVersion.V2025_07_01,
         KeyClientOptions.ServiceVersion.V7_6,
@@ -83,6 +84,25 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyVaultKey keyReturned = await Client.GetKeyAsync(keyNoHsm.Name);
 
             AssertKeyVaultKeysEqual(keyNoHsm, keyReturned);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V2026_07_01_Preview)]
+        public async Task CreateAkpKey()
+        {
+            string keyName = Recording.GenerateId();
+
+            CreateAkpKeyOptions options = new CreateAkpKeyOptions(keyName, AkpAlgorithm.MLDsa65, hardwareProtected: true);
+            KeyVaultKey akpKey = await Client.CreateAkpKeyAsync(options);
+            RegisterForCleanup(keyName);
+
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
+
+            AssertKeyVaultKeysEqual(akpKey, keyReturned);
+
+            Assert.AreEqual(KeyType.AkpHsm, keyReturned.KeyType);
+            Assert.AreEqual(AkpAlgorithm.MLDsa65, keyReturned.Key.Algorithm);
+            Assert.IsNotNull(keyReturned.Key.Pub);
         }
 
         [RecordedTest]
