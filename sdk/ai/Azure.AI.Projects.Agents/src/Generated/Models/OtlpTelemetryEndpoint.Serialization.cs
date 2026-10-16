@@ -77,7 +77,7 @@ namespace Azure.AI.Projects.Agents
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteStringValue(Endpoint.AbsoluteUri);
+            writer.WriteStringValue(Endpoint);
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
         }
@@ -111,7 +111,7 @@ namespace Azure.AI.Projects.Agents
             IList<ExportedDataTypes> exportedDataTypes = default;
             TelemetryEndpointAuthentication authentication = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Uri endpoint = default;
+            string endpoint = default;
             TelemetryTransportProtocol protocol = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +141,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("endpoint"u8))
                 {
-                    endpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    endpoint = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("protocol"u8))

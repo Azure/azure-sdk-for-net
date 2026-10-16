@@ -43,6 +43,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         // Allowed values are: Playback, Live, Record.
         // Uncomment this line to debug the connection to locally running test-proxy (the connection will be made to default port 5000).
         // UseLocalDebugProxy = true;
+        TestTimeoutInSeconds = 30;
         ProjectsTestSanitizers.ApplySanitizers(this);
     }
 

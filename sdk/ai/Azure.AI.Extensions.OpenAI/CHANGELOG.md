@@ -1,14 +1,10 @@
 # Release History
 
-## 3.0.0-beta.5 (Unreleased)
-
-### Features Added
+## 3.0.0-beta.5 (2026-10-16)
 
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- The `MicrosoftCopilotToolsetPreview` tool was added as a replacement for `GitHubCopilotToolsetPreview`.
+- `GitHubCopilotToolsetPreview` was marked as legacy and will be removed in the future releases.
 
 ## 3.0.0-beta.4 (2026-10-12)
 

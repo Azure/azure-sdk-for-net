@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
 using OpenAI.Responses;
 
@@ -14,7 +15,7 @@ namespace Azure.AI.Projects.Agents
     [Experimental("AAIP001")]
     public partial class VoiceAgentMcpTool : VoiceAgentTool
     {
-        private McpToolFilter _allowedTools;
+        private BinaryData _allowedTools;
         private bool _allowedToolsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentMcpTool"/>. </summary>
@@ -52,7 +53,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="responseScheduling"> When the MCP invocation creates a follow-up response. Defaults to `when_idle`. </param>
-        internal VoiceAgentMcpTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, string authorization, string serverDescription, IDictionary<string, string> headers, McpToolFilter allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs, VoiceAgentToolResponseScheduling? responseScheduling) : base(@type, additionalBinaryDataProperties)
+        internal VoiceAgentMcpTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs, VoiceAgentToolResponseScheduling? responseScheduling) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
@@ -90,8 +91,46 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets or sets the Headers. </summary>
         public IDictionary<string, string> Headers { get; set; }
 
-        /// <summary> Gets or sets the AllowedTools. </summary>
-        public McpToolFilter AllowedTools
+        /// <summary>
+        /// Gets or sets the AllowedTools.
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="string"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="McpToolFilter"/>. </description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData AllowedTools
         {
             get
             {

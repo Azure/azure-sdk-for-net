@@ -1,21 +1,14 @@
 # Release History
 
-## 3.0.0-beta.5 (Unreleased)
+## 3.0.0-beta.5 (2026-10-16)
 
 ### Features Added
-
 - Added `ProjectsRealtimeSessionClientOptions.Transport` to select a Voice Agent's WebSocket or WebRTC signaling transport.
 
 ### Breaking Changes
-
 - Removed the `UpdateMemories(string, BinaryContent, RequestOptions)` and `UpdateMemoriesAsync(string, BinaryContent, RequestOptions)` protocol overloads from `AIProjectMemoryStores`. Use the corresponding long-running operation overloads that accept `waitUntilCompleted` instead, passing `false` to return after starting the operation.
 
-### Bugs Fixed
-
-### Other Changes
-
 ### Sample Updates
-
 - Added runnable Voice Agent WebSocket transport samples for stored text conversations and streamed PCM audio with actual input and output byte counts.
 
 ## 3.0.0-beta.4 (2026-10-12)

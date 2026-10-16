@@ -541,7 +541,38 @@ namespace Azure.AI.Extensions.OpenAI
             return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Configuration overrides for GitHub Copilot built-in tools. </summary>
+        /// <summary> Configuration overrides for Microsoft Copilot built-in tools. </summary>
+        /// <param name="defaultConfig"> The default configuration for built-in tools. If omitted, built-in tools are enabled by default. </param>
+        /// <param name="configs"> Per-tool configuration overrides. Duplicate built-in tool names are not allowed. </param>
+        /// <returns> A new <see cref="OpenAI.MicrosoftCopilotToolsetPreview"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static MicrosoftCopilotToolsetPreview MicrosoftCopilotToolsetPreview(MicrosoftCopilotToolsetDefaultConfig defaultConfig = default, IEnumerable<MicrosoftCopilotToolsetConfig> configs = default)
+        {
+            configs ??= new ChangeTrackingList<MicrosoftCopilotToolsetConfig>();
+
+            return new MicrosoftCopilotToolsetPreview("microsoft_copilot_toolset_preview", defaultConfig, configs.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The default enablement setting for Microsoft Copilot built-in tools. </summary>
+        /// <param name="enabled"> Whether built-in tools are enabled by default. Defaults to true. </param>
+        /// <returns> A new <see cref="OpenAI.MicrosoftCopilotToolsetDefaultConfig"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static MicrosoftCopilotToolsetDefaultConfig MicrosoftCopilotToolsetDefaultConfig(bool? enabled = default)
+        {
+            return new MicrosoftCopilotToolsetDefaultConfig(enabled, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An enablement override for a Microsoft Copilot built-in tool. </summary>
+        /// <param name="name"> The built-in tool to configure. </param>
+        /// <param name="enabled"> Whether the built-in tool is enabled. If omitted, the toolset default applies. </param>
+        /// <returns> A new <see cref="OpenAI.MicrosoftCopilotToolsetConfig"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static MicrosoftCopilotToolsetConfig MicrosoftCopilotToolsetConfig(MicrosoftCopilotBuiltInTool name = default, bool? enabled = default)
+        {
+            return new MicrosoftCopilotToolsetConfig(name, enabled, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The legacy GitHub Copilot toolset retained for compatibility. Use `MicrosoftCopilotToolsetPreview` for new integrations. </summary>
         /// <param name="defaultConfig"> The default configuration for built-in tools. If omitted, built-in tools are enabled by default. </param>
         /// <param name="configs"> Per-tool configuration overrides. Duplicate built-in tool names are not allowed. </param>
         /// <returns> A new <see cref="OpenAI.GitHubCopilotToolsetPreview"/> instance for mocking. </returns>
@@ -553,7 +584,7 @@ namespace Azure.AI.Extensions.OpenAI
             return new GitHubCopilotToolsetPreview("github_copilot_toolset_preview", defaultConfig, configs.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The default enablement setting for GitHub Copilot built-in tools. </summary>
+        /// <summary> The legacy default enablement setting retained for compatibility. Use `MicrosoftCopilotToolsetDefaultConfig` for new integrations. </summary>
         /// <param name="enabled"> Whether built-in tools are enabled by default. Defaults to true. </param>
         /// <returns> A new <see cref="OpenAI.GitHubCopilotToolsetDefaultConfig"/> instance for mocking. </returns>
         public static GitHubCopilotToolsetDefaultConfig GitHubCopilotToolsetDefaultConfig(bool? enabled = default)
@@ -561,7 +592,7 @@ namespace Azure.AI.Extensions.OpenAI
             return new GitHubCopilotToolsetDefaultConfig(enabled, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> An enablement override for a GitHub Copilot built-in tool. </summary>
+        /// <summary> The legacy per-tool enablement override retained for compatibility. Use `MicrosoftCopilotToolsetConfig` for new integrations. </summary>
         /// <param name="name"> The built-in tool to configure. </param>
         /// <param name="enabled"> Whether the built-in tool is enabled. If omitted, the toolset default applies. </param>
         /// <returns> A new <see cref="OpenAI.GitHubCopilotToolsetConfig"/> instance for mocking. </returns>
