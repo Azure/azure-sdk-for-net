@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
         /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
         /// <param name="categoryType"> Specifies the category type for item details. </param>
-        /// <param name="pageSize"> Page size for server paging. Optional. Default value is 1000 items per page. </param>
+        /// <param name="pageSize"> Number of items to return in one request, max value is 5000. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dateRange"/> or <paramref name="carbonScopeList"/> is null. </exception>
         public BillingAccountItemDetailsReportQueryFilter(CarbonEmissionQueryDateRange dateRange, IEnumerable<CarbonEmissionScope> carbonScopeList, BillingAccountCategoryTypeEnum categoryType, int pageSize) : base(CarbonEmissionQueryReportType.ItemDetailsReport, dateRange, carbonScopeList)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="categoryType"> Specifies the category type for item details. </param>
-        /// <param name="pageSize"> Page size for server paging. Optional. Default value is 1000 items per page. </param>
+        /// <param name="pageSize"> Number of items to return in one request, max value is 5000. </param>
         /// <param name="skipToken"> Pagination token for fetching the next page of data. Optional. </param>
         /// <param name="orderBy"> The column name to order the results by. See supported values in BillingAccountOrderByColumnEnum. </param>
         /// <param name="sortDirection"> Sort direction. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <summary> Specifies the category type for item details. </summary>
         public BillingAccountCategoryTypeEnum CategoryType { get; }
 
-        /// <summary> Page size for server paging. Optional. Default value is 1000 items per page. </summary>
+        /// <summary> Number of items to return in one request, max value is 5000. </summary>
         public int PageSize { get; }
 
         /// <summary> Pagination token for fetching the next page of data. Optional. </summary>

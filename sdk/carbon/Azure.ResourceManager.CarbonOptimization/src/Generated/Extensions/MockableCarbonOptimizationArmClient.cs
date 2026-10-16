@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -60,33 +59,17 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// <param name="queryParameters"> Query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="queryParameters"/> is null. </exception>
-        public virtual async Task<Response<CarbonEmissionListResult>> QueryCarbonEmissionReportsByBillingAccountAsync(ResourceIdentifier scope, BillingAccountQueryFilter queryParameters, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CarbonEmission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CarbonEmission> QueryCarbonEmissionReportsByBillingAccountAsync(ResourceIdentifier scope, BillingAccountQueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(queryParameters, nameof(queryParameters));
 
-            using DiagnosticScope scope0 = CarbonServiceClientDiagnostics.CreateScope("MockableCarbonOptimizationArmClient.QueryCarbonEmissionReportsByBillingAccount");
-            scope0.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = CarbonServiceRestClient.CreateQueryCarbonEmissionReportsByBillingAccountRequest(scope.ToString(), BillingAccountQueryFilter.ToRequestContent(queryParameters), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CarbonEmissionListResult> response = Response.FromValue(CarbonEmissionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new CarbonEmissionAsync0CollectionResultOfT(CarbonServiceRestClient, scope.ToString(), BillingAccountQueryFilter.ToRequestContent(queryParameters), context, "MockableCarbonOptimizationArmClient.QueryCarbonEmissionReportsByBillingAccount");
         }
 
         /// <summary>
@@ -110,33 +93,17 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// <param name="queryParameters"> Query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="queryParameters"/> is null. </exception>
-        public virtual Response<CarbonEmissionListResult> QueryCarbonEmissionReportsByBillingAccount(ResourceIdentifier scope, BillingAccountQueryFilter queryParameters, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CarbonEmission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CarbonEmission> QueryCarbonEmissionReportsByBillingAccount(ResourceIdentifier scope, BillingAccountQueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(queryParameters, nameof(queryParameters));
 
-            using DiagnosticScope scope0 = CarbonServiceClientDiagnostics.CreateScope("MockableCarbonOptimizationArmClient.QueryCarbonEmissionReportsByBillingAccount");
-            scope0.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = CarbonServiceRestClient.CreateQueryCarbonEmissionReportsByBillingAccountRequest(scope.ToString(), BillingAccountQueryFilter.ToRequestContent(queryParameters), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CarbonEmissionListResult> response = Response.FromValue(CarbonEmissionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new CarbonEmission0CollectionResultOfT(CarbonServiceRestClient, scope.ToString(), BillingAccountQueryFilter.ToRequestContent(queryParameters), context, "MockableCarbonOptimizationArmClient.QueryCarbonEmissionReportsByBillingAccount");
         }
     }
 }

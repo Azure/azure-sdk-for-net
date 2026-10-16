@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="locationList"> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </param>
         /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
         /// <param name="categoryType"> Specifies the category type for item details. </param>
-        /// <param name="pageSize"> Page size for server paging. Optional. Default value is 1000 items per page. </param>
+        /// <param name="pageSize"> Number of items to return in one request, max value is 5000. </param>
         /// <param name="skipToken"> Pagination token for fetching the next page of data. Optional. </param>
         /// <param name="orderBy"> The column name to order the results by. See supported values in BillingAccountOrderByColumnEnum. </param>
         /// <param name="sortDirection"> Sort direction. </param>
