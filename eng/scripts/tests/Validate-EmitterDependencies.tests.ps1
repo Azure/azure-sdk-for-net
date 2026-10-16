@@ -35,25 +35,31 @@ BeforeAll {
         $Value | ConvertTo-Json -Depth 20 | Set-Content $Path
     }
 
-    function New-Resolution($Dependency, $Version) {
-        @{
-            version = $Version
-            resolved = "https://registry.npmjs.org/$Dependency/-/$($Dependency.Split('/')[-1])-$Version.tgz"
-            integrity = "sha512-fixture"
+    function Set-DependencyVersion($Root, $Emitter, $Dependency, $Version) {
+        $manifestPath = Join-Path $Root "eng/packages/$Emitter/package.json"
+        $manifest = Get-Content $manifestPath -Raw | ConvertFrom-Json -AsHashtable
+        $manifest.dependencies[$Dependency] = $Version
+        Write-Json $manifestPath $manifest
+    }
+
+    function Find-PipelineNode($Node, [string]$DisplayName) {
+        if ($Node -is [System.Collections.IDictionary]) {
+            if ($Node["displayName"] -eq $DisplayName) { $Node }
+            foreach ($child in $Node.Values) { Find-PipelineNode $child $DisplayName }
+        } elseif ($Node -is [System.Collections.IEnumerable] -and $Node -isnot [string]) {
+            foreach ($child in $Node) { Find-PipelineNode $child $DisplayName }
         }
     }
 
-    function Set-DependencyVersion($Root, $Emitter, $Dependency, $Version) {
-        $directory = Join-Path $Root "eng/packages/$Emitter"
-        $manifestPath = Join-Path $directory "package.json"
-        $lockPath = Join-Path $directory "package-lock.json"
-        $manifest = Get-Content $manifestPath -Raw | ConvertFrom-Json -AsHashtable
-        $lock = Get-Content $lockPath -Raw | ConvertFrom-Json -AsHashtable
-        $manifest.dependencies[$Dependency] = $Version
-        $lock.packages[''].dependencies[$Dependency] = $Version
-        $lock.packages["node_modules/$Dependency"] = New-Resolution $Dependency $Version
-        Write-Json $manifestPath $manifest
-        Write-Json $lockPath $lock
+    $pipeline = Get-Content (Join-Path $repoRoot "eng/pipelines/templates/archetype-typespec-emitter.yml") -Raw | ConvertFrom-Yaml
+    $validationSteps = @(Find-PipelineNode $pipeline "Validate emitter dependency versions")
+    $validationSteps.Count | Should -Be 1
+    $validationScript = $validationSteps[0].pwsh
+
+    function Invoke-ValidationStep($Root, $Emitter) {
+        $script = $validationScript.Replace('$(Build.SourcesDirectory)', $Root).
+            Replace('${{ parameters.EmitterPackagePath }}', "eng/packages/$Emitter")
+        & ([scriptblock]::Create($script))
     }
 
     New-Item -ItemType Directory -Force (Join-Path $template "eng") | Out-Null
@@ -66,78 +72,47 @@ BeforeAll {
             name = "@azure-typespec/$emitter"
             dependencies = $dependencies
         }
-        $packages = @{ "" = @{ dependencies = $dependencies } }
-        foreach ($dependency in $dependencies.Keys) {
-            $packages["node_modules/$dependency"] = New-Resolution $dependency $current
-        }
-        Write-Json (Join-Path $directory "package-lock.json") @{ lockfileVersion = 3; packages = $packages }
     }
+    $helperDirectory = Join-Path $template "eng/scripts/typespec"
+    New-Item -ItemType Directory -Force $helperDirectory | Out-Null
+    Copy-Item (Join-Path $repoRoot "eng/scripts/typespec/CodeGen-Helpers.ps1") $helperDirectory
     Write-Json (Join-Path $template $descriptorPaths[0]) @{ dependencies = @{ $base = $current } }
     Write-Json (Join-Path $template $descriptorPaths[1]) @{ dependencies = @{ $azure = $current } }
 }
 
-Describe "Emitter dependency version ceilings" {
+Describe "Generator dependency version ceilings" {
     BeforeEach {
         $fixture = Join-Path $TestDrive ([Guid]::NewGuid().ToString())
         Copy-Item $template $fixture -Recurse -Force
     }
 
     It "accepts versions equal to the local descriptor for <Emitter> / <Dependency>" -ForEach $dependencyCases {
-        { Assert-EmitterDependencies $fixture "eng/packages/$Emitter" } | Should -Not -Throw
+        { Invoke-ValidationStep $fixture $Emitter } | Should -Not -Throw
     }
 
     It "accepts older version <Version> without publication history for <Emitter> / <Dependency>" -ForEach $olderCases {
         Set-DependencyVersion $fixture $Emitter $Dependency $Version
-        { Assert-EmitterDependencies $fixture "eng/packages/$Emitter" } | Should -Not -Throw
+        { Invoke-ValidationStep $fixture $Emitter } | Should -Not -Throw
     }
 
     It "rejects versions newer than the descriptor for <Emitter> / <Dependency>" -ForEach $dependencyCases {
         Set-DependencyVersion $fixture $Emitter $Dependency $newer
-        { Assert-EmitterDependencies $fixture "eng/packages/$Emitter" } |
-            Should -Throw "*$Emitter*dependency '$Dependency'*referenced version '$newer'*newer than the approved version '$current'*"
+        { Invoke-ValidationStep $fixture $Emitter } |
+            Should -Throw "*$Emitter*dependency '$Dependency' version '$newer'*newer than the approved version '$current'*"
     }
 
     It "rejects the incident's preview when the local approved version is lower" {
         $preview = "1.0.0-alpha.20261013.3"
         Write-Json (Join-Path $fixture $descriptorPaths[1]) @{ dependencies = @{ $azure = $older } }
         Set-DependencyVersion $fixture "http-client-csharp-mgmt" $azure $preview
-        { Assert-EmitterDependencies $fixture "eng/packages/http-client-csharp-mgmt" } |
-            Should -Throw "*$azure*referenced version '$preview'*newer than the approved version '$older'*"
+        { Invoke-ValidationStep $fixture "http-client-csharp-mgmt" } |
+            Should -Throw "*$azure*version '$preview'*newer than the approved version '$older'*"
     }
 
-    It "rejects manifest/lockfile root reference mismatch for <Emitter> / <Dependency>" -ForEach $dependencyCases {
-        $path = Join-Path $fixture "eng/packages/$Emitter/package-lock.json"
-        $lock = Get-Content $path -Raw | ConvertFrom-Json -AsHashtable
-        $lock.packages[''].dependencies[$Dependency] = $older
-        Write-Json $path $lock
-        { Assert-EmitterDependencies $fixture "eng/packages/$Emitter" } |
-            Should -Throw "*$Dependency*root reference '$older'*does not match*"
-    }
-
-    It "rejects direct lockfile resolution mismatch for <Emitter> / <Dependency>" -ForEach $dependencyCases {
-        $path = Join-Path $fixture "eng/packages/$Emitter/package-lock.json"
-        $lock = Get-Content $path -Raw | ConvertFrom-Json -AsHashtable
-        $lock.packages["node_modules/$Dependency"] = New-Resolution $Dependency $older
-        Write-Json $path $lock
-        { Assert-EmitterDependencies $fixture "eng/packages/$Emitter" } |
-            Should -Throw "*$Dependency*resolved version '$older'*does not match*"
-    }
-
-    It "rejects a nested resolution newer than the descriptor even with valid direct pins" {
-        $path = Join-Path $fixture "eng/packages/http-client-csharp-mgmt/package-lock.json"
-        $lock = Get-Content $path -Raw | ConvertFrom-Json -AsHashtable
-        $lock.packages["node_modules/$azure/node_modules/$base"] = New-Resolution $base $newer
-        Write-Json $path $lock
-        { Assert-EmitterDependencies $fixture "eng/packages/http-client-csharp-mgmt" } |
-            Should -Throw "*$base*referenced version '$current'*node_modules/$azure/node_modules/$base*version '$newer'*newer than the approved version '$current'*"
-    }
-
-    It "accepts a nested older resolution" {
-        $path = Join-Path $fixture "eng/packages/http-client-csharp-mgmt/package-lock.json"
-        $lock = Get-Content $path -Raw | ConvertFrom-Json -AsHashtable
-        $lock.packages["node_modules/$azure/node_modules/$base"] = New-Resolution $base $older
-        Write-Json $path $lock
-        { Assert-EmitterDependencies $fixture "eng/packages/http-client-csharp-mgmt" } | Should -Not -Throw
+    It "ignores unrelated dependencies and lockfile content" {
+        Set-DependencyVersion $fixture "http-client-csharp-mgmt" "unrelated-package" "next"
+        "Not JSON" | Set-Content (Join-Path $fixture "eng/packages/http-client-csharp-mgmt/package-lock.json")
+        { Invoke-ValidationStep $fixture "http-client-csharp-mgmt" } | Should -Not -Throw
     }
 
     It "rejects non-exact manifest reference <Reference>" -ForEach @(
@@ -145,19 +120,19 @@ Describe "Emitter dependency version ceilings" {
         @{ Reference = "npm:preview@1.0.0" }, @{ Reference = "" }
     ) {
         Set-DependencyVersion $fixture "http-client-csharp" $base $Reference
-        { Assert-EmitterDependencies $fixture "eng/packages/http-client-csharp" } |
-            Should -Throw "*Unable to compare*$base*referenced version '$Reference'*approved version '$current'*"
+        { Invoke-ValidationStep $fixture "http-client-csharp" } |
+            Should -Throw "*Unable to compare*$base*version '$Reference'*approved version '$current'*"
     }
 
     It "fails explicitly when the approval descriptor is invalid" {
         Write-Json (Join-Path $fixture $descriptorPaths[0]) @{ dependencies = @{ $base = "next" } }
-        { Assert-EmitterDependencies $fixture "eng/packages/http-client-csharp" } |
+        { Invoke-ValidationStep $fixture "http-client-csharp" } |
             Should -Throw "*Unable to compare*$base*approved version 'next'*"
     }
 
     It "does not treat peer dependencies as descriptor approvals" {
         Write-Json (Join-Path $fixture $descriptorPaths[0]) @{ peerDependencies = @{ $base = $current } }
-        { Assert-EmitterDependencies $fixture "eng/packages/http-client-csharp" } |
+        { Invoke-ValidationStep $fixture "http-client-csharp" } |
             Should -Throw "*Unable to compare*$base*approved version ''*"
     }
 
@@ -165,40 +140,13 @@ Describe "Emitter dependency version ceilings" {
         $newApproval = "2.0.0-alpha.7"
         Write-Json (Join-Path $fixture $descriptorPaths[0]) @{ dependencies = @{ $base = $newApproval } }
         Set-DependencyVersion $fixture "http-client-csharp" $base $newApproval
-        { Assert-EmitterDependencies $fixture "eng/packages/http-client-csharp" } | Should -Not -Throw
+        { Invoke-ValidationStep $fixture "http-client-csharp" } | Should -Not -Throw
     }
 
     It "reports a missing approval descriptor explicitly" {
         Remove-Item (Join-Path $fixture $descriptorPaths[0])
-        { Assert-EmitterDependencies $fixture "eng/packages/http-client-csharp" } |
+        { Invoke-ValidationStep $fixture "http-client-csharp" } |
             Should -Throw "*emitter-package.json*does not exist*"
-    }
-
-    It "rejects a missing lockfile root or direct resolution" -ForEach @(
-        @{ MissingPath = "" }, @{ MissingPath = "node_modules/@typespec/http-client-csharp" }
-    ) {
-        $path = Join-Path $fixture "eng/packages/http-client-csharp/package-lock.json"
-        $lock = Get-Content $path -Raw | ConvertFrom-Json -AsHashtable
-        $lock.packages.Remove($MissingPath)
-        Write-Json $path $lock
-        { Assert-EmitterDependencies $fixture "eng/packages/http-client-csharp" } |
-            Should -Throw "*$base*does not match*"
-    }
-
-    It "supports npm lockfile v2 but rejects unresolved v1" -ForEach @(
-        @{ LockVersion = 2; Valid = $true }, @{ LockVersion = 1; Valid = $false }
-    ) {
-        $path = Join-Path $fixture "eng/packages/http-client-csharp/package-lock.json"
-        $lock = Get-Content $path -Raw | ConvertFrom-Json -AsHashtable
-        $lock.lockfileVersion = $LockVersion
-        Write-Json $path $lock
-        if ($Valid) {
-            { Assert-EmitterDependencies $fixture "eng/packages/http-client-csharp" } | Should -Not -Throw
-        }
-        else {
-            { Assert-EmitterDependencies $fixture "eng/packages/http-client-csharp" } |
-                Should -Throw "*package-lock.json must contain*package resolutions*"
-        }
     }
 
 }
@@ -246,8 +194,8 @@ Describe "Emitter CI integration" {
     It "validates checked-in inputs before initialization can rewrite them" {
         $pipeline = Get-Content (Join-Path $repoRoot "eng/pipelines/templates/archetype-typespec-emitter.yml") -Raw
         $pipeline | Should -Match "if in\(parameters.EmitterPackagePath, 'eng/packages/http-client-csharp', 'eng/packages/http-client-csharp-mgmt'\)"
-        $pipeline.IndexOf("Assert-EmitterDependencies") | Should -BeGreaterThan -1
-        $pipeline.IndexOf("Assert-EmitterDependencies") |
+        $pipeline.IndexOf("Assert-VersionNotNewerThanApproved") | Should -BeGreaterThan -1
+        $pipeline.IndexOf("Assert-VersionNotNewerThanApproved") |
             Should -BeLessThan $pipeline.IndexOf("Initialize-WorkingDirectory.ps1")
         $pipeline | Should -Match 'eng/scripts/typespec/CodeGen-Helpers.ps1'
         $pipeline.Substring(0, $pipeline.IndexOf("Initialize-WorkingDirectory.ps1")) |
