@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Hci.Models
             DateTimeOffset? startsOn = default;
             DateTimeOffset? endsOn = default;
             HciJobStatus? status = default;
-            JobReportedProperties reportedProperties = default;
+            HciClusterJobReportedProperties reportedProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             SdnIntegrationIntent sdnIntegrationIntent = default;
             string sdnPrefix = default;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    reportedProperties = JobReportedProperties.DeserializeJobReportedProperties(prop.Value, options);
+                    reportedProperties = HciClusterJobReportedProperties.DeserializeHciClusterJobReportedProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sdnIntegrationIntent"u8))

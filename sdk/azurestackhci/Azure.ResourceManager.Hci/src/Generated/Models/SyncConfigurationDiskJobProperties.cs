@@ -13,34 +13,34 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Properties for resolving configuration drift. </summary>
-    public partial class SyncConfigurationJobProperties : EdgeMachineDiskJobProperties
+    public partial class SyncConfigurationDiskJobProperties : EdgeMachineDiskJobProperties
     {
-        /// <summary> Initializes a new instance of <see cref="SyncConfigurationJobProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncConfigurationDiskJobProperties"/>. </summary>
         /// <param name="resolutionStrategy"> The strategy to use for resolving the configuration drift. </param>
-        public SyncConfigurationJobProperties(ResolutionStrategy resolutionStrategy) : base(DiskJobType.SyncConfiguration)
+        public SyncConfigurationDiskJobProperties(HciConfigurationDriftResolutionStrategy resolutionStrategy) : base(DiskJobType.SyncConfiguration)
         {
             ResolutionStrategy = resolutionStrategy;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SyncConfigurationJobProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncConfigurationDiskJobProperties"/>. </summary>
         /// <param name="jobType"> Job Type to support polymorphic resource. </param>
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of disk job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Properties reported by the job execution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resolutionStrategy"> The strategy to use for resolving the configuration drift. </param>
-        internal SyncConfigurationJobProperties(DiskJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, ResponseError error, DiskJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResolutionStrategy resolutionStrategy) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, reportedProperties, additionalBinaryDataProperties)
+        internal SyncConfigurationDiskJobProperties(DiskJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, HciJobStatus? status, ResponseError error, DiskJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, HciConfigurationDriftResolutionStrategy resolutionStrategy) : base(jobType, deploymentMode, provisioningState, jobId, startsOn, endsOn, status, error, reportedProperties, additionalBinaryDataProperties)
         {
             ResolutionStrategy = resolutionStrategy;
         }
 
         /// <summary> The strategy to use for resolving the configuration drift. </summary>
         [WirePath("resolutionStrategy")]
-        public ResolutionStrategy ResolutionStrategy { get; set; }
+        public HciConfigurationDriftResolutionStrategy ResolutionStrategy { get; set; }
     }
 }

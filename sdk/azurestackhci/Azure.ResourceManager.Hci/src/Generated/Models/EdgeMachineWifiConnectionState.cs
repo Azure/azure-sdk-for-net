@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> WiFi connection state. </summary>
-    public readonly partial struct ConnectionState : IEquatable<ConnectionState>
+    public readonly partial struct EdgeMachineWifiConnectionState : IEquatable<EdgeMachineWifiConnectionState>
     {
         private readonly string _value;
         /// <summary> WiFi is not configured. </summary>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> WiFi authentication failed. </summary>
         private const string AuthenticationFailedValue = "AuthenticationFailed";
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeMachineWifiConnectionState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConnectionState(string value)
+        public EdgeMachineWifiConnectionState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> WiFi is not configured. </summary>
-        public static ConnectionState NotConfigured { get; } = new ConnectionState(NotConfiguredValue);
+        public static EdgeMachineWifiConnectionState NotConfigured { get; } = new EdgeMachineWifiConnectionState(NotConfiguredValue);
 
         /// <summary> WiFi is connected. </summary>
-        public static ConnectionState Connected { get; } = new ConnectionState(ConnectedValue);
+        public static EdgeMachineWifiConnectionState Connected { get; } = new EdgeMachineWifiConnectionState(ConnectedValue);
 
         /// <summary> WiFi is disconnected. </summary>
-        public static ConnectionState Disconnected { get; } = new ConnectionState(DisconnectedValue);
+        public static EdgeMachineWifiConnectionState Disconnected { get; } = new EdgeMachineWifiConnectionState(DisconnectedValue);
 
         /// <summary> WiFi is connecting. </summary>
-        public static ConnectionState Connecting { get; } = new ConnectionState(ConnectingValue);
+        public static EdgeMachineWifiConnectionState Connecting { get; } = new EdgeMachineWifiConnectionState(ConnectingValue);
 
         /// <summary> WiFi is disconnecting. </summary>
-        public static ConnectionState Disconnecting { get; } = new ConnectionState(DisconnectingValue);
+        public static EdgeMachineWifiConnectionState Disconnecting { get; } = new EdgeMachineWifiConnectionState(DisconnectingValue);
 
         /// <summary> WiFi authentication failed. </summary>
-        public static ConnectionState AuthenticationFailed { get; } = new ConnectionState(AuthenticationFailedValue);
+        public static EdgeMachineWifiConnectionState AuthenticationFailed { get; } = new EdgeMachineWifiConnectionState(AuthenticationFailedValue);
 
-        /// <summary> Determines if two <see cref="ConnectionState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EdgeMachineWifiConnectionState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ConnectionState left, ConnectionState right) => left.Equals(right);
+        public static bool operator ==(EdgeMachineWifiConnectionState left, EdgeMachineWifiConnectionState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ConnectionState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EdgeMachineWifiConnectionState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ConnectionState left, ConnectionState right) => !left.Equals(right);
+        public static bool operator !=(EdgeMachineWifiConnectionState left, EdgeMachineWifiConnectionState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ConnectionState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EdgeMachineWifiConnectionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionState(string value) => new ConnectionState(value);
+        public static implicit operator EdgeMachineWifiConnectionState(string value) => new EdgeMachineWifiConnectionState(value);
 
-        /// <summary> Converts a string to a <see cref="ConnectionState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EdgeMachineWifiConnectionState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionState?(string value) => value == null ? null : new ConnectionState(value);
+        public static implicit operator EdgeMachineWifiConnectionState?(string value) => value == null ? null : new EdgeMachineWifiConnectionState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ConnectionState other && Equals(other);
+        public override bool Equals(object obj) => obj is EdgeMachineWifiConnectionState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ConnectionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EdgeMachineWifiConnectionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

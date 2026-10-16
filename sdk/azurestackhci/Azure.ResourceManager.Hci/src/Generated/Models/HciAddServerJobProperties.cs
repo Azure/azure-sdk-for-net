@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="addServerJobServerDetails"> Details of servers to be added to the cluster. </param>
         /// <param name="secrets"> List of protected parameters to pass to trigger the job for the cluster. </param>
-        internal HciAddServerJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, HciJobStatus? status, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<AddServerJobServerDetails> addServerJobServerDetails, IList<EceDeploymentSecrets> secrets) : base(jobType, deploymentMode, provisioningState, jobId, startsOn, endsOn, status, reportedProperties, additionalBinaryDataProperties)
+        internal HciAddServerJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, HciJobStatus? status, HciClusterJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<AddServerJobServerDetails> addServerJobServerDetails, IList<EceDeploymentSecrets> secrets) : base(jobType, deploymentMode, provisioningState, jobId, startsOn, endsOn, status, reportedProperties, additionalBinaryDataProperties)
         {
             AddServerJobServerDetails = addServerJobServerDetails;
             Secrets = secrets;

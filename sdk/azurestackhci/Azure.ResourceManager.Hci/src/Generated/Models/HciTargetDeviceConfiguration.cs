@@ -12,24 +12,24 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Device configuration. </summary>
-    public partial class TargetDeviceConfiguration
+    public partial class HciTargetDeviceConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TargetDeviceConfiguration"/>. </summary>
-        public TargetDeviceConfiguration()
+        /// <summary> Initializes a new instance of <see cref="HciTargetDeviceConfiguration"/>. </summary>
+        public HciTargetDeviceConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TargetDeviceConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciTargetDeviceConfiguration"/>. </summary>
         /// <param name="network"> Network configuration. </param>
         /// <param name="hostName"> Hostname of the device. </param>
         /// <param name="webProxy"> Web proxy configuration. </param>
         /// <param name="time"> Time configuration. </param>
         /// <param name="storage"> Storage configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TargetDeviceConfiguration(NetworkConfiguration network, string hostName, HciWebProxyConfiguration webProxy, HciTimeConfiguration time, StorageConfiguration storage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciTargetDeviceConfiguration(NetworkConfiguration network, string hostName, HciWebProxyConfiguration webProxy, HciTimeConfiguration time, StorageConfiguration storage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Network = network;
             HostName = hostName;

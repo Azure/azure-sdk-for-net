@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Hci.Models
             IList<string> dnsServers = default;
             IPInterfaceType? ipInterfaceType = default;
             int? vlanId = default;
-            InterfaceState? interfaceState = default;
+            EdgeMachineNetworkInterfaceState? interfaceState = default;
             WifiConfigurationDesiredProperties wifiConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    interfaceState = new InterfaceState(prop.Value.GetString());
+                    interfaceState = new EdgeMachineNetworkInterfaceState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("wifiConfiguration"u8))

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Hci.Models
             string modelName = default;
             string version = default;
             string azureMachineId = default;
-            Architecture? architecture = default;
+            HciCpuArchitecture? architecture = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    architecture = new Architecture(prop.Value.GetString());
+                    architecture = new HciCpuArchitecture(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))

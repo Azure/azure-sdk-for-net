@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="architecture"> CPU architecture of the device, for example amd64 or arm64. </param>
         /// <param name="error"> Error details if the validation failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OwnershipVoucherValidationDetails(OwnershipVoucherValidationStatus? validationStatus, string serialNumber, string id, string manufacturer, string modelName, string version, string azureMachineId, Architecture? architecture, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OwnershipVoucherValidationDetails(OwnershipVoucherValidationStatus? validationStatus, string serialNumber, string id, string manufacturer, string modelName, string version, string azureMachineId, HciCpuArchitecture? architecture, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ValidationStatus = validationStatus;
             SerialNumber = serialNumber;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> CPU architecture of the device, for example amd64 or arm64. </summary>
         [WirePath("architecture")]
-        public Architecture? Architecture { get; }
+        public HciCpuArchitecture? Architecture { get; }
 
         /// <summary> Error details if the validation failed. </summary>
         [WirePath("error")]

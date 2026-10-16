@@ -13,24 +13,24 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Onboarding configuration. </summary>
-    public partial class OnboardingConfiguration
+    public partial class EdgeMachineOnboardingConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OnboardingConfiguration"/>. </summary>
-        public OnboardingConfiguration()
+        /// <summary> Initializes a new instance of <see cref="EdgeMachineOnboardingConfiguration"/>. </summary>
+        public EdgeMachineOnboardingConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OnboardingConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeMachineOnboardingConfiguration"/>. </summary>
         /// <param name="type"> Type of the onboarding resource to support polymorphic resource. </param>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="location"> Location of the resource. </param>
         /// <param name="tenantId"> Tenant ID of the resource. </param>
         /// <param name="arcVirtualMachineId"> Azure Arc virtual machine ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OnboardingConfiguration(OnboardingResourceType? @type, ResourceIdentifier resourceId, string location, string tenantId, string arcVirtualMachineId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineOnboardingConfiguration(EdgeMachineOnboardingResourceType? @type, ResourceIdentifier resourceId, string location, string tenantId, string arcVirtualMachineId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ResourceId = resourceId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Type of the onboarding resource to support polymorphic resource. </summary>
         [WirePath("type")]
-        public OnboardingResourceType? Type { get; set; }
+        public EdgeMachineOnboardingResourceType? Type { get; set; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("resourceId")]

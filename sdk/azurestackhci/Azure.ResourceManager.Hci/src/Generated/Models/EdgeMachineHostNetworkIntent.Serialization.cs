@@ -139,30 +139,30 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(OverrideVirtualSwitchConfiguration))
+            if (options.Format != "W" && Optional.IsDefined(ShouldOverrideVirtualSwitchConfiguration))
             {
                 writer.WritePropertyName("overrideVirtualSwitchConfiguration"u8);
-                writer.WriteBooleanValue(OverrideVirtualSwitchConfiguration.Value);
+                writer.WriteBooleanValue(ShouldOverrideVirtualSwitchConfiguration.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(VirtualSwitchConfigurationOverrides))
             {
                 writer.WritePropertyName("virtualSwitchConfigurationOverrides"u8);
                 writer.WriteObjectValue(VirtualSwitchConfigurationOverrides, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(OverrideQosPolicy))
+            if (options.Format != "W" && Optional.IsDefined(ShouldOverrideQosPolicy))
             {
                 writer.WritePropertyName("overrideQosPolicy"u8);
-                writer.WriteBooleanValue(OverrideQosPolicy.Value);
+                writer.WriteBooleanValue(ShouldOverrideQosPolicy.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(QosPolicyOverrides))
             {
                 writer.WritePropertyName("qosPolicyOverrides"u8);
                 writer.WriteObjectValue(QosPolicyOverrides, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(OverrideAdapterProperty))
+            if (options.Format != "W" && Optional.IsDefined(ShouldOverrideAdapterProperty))
             {
                 writer.WritePropertyName("overrideAdapterProperty"u8);
-                writer.WriteBooleanValue(OverrideAdapterProperty.Value);
+                writer.WriteBooleanValue(ShouldOverrideAdapterProperty.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(AdapterPropertyOverrides))
             {
@@ -222,11 +222,11 @@ namespace Azure.ResourceManager.Hci.Models
             bool? isNetworkIntentType = default;
             string intentName = default;
             IReadOnlyList<string> intentAdapters = default;
-            bool? overrideVirtualSwitchConfiguration = default;
+            bool? shouldOverrideVirtualSwitchConfiguration = default;
             EdgeMachineVirtualSwitchConfigurationOverrides virtualSwitchConfigurationOverrides = default;
-            bool? overrideQosPolicy = default;
+            bool? shouldOverrideQosPolicy = default;
             DeploymentSettingQosPolicyOverrides qosPolicyOverrides = default;
-            bool? overrideAdapterProperty = default;
+            bool? shouldOverrideAdapterProperty = default;
             EdgeMachineAdapterPropertyOverrides adapterPropertyOverrides = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    overrideVirtualSwitchConfiguration = prop.Value.GetBoolean();
+                    shouldOverrideVirtualSwitchConfiguration = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("virtualSwitchConfigurationOverrides"u8))
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    overrideQosPolicy = prop.Value.GetBoolean();
+                    shouldOverrideQosPolicy = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("qosPolicyOverrides"u8))
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    overrideAdapterProperty = prop.Value.GetBoolean();
+                    shouldOverrideAdapterProperty = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("adapterPropertyOverrides"u8))
@@ -409,11 +409,11 @@ namespace Azure.ResourceManager.Hci.Models
                 isNetworkIntentType,
                 intentName,
                 intentAdapters ?? new ChangeTrackingList<string>(),
-                overrideVirtualSwitchConfiguration,
+                shouldOverrideVirtualSwitchConfiguration,
                 virtualSwitchConfigurationOverrides,
-                overrideQosPolicy,
+                shouldOverrideQosPolicy,
                 qosPolicyOverrides,
-                overrideAdapterProperty,
+                shouldOverrideAdapterProperty,
                 adapterPropertyOverrides,
                 additionalBinaryDataProperties);
         }

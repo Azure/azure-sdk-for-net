@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary>
     /// Disk Job properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CreateVolumeJobProperties"/> and <see cref="SyncConfigurationJobProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CreateVolumeJobProperties"/> and <see cref="SyncConfigurationDiskJobProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEdgeMachineDiskJobProperties))]
     public abstract partial class EdgeMachineDiskJobProperties : IJsonModel<EdgeMachineDiskJobProperties>
@@ -100,15 +100,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartTimeUtc.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
-                writer.WriteStringValue(EndTimeUtc.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Hci.Models
                     case "CreateVolume":
                         return CreateVolumeJobProperties.DeserializeCreateVolumeJobProperties(element, options);
                     case "SyncConfiguration":
-                        return SyncConfigurationJobProperties.DeserializeSyncConfigurationJobProperties(element, options);
+                        return SyncConfigurationDiskJobProperties.DeserializeSyncConfigurationDiskJobProperties(element, options);
                 }
             }
             return UnknownEdgeMachineDiskJobProperties.DeserializeUnknownEdgeMachineDiskJobProperties(element, options);

@@ -12,22 +12,22 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Overall Lifecycle details for a resource. </summary>
-    public partial class LifecycleDetails
+    public partial class EdgeMachineLifecycleDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LifecycleDetails"/>. </summary>
-        internal LifecycleDetails()
+        /// <summary> Initializes a new instance of <see cref="EdgeMachineLifecycleDetails"/>. </summary>
+        internal EdgeMachineLifecycleDetails()
         {
-            LifecycleStages = new ChangeTrackingList<LifecycleStage>();
+            LifecycleStages = new ChangeTrackingList<EdgeMachineLifecycleStage>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LifecycleDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeMachineLifecycleDetails"/>. </summary>
         /// <param name="lifecycleStatus"> Overall lifecycle status of the edge machine. </param>
         /// <param name="lifecycleStages"> List of lifecycle stages for the edge machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LifecycleDetails(LifecycleStatus lifecycleStatus, IReadOnlyList<LifecycleStage> lifecycleStages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineLifecycleDetails(EdgeMachineLifecycleStatusInfo lifecycleStatus, IReadOnlyList<EdgeMachineLifecycleStage> lifecycleStages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LifecycleStatus = lifecycleStatus;
             LifecycleStages = lifecycleStages;
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Overall lifecycle status of the edge machine. </summary>
         [WirePath("lifecycleStatus")]
-        public LifecycleStatus LifecycleStatus { get; }
+        public EdgeMachineLifecycleStatusInfo LifecycleStatus { get; }
 
         /// <summary> List of lifecycle stages for the edge machine. </summary>
         [WirePath("lifecycleStages")]
-        public IReadOnlyList<LifecycleStage> LifecycleStages { get; }
+        public IReadOnlyList<EdgeMachineLifecycleStage> LifecycleStages { get; }
     }
 }

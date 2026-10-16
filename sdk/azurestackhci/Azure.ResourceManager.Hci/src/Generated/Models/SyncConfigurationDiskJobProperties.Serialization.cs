@@ -16,10 +16,10 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Properties for resolving configuration drift. </summary>
-    public partial class SyncConfigurationJobProperties : EdgeMachineDiskJobProperties, IJsonModel<SyncConfigurationJobProperties>
+    public partial class SyncConfigurationDiskJobProperties : EdgeMachineDiskJobProperties, IJsonModel<SyncConfigurationDiskJobProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="SyncConfigurationJobProperties"/> for deserialization. </summary>
-        internal SyncConfigurationJobProperties()
+        /// <summary> Initializes a new instance of <see cref="SyncConfigurationDiskJobProperties"/> for deserialization. </summary>
+        internal SyncConfigurationDiskJobProperties()
         {
         }
 
@@ -27,45 +27,45 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EdgeMachineDiskJobProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SyncConfigurationJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SyncConfigurationDiskJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSyncConfigurationJobProperties(document.RootElement, options);
+                        return DeserializeSyncConfigurationDiskJobProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SyncConfigurationJobProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncConfigurationDiskJobProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SyncConfigurationJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SyncConfigurationDiskJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SyncConfigurationJobProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncConfigurationDiskJobProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SyncConfigurationJobProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SyncConfigurationDiskJobProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SyncConfigurationJobProperties IPersistableModel<SyncConfigurationJobProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (SyncConfigurationJobProperties)PersistableModelCreateCore(data, options);
+        SyncConfigurationDiskJobProperties IPersistableModel<SyncConfigurationDiskJobProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (SyncConfigurationDiskJobProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SyncConfigurationJobProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SyncConfigurationDiskJobProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SyncConfigurationJobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SyncConfigurationDiskJobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SyncConfigurationJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SyncConfigurationDiskJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncConfigurationJobProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncConfigurationDiskJobProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("resolutionStrategy"u8);
@@ -88,24 +88,24 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SyncConfigurationJobProperties IJsonModel<SyncConfigurationJobProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SyncConfigurationJobProperties)JsonModelCreateCore(ref reader, options);
+        SyncConfigurationDiskJobProperties IJsonModel<SyncConfigurationDiskJobProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SyncConfigurationDiskJobProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EdgeMachineDiskJobProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SyncConfigurationJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SyncConfigurationDiskJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncConfigurationJobProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncConfigurationDiskJobProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSyncConfigurationJobProperties(document.RootElement, options);
+            return DeserializeSyncConfigurationDiskJobProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SyncConfigurationJobProperties DeserializeSyncConfigurationJobProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static SyncConfigurationDiskJobProperties DeserializeSyncConfigurationDiskJobProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -115,13 +115,13 @@ namespace Azure.ResourceManager.Hci.Models
             EceDeploymentMode? deploymentMode = default;
             HciProvisioningState? provisioningState = default;
             string jobId = default;
-            DateTimeOffset? startTimeUtc = default;
-            DateTimeOffset? endTimeUtc = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             HciJobStatus? status = default;
             ResponseError error = default;
             DiskJobReportedProperties reportedProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResolutionStrategy resolutionStrategy = default;
+            HciConfigurationDriftResolutionStrategy resolutionStrategy = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("jobType"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    startTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    endTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("resolutionStrategy"u8))
                 {
-                    resolutionStrategy = new ResolutionStrategy(prop.Value.GetString());
+                    resolutionStrategy = new HciConfigurationDriftResolutionStrategy(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -207,13 +207,13 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SyncConfigurationJobProperties(
+            return new SyncConfigurationDiskJobProperties(
                 jobType,
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startsOn,
+                endsOn,
                 status,
                 error,
                 reportedProperties,

@@ -115,13 +115,13 @@ namespace Azure.ResourceManager.Hci.Models
             EceDeploymentMode? deploymentMode = default;
             HciProvisioningState? provisioningState = default;
             string jobId = default;
-            DateTimeOffset? startTimeUtc = default;
-            DateTimeOffset? endTimeUtc = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             HciJobStatus? status = default;
             ResponseError error = default;
             NetworkAdapterJobReportedProperties reportedProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResolutionStrategy resolutionStrategy = default;
+            HciConfigurationDriftResolutionStrategy resolutionStrategy = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("jobType"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    startTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    endTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("resolutionStrategy"u8))
                 {
-                    resolutionStrategy = new ResolutionStrategy(prop.Value.GetString());
+                    resolutionStrategy = new HciConfigurationDriftResolutionStrategy(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -212,8 +212,8 @@ namespace Azure.ResourceManager.Hci.Models
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startsOn,
+                endsOn,
                 status,
                 error,
                 reportedProperties,

@@ -14,56 +14,56 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Represents a provisioning request. </summary>
-    public partial class ProvisioningContent : IJsonModel<ProvisioningContent>
+    public partial class EdgeMachineOSProvisionContent : IJsonModel<EdgeMachineOSProvisionContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ProvisioningContent"/> for deserialization. </summary>
-        internal ProvisioningContent()
+        /// <summary> Initializes a new instance of <see cref="EdgeMachineOSProvisionContent"/> for deserialization. </summary>
+        internal EdgeMachineOSProvisionContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProvisioningContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EdgeMachineOSProvisionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisioningContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineOSProvisionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProvisioningContent(document.RootElement, options);
+                        return DeserializeEdgeMachineOSProvisionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisioningContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeMachineOSProvisionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisioningContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineOSProvisionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisioningContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeMachineOSProvisionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProvisioningContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EdgeMachineOSProvisionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProvisioningContent IPersistableModel<ProvisioningContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EdgeMachineOSProvisionContent IPersistableModel<EdgeMachineOSProvisionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProvisioningContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EdgeMachineOSProvisionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProvisioningContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EdgeMachineOSProvisionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisioningContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineOSProvisionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisioningContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeMachineOSProvisionContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("target"u8);
             writer.WriteStringValue(Target.ToString());
@@ -127,24 +127,24 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProvisioningContent IJsonModel<ProvisioningContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EdgeMachineOSProvisionContent IJsonModel<EdgeMachineOSProvisionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProvisioningContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EdgeMachineOSProvisionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisioningContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineOSProvisionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisioningContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeMachineOSProvisionContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProvisioningContent(document.RootElement, options);
+            return DeserializeEdgeMachineOSProvisionContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProvisioningContent DeserializeProvisioningContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeMachineOSProvisionContent DeserializeEdgeMachineOSProvisionContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.Hci.Models
             ProvisioningOSType target = default;
             OSProvisionProfile osProfile = default;
             IList<HciUserDetails> userDetails = default;
-            OnboardingConfiguration onboardingConfiguration = default;
-            TargetDeviceConfiguration deviceConfiguration = default;
+            EdgeMachineOnboardingConfiguration onboardingConfiguration = default;
+            HciTargetDeviceConfiguration deviceConfiguration = default;
             string customConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    onboardingConfiguration = OnboardingConfiguration.DeserializeOnboardingConfiguration(prop.Value, options);
+                    onboardingConfiguration = EdgeMachineOnboardingConfiguration.DeserializeEdgeMachineOnboardingConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("deviceConfiguration"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    deviceConfiguration = TargetDeviceConfiguration.DeserializeTargetDeviceConfiguration(prop.Value, options);
+                    deviceConfiguration = HciTargetDeviceConfiguration.DeserializeHciTargetDeviceConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("customConfiguration"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProvisioningContent(
+            return new EdgeMachineOSProvisionContent(
                 target,
                 osProfile,
                 userDetails ?? new ChangeTrackingList<HciUserDetails>(),

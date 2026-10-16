@@ -13,35 +13,35 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Lifecycle stage details for a resource. </summary>
-    public partial class LifecycleStage
+    public partial class EdgeMachineLifecycleStage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LifecycleStage"/>. </summary>
-        internal LifecycleStage()
+        /// <summary> Initializes a new instance of <see cref="EdgeMachineLifecycleStage"/>. </summary>
+        internal EdgeMachineLifecycleStage()
         {
-            SubStages = new ChangeTrackingList<LifecycleStage>();
+            SubStages = new ChangeTrackingList<EdgeMachineLifecycleStage>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LifecycleStage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeMachineLifecycleStage"/>. </summary>
         /// <param name="name"> Name of the stage. </param>
         /// <param name="description"> Description of the stage. </param>
         /// <param name="status"> Status of the stage. </param>
-        /// <param name="startTimeUtc"> Start time of the stage. </param>
-        /// <param name="endTimeUtc"> End time of the stage. </param>
-        /// <param name="lastUpdatedUtc"> Last time the stage was updated. </param>
+        /// <param name="startsOn"> Start time of the stage. </param>
+        /// <param name="endsOn"> End time of the stage. </param>
+        /// <param name="lastUpdatedOn"> Last time the stage was updated. </param>
         /// <param name="error"> Error details. </param>
         /// <param name="subStages"> Sub-stages for this stage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LifecycleStage(string name, string description, LifecycleOperationStatus status, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, DateTimeOffset? lastUpdatedUtc, ResponseError error, IReadOnlyList<LifecycleStage> subStages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineLifecycleStage(string name, string description, EdgeMachineLifecycleOperationStatus status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, DateTimeOffset? lastUpdatedOn, ResponseError error, IReadOnlyList<EdgeMachineLifecycleStage> subStages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             Status = status;
-            StartTimeUtc = startTimeUtc;
-            EndTimeUtc = endTimeUtc;
-            LastUpdatedUtc = lastUpdatedUtc;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
+            LastUpdatedOn = lastUpdatedOn;
             Error = error;
             SubStages = subStages;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Status of the stage. </summary>
         [WirePath("status")]
-        public LifecycleOperationStatus Status { get; }
+        public EdgeMachineLifecycleOperationStatus Status { get; }
 
         /// <summary> Start time of the stage. </summary>
         [WirePath("startTimeUtc")]
-        public DateTimeOffset? StartTimeUtc { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End time of the stage. </summary>
         [WirePath("endTimeUtc")]
-        public DateTimeOffset? EndTimeUtc { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Last time the stage was updated. </summary>
         [WirePath("lastUpdatedUtc")]
-        public DateTimeOffset? LastUpdatedUtc { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
 
         /// <summary> Error details. </summary>
         [WirePath("error")]
@@ -77,6 +77,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Sub-stages for this stage. </summary>
         [WirePath("subStages")]
-        public IReadOnlyList<LifecycleStage> SubStages { get; }
+        public IReadOnlyList<EdgeMachineLifecycleStage> SubStages { get; }
     }
 }

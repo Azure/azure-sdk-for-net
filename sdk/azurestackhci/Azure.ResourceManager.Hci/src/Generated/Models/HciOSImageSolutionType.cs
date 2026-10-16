@@ -12,18 +12,18 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Represents the solution type (OS family) of an OS image. </summary>
-    public readonly partial struct SolutionType : IEquatable<SolutionType>
+    public readonly partial struct HciOSImageSolutionType : IEquatable<HciOSImageSolutionType>
     {
         private readonly string _value;
         /// <summary> AzureLinux OS. </summary>
         private const string AzureLinuxValue = "AzureLinux";
         /// <summary> HCI OS. </summary>
-        private const string HCIValue = "HCI";
+        private const string HciValue = "HCI";
 
-        /// <summary> Initializes a new instance of <see cref="SolutionType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciOSImageSolutionType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SolutionType(string value)
+        public HciOSImageSolutionType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> AzureLinux OS. </summary>
-        public static SolutionType AzureLinux { get; } = new SolutionType(AzureLinuxValue);
+        public static HciOSImageSolutionType AzureLinux { get; } = new HciOSImageSolutionType(AzureLinuxValue);
 
         /// <summary> HCI OS. </summary>
-        public static SolutionType HCI { get; } = new SolutionType(HCIValue);
+        public static HciOSImageSolutionType Hci { get; } = new HciOSImageSolutionType(HciValue);
 
-        /// <summary> Determines if two <see cref="SolutionType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HciOSImageSolutionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(SolutionType left, SolutionType right) => left.Equals(right);
+        public static bool operator ==(HciOSImageSolutionType left, HciOSImageSolutionType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SolutionType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HciOSImageSolutionType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(SolutionType left, SolutionType right) => !left.Equals(right);
+        public static bool operator !=(HciOSImageSolutionType left, HciOSImageSolutionType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SolutionType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HciOSImageSolutionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SolutionType(string value) => new SolutionType(value);
+        public static implicit operator HciOSImageSolutionType(string value) => new HciOSImageSolutionType(value);
 
-        /// <summary> Converts a string to a <see cref="SolutionType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HciOSImageSolutionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SolutionType?(string value) => value == null ? null : new SolutionType(value);
+        public static implicit operator HciOSImageSolutionType?(string value) => value == null ? null : new HciOSImageSolutionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SolutionType other && Equals(other);
+        public override bool Equals(object obj) => obj is HciOSImageSolutionType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(SolutionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HciOSImageSolutionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

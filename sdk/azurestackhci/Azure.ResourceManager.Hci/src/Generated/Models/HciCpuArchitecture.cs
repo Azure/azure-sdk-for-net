@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Represents the CPU architecture of a machine or an OS image. </summary>
-    public readonly partial struct Architecture : IEquatable<Architecture>
+    public readonly partial struct HciCpuArchitecture : IEquatable<HciCpuArchitecture>
     {
         private readonly string _value;
         /// <summary> 64-bit x86 architecture. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> 64-bit Arm architecture. </summary>
         private const string Arm64Value = "arm64";
 
-        /// <summary> Initializes a new instance of <see cref="Architecture"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciCpuArchitecture"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Architecture(string value)
+        public HciCpuArchitecture(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> 64-bit x86 architecture. </summary>
-        public static Architecture Amd64 { get; } = new Architecture(Amd64Value);
+        public static HciCpuArchitecture Amd64 { get; } = new HciCpuArchitecture(Amd64Value);
 
         /// <summary> 64-bit Arm architecture. </summary>
-        public static Architecture Arm64 { get; } = new Architecture(Arm64Value);
+        public static HciCpuArchitecture Arm64 { get; } = new HciCpuArchitecture(Arm64Value);
 
-        /// <summary> Determines if two <see cref="Architecture"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HciCpuArchitecture"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Architecture left, Architecture right) => left.Equals(right);
+        public static bool operator ==(HciCpuArchitecture left, HciCpuArchitecture right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Architecture"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HciCpuArchitecture"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Architecture left, Architecture right) => !left.Equals(right);
+        public static bool operator !=(HciCpuArchitecture left, HciCpuArchitecture right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Architecture"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HciCpuArchitecture"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Architecture(string value) => new Architecture(value);
+        public static implicit operator HciCpuArchitecture(string value) => new HciCpuArchitecture(value);
 
-        /// <summary> Converts a string to a <see cref="Architecture"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HciCpuArchitecture"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Architecture?(string value) => value == null ? null : new Architecture(value);
+        public static implicit operator HciCpuArchitecture?(string value) => value == null ? null : new HciCpuArchitecture(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Architecture other && Equals(other);
+        public override bool Equals(object obj) => obj is HciCpuArchitecture other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Architecture other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HciCpuArchitecture other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

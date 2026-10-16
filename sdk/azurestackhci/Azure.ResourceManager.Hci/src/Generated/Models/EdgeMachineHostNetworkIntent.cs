@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="isNetworkIntentType"> IsNetworkIntentType for host network intent. </param>
         /// <param name="intentName"> Name of the network intent you wish to create. </param>
         /// <param name="intentAdapters"> Array of adapters used for the network intent. </param>
-        /// <param name="overrideVirtualSwitchConfiguration"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="shouldOverrideVirtualSwitchConfiguration"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
         /// <param name="virtualSwitchConfigurationOverrides"> Set virtualSwitch ConfigurationOverrides for cluster. </param>
-        /// <param name="overrideQosPolicy"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="shouldOverrideQosPolicy"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
         /// <param name="qosPolicyOverrides"> Set QoS PolicyOverrides for cluster. </param>
-        /// <param name="overrideAdapterProperty"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="shouldOverrideAdapterProperty"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
         /// <param name="adapterPropertyOverrides"> Set Adapter PropertyOverrides for cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineHostNetworkIntent(long? scope, long? intentType, bool? isComputeIntentSet, bool? isStorageIntentSet, bool? isOnlyStorage, bool? isManagementIntentSet, bool? isStretchIntentSet, bool? isOnlyStretch, bool? isNetworkIntentType, string intentName, IReadOnlyList<string> intentAdapters, bool? overrideVirtualSwitchConfiguration, EdgeMachineVirtualSwitchConfigurationOverrides virtualSwitchConfigurationOverrides, bool? overrideQosPolicy, DeploymentSettingQosPolicyOverrides qosPolicyOverrides, bool? overrideAdapterProperty, EdgeMachineAdapterPropertyOverrides adapterPropertyOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineHostNetworkIntent(long? scope, long? intentType, bool? isComputeIntentSet, bool? isStorageIntentSet, bool? isOnlyStorage, bool? isManagementIntentSet, bool? isStretchIntentSet, bool? isOnlyStretch, bool? isNetworkIntentType, string intentName, IReadOnlyList<string> intentAdapters, bool? shouldOverrideVirtualSwitchConfiguration, EdgeMachineVirtualSwitchConfigurationOverrides virtualSwitchConfigurationOverrides, bool? shouldOverrideQosPolicy, DeploymentSettingQosPolicyOverrides qosPolicyOverrides, bool? shouldOverrideAdapterProperty, EdgeMachineAdapterPropertyOverrides adapterPropertyOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             IntentType = intentType;
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Hci.Models
             IsNetworkIntentType = isNetworkIntentType;
             IntentName = intentName;
             IntentAdapters = intentAdapters;
-            OverrideVirtualSwitchConfiguration = overrideVirtualSwitchConfiguration;
+            ShouldOverrideVirtualSwitchConfiguration = shouldOverrideVirtualSwitchConfiguration;
             VirtualSwitchConfigurationOverrides = virtualSwitchConfigurationOverrides;
-            OverrideQosPolicy = overrideQosPolicy;
+            ShouldOverrideQosPolicy = shouldOverrideQosPolicy;
             QosPolicyOverrides = qosPolicyOverrides;
-            OverrideAdapterProperty = overrideAdapterProperty;
+            ShouldOverrideAdapterProperty = shouldOverrideAdapterProperty;
             AdapterPropertyOverrides = adapterPropertyOverrides;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
         [WirePath("overrideVirtualSwitchConfiguration")]
-        public bool? OverrideVirtualSwitchConfiguration { get; }
+        public bool? ShouldOverrideVirtualSwitchConfiguration { get; }
 
         /// <summary> Set virtualSwitch ConfigurationOverrides for cluster. </summary>
         [WirePath("virtualSwitchConfigurationOverrides")]
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
         [WirePath("overrideQosPolicy")]
-        public bool? OverrideQosPolicy { get; }
+        public bool? ShouldOverrideQosPolicy { get; }
 
         /// <summary> Set QoS PolicyOverrides for cluster. </summary>
         [WirePath("qosPolicyOverrides")]
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
         [WirePath("overrideAdapterProperty")]
-        public bool? OverrideAdapterProperty { get; }
+        public bool? ShouldOverrideAdapterProperty { get; }
 
         /// <summary> Set Adapter PropertyOverrides for cluster. </summary>
         [WirePath("adapterPropertyOverrides")]

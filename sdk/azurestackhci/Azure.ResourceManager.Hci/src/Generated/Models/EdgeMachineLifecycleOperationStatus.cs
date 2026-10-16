@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Status of an operation. Maps to Steps.Status / SubSteps.Status. </summary>
-    public readonly partial struct LifecycleOperationStatus : IEquatable<LifecycleOperationStatus>
+    public readonly partial struct EdgeMachineLifecycleOperationStatus : IEquatable<EdgeMachineLifecycleOperationStatus>
     {
         private readonly string _value;
         /// <summary> Operation has not started. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Operation has failed. </summary>
         private const string FailedValue = "Failed";
 
-        /// <summary> Initializes a new instance of <see cref="LifecycleOperationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeMachineLifecycleOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LifecycleOperationStatus(string value)
+        public EdgeMachineLifecycleOperationStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Operation has not started. </summary>
-        public static LifecycleOperationStatus NotStarted { get; } = new LifecycleOperationStatus(NotStartedValue);
+        public static EdgeMachineLifecycleOperationStatus NotStarted { get; } = new EdgeMachineLifecycleOperationStatus(NotStartedValue);
 
         /// <summary> Operation is in progress. </summary>
-        public static LifecycleOperationStatus InProgress { get; } = new LifecycleOperationStatus(InProgressValue);
+        public static EdgeMachineLifecycleOperationStatus InProgress { get; } = new EdgeMachineLifecycleOperationStatus(InProgressValue);
 
         /// <summary> Operation has completed successfully. </summary>
-        public static LifecycleOperationStatus Completed { get; } = new LifecycleOperationStatus(CompletedValue);
+        public static EdgeMachineLifecycleOperationStatus Completed { get; } = new EdgeMachineLifecycleOperationStatus(CompletedValue);
 
         /// <summary> Operation has failed. </summary>
-        public static LifecycleOperationStatus Failed { get; } = new LifecycleOperationStatus(FailedValue);
+        public static EdgeMachineLifecycleOperationStatus Failed { get; } = new EdgeMachineLifecycleOperationStatus(FailedValue);
 
-        /// <summary> Determines if two <see cref="LifecycleOperationStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EdgeMachineLifecycleOperationStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(LifecycleOperationStatus left, LifecycleOperationStatus right) => left.Equals(right);
+        public static bool operator ==(EdgeMachineLifecycleOperationStatus left, EdgeMachineLifecycleOperationStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LifecycleOperationStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EdgeMachineLifecycleOperationStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(LifecycleOperationStatus left, LifecycleOperationStatus right) => !left.Equals(right);
+        public static bool operator !=(EdgeMachineLifecycleOperationStatus left, EdgeMachineLifecycleOperationStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LifecycleOperationStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EdgeMachineLifecycleOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LifecycleOperationStatus(string value) => new LifecycleOperationStatus(value);
+        public static implicit operator EdgeMachineLifecycleOperationStatus(string value) => new EdgeMachineLifecycleOperationStatus(value);
 
-        /// <summary> Converts a string to a <see cref="LifecycleOperationStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EdgeMachineLifecycleOperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LifecycleOperationStatus?(string value) => value == null ? null : new LifecycleOperationStatus(value);
+        public static implicit operator EdgeMachineLifecycleOperationStatus?(string value) => value == null ? null : new EdgeMachineLifecycleOperationStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LifecycleOperationStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is EdgeMachineLifecycleOperationStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(LifecycleOperationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EdgeMachineLifecycleOperationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

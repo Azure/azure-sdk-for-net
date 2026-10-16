@@ -16,51 +16,51 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Lifecycle stage details for a resource. </summary>
-    public partial class LifecycleStage : IJsonModel<LifecycleStage>
+    public partial class EdgeMachineLifecycleStage : IJsonModel<EdgeMachineLifecycleStage>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LifecycleStage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EdgeMachineLifecycleStage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LifecycleStage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineLifecycleStage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLifecycleStage(document.RootElement, options);
+                        return DeserializeEdgeMachineLifecycleStage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LifecycleStage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeMachineLifecycleStage)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LifecycleStage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineLifecycleStage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LifecycleStage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeMachineLifecycleStage)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LifecycleStage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EdgeMachineLifecycleStage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LifecycleStage IPersistableModel<LifecycleStage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EdgeMachineLifecycleStage IPersistableModel<EdgeMachineLifecycleStage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LifecycleStage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EdgeMachineLifecycleStage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LifecycleStage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EdgeMachineLifecycleStage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LifecycleStage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineLifecycleStage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LifecycleStage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeMachineLifecycleStage)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -91,20 +91,20 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartTimeUtc.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
-                writer.WriteStringValue(EndTimeUtc.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedUtc))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedUtc"u8);
-                writer.WriteStringValue(LastUpdatedUtc.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("subStages"u8);
                 writer.WriteStartArray();
-                foreach (LifecycleStage item in SubStages)
+                foreach (EdgeMachineLifecycleStage item in SubStages)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -140,24 +140,24 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LifecycleStage IJsonModel<LifecycleStage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EdgeMachineLifecycleStage IJsonModel<EdgeMachineLifecycleStage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LifecycleStage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EdgeMachineLifecycleStage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LifecycleStage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineLifecycleStage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LifecycleStage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeMachineLifecycleStage)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLifecycleStage(document.RootElement, options);
+            return DeserializeEdgeMachineLifecycleStage(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LifecycleStage DeserializeLifecycleStage(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeMachineLifecycleStage DeserializeEdgeMachineLifecycleStage(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.Hci.Models
             }
             string name = default;
             string description = default;
-            LifecycleOperationStatus status = default;
-            DateTimeOffset? startTimeUtc = default;
-            DateTimeOffset? endTimeUtc = default;
-            DateTimeOffset? lastUpdatedUtc = default;
+            EdgeMachineLifecycleOperationStatus status = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
+            DateTimeOffset? lastUpdatedOn = default;
             ResponseError error = default;
-            IReadOnlyList<LifecycleStage> subStages = default;
+            IReadOnlyList<EdgeMachineLifecycleStage> subStages = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new LifecycleOperationStatus(prop.Value.GetString());
+                    status = new EdgeMachineLifecycleOperationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("startTimeUtc"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    startTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    endTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastUpdatedUtc"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lastUpdatedUtc = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -231,10 +231,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<LifecycleStage> array = new List<LifecycleStage>();
+                    List<EdgeMachineLifecycleStage> array = new List<EdgeMachineLifecycleStage>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeLifecycleStage(item, options));
+                        array.Add(DeserializeEdgeMachineLifecycleStage(item, options));
                     }
                     subStages = array;
                     continue;
@@ -244,15 +244,15 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LifecycleStage(
+            return new EdgeMachineLifecycleStage(
                 name,
                 description,
                 status,
-                startTimeUtc,
-                endTimeUtc,
-                lastUpdatedUtc,
+                startsOn,
+                endsOn,
+                lastUpdatedOn,
                 error,
-                subStages ?? new ChangeTrackingList<LifecycleStage>(),
+                subStages ?? new ChangeTrackingList<EdgeMachineLifecycleStage>(),
                 additionalBinaryDataProperties);
         }
     }

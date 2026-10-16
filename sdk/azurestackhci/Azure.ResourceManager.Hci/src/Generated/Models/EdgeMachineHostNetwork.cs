@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="EdgeMachineHostNetwork"/>. </summary>
         /// <param name="intents"> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </param>
         /// <param name="storageNetworks"> List of StorageNetworks config to deploy AzureStackHCI Cluster. </param>
-        /// <param name="storageConnectivitySwitchless"> Defines how the storage adapters between nodes are connected either switch or switch less. </param>
+        /// <param name="isStorageConnectivitySwitchless"> Defines how the storage adapters between nodes are connected either switch or switch less. </param>
         /// <param name="enableStorageAutoIP"> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineHostNetwork(IReadOnlyList<EdgeMachineHostNetworkIntent> intents, IReadOnlyList<EdgeMachineStorageNetwork> storageNetworks, bool? storageConnectivitySwitchless, bool? enableStorageAutoIP, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineHostNetwork(IReadOnlyList<EdgeMachineHostNetworkIntent> intents, IReadOnlyList<EdgeMachineStorageNetwork> storageNetworks, bool? isStorageConnectivitySwitchless, bool? enableStorageAutoIP, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Intents = intents;
             StorageNetworks = storageNetworks;
-            StorageConnectivitySwitchless = storageConnectivitySwitchless;
+            IsStorageConnectivitySwitchless = isStorageConnectivitySwitchless;
             EnableStorageAutoIP = enableStorageAutoIP;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Defines how the storage adapters between nodes are connected either switch or switch less. </summary>
         [WirePath("storageConnectivitySwitchless")]
-        public bool? StorageConnectivitySwitchless { get; }
+        public bool? IsStorageConnectivitySwitchless { get; }
 
         /// <summary> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </summary>
         [WirePath("enableStorageAutoIp")]

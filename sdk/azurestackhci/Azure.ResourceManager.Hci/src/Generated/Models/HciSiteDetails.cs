@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="siteResourceId"> Site resource Id to be set during Edge Machine resource creation. </param>
         /// <param name="deviceConfiguration"> Edge Device configuration received from site common configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciSiteDetails(ResourceIdentifier siteResourceId, TargetDeviceConfiguration deviceConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciSiteDetails(ResourceIdentifier siteResourceId, HciTargetDeviceConfiguration deviceConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SiteResourceId = siteResourceId;
             DeviceConfiguration = deviceConfiguration;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Edge Device configuration received from site common configuration. </summary>
         [WirePath("deviceConfiguration")]
-        public TargetDeviceConfiguration DeviceConfiguration { get; set; }
+        public HciTargetDeviceConfiguration DeviceConfiguration { get; set; }
     }
 }

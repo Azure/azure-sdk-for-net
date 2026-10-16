@@ -12,29 +12,29 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Summary lifecycle status for a resource. </summary>
-    public partial class LifecycleStatus
+    public partial class EdgeMachineLifecycleStatusInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LifecycleStatus"/>. </summary>
-        internal LifecycleStatus()
+        /// <summary> Initializes a new instance of <see cref="EdgeMachineLifecycleStatusInfo"/>. </summary>
+        internal EdgeMachineLifecycleStatusInfo()
         {
             RecommendedSteps = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LifecycleStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeMachineLifecycleStatusInfo"/>. </summary>
         /// <param name="status"> Overall lifecycle status of the edge machine. </param>
         /// <param name="stage"> Depicts what is the current ongoing stage. </param>
-        /// <param name="lastUpdatedUtc"> Last time the lifecycle status was updated. </param>
+        /// <param name="lastUpdatedOn"> Last time the lifecycle status was updated. </param>
         /// <param name="message"> Message to provide more details on lifecycle status, especially in case of failures. </param>
         /// <param name="recommendedSteps"> Recommended steps to resolve failures. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LifecycleStatus(EdgeMachineLifecycleStatus status, string stage, DateTimeOffset lastUpdatedUtc, string message, IReadOnlyList<string> recommendedSteps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineLifecycleStatusInfo(EdgeMachineLifecycleStatus status, string stage, DateTimeOffset lastUpdatedOn, string message, IReadOnlyList<string> recommendedSteps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Stage = stage;
-            LastUpdatedUtc = lastUpdatedUtc;
+            LastUpdatedOn = lastUpdatedOn;
             Message = message;
             RecommendedSteps = recommendedSteps;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Last time the lifecycle status was updated. </summary>
         [WirePath("lastUpdatedUtc")]
-        public DateTimeOffset LastUpdatedUtc { get; }
+        public DateTimeOffset LastUpdatedOn { get; }
 
         /// <summary> Message to provide more details on lifecycle status, especially in case of failures. </summary>
         [WirePath("message")]

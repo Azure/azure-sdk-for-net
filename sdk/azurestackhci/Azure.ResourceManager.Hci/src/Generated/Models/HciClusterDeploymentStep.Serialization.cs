@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartArray();
-                foreach (Metadata item in AdditionalData)
+                foreach (HciClusterDeploymentStepMetadata item in AdditionalData)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Hci.Models
             IReadOnlyList<string> exception = default;
             ResponseError error = default;
             int? percentComplete = default;
-            IReadOnlyList<Metadata> additionalData = default;
+            IReadOnlyList<HciClusterDeploymentStepMetadata> additionalData = default;
             IReadOnlyList<string> recommendedSteps = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -312,10 +312,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<Metadata> array = new List<Metadata>();
+                    List<HciClusterDeploymentStepMetadata> array = new List<HciClusterDeploymentStepMetadata>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Metadata.DeserializeMetadata(item, options));
+                        array.Add(HciClusterDeploymentStepMetadata.DeserializeHciClusterDeploymentStepMetadata(item, options));
                     }
                     additionalData = array;
                     continue;
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Hci.Models
                 exception ?? new ChangeTrackingList<string>(),
                 error,
                 percentComplete,
-                additionalData ?? new ChangeTrackingList<Metadata>(),
+                additionalData ?? new ChangeTrackingList<HciClusterDeploymentStepMetadata>(),
                 recommendedSteps ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }

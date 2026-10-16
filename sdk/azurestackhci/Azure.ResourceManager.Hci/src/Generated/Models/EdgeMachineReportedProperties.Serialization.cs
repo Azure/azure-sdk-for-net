@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(WorkloadInventoryLastUpdated))
+            if (options.Format != "W" && Optional.IsDefined(WorkloadInventoryLastUpdatedOn))
             {
                 writer.WritePropertyName("workloadInventoryLastUpdated"u8);
-                writer.WriteStringValue(WorkloadInventoryLastUpdated.Value, "O");
+                writer.WriteStringValue(WorkloadInventoryLastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(StorageInitiators))
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Hci.Models
             SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default;
             ExtensionProfile extensionProfile = default;
             IReadOnlyList<EdgeMachineWorkloadInventoryItem> workloadInventory = default;
-            DateTimeOffset? workloadInventoryLastUpdated = default;
+            DateTimeOffset? workloadInventoryLastUpdatedOn = default;
             IReadOnlyList<StorageInitiator> storageInitiators = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    workloadInventoryLastUpdated = prop.Value.GetDateTimeOffset("O");
+                    workloadInventoryLastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("storageInitiators"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Hci.Models
                 sbeDeploymentPackageInfo,
                 extensionProfile,
                 workloadInventory ?? new ChangeTrackingList<EdgeMachineWorkloadInventoryItem>(),
-                workloadInventoryLastUpdated,
+                workloadInventoryLastUpdatedOn,
                 storageInitiators ?? new ChangeTrackingList<StorageInitiator>(),
                 additionalBinaryDataProperties);
         }

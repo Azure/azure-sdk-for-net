@@ -15,51 +15,51 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Onboarding configuration. </summary>
-    public partial class OnboardingConfiguration : IJsonModel<OnboardingConfiguration>
+    public partial class EdgeMachineOnboardingConfiguration : IJsonModel<EdgeMachineOnboardingConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OnboardingConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EdgeMachineOnboardingConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OnboardingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineOnboardingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOnboardingConfiguration(document.RootElement, options);
+                        return DeserializeEdgeMachineOnboardingConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OnboardingConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeMachineOnboardingConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OnboardingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineOnboardingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OnboardingConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeMachineOnboardingConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OnboardingConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EdgeMachineOnboardingConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OnboardingConfiguration IPersistableModel<OnboardingConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EdgeMachineOnboardingConfiguration IPersistableModel<EdgeMachineOnboardingConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OnboardingConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EdgeMachineOnboardingConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OnboardingConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EdgeMachineOnboardingConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OnboardingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineOnboardingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnboardingConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeMachineOnboardingConfiguration)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Type))
             {
@@ -119,30 +119,30 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OnboardingConfiguration IJsonModel<OnboardingConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EdgeMachineOnboardingConfiguration IJsonModel<EdgeMachineOnboardingConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OnboardingConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EdgeMachineOnboardingConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OnboardingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineOnboardingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnboardingConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeMachineOnboardingConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOnboardingConfiguration(document.RootElement, options);
+            return DeserializeEdgeMachineOnboardingConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OnboardingConfiguration DeserializeOnboardingConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeMachineOnboardingConfiguration DeserializeEdgeMachineOnboardingConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            OnboardingResourceType? @type = default;
+            EdgeMachineOnboardingResourceType? @type = default;
             ResourceIdentifier resourceId = default;
             string location = default;
             string tenantId = default;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    @type = new OnboardingResourceType(prop.Value.GetString());
+                    @type = new EdgeMachineOnboardingResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceId"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OnboardingConfiguration(
+            return new EdgeMachineOnboardingConfiguration(
                 @type,
                 resourceId,
                 location,

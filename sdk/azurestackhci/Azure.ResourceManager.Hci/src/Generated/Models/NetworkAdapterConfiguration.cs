@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="interfaceState"> Administrative state of the interface (up or down). </param>
         /// <param name="wifiConfiguration"> WiFi configuration desired properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkAdapterConfiguration(string adapterName, string ip4Address, string subnetMask, string defaultGateway, IList<string> dnsServers, IPInterfaceType? ipInterfaceType, int? vlanId, InterfaceState? interfaceState, WifiConfigurationDesiredProperties wifiConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkAdapterConfiguration(string adapterName, string ip4Address, string subnetMask, string defaultGateway, IList<string> dnsServers, IPInterfaceType? ipInterfaceType, int? vlanId, EdgeMachineNetworkInterfaceState? interfaceState, WifiConfigurationDesiredProperties wifiConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdapterName = adapterName;
             Ip4Address = ip4Address;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Administrative state of the interface (up or down). </summary>
         [WirePath("interfaceState")]
-        public InterfaceState? InterfaceState { get; set; }
+        public EdgeMachineNetworkInterfaceState? InterfaceState { get; set; }
 
         /// <summary> WiFi configuration desired properties. </summary>
         [WirePath("wifiConfiguration")]

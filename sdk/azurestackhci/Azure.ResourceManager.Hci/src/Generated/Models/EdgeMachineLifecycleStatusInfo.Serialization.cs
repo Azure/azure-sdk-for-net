@@ -14,51 +14,51 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Summary lifecycle status for a resource. </summary>
-    public partial class LifecycleStatus : IJsonModel<LifecycleStatus>
+    public partial class EdgeMachineLifecycleStatusInfo : IJsonModel<EdgeMachineLifecycleStatusInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LifecycleStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EdgeMachineLifecycleStatusInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LifecycleStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineLifecycleStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLifecycleStatus(document.RootElement, options);
+                        return DeserializeEdgeMachineLifecycleStatusInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LifecycleStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeMachineLifecycleStatusInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LifecycleStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineLifecycleStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LifecycleStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeMachineLifecycleStatusInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LifecycleStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EdgeMachineLifecycleStatusInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LifecycleStatus IPersistableModel<LifecycleStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EdgeMachineLifecycleStatusInfo IPersistableModel<EdgeMachineLifecycleStatusInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LifecycleStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EdgeMachineLifecycleStatusInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LifecycleStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EdgeMachineLifecycleStatusInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LifecycleStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineLifecycleStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LifecycleStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeMachineLifecycleStatusInfo)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("lastUpdatedUtc"u8);
-                writer.WriteStringValue(LastUpdatedUtc, "O");
+                writer.WriteStringValue(LastUpdatedOn, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Message))
             {
@@ -128,24 +128,24 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LifecycleStatus IJsonModel<LifecycleStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EdgeMachineLifecycleStatusInfo IJsonModel<EdgeMachineLifecycleStatusInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LifecycleStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EdgeMachineLifecycleStatusInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LifecycleStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineLifecycleStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LifecycleStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeMachineLifecycleStatusInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLifecycleStatus(document.RootElement, options);
+            return DeserializeEdgeMachineLifecycleStatusInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LifecycleStatus DeserializeLifecycleStatus(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeMachineLifecycleStatusInfo DeserializeEdgeMachineLifecycleStatusInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             EdgeMachineLifecycleStatus status = default;
             string stage = default;
-            DateTimeOffset lastUpdatedUtc = default;
+            DateTimeOffset lastUpdatedOn = default;
             string message = default;
             IReadOnlyList<string> recommendedSteps = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("lastUpdatedUtc"u8))
                 {
-                    lastUpdatedUtc = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("message"u8))
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LifecycleStatus(
+            return new EdgeMachineLifecycleStatusInfo(
                 status,
                 stage,
-                lastUpdatedUtc,
+                lastUpdatedOn,
                 message,
                 recommendedSteps ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

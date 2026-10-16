@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> AzureLinux OS. </summary>
         private const string AzureLinuxValue = "AzureLinux";
         /// <summary> HCI OS. </summary>
-        private const string HCIValue = "HCI";
+        private const string HciValue = "HCI";
 
         /// <summary> Initializes a new instance of <see cref="ProvisioningOSType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static ProvisioningOSType AzureLinux { get; } = new ProvisioningOSType(AzureLinuxValue);
 
         /// <summary> HCI OS. </summary>
-        public static ProvisioningOSType HCI { get; } = new ProvisioningOSType(HCIValue);
+        public static ProvisioningOSType Hci { get; } = new ProvisioningOSType(HciValue);
 
         /// <summary> Determines if two <see cref="ProvisioningOSType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -12,16 +12,16 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Download Request properties. </summary>
-    public partial class DownloadContent
+    public partial class HciOSDownloadContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DownloadContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciOSDownloadContent"/>. </summary>
         /// <param name="target"> Target operating system to support polymorphic resource. </param>
         /// <param name="osProfile"> Operating system profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osProfile"/> is null. </exception>
-        public DownloadContent(ProvisioningOSType target, DownloadOSProfile osProfile)
+        public HciOSDownloadContent(ProvisioningOSType target, DownloadOSProfile osProfile)
         {
             Argument.AssertNotNull(osProfile, nameof(osProfile));
 
@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.Hci.Models
             OSProfile = osProfile;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DownloadContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciOSDownloadContent"/>. </summary>
         /// <param name="target"> Target operating system to support polymorphic resource. </param>
         /// <param name="osProfile"> Operating system profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DownloadContent(ProvisioningOSType target, DownloadOSProfile osProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciOSDownloadContent(ProvisioningOSType target, DownloadOSProfile osProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Target = target;
             OSProfile = osProfile;

@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.Hci.Models
             string composedImageVersion = default;
             string composedImageIsoUri = default;
             string composedImageIsoHash = default;
-            Architecture? architecture = default;
-            SolutionType? solutionType = default;
+            HciCpuArchitecture? architecture = default;
+            HciOSImageSolutionType? solutionType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    architecture = new Architecture(prop.Value.GetString());
+                    architecture = new HciCpuArchitecture(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("solutionType"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    solutionType = new SolutionType(prop.Value.GetString());
+                    solutionType = new HciOSImageSolutionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

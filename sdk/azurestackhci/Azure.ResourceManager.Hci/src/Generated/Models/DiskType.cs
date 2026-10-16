@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Unknown disk type. </summary>
         private const string UnknownValue = "Unknown";
         /// <summary> Storage Class Memory disk. </summary>
-        private const string SCMValue = "SCM";
+        private const string ScmValue = "SCM";
         /// <summary> NVMe disk. </summary>
         private const string NVMeValue = "NVMe";
         /// <summary> SATA disk. </summary>
-        private const string SATAValue = "SATA";
+        private const string SataValue = "SATA";
         /// <summary> Solid State Drive. </summary>
-        private const string SSDValue = "SSD";
+        private const string SsdValue = "SSD";
         /// <summary> Hard Disk Drive. </summary>
-        private const string HDDValue = "HDD";
+        private const string HddValue = "HDD";
         /// <summary> Virtual disk. </summary>
         private const string VirtualValue = "Virtual";
         /// <summary> Other disk type. </summary>
@@ -46,19 +46,19 @@ namespace Azure.ResourceManager.Hci.Models
         public static DiskType Unknown { get; } = new DiskType(UnknownValue);
 
         /// <summary> Storage Class Memory disk. </summary>
-        public static DiskType SCM { get; } = new DiskType(SCMValue);
+        public static DiskType Scm { get; } = new DiskType(ScmValue);
 
         /// <summary> NVMe disk. </summary>
         public static DiskType NVMe { get; } = new DiskType(NVMeValue);
 
         /// <summary> SATA disk. </summary>
-        public static DiskType SATA { get; } = new DiskType(SATAValue);
+        public static DiskType Sata { get; } = new DiskType(SataValue);
 
         /// <summary> Solid State Drive. </summary>
-        public static DiskType SSD { get; } = new DiskType(SSDValue);
+        public static DiskType Ssd { get; } = new DiskType(SsdValue);
 
         /// <summary> Hard Disk Drive. </summary>
-        public static DiskType HDD { get; } = new DiskType(HDDValue);
+        public static DiskType Hdd { get; } = new DiskType(HddValue);
 
         /// <summary> Virtual disk. </summary>
         public static DiskType Virtual { get; } = new DiskType(VirtualValue);

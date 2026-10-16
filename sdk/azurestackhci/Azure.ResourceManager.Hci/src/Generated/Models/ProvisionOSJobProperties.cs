@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="ProvisionOSJobProperties"/>. </summary>
         /// <param name="provisioningRequest"> Os Provisioning request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provisioningRequest"/> is null. </exception>
-        public ProvisionOSJobProperties(ProvisioningContent provisioningRequest) : base(EdgeMachineJobType.ProvisionOS)
+        public ProvisionOSJobProperties(EdgeMachineOSProvisionContent provisioningRequest) : base(EdgeMachineJobType.ProvisionOS)
         {
             Argument.AssertNotNull(provisioningRequest, nameof(provisioningRequest));
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningRequest"> Os Provisioning request. </param>
         /// <param name="reportedProperties"> Reported Properties for Provision Os job. </param>
-        internal ProvisionOSJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, HciJobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProvisioningContent provisioningRequest, ProvisionOSReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startsOn, endsOn, status, error, additionalBinaryDataProperties)
+        internal ProvisionOSJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, HciJobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, EdgeMachineOSProvisionContent provisioningRequest, ProvisionOSReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startsOn, endsOn, status, error, additionalBinaryDataProperties)
         {
             ProvisioningRequest = provisioningRequest;
             ReportedProperties = reportedProperties;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Os Provisioning request. </summary>
         [WirePath("provisioningRequest")]
-        public ProvisioningContent ProvisioningRequest { get; set; }
+        public EdgeMachineOSProvisionContent ProvisioningRequest { get; set; }
 
         /// <summary> Reported Properties for Provision Os job. </summary>
         [WirePath("reportedProperties")]

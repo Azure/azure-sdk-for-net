@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Hci.Models
             HciJobStatus? status = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DownloadContent downloadRequest = default;
+            HciOSDownloadContent downloadRequest = default;
             ProvisionOSReportedProperties reportedProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("downloadRequest"u8))
                 {
-                    downloadRequest = DownloadContent.DeserializeDownloadContent(prop.Value, options);
+                    downloadRequest = HciOSDownloadContent.DeserializeHciOSDownloadContent(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("reportedProperties"u8))

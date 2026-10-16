@@ -13,52 +13,52 @@ using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Reported Properties for job triggered from cloud. </summary>
-    public partial class JobReportedProperties : IJsonModel<JobReportedProperties>
+    /// <summary> Overall Lifecycle details for a resource. </summary>
+    public partial class EdgeMachineLifecycleDetails : IJsonModel<EdgeMachineLifecycleDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual JobReportedProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EdgeMachineLifecycleDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JobReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineLifecycleDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeJobReportedProperties(document.RootElement, options);
+                        return DeserializeEdgeMachineLifecycleDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobReportedProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeMachineLifecycleDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JobReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineLifecycleDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(JobReportedProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeMachineLifecycleDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<JobReportedProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EdgeMachineLifecycleDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        JobReportedProperties IPersistableModel<JobReportedProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EdgeMachineLifecycleDetails IPersistableModel<EdgeMachineLifecycleDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<JobReportedProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EdgeMachineLifecycleDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<JobReportedProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EdgeMachineLifecycleDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +69,25 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JobReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineLifecycleDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobReportedProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeMachineLifecycleDetails)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            if (options.Format != "W" && Optional.IsDefined(LifecycleStatus))
             {
-                writer.WritePropertyName("percentComplete"u8);
-                writer.WriteNumberValue(PercentComplete.Value);
+                writer.WritePropertyName("lifecycleStatus"u8);
+                writer.WriteObjectValue(LifecycleStatus, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ValidationStatus))
+            if (options.Format != "W")
             {
-                writer.WritePropertyName("validationStatus"u8);
-                writer.WriteObjectValue(ValidationStatus, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
-            {
-                writer.WritePropertyName("deploymentStatus"u8);
-                writer.WriteObjectValue(DeploymentStatus, options);
+                writer.WritePropertyName("lifecycleStages"u8);
+                writer.WriteStartArray();
+                foreach (EdgeMachineLifecycleStage item in LifecycleStages)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,60 +108,51 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        JobReportedProperties IJsonModel<JobReportedProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EdgeMachineLifecycleDetails IJsonModel<EdgeMachineLifecycleDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual JobReportedProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EdgeMachineLifecycleDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JobReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineLifecycleDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobReportedProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeMachineLifecycleDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeJobReportedProperties(document.RootElement, options);
+            return DeserializeEdgeMachineLifecycleDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static JobReportedProperties DeserializeJobReportedProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeMachineLifecycleDetails DeserializeEdgeMachineLifecycleDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? percentComplete = default;
-            EceActionStatus validationStatus = default;
-            EceActionStatus deploymentStatus = default;
+            EdgeMachineLifecycleStatusInfo lifecycleStatus = default;
+            IReadOnlyList<EdgeMachineLifecycleStage> lifecycleStages = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("percentComplete"u8))
+                if (prop.NameEquals("lifecycleStatus"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    percentComplete = prop.Value.GetInt32();
+                    lifecycleStatus = EdgeMachineLifecycleStatusInfo.DeserializeEdgeMachineLifecycleStatusInfo(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("validationStatus"u8))
+                if (prop.NameEquals("lifecycleStages"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    List<EdgeMachineLifecycleStage> array = new List<EdgeMachineLifecycleStage>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        continue;
+                        array.Add(EdgeMachineLifecycleStage.DeserializeEdgeMachineLifecycleStage(item, options));
                     }
-                    validationStatus = EceActionStatus.DeserializeEceActionStatus(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("deploymentStatus"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deploymentStatus = EceActionStatus.DeserializeEceActionStatus(prop.Value, options);
+                    lifecycleStages = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +160,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new JobReportedProperties(percentComplete, validationStatus, deploymentStatus, additionalBinaryDataProperties);
+            return new EdgeMachineLifecycleDetails(lifecycleStatus, lifecycleStages ?? new ChangeTrackingList<EdgeMachineLifecycleStage>(), additionalBinaryDataProperties);
         }
     }
 }

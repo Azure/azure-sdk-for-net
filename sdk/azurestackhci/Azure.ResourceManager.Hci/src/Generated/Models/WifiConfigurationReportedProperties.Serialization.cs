@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             string ssid = default;
-            AuthenticationType? authenticationType = default;
-            EAPMethod? eapMethod = default;
+            EdgeMachineWifiAuthenticationType? authenticationType = default;
+            EapMethod? eapMethod = default;
             int? signalStrength = default;
             string lastSuccessfulConnectionTimestamp = default;
-            ConnectionState? connectionState = default;
+            EdgeMachineWifiConnectionState? connectionState = default;
             string username = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    authenticationType = new AuthenticationType(prop.Value.GetString());
+                    authenticationType = new EdgeMachineWifiAuthenticationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("eapMethod"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    eapMethod = new EAPMethod(prop.Value.GetString());
+                    eapMethod = new EapMethod(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("signalStrength"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    connectionState = new ConnectionState(prop.Value.GetString());
+                    connectionState = new EdgeMachineWifiConnectionState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("username"u8))

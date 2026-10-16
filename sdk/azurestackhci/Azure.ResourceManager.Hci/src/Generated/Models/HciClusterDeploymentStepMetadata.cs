@@ -12,25 +12,25 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Metadata associated with a deployment step. </summary>
-    public partial class Metadata
+    public partial class HciClusterDeploymentStepMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Metadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterDeploymentStepMetadata"/>. </summary>
         /// <param name="key"> The key of the metadata entry. </param>
         /// <param name="value"> The value of the metadata entry. </param>
-        internal Metadata(string key, string value)
+        internal HciClusterDeploymentStepMetadata(string key, string value)
         {
             Key = key;
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Metadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterDeploymentStepMetadata"/>. </summary>
         /// <param name="key"> The key of the metadata entry. </param>
         /// <param name="value"> The value of the metadata entry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Metadata(string key, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciClusterDeploymentStepMetadata(string key, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Value = value;

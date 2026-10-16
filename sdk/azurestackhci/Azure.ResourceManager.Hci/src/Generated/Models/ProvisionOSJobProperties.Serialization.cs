@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Hci.Models
             HciJobStatus? status = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ProvisioningContent provisioningRequest = default;
+            EdgeMachineOSProvisionContent provisioningRequest = default;
             ProvisionOSReportedProperties reportedProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("provisioningRequest"u8))
                 {
-                    provisioningRequest = ProvisioningContent.DeserializeProvisioningContent(prop.Value, options);
+                    provisioningRequest = EdgeMachineOSProvisionContent.DeserializeEdgeMachineOSProvisionContent(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("reportedProperties"u8))

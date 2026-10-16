@@ -33,20 +33,20 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Provisioning state of the job. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of Edge device job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Reported properties for Network Adapter Job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineNetworkAdapterJobProperties(NetworkAdapterJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, ResponseError error, NetworkAdapterJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineNetworkAdapterJobProperties(NetworkAdapterJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, HciJobStatus? status, ResponseError error, NetworkAdapterJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobType = jobType;
             DeploymentMode = deploymentMode;
             ProvisioningState = provisioningState;
             JobId = jobId;
-            StartTimeUtc = startTimeUtc;
-            EndTimeUtc = endTimeUtc;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Status = status;
             Error = error;
             ReportedProperties = reportedProperties;
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> The UTC date and time at which the job started. </summary>
         [WirePath("startTimeUtc")]
-        public DateTimeOffset? StartTimeUtc { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The UTC date and time at which the job completed. </summary>
         [WirePath("endTimeUtc")]
-        public DateTimeOffset? EndTimeUtc { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Status of Edge device job. </summary>
         [WirePath("status")]

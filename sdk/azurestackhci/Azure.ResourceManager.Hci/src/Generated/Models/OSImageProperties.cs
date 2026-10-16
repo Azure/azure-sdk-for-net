@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="architecture"> Represents the CPU architecture of an OS image, for example amd64 or arm64. </param>
         /// <param name="solutionType"> The solution type (OS family) of the OS image, for example AzureLinux or HCI. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OSImageProperties(string validatedSolutionRecipeVersion, string composedImageVersion, string composedImageIsoUri, string composedImageIsoHash, Architecture? architecture, SolutionType? solutionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OSImageProperties(string validatedSolutionRecipeVersion, string composedImageVersion, string composedImageIsoUri, string composedImageIsoHash, HciCpuArchitecture? architecture, HciOSImageSolutionType? solutionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ValidatedSolutionRecipeVersion = validatedSolutionRecipeVersion;
             ComposedImageVersion = composedImageVersion;
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Represents the CPU architecture of an OS image, for example amd64 or arm64. </summary>
         [WirePath("architecture")]
-        public Architecture? Architecture { get; }
+        public HciCpuArchitecture? Architecture { get; }
 
         /// <summary> The solution type (OS family) of the OS image, for example AzureLinux or HCI. </summary>
         [WirePath("solutionType")]
-        public SolutionType? SolutionType { get; }
+        public HciOSImageSolutionType? SolutionType { get; }
     }
 }

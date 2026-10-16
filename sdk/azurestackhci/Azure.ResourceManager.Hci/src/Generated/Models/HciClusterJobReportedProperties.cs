@@ -12,22 +12,22 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Reported Properties for job triggered from cloud. </summary>
-    public partial class JobReportedProperties
+    public partial class HciClusterJobReportedProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="JobReportedProperties"/>. </summary>
-        internal JobReportedProperties()
+        /// <summary> Initializes a new instance of <see cref="HciClusterJobReportedProperties"/>. </summary>
+        internal HciClusterJobReportedProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobReportedProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterJobReportedProperties"/>. </summary>
         /// <param name="percentComplete"> The percentage of the job that is complete. </param>
         /// <param name="validationStatus"> Validation status of job. </param>
         /// <param name="deploymentStatus"> Deployment status of job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobReportedProperties(int? percentComplete, EceActionStatus validationStatus, EceActionStatus deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciClusterJobReportedProperties(int? percentComplete, EceActionStatus validationStatus, EceActionStatus deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PercentComplete = percentComplete;
             ValidationStatus = validationStatus;

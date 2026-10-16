@@ -12,16 +12,16 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Represents a provisioning request. </summary>
-    public partial class ProvisioningContent
+    public partial class EdgeMachineOSProvisionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeMachineOSProvisionContent"/>. </summary>
         /// <param name="target"> Target operating system to support polymorphic resource. </param>
         /// <param name="osProfile"> Operating system profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osProfile"/> is null. </exception>
-        public ProvisioningContent(ProvisioningOSType target, OSProvisionProfile osProfile)
+        public EdgeMachineOSProvisionContent(ProvisioningOSType target, OSProvisionProfile osProfile)
         {
             Argument.AssertNotNull(osProfile, nameof(osProfile));
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Hci.Models
             UserDetails = new ChangeTrackingList<HciUserDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeMachineOSProvisionContent"/>. </summary>
         /// <param name="target"> Target operating system to support polymorphic resource. </param>
         /// <param name="osProfile"> Operating system profile. </param>
         /// <param name="userDetails"> User configuration. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deviceConfiguration"> Device configuration. </param>
         /// <param name="customConfiguration"> Base64 encoded custom configuration for CAPI to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningContent(ProvisioningOSType target, OSProvisionProfile osProfile, IList<HciUserDetails> userDetails, OnboardingConfiguration onboardingConfiguration, TargetDeviceConfiguration deviceConfiguration, string customConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineOSProvisionContent(ProvisioningOSType target, OSProvisionProfile osProfile, IList<HciUserDetails> userDetails, EdgeMachineOnboardingConfiguration onboardingConfiguration, HciTargetDeviceConfiguration deviceConfiguration, string customConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Target = target;
             OSProfile = osProfile;
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Onboarding configuration. </summary>
         [WirePath("onboardingConfiguration")]
-        public OnboardingConfiguration OnboardingConfiguration { get; set; }
+        public EdgeMachineOnboardingConfiguration OnboardingConfiguration { get; set; }
 
         /// <summary> Device configuration. </summary>
         [WirePath("deviceConfiguration")]
-        public TargetDeviceConfiguration DeviceConfiguration { get; set; }
+        public HciTargetDeviceConfiguration DeviceConfiguration { get; set; }
 
         /// <summary> Base64 encoded custom configuration for CAPI to use. </summary>
         [WirePath("customConfiguration")]

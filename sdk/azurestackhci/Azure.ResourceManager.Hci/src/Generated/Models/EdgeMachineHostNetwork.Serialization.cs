@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageConnectivitySwitchless))
+            if (options.Format != "W" && Optional.IsDefined(IsStorageConnectivitySwitchless))
             {
                 writer.WritePropertyName("storageConnectivitySwitchless"u8);
-                writer.WriteBooleanValue(StorageConnectivitySwitchless.Value);
+                writer.WriteBooleanValue(IsStorageConnectivitySwitchless.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(EnableStorageAutoIP))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             IReadOnlyList<EdgeMachineHostNetworkIntent> intents = default;
             IReadOnlyList<EdgeMachineStorageNetwork> storageNetworks = default;
-            bool? storageConnectivitySwitchless = default;
+            bool? isStorageConnectivitySwitchless = default;
             bool? enableStorageAutoIP = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    storageConnectivitySwitchless = prop.Value.GetBoolean();
+                    isStorageConnectivitySwitchless = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableStorageAutoIp"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EdgeMachineHostNetwork(intents ?? new ChangeTrackingList<EdgeMachineHostNetworkIntent>(), storageNetworks ?? new ChangeTrackingList<EdgeMachineStorageNetwork>(), storageConnectivitySwitchless, enableStorageAutoIP, additionalBinaryDataProperties);
+            return new EdgeMachineHostNetwork(intents ?? new ChangeTrackingList<EdgeMachineHostNetworkIntent>(), storageNetworks ?? new ChangeTrackingList<EdgeMachineStorageNetwork>(), isStorageConnectivitySwitchless, enableStorageAutoIP, additionalBinaryDataProperties);
         }
     }
 }

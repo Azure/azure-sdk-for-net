@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             Steps = new ChangeTrackingList<HciClusterDeploymentStep>();
             Exception = new ChangeTrackingList<string>();
-            AdditionalData = new ChangeTrackingList<Metadata>();
+            AdditionalData = new ChangeTrackingList<HciClusterDeploymentStepMetadata>();
             RecommendedSteps = new ChangeTrackingList<string>();
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="additionalData"> Additional metadata associated with the step. </param>
         /// <param name="recommendedSteps"> Recommended steps to resolve failures in this step. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterDeploymentStep(string name, string description, string fullStepIndex, string startOn, string endOn, string status, IReadOnlyList<HciClusterDeploymentStep> steps, IReadOnlyList<string> exception, ResponseError error, int? percentComplete, IReadOnlyList<Metadata> additionalData, IReadOnlyList<string> recommendedSteps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciClusterDeploymentStep(string name, string description, string fullStepIndex, string startOn, string endOn, string status, IReadOnlyList<HciClusterDeploymentStep> steps, IReadOnlyList<string> exception, ResponseError error, int? percentComplete, IReadOnlyList<HciClusterDeploymentStepMetadata> additionalData, IReadOnlyList<string> recommendedSteps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Additional metadata associated with the step. </summary>
         [WirePath("additionalData")]
-        public IReadOnlyList<Metadata> AdditionalData { get; }
+        public IReadOnlyList<HciClusterDeploymentStepMetadata> AdditionalData { get; }
 
         /// <summary> Recommended steps to resolve failures in this step. </summary>
         [WirePath("recommendedSteps")]

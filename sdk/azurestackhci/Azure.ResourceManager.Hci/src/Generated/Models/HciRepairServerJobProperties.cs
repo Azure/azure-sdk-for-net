@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="repairServerJobServerDetails"> Details of servers to be repaired in the cluster. </param>
         /// <param name="secrets"> List of protected parameters to pass to trigger job for cluster. </param>
-        internal HciRepairServerJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, HciJobStatus? status, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<RepairServerJobServerDetails> repairServerJobServerDetails, IList<EceDeploymentSecrets> secrets) : base(jobType, deploymentMode, provisioningState, jobId, startsOn, endsOn, status, reportedProperties, additionalBinaryDataProperties)
+        internal HciRepairServerJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, HciJobStatus? status, HciClusterJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<RepairServerJobServerDetails> repairServerJobServerDetails, IList<EceDeploymentSecrets> secrets) : base(jobType, deploymentMode, provisioningState, jobId, startsOn, endsOn, status, reportedProperties, additionalBinaryDataProperties)
         {
             RepairServerJobServerDetails = repairServerJobServerDetails;
             Secrets = secrets;

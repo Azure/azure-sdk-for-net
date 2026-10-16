@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Hci.Models
             string cloudId = default;
             ResourceIdentifier arcMachineResourceGroupId = default;
             ResourceIdentifier arcMachineResourceId = default;
-            LifecycleDetails lifecycleDetails = default;
+            EdgeMachineLifecycleDetails lifecycleDetails = default;
             ResourceIdentifier arcGatewayResourceId = default;
             HciSiteDetails siteDetails = default;
             OwnershipVoucherDetails ownershipVoucherDetails = default;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lifecycleDetails = LifecycleDetails.DeserializeLifecycleDetails(prop.Value, options);
+                    lifecycleDetails = EdgeMachineLifecycleDetails.DeserializeEdgeMachineLifecycleDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("arcGatewayResourceId"u8))
