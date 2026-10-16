@@ -10,7 +10,7 @@ compatibility: "Guidance/review use local references. Apply requires azure-sdk-m
 
 # TypeSpec SDK Naming
 
-One source of naming rules for authoring and assessment. Read the [naming dispatcher](references/naming-conventions.md) and only its applicable profiles.
+One source of naming rules for authoring and read-only naming review. Read the [naming dispatcher](references/naming-conventions.md) and only its applicable profiles.
 
 ## Workflow
 
@@ -23,7 +23,7 @@ One source of naming rules for authoring and assessment. Read the [naming dispat
 ## Consumers
 
 - `azure-typespec-author`: consult in guidance mode before authoring; use apply for planned SDK-only overrides.
-- `azure-typespec-assessment` and Copilot reviewers: use review mode on the supplied changed declarations and SDK evidence, never apply.
+- Copilot reviewers: use review mode on the supplied changed declarations and SDK evidence, never apply.
 - Direct naming-only `client.tsp` requests use this skill; do not recursively invoke the full authoring workflow. Other SDK customization or generation requests remain with their existing workflows.
 
 If invoked by another skill, return naming decisions to that workflow; do not start a separate assessment or SDK-generation workflow.

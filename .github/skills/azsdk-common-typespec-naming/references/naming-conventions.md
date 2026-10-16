@@ -6,7 +6,7 @@ Use this single rule source for proactive authoring and read-only review. No lin
 
 Use the user's confirmed targets, `tspconfig.yaml` emitter/options configuration, and SDK project configuration to identify SDK languages and ARM versus data-plane. Normalize `C#`, `.NET`, and `csharp` to `csharp`. An OpenAPI-only configuration does not establish an SDK target. Ask before language-specific edits when the target or service type is unknown.
 
-An unknown SDK target is missing information, not an unsupported profile. Ask which languages are targeted when needed for a naming decision; in read-only review, report missing context without blocking unrelated assessment. Do not require SDK-language intake for unrelated REST authoring.
+An unknown SDK target is missing information, not an unsupported profile. Ask which languages are targeted when needed for a naming decision; in read-only review, report missing context without blocking unrelated review work. Do not require SDK-language intake for unrelated REST authoring.
 
 | Language        | Service type     | Profile                                                                            |
 | --------------- | ---------------- | ---------------------------------------------------------------------------------- |

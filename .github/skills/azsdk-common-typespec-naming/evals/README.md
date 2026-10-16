@@ -33,5 +33,5 @@ filesystem provider races. The shared skill-eval pipeline discovers the suite.
 
 Use `--tag case=numeric-enum,member-semantics,body-role` for the reviewed naming subset.
 
-Authoring/assessment delegation is covered separately in the repository's
+Authoring delegation is covered separately in the repository's
 `evals/workflows/mock/typespec-naming-handoffs.eval.yaml`.
