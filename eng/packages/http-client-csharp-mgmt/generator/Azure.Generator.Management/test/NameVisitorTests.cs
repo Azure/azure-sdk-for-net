@@ -1,11 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Generator.Management;
+using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 
 namespace Azure.Generator.Mgmt.Tests
@@ -13,6 +18,62 @@ namespace Azure.Generator.Mgmt.Tests
     internal class NameVisitorTests
     {
         private const string TestClientName = "TestClient";
+
+        [Test]
+        public void ArmResourceTypePropertyUsesSharedProjection()
+        {
+            var resourceType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "armResourceType", "Azure.Core.armResourceType");
+            var inputProperty = InputFactory.Property("type", resourceType, isReadOnly: true);
+            var model = InputFactory.Model(KnownManagementTypes.ArmResourceId, properties: [inputProperty]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = new SystemObjectModelProvider(typeof(ResourceData), model);
+
+            var property = plugin.Object.TypeFactory.CreateProperty(inputProperty, provider)!;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(property.Name, Is.EqualTo(nameof(ResourceData.ResourceType)));
+                Assert.That(property.Type, Is.EqualTo(new CSharpType(typeof(ResourceType))));
+                Assert.That(property.WireInfo!.SerializedName, Is.EqualTo("type"));
+            });
+        }
+
+        [TestCase("id")]
+        [TestCase("type")]
+        [TestCase("location")]
+        public void ArmFrameworkStringPropertyIsNotBroadlyProjected(string wireName)
+        {
+            var inputProperty = InputFactory.Property("currentProperty", InputPrimitiveType.String, serializedName: wireName, isReadOnly: wireName != "location");
+            var model = InputFactory.Model(KnownManagementTypes.ArmResourceId, properties: [inputProperty]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = new SystemObjectModelProvider(typeof(TrackedResourceData), model);
+
+            var property = plugin.Object.TypeFactory.CreateProperty(inputProperty, provider)!;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(property.Name, Is.EqualTo("CurrentProperty"));
+                Assert.That(property.Type, Is.EqualTo(new CSharpType(typeof(string), isNullable: true)));
+                Assert.That(property.WireInfo!.SerializedName, Is.EqualTo(wireName));
+            });
+        }
+
+        [Test]
+        public void OrdinaryModelPropertyIsNotArmProjected()
+        {
+            var inputProperty = InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true);
+            var model = InputFactory.Model("CurrentResource", properties: [inputProperty]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+
+            var property = plugin.Object.TypeFactory.CreateProperty(inputProperty, provider)!;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(property.Name, Is.EqualTo("Type"));
+                Assert.That(property.Type, Is.EqualTo(new CSharpType(typeof(string), isNullable: true)));
+            });
+        }
 
         [Test]
         public void TestTransformUrlToUri()

@@ -3818,7 +3818,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PublicIPAddressDataAsync1CollectionResultOfT(
+            return new PublicIPAddressDataAsync2CollectionResultOfT(
                 PublicIPAddressesOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3857,7 +3857,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PublicIPAddressData1CollectionResultOfT(
+            return new PublicIPAddressData2CollectionResultOfT(
                 PublicIPAddressesOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

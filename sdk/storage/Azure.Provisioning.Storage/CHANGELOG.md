@@ -1,14 +1,14 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0 (2026-10-15)
 
 ### Features Added
 
-### Breaking Changes
+- Stable release of the features previously introduced in `1.2.0-beta.1` and `1.2.0-beta.2`.
 
 ### Bugs Fixed
 
-### Other Changes
+- Restored automatic name generation for `FileShare` and `BlobContainer` to use 3-63 characters consisting of lowercase letters, numbers, and hyphens. Mixed-case identifiers are lowercased, and underscores and unsupported punctuation are removed.
 
 ## 1.2.0-beta.2 (2026-10-13)
 

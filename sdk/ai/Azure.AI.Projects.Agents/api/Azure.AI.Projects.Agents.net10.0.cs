@@ -2712,7 +2712,7 @@ namespace Azure.AI.Projects.Agents
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground VoiceAgentAvatarVideoBackground(System.Uri imageUrl = null, string color = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop VoiceAgentAvatarVideoCrop(System.Collections.Generic.IEnumerable<object> bottomRight = null, System.Collections.Generic.IEnumerable<object> topLeft = null) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop VoiceAgentAvatarVideoCrop(System.Collections.Generic.IEnumerable<uint> bottomRight = null, System.Collections.Generic.IEnumerable<uint> topLeft = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.VoiceAgentAvatarVideoParams VoiceAgentAvatarVideoParams(int? bitrate = default(int?), Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop crop = null, Azure.AI.Projects.Agents.VoiceAgentAvatarVideoResolution resolution = null, Azure.AI.Projects.Agents.VoiceAgentAvatarVideoBackground background = null, int? gopSize = default(int?)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -4782,9 +4782,9 @@ namespace Azure.AI.Projects.Agents
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class VoiceAgentAvatarVideoCrop : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop>
     {
-        public VoiceAgentAvatarVideoCrop(System.Collections.Generic.IEnumerable<object> bottomRight, System.Collections.Generic.IEnumerable<object> topLeft) { }
-        public System.Collections.Generic.IList<object> BottomRight { get { throw null; } }
-        public System.Collections.Generic.IList<object> TopLeft { get { throw null; } }
+        public VoiceAgentAvatarVideoCrop(System.Collections.Generic.IEnumerable<uint> bottomRight, System.Collections.Generic.IEnumerable<uint> topLeft) { }
+        public System.Collections.Generic.IList<uint> BottomRight { get { throw null; } }
+        public System.Collections.Generic.IList<uint> TopLeft { get { throw null; } }
         protected virtual Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.Agents.VoiceAgentAvatarVideoCrop PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
