@@ -8,6 +8,8 @@
 
 ### Breaking Changes
 
+- Removed the `UpdateMemories(string, BinaryContent, RequestOptions)` and `UpdateMemoriesAsync(string, BinaryContent, RequestOptions)` protocol overloads from `AIProjectMemoryStores`. Use the corresponding long-running operation overloads that accept `waitUntilCompleted` instead, passing `false` to return after starting the operation.
+
 ### Bugs Fixed
 
 ### Other Changes

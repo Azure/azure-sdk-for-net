@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Changed `VoiceAgentAvatarVideoCrop.BottomRight` and `TopLeft` from `IList<object>` to `IList<uint>`. Its constructor and `ProjectsAgentsModelFactory.VoiceAgentAvatarVideoCrop` now accept `IEnumerable<uint>` instead of `IEnumerable<object>`.
+
 ### Bugs Fixed
 
 ### Other Changes
