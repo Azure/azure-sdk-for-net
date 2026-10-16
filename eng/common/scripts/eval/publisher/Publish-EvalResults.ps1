@@ -1,10 +1,9 @@
-# Uploads one saved archive with Azure CLI, retains its receipt, then signals the dashboard.
+# Uploads one saved archive with Azure CLI, then signals the dashboard without local status files.
 #requires -Version 7.4
 [CmdletBinding()]
 param(
     [Parameter(Mandatory)] [ValidatePattern('^[a-z0-9]{3,24}$')] [string] $StorageAccountName,
     [Parameter(Mandatory)] [string] $BundlePath,
-    [Parameter(Mandatory)] [string] $ResultPath,
     [string] $DashboardRefreshUrl = '',
     [string] $DashboardResource = ''
 )
@@ -22,23 +21,11 @@ function Invoke-AzJson([string[]] $Arguments) {
     try { return $document.RootElement.Clone() } finally { $document.Dispose() }
 }
 
-function Save-Receipt([hashtable] $Receipt) {
-    $temporary = "$ResultPath.tmp"
-    # Create-new also refuses existing links/files instead of truncating their targets.
-    $bytes = [System.Text.Encoding]::UTF8.GetBytes(($Receipt | ConvertTo-Json -Depth 5) + "`n")
-    $stream = [System.IO.File]::Open($temporary, [System.IO.FileMode]::CreateNew, [System.IO.FileAccess]::Write, [System.IO.FileShare]::None)
-    try { $stream.Write($bytes, 0, $bytes.Length) } finally { $stream.Dispose() }
-    [System.IO.File]::Move($temporary, $ResultPath, $true)
-}
-
 $operation = 'validate_inputs'
 $failureCode = 'invalid_bundle'
 $stored = $false
 try {
     $BundlePath = [System.IO.Path]::GetFullPath($BundlePath)
-    $ResultPath = [System.IO.Path]::GetFullPath($ResultPath)
-    $archivePaths = @($BundlePath, "$BundlePath.json")
-    if ($ResultPath -in $archivePaths -or "$ResultPath.tmp" -in $archivePaths) { throw 'Receipt and temporary paths must not replace the archive or descriptor.' }
     $archive = Get-Item -LiteralPath $BundlePath
     $descriptor = Get-Item -LiteralPath "$BundlePath.json"
     if ($archive.PSIsContainer -or $archive.LinkType -or $archive.Length -le 0 -or $archive.Length -gt 32MB -or
@@ -48,9 +35,8 @@ try {
     $name = [string] $prepared.blobName
     if ($prepared.bytes -ne $archive.Length -or $prepared.sha256 -cne $hash -or $name.Length -gt 800 -or
         $name -cnotmatch '^v1/[a-z0-9][a-z0-9-]{0,99}/(?:[a-z0-9_.~-]|%[0-9A-F]{2})+/[1-9][0-9]{0,19}/[1-9][0-9]{0,19}/[1-9][0-9]*/dashboard-bundle\.zip$') {
-        throw 'Archive identity or checksum differs from its preparation receipt.'
+        throw 'Archive identity or checksum differs from its preparation descriptor.'
     }
-    [System.IO.Directory]::CreateDirectory([System.IO.Path]::GetDirectoryName($ResultPath)) | Out-Null
 
     # Deployment values belong to protected pipeline configuration, not queue-time input.
     # Never acquire a notification token for a noncanonical or non-App-Service destination.
@@ -101,15 +87,12 @@ try {
         $duplicate = $true
     }
 
-    $operation = 'persist_storage_result'
-    $failureCode = 'receipt_failed'
-    $receipt = @{ status = 'stored'; blobName = $name; sha256 = $hash; duplicate = $duplicate; notification = @{ status = 'pending' } }
-    Save-Receipt $receipt
     $stored = $true
+    Write-Host "Result archive stored: $name (duplicate: $duplicate)."
 
     $body = @{ blobName = $name; sha256 = $hash } | ConvertTo-Json -Compress
     if ([System.Text.Encoding]::UTF8.GetByteCount($body) -gt 2048) { throw 'Invalid refresh signal.' }
-    $receipt.notification = @{ status = 'failed'; errorCode = $(if ($notificationValid) { 'notification_failed' } else { 'notification_configuration' }) }
+    $notificationSucceeded = $false
     for ($attempt = 0; $notificationValid -and $attempt -lt 4; $attempt++) {
         $status = 0; $headers = @{}
         try {
@@ -121,7 +104,7 @@ try {
             if ($status -eq 200) {
                 $report = $response.Content | ConvertFrom-Json -AsHashtable
                 if ($report.status -eq 'succeeded' -and $report.failureCount -eq 0) {
-                    $receipt.notification = @{ status = 'succeeded' }; break
+                    $notificationSucceeded = $true; break
                 }
             }
         } catch {
@@ -139,15 +122,14 @@ try {
         }
         Start-Sleep -Milliseconds ([int]([Math]::Clamp($seconds, 0, 60) * 1000))
     }
-    try { Save-Receipt $receipt }
-    catch { Write-Warning 'Archive stored; notification status could not be saved. The original storage receipt is retained.' }
-    Write-Host "Result archive stored: $name (duplicate: $duplicate)."
     if (!$notificationValid) { Write-Warning 'Archive stored; dashboard notification configuration is missing or invalid. Reload/startup/daily reconciliation can recover it.' }
-    elseif ($receipt.notification.status -eq 'failed') { Write-Warning 'Archive stored; dashboard refresh failed. Reload/startup/daily reconciliation can recover it.' }
+    elseif (!$notificationSucceeded) { Write-Warning 'Archive stored; dashboard refresh failed. Reload/startup/daily reconciliation can recover it.' }
+    else { Write-Host 'Dashboard refresh succeeded.' }
 } catch {
-    # Preserve an existing stored receipt. Raw CLI output and exceptions can contain tokens.
-    if (!$stored -and $operation -ne 'validate_inputs') {
-        try { Save-Receipt @{ status = 'failed'; operation = $operation; errorCode = $failureCode } } catch { }
+    # Raw CLI output and exceptions can contain tokens. Stored data needs no local status file.
+    if ($stored) {
+        Write-Warning 'Archive stored; dashboard refresh failed. Reload/startup/daily reconciliation can recover it.'
+    } else {
+        throw "Evaluation publication failed: $operation ($failureCode). No raw Azure response was logged."
     }
-    throw "Evaluation publication failed: $operation ($failureCode). No raw Azure response was logged."
 }

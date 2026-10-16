@@ -94,8 +94,8 @@ saved ZIP**; Azure CLI owns transport retries, without another script/task retry
 Request/socket timeouts and the task deadline bound execution. Existing archives must match metadata,
 owner, checksum and size. Changed content needs a new Summary attempt, not an overwrite.
 The publisher never deletes archives; the dashboard's separate identity stays read-only.
-Local storage receipts are replaced atomically before any notification. Later
-notification/status-save failures cannot erase the retained successful storage result.
+The upload is confirmed and logged before notification. No local publication status
+file is written; a failed notification does not change the stored archive or fail upload.
 
 ### Notification and recovery
 
@@ -105,7 +105,7 @@ dashboard URL or API ID is hardcoded in the script. The URL must be a canonical
 HTTPS App Service address ending exactly in `/api/refresh`, with no credentials,
 nondefault port, query or fragment; the resource must be `api://<API-client-ID>`.
 Validation happens before requesting a notification token. Missing or invalid
-configuration preserves the successful storage receipt, sends no token and warns.
+configuration preserves the uploaded archive, sends no token and warns.
 The storage OAuth resource `https://storage.azure.com/` remains a platform constant,
 not a deployment destination. For the values above, Azure CLI requests a token for
 `api://258998df-81ec-460c-bdd7-56a9bdde1e48`; the dashboard
@@ -127,7 +127,8 @@ common-tests PR pipeline runs all shared/archive Node tests and discovers the ta
 PowerShell suite under `eng/common-tests/eval`; failures fail the CI job.
 CI restores only the locked archive dependency, not the Vally evaluator.
 Regression coverage includes the actual HTTP
-cmdlet against loopback, invalid collision metadata and receipt-path aliases.
+cmdlet against loopback, invalid collision metadata, upload-before-notification
+ordering and publication without local status files.
 The loopback fixture selects the first Node application when CI has multiple Node
 installations on `PATH`. Configuration tests use synthetic hosts/resources and
 prove invalid targets cannot request or receive notification tokens.
@@ -135,8 +136,9 @@ Tests use synthetic fixtures and fake Azure transports;
 they do not evaluate models or contact production services. A real-run test remains
 separate from local checks and should use an already approved evaluation run.
 
-The saved result includes a bounded operation/error code/HTTP status, never raw SDK
-requests, tokens or result contents. Token acquisition failures require checking the
+The task logs the stored Blob name and notification outcome. Failures include a
+bounded operation/error code, never raw Azure responses, tokens or result contents.
+Token acquisition failures require checking the
 service connection; Blob 403 requires checking its data-role scope; network failures
 require checking approved egress. Preserve the original archive for conflicts, and
 retry the signal or the same saved bytes for outages. Never substitute account keys,

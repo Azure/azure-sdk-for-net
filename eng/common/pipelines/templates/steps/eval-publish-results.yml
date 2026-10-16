@@ -49,5 +49,4 @@ steps:
           & "$(Build.SourcesDirectory)/eng/common/scripts/eval/publisher/Publish-EvalResults.ps1" `
             -StorageAccountName $env:EVAL_STORAGE_ACCOUNT_NAME `
             -BundlePath "$(Build.ArtifactStagingDirectory)/eval-summary/dashboard-bundle.zip" `
-            -ResultPath "$(Build.ArtifactStagingDirectory)/eval-summary/storage-publication-result.json" `
             -DashboardRefreshUrl $env:EVAL_DASHBOARD_REFRESH_URL -DashboardResource $env:EVAL_DASHBOARD_RESOURCE

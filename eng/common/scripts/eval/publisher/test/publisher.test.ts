@@ -197,6 +197,10 @@ test("pipeline separates token-bearing attempt verification from rendering and u
     assert.match(steps, /EVAL_DASHBOARD_REFRESH_URL: \$\(EvalDashboardRefreshUrl\)/);
     assert.match(steps, /EVAL_DASHBOARD_RESOURCE: \$\(EvalDashboardResource\)/);
     assert.match(steps, /-DashboardRefreshUrl \$env:EVAL_DASHBOARD_REFRESH_URL -DashboardResource \$env:EVAL_DASHBOARD_RESOURCE/);
+    assert.doesNotMatch(steps, /ResultPath|storage-publication-result/);
+    const publisher = await readFile(resolve(import.meta.dirname, "../Publish-EvalResults.ps1"), "utf8");
+    assert.doesNotMatch(publisher, /Save-Receipt|ResultPath|persist_storage_result|receipt_failed|File\]::(?:Write|Open|Move)|Set-Content/);
+    assert.ok(publisher.indexOf('Write-Host "Result archive stored:') < publisher.indexOf("'--resource', $DashboardResource"), "Confirm upload before notification without a local status file");
     assert.doesNotMatch(steps, /258998df|azsdk-eval-bue6/);
     assert.doesNotMatch(await readFile(resolve(import.meta.dirname, "../Publish-EvalResults.ps1"), "utf8"), /258998df|azsdk-eval-bue6/);
     assert.doesNotMatch(await readFile(resolve(import.meta.dirname, "../Publish-EvalResults.ps1"), "utf8"), /TF_BUILD|SYSTEM_|BUILD_|System\.DefinitionId/);
