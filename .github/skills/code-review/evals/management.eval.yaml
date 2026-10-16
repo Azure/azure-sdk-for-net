@@ -537,3 +537,21 @@ stimuli:
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
+
+  - name: waituntil-first-parameter-lro-is-not-flagged
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic new API and
+      return findings only. Azure.ResourceManager.Compute's generator adds
+      VirtualMachineCollection.CreateOrUpdateAsync(WaitUntil waitUntil, string vmName,
+      VirtualMachineData data, CancellationToken cancellationToken = default), returning
+      Task<ArmOperation<VirtualMachineResource>>. The method keeps its natural CreateOrUpdate
+      name with no Start prefix, which is the current WaitUntil-based LRO convention used
+      throughout this library. All other implementation, tests and documentation are correct.
+      If there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^No findings\.$'
