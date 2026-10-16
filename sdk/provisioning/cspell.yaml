@@ -4,6 +4,3 @@ overrides:
   - filename: '**/sdk/provisioning/**/*.cs'
     words:
       - AZPROVISION
-  - filename: '**/sdk/healthbot/Azure.Provisioning.HealthBot/tests/*.cs'
-    words:
-      - Trycep
