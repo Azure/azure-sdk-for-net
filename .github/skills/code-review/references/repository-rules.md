@@ -120,8 +120,6 @@ shipping package has
 
 - Use listing diffs to locate in-scope changes, then check actual compatibility with the
   affected GA contract. No added, removed, or modified line is a finding by itself
-- A PR that changes public API but does **not** update the api files has not run
-  `dotnet build /t:GenerateApiListing` — flag it
 - The public API must be **identical across all TFMs**. A member present in `.net8.0.cs` but
   not `.netstandard2.0.cs` is a violation
 
