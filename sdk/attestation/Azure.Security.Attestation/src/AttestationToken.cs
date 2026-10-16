@@ -268,7 +268,7 @@ namespace Azure.Security.Attestation
         /// An unsecured token (one whose <see cref="Algorithm"/> is "none") carries no signature and never passes
         /// validation, regardless of any handler attached to <see cref="AttestationTokenValidationOptions.TokenValidated"/>. Neither does a token without an algorithm.
         /// </remarks>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="options"/> or <paramref name="attestationSigningCertificates"/> is null, or <paramref name="attestationSigningCertificates"/> contains null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="options"/> or <paramref name="attestationSigningCertificates"/> is null, <paramref name="attestationSigningCertificates"/> contains null, or <see cref="AttestationTokenValidationOptions.ValidateIssuer"/> is true and <see cref="AttestationTokenValidationOptions.ExpectedIssuer"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if <paramref name="attestationSigningCertificates"/> is empty, or one of its signers has no signing certificate.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
         public virtual async Task<bool> ValidateTokenAsync(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
@@ -289,7 +289,7 @@ namespace Azure.Security.Attestation
         /// An unsecured token (one whose <see cref="Algorithm"/> is "none") carries no signature and never passes
         /// validation, regardless of any handler attached to <see cref="AttestationTokenValidationOptions.TokenValidated"/>. Neither does a token without an algorithm.
         /// </remarks>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="options"/> or <paramref name="attestationSigningCertificates"/> is null, or <paramref name="attestationSigningCertificates"/> contains null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="options"/> or <paramref name="attestationSigningCertificates"/> is null, <paramref name="attestationSigningCertificates"/> contains null, or <see cref="AttestationTokenValidationOptions.ValidateIssuer"/> is true and <see cref="AttestationTokenValidationOptions.ExpectedIssuer"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if <paramref name="attestationSigningCertificates"/> is empty, or one of its signers has no signing certificate.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
         public virtual bool ValidateToken(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
@@ -306,7 +306,7 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Token used to cancel this operation if necessary.</param>
         /// <param name="allowUnsecured">True only for the response to a draft-policy attestation, which the service never signs.</param>
         /// <returns>true if the token was valid, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="options"/> or <paramref name="attestationSigningCertificates"/> is null, or <paramref name="attestationSigningCertificates"/> contains null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="options"/> or <paramref name="attestationSigningCertificates"/> is null, <paramref name="attestationSigningCertificates"/> contains null, or <see cref="AttestationTokenValidationOptions.ValidateIssuer"/> is true and <see cref="AttestationTokenValidationOptions.ExpectedIssuer"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown if <paramref name="attestationSigningCertificates"/> is empty, or one of its signers has no signing certificate.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
         internal async Task<bool> ValidateTokenInternal(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, bool async, CancellationToken cancellationToken = default, bool allowUnsecured = false)
@@ -318,6 +318,9 @@ namespace Azure.Security.Attestation
             {
                 return true;
             }
+
+            // Check the caller's options before the token, so a misconfiguration is reported the same way whatever the token.
+            AssertIssuerOptions(options);
 
             // Without an algorithm there is no way to verify the token's signature.
             string algorithm = Header.Algorithm;
@@ -479,12 +482,7 @@ namespace Azure.Security.Attestation
             return rsa != null && rsa.VerifyData(signedData, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
         }
 
-        /// <summary>
-        /// Validate the common properties of the attestation token - ensure that the expiration time for the token is "reasonable", if present.
-        /// </summary>
-        /// <returns>true if the common properties are valid.</returns>
-        /// <exception cref="Exception">Thrown if the attestation token is not value.</exception>
-        private bool ValidateCommonProperties(AttestationTokenValidationOptions options)
+        private static void AssertIssuerOptions(AttestationTokenValidationOptions options)
         {
             if (options.ValidateIssuer && options.ExpectedIssuer == null)
             {
@@ -492,6 +490,15 @@ namespace Azure.Security.Attestation
                     $"{nameof(options)}.{nameof(options.ExpectedIssuer)}",
                     "Issuer validation requires ExpectedIssuer to be set to the base URI of the attestation provider the token must come from. To skip issuer validation, set ValidateIssuer to false.");
             }
+        }
+
+        /// <summary>
+        /// Validate the common properties of the attestation token - ensure that the expiration time for the token is "reasonable", if present.
+        /// </summary>
+        /// <returns>true if the common properties are valid.</returns>
+        /// <exception cref="Exception">Thrown if the attestation token is not value.</exception>
+        private bool ValidateCommonProperties(AttestationTokenValidationOptions options)
+        {
             DateTimeOffset timeNow = DateTimeOffset.Now;
             if (Payload.ExpirationTime.HasValue && (options?.ValidateExpirationTime ?? true))
             {

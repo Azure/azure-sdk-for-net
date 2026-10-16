@@ -107,7 +107,7 @@ namespace Azure.Security.Attestation.Tests
             // The token is well formed and inside its validity window, so the missing signature is the only
             // reason to reject it.
             Assert.AreEqual("none", parsedToken.Algorithm);
-            Assert.IsFalse(await parsedToken.ValidateTokenAsync(new AttestationTokenValidationOptions(), null));
+            Assert.IsFalse(await parsedToken.ValidateTokenAsync(new AttestationTokenValidationOptions { ValidateIssuer = false }, null));
 
             // Callers who explicitly turn validation off still opt out entirely.
             Assert.IsTrue(await parsedToken.ValidateTokenAsync(new AttestationTokenValidationOptions { ValidateToken = false }, null));

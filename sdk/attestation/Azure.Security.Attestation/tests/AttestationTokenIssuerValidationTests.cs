@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -57,6 +58,36 @@ namespace Azure.Security.Attestation.Tests
             AttestationToken token = SignedToken($"{{\"iss\":\"{ProviderA}\"}}");
 
             Assert.Throws<ArgumentNullException>(() => token.ValidateToken(new AttestationTokenValidationOptions(), SignersFor(_providerBCertificate)));
+        }
+
+        // A missing ExpectedIssuer is a caller error, so it is reported before the token is examined, whatever the token.
+        [TestCase("untrusted signer")]
+        [TestCase("no alg")]
+        [TestCase("unsigned")]
+        public void MissingExpectedIssuerIsReportedBeforeTheToken(string kind)
+        {
+            using RSA otherKey = RSA.Create(2048);
+            using X509Certificate2 otherCertificate = new CertificateRequest($"CN={ProviderA}", otherKey, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1)
+                .CreateSelfSigned(DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddDays(1));
+            AttestationToken token = kind switch
+            {
+                "untrusted signer" => AttestationToken.Deserialize(new AttestationToken(
+                    BinaryData.FromString($"{{\"iss\":\"{ProviderA}\"}}"), new AttestationTokenSigningKey(otherKey, otherCertificate)).Serialize()),
+                "no alg" => AttestationToken.Deserialize(Base64Url.EncodeString("{\"typ\":\"JWT\"}") + "." + Base64Url.EncodeString($"{{\"iss\":\"{ProviderA}\"}}") + "." + Base64Url.Encode(new byte[] { 1 })),
+                _ => AttestationToken.Deserialize(new AttestationToken(BinaryData.FromString($"{{\"iss\":\"{ProviderA}\"}}")).Serialize()),
+            };
+
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => token.ValidateToken(new AttestationTokenValidationOptions(), SignersFor(_providerACertificate)));
+            Assert.AreEqual("options.ExpectedIssuer", ex.ParamName);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await token.ValidateTokenAsync(new AttestationTokenValidationOptions(), SignersFor(_providerACertificate)));
+        }
+
+        [Test]
+        public void IssuerOptionsAreIgnoredWhenValidationIsDisabled()
+        {
+            AttestationToken token = AttestationToken.Deserialize(new AttestationToken(BinaryData.FromString($"{{\"iss\":\"{ProviderA}\"}}")).Serialize());
+
+            Assert.IsTrue(token.ValidateToken(new AttestationTokenValidationOptions { ValidateToken = false }, null));
         }
 
         [TestCase(ProviderA)]
