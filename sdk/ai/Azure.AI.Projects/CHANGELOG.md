@@ -5,6 +5,7 @@
 ### Features Added
 
 - Added `ProjectsRealtimeSessionClientOptions.Transport` to select a Voice Agent's WebSocket or WebRTC signaling transport.
+- Added opt-in Voice Agent realtime tracing for connections, sessions, responses, tool milestones, audio usage, cancellation, and errors using the existing Foundry GenAI tracing settings. Added correlated, payload-free realtime diagnostic logs.
 
 ### Breaking Changes
 
@@ -15,6 +16,7 @@
 ### Sample Updates
 
 - Added runnable Voice Agent WebSocket transport samples for stored text conversations and streamed PCM audio with actual input and output byte counts.
+- Added runnable Voice Agent REST and realtime telemetry samples using the existing Foundry tracing settings, OpenTelemetry console exporter, and correlated realtime diagnostic logs.
 
 ## 3.0.0-beta.4 (2026-10-12)
 

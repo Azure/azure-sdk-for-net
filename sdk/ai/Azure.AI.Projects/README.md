@@ -53,6 +53,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
   - [Toolboxes](#toolboxes)
   - [Routines](#routines)
 - [Tracing](#tracing)
+    - [Voice Agent REST and realtime tracing](#voice-agent-rest-and-realtime-tracing)
     - [Azure Monitor Tracing](#tracing-to-azure-monitor)
     - [Console Tracing](#tracing-to-console)
     - [Enabling content recording](#enabling-content-recording)
@@ -1985,6 +1986,41 @@ var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddConsoleExporter() // Export traces to the console
                 .Build();
 ```
+
+### Voice Agent REST and realtime tracing
+
+Voice Agent tracing uses the existing GenAI tracing and content-recording settings described above.
+No Voice Agent-specific option or environment variable is required. Register an `ActivityListener`
+or an OpenTelemetry provider for `Azure.AI.Projects.*` before starting operations.
+
+Realtime Activities use the source `Azure.AI.Projects.ProjectsRealtimeClient`. Connection and
+session Activities are named `voice_agents.realtime.connect` and `voice_agents.realtime.session`;
+each server-created response has an `invoke_agent` Activity parented to its session. These are
+client Activities. They include endpoint hostname, agent/session/response identifiers, token usage
+when returned by the service, transferred audio byte counts, and time to first output audio.
+Tool requests, tool outputs, cancellation requests, session updates, and safe error notifications
+are events rather than separate spans for every message or audio chunk. The SDK does not create
+tool-execution spans because the application, not the SDK, executes client-side functions.
+
+Realtime tracing respects `AIProjectClientOptions.EnableDistributedTracing = false`. When GenAI
+tracing is disabled or no listener is registered, the realtime connection is not wrapped for
+instrumentation. Incoming events are observed as the application reads updates, matching the
+OpenAI realtime client's pull-based receive behavior. Dispose the session to finish its Activity
+and any interrupted response Activities.
+
+The `Azure-AI-Projects-Realtime` EventSource emits connection states and protocol milestone names
+with trace/span identifiers. It honors the existing logging enablement setting and can be consumed
+with an `AzureEventSourceListener`. It does not log protocol payloads or exception messages.
+Raw audio, credentials, authentication headers, query strings, and close reasons are never added
+to Voice Agent telemetry. Text, transcripts, and tool details are excluded unless the existing
+content-recording option is enabled; opted-in content is bounded. REST telemetry does not record
+request or response bodies.
+
+For complete runnable examples, see the
+[Voice Agent REST telemetry sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/VoiceAgent/Sample_VoiceAgent_Telemetry.cs)
+and the
+[Voice Agent realtime telemetry sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Telemetry_Realtime.md).
+Both use the existing Foundry enablement settings and OpenTelemetry console exporter.
 
 ### Enabling content recording
 
