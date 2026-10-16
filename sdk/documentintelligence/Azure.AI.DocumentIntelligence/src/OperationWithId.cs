@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -38,6 +39,11 @@ namespace Azure.AI.DocumentIntelligence
         public override Response GetRawResponse()
         {
             return _internalOperation.GetRawResponse();
+        }
+
+        public override RehydrationToken? GetRehydrationToken()
+        {
+            return _internalOperation.GetRehydrationToken();
         }
 
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
