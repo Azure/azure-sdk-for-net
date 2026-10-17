@@ -1,0 +1,251 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
+#Requires -Version 7.4
+
+[CmdletBinding()]
+param(
+    [Parameter(Mandatory)]
+    [string] $SubscriptionId,
+    [Parameter(Mandatory)]
+    [string] $ResourceGroup,
+    [Parameter(Mandatory)]
+    [string] $ClusterName,
+    [Parameter(Mandatory)]
+    [string] $IdentityName
+)
+
+$ErrorActionPreference = 'Stop'
+$PSNativeCommandUseErrorActionPreference = $true
+$repo = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..\..\..')).Path
+$state = Join-Path $repo "artifacts\aks-identity-binding-ga\live-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
+New-Item -ItemType Directory -Path $state | Out-Null
+
+$account = az account show --subscription $SubscriptionId --output json | ConvertFrom-Json
+if ($account.environmentName -ne 'AzureCloud') {
+    throw 'This live test requires Azure public cloud.'
+}
+$group = az group show --subscription $SubscriptionId --name $ResourceGroup --output json | ConvertFrom-Json
+if ($group.tags.sample -ne 'workload-identity-proxy') {
+    throw 'Use a dedicated resource group tagged sample=workload-identity-proxy.'
+}
+$deadline = [DateTimeOffset]::UtcNow.AddMinutes(10)
+do {
+    $cluster = az aks show --subscription $SubscriptionId --resource-group $ResourceGroup --name $ClusterName --output json | ConvertFrom-Json
+    if ($cluster.provisioningState -eq 'Succeeded') {
+        break
+    }
+    if ($cluster.provisioningState -notin @('Creating', 'Updating') -or [DateTimeOffset]::UtcNow -ge $deadline) {
+        throw "Cluster readiness failed: $($cluster.provisioningState)."
+    }
+    Start-Sleep -Seconds 10
+} while ($true)
+if ($cluster.provisioningState -ne 'Succeeded' -or !$cluster.securityProfile.workloadIdentity.enabled -or !$cluster.oidcIssuerProfile.enabled) {
+    throw 'The cluster must be ready with workload identity and OIDC enabled.'
+}
+if ($cluster.apiServerAccessProfile.enableVnetIntegration) {
+    throw 'AKS identity binding does not support API server VNet integration.'
+}
+$identity = az identity show --subscription $SubscriptionId --resource-group $ResourceGroup --name $IdentityName --output json | ConvertFrom-Json
+if ($identity.tenantId -ne $account.tenantId) {
+    throw 'The identity and cluster subscription must use the same tenant.'
+}
+$bindings = @(az aks identity-binding list --subscription $SubscriptionId --resource-group $ResourceGroup --cluster-name $ClusterName --output json | ConvertFrom-Json)
+if (!($bindings | Where-Object { $_.properties.managedIdentity.resourceId -ieq $identity.id -and $_.properties.provisioningState -eq 'Succeeded' })) {
+    az aks identity-binding create --subscription $SubscriptionId --resource-group $ResourceGroup --cluster-name $ClusterName `
+        --name "$IdentityName-binding" --managed-identity-resource-id $identity.id --output none
+}
+$fics = @(az identity federated-credential list --subscription $SubscriptionId --resource-group $ResourceGroup --identity-name $IdentityName --output json | ConvertFrom-Json)
+if ($fics.Count -ne 1 -or $fics[0].name -ne 'aks-identity-binding') {
+    throw 'The negative test requires only the AKS-managed aks-identity-binding FIC; do not add a conventional FIC.'
+}
+$roles = @(az role assignment list --subscription $SubscriptionId --scope $group.id --include-inherited --output json | ConvertFrom-Json)
+if ($roles | Where-Object { $_.principalId -eq $identity.principalId }) {
+    throw 'The direct-upload test identity must not have Azure roles on the test resource group.'
+}
+
+$kubeconfig = Join-Path $state 'kubeconfig'
+az aks get-credentials --subscription $SubscriptionId --resource-group $ResourceGroup --name $ClusterName --admin --file $kubeconfig --output none
+$kube = @('--kubeconfig', $kubeconfig)
+kubectl @kube wait --for=condition=Ready nodes --all --timeout=180s
+$existingNamespace = kubectl @kube get namespace wi-proxy --ignore-not-found --output json
+if ($existingNamespace) {
+    $namespace = $existingNamespace | ConvertFrom-Json
+    if ($namespace.metadata.labels.'app.kubernetes.io/part-of' -ne 'workload-identity-proxy') {
+        throw 'Refusing to overwrite a namespace that is not owned by this test.'
+    }
+}
+
+$publish = Join-Path $state 'publish'
+dotnet publish (Join-Path $PSScriptRoot 'Integration.Identity.Container.csproj') --configuration Release `
+    --framework net10.0 --runtime linux-x64 --self-contained false --output $publish --verbosity quiet
+$expectedCoreHash = (Get-FileHash (Join-Path $publish 'Azure.Core.dll') -Algorithm SHA256).Hash
+
+$identityManifest = @"
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: wi-proxy
+  labels:
+    app.kubernetes.io/part-of: workload-identity-proxy
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: wi-proxy
+  namespace: wi-proxy
+  annotations:
+    azure.workload.identity/client-id: "$($identity.clientId)"
+    azure.workload.identity/tenant-id: "$($identity.tenantId)"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: wi-proxy-$($identity.clientId)
+rules:
+  - verbs: ["use-managed-identity"]
+    apiGroups: ["cid.wi.aks.azure.com"]
+    resources: ["$($identity.clientId)"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: wi-proxy-$($identity.clientId)
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: wi-proxy-$($identity.clientId)
+subjects:
+  - kind: ServiceAccount
+    name: wi-proxy
+    namespace: wi-proxy
+"@
+$identityManifest | kubectl @kube apply --filename -
+kubectl @kube --namespace wi-proxy delete job wi-proxy-enabled wi-proxy-disabled --ignore-not-found --wait=true
+
+foreach ($mode in @('enabled', 'disabled')) {
+    $jobManifest = @"
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: wi-proxy-$mode
+  namespace: wi-proxy
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 600
+  template:
+    metadata:
+      labels:
+        azure.workload.identity/use: "true"
+      annotations:
+        azure.workload.identity/use-identity-binding: "true"
+    spec:
+      serviceAccountName: wi-proxy
+      restartPolicy: Never
+      nodeSelector:
+        kubernetes.io/os: linux
+        kubernetes.io/arch: amd64
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1654
+        runAsGroup: 1654
+        fsGroup: 1654
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: app
+          image: mcr.microsoft.com/dotnet/runtime:10.0
+          command: ["/bin/sh", "-c"]
+          args: ["while [ ! -f /app/.ready ]; do sleep 1; done; exec dotnet /app/Integration.Identity.Container.dll $mode"]
+          env:
+            - name: ARM_RESOURCE_ID
+              value: "$($group.id)"
+            - name: DOTNET_CLI_HOME
+              value: /tmp
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi
+          volumeMounts:
+            - name: app
+              mountPath: /app
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: app
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
+"@
+    $jobManifest | kubectl @kube apply --filename -
+}
+
+try {
+    foreach ($mode in @('enabled', 'disabled')) {
+        kubectl @kube --namespace wi-proxy wait --for=condition=Ready pod --selector "job-name=wi-proxy-$mode" --timeout=180s
+        $pod = kubectl @kube --namespace wi-proxy get pod --selector "job-name=wi-proxy-$mode" --output 'jsonpath={.items[0].metadata.name}'
+        # The emptyDir root is kubelet-owned; do not restore its archived directory metadata.
+        tar -C $publish -cf - . | kubectl @kube --namespace wi-proxy exec --stdin $pod --container app -- tar --no-same-owner --no-same-permissions --no-overwrite-dir -xf - -C /app
+        kubectl @kube --namespace wi-proxy exec $pod --container app -- touch /app/.ready
+    }
+    $deadline = [DateTimeOffset]::UtcNow.AddMinutes(6)
+    do {
+        $jobs = kubectl @kube --namespace wi-proxy get jobs wi-proxy-enabled wi-proxy-disabled --output json | ConvertFrom-Json
+        $failed = @($jobs.items | Where-Object {
+            $_.status.conditions | Where-Object { $_.type -in @('Failed', 'FailureTarget') -and $_.status -eq 'True' }
+        })
+        if ($failed.Count -gt 0) {
+            throw "Live job failed: $($failed.metadata.name -join ', '). See redacted logs in $state."
+        }
+        $complete = @($jobs.items | Where-Object {
+            $_.status.conditions | Where-Object { $_.type -eq 'Complete' -and $_.status -eq 'True' }
+        })
+        if ($complete.Count -eq 2) {
+            break
+        }
+        if ([DateTimeOffset]::UtcNow -ge $deadline) {
+            throw "Live jobs did not complete within six minutes. See redacted logs in $state."
+        }
+        Start-Sleep -Seconds 5
+    } while ($true)
+}
+finally {
+    foreach ($mode in @('enabled', 'disabled')) {
+        kubectl @kube --namespace wi-proxy logs "job/wi-proxy-$mode" --container app |
+            Set-Content (Join-Path $state "$mode.jsonl") -Encoding utf8
+    }
+}
+
+foreach ($mode in @('enabled', 'disabled')) {
+    $results = @(Get-Content (Join-Path $state "$mode.jsonl") | ForEach-Object { $_ | ConvertFrom-Json })
+    $expectedScenarios = if ($mode -eq 'enabled') { @('candidate', 'configuration', 'async', 'cache', 'sync', 'concurrent', 'arm-authentication') } else { @('candidate', 'configuration', 'disabled') }
+    if ($results.Count -ne $expectedScenarios.Count -or ($results | Where-Object { $_.passed -ne $true }) -or
+        (Compare-Object $expectedScenarios @($results.scenario))) {
+        throw "Unexpected or failing results in $mode.jsonl."
+    }
+    $candidate = $results | Where-Object { $_.scenario -eq 'candidate' }
+    if ($candidate.details.coreSha256 -ne $expectedCoreHash) {
+        throw 'The pod did not run the Azure.Core candidate published from this worktree.'
+    }
+    Get-Content (Join-Path $state "$mode.jsonl")
+}
+$jobs = kubectl @kube --namespace wi-proxy get jobs --output json | ConvertFrom-Json
+$pods = kubectl @kube --namespace wi-proxy get pods --output json | ConvertFrom-Json
+@{
+    testedAt = [DateTimeOffset]::UtcNow.ToString('O')
+    resourceGroup = $group.id
+    cluster = $cluster.name
+    kubernetesVersion = $cluster.currentKubernetesVersion
+    coreSha256 = $expectedCoreHash
+    jobs = @($jobs.items | ForEach-Object { @{ name = $_.metadata.name; succeeded = $_.status.succeeded } })
+    images = @($pods.items.status.containerStatuses.imageID)
+} | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $state 'summary.json') -Encoding utf8
+Write-Host "Both live jobs passed. Redacted evidence: $state"

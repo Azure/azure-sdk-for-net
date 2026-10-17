@@ -17,6 +17,12 @@ public class MyProgram
     /// <returns></returns>
     public static async global::System.Threading.Tasks.Task Main(string[] args)
     {
+        if (args.Length > 0)
+        {
+            Environment.ExitCode = await WorkloadIdentityBindingTests.RunAsync(args).ConfigureAwait(false);
+            return;
+        }
+
         try
         {
             var cred = new WorkloadIdentityCredential();
