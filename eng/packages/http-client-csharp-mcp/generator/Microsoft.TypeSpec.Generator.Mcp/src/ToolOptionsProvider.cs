@@ -10,10 +10,13 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Microsoft.TypeSpec.Generator.Mcp;
 
-internal sealed class ToolOptionsProvider(McpManifest manifest, ToolSelection selection, InputServiceMethod method)
-    : McpProvider(manifest, selection.Types.Options)
+internal sealed class ToolOptionsProvider(McpManifest manifest, string name, OptionMapping[] options, InputServiceMethod method)
+    : McpProvider(manifest, name)
 {
-    protected override PropertyProvider[] BuildProperties() => selection.Options.Select(option =>
+    internal ToolOptionsProvider(McpManifest manifest, ToolSelection selection, InputServiceMethod method)
+        : this(manifest, selection.Types.Options, selection.Options, method) { }
+
+    protected override PropertyProvider[] BuildProperties() => options.Select(option =>
     {
         var parameter = option.Source is null ? null : method.Parameters.Single(p => p.Name == option.Source);
         var description = option.DescriptionMember is { } member

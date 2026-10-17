@@ -14,7 +14,7 @@ internal sealed class McpOutputLibrary : OutputLibrary
         var manifest = generator.Manifest;
         var methods = generator.InputLibrary.InputNamespace.Clients.SelectMany(c => c.Methods).ToArray();
         manifest.ValidateOperationIds(methods.Select(m => m.CrossLanguageDefinitionId));
-        return manifest.Operations.SelectMany(selection =>
+        var providers = manifest.Operations.SelectMany(selection =>
         {
             var method = methods.Single(m => m.CrossLanguageDefinitionId == selection.OperationId);
             ValidateMethod(selection, method);
@@ -26,7 +26,19 @@ internal sealed class McpOutputLibrary : OutputLibrary
                 new ToolResultProvider(manifest, selection),
                 new ToolJsonContextProvider(manifest, selection)
             };
-        }).ToArray();
+        }).ToList();
+        foreach (var selection in manifest.CommandSelections)
+        {
+            var method = methods.Single(method => method.CrossLanguageDefinitionId == selection.OperationId);
+            var model = CommandModel.Create(selection, method);
+            var options = new ToolOptionsProvider(manifest, selection.Prefix + "Options", model.Options, method);
+            var command = new CommandProvider(manifest, model, options);
+            providers.AddRange([
+                command, options, new CommandCatalogProvider(manifest, model, command),
+                new ToolJsonContextProvider(manifest, selection.Prefix + "JsonContext", command.Result)
+            ]);
+        }
+        return providers.ToArray();
     }
 
     internal static void ValidateMethod(ToolSelection selection, InputServiceMethod method)

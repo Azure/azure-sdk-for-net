@@ -22,7 +22,8 @@ vi.mock("@typespec/http-client-csharp", async (importOriginal) => ({
 }));
 
 async function createContext(
-  options: McpEmitterOptions = {}
+  options: McpEmitterOptions = {},
+  source?: string
 ): Promise<EmitContext<McpEmitterOptions>> {
   const host = await createTestHost({ libraries: [HttpTestLibrary] });
   host.addJsFile("mcp.js", { $lib, $decorators, $onValidate });
@@ -34,10 +35,12 @@ async function createContext(
     "mcp.tsp",
     library.replace("../dist/emitter/index.js", "./mcp.js")
   );
-  const storage = await readFile(
-    new URL("./fixtures/storage.tsp", import.meta.url),
-    "utf8"
-  );
+  const storage =
+    source ??
+    (await readFile(
+      new URL("./fixtures/sdk-binding.tsp", import.meta.url),
+      "utf8"
+    ));
   host.addTypeSpecFile("main.tsp", 'import "./mcp.tsp";\n' + storage);
   await host.compile("main.tsp");
   return {
@@ -54,7 +57,7 @@ describe("MCP emitter", () => {
     vi.mocked(emitCodeModel).mockResolvedValue([undefined, []]);
   });
 
-  it("derives the selected Storage operation from the checked-in projection", async () => {
+  it("preserves the legacy SDK-binding projection", async () => {
     const { program } = await createContext();
     const model = getMcpConfiguration(program);
     expect(model?.namespace).toBe("Azure.Mcp.Tools.Storage.GeneratedMcp");
@@ -63,6 +66,48 @@ describe("MCP emitter", () => {
     ]);
     expect(model?.composites).toHaveLength(3);
   });
+
+  it.each(["augment", "direct"])(
+    "selects only the original command operation, not inherited client aliases (%s)",
+    async (style) => {
+      const configuration = `#{
+        id: "12b53c92-f2cf-4a1a-880d-c6f44a0d49d6",
+        path: "example item create",
+        title: "Create item",
+        commandType: "Example.ItemCreateCommand",
+        handler: #{type: "Example.IService", member: "CreateAsync"},
+        resultName: "Item",
+        safety: #{}
+      }`;
+      const source = `
+        using Azure.Mcp;
+        using TypeSpec.Http;
+        @service @server("{endpoint}", "Endpoint.", {endpoint: url})
+        @mcpService(#{outputNamespace: "Example.Generated"})
+        namespace Example;
+        interface Items {
+          ${style === "direct" ? `@command(${configuration})` : ""}
+          @put @route("/items/{name}")
+          create(@path name: string): void;
+          @get @route("/items/{name}")
+          get(@path name: string): void;
+        }
+        @route("/client") interface ItemClient extends Items {}
+        ${style === "augment" ? `@@command(Items.create, ${configuration});` : ""}
+      `;
+      const { program } = await createContext({}, source);
+      const model = getMcpConfiguration(program);
+      expect(model?.operations).toEqual([]);
+      expect(model?.commands.map((command) => command.operationId)).toEqual([
+        "Example.Items.create"
+      ]);
+      expect(model?.metadataReferences).toEqual([]);
+      expect(model?.composites).toEqual([]);
+      expect(model?.commands[0]).not.toHaveProperty("binding");
+      expect(model?.commands[0]).not.toHaveProperty("wire");
+      expect(model?.commands[0]).not.toHaveProperty("types");
+    }
+  );
 
   it.each([false, true])(
     "retains transport only when save-inputs=%s",

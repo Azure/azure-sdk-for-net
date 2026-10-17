@@ -3,13 +3,17 @@
 
 using System.Text.Json.Serialization;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Microsoft.TypeSpec.Generator.Mcp;
 
-internal sealed class ToolJsonContextProvider(McpManifest manifest, ToolSelection selection) : McpProvider(manifest, selection.Types.JsonContext)
+internal sealed class ToolJsonContextProvider(McpManifest manifest, string name, TypeProvider result) : McpProvider(manifest, name)
 {
+    internal ToolJsonContextProvider(McpManifest manifest, ToolSelection selection)
+        : this(manifest, selection.Types.JsonContext, new ToolResultProvider(manifest, selection)) { }
+
     protected override CSharpType BuildBaseType() => typeof(JsonSerializerContext);
 
     protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
@@ -18,7 +22,7 @@ internal sealed class ToolJsonContextProvider(McpManifest manifest, ToolSelectio
     protected override AttributeStatement[] BuildAttributes() =>
     [
         new AttributeStatement(typeof(JsonSerializableAttribute),
-            [TypeOf(new ToolResultProvider(Manifest, selection).Type)]),
+            [TypeOf(result.Type)]),
         new AttributeStatement(typeof(JsonSourceGenerationOptionsAttribute), [],
         [
             new("PropertyNamingPolicy", Static(typeof(JsonKnownNamingPolicy)).Property("CamelCase")),

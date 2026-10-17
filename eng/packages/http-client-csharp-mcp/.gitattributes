@@ -1,2 +1,4 @@
 # Preserve the generator's exact output bytes on Windows as well as Unix.
 generator/TestProjects/Local/Storage/src/Generated/*.cs text eol=lf
+# Preserve the upstream service fixture for raw-source provenance checks.
+emitter/test/fixtures/specification/**/*.tsp text eol=lf

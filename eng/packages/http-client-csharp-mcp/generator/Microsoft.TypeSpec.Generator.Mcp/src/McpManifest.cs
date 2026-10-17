@@ -12,8 +12,12 @@ public sealed record McpManifest(
     string Namespace,
     string[] MetadataReferences,
     ToolSelection[] Operations,
-    CompositeSelection[] Composites)
+    CompositeSelection[] Composites,
+    CommandSelection[]? Commands = null)
 {
+    [JsonIgnore]
+    public CommandSelection[] CommandSelections => Commands ?? [];
+
     public static McpManifest Load(string path)
     {
         var manifest = JsonSerializer.Deserialize<McpManifest>(File.ReadAllText(path), new JsonSerializerOptions
@@ -34,7 +38,7 @@ public sealed record McpManifest(
         Require(MetadataReferences is not null && MetadataReferences.All(p =>
             !string.IsNullOrWhiteSpace(p) && !Path.IsPathRooted(p) && !p.Replace('\\', '/').Split('/').Contains("..")),
             "Metadata references must be paths relative to the emitter output directory.");
-        Require(Operations is { Length: > 0 }, "Select at least one operation.");
+        Require(Operations is not null && Operations.Length + CommandSelections.Length > 0, "Select at least one operation.");
         var paths = new HashSet<string>(StringComparer.Ordinal);
         var ids = new HashSet<Guid>();
         var operationIds = new HashSet<string>(StringComparer.Ordinal);
@@ -93,6 +97,20 @@ public sealed record McpManifest(
                 "Result properties must have unique names and explicit types.");
             ValidateBinding(tool.Binding);
         }
+        foreach (var command in CommandSelections)
+        {
+            Require(command is not null, "A command cannot be null.");
+            command.Validate();
+            Require(operationIds.Add(command.OperationId),
+                $"Command operation '{command.OperationId}' is selected more than once.");
+            Require(ids.Add(Guid.Parse(command.Id)), $"Command tool GUID '{command.Id}' is selected more than once: " +
+                string.Join(", ", CommandSelections.Select(selection => selection.OperationId)));
+            Require(paths.Add(command.Path), $"Command path '{command.Path}' is selected more than once.");
+            foreach (var name in new[] { command.Prefix + "Command", command.Prefix + "Options", command.Prefix + "Catalog", command.Prefix + "JsonContext" })
+            {
+                Require(typeNames.Add(name), "Generated type names must be unique.");
+            }
+        }
         Require(Composites is not null && Composites.All(c => c is not null &&
             !string.IsNullOrWhiteSpace(c.Path) && !string.IsNullOrWhiteSpace(c.Reason) && paths.Add(c.Path)),
             "Handwritten exclusions require unique paths, reasons, and no generated-path collision.");
@@ -101,10 +119,10 @@ public sealed record McpManifest(
     public void ValidateOperationIds(IEnumerable<string> availableIds)
     {
         var ids = availableIds.ToArray();
-        foreach (var tool in Operations)
+        foreach (var operationId in Operations.Select(tool => tool.OperationId).Concat(CommandSelections.Select(tool => tool.OperationId)))
         {
-            var count = ids.Count(id => id == tool.OperationId);
-            Require(count == 1, $"Selected operation '{tool.OperationId}' resolved {count} times; exactly one match is required.");
+            var count = ids.Count(id => id == operationId);
+            Require(count == 1, $"Selected operation '{operationId}' resolved {count} times; exactly one match is required.");
         }
     }
 
@@ -161,13 +179,13 @@ public sealed record McpManifest(
     internal static bool IsIdentifier(string? value) => !string.IsNullOrWhiteSpace(value) &&
         SyntaxFacts.IsValidIdentifier(value) && SyntaxFacts.GetKeywordKind(value) == SyntaxKind.None;
 
-    private static bool IsCommandSegment(string value) => !string.IsNullOrWhiteSpace(value) &&
+    internal static bool IsCommandSegment(string value) => !string.IsNullOrWhiteSpace(value) &&
         value.All(c => char.IsAsciiLetterOrDigit(c) || c == '-');
 
-    private static bool IsTypeName(string? value) => value is not null &&
+    internal static bool IsTypeName(string? value) => value is not null &&
         (PrimitiveTypes.Contains(value) || (value.Contains('.') && value.Split('.').All(IsIdentifier)));
 
-    private static void ValidateMember(StaticMember? member)
+    internal static void ValidateMember(StaticMember? member)
     {
         Require(member is null || (IsTypeName(member.Type) && IsIdentifier(member.Member)),
             "Static members need a qualified type and valid member name.");

@@ -8,8 +8,30 @@ using TypeSpec.Reflection;
 /** Output configuration and explicitly handwritten composite exclusions. */
 model McpService {
   outputNamespace: string;
-  metadataReferences: string[];
-  composites: CompositeSelection[];
+  metadataReferences?: string[];
+  composites?: CompositeSelection[];
+}
+
+/** A complete MCP command that delegates service policy to an existing typed handler. */
+model CommandConfiguration {
+  id: string;
+  path: string;
+  title: string;
+  commandType: string;
+  handler: StaticMember;
+  resultName: string;
+  description?: StaticMember;
+  errorPolicy?: StaticMember;
+  errorMessage?: string;
+  options?: CommandOption[];
+  safety: SafetyOverrides;
+}
+
+/** Only descriptions are authored; types, requiredness, and names come from the handler. */
+model CommandOption {
+  name: string;
+  description?: string;
+  descriptionMember?: StaticMember;
 }
 
 model CompositeSelection {
@@ -116,3 +138,6 @@ extern dec mcpService(target: Namespace, configuration: valueof McpService);
 
 /** Select an operation and attach its reviewed MCP/SDK mapping. */
 extern dec tool(target: Operation, configuration: valueof ToolConfiguration);
+
+/** Select an existing service operation without restating its HTTP or SDK implementation. */
+extern dec command(target: Operation, configuration: valueof CommandConfiguration);

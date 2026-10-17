@@ -3,8 +3,26 @@
 
 export interface McpService {
   outputNamespace: string;
-  metadataReferences: string[];
-  composites: { path: string; reason: string }[];
+  metadataReferences?: string[];
+  composites?: { path: string; reason: string }[];
+}
+
+export interface CommandConfiguration {
+  id: string;
+  path: string;
+  title: string;
+  commandType: string;
+  handler: StaticMember;
+  resultName: string;
+  description?: StaticMember;
+  errorPolicy?: StaticMember;
+  errorMessage?: string;
+  options?: {
+    name: string;
+    description?: string;
+    descriptionMember?: StaticMember;
+  }[];
+  safety: ToolConfiguration["safety"];
 }
 
 export interface StaticMember {
@@ -73,6 +91,7 @@ export interface ToolConfiguration {
 export interface McpCodeModel {
   namespace: string;
   metadataReferences: string[];
-  composites: McpService["composites"];
+  composites: NonNullable<McpService["composites"]>;
   operations: (ToolConfiguration & { operationId: string })[];
+  commands: (CommandConfiguration & { operationId: string })[];
 }

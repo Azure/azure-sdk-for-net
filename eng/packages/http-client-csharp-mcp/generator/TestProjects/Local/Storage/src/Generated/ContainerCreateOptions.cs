@@ -8,7 +8,7 @@ using Microsoft.Mcp.Core.Options;
 namespace Azure.Mcp.Tools.Storage.GeneratedMcp
 {
     /// <summary></summary>
-    public partial class GeneratedContainerCreateOptions
+    public partial class ContainerCreateOptions
     {
         /// <summary> Gets or sets the Account. </summary>
         [Option(Description = "The name of the Azure Storage account. This is the unique name you chose for your storage account (e.g., 'mystorageaccount').")]
