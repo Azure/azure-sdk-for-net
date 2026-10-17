@@ -99,6 +99,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(DynamicMemoryConfig))
+            {
+                writer.WritePropertyName("dynamicMemoryConfig"u8);
+                writer.WriteObjectValue(DynamicMemoryConfig, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -145,6 +150,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             int? processors = default;
             long? memoryInMB = default;
             IList<HciVmInstanceHardwareProfileGpuConfiguration> virtualMachineGPUs = default;
+            HciVmInstanceHardwareProfileDynamicMemoryConfiguration dynamicMemoryConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,12 +195,27 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     virtualMachineGPUs = array;
                     continue;
                 }
+                if (prop.NameEquals("dynamicMemoryConfig"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dynamicMemoryConfig = HciVmInstanceHardwareProfileDynamicMemoryConfiguration.DeserializeHciVmInstanceHardwareProfileDynamicMemoryConfiguration(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HciVmInstanceHardwareProfilePatch(vmSize, processors, memoryInMB, virtualMachineGPUs ?? new ChangeTrackingList<HciVmInstanceHardwareProfileGpuConfiguration>(), additionalBinaryDataProperties);
+            return new HciVmInstanceHardwareProfilePatch(
+                vmSize,
+                processors,
+                memoryInMB,
+                virtualMachineGPUs ?? new ChangeTrackingList<HciVmInstanceHardwareProfileGpuConfiguration>(),
+                dynamicMemoryConfig,
+                additionalBinaryDataProperties);
         }
     }
 }
