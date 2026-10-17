@@ -98,7 +98,24 @@ The test:
    existing Storage SDK and MCP framework contracts. Runtime assertions cover
    private-container creation, cancellation forwarding, command registration,
    identity/description/safety, required options, and JSON serialization.
-4. Deletes the temporary workspace after the test.
+4. Compares the fresh output inventory and raw bytes against the checked-in
+   results under
+   [`generator/TestProjects/Local/Storage/src/Generated`](generator/TestProjects/Local/Storage/src/Generated).
+5. Deletes the temporary workspace after the test.
+
+The five checked-in C# files are actual generator output, not handwritten
+examples. Normal tests verify them without modifying them. To intentionally
+regenerate the checked-in results after changing the projection or generator,
+run (requires PowerShell 7):
+
+```powershell
+npm run generate:storage
+```
+
+This invokes `eng\scripts\Generate.ps1`, builds the package, generates into an
+isolated temporary consumer, and compiles and executes the generated code before
+copying its exact bytes into the checked-in output directory. Commit the
+resulting diffs; do not edit generated files manually.
 
 The doubles test generated-code contracts, not the real Storage SDK, real MCP
 host, or Azure service behavior. Fresh byte-for-byte output verification and

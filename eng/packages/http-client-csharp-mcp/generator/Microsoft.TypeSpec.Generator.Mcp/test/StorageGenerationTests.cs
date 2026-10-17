@@ -74,10 +74,39 @@ public sealed class StorageGenerationTests
             var executed = await Run("dotnet", source, "run", "--no-build");
             Assert.That(executed.ExitCode, Is.Zero, executed.Output);
             Assert.That(executed.Output, Does.Contain("Storage generated scaffolding executed successfully."));
+            VerifyCheckedInOutput(package, generated);
         }
         finally
         {
             Directory.Delete(root, recursive: true);
+        }
+    }
+
+    private static void VerifyCheckedInOutput(string package, string generated)
+    {
+        var expected = Path.Combine(package, "generator", "TestProjects", "Local", "Storage", "src", "Generated");
+        var files = Directory.GetFiles(generated, "*.cs");
+        if (Environment.GetEnvironmentVariable("AZURE_MCP_UPDATE_GENERATED") == "1")
+        {
+            Directory.CreateDirectory(expected);
+            foreach (var stale in Directory.GetFiles(expected, "*.cs").Where(path =>
+                !files.Any(file => Path.GetFileName(file) == Path.GetFileName(path))))
+            {
+                File.Delete(stale);
+            }
+            foreach (var file in files)
+            {
+                File.Copy(file, Path.Combine(expected, Path.GetFileName(file)), overwrite: true);
+            }
+        }
+        Assert.That(Directory.Exists(expected), Is.True, "Run npm run generate:storage to create the checked-in output.");
+        Assert.That(Directory.GetFiles(expected, "*.cs").Select(Path.GetFileName),
+            Is.EquivalentTo(files.Select(Path.GetFileName)), "The checked-in generated file inventory changed.");
+        foreach (var file in files)
+        {
+            Assert.That(File.ReadAllBytes(file),
+                Is.EqualTo(File.ReadAllBytes(Path.Combine(expected, Path.GetFileName(file)))),
+                $"{Path.GetFileName(file)} differs from the checked-in output. Run npm run generate:storage to update it.");
         }
     }
 

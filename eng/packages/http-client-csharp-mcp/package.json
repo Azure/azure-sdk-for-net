@@ -26,6 +26,7 @@
     "test:emitter": "vitest run -c ./emitter/vitest.config.ts",
     "test:generator": "dotnet test ./generator --configuration Release",
     "test:storage": "dotnet test ./generator --configuration Release --filter FullyQualifiedName~StorageGenerationTests",
+    "generate:storage": "pwsh -NoProfile -File ./eng/scripts/Generate.ps1",
     "test": "npm run test:generator && npm run test:emitter",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
