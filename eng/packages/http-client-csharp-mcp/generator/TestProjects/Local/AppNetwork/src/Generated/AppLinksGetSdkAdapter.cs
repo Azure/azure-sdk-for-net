@@ -7,6 +7,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -35,6 +36,30 @@ namespace Microsoft.AppLink
             if (string.IsNullOrWhiteSpace(options.AppLink))
             {
                 throw new CommandValidationException("'AppLink' is required.");
+            }
+            if (Enumerable.Any(options.ResourceGroup, character => char.IsControl(character)))
+            {
+                throw new CommandValidationException("'ResourceGroup' cannot contain control characters.");
+            }
+            if (options.ResourceGroup == ".")
+            {
+                throw new CommandValidationException("'ResourceGroup' must be a resource path segment, not a dot segment.");
+            }
+            if (options.ResourceGroup == "..")
+            {
+                throw new CommandValidationException("'ResourceGroup' must be a resource path segment, not a dot segment.");
+            }
+            if (Enumerable.Any(options.AppLink, character => char.IsControl(character)))
+            {
+                throw new CommandValidationException("'AppLink' cannot contain control characters.");
+            }
+            if (options.AppLink == ".")
+            {
+                throw new CommandValidationException("'AppLink' must be a resource path segment, not a dot segment.");
+            }
+            if (options.AppLink == "..")
+            {
+                throw new CommandValidationException("'AppLink' must be a resource path segment, not a dot segment.");
             }
             if (options.ResourceGroup.Length < 1)
             {

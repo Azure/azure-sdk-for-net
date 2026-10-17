@@ -53,6 +53,9 @@ Options are normal flat MCP options: nullable `Subscription`/`Tenant` use the
 existing profile/environment resolver; resource-group-scoped tools require
 `ResourceGroup`; Get also requires `AppLink`; lists accept `ContinuationToken`.
 Names and name-pattern validation derive from the service/path metadata.
+Scalar resource path arguments also reject exact `.`/`..` segments and control
+characters before the shared subscription hook or SDK, rather than letting URI
+normalization or permissive end-of-line regex matching change their scope.
 SDK identifier factories convert those inputs; SDK resource **data** is projected
 through its verified typed `IPersistableModel<T>.Write` contract into AOT-safe `JsonElement`
 results, never by serializing resource clients, credentials, or pipelines.

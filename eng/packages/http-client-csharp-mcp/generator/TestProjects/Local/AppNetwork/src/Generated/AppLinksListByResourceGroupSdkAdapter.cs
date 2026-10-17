@@ -34,6 +34,18 @@ namespace Microsoft.AppLink
             {
                 throw new CommandValidationException("'ResourceGroup' is required.");
             }
+            if (Enumerable.Any(options.ResourceGroup, character => char.IsControl(character)))
+            {
+                throw new CommandValidationException("'ResourceGroup' cannot contain control characters.");
+            }
+            if (options.ResourceGroup == ".")
+            {
+                throw new CommandValidationException("'ResourceGroup' must be a resource path segment, not a dot segment.");
+            }
+            if (options.ResourceGroup == "..")
+            {
+                throw new CommandValidationException("'ResourceGroup' must be a resource path segment, not a dot segment.");
+            }
             if (options.ResourceGroup.Length < 1)
             {
                 throw new CommandValidationException("'ResourceGroup' does not match the service name constraints.");

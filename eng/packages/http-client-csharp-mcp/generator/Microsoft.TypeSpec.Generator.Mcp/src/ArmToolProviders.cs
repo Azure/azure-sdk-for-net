@@ -76,6 +76,30 @@ internal sealed class ArmSdkAdapterProvider(McpManifest manifest, ArmBinding bin
                     Literal($"'{option.Name}' is required.")))
             });
         }
+        // Subscription selectors are resolved to SDK identifiers; the remaining values become path segments directly.
+        foreach (var parameter in binding.Target.ServiceMethod!.Operation.Parameters
+            .OfType<Microsoft.TypeSpec.Generator.Input.InputPathParameter>()
+            .Where(parameter => parameter.Scope != Microsoft.TypeSpec.Generator.Input.InputParameterScope.Constant &&
+                parameter.Name != "subscriptionId"))
+        {
+            var name = binding.OptionFor(parameter.Name);
+            var character = new CodeWriterDeclaration("character");
+            statements.Add(new IfStatement(Static(typeof(Enumerable)).Invoke("Any",
+                [input.Property(name), new FuncExpression([character],
+                    Static(typeof(char)).Invoke("IsControl", [new VariableExpression(typeof(char), character)]))]))
+            {
+                Throw(New.Instance(ExistingType("Microsoft.Mcp.Core.Commands", "CommandValidationException"),
+                    Literal($"'{name}' cannot contain control characters.")))
+            });
+            foreach (var dot in new[] { ".", ".." })
+            {
+                statements.Add(new IfStatement(input.Property(name).Equal(Literal(dot)))
+                {
+                    Throw(New.Instance(ExistingType("Microsoft.Mcp.Core.Commands", "CommandValidationException"),
+                        Literal($"'{name}' must be a resource path segment, not a dot segment.")))
+                });
+            }
+        }
         foreach (var pair in binding.Selection.ParameterConstraints ?? [])
         {
             var option = binding.Options.SingleOrDefault(option => option.Name == binding.OptionFor(pair.Key));

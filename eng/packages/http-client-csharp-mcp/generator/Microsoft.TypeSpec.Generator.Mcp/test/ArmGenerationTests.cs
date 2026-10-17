@@ -119,8 +119,10 @@ public sealed class ArmGenerationTests
             if(!shipped.StartsWith("1.0.0-beta.2")) throw new Exception("Actual shipped AppNetwork assembly required.");
             var client=new ArmClient(new Credential(),"sub",new ArmClientOptions { Transport=new HttpClientTransport(new HttpClient(transport)) });
             var endpoint=ArmEnvironment.AzurePublicCloud.Endpoint;
+            var hookCalls=0;
             Func<string,string?,CancellationToken,Task<SubscriptionResource>> hook=(sub,tenant,ct) => {
                 ct.ThrowIfCancellationRequested();
+                hookCalls++;
                 if((sub!="sub" && sub!="friendly") || tenant!="tenant") throw new Exception("Subscription/tenant not forwarded.");
                 return Task.FromResult(client.GetSubscriptionResource(SubscriptionResource.CreateResourceIdentifier(sub=="friendly" ? "sub" : sub)));
             };
@@ -156,6 +158,40 @@ public sealed class ArmGenerationTests
                 throw new Exception("Expected resource group max-length failure.");
             } catch(Microsoft.Mcp.Core.Commands.CommandValidationException) {}
             if(transport.Requests.Count!=4) throw new Exception("Invalid resource group length made a request.");
+            var beforeDot=hookCalls;
+            foreach(var dot in new[] {".",".."})
+            {
+                try {
+                    await AppLinksGetSdkAdapter.ExecuteAsync(
+                        new AppLinksGetOptions { Subscription="sub",Tenant="tenant",ResourceGroup=dot,AppLink="bridge" },hook,endpoint,CancellationToken.None);
+                    throw new Exception("Expected Get dot-segment failure.");
+                } catch(Microsoft.Mcp.Core.Commands.CommandValidationException) {}
+                try {
+                    await AppLinksListByResourceGroupSdkAdapter.ExecuteAsync(
+                        new AppLinksListByResourceGroupOptions { Subscription="sub",Tenant="tenant",ResourceGroup=dot },hook,endpoint,CancellationToken.None);
+                    throw new Exception("Expected List dot-segment failure.");
+                } catch(Microsoft.Mcp.Core.Commands.CommandValidationException) {}
+            }
+            if(transport.Requests.Count!=4 || hookCalls!=beforeDot) throw new Exception("Dot-segment input reached the hook or SDK.");
+            foreach(var control in new[] {"\n","\r","\t","\0"})
+            {
+                try {
+                    await AppLinksGetSdkAdapter.ExecuteAsync(
+                        new AppLinksGetOptions { Subscription="sub",Tenant="tenant",ResourceGroup="rg"+control,AppLink="bridge" },hook,endpoint,CancellationToken.None);
+                    throw new Exception("Expected Get resource-group control-character failure.");
+                } catch(Microsoft.Mcp.Core.Commands.CommandValidationException) {}
+                try {
+                    await AppLinksListByResourceGroupSdkAdapter.ExecuteAsync(
+                        new AppLinksListByResourceGroupOptions { Subscription="sub",Tenant="tenant",ResourceGroup="rg"+control },hook,endpoint,CancellationToken.None);
+                    throw new Exception("Expected List resource-group control-character failure.");
+                } catch(Microsoft.Mcp.Core.Commands.CommandValidationException) {}
+                try {
+                    await AppLinksGetSdkAdapter.ExecuteAsync(
+                        new AppLinksGetOptions { Subscription="sub",Tenant="tenant",ResourceGroup="rg",AppLink="valid"+control },hook,endpoint,CancellationToken.None);
+                    throw new Exception("Expected AppLink control-character failure.");
+                } catch(Microsoft.Mcp.Core.Commands.CommandValidationException) {}
+            }
+            if(transport.Requests.Count!=4 || hookCalls!=beforeDot) throw new Exception("Control-character input reached the hook or SDK.");
             using var cancellation=new CancellationTokenSource();
             cancellation.Cancel();
             try {
