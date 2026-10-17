@@ -47,7 +47,7 @@ public sealed class GenerationTests
                 emit = new[] { package },
                 options = new Dictionary<string, object>
                 {
-                    ["@azure-tools/typespec-mcp"] = emitterOptions
+                    ["@azure-typespec/mcp-tools"] = emitterOptions
                 }
             };
             File.WriteAllText(Path.Combine(generation, "tspconfig.yaml"), JsonSerializer.Serialize(configuration));

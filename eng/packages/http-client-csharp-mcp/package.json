@@ -1,5 +1,5 @@
 {
-  "name": "@azure-tools/typespec-mcp",
+  "name": "@azure-typespec/mcp-tools",
   "type": "module",
   "main": "emitter/index.js",
   "tspMain": "lib/main.tsp",

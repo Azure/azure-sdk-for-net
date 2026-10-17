@@ -1,6 +1,6 @@
 # TypeSpec MCP tools generator prototype
 
-`@azure-tools/typespec-mcp` generates reviewed MCP tool scaffolding from
+`@azure-typespec/mcp-tools` generates reviewed MCP tool scaffolding from
 TypeSpec HTTP operations. The schema, decorators, emitter, C# generator, and
 generator tests live here; service projections and runtime integration remain
 in the consuming MCP repository.
@@ -112,13 +112,13 @@ the consumer must include the assemblies that its existing MCP types require.
 The consumer wrapper preserves its complete existing YAML configuration,
 replaces `emit` with the **absolute package directory** from that checkout, and
 puts the preserved C# options under the stable key
-`@azure-tools/typespec-mcp`:
+`@azure-typespec/mcp-tools`:
 
 ```yaml
 emit:
   - 'C:\git\azure-sdk-for-net\eng\packages\http-client-csharp-mcp'
 options:
-  "@azure-tools/typespec-mcp":
+  "@azure-typespec/mcp-tools":
     emitter-output-dir: "{project-root}/.."
     package-name: Example.Mcp.Tools
     new-project: false

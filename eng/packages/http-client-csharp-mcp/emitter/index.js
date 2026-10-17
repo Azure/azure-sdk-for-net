@@ -14,7 +14,7 @@ import {
 import { CSharpEmitterOptionsSchema, emitCodeModel } from "@typespec/http-client-csharp";
 
 export const $lib = createTypeSpecLibrary({
-  name: "@azure-tools/typespec-mcp",
+  name: "@azure-typespec/mcp-tools",
   diagnostics: {
     "invalid-configuration": {
       severity: "error",
