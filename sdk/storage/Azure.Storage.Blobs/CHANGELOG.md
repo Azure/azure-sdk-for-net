@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed client-side encryption v1 decryption of ranged downloads so the 16-byte IV is fully read even when the ciphertext stream returns short reads, and a truncated IV now fails instead of silently corrupting plaintext.
 
 ### Other Changes
 
