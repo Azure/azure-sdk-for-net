@@ -180,8 +180,6 @@ DefaultAzureCredentialOptions options = new
 
 #### AuthenticationFailedException for applications using [Azure Kubernetes Service identity bindings](https://learn.microsoft.com/azure/aks/identity-bindings-concepts)
 
-For generally available SDK support, use Azure.Core 1.64.0 or later. Verify that the [AKS identity binding and Kubernetes permissions](https://learn.microsoft.com/azure/aks/identity-bindings) are configured; the SDK proxy option doesn't create the binding or grant permission to use the managed identity.
-
 | Error Message | Description | Mitigation |
 |---|---|---|
 | <ul><li>AADSTS700211: No matching federated identity record found for presented assertion issuer ...</li><li>AADSTS700212: No matching federated identity record found for presented assertion audience 'api://AKSIdentityBinding'.</li></ul> | `WorkloadIdentityCredential` isn't configured to use the identity binding proxy. | When using `WorkloadIdentityCredential` directly, set `WorkloadIdentityCredentialOptions.IsAzureProxyEnabled` to `true`. Identity binding mode isn't supported when `WorkloadIdentityCredential` is used via `DefaultAzureCredential`, so construct and use a `WorkloadIdentityCredential` explicitly to enable this option. |
