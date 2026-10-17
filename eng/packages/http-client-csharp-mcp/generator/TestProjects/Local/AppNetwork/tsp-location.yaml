@@ -1,0 +1,5 @@
+repo: Azure/azure-rest-api-specs
+commit: 1142128f76754601aac1da265c6fa5fd66380d9b
+directory: specification/applink/AppLink.Management
+entrypointFile: appnetwork.tsp
+emitterPackageJsonPath: eng/packages/http-client-csharp-mcp/emitter-package.json

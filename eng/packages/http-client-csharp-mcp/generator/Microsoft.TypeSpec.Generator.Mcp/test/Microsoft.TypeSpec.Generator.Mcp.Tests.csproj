@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net10.0</TargetFrameworks>
+    <IsTestProject>true</IsTestProject>
+    <GeneratorDirectory>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\..\..\node_modules\@typespec\http-client-csharp\dist\generator'))</GeneratorDirectory>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\Microsoft.TypeSpec.Generator.Mcp.csproj" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <Reference Include="Microsoft.CodeAnalysis" HintPath="$(GeneratorDirectory)\Microsoft.CodeAnalysis.dll" />
+    <Reference Include="Microsoft.CodeAnalysis.CSharp" HintPath="$(GeneratorDirectory)\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Reference Include="Microsoft.TypeSpec.Generator" HintPath="$(GeneratorDirectory)\Microsoft.TypeSpec.Generator.dll" />
+    <Reference Include="Microsoft.TypeSpec.Generator.Input" HintPath="$(GeneratorDirectory)\Microsoft.TypeSpec.Generator.Input.dll" />
+  </ItemGroup>
+</Project>

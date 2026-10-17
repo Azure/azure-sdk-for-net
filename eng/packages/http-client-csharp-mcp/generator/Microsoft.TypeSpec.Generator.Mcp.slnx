@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Microsoft.TypeSpec.Generator.Mcp/src/Microsoft.TypeSpec.Generator.Mcp.csproj" />
+  <Project Path="Microsoft.TypeSpec.Generator.Mcp/test/Microsoft.TypeSpec.Generator.Mcp.Tests.csproj" />
+</Solution>

@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
+    <IsGeneratorLibrary>true</IsGeneratorLibrary>
+    <IsShippingLibrary>false</IsShippingLibrary>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <NoWarn>$(NoWarn);CS8002;CS1591</NoWarn>
+  </PropertyGroup>
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+</Project>
