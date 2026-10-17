@@ -4,9 +4,18 @@
 
 ### Features Added
 
+- Added APIs for listing `Contains` relationships at resource group and subscription scopes.
+- Added resource and collection APIs for managing `DependencyOf` relationships scoped to a service group.
+- Added pageable enumeration for `DependencyOf` and service group member relationship collections.
+
 ### Breaking Changes
 
+- Corrected the source and target semantics of `ServiceGroupMemberRelationshipProperties`. The constructor now accepts `sourceId`, `SourceId` is settable, `TargetId` is read-only, and `SourceTenant` replaces `TargetTenant`.
+
 ### Bugs Fixed
+
+- Fixed relationship collection paging to handle relative continuation tokens and propagate cancellation tokens during async enumeration.
+- Fixed `Contains` relationship operations to honor configured API version overrides.
 
 ### Other Changes
 
