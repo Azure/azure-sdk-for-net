@@ -1,2 +1,3 @@
 # Preserve the generator's exact output bytes on Windows as well as Unix.
 generator/TestProjects/Local/Storage/src/Generated/*.cs text eol=lf
+generator/TestProjects/Local/AppNetwork/src/Generated/*.cs text eol=lf

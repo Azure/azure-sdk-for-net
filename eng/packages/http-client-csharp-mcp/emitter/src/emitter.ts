@@ -3,6 +3,7 @@
 
 import { EmitContext, emitFile, resolvePath } from "@typespec/compiler";
 import { emitCodeModel } from "@typespec/http-client-csharp";
+import { emitManagementCodeModel } from "@azure-typespec/http-client-csharp-mgmt";
 import { getMcpConfiguration } from "./decorators.js";
 import { McpEmitterOptions } from "./options.js";
 
@@ -15,7 +16,10 @@ export async function $onEmit(context: EmitContext<McpEmitterOptions>) {
   if (!configuration || context.program.hasError()) {
     return;
   }
-  context.options["generator-name"] = "McpGenerator";
+  const management = context.options["management-plane"] === true;
+  context.options["generator-name"] = management
+    ? "ArmMcpGenerator"
+    : "McpGenerator";
   context.options["emitter-extension-path"] = import.meta.url;
   // MCP registration/options are externally consumed roots, not REST client dependencies.
   context.options["unreferenced-types-handling"] = "keepAll";
@@ -25,6 +29,10 @@ export async function $onEmit(context: EmitContext<McpEmitterOptions>) {
     content: JSON.stringify(configuration, null, 2) + "\n"
   });
   try {
+    if (management) {
+      await emitManagementCodeModel(context);
+      return;
+    }
     const [, diagnostics] = await emitCodeModel(context);
     context.program.reportDiagnostics(diagnostics);
   } finally {

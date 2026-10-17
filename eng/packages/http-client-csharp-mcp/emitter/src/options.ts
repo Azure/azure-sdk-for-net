@@ -2,17 +2,22 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 import { JSONSchemaType } from "@typespec/compiler";
+import { CSharpEmitterOptionsSchema } from "@typespec/http-client-csharp";
 import {
-  CSharpEmitterOptions,
-  CSharpEmitterOptionsSchema
-} from "@typespec/http-client-csharp";
+  AzureMgmtEmitterOptions,
+  AzureMgmtEmitterOptionsSchema
+} from "@azure-typespec/http-client-csharp-mgmt";
 
-export type McpEmitterOptions = CSharpEmitterOptions;
+export interface McpEmitterOptions extends AzureMgmtEmitterOptions {
+  "management-plane"?: boolean;
+}
 
 export const McpEmitterOptionsSchema: JSONSchemaType<McpEmitterOptions> = {
   type: "object",
   additionalProperties: false,
   properties: {
-    ...CSharpEmitterOptionsSchema.properties
+    ...CSharpEmitterOptionsSchema.properties,
+    ...AzureMgmtEmitterOptionsSchema.properties,
+    "management-plane": { type: "boolean", nullable: true }
   }
 };

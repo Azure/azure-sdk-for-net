@@ -11,7 +11,7 @@ namespace Microsoft.TypeSpec.Generator.Mcp;
 
 public sealed record CommandSelection(
     string OperationId, string Namespace, string Name, string Id, string Path, string Title,
-    SafetyOverrides Safety, string? InterfaceName = null)
+    SafetyOverrides Safety, string? InterfaceName = null, Dictionary<string, ParameterConstraint>? ParameterConstraints = null)
 {
     [JsonIgnore]
     public string Prefix => Pascal(InterfaceName ?? "") + Pascal(Name);
@@ -37,6 +37,8 @@ public sealed record CommandSelection(
         McpManifest.Require(!string.IsNullOrWhiteSpace(Title) && Safety is not null, "A title and safety annotations are required.");
     }
 }
+
+public sealed record ParameterConstraint(string? Pattern = null, int? MinLength = null, int? MaxLength = null);
 
 internal sealed record CommandModel(
     CommandSelection Selection, InputServiceMethod Operation, ServiceContract Contract, OptionMapping[] Options, string ResultName,

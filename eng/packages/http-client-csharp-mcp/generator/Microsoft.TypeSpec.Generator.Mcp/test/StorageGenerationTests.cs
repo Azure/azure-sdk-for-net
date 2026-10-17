@@ -174,7 +174,7 @@ public sealed class StorageGenerationTests
     private Task<(int ExitCode, string Output)> Generate() =>
         Run("node", _root, _cli, "generate", "--output-dir", _root, "--skip-install", "--save-inputs", "--debug");
 
-    private static void IsolateBuild(string root)
+    internal static void IsolateBuild(string root)
     {
         foreach (var name in new[] { "Directory.Build.props", "Directory.Build.targets", "Directory.Packages.props" })
         {
@@ -182,7 +182,8 @@ public sealed class StorageGenerationTests
         }
     }
 
-    private static async Task<string> CreateConsumer(string root, string name)
+    internal static async Task<string> CreateConsumer(string root, string name, bool arm = false,
+        string sdkPackage = "Azure.ResourceManager.AppNetwork", string sdkVersion = "1.0.0-beta.2")
     {
         var source = Path.Combine(root, "src");
         Directory.CreateDirectory(source);
@@ -194,7 +195,16 @@ public sealed class StorageGenerationTests
               <PropertyGroup><TargetFramework>net10.0</TargetFramework><Nullable>enable</Nullable><ImplicitUsings>enable</ImplicitUsings></PropertyGroup>
             </Project>
             """);
-        File.WriteAllText(Path.Combine(metadata, "Types.cs"), McpCoreTypes);
+        if (arm)
+        {
+            var metadataProject = Path.Combine(metadata, "Microsoft.Mcp.Core.csproj");
+            File.WriteAllText(metadataProject, File.ReadAllText(metadataProject).Replace("</Project>",
+                $"""<ItemGroup><PackageReference Include="{sdkPackage}" Version="{sdkVersion}" /></ItemGroup></Project>""", StringComparison.Ordinal));
+        }
+        File.WriteAllText(Path.Combine(metadata, "Types.cs"), arm
+            ? McpCoreTypes[..McpCoreTypes.IndexOf("namespace Microsoft.Extensions.Logging", StringComparison.Ordinal)]
+                + ArmCoreTypes
+            : McpCoreTypes);
         var built = await Run("dotnet", metadata, "build", "--output", output, "--nologo", "--verbosity", "quiet");
         Assert.That(built.ExitCode, Is.Zero, built.Output);
         File.WriteAllText(Path.Combine(source, name + ".csproj"), """
@@ -206,6 +216,14 @@ public sealed class StorageGenerationTests
               <ItemGroup><Reference Include="Microsoft.Mcp.Core" HintPath="bin/Debug/net10.0/Microsoft.Mcp.Core.dll" /></ItemGroup>
             </Project>
             """);
+        if (arm)
+        {
+            var project = Path.Combine(source, name + ".csproj");
+            File.WriteAllText(project, File.ReadAllText(project).Replace("</Project>",
+                $"""<PropertyGroup><IsAotCompatible>true</IsAotCompatible></PropertyGroup><ItemGroup><PackageReference Include="{sdkPackage}" Version="{sdkVersion}" /></ItemGroup></Project>""", StringComparison.Ordinal));
+            var consumerBuild = await Run("dotnet", source, "build", "--nologo", "--verbosity", "quiet");
+            Assert.That(consumerBuild.ExitCode, Is.Zero, consumerBuild.Output);
+        }
         return source;
     }
 
@@ -396,6 +414,19 @@ public sealed class StorageGenerationTests
         namespace Azure
         {
             public class RequestFailedException(int status,string message) : Exception(message) { public int Status=>status; }
+        }
+        """;
+
+    private const string ArmCoreTypes = """
+        namespace Azure.Mcp.Core.Options { public interface ISubscriptionOption { string? Subscription {get;set;} } }
+        namespace Azure.Mcp.Core.Services.Azure.Subscription { public interface ISubscriptionResolver { string? ResolveSubscription(string? subscription); } }
+        namespace Azure.Mcp.Core.Commands.Subscription
+        {
+            public abstract class SubscriptionCommand<TOptions,TResult> : Microsoft.Mcp.Core.Commands.AuthenticatedCommand<TOptions,TResult>
+                where TOptions : class, global::Azure.Mcp.Core.Options.ISubscriptionOption
+            {
+                protected SubscriptionCommand(global::Azure.Mcp.Core.Services.Azure.Subscription.ISubscriptionResolver resolver) {}
+            }
         }
         """;
 }

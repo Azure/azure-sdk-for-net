@@ -26,7 +26,9 @@
     "test:emitter": "vitest run -c ./emitter/vitest.config.ts",
     "test:generator": "dotnet test ./generator --configuration Release",
     "test:storage": "dotnet test ./generator --configuration Release --filter FullyQualifiedName~StorageGenerationTests",
+    "test:arm": "dotnet test ./generator --configuration Release --filter FullyQualifiedName~ArmGenerationTests",
     "generate:storage": "pwsh -NoProfile -File ./eng/scripts/Generate.ps1",
+    "generate:arm": "pwsh -NoProfile -File ./eng/scripts/Generate.ps1 -Scenario Arm",
     "test": "npm run test:generator && npm run test:emitter",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
@@ -39,10 +41,13 @@
     "lib/**"
   ],
   "dependencies": {
+    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20261015.3",
     "@typespec/http-client-csharp": "1.0.0-alpha.20261014.5"
   },
   "devDependencies": {
     "@azure-tools/typespec-client-generator-core": "0.73.0",
+    "@azure-tools/typespec-azure-resource-manager": "0.73.0",
+    "@azure-tools/typespec-azure-rulesets": "0.73.0",
     "@typespec/compiler": "1.17.0",
     "@typespec/http": "1.17.0",
     "@eslint/js": "^10.0.1",
@@ -59,6 +64,9 @@
     "vitest": "4.1.11"
   },
   "azure-sdk/emitter-package-json-pinning": [
+    "@azure-typespec/http-client-csharp-mgmt",
+    "@azure-tools/typespec-azure-resource-manager",
+    "@azure-tools/typespec-azure-rulesets",
     "@azure-tools/typespec-client-generator-core",
     "@typespec/compiler",
     "@typespec/http",

@@ -6,6 +6,9 @@ import {
   DecoratorFunction,
   getNamespaceFullName,
   getService,
+  getPattern,
+  getMinLength,
+  getMaxLength,
   getSummary,
   Namespace,
   Operation,
@@ -136,7 +139,19 @@ export function getMcpConfiguration(
           .join("."),
         title:
           identity.title ?? getSummary(program, operation) ?? operation.name,
-        safety: program.stateMap(safetyKey).get(operation) ?? {}
+        safety: program.stateMap(safetyKey).get(operation) ?? {},
+        parameterConstraints: Object.fromEntries(
+          [...operation.parameters.properties].flatMap(([name, property]) => {
+            const pattern = getPattern(program, property);
+            const minLength = getMinLength(program, property);
+            const maxLength = getMaxLength(program, property);
+            return pattern !== undefined ||
+              minLength !== undefined ||
+              maxLength !== undefined
+              ? [[name, { pattern, minLength, maxLength }]]
+              : [];
+          })
+        )
       };
     })
   };

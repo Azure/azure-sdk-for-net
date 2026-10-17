@@ -1,12 +1,119 @@
 # TypeSpec MCP tools generator prototype
 
-`@azure-typespec/mcp-tools` generates REST-shaped service contracts and MCP
-command adapters from existing service TypeSpec. **No prewritten convenience
-service interface or implementation is required for generation.** Developers
-implement the generated required partial method in a separate handwritten file.
+`@azure-typespec/mcp-tools` generates MCP tools from existing service TypeSpec.
+For predictable generated ARM SDK surfaces it computes the stock management
+providers, generates SDK-bound adapters, and validates complete calls against
+the referenced shipped SDK. **No prewritten per-operation convenience service
+or handwritten SDK map is required.**
 
-This remains a bounded Storage container-create prototype, not full Storage
-coverage or automatic synthesis of authentication and SDK workflows.
+The Storage REST-shaped partial-service path remains an explicit escape hatch
+for handwritten/customized convenience workflows. It is not the prerequisite
+or preferred binding path for the generated ARM example.
+
+## SDK-bound read-only ARM example
+
+The example uses **`Azure.ResourceManager.AppNetwork` 1.0.0-beta.2**, with its
+matching upstream `client.tsp` and namespace configuration pinned by the
+[AppNetwork location file](generator/TestProjects/Local/AppNetwork/tsp-location.yaml).
+The [small overlay](emitter/test/fixtures/appnetwork.tsp) selects exactly:
+
+| Operation | Tool | Stock SDK target |
+| --- | --- | --- |
+| `Microsoft.AppLink.AppLinks.get` | `appnetwork applink get` | `AppLinkResource.GetAsync(CancellationToken)` |
+| `Microsoft.AppLink.AppLinks.listByResourceGroup` | `appnetwork applink list` | `AppLinkCollection.GetAllAsync(CancellationToken)` |
+| `Microsoft.AppLink.AppLinks.listBySubscription` | `appnetwork applink subscription list` | `AppNetworkExtensions.GetAppLinksAsync(SubscriptionResource, CancellationToken)` |
+
+The overlay contains identity/title annotations, not CLR names or SDK member
+mappings. The frontend uses the stock management emitter's resource detection,
+client customizations, and ARM metadata. The backend constructs the normal
+management `TypeProvider` graph in memory, associates methods with their
+`ScmMethodProvider.ServiceMethod` identities, and derives resource/collection/
+extension navigation from those providers. **It never emits a replacement
+HTTP client.** Mutation/LRO/credential/key operations are outside this path.
+The bounded adapter supports the shown resource-group/subscription navigation
+and path-only read inputs, not arbitrary ARM scopes or extra method arguments.
+
+SDK references come from the consumer project's actual MSBuild `ReferencePath`
+closure, including restored NuGet assets, not a guessed DLL in its build folder.
+The backend checks the expected public SDK signatures and uses Roslyn to compile
+the complete generated SDK adapters and DTO conversions against that closure
+before emitting them. A mismatch reports the operation, expected stock signature,
+and available referenced candidates. It fails rather than selecting a similar
+overload or silently generating a partial stub.
+For an operation needing a handwritten override, leave that operation unselected
+and register its ordinary handwritten command alongside the generated tools.
+The generator does not turn a failed SDK binding into a successful stub.
+
+Each operation produces an `Options`, `Result`, `SdkAdapter`, `Command`,
+`JsonContext`, and `Catalog` file in the service's `Microsoft.AppLink` namespace.
+One shared continuation helper brings the total to **19 generated files**.
+See [the actual generated output](generator/TestProjects/Local/AppNetwork/src/Generated).
+
+Options are normal flat MCP options: nullable `Subscription`/`Tenant` use the
+existing profile/environment resolver; resource-group-scoped tools require
+`ResourceGroup`; Get also requires `AppLink`; lists accept `ContinuationToken`.
+Names and name-pattern validation derive from the service/path metadata.
+SDK identifier factories convert those inputs; SDK resource **data** is projected
+through its verified typed `IPersistableModel<T>.Write` contract into AOT-safe `JsonElement`
+results, never by serializing resource clients, credentials, or pipelines.
+Get returns `Data`; lists return `Items` and `ContinuationToken`. The dynamic data projection preserves the SDK's resource JSON. ARM commands
+expose source-generated `ResultTypeInfo` for the standard output envelope/schema;
+the projected resource-data contents remain dynamic rather than a new typed model.
+
+Commands derive from the existing `SubscriptionCommand<TOptions,TResult>` and
+options implement `ISubscriptionOption`. Their constructor takes the logger,
+`ISubscriptionResolver`, and two **shared**, not per-operation, hooks:
+
+```csharp
+Func<string, string?, CancellationToken, Task<SubscriptionResource>> getSubscription
+Func<Uri> getArmEndpoint
+```
+
+The MCP consumer can bind these directly to `IAzureService.GetSubscription`
+and `IAzureService.CloudConfiguration.ArmEnvironment.Endpoint`. Resource/collection
+handles use the same `ArmClient`; deriving a resource-group handle makes no
+extra resource-group GET request. The generator does not construct new credentials,
+guess the cloud, or require a handwritten service wrapper for each tool.
+
+### Explicit one-page behavior
+
+Lists call the shipped SDK's `AsPages` and return **one page only**. They do not
+enumerate all pages or expose a made-up maximum/page-size contract. A returned
+opaque token is bound to the original operation and subscription/resource-group
+path. Resuming reconstructs the absolute SDK token only under the same configured
+ARM endpoint. Raw URL tokens, cross-operation/scope tokens, and SDK links outside
+the configured endpoint are rejected. Cancellation is forwarded to the SDK.
+
+The originally investigated ResourceConnector 1.0.0-beta.5 has a real shipped
+first-page continuation defect: it yields the previous token before reading
+the response `nextLink`. DNS Resolver 1.3.0-beta.2 has the same defect.
+AppNetwork's released SDK has corrected behavior, proven with its actual DLL.
+No service-specific response-parsing workaround or fake pageable implementation
+is used to hide those defects.
+
+### Generate and validate the ARM example
+
+Use the same repository-pinned `tsp-client` setup described below. From this
+package directory:
+
+```powershell
+npm run generate:arm
+npm run test:arm
+```
+
+The fixture restores the shipped SDK, uses actual `tsp-client sync`/`generate`,
+compiles the complete emitted source, and executes Get, resource-group page/resume,
+and subscription List through the real SDK with an in-memory HTTP transport.
+It checks one-request-per-page behavior, resource-data projection, cancellation,
+name/token validation, byte-stable regeneration, and explicit binding failure
+when the stock TypeSpec resource name does not exist in the referenced SDK.
+The transport is mocked; the SDK and all SDK calls are real. No Azure provisioning
+or live calls are needed.
+
+The emitter option `"management-plane": true` selects this path and preserves
+the upstream SDK namespace/configuration. The existing default remains the
+partial-service path below. In both cases handwritten consumer tools remain
+default-on unless the consumer explicitly opts into generated replacements.
 
 ## Repository ownership
 
@@ -42,7 +149,7 @@ The five primitive decorators are declared in [lib/main.tsp](lib/main.tsp).
 Safety decorators override conservative HTTP defaults; they are MCP hints,
 not authorization controls. Omitting a boolean argument means `true`.
 
-## Generated contract
+## Storage partial-service escape hatch
 
 `Storage.Blob.Container.create` produces seven files in namespace `Storage.Blob`:
 
@@ -192,13 +299,16 @@ by hand.
 
 ## Boundaries and runtime references
 
-Supported contracts include JSON primitive types, nullable values, dictionaries,
-arrays, open-enum wire values, and ordinary recursive models. Unsupported scopes,
-closed enums/literals, inheritance/polymorphism/open models, streaming, paging,
-and LROs fail explicitly. Contract/output name collisions are errors.
+The partial-service path supports JSON primitive types, nullable values,
+dictionaries, arrays, open-enum wire values, and ordinary recursive models.
+Unsupported scopes, closed enums/literals, inheritance/polymorphism/open models,
+streaming, paging, and LROs fail explicitly on that path. The SDK-bound ARM path
+instead handles the bounded paging scenario described above. Contract/output
+name collisions are errors.
 
 The backend currently evaluates the sole consumer `src\*.csproj` and references
-its built MCP framework assemblies. A framework baseline build is still required,
+its built MCP framework assemblies. The ARM path additionally resolves its actual
+MSBuild references for SDK binding. A framework baseline build is still required,
 but a convenience interface/implementation is not. Runtime references are added
 by the generator, never specified in TypeSpec.
 

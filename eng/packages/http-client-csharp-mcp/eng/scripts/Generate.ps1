@@ -1,5 +1,10 @@
 #Requires -Version 7.0
 
+param(
+    [ValidateSet('Storage', 'Arm')]
+    [string] $Scenario = 'Storage'
+)
+
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
@@ -13,7 +18,12 @@ try {
     }
 
     $env:AZURE_MCP_UPDATE_GENERATED = '1'
-    npm run test:storage
+    if ($Scenario -eq 'Arm') {
+        npm run test:arm
+    }
+    else {
+        npm run test:storage
+    }
     if ($LASTEXITCODE -ne 0) {
         throw 'Generating and validating the Storage output failed.'
     }

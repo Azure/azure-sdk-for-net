@@ -9,6 +9,22 @@ namespace Microsoft.TypeSpec.Generator.Mcp;
 
 internal static class CommandSyntaxAdapter
 {
+    internal static void RewritePrimary(string path)
+    {
+        var root = CSharpSyntaxTree.ParseText(File.ReadAllText(path)).GetRoot();
+        var command = root.DescendantNodes().OfType<ClassDeclarationSyntax>().Single();
+        var constructor = command.Members.OfType<ConstructorDeclarationSyntax>().Single();
+        McpManifest.Require(constructor.Body is { Statements.Count: 0 } &&
+            constructor.Initializer is { RawKind: (int)SyntaxKind.BaseConstructorInitializer },
+            "Unexpected ARM constructor shape.");
+        var baseType = command.BaseList!.Types.Single();
+        var primary = command.WithParameterList(constructor.ParameterList)
+            .WithBaseList(command.BaseList.ReplaceNode(baseType,
+                SyntaxFactory.PrimaryConstructorBaseType(baseType.Type, constructor.Initializer.ArgumentList)))
+            .WithMembers(SyntaxFactory.List(command.Members.Where(member => member != constructor)));
+        File.WriteAllText(path, root.ReplaceNode(command, primary).NormalizeWhitespace(eol: "\n").ToFullString() + "\n");
+    }
+
     internal static void Rewrite(string path, CommandSelection selection)
     {
         // The shared writer predates primary constructors and records.

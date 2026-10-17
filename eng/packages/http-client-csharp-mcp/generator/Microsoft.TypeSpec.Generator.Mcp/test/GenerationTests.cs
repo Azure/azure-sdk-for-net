@@ -71,9 +71,9 @@ public sealed class GenerationTests
         var library = File.ReadAllText(libraryPath);
         var fixtures = Path.Combine(package, "emitter", "test", "fixtures");
         var authored = Directory.GetFiles(fixtures, "*.tsp", SearchOption.TopDirectoryOnly);
-        Assert.That(authored.Select(Path.GetFileName), Is.EqualTo(new[] { "storage.tsp" }),
+        Assert.That(authored.Select(Path.GetFileName), Is.EquivalentTo(new[] { "storage.tsp", "appnetwork.tsp" }),
             "Do not retain a verbose parallel mapping fixture under another filename.");
-        var input = library + File.ReadAllText(authored.Single());
+        var input = library + string.Concat(authored.Select(File.ReadAllText));
         var outputs = Directory.GetFiles(Path.Combine(package, "generator", "TestProjects", "Local", "Storage", "src", "Generated"), "*.cs");
         var generated = string.Concat(outputs.Select(File.ReadAllText));
         Assert.That(Regex.Replace(input, @"\s+", "").Length, Is.LessThan(Regex.Replace(generated, @"\s+", "").Length));

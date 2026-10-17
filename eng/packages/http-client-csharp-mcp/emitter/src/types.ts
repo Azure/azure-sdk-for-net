@@ -23,5 +23,13 @@ export interface McpCodeModel {
     name: string;
     title: string;
     safety: SafetyOverrides;
+    parameterConstraints?: Record<
+      string,
+      {
+        pattern?: string;
+        minLength?: number;
+        maxLength?: number;
+      }
+    >;
   })[];
 }
