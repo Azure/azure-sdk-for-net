@@ -38,8 +38,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="dataCollectionOptions"> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </param>
         /// <param name="displayName"> Display Name. </param>
         /// <param name="computeNodeOcids"> The list of compute servers to be added to the cloud VM cluster. </param>
+        /// <param name="isAcceleratedNetworkEnabled"> Indicates if the Accelerated Networking feature is enabled or disabled for provisioning an Exadata VM cluster. The default value is: false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterUpdateProperties(int? storageSizeInGbs, IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, int? cpuCoreCount, float? ocpuCount, IList<string> sshPublicKeys, OracleLicenseModel? licenseModel, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IList<string> computeNodeOcids, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudVmClusterUpdateProperties(int? storageSizeInGbs, IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, int? cpuCoreCount, float? ocpuCount, IList<string> sshPublicKeys, OracleLicenseModel? licenseModel, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IList<string> computeNodeOcids, bool? isAcceleratedNetworkEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageSizeInGbs = storageSizeInGbs;
             FileSystemConfigurationDetails = fileSystemConfigurationDetails;
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             DataCollectionOptions = dataCollectionOptions;
             DisplayName = displayName;
             ComputeNodeOcids = computeNodeOcids;
+            IsAcceleratedNetworkEnabled = isAcceleratedNetworkEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -88,5 +90,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> The list of compute servers to be added to the cloud VM cluster. </summary>
         public IList<string> ComputeNodeOcids { get; }
+
+        /// <summary> Indicates if the Accelerated Networking feature is enabled or disabled for provisioning an Exadata VM cluster. The default value is: false. </summary>
+        public bool? IsAcceleratedNetworkEnabled { get; set; }
     }
 }
