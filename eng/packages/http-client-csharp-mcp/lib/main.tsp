@@ -1,5 +1,5 @@
 import "@typespec/http";
-import "../emitter/index.js";
+import "../dist/emitter/index.js";
 
 namespace Azure.Mcp;
 

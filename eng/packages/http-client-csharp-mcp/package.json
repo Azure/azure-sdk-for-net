@@ -1,25 +1,66 @@
 {
   "name": "@azure-typespec/mcp-tools",
   "type": "module",
-  "main": "emitter/index.js",
+  "main": "dist/emitter/index.js",
   "tspMain": "lib/main.tsp",
   "exports": {
     ".": {
       "typespec": "./lib/main.tsp",
-      "default": "./emitter/index.js"
+      "import": "./dist/emitter/index.js"
     }
   },
   "private": true,
   "version": "0.0.0",
+  "author": "Microsoft Corporation",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Azure/azure-sdk-for-net.git"
+  },
   "description": "Service-neutral Azure MCP tool generator using the TypeSpec C# generator providers.",
   "scripts": {
-    "build": "node --check emitter/index.js && dotnet build generator/Microsoft.TypeSpec.Generator.Mcp/src/Microsoft.TypeSpec.Generator.Mcp.csproj --configuration Release",
-    "test": "dotnet test generator/Microsoft.TypeSpec.Generator.Mcp/test/Microsoft.TypeSpec.Generator.Mcp.Tests.csproj --configuration Release"
+    "clean": "rimraf ./dist ./emitter/temp ./temp && dotnet clean ./generator",
+    "build:emitter": "tsc -p ./emitter/tsconfig.build.json",
+    "build:generator": "dotnet build ./generator --configuration Release",
+    "build": "npm run build:emitter && npm run build:generator",
+    "test:emitter": "vitest run -c ./emitter/vitest.config.ts",
+    "test:generator": "dotnet test ./generator --configuration Release",
+    "test:storage": "dotnet test ./generator --configuration Release --filter FullyQualifiedName~StorageGenerationTests",
+    "test": "npm run test:generator && npm run test:emitter",
+    "lint": "eslint . --max-warnings=0",
+    "lint:fix": "eslint . --fix",
+    "prettier:fix": "prettier --write --config .prettierrc.json ./**/*.ts package.json",
+    "prettier": "prettier --check --config .prettierrc.json ./**/*.ts package.json"
+  },
+  "files": [
+    "dist/emitter/**",
+    "dist/generator/**",
+    "lib/**"
+  ],
+  "dependencies": {
+    "@typespec/http-client-csharp": "1.0.0-alpha.20261014.5"
   },
   "devDependencies": {
     "@azure-tools/typespec-client-generator-core": "0.73.0",
     "@typespec/compiler": "1.17.0",
     "@typespec/http": "1.17.0",
-    "@typespec/http-client-csharp": "1.0.0-alpha.20261014.5"
-  }
+    "@eslint/js": "^10.0.1",
+    "@types/node": "~22.12.0",
+    "eslint": "^10.6.0",
+    "globals": "^17.7.0",
+    "prettier": "~3.9.1",
+    "rimraf": "~6.1.3",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.62.0",
+    "vitest": "4.1.11"
+  },
+  "overrides": {
+    "vitest": "4.1.11"
+  },
+  "azure-sdk/emitter-package-json-pinning": [
+    "@azure-tools/typespec-client-generator-core",
+    "@typespec/compiler",
+    "@typespec/http",
+    "@typespec/http-client-csharp"
+  ]
 }

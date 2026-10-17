@@ -18,10 +18,11 @@
     <Error Condition="!Exists('$(GeneratorDirectory)\Microsoft.TypeSpec.Generator.dll')"
            Text="Run npm ci in eng/packages/http-client-csharp-mcp before building the MCP generator." />
   </Target>
-  <Target Name="CopyForLocalExecution" AfterTargets="Build">
+  <Target Name="CopyForNpmPackage" AfterTargets="Build">
     <ItemGroup>
-      <PluginFiles Include="$(TargetPath)" />
+      <SourceDir Include="$(GeneratorDirectory)\**\*.*" />
     </ItemGroup>
-    <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" />
+    <Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator\%(RecursiveDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" />
   </Target>
 </Project>

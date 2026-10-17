@@ -174,7 +174,7 @@ public sealed class GenerationTests
         }
     }
 
-    private static string FindPackage()
+    internal static string FindPackage()
     {
         var directory = new DirectoryInfo(TestContext.CurrentContext.TestDirectory);
         while (directory is not null)
@@ -189,7 +189,7 @@ public sealed class GenerationTests
         throw new InvalidOperationException("Cannot find the MCP generator package from the test output directory.");
     }
 
-    private static async Task<(int ExitCode, string Output)> Run(string executable, string workingDirectory, params string[] arguments)
+    internal static async Task<(int ExitCode, string Output)> Run(string executable, string workingDirectory, params string[] arguments)
     {
         var start = new ProcessStartInfo(executable)
         {
