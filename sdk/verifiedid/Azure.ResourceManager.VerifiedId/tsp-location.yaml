@@ -1,6 +1,6 @@
 directory: specification/verifiedid/resource-manager/Microsoft.VerifiedId/VerifiedId
-commit: 491fe2ff04d0633ff078042a757353cb797de9d1
+commit: 663934c93853cb58f6477c2e8e0f48d5eca2d770
 repo: Azure/azure-rest-api-specs
-additionalDirectories:
+additionalDirectories: 
 
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
