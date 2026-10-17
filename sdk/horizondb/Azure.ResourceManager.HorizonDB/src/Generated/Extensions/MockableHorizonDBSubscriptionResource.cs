@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -38,11 +39,106 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
 
         private ClientDiagnostics HorizonDBClustersClientDiagnostics => _horizonDBClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HorizonDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HorizonDBClusters HorizonDBClustersRestClient => _horizonDBClustersRestClient ??= new HorizonDBClusters(HorizonDBClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/clusters", out string apiVersion) ? apiVersion : "2026-05-01-preview");
+        private HorizonDBClusters HorizonDBClustersRestClient => _horizonDBClustersRestClient ??= new HorizonDBClusters(HorizonDBClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/clusters", out string apiVersion) ? apiVersion : "2026-10-01-preview");
 
         private ClientDiagnostics HorizonDBParameterGroupsClientDiagnostics => _horizonDBParameterGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HorizonDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HorizonDBParameterGroups HorizonDBParameterGroupsRestClient => _horizonDBParameterGroupsRestClient ??= new HorizonDBParameterGroups(HorizonDBParameterGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/parameterGroups", out string apiVersion0) ? apiVersion0 : "2026-05-01-preview");
+        private HorizonDBParameterGroups HorizonDBParameterGroupsRestClient => _horizonDBParameterGroupsRestClient ??= new HorizonDBParameterGroups(HorizonDBParameterGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/parameterGroups", out string apiVersion0) ? apiVersion0 : "2026-10-01-preview");
+
+        /// <summary>
+        /// Gets the singleton HorizonDB capability catalog entry available to a subscription in a specific region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HorizonDb/locations/{location}/capabilities/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Capabilities_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CapabilityResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="CapabilityResource"/> object. </returns>
+        public virtual CapabilityResource GetCapability()
+        {
+            return new CapabilityResource(Client, Id.AppendProviderResource("Microsoft.HorizonDb", "locations", "default"));
+        }
+
+        /// <summary> Gets a collection of DefaultParameterGroups in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of DefaultParameterGroups and their operations over a DefaultParameterGroupResource. </returns>
+        public virtual DefaultParameterGroupCollection GetDefaultParameterGroups(AzureLocation location)
+        {
+            return GetCachedClient(client => new DefaultParameterGroupCollection(client, Id, location));
+        }
+
+        /// <summary>
+        /// Gets a default parameter group available for a subscription in a specific region. Each PostgreSQL version has at most one default parameter group in a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HorizonDb/locations/{location}/parameterGroups/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DefaultParameterGroups_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="name"> The name of the DefaultParameterGroup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DefaultParameterGroupResource>> GetDefaultParameterGroupAsync(AzureLocation location, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDefaultParameterGroups(location).GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a default parameter group available for a subscription in a specific region. Each PostgreSQL version has at most one default parameter group in a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HorizonDb/locations/{location}/parameterGroups/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DefaultParameterGroups_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="name"> The name of the DefaultParameterGroup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DefaultParameterGroupResource> GetDefaultParameterGroup(AzureLocation location, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDefaultParameterGroups(location).Get(name, cancellationToken);
+        }
 
         /// <summary>
         /// Lists all HorizonDB clusters in a subscription.
@@ -53,11 +149,11 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbClusters_ListBySubscription. </description>
+        /// <description> Clusters_ListBySubscription. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,11 +177,11 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbClusters_ListBySubscription. </description>
+        /// <description> Clusters_ListBySubscription. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,11 +205,11 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_ListBySubscription. </description>
+        /// <description> ParameterGroups_ListBySubscription. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,11 +233,11 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_ListBySubscription. </description>
+        /// <description> ParameterGroups_ListBySubscription. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 throw new FormatException($"The model {nameof(Network)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WritePropertyName("publicAccess"u8);
+                writer.WriteStringValue(PublicAccess.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            HorizonDBPublicNetworkAccessState? publicNetworkAccess = default;
+            HorizonDBPublicNetworkAccessState? publicAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("publicNetworkAccess"u8))
+                if (prop.NameEquals("publicAccess"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    publicNetworkAccess = new HorizonDBPublicNetworkAccessState(prop.Value.GetString());
+                    publicAccess = new HorizonDBPublicNetworkAccessState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new Network(publicNetworkAccess, additionalBinaryDataProperties);
+            return new Network(publicAccess, additionalBinaryDataProperties);
         }
     }
 }

@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.HorizonDB
     {
         private readonly ClientDiagnostics _horizonDBClustersClientDiagnostics;
         private readonly HorizonDBClusters _horizonDBClustersRestClient;
+        private readonly ClientDiagnostics _authenticationsClientDiagnostics;
+        private readonly Authentications _authenticationsRestClient;
         private readonly HorizonDBClusterData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HorizonDb/clusters";
@@ -52,8 +54,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HorizonDBClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            TryGetApiVersion(ResourceType, out string horizonDBClusterApiVersion);
             _horizonDBClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
-            _horizonDBClustersRestClient = new HorizonDBClusters(_horizonDBClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/clusters", out string horizonDBClustersApiVersionOverride) ? horizonDBClustersApiVersionOverride : "2026-05-01-preview");
+            _horizonDBClustersRestClient = new HorizonDBClusters(_horizonDBClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/clusters", out string horizonDBClustersApiVersionOverride) ? horizonDBClustersApiVersionOverride : "2026-10-01-preview");
+            _authenticationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
+            _authenticationsRestClient = new Authentications(_authenticationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBClusterApiVersion ?? "2026-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -102,11 +107,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbClusters_Get. </description>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -150,11 +155,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbClusters_Get. </description>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -190,7 +195,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Updates an existing HorizonDB cluster (e.g., tags, virtual cores, replica count).
+        /// Updates an existing HorizonDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -198,11 +203,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbClusters_Update. </description>
+        /// <description> Clusters_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -249,7 +254,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Updates an existing HorizonDB cluster (e.g., tags, virtual cores, replica count).
+        /// Updates an existing HorizonDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -257,11 +262,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbClusters_Update. </description>
+        /// <description> Clusters_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -308,7 +313,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Deletes a HorizonDB cluster.
+        /// Deletes a HorizonDB cluster, its Cluster-scoped Endpoint, and all remaining child resources. For an accepted deletion, the long-running operation remains nonterminal until physical deletion completes and point GET returns 404 Not Found.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -316,11 +321,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbClusters_Delete. </description>
+        /// <description> Clusters_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -357,7 +362,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Deletes a HorizonDB cluster.
+        /// Deletes a HorizonDB cluster, its Cluster-scoped Endpoint, and all remaining child resources. For an accepted deletion, the long-running operation remains nonterminal until physical deletion completes and point GET returns 404 Not Found.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -365,11 +370,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbClusters_Delete. </description>
+        /// <description> Clusters_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -406,19 +411,95 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Restarts a HorizonDB cluster.
+        /// Lists the two service-created authentication configurations for the cluster: passwordMethod and microsoftEntra.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/restart. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/authentications. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbClusters_Restart. </description>
+        /// <description> Authentications_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HorizonDBClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Authentication"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Authentication> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AuthenticationAsyncCollectionResultOfT(
+                _authenticationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HorizonDBClusterResource.GetAll");
+        }
+
+        /// <summary>
+        /// Lists the two service-created authentication configurations for the cluster: passwordMethod and microsoftEntra.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/authentications. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Authentications_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HorizonDBClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Authentication"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Authentication> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AuthenticationCollectionResultOfT(
+                _authenticationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HorizonDBClusterResource.GetAll");
+        }
+
+        /// <summary>
+        /// Triggers failover within the cluster's designated read-write pool. HorizonDB selects the replacement node using the same eligibility and node-selection rules as automatic failover. The request fails with 409 Conflict when the designated pool is not eligible for failover or another conflicting operation is in progress.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/failover. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Failover. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -428,9 +509,9 @@ namespace Azure.ResourceManager.HorizonDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> RestartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HorizonDBClusterResource>> FailoverAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterResource.Restart");
+            using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterResource.Failover");
             scope.Start();
             try
             {
@@ -438,12 +519,18 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBClustersRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _horizonDBClustersRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                HorizonDBArmOperation<HorizonDBClusterResource> operation = new HorizonDBArmOperation<HorizonDBClusterResource>(
+                    new HorizonDBClusterResourceOperationSource(Client),
+                    _horizonDBClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -455,19 +542,19 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Restarts a HorizonDB cluster.
+        /// Triggers failover within the cluster's designated read-write pool. HorizonDB selects the replacement node using the same eligibility and node-selection rules as automatic failover. The request fails with 409 Conflict when the designated pool is not eligible for failover or another conflicting operation is in progress.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/restart. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/failover. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbClusters_Restart. </description>
+        /// <description> Clusters_Failover. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -477,9 +564,9 @@ namespace Azure.ResourceManager.HorizonDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Restart(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HorizonDBClusterResource> Failover(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterResource.Restart");
+            using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterResource.Failover");
             scope.Start();
             try
             {
@@ -487,208 +574,18 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBClustersRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _horizonDBClustersRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                HorizonDBArmOperation<HorizonDBClusterResource> operation = new HorizonDBArmOperation<HorizonDBClusterResource>(
+                    new HorizonDBClusterResourceOperationSource(Client),
+                    _horizonDBClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Starts a stopped HorizonDB cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/start. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HorizonDbClusters_Start. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDBClusterResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterResource.Start");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _horizonDBClustersRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Starts a stopped HorizonDB cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/start. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HorizonDbClusters_Start. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDBClusterResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterResource.Start");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _horizonDBClustersRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Stops a running HorizonDB cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/stop. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HorizonDbClusters_Stop. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDBClusterResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> StopAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterResource.Stop");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _horizonDBClustersRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Stops a running HorizonDB cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/stop. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HorizonDbClusters_Stop. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDBClusterResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Stop(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterResource.Stop");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _horizonDBClustersRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }
@@ -1070,37 +967,223 @@ namespace Azure.ResourceManager.HorizonDB
             return GetHorizonDBPrivateLinkResources().Get(groupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HorizonDBAdministrators in the <see cref="HorizonDBClusterResource"/>. </summary>
-        /// <returns> An object representing collection of HorizonDBAdministrators and their operations over a HorizonDBAdministratorResource. </returns>
-        public virtual HorizonDBAdministratorCollection GetHorizonDBAdministrators()
+        /// <summary> Gets a collection of MicrosoftEntraAdministrators in the <see cref="HorizonDBClusterResource"/>. </summary>
+        /// <returns> An object representing collection of MicrosoftEntraAdministrators and their operations over a MicrosoftEntraAdministratorResource. </returns>
+        public virtual MicrosoftEntraAdministratorCollection GetMicrosoftEntraAdministrators()
         {
-            return GetCachedClient(client => new HorizonDBAdministratorCollection(client, Id));
+            return GetCachedClient(client => new MicrosoftEntraAdministratorCollection(client, Id));
         }
 
-        /// <summary> Gets information about a HorizonDB administrator. </summary>
-        /// <param name="objectId"> The Entra ID object identifier of the principal (an RFC 4122 GUID). </param>
+        /// <summary> Gets information about a PostgreSQL role that is a member of azure_pg_admin and mapped to a Microsoft Entra principal. </summary>
+        /// <param name="objectId"> The Microsoft Entra object identifier of the principal mapped to the PostgreSQL role, represented as an RFC 4122 GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HorizonDBAdministratorResource>> GetHorizonDBAdministratorAsync(string objectId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MicrosoftEntraAdministratorResource>> GetMicrosoftEntraAdministratorAsync(string objectId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
 
-            return await GetHorizonDBAdministrators().GetAsync(objectId, cancellationToken).ConfigureAwait(false);
+            return await GetMicrosoftEntraAdministrators().GetAsync(objectId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets information about a HorizonDB administrator. </summary>
-        /// <param name="objectId"> The Entra ID object identifier of the principal (an RFC 4122 GUID). </param>
+        /// <summary> Gets information about a PostgreSQL role that is a member of azure_pg_admin and mapped to a Microsoft Entra principal. </summary>
+        /// <param name="objectId"> The Microsoft Entra object identifier of the principal mapped to the PostgreSQL role, represented as an RFC 4122 GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HorizonDBAdministratorResource> GetHorizonDBAdministrator(string objectId, CancellationToken cancellationToken = default)
+        public virtual Response<MicrosoftEntraAdministratorResource> GetMicrosoftEntraAdministrator(string objectId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
 
-            return GetHorizonDBAdministrators().Get(objectId, cancellationToken);
+            return GetMicrosoftEntraAdministrators().Get(objectId, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PasswordAuthenticationResource"/> along with the instance operations that can be performed on it in the <see cref="HorizonDBClusterResource"/>. </summary>
+        /// <returns> Returns a <see cref="PasswordAuthenticationResource"/> object. </returns>
+        public virtual PasswordAuthenticationResource GetPasswordAuthentication()
+        {
+            return new PasswordAuthenticationResource(Client, Id.AppendChildResource("authentications", "passwordMethod"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="MicrosoftEntraAuthenticationResource"/> along with the instance operations that can be performed on it in the <see cref="HorizonDBClusterResource"/>. </summary>
+        /// <returns> Returns a <see cref="MicrosoftEntraAuthenticationResource"/> object. </returns>
+        public virtual MicrosoftEntraAuthenticationResource GetMicrosoftEntraAuthentication()
+        {
+            return new MicrosoftEntraAuthenticationResource(Client, Id.AppendChildResource("authentications", "microsoftEntra"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChangeDataCaptureCapabilityResource"/> along with the instance operations that can be performed on it in the <see cref="HorizonDBClusterResource"/>. </summary>
+        /// <returns> Returns a <see cref="ChangeDataCaptureCapabilityResource"/> object. </returns>
+        public virtual ChangeDataCaptureCapabilityResource GetChangeDataCaptureCapability()
+        {
+            return new ChangeDataCaptureCapabilityResource(Client, Id.AppendChildResource("changeDataCapture", "default"));
+        }
+
+        /// <summary> Gets a collection of ChangeDataCaptureDestinations in the <see cref="HorizonDBClusterResource"/>. </summary>
+        /// <returns> An object representing collection of ChangeDataCaptureDestinations and their operations over a ChangeDataCaptureDestinationResource. </returns>
+        public virtual ChangeDataCaptureDestinationCollection GetChangeDataCaptureDestinations()
+        {
+            return GetCachedClient(client => new ChangeDataCaptureDestinationCollection(client, Id));
+        }
+
+        /// <summary> Gets a change data capture destination. </summary>
+        /// <param name="destinationName"> The caller-selected name of the change data capture destination. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="destinationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="destinationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ChangeDataCaptureDestinationResource>> GetChangeDataCaptureDestinationAsync(string destinationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(destinationName, nameof(destinationName));
+
+            return await GetChangeDataCaptureDestinations().GetAsync(destinationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a change data capture destination. </summary>
+        /// <param name="destinationName"> The caller-selected name of the change data capture destination. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="destinationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="destinationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ChangeDataCaptureDestinationResource> GetChangeDataCaptureDestination(string destinationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(destinationName, nameof(destinationName));
+
+            return GetChangeDataCaptureDestinations().Get(destinationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ChangeDataCaptureConfigurations in the <see cref="HorizonDBClusterResource"/>. </summary>
+        /// <returns> An object representing collection of ChangeDataCaptureConfigurations and their operations over a ChangeDataCaptureConfigurationResource. </returns>
+        public virtual ChangeDataCaptureConfigurationCollection GetChangeDataCaptureConfigurations()
+        {
+            return GetCachedClient(client => new ChangeDataCaptureConfigurationCollection(client, Id));
+        }
+
+        /// <summary> Gets a change data capture configuration. </summary>
+        /// <param name="configurationName"> The caller-selected ARM-safe name of the change data capture configuration. The exact PostgreSQL database name is stored in properties.databaseName. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ChangeDataCaptureConfigurationResource>> GetChangeDataCaptureConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            return await GetChangeDataCaptureConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a change data capture configuration. </summary>
+        /// <param name="configurationName"> The caller-selected ARM-safe name of the change data capture configuration. The exact PostgreSQL database name is stored in properties.databaseName. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ChangeDataCaptureConfigurationResource> GetChangeDataCaptureConfiguration(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            return GetChangeDataCaptureConfigurations().Get(configurationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of Endpoints in the <see cref="HorizonDBClusterResource"/>. </summary>
+        /// <returns> An object representing collection of Endpoints and their operations over a EndpointResource. </returns>
+        public virtual EndpointCollection GetEndpoints()
+        {
+            return GetCachedClient(client => new EndpointCollection(client, Id));
+        }
+
+        /// <summary> Gets information about a service-generated HorizonDB Cluster- or Pool-scoped Endpoint. </summary>
+        /// <param name="endpointName"> The platform-assigned name of the HorizonDB endpoint. A Cluster-scoped ReadWrite Endpoint has exactly the same name as its associated Cluster. A Pool-scoped Endpoint has exactly the same name as its associated Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EndpointResource>> GetEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return await GetEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets information about a service-generated HorizonDB Cluster- or Pool-scoped Endpoint. </summary>
+        /// <param name="endpointName"> The platform-assigned name of the HorizonDB endpoint. A Cluster-scoped ReadWrite Endpoint has exactly the same name as its associated Cluster. A Pool-scoped Endpoint has exactly the same name as its associated Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EndpointResource> GetEndpoint(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return GetEndpoints().Get(endpointName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of LogCaptureConfigurations in the <see cref="HorizonDBClusterResource"/>. </summary>
+        /// <returns> An object representing collection of LogCaptureConfigurations and their operations over a LogCaptureConfigurationResource. </returns>
+        public virtual LogCaptureConfigurationCollection GetLogCaptureConfigurations()
+        {
+            return GetCachedClient(client => new LogCaptureConfigurationCollection(client, Id));
+        }
+
+        /// <summary> Gets a log capture configuration for a HorizonDB cluster. </summary>
+        /// <param name="logCaptureConfigurationName"> The name of the LogCaptureConfiguration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="logCaptureConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logCaptureConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LogCaptureConfigurationResource>> GetLogCaptureConfigurationAsync(string logCaptureConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(logCaptureConfigurationName, nameof(logCaptureConfigurationName));
+
+            return await GetLogCaptureConfigurations().GetAsync(logCaptureConfigurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a log capture configuration for a HorizonDB cluster. </summary>
+        /// <param name="logCaptureConfigurationName"> The name of the LogCaptureConfiguration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="logCaptureConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logCaptureConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LogCaptureConfigurationResource> GetLogCaptureConfiguration(string logCaptureConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(logCaptureConfigurationName, nameof(logCaptureConfigurationName));
+
+            return GetLogCaptureConfigurations().Get(logCaptureConfigurationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of LogFiles in the <see cref="HorizonDBClusterResource"/>. </summary>
+        /// <returns> An object representing collection of LogFiles and their operations over a LogFileResource. </returns>
+        public virtual LogFileCollection GetLogFiles()
+        {
+            return GetCachedClient(client => new LogFileCollection(client, Id));
+        }
+
+        /// <summary> Gets metadata for a captured HorizonDB log file. </summary>
+        /// <param name="logFileName"> The name of the LogFile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="logFileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logFileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LogFileResource>> GetLogFileAsync(string logFileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(logFileName, nameof(logFileName));
+
+            return await GetLogFiles().GetAsync(logFileName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets metadata for a captured HorizonDB log file. </summary>
+        /// <param name="logFileName"> The name of the LogFile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="logFileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logFileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LogFileResource> GetLogFile(string logFileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(logFileName, nameof(logFileName));
+
+            return GetLogFiles().Get(logFileName, cancellationToken);
         }
     }
 }

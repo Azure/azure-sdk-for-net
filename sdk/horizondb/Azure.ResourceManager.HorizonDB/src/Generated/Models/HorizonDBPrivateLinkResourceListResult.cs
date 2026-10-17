@@ -12,21 +12,21 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> The response of a HorizonDbPrivateLinkResource list operation. </summary>
+    /// <summary> The response of a PrivateLinkResource list operation. </summary>
     internal partial class HorizonDBPrivateLinkResourceListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateLinkResourceListResult"/>. </summary>
-        /// <param name="value"> The HorizonDbPrivateLinkResource items on this page. </param>
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
         internal HorizonDBPrivateLinkResourceListResult(IEnumerable<HorizonDBPrivateLinkResourceData> value)
         {
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateLinkResourceListResult"/>. </summary>
-        /// <param name="value"> The HorizonDbPrivateLinkResource items on this page. </param>
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal HorizonDBPrivateLinkResourceListResult(IList<HorizonDBPrivateLinkResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The HorizonDbPrivateLinkResource items on this page. </summary>
+        /// <summary> The PrivateLinkResource items on this page. </summary>
         public IList<HorizonDBPrivateLinkResourceData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>

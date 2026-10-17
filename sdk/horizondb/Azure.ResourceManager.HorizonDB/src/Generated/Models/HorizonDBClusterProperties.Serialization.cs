@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
     /// <summary> Properties of a HorizonDB cluster. </summary>
     public partial class HorizonDBClusterProperties : IJsonModel<HorizonDBClusterProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterProperties"/> for deserialization. </summary>
-        internal HorizonDBClusterProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual HorizonDBClusterProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -80,102 +75,65 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 throw new FormatException($"The model {nameof(HorizonDBClusterProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("administratorLogin"u8);
-            writer.WriteStringValue(AdministratorLogin);
-            if (Optional.IsDefined(AdministratorLoginPassword))
+            if (Optional.IsDefined(PostgreSqlVersion))
             {
-                writer.WritePropertyName("administratorLoginPassword"u8);
-                writer.WriteStringValue(AdministratorLoginPassword);
+                writer.WritePropertyName("postgreSqlVersion"u8);
+                writer.WriteStringValue(PostgreSqlVersion.Value.ToString());
             }
-            if (Optional.IsDefined(Version))
+            if (Optional.IsDefined(CreationMode))
             {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
+                writer.WritePropertyName("creationMode"u8);
+                writer.WriteStringValue(CreationMode.Value.ToString());
             }
-            if (Optional.IsDefined(CreateMode))
+            if (Optional.IsDefined(PointInTimeUtc))
             {
-                writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
+                writer.WritePropertyName("pointInTimeUtc"u8);
+                writer.WriteStringValue(PointInTimeUtc.Value, "O");
             }
-            if (Optional.IsDefined(PointInTimeUtcOn))
+            if (Optional.IsDefined(CreationSourceClusterResourceId))
             {
-                writer.WritePropertyName("pointInTimeUTC"u8);
-                writer.WriteStringValue(PointInTimeUtcOn.Value, "O");
+                writer.WritePropertyName("creationSourceClusterResourceId"u8);
+                writer.WriteStringValue(CreationSourceClusterResourceId);
             }
-            if (Optional.IsDefined(SourceClusterResourceId))
+            if (Optional.IsDefined(CreationSourceClusterLocation))
             {
-                writer.WritePropertyName("sourceClusterResourceId"u8);
-                writer.WriteStringValue(SourceClusterResourceId);
-            }
-            if (Optional.IsDefined(PoolName))
-            {
-                writer.WritePropertyName("poolName"u8);
-                writer.WriteStringValue(PoolName);
-            }
-            if (Optional.IsDefined(ReplicaCount))
-            {
-                writer.WritePropertyName("replicaCount"u8);
-                writer.WriteNumberValue(ReplicaCount.Value);
-            }
-            if (Optional.IsDefined(VCores))
-            {
-                writer.WritePropertyName("vCores"u8);
-                writer.WriteNumberValue(VCores.Value);
-            }
-            if (Optional.IsDefined(ProcessorType))
-            {
-                writer.WritePropertyName("processorType"u8);
-                writer.WriteStringValue(ProcessorType);
+                writer.WritePropertyName("creationSourceClusterLocation"u8);
+                writer.WriteStringValue(CreationSourceClusterLocation);
             }
             if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
                 writer.WriteObjectValue(Network, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (Optional.IsDefined(Backup))
+            {
+                writer.WritePropertyName("backup"u8);
+                writer.WriteObjectValue(Backup, options);
+            }
+            if (Optional.IsDefined(DataEncryption))
+            {
+                writer.WritePropertyName("dataEncryption"u8);
+                writer.WriteObjectValue(DataEncryption, options);
+            }
+            if (Optional.IsDefined(AiModelManagement))
+            {
+                writer.WritePropertyName("aiModelManagement"u8);
+                writer.WriteStringValue(AiModelManagement.Value.ToString());
+            }
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedDomainName))
-            {
-                writer.WritePropertyName("fullyQualifiedDomainName"u8);
-                writer.WriteStringValue(FullyQualifiedDomainName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ReadOnlyEndpoint))
-            {
-                writer.WritePropertyName("readonlyEndpoint"u8);
-                writer.WriteStringValue(ReadOnlyEndpoint);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.ToString());
             }
-            if (Optional.IsDefined(ZonePlacementPolicy))
+            if (options.Format != "W")
             {
-                writer.WritePropertyName("zonePlacementPolicy"u8);
-                writer.WriteStringValue(ZonePlacementPolicy.Value.ToString());
-            }
-            if (Optional.IsDefined(ParameterGroup))
-            {
-                writer.WritePropertyName("parameterGroup"u8);
-                writer.WriteObjectValue(ParameterGroup, options);
-            }
-            if (Optional.IsDefined(AuthConfig))
-            {
-                writer.WritePropertyName("authConfig"u8);
-                writer.WriteObjectValue(AuthConfig, options);
-            }
-            if (Optional.IsDefined(ComputeModel))
-            {
-                writer.WritePropertyName("computeModel"u8);
-                writer.WriteObjectValue(ComputeModel, options);
-            }
-            if (Optional.IsDefined(Mirroring))
-            {
-                writer.WritePropertyName("mirroring"u8);
-                writer.WriteObjectValue(Mirroring, options);
+                writer.WritePropertyName("readWritePool"u8);
+                writer.WriteObjectValue(ReadWritePool, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -219,97 +177,60 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            string administratorLogin = default;
-            string administratorLoginPassword = default;
-            string version = default;
-            HorizonDBClusterCreateMode? createMode = default;
-            DateTimeOffset? pointInTimeUtcOn = default;
-            ResourceIdentifier sourceClusterResourceId = default;
-            string poolName = default;
-            int? replicaCount = default;
-            int? vCores = default;
-            string processorType = default;
+            PostgreSqlVersion? postgreSqlVersion = default;
+            ClusterCreateMode? creationMode = default;
+            DateTimeOffset? pointInTimeUtc = default;
+            ResourceIdentifier creationSourceClusterResourceId = default;
+            string creationSourceClusterLocation = default;
             Network network = default;
-            HorizonDBClusterState? state = default;
-            string fullyQualifiedDomainName = default;
-            string readOnlyEndpoint = default;
-            HorizonDBProvisioningState? provisioningState = default;
-            HorizonDBZonePlacementPolicy? zonePlacementPolicy = default;
-            HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default;
-            HorizonDBClusterAuthConfig authConfig = default;
-            HorizonDBComputeModel computeModel = default;
-            HorizonDBClusterMirroring mirroring = default;
+            BackupProperties backup = default;
+            HorizonDBClusterDataEncryption dataEncryption = default;
+            AiModelManagementStatus? aiModelManagement = default;
+            ClusterState state = default;
+            HorizonDBProvisioningState provisioningState = default;
+            ReadWritePoolProperties readWritePool = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("administratorLogin"u8))
-                {
-                    administratorLogin = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("administratorLoginPassword"u8))
-                {
-                    administratorLoginPassword = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("version"u8))
-                {
-                    version = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("createMode"u8))
+                if (prop.NameEquals("postgreSqlVersion"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createMode = new HorizonDBClusterCreateMode(prop.Value.GetString());
+                    postgreSqlVersion = new PostgreSqlVersion(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("pointInTimeUTC"u8))
+                if (prop.NameEquals("creationMode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pointInTimeUtcOn = prop.Value.GetDateTimeOffset("O");
+                    creationMode = new ClusterCreateMode(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("sourceClusterResourceId"u8))
+                if (prop.NameEquals("pointInTimeUtc"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceClusterResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    pointInTimeUtc = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("poolName"u8))
-                {
-                    poolName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("replicaCount"u8))
+                if (prop.NameEquals("creationSourceClusterResourceId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    replicaCount = prop.Value.GetInt32();
+                    creationSourceClusterResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("vCores"u8))
+                if (prop.NameEquals("creationSourceClusterLocation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    vCores = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("processorType"u8))
-                {
-                    processorType = prop.Value.GetString();
+                    creationSourceClusterLocation = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("network"u8))
@@ -321,77 +242,46 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     network = Network.DeserializeNetwork(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("state"u8))
+                if (prop.NameEquals("backup"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new HorizonDBClusterState(prop.Value.GetString());
+                    backup = BackupProperties.DeserializeBackupProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("fullyQualifiedDomainName"u8))
+                if (prop.NameEquals("dataEncryption"u8))
                 {
-                    fullyQualifiedDomainName = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataEncryption = HorizonDBClusterDataEncryption.DeserializeHorizonDBClusterDataEncryption(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("readonlyEndpoint"u8))
+                if (prop.NameEquals("aiModelManagement"u8))
                 {
-                    readOnlyEndpoint = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aiModelManagement = new AiModelManagementStatus(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("state"u8))
+                {
+                    state = new ClusterState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provisioningState = new HorizonDBProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("zonePlacementPolicy"u8))
+                if (prop.NameEquals("readWritePool"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    zonePlacementPolicy = new HorizonDBZonePlacementPolicy(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("parameterGroup"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    parameterGroup = HorizonDBClusterParameterGroupConnectionProperties.DeserializeHorizonDBClusterParameterGroupConnectionProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("authConfig"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    authConfig = HorizonDBClusterAuthConfig.DeserializeHorizonDBClusterAuthConfig(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("computeModel"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    computeModel = HorizonDBComputeModel.DeserializeHorizonDBComputeModel(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("mirroring"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mirroring = HorizonDBClusterMirroring.DeserializeHorizonDBClusterMirroring(prop.Value, options);
+                    readWritePool = ReadWritePoolProperties.DeserializeReadWritePoolProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -400,26 +290,18 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 }
             }
             return new HorizonDBClusterProperties(
-                administratorLogin,
-                administratorLoginPassword,
-                version,
-                createMode,
-                pointInTimeUtcOn,
-                sourceClusterResourceId,
-                poolName,
-                replicaCount,
-                vCores,
-                processorType,
+                postgreSqlVersion,
+                creationMode,
+                pointInTimeUtc,
+                creationSourceClusterResourceId,
+                creationSourceClusterLocation,
                 network,
+                backup,
+                dataEncryption,
+                aiModelManagement,
                 state,
-                fullyQualifiedDomainName,
-                readOnlyEndpoint,
                 provisioningState,
-                zonePlacementPolicy,
-                parameterGroup,
-                authConfig,
-                computeModel,
-                mirroring,
+                readWritePool,
                 additionalBinaryDataProperties);
         }
     }

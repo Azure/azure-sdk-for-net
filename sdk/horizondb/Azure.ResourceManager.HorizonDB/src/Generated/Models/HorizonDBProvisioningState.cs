@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.HorizonDB.Models
     public readonly partial struct HorizonDBProvisioningState : IEquatable<HorizonDBProvisioningState>
     {
         private readonly string _value;
-        /// <summary> Provisioning completed successfully. </summary>
+        /// <summary> Resource has been created. </summary>
         private const string SucceededValue = "Succeeded";
-        /// <summary> Provisioning failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         private const string FailedValue = "Failed";
-        /// <summary> Provisioning was canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         private const string CanceledValue = "Canceled";
-        /// <summary> Provisioning is in progress. </summary>
+        /// <summary> The HorizonDB resource operation is actively running. </summary>
         private const string InProgressValue = "InProgress";
-        /// <summary> Provisioning is in progress. </summary>
+        /// <summary> The HorizonDB resource is still provisioning. </summary>
         private const string ProvisioningValue = "Provisioning";
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBProvisioningState"/>. </summary>
@@ -36,19 +36,19 @@ namespace Azure.ResourceManager.HorizonDB.Models
             _value = value;
         }
 
-        /// <summary> Provisioning completed successfully. </summary>
+        /// <summary> Resource has been created. </summary>
         public static HorizonDBProvisioningState Succeeded { get; } = new HorizonDBProvisioningState(SucceededValue);
 
-        /// <summary> Provisioning failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static HorizonDBProvisioningState Failed { get; } = new HorizonDBProvisioningState(FailedValue);
 
-        /// <summary> Provisioning was canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static HorizonDBProvisioningState Canceled { get; } = new HorizonDBProvisioningState(CanceledValue);
 
-        /// <summary> Provisioning is in progress. </summary>
+        /// <summary> The HorizonDB resource operation is actively running. </summary>
         public static HorizonDBProvisioningState InProgress { get; } = new HorizonDBProvisioningState(InProgressValue);
 
-        /// <summary> Provisioning is in progress. </summary>
+        /// <summary> The HorizonDB resource is still provisioning. </summary>
         public static HorizonDBProvisioningState Provisioning { get; } = new HorizonDBProvisioningState(ProvisioningValue);
 
         /// <summary> Determines if two <see cref="HorizonDBProvisioningState"/> values are the same. </summary>
