@@ -1,4 +1,4 @@
-import "./specification/storage/data-plane/BlobStorage/main.tsp";
+import "./main.tsp";
 
 using Azure.Mcp;
 

@@ -10,7 +10,8 @@ using System.Text.Json.Serialization;
 namespace Storage.Blob
 {
     [JsonSerializable(typeof(ContainerCreateCommand.ContainerCreateCommandResult))]
-    [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault)]
+    [JsonSerializable(typeof(ContainerCreateRequest))]
+    [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault, UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow, RespectNullableAnnotations = true)]
     internal sealed partial class ContainerCreateJsonContext : JsonSerializerContext
     {
     }

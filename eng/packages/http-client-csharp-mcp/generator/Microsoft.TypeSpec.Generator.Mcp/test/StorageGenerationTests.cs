@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using NUnit.Framework;
 using static Microsoft.TypeSpec.Generator.Mcp.Tests.GenerationTests;
 
@@ -10,122 +9,161 @@ namespace Microsoft.TypeSpec.Generator.Mcp.Tests;
 
 public sealed class StorageGenerationTests
 {
-    [TestCase("main.tsp", "cc7a896723160ba38bc0c40caf8037ec4e3596292b99bab7b71a1568254549b3")]
-    [TestCase("client.tsp", "3adc0558d34920544a1af7191a41498b1e923178b13d7a0cc847c6cb3c74bb9c")]
-    [TestCase("Common/service.tsp", "f7cc7c985b8ec48fb70dfafea552318ff34af6497e741db6ba45322329f96874")]
-    [TestCase("Common/routes.tsp", "555f4a78dde007eaea133c138bac3ece004bd27d33974b608e248e4dae3b1147")]
-    [TestCase("Common/models.tsp", "8037b8bdbc6d628614e4ee8131016c56d458421d7c5eb2ccdbf5c61124646cc5")]
-    public void PinnedServiceSourceIsUnchanged(string relativePath, string expectedHash)
+    private string _package = null!;
+    private string _root = null!;
+    private string _cli = null!;
+
+    [OneTimeSetUp]
+    public async Task SyncPinnedServiceWithTspClient()
     {
-        var path = Path.Combine(FindPackage(), "emitter", "test", "fixtures", "specification", "storage",
-            "data-plane", "BlobStorage", relativePath.Replace('/', Path.DirectorySeparatorChar));
-        var hash = Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(path)));
-        Assert.That(hash, Is.EqualTo(expectedHash), "Update service source and its pinned provenance together, not to accommodate the MCP emitter.");
+        _package = FindPackage();
+        _root = Path.Combine(_package, "temp", "storage-" + Guid.NewGuid().ToString("N"));
+        _cli = Path.GetFullPath(Path.Combine(_package, "..", "..", "common", "tsp-client", "node_modules",
+            "@azure-tools", "typespec-client-generator-cli", "dist", "index.js"));
+        Assert.That(File.Exists(_cli), Is.True, "Run npm ci --prefix eng/common/tsp-client before Storage generation.");
+        Directory.CreateDirectory(_root);
+        IsolateBuild(_root);
+        File.Copy(Path.Combine(_package, "generator", "TestProjects", "Local", "Storage", "tsp-location.yaml"),
+            Path.Combine(_root, "tsp-location.yaml"));
+        var synced = await Run("node", _root, _cli, "sync", "--output-dir", _root);
+        Assert.That(synced.ExitCode, Is.Zero, synced.Output);
+        // Use the local emitter's package self-reference and its one pinned dependency graph.
+        foreach (var name in new[] { "package.json", "package-lock.json" })
+        {
+            File.Delete(Path.Combine(_root, "TempTypeSpecFiles", name));
+        }
+        var staged = Path.Combine(_root, "TempTypeSpecFiles", "BlobStorage");
+        File.Copy(Path.Combine(_package, "emitter", "test", "fixtures", "storage.tsp"), Path.Combine(staged, "storage.tsp"));
+        WriteConfiguration(staged, _root, "Azure.Mcp.Tools.Storage", import: true);
+    }
+
+    [OneTimeTearDown]
+    public void CleanUp()
+    {
+        if (_root is not null && Directory.Exists(_root))
+        {
+            Directory.Delete(_root, recursive: true);
+        }
     }
 
     [Test]
-    public async Task UnrelatedServiceCommandsGenerateAndExecuteWithoutStorageMappings()
+    public void ServiceSourcesAreImportedThroughTheStandardLocation()
     {
-        var package = FindPackage();
-        var root = Path.Combine(package, "temp", Guid.NewGuid().ToString("N"));
-        var source = Path.Combine(root, "src");
-        Directory.CreateDirectory(source);
+        var staged = Path.Combine(_root, "TempTypeSpecFiles", "BlobStorage");
+        foreach (var relative in new[] { "main.tsp", "client.tsp", "Common/service.tsp", "Common/routes.tsp", "Common/models.tsp" })
+        {
+            Assert.That(File.Exists(Path.Combine(staged, relative.Replace('/', Path.DirectorySeparatorChar))), Is.True);
+        }
+        var vendored = Path.Combine(_package, "emitter", "test", "fixtures", "specification", "storage");
+        Assert.That(Directory.Exists(vendored) ? Directory.GetFiles(vendored, "*.tsp", SearchOption.AllDirectories) : [], Is.Empty,
+            "Do not vendor upstream TypeSpec when tsp-client owns the source revision.");
+    }
+
+    [Test]
+    public async Task FirstGenerationEmitsRestServiceBeforeAnyConvenienceCodeExists()
+    {
+        var source = await CreateConsumer(_root, "Azure.Mcp.Tools.Storage");
+        var emitted = await Generate();
+        Assert.That(emitted.ExitCode, Is.Zero, emitted.Output);
+        var generated = Path.Combine(source, "Generated");
+        Assert.That(Directory.GetFiles(generated, "*.cs").Select(Path.GetFileName), Is.EquivalentTo(new[]
+        {
+            "ContainerCreateCommand.cs", "ContainerCreateCatalog.cs", "ContainerCreateOptions.cs", "ContainerCreateJsonContext.cs",
+            "ContainerCreateRequest.cs", "ContainerCreateResponse.cs", "ContainerCreateService.cs"
+        }));
+        var service = File.ReadAllText(Path.Combine(generated, "ContainerCreateService.cs"));
+        Assert.That(service, Does.Contain("public partial Task<ContainerCreateResponse> CreateContainerAsync("));
+        Assert.That(service, Does.Not.Contain("NotImplementedException").And.Not.Contain("IStorageService"));
+        var request = File.ReadAllText(Path.Combine(generated, "ContainerCreateRequest.cs"));
+        Assert.That(request, Does.Contain("required Uri Url").And.Contain("Dictionary<string, string>? Metadata")
+            .And.Contain("string? Access").And.Contain("int? Timeout").And.Contain("\"2026-12-06\""));
+        Assert.That(File.ReadAllText(Path.Combine(generated, "ContainerCreateResponse.cs")), Does.Not.Contain(" Body "));
+        var incomplete = await Run("dotnet", source, "build", "--nologo", "--verbosity", "quiet");
+        Assert.That(incomplete.ExitCode, Is.Not.Zero);
+        Assert.That(incomplete.Output, Does.Contain("CS8795"), "An implementation must be required, not a successful no-op.");
+
+        var partialPath = Path.Combine(source, "ContainerCreateService.cs");
+        File.WriteAllText(partialPath, StoragePartial);
+        File.WriteAllText(Path.Combine(source, "Program.cs"), StorageProgram);
+        EnableExecutable(source);
+        var regenerated = await Generate();
+        Assert.That(regenerated.ExitCode, Is.Zero, regenerated.Output);
+        Assert.That(File.ReadAllText(partialPath), Is.EqualTo(StoragePartial), "Generation must preserve the handwritten partial.");
+        var compiled = await Run("dotnet", source, "build", "--nologo", "--verbosity", "quiet");
+        Assert.That(compiled.ExitCode, Is.Zero, compiled.Output);
+        var executed = await Run("dotnet", source, "run", "--no-build");
+        Assert.That(executed.ExitCode, Is.Zero, executed.Output);
+        Assert.That(executed.Output, Does.Contain("Generated Storage service contract executed."));
+        var bytes = Directory.GetFiles(generated, "*.cs").ToDictionary(file => Path.GetFileName(file)!, File.ReadAllBytes);
+        var verified = await Generate();
+        Assert.That(verified.ExitCode, Is.Zero, verified.Output);
+        foreach (var file in Directory.GetFiles(generated, "*.cs"))
+        {
+            Assert.That(File.ReadAllBytes(file), Is.EqualTo(bytes[Path.GetFileName(file)]), "Regeneration must be byte-stable.");
+        }
+        VerifyCheckedInOutput(_package, generated);
+    }
+
+    [Test]
+    public async Task UnrelatedTypedResponseAndRecursiveModelNeedNoSourceHandler()
+    {
+        var root = Path.Combine(_package, "temp", Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
         try
         {
-            CreateLocalCompilerAndHttpSentinels(root);
-            File.WriteAllText(Path.Combine(root, "Directory.Build.props"), "<Project />");
-            File.WriteAllText(Path.Combine(root, "Directory.Build.targets"), "<Project />");
-            File.WriteAllText(Path.Combine(root, "Directory.Packages.props"), "<Project />");
-            await BuildMetadata(root, Path.Combine(source, "bin", "Debug", "net10.0"), "Microsoft.Mcp.Core", McpCoreTypes);
-            File.WriteAllText(Path.Combine(source, "Example.csproj"), """
-                <Project Sdk="Microsoft.NET.Sdk">
-                  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net10.0</TargetFramework></PropertyGroup>
-                  <ItemGroup><Reference Include="Microsoft.Mcp.Core" HintPath="bin/Debug/net10.0/Microsoft.Mcp.Core.dll" /></ItemGroup>
-                </Project>
-                """);
-            File.WriteAllText(Path.Combine(source, "Handler.cs"), """
-                using System.Threading;
-                using System.Threading.Tasks;
-                namespace Example;
-                public sealed class Model { public string Name { get; set; } }
-                public interface IService
-                {
-                    /// <param name="name">Resource name.</param>
-                    /// <param name="limit">Optional limit.</param>
-                    Task<Model> GetResourceAsync(string name,int? limit,CancellationToken token);
-                    /// <param name="name">Resource name.</param>
-                    /// <param name="force">Whether to force deletion.</param>
-                    Task<Model> RemoveQueueAsync(string name,bool force,CancellationToken token);
-                }
-                public sealed class Service : IService
-                {
-                    public Task<Model> GetResourceAsync(string name,int? limit,CancellationToken token) => Task.FromResult(new Model { Name=name+limit });
-                    public Task<Model> RemoveQueueAsync(string name,bool force,CancellationToken token) => Task.FromResult(new Model { Name=name+force });
-                }
-                """);
-            File.WriteAllText(Path.Combine(source, "Program.cs"), """
-                using System;
-                using System.Threading;
-                using System.Threading.Tasks;
-                using Example;
-                using Microsoft.Extensions.Logging;
-                using Microsoft.Mcp.Core.Models.Command;
-                var service = new Service();
-                var read = await new ResourceGetCommand(new Logger<ResourceGetCommand>(),service)
-                    .ExecuteAsync(new CommandContext(),new ResourceGetOptions { Name="secret",Limit=3 },CancellationToken.None);
-                var deleted = await new QueueRemoveCommand(new Logger<QueueRemoveCommand>(),service)
-                    .ExecuteAsync(new CommandContext(),new QueueRemoveOptions { Name="queue",Force=true },CancellationToken.None);
-                if(read.Results?.Json != "{\"resource\":{\"name\":\"secret3\"}}" ||
-                    deleted.Results?.Json != "{\"queue\":{\"name\":\"queueTrue\"}}") throw new Exception("Command dispatch/result mismatch.");
-                if(!ResourceGetCatalog.ReadOnly || !QueueRemoveCatalog.Destructive) throw new Exception("HTTP safety defaults changed.");
-                Console.WriteLine("Unrelated commands executed.");
-                sealed class Logger<T> : ILogger<T> { public void Error(Exception exception,string message) => throw new Exception(message,exception); }
-                """);
+            IsolateBuild(root);
+            var source = await CreateConsumer(root, "Example");
             File.WriteAllText(Path.Combine(root, "main.tsp"), """
                 using TypeSpec.Http;
                 using Azure.Mcp;
-                @service
-                namespace Example;
+                @service namespace Example;
+                model Item { name: string; child?: Item; }
                 interface Resource {
                   @get @route("/resources/{name}")
                   @tool("12b53c92-f2cf-4a1a-880d-c6f44a0d49d6", "example resource get", "Get resource")
-                  get(@path name: string,@query limit?: int32): void;
-                }
-                interface Queue {
-                  @delete @route("/queues/{name}")
-                  @tool("b5b72a82-d8fc-43b4-ad65-06fd8388dd19", "example queue delete", "Delete queue")
-                  remove(@path name: string,@query force: boolean): void;
+                  get(@path name: string, @query limit?: int32): Item;
                 }
                 """);
-            File.WriteAllText(Path.Combine(root, "tspconfig.yaml"), JsonSerializer.Serialize(new
-            {
-                emit = new[] { package },
-                options = new Dictionary<string, object>
-                {
-                    ["@azure-typespec/mcp-tools"] = new Dictionary<string, object>
-                    {
-                        ["emitter-output-dir"] = root, ["package-name"] = "Example", ["new-project"] = false
-                    }
-                }
-            }));
-            var emitted = await Run("node", root,
-                Path.Combine(package, "node_modules", "@typespec", "compiler", "cmd", "tsp.js"),
-                "compile", "main.tsp", "--import", Path.Combine(package, "lib", "main.tsp"));
+            WriteConfiguration(root, root, "Example", import: false);
+            var emitted = await Run("node", root, Path.Combine(_package, "node_modules", "@typespec", "compiler", "cmd", "tsp.js"),
+                "compile", "main.tsp", "--import", Path.Combine(_package, "lib", "main.tsp"));
             Assert.That(emitted.ExitCode, Is.Zero, emitted.Output);
             Assert.That(Directory.GetFiles(Path.Combine(source, "Generated"), "*.cs"), Has.Length.EqualTo(8));
+            Assert.That(File.Exists(Path.Combine(root, "tspMcpCodeModel.json")), Is.False);
+            File.WriteAllText(Path.Combine(source, "Service.cs"), """
+                namespace Example;
+                public partial class ResourceGetService
+                {
+                    public partial Task<ResourceGetResponse> GetResourceAsync(ResourceGetRequest request,CancellationToken cancellationToken)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return Task.FromResult(new ResourceGetResponse {
+                            Status=200, Body=new Item { Name=request.Name+request.Limit,Child=new Item { Name="child" } }
+                        });
+                    }
+                }
+                """);
+            File.WriteAllText(Path.Combine(source, "Program.cs"), """
+                using Example;
+                using Microsoft.Extensions.Logging;
+                using Microsoft.Mcp.Core.Models.Command;
+                using System.Text.Json;
+                const string json="{\"endpoint\":\"https://example.test\",\"name\":\"item\",\"limit\":3}";
+                var request=JsonSerializer.Deserialize(json,ResourceGetJsonContext.Default.ResourceGetRequest)!;
+                if(request.Name!="item" || request.Limit!=3) throw new Exception("Typed request deserialization changed.");
+                var response=await new ResourceGetCommand(new Logger(),new ResourceGetService()).ExecuteAsync(
+                    new CommandContext(),new ResourceGetOptions { Request=json },CancellationToken.None);
+                if(response.Results?.Json!="{\"resource\":{\"status\":200,\"body\":{\"name\":\"item3\",\"child\":{\"name\":\"child\"}}}}")
+                    throw new Exception(response.Results?.Json);
+                Console.WriteLine("Unrelated typed contract executed.");
+                sealed class Logger : ILogger<ResourceGetCommand> { public void Error(Exception exception,string message) => throw new Exception(message,exception); }
+                """);
+            EnableExecutable(source);
             var compiled = await Run("dotnet", source, "build", "--nologo", "--verbosity", "quiet");
             Assert.That(compiled.ExitCode, Is.Zero, compiled.Output);
             var executed = await Run("dotnet", source, "run", "--no-build");
             Assert.That(executed.ExitCode, Is.Zero, executed.Output);
-            Assert.That(executed.Output, Does.Contain("Unrelated commands executed."));
-            var handlerPath = Path.Combine(source, "Handler.cs");
-            File.WriteAllText(handlerPath, File.ReadAllText(handlerPath).Replace("int? limit", "Model limit", StringComparison.Ordinal));
-            var failed = await Run("node", root,
-                Path.Combine(package, "node_modules", "@typespec", "compiler", "cmd", "tsp.js"),
-                "compile", "main.tsp", "--import", Path.Combine(package, "lib", "main.tsp"));
-            Assert.That(failed.ExitCode, Is.Not.Zero, failed.Output);
-            Assert.That(failed.Output, Does.Contain("only primitive options"));
-            Assert.That(File.Exists(Path.Combine(root, "tspMcpCodeModel.json")), Is.False);
+            Assert.That(executed.Output, Does.Contain("Unrelated typed contract executed."));
         }
         finally
         {
@@ -133,90 +171,65 @@ public sealed class StorageGenerationTests
         }
     }
 
-    [Test]
-    public async Task ExistingServiceWithCompactOverlayGeneratesCompleteCommand()
+    private Task<(int ExitCode, string Output)> Generate() =>
+        Run("node", _root, _cli, "generate", "--output-dir", _root, "--skip-install", "--save-inputs", "--debug");
+
+    private static void IsolateBuild(string root)
     {
-        var package = FindPackage();
-        var root = Path.Combine(package, "temp", Guid.NewGuid().ToString("N"));
+        foreach (var name in new[] { "Directory.Build.props", "Directory.Build.targets", "Directory.Packages.props" })
+        {
+            File.WriteAllText(Path.Combine(root, name), "<Project />");
+        }
+    }
+
+    private static async Task<string> CreateConsumer(string root, string name)
+    {
         var source = Path.Combine(root, "src");
         Directory.CreateDirectory(source);
-        try
+        var output = Path.Combine(source, "bin", "Debug", "net10.0");
+        var metadata = Path.Combine(root, "metadata");
+        Directory.CreateDirectory(metadata);
+        File.WriteAllText(Path.Combine(metadata, "Microsoft.Mcp.Core.csproj"), """
+            <Project Sdk="Microsoft.NET.Sdk">
+              <PropertyGroup><TargetFramework>net10.0</TargetFramework><Nullable>enable</Nullable><ImplicitUsings>enable</ImplicitUsings></PropertyGroup>
+            </Project>
+            """);
+        File.WriteAllText(Path.Combine(metadata, "Types.cs"), McpCoreTypes);
+        var built = await Run("dotnet", metadata, "build", "--output", output, "--nologo", "--verbosity", "quiet");
+        Assert.That(built.ExitCode, Is.Zero, built.Output);
+        File.WriteAllText(Path.Combine(source, name + ".csproj"), """
+            <Project Sdk="Microsoft.NET.Sdk">
+              <PropertyGroup>
+                <OutputType>Library</OutputType><TargetFramework>net10.0</TargetFramework>
+                <Nullable>enable</Nullable><ImplicitUsings>enable</ImplicitUsings><TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+              </PropertyGroup>
+              <ItemGroup><Reference Include="Microsoft.Mcp.Core" HintPath="bin/Debug/net10.0/Microsoft.Mcp.Core.dll" /></ItemGroup>
+            </Project>
+            """);
+        return source;
+    }
+
+    private static void EnableExecutable(string source)
+    {
+        var project = Directory.GetFiles(source, "*.csproj").Single();
+        File.WriteAllText(project, File.ReadAllText(project).Replace("<OutputType>Library", "<OutputType>Exe", StringComparison.Ordinal));
+    }
+
+    private static void WriteConfiguration(string directory, string output, string packageName, bool import)
+    {
+        File.WriteAllText(Path.Combine(directory, "tspconfig.yaml"), JsonSerializer.Serialize(new
         {
-            File.WriteAllText(Path.Combine(root, "Directory.Build.props"), "<Project />");
-            File.WriteAllText(Path.Combine(root, "Directory.Build.targets"), "<Project />");
-            File.WriteAllText(Path.Combine(root, "Directory.Packages.props"), "<Project />");
-            await BuildMetadata(root, Path.Combine(source, "bin", "Debug", "net10.0"), "Microsoft.Mcp.Core", McpCoreTypes);
-            await BuildMetadata(root, Path.Combine(source, "bin", "Debug", "net10.0"), "Azure.Mcp.Core", AzureCoreTypes);
-            File.WriteAllText(Path.Combine(source, "Azure.Mcp.Tools.Storage.csproj"), """
-                <Project Sdk="Microsoft.NET.Sdk">
-                  <PropertyGroup>
-                    <OutputType>Exe</OutputType>
-                    <TargetFramework>net10.0</TargetFramework>
-                    <Nullable>enable</Nullable>
-                    <ImplicitUsings>enable</ImplicitUsings>
-                    <DefineConstants>MCP_GENERATED</DefineConstants>
-                  </PropertyGroup>
-                  <ItemGroup>
-                    <Reference Include="Microsoft.Mcp.Core" HintPath="bin/Debug/net10.0/Microsoft.Mcp.Core.dll" />
-                    <Reference Include="Azure.Mcp.Core" HintPath="bin/Debug/net10.0/Azure.Mcp.Core.dll" />
-                  </ItemGroup>
-                </Project>
-                """);
-            File.WriteAllText(Path.Combine(source, "ExistingTypes.cs"), ExistingTypes);
-            File.WriteAllText(Path.Combine(source, "Handler.cs"), HandlerTypes);
-            File.WriteAllText(Path.Combine(source, "Program.cs"), CompleteCommandProgram);
-            var fixtures = Path.Combine(package, "emitter", "test", "fixtures");
-            foreach (var file in Directory.GetFiles(Path.Combine(fixtures, "specification"), "*.tsp", SearchOption.AllDirectories))
+            imports = import ? new[] { Path.Combine(FindPackage(), "lib", "main.tsp") } : [],
+            emit = new[] { "@azure-typespec/mcp-tools" },
+            options = new Dictionary<string, object>
             {
-                var target = Path.Combine(root, Path.GetRelativePath(fixtures, file));
-                Directory.CreateDirectory(Path.GetDirectoryName(target)!);
-                File.Copy(file, target);
-            }
-            var overlay = File.ReadAllText(Path.Combine(fixtures, "storage.tsp"));
-            File.WriteAllText(Path.Combine(root, "storage.tsp"), overlay);
-            File.WriteAllText(Path.Combine(root, "tspconfig.yaml"), JsonSerializer.Serialize(new
-            {
-                emit = new[] { package },
-                options = new Dictionary<string, object>
+                ["@azure-typespec/mcp-tools"] = new Dictionary<string, object>
                 {
-                    ["@azure-typespec/mcp-tools"] = new Dictionary<string, object>
-                    {
-                        ["emitter-output-dir"] = root,
-                        ["package-name"] = "Azure.Mcp.Tools.Storage",
-                        ["new-project"] = false,
-                        ["license"] = new { name = "MIT License", company = "Microsoft Corporation" }
-                    }
+                    ["emitter-output-dir"] = output, ["package-name"] = packageName, ["new-project"] = false,
+                    ["license"] = new { name = "MIT License", company = "Microsoft Corporation" }
                 }
-            }));
-            var emitted = await Run("node", root,
-                Path.Combine(package, "node_modules", "@typespec", "compiler", "cmd", "tsp.js"),
-                "compile", "storage.tsp", "--import", Path.Combine(package, "lib", "main.tsp"));
-            Assert.That(emitted.ExitCode, Is.Zero, emitted.Output);
-            var generated = Path.Combine(source, "Generated");
-            Assert.That(Directory.GetFiles(generated, "*.cs").Select(Path.GetFileName), Is.EquivalentTo(new[]
-            {
-                "ContainerCreateCommand.cs", "ContainerCreateCatalog.cs", "ContainerCreateOptions.cs", "ContainerCreateJsonContext.cs"
-            }));
-            var command = File.ReadAllText(Path.Combine(generated, "ContainerCreateCommand.cs"));
-            Assert.That(command, Does.Contain("class ContainerCreateCommand(").And.Contain("record ContainerCreateCommandResult"));
-            Assert.That(command, Does.Contain("namespace Storage.Blob"));
-            Assert.That(command, Does.Contain("record ContainerCreateCommandResult(ContainerInfo Container);"));
-            Assert.That(command, Does.Contain("handler.CreateContainer(options.Account, options.Container, options.Tenant, cancellationToken)"));
-            var generatedCharacters = Directory.GetFiles(generated, "*.cs").Sum(file => Regex.Replace(File.ReadAllText(file), @"\s+", "").Length);
-            Assert.That(Regex.Replace(overlay, @"\s+", "").Length, Is.LessThan(generatedCharacters),
-                "MCP authoring must be smaller than its complete generated output, independently of formatting.");
-            Assert.That(File.Exists(Path.Combine(root, "tspMcpCodeModel.json")), Is.False);
-            var compiled = await Run("dotnet", source, "build", "--nologo", "--verbosity", "quiet");
-            Assert.That(compiled.ExitCode, Is.Zero, compiled.Output);
-            var executed = await Run("dotnet", source, "run", "--no-build");
-            Assert.That(executed.ExitCode, Is.Zero, executed.Output);
-            Assert.That(executed.Output, Does.Contain("Complete generated Storage command executed successfully."));
-            VerifyCheckedInOutput(package, generated);
-        }
-        finally
-        {
-            Directory.Delete(root, recursive: true);
-        }
+            }
+        }));
     }
 
     private static void VerifyCheckedInOutput(string package, string generated)
@@ -236,43 +249,90 @@ public sealed class StorageGenerationTests
                 File.Copy(file, Path.Combine(expected, Path.GetFileName(file)), overwrite: true);
             }
         }
-        Assert.That(Directory.Exists(expected), Is.True, "Run npm run generate:storage to create the checked-in output.");
         Assert.That(Directory.GetFiles(expected, "*.cs").Select(Path.GetFileName),
-            Is.EquivalentTo(files.Select(Path.GetFileName)), "The checked-in generated file inventory changed.");
+            Is.EquivalentTo(files.Select(Path.GetFileName)), "Run npm run generate:storage to update the generated inventory.");
         foreach (var file in files)
         {
-            Assert.That(File.ReadAllBytes(file),
-                Is.EqualTo(File.ReadAllBytes(Path.Combine(expected, Path.GetFileName(file)))),
-                $"{Path.GetFileName(file)} differs from the checked-in output. Run npm run generate:storage to update it.");
+            Assert.That(File.ReadAllBytes(file), Is.EqualTo(File.ReadAllBytes(Path.Combine(expected, Path.GetFileName(file)))),
+                $"{Path.GetFileName(file)} differs. Run npm run generate:storage.");
         }
     }
 
-    private static async Task BuildMetadata(string root, string output, string name, string code)
-    {
-        var directory = Path.Combine(root, "metadata", name);
-        Directory.CreateDirectory(directory);
-        File.WriteAllText(Path.Combine(directory, name + ".csproj"), """
-            <Project Sdk="Microsoft.NET.Sdk">
-              <PropertyGroup>
-                <TargetFramework>net10.0</TargetFramework>
-                <Nullable>enable</Nullable>
-                <ImplicitUsings>enable</ImplicitUsings>
-              </PropertyGroup>
-            </Project>
-            """);
-        File.WriteAllText(Path.Combine(directory, "Types.cs"), code);
-        var built = await Run("dotnet", directory, "build", "--output", output, "--nologo", "--verbosity", "quiet");
-        Assert.That(built.ExitCode, Is.Zero, built.Output);
-    }
+    private const string StoragePartial = """
+        namespace Storage.Blob;
+        public partial class ContainerCreateService
+        {
+            public ContainerCreateRequest? LastRequest;
+            public CancellationToken Token;
+            public Exception? Failure;
+            public int Calls;
+            public partial Task<ContainerCreateResponse> CreateContainerAsync(ContainerCreateRequest request,CancellationToken cancellationToken)
+            {
+                Calls++;
+                LastRequest=request;
+                Token=cancellationToken;
+                return Failure is null
+                    ? Task.FromResult(new ContainerCreateResponse { Status=201, Headers=new() { ["etag"]="tag" } })
+                    : Task.FromException<ContainerCreateResponse>(Failure);
+            }
+        }
+        """;
+
+    private const string StorageProgram = """
+        using Storage.Blob;
+        using Microsoft.Extensions.Logging;
+        using Microsoft.Mcp.Core.Commands;
+        using Microsoft.Mcp.Core.Models.Command;
+        using System.Text.Json;
+        var service=new ContainerCreateService();
+        var logger=new Logger();
+        var command=new ContainerCreateCommand(logger,service);
+        using var cancellation=new CancellationTokenSource();
+        var options=new ContainerCreateOptions {
+            Request="{\"url\":\"https://account.blob.core.windows.net/container\",\"metadata\":{\"owner\":\"secret\"},\"access\":\"container\",\"timeout\":15}"
+        };
+        var context=new CommandContext();
+        var response=await command.ExecuteAsync(context,options,cancellation.Token);
+        Require(ReferenceEquals(context.Response,response),"Return actual context response.");
+        Require(service.LastRequest!.Url.AbsoluteUri=="https://account.blob.core.windows.net/container" &&
+            service.LastRequest.Metadata!["owner"]=="secret" && service.LastRequest.Timeout==15 &&
+            service.LastRequest.Access=="container" && service.LastRequest.Version=="2026-12-06" &&
+            service.Token==cancellation.Token,"REST fields, defaults, metadata and cancellation must be forwarded.");
+        Require(response.Results?.Json=="{\"container\":{\"status\":201,\"headers\":{\"etag\":\"tag\"}}}","Preserve no-body status/headers.");
+        var result=JsonSerializer.Deserialize(response.Results!.Json,ContainerCreateJsonContext.Default.ContainerCreateCommandResult)!;
+        result.Deconstruct(out var rawResponse);
+        Require(rawResponse.Status==201 && (result with { Container=new ContainerCreateResponse { Status=202 } }).Container.Status==202,
+            "Preserve positional record, init/deconstruction, and JSON roundtrip.");
+        Require(command.ResultTypeInfo is null,"Do not infer a new outputSchema.");
+        var calls=service.Calls;
+        foreach(var invalid in new[] { "null","{}","{\"url\":null}","{\"url\":\"https://example.com\",\"unknown\":1}","{invalid" })
+        {
+            response=await command.ExecuteAsync(new(),new ContainerCreateOptions { Request=invalid },cancellation.Token);
+            Require(response.Status==400 && service.Calls==calls,"Invalid JSON must fail before invoking the partial service.");
+        }
+        service.Failure=new JsonException("Internal service failure.");
+        response=await command.ExecuteAsync(new(),options,cancellation.Token);
+        Require(response.Status==500 && response.Error=="Internal service failure.","Service JSON failures are not input validation failures.");
+        service.Failure=new Azure.RequestFailedException(429,"throttled");
+        response=await command.ExecuteAsync(new(),options,cancellation.Token);
+        Require(response.Status==429 && logger.Errors==7,"Use established exception handling and safe logging.");
+        Console.WriteLine("Generated Storage service contract executed.");
+        static void Require(bool condition,string message) { if(!condition) throw new Exception(message); }
+        sealed class Logger : ILogger<ContainerCreateCommand>
+        {
+            public int Errors;
+            public void Error(Exception exception,string message)
+            {
+                Errors++;
+                if(message.Contains("secret")) throw new Exception("Do not log request values.");
+            }
+        }
+        """;
 
     private const string McpCoreTypes = """
         namespace Microsoft.Mcp.Core.Commands
         {
-            public class CommandGroup
-            {
-                public Type? Registered { get; private set; }
-                public void AddCommand<T>(IServiceProvider services) => Registered = typeof(T);
-            }
+            public class CommandGroup { public void AddCommand<T>(IServiceProvider services) {} }
             public enum ToolOperationPlane { Data, Control }
             [AttributeUsage(AttributeTargets.Class)]
             public sealed class CommandMetadataAttribute : Attribute
@@ -289,6 +349,7 @@ public sealed class StorageGenerationTests
                 public required bool Secret { get; init; }
                 public required bool LocalRequired { get; init; }
             }
+            public class CommandValidationException(string message) : Exception(message);
             public abstract class AuthenticatedCommand<TOptions,TResult> where TOptions : class
             {
                 public virtual System.Text.Json.Serialization.Metadata.JsonTypeInfo<TResult>? ResultTypeInfo => null;
@@ -297,8 +358,9 @@ public sealed class StorageGenerationTests
                 protected virtual string GetErrorMessage(Exception exception) => exception.Message;
                 protected void HandleException(Models.Command.CommandContext context,Exception exception)
                 {
-                    context.Response.Error = GetErrorMessage(exception);
-                    context.Response.Status = exception is Azure.RequestFailedException request ? request.Status : 500;
+                    context.Response.Error=GetErrorMessage(exception);
+                    context.Response.Status=exception is CommandValidationException ? 400 :
+                        exception is Azure.RequestFailedException request ? request.Status : 500;
                 }
             }
         }
@@ -309,18 +371,18 @@ public sealed class StorageGenerationTests
         }
         namespace Microsoft.Mcp.Core.Models.Command
         {
-            public class CommandContext { public CommandResponse Response { get; } = new(); }
+            public class CommandContext { public CommandResponse Response { get; }=new(); }
             public class CommandResponse
             {
                 public ResponseResult? Results { get; set; }
                 public string? Error { get; set; }
-                public int Status { get; set; } = 200;
+                public int Status { get; set; }=200;
             }
             public class ResponseResult
             {
                 public required string Json { get; init; }
                 public static ResponseResult Create<T>(T value,System.Text.Json.Serialization.Metadata.JsonTypeInfo<T> info) =>
-                    new() { Json = System.Text.Json.JsonSerializer.Serialize(value,info) };
+                    new() { Json=System.Text.Json.JsonSerializer.Serialize(value,info) };
             }
         }
         namespace Microsoft.Extensions.Logging
@@ -333,128 +395,7 @@ public sealed class StorageGenerationTests
         }
         namespace Azure
         {
-            public class RequestFailedException(int status,string message) : Exception(message) { public int Status => status; }
+            public class RequestFailedException(int status,string message) : Exception(message) { public int Status=>status; }
         }
         """;
-
-    private const string AzureCoreTypes = """
-        namespace Azure.Mcp.Core.Options;
-        public static class OptionDescriptions { public const string Tenant = "The tenant."; }
-        """;
-
-    private const string ExistingTypes = """
-        namespace Storage.Blob
-        {
-        #if !MCP_GENERATED
-            public class ContainerCreateCommand { public const string CustomizedDescription = "Reviewed Storage description."; }
-        #endif
-        }
-        namespace Azure.Mcp.Tools.Storage.Models
-        {
-            public class ContainerInfo { public string? Name { get; set; } }
-        }
-        """;
-
-    private const string HandlerTypes = """
-        using System;
-        using System.Threading;
-        using System.Threading.Tasks;
-
-        namespace Azure.Mcp.Tools.Storage.Services
-        {
-            public interface IStorageService
-            {
-                Task<Models.ContainerInfo> CreateContainer(string account,string container,string? tenant=null,CancellationToken cancellationToken=default);
-            }
-        }
-        namespace Azure.Mcp.Tools.Storage.Commands.Blob.Container
-        {
-            internal static class ContainerCreateCustomization
-            {
-                internal const string Description = "Reviewed Storage description.";
-                internal const string AccountDescription = "The storage account.";
-                internal const string ContainerDescription = "The container.";
-                internal const string TenantDescription = Azure.Mcp.Core.Options.OptionDescriptions.Tenant;
-                internal const string DefaultErrorMessage = "Storage request failed (HTTP {0}): {1}";
-                internal static string? GetErrorMessage(Exception exception) => exception is InvalidOperationException ? "Reviewed failure." : null;
-            }
-        }
-        """;
-
-    private const string CompleteCommandProgram = """
-        using Storage.Blob;
-        using Azure.Mcp.Tools.Storage.Commands.Blob.Container;
-        using Azure.Mcp.Tools.Storage.Models;
-        using Azure.Mcp.Tools.Storage.Services;
-        using Microsoft.Mcp.Core.Commands;
-        using Microsoft.Mcp.Core.Models.Command;
-        using Microsoft.Extensions.Logging;
-        using System.Reflection;
-        using System.Text.Json;
-
-        var service = new Service();
-        var logger = new Logger();
-        var command = new ContainerCreateCommand(logger,service);
-        using var cancellation = new CancellationTokenSource();
-        var options = new ContainerCreateOptions { Account="account",Container="example",Tenant="tenant" };
-        var context = new CommandContext();
-        var response = await command.ExecuteAsync(context,options,cancellation.Token);
-        Require(ReferenceEquals(response,context.Response),"Command must return the actual context response.");
-        Require(service.Arguments == ("account","example","tenant",cancellation.Token),"All handler arguments and cancellation must be forwarded.");
-        Require(response.Results?.Json == "{\"container\":{\"name\":\"example\"}}","Result must be serialized with its generated context.");
-        var roundtrip = JsonSerializer.Deserialize(response.Results!.Json,ContainerCreateJsonContext.Default.ContainerCreateCommandResult)!;
-        roundtrip.Deconstruct(out var containerInfo);
-        Require(containerInfo.Name == "example","The result must deserialize and retain its positional-record contract.");
-        Require((roundtrip with { Container = new ContainerInfo { Name = "copy" } }).Container.Name == "copy",
-            "The result must retain its init property/record copy contract.");
-        Require(command.ResultTypeInfo is null,"Do not change the existing catalog output schema.");
-        var metadata = typeof(ContainerCreateCommand).GetCustomAttribute<CommandMetadataAttribute>()!;
-        Require(metadata.Id == ContainerCreateCatalog.Id && metadata.Name == "create" &&
-            metadata.Title == "Create Storage Blob Container" && metadata.Description == ContainerCreateCustomization.Description,
-            "Command metadata identity changed.");
-        Require(metadata.Destructive && !metadata.Idempotent && !metadata.ReadOnly && !metadata.OpenWorld &&
-            !metadata.Secret && !metadata.LocalRequired && metadata.OperationPlane == ToolOperationPlane.Data,"Safety metadata changed.");
-        Require(ContainerCreateCatalog.OperationId == "Storage.Blob.Container.create","Must select the original service operation.");
-        Require(ContainerCreateCatalog.Path == "storage blob container create","Tool path changed.");
-        var group = new CommandGroup();
-        ContainerCreateCatalog.Register(group,new Services());
-        Require(group.Registered == typeof(ContainerCreateCommand),"Catalog must register the generated command.");
-        Require(typeof(ContainerCreateOptions).GetProperty("Account")!.IsDefined(typeof(System.Runtime.CompilerServices.RequiredMemberAttribute)) &&
-            typeof(ContainerCreateOptions).GetProperty("Container")!.IsDefined(typeof(System.Runtime.CompilerServices.RequiredMemberAttribute)),
-            "Infer required properties from the handler.");
-        Require(new ContainerCreateOptions { Account="a",Container="c" }.Tenant is null,"Nullable tenant must stay optional.");
-        service.Failure = new InvalidOperationException("details");
-        response = await command.ExecuteAsync(new(),options,cancellation.Token);
-        Require(response.Error == "Reviewed failure." && response.Status == 500 && logger.Errors == 1,"Custom policy/base error handling/logging must run.");
-        service.Failure = new Azure.RequestFailedException(429,"throttled");
-        response = await command.ExecuteAsync(new(),options,cancellation.Token);
-        Require(response.Error == "Storage request failed (HTTP 429): throttled" && response.Status == 429 && logger.Errors == 2,
-            "Default request failure format/status changed.");
-        service.Failure = new OperationCanceledException("cancelled");
-        response = await command.ExecuteAsync(new(),options,cancellation.Token);
-        Require(response.Error == "cancelled" && logger.Errors == 3,"Non-HTTP failures must go through the existing base handler.");
-        Console.WriteLine("Complete generated Storage command executed successfully.");
-        static void Require(bool condition,string message) { if(!condition) throw new InvalidOperationException(message); }
-        sealed class Services : IServiceProvider { public object? GetService(Type type) => null; }
-        sealed class Logger : ILogger<ContainerCreateCommand>
-        {
-            public int Errors;
-            public void Error(Exception exception,string message)
-            {
-                Errors++;
-                if(message.Contains("tenant")) throw new InvalidOperationException("Do not log option values.");
-            }
-        }
-        sealed class Service : IStorageService
-        {
-            public (string,string,string?,CancellationToken) Arguments;
-            public Exception? Failure;
-            public Task<ContainerInfo> CreateContainer(string account,string container,string? tenant=null,CancellationToken cancellationToken=default)
-            {
-                Arguments=(account,container,tenant,cancellationToken);
-                return Failure is null ? Task.FromResult(new ContainerInfo { Name=container }) : Task.FromException<ContainerInfo>(Failure);
-            }
-        }
-        """;
-
 }

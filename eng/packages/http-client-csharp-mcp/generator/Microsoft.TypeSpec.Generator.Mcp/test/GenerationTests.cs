@@ -83,21 +83,6 @@ public sealed class GenerationTests
             .And.Not.Contain("commandType").And.Not.Contain("handler").And.Not.Contain(".dll"));
     }
 
-    internal static void CreateLocalCompilerAndHttpSentinels(string root)
-    {
-        foreach (var name in new[] { "compiler", "http" })
-        {
-            var package = Path.Combine(root, "node_modules", "@typespec", name);
-            Directory.CreateDirectory(package);
-            File.WriteAllText(Path.Combine(package, "package.json"),
-                $$"""{"name":"@typespec/{{name}}","version":"1.17.0","type":"module","main":"index.js","tspMain":"main.tsp"}""");
-            File.WriteAllText(Path.Combine(package, "main.tsp"), "import \"./index.js\";");
-            File.WriteAllText(Path.Combine(package, "index.js"), "throw new Error('Consumer dependency tree must not be loaded.');");
-            Directory.CreateDirectory(Path.Combine(package, "entrypoints"));
-            File.Copy(Path.Combine(package, "index.js"), Path.Combine(package, "entrypoints", "cli.js"));
-        }
-    }
-
     internal static string FindPackage()
     {
         var directory = new DirectoryInfo(TestContext.CurrentContext.TestDirectory);

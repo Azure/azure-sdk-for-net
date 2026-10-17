@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Mcp.Tools.Storage.Commands.Blob.Container;
 using Microsoft.Mcp.Core.Commands;
 
 namespace Storage.Blob
@@ -16,7 +15,7 @@ namespace Storage.Blob
         public const string Id = "f5088334-e630-4df0-a5be-ac87787acad0";
         public const string Path = "storage blob container create";
         public const string OperationId = "Storage.Blob.Container.create";
-        public const string Description = ContainerCreateCustomization.Description;
+        public const string Description = "Creates a new container in the specified account. If the container with the same name already exists, the operation fails.";
         public const bool Destructive = true;
         public const bool Idempotent = false;
         public const bool ReadOnly = false;

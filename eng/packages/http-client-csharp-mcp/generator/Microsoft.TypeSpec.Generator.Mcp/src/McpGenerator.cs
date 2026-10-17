@@ -3,7 +3,6 @@
 
 using System.ComponentModel.Composition;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.TypeSpec.Generator.SourceInput;
 
 namespace Microsoft.TypeSpec.Generator.Mcp;
@@ -35,16 +34,10 @@ public sealed class McpGenerator(GeneratorContext context) : CodeModelGenerator(
             }
             var compilation = source.Customization
                 ?? throw new InvalidOperationException("Complete commands require an existing consumer source compilation.");
-            // The SDK workspace can disable XML-doc parsing; command option inference needs those comments.
-            foreach (var tree in compilation.SyntaxTrees.Where(tree => tree.Options.DocumentationMode == DocumentationMode.None).ToArray())
-            {
-                var options = ((CSharpParseOptions)tree.Options).WithDocumentationMode(DocumentationMode.Parse);
-                compilation = compilation.ReplaceSyntaxTree(tree, CSharpSyntaxTree.ParseText(tree.GetText(), options, tree.FilePath));
-            }
-            // Selected commands replace handwritten declarations under a consumer build switch.
-            // Do not let customization filtering silently suppress their generated implementations.
+            // Implementing partial methods must not suppress their generated defining declarations.
             var declarations = Manifest.Commands.SelectMany(command =>
-                compilation.GetTypeByMetadataName(command.CommandType)?.DeclaringSyntaxReferences ?? [])
+                new[] { command.CommandType, command.Namespace + "." + command.ServiceName })
+                .SelectMany(name => compilation.GetTypeByMetadataName(name)?.DeclaringSyntaxReferences ?? [])
                 .GroupBy(reference => reference.SyntaxTree);
             foreach (var group in declarations)
             {
@@ -67,12 +60,16 @@ public sealed class McpGenerator(GeneratorContext context) : CodeModelGenerator(
 
     public override Task WriteAdditionalFiles(string outputPath)
     {
-        foreach (var command in Manifest.Commands)
+        var library = (McpOutputLibrary)OutputLibrary;
+        foreach (var model in library.Commands)
         {
-            var model = CommandModel.Create(command, InputLibrary.InputNamespace.Clients.SelectMany(client => client.Methods)
-                .Single(method => method.CrossLanguageDefinitionId == command.OperationId));
-            OptionsSyntaxAdapter.Rewrite(Path.Combine(outputPath, "src", "Generated", command.Prefix + "Options.cs"), model.Options);
-            CommandSyntaxAdapter.Rewrite(Path.Combine(outputPath, "src", "Generated", command.Prefix + "Command.cs"), command);
+            OptionsSyntaxAdapter.Rewrite(Path.Combine(outputPath, "src", "Generated", model.Selection.Prefix + "Options.cs"), model.Options);
+            CommandSyntaxAdapter.Rewrite(Path.Combine(outputPath, "src", "Generated", model.Selection.Prefix + "Command.cs"), model.Selection);
+        }
+        foreach (var contract in library.TypeProviders.OfType<DataContractProvider>())
+        {
+            OptionsSyntaxAdapter.Rewrite(Path.Combine(outputPath, contract.RelativeFilePath),
+                contract.ContractProperties.Select(property => new OptionMapping(property.Name, "", property.Required)).ToArray());
         }
         return Task.CompletedTask;
     }

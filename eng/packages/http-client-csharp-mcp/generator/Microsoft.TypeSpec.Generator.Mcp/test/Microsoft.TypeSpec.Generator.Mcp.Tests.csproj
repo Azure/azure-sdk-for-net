@@ -11,6 +11,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <Reference Include="Microsoft.CodeAnalysis" HintPath="$(GeneratorDirectory)\Microsoft.CodeAnalysis.dll" />
     <Reference Include="Microsoft.CodeAnalysis.CSharp" HintPath="$(GeneratorDirectory)\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Reference Include="Microsoft.TypeSpec.Generator" HintPath="$(GeneratorDirectory)\Microsoft.TypeSpec.Generator.dll" />
     <Reference Include="Microsoft.TypeSpec.Generator.Input" HintPath="$(GeneratorDirectory)\Microsoft.TypeSpec.Generator.Input.dll" />
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Globalization;
+using System.Text.Json;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -67,7 +68,7 @@ internal sealed class CommandProvider : McpProvider
         [
             new ParameterProvider("logger", $"The command logger.",
                 ExistingType("Microsoft.Extensions.Logging", "ILogger`1").MakeGenericType([Type])),
-            new ParameterProvider("handler", $"The authenticated service handler.", _model.HandlerType)
+            new ParameterProvider("handler", $"The generated partial service.", _model.Contract.Service.Type)
         ]), new MethodBodyStatements([]), this)
     ];
 
@@ -77,11 +78,14 @@ internal sealed class CommandProvider : McpProvider
             ExistingType("Microsoft.Mcp.Core.Models.Command", "CommandContext"));
         var options = new ParameterProvider("options", $"The bound command options.", _options.Type);
         var cancellation = new ParameterProvider("cancellationToken", $"The cancellation token.", typeof(CancellationToken));
-        var handler = new VariableExpression(_model.HandlerType, "handler");
+        var handler = new VariableExpression(_model.Contract.Service.Type, "handler");
         var logger = new VariableExpression(ExistingType("Microsoft.Extensions.Logging", "ILogger`1").MakeGenericType([Type]), "logger");
-        var arguments = _model.Options.Select(option => ((ValueExpression)options).Property(option.Name)).Append(cancellation).ToArray();
-        var result = Declare("value", _model.ReturnType, handler.Invoke(_model.Handler.Member, arguments, true), out var value);
-        var json = new ToolJsonContextProvider(Manifest, _model.Selection.Prefix + "JsonContext", Result);
+        var json = new ToolJsonContextProvider(Manifest, _model.Selection.Prefix + "JsonContext", Result, _model.Contract.Request);
+        var parsed = Declare("request", _model.Contract.Request.Type,
+            This.Invoke("ParseRequest", [((ValueExpression)options).Property("Request")]),
+            out var request);
+        var result = Declare("value", _model.ReturnType,
+            handler.Invoke(_model.Selection.HandlerName + "Async", [request, cancellation], true), out var value);
         var serialized = Static(ExistingType("Microsoft.Mcp.Core.Models.Command", "ResponseResult")).Invoke("Create",
         [
             New.Instance(Result.Type, value),
@@ -96,6 +100,7 @@ internal sealed class CommandProvider : McpProvider
             [
                 new TryCatchFinallyStatement(new TryExpression(
                 [
+                    parsed,
                     result,
                     response.Property("Results").Assign(serialized).Terminate()
                 ]), new CatchExpression(declaration,
@@ -107,8 +112,34 @@ internal sealed class CommandProvider : McpProvider
                 Return(response)
             ]), this);
         return _model.ErrorPolicy is null && _model.ErrorMessage is null
-            ? [execute]
-            : [execute, BuildErrorMessage()];
+            ? [execute, BuildParseRequest(json)]
+            : [execute, BuildParseRequest(json), BuildErrorMessage()];
+    }
+
+    private MethodProvider BuildParseRequest(ToolJsonContextProvider json)
+    {
+        var input = new ParameterProvider("json", $"The JSON request.", typeof(string));
+        var parsed = Declare("request", _model.Contract.Request.Type,
+            Static(typeof(JsonSerializer)).Invoke("Deserialize",
+                [input, Static(json.Type).Property("Default").Property(_model.Contract.Request.Name)]), out var request);
+        return new MethodProvider(new MethodSignature("ParseRequest", $"Validates the REST-shaped JSON request.",
+            MethodSignatureModifiers.Private, _model.Contract.Request.Type, null, [input]),
+            new MethodBodyStatements(
+            [
+                new TryCatchFinallyStatement(new TryExpression(
+                [
+                    parsed,
+                    new IfStatement(request.Equal(Null))
+                    {
+                        Throw(New.Instance(typeof(JsonException), Literal("The request must be a JSON object.")))
+                    },
+                    Return(request)
+                ]), new CatchExpression(Static(typeof(JsonException)),
+                [
+                    Throw(New.Instance(ExistingType("Microsoft.Mcp.Core.Commands", "CommandValidationException"),
+                        Literal($"Invalid request JSON for {_model.Contract.Request.Name}.")))
+                ]))
+            ]), this);
     }
 
     private MethodProvider BuildErrorMessage()

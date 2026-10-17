@@ -1,16 +1,29 @@
 # TypeSpec MCP tools generator prototype
 
-`@azure-typespec/mcp-tools` generates complete MCP command adapters from existing
-service TypeSpec. TypeSpec describes the service and reviewed MCP metadata, not
-C# types, assembly paths, SDK statements, or a second HTTP projection.
-The example remains bounded to Storage container creation; unselected APIs and
-handwritten tools remain unchanged.
+`@azure-typespec/mcp-tools` generates REST-shaped service contracts and MCP
+command adapters from existing service TypeSpec. **No prewritten convenience
+service interface or implementation is required for generation.** Developers
+implement the generated required partial method in a separate handwritten file.
+
+This remains a bounded Storage container-create prototype, not full Storage
+coverage or automatic synthesis of authentication and SDK workflows.
+
+## Repository ownership
+
+- The reusable emitter, C# backend, and shared decorators live in this package.
+- Authoritative service TypeSpec stays in `Azure/azure-rest-api-specs`.
+- The MCP consumer owns its small operation-selection overlay, generation
+  configuration, handwritten partial implementation, and opt-in switch.
+- MCP runtime attributes and base classes remain in `microsoft/mcp`.
+
+TypeSpec does not contain CLR type names, assembly paths, output namespaces,
+handler references, or execution statements. Generated namespaces and names
+derive from the actual service operation.
 
 ## TypeSpec authoring
 
-[`storage.tsp`](emitter/test/fixtures/storage.tsp) imports the unchanged upstream
-Blob Storage service and augments its actual `Storage.Blob.Container.create`
-operation:
+The [Storage overlay](emitter/test/fixtures/storage.tsp) imports the staged
+upstream `main.tsp` and decorates its existing operation:
 
 ```typespec
 @@tool(
@@ -19,103 +32,134 @@ operation:
   "storage blob container create",
   "Create Storage Blob Container"
 );
-@@destructive(Storage.Blob.Container.create);
 @@idempotent(Storage.Blob.Container.create, false);
-@@readOnly(Storage.Blob.Container.create, false);
 @@openWorld(Storage.Blob.Container.create, false);
 ```
 
-`@tool` takes the stable ID, command path, and optional title. An omitted title
-uses the existing operation's `@summary`, then its name. The four focused safety
-decorators accept an optional boolean (default `true`); omitted annotations keep
-conservative HTTP defaults.
+`@tool` takes a stable identity, path, and optional title. The title otherwise
+uses the existing operation summary/name. Existing `@service` supplies ownership.
+The five primitive decorators are declared in [lib/main.tsp](lib/main.tsp).
+Safety decorators override conservative HTTP defaults; they are MCP hints,
+not authorization controls. Omitting a boolean argument means `true`.
 
-The existing `@service` supplies service ownership. There is no separate service
-configuration decorator, anonymous configuration object, output namespace, type
-name, handler/member reference, or DLL path in the overlay.
-[`lib/main.tsp`](lib/main.tsp) contains only these five decorator declarations.
-The old SDK-binding schema, providers, and `sdk-binding.tsp` are removed rather
-than retained under another name.
+## Generated contract
 
-The standard-formatted overlay is 14 lines and the entire shared TypeSpec library
-is 26 lines: **40 MCP-authored TypeSpec lines including the library**, not just
-the sample, versus 139 generated C# lines. Tests compare both total physical
-lines and non-whitespace size, and reject additional parallel mapping fixtures.
+`Storage.Blob.Container.create` produces seven files in namespace `Storage.Blob`:
 
-## .NET generation conventions
-
-The backend derives output from the operation's TypeSpec namespace, interface,
-and name. `Storage.Blob.Container.create` produces these four actual files in
-namespace **`Storage.Blob`**:
-
-| Output | Responsibility |
+| File | Responsibility |
 | --- | --- |
-| `ContainerCreateCommand.cs` | Complete primary-constructor `AuthenticatedCommand<TOptions,TResult>`, metadata, dispatch, serialization, safe logging, error handling, and nested positional result record. |
-| `ContainerCreateOptions.cs` | Required/nullable primitive options and descriptions inferred from existing typed source. |
-| `ContainerCreateJsonContext.cs` | Source-generated JSON metadata, camelCase and `WhenWritingDefault`. |
-| `ContainerCreateCatalog.cs` | Stable registration, path, operation identity, and reviewed safety. |
+| `ContainerCreateRequest.cs` | Client endpoint/API version and operation parameters, with typed JSON properties, requiredness, defaults, and documentation. |
+| `ContainerCreateResponse.cs` | HTTP status and optional response headers. Body-returning operations also get a typed `Body` property. |
+| `ContainerCreateService.cs` | Required partial service declaration; no fabricated implementation. |
+| `ContainerCreateCommand.cs` | Metadata, JSON validation, cancellation forwarding, service invocation, serialization, logging, and exception policy. |
+| `ContainerCreateOptions.cs` | One required string `Request` option containing the complete JSON request. |
+| `ContainerCreateJsonContext.cs` | Source-generated request/result JSON metadata. |
+| `ContainerCreateCatalog.cs` | Stable registration, path, identity, and safety. |
 
-See [the checked-in results](generator/TestProjects/Local/Storage/src/Generated).
-The command does not override `ResultTypeInfo`, preserving the current
-consumer's catalog/output-schema behavior.
+Additional selected request/response models are generated as needed. See the
+[actual checked-in outputs](generator/TestProjects/Local/Storage/src/Generated).
 
-Generated names are `<Interface><Operation>Command/Options/Catalog/JsonContext`
-in PascalCase. Standalone operations use just their operation name. Every
-selected operation must belong to the same existing service; nested operation
-namespaces are retained. Colliding output filenames, including case-only
-collisions, are errors.
+The service declaration is:
 
-The backend looks for exactly one source-interface method named
-`<Operation><Interface>` or that name plus `Async`. For the example, this is the
-existing `IStorageService.CreateContainer(account, container, tenant, token)`.
-The interface's name/namespace are not authored in TypeSpec. Zero matches,
-multiple interfaces/overloads, or both suffix variants are explicit errors,
-not guessed bindings.
+```csharp
+public partial class ContainerCreateService
+{
+    public partial Task<ContainerCreateResponse> CreateContainerAsync(
+        ContainerCreateRequest request, CancellationToken cancellationToken);
+}
+```
 
-Roslyn infers parameter names/types/nullability, cancellation, and the result
-model. The nested positional result property uses the interface name, or the
-handler result model name for a standalone operation. Commands require
-`Task<T>` with a nonnullable nongeneric result and exactly one final
-`CancellationToken`. Primitive string/numeric/boolean options, including nullable
-optional values, are supported. Generic/by-reference/`params` handlers,
-unsupported types/defaults, paging, and LROs are rejected.
+Without an implementing partial, C# compilation fails with `CS8795`. Generation
+itself succeeds before that source exists. Implement the member and any
+constructor/dependency injection in a separate non-generated partial file.
+Regeneration preserves that file and the generated defining declaration.
 
-Option descriptions come from handler XML `<param>` documentation, then
-same-named service parameters. An optional unique static source class named
-`<Interface><Operation>Customization` supplies normal .NET customizations:
+The backend does not search for an existing `IStorageService` or copy its
+signature. REST client parameters are included rather than assuming a service
+endpoint already exists in handwritten convenience code.
 
-- Accessible string constants `Description` and `<Parameter>Description`
-  override command/option descriptions.
-- `static string? GetErrorMessage(Exception)` preserves service-specific human
-  error guidance, falling back to the authenticated base policy on `null`.
-- Optional string constant `DefaultErrorMessage` formats an Azure request
-  failure using `{0}` for HTTP status and `{1}` for its message.
+### Raw request versus convenience behavior
 
-These existing-source conventions are optional and type/accessibility checked.
-No execution statements or CLR binding configuration are moved to another
-manifest. The existing service remains the policy boundary: tenant/credential
-resolution, validated sovereign endpoints, private creation, properties reads,
-and result shaping are not inferred from REST or reimplemented by this generator.
+The selected REST operation accepts a container URL, API version, client request
+ID, timeout, metadata, public-access setting, and encryption-scope settings. It
+returns status/headers, **not** a `ContainerInfo` body.
 
-### Metadata and opt-in
+The raw MCP prototype accepts that contract as JSON, for example:
 
-Build the consumer baseline before generation. The backend evaluates its sole
-`src\*.csproj` using `dotnet msbuild -getProperty:TargetDir` and references the
-built `Microsoft.Mcp.Core.dll` and, when present, `Azure.Mcp.Core.dll` itself.
-There is no target-framework/configuration-specific DLL path in TypeSpec.
-Missing projects/build outputs/framework types fail explicitly. This prototype
-requires an existing single-target consumer project.
+```json
+{
+  "url": "https://account.blob.core.windows.net/container",
+  "metadata": { "owner": "example" }
+}
+```
 
-Only the selected generated command declarations are excluded from the
-**in-memory** customization compilation. No input source files are hidden,
-moved, or edited. The consumer must exclude its handwritten implementation from
-its real build only when opting into the generated replacement. Generation
-does not change feature switches; handwritten remains the default.
+This intentionally differs from the earlier account/container/tenant convenience
+schema. A raw generated tool must not be advertised as catalog/schema parity
+with the handwritten tool. Handwritten remains the consumer default.
+
+`Request` is a string because the MCP runtime's flat option binder does not
+support URI/dictionary properties. Generated JSON metadata handles typed URI,
+metadata dictionaries, arrays, optional fields, and open-enum wire values.
+Missing/null required fields, unknown members, and malformed JSON fail before
+dispatch with a structured validation error. Service/serialization failures
+continue through the normal exception policy, not input-validation handling.
+
+Authentication, endpoint allowlisting, safe public/sovereign-cloud handling,
+SDK calls, retries, private-access policy, and optional follow-up properties reads
+belong in the handwritten implementation/shared infrastructure. They are not
+inferred from one REST declaration. A raw result wraps the response envelope in
+the command's positional result record; no `ResultTypeInfo` override is added.
+
+### Optional customizations
+
+A unique static source class named `<Interface><Operation>Customization` can
+provide accessible string constants `Description`, `RequestDescription`, and
+`DefaultErrorMessage`, plus `static string? GetErrorMessage(Exception)`.
+These members are optional and type/accessibility checked. An error-policy
+result of `null` falls back to the authenticated base policy.
+
+No customization class is needed to generate the service contract.
+
+## Standard generation with tsp-client
+
+Source acquisition and commit wiring use the repository-pinned `tsp-client`,
+not a bespoke downloader/cache. The [Storage location file](generator/TestProjects/Local/Storage/tsp-location.yaml)
+records `repo`, immutable `commit`, `directory`, and the overlay entry point.
+The upstream sources are no longer vendored here.
+
+From the repository root, install the standard client once:
+
+```powershell
+npm ci --prefix eng\common\tsp-client
+```
+
+The integration fixture invokes the pinned CLI's **`sync` and `generate`**
+commands. It stages the overlay/configuration beside the acquired upstream
+`main.tsp`, preserving all upstream TypeSpec. Local generation uses
+`--skip-install` and standard package self-reference to this private emitter
+under its own `temp` directory. Only the CLI-created temporary package manifests
+are removed so compiler/libraries/emitter share one physical pinned installation.
+No symlinks, import rewrites, or module-resolution hooks are used.
+
+The [emitter selection manifest](emitter-package.json) selects the local private
+package for this development workflow; it is not a published installation
+contract. Run the CLI from the client project containing its location file, not
+from the `eng\common\tsp-client` installation directory.
+
+The consumer's thin wrapper should delegate to the same standard workflow, take
+a .NET checkout path for local development, preserve its complete configuration
+and license, require fresh output, and verify exact inventory/raw bytes.
+
+Compiling the pinned unchanged Blob service produces 41 upstream TCGC
+`conflict-access-override` warnings. They are not suppressed or fixed by altering
+the service. The published Blob .NET SDK still uses Swagger/AutoRest.
 
 ## Build, test, and regenerate
 
-Prerequisites are the repository-selected .NET SDK (10.0.401 or compatible),
-Node.js 22.18+ in the 22.x line, npm, and PowerShell 7 for regeneration.
+Prerequisites: repository-selected .NET SDK (10.0.401 or compatible), Node.js 22,
+npm, PowerShell 7 for regeneration, the installed pinned `tsp-client`, and network
+access for its standard source sync.
+
 From this package directory:
 
 ```powershell
@@ -127,78 +171,43 @@ npm run prettier
 npm run test:storage
 ```
 
-Tests compile the real pinned service with the actual frontend/backend, then
-compile and execute the generated command against explicit MCP/service doubles.
-They cover metadata, naming, reference discovery, handler arguments/cancellation,
-required/nullable options, positional-record/JSON roundtrips, registration,
-safe logging, and custom/default/base error handling. Unrelated service commands,
-ambiguous/unsupported mappings, compiler isolation, and transport cleanup have
-separate coverage. Doubles are not live Azure or real MCP runtime validation.
+The Storage fixture uses actual `tsp-client` source sync/generation. It starts
+with only framework references and no service source, checks the required-partial
+compiler diagnostic, then adds a handwritten partial and compiles/executes the
+output. It covers raw parameters/defaults, metadata, no-body status/headers,
+JSON validation and roundtrips, cancellation forwarding, and exception behavior.
+An unrelated typed/recursive model proves generation is not Storage-specific.
+Local framework doubles are not live Azure or real MCP runtime evidence.
 
-Normal tests generate fresh output and compare exact inventory/raw bytes
-without modifying snapshots. Intentionally regenerate with:
+Normal tests compare fresh generated files with snapshots without updating them.
+Intentionally regenerate only through:
 
 ```powershell
 npm run generate:storage
 ```
 
-`eng\scripts\Generate.ps1` builds, generates, compiles, and executes before copying
-the actual output to the checked-in directory. Commit generated diffs; never
-edit generated C# by hand.
+The generation script builds, syncs/generates through the tested standard client,
+compiles, and executes before copying actual output. Never edit generated C#
+by hand.
 
-The five unchanged service files are the complete relative import closure from
-`Azure/azure-rest-api-specs@ae348cc71f54a61f5d17472052cfef279a23db6b`, including
-client customizations. See [provenance](emitter/test/fixtures/specification/README.md).
-These much larger pre-existing API definitions are explicitly not counted as
-new MCP authoring. SHA256 tests prevent modifying them to accommodate generation.
-Their pinned compilation produces 41 unsuppressed upstream TCGC
-`conflict-access-override` warnings, with no service/compiler errors.
-The published Blob .NET SDK still uses Swagger/AutoRest, not this TypeSpec.
+## Boundaries and runtime references
 
-## External checkout
+Supported contracts include JSON primitive types, nullable values, dictionaries,
+arrays, open-enum wire values, and ordinary recursive models. Unsupported scopes,
+closed enums/literals, inheritance/polymorphism/open models, streaming, paging,
+and LROs fail explicitly. Contract/output name collisions are errors.
 
-The real MCP consumer is a separate unpublished local branch, not a directory
-supplied by this PR. Supply this checkout at runtime, build this package and the
-consumer baseline, and preserve the consumer's complete C# configuration/license:
+The backend currently evaluates the sole consumer `src\*.csproj` and references
+its built MCP framework assemblies. A framework baseline build is still required,
+but a convenience interface/implementation is not. Runtime references are added
+by the generator, never specified in TypeSpec.
 
-```yaml
-emit:
-  - 'C:\git\azure-sdk-for-net\eng\packages\http-client-csharp-mcp'
-options:
-  "@azure-typespec/mcp-tools":
-    emitter-output-dir: 'C:\git\mcp\tools\Azure.Mcp.Tools.Storage'
-    package-name: Azure.Mcp.Tools.Storage
-    new-project: false
-```
+A versioned reusable MCP runtime package would remove this bootstrap limitation.
+Those core projects are not currently packaged for that use; this prototype
+does not publish or introduce a cross-checkout project dependency. Generated
+consumers still require compatible MCP runtime references.
 
-Invoke this package's pinned compiler with scoped
-`TYPESPEC_SKIP_COMPILER_RESOLVE=1` and dynamically import `lib\main.tsp`.
-Stage unchanged service imports and overlay under an isolated
-`temp\consumer-<GUID>` workspace in this package, with `emitter-output-dir`
-explicitly pointing to the actual consumer. Clean staging in `finally`.
-This keeps one physical pinned library installation without rewriting imports,
-module-resolution hooks, symlinks, or tracked machine-specific dependencies.
-Equal versions in two installations can still break typekit registries.
-
-Verification must move old output aside, require all fresh files, compare raw
-inventory/bytes, and restore old output on failure. Stale files or partial YAML
-`extends` overrides are not valid generation evidence.
-
-## Implementation
-
-The package follows neighboring emitter conventions: strict TypeScript,
-standard entry points/options, split build/test scripts, ESLint/Prettier/Vitest,
-and a generator solution. The frontend delegates HTTP model construction to
-stock `@typespec/http-client-csharp`. The `McpGenerator` MEF extension uses
-TypeProviders and narrow Roslyn syntax adapters for required/nullable options,
-primary constructors, and positional records.
-
-The standard `emitter-extension-path` stages the pinned generator host and
-dependencies under `dist\generator`. Dependencies are pinned to
-`@typespec/http-client-csharp` **1.0.0-alpha.20261014.5**, TypeSpec **1.17.0**,
-and TCGC **0.73.0**. No MCP runtime package is linked into the generator.
-This private prototype has no publication/install contract.
-
-`tspMcpCodeModel.json` is private generated transport containing service/tool
-identity, not an authored manifest. The emitter deletes it in `finally`, even
-after backend failure, unless `save-inputs` retains it for diagnostics.
+The frontend uses stock `@typespec/http-client-csharp`; the MEF backend uses
+TypeProviders and narrow syntax adapters for required/nullable properties,
+primary constructors, and positional records. The normal `emitter-extension-path`
+stages the pinned host under `dist\generator`.
