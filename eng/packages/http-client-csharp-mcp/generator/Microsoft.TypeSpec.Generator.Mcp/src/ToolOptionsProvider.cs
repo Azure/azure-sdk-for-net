@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -10,18 +9,14 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Microsoft.TypeSpec.Generator.Mcp;
 
-internal sealed class ToolOptionsProvider(McpManifest manifest, string name, OptionMapping[] options, InputServiceMethod method)
+internal sealed class ToolOptionsProvider(McpManifest manifest, string name, OptionMapping[] options)
     : McpProvider(manifest, name)
 {
-    internal ToolOptionsProvider(McpManifest manifest, ToolSelection selection, InputServiceMethod method)
-        : this(manifest, selection.Types.Options, selection.Options, method) { }
-
     protected override PropertyProvider[] BuildProperties() => options.Select(option =>
     {
-        var parameter = option.Source is null ? null : method.Parameters.Single(p => p.Name == option.Source);
         var description = option.DescriptionMember is { } member
             ? Static(ResolveType(member.Type)).Property(member.Member)
-            : (ValueExpression)Literal(option.Description ?? parameter?.Doc ?? parameter?.Summary ?? option.Source!);
+            : (ValueExpression)Literal(option.Description!);
         return Option(option.Name, ResolveType(option.Type), description);
     }).ToArray();
 

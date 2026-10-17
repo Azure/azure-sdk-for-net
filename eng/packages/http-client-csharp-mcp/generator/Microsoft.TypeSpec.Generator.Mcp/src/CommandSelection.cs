@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator.Input;
@@ -10,48 +11,36 @@ using Microsoft.TypeSpec.Generator.Primitives;
 namespace Microsoft.TypeSpec.Generator.Mcp;
 
 public sealed record CommandSelection(
-    string OperationId, string Id, string Path, string Title, string CommandType,
-    StaticMember Handler, string ResultName, SafetyOverrides Safety,
-    StaticMember? Description = null, StaticMember? ErrorPolicy = null,
-    string? ErrorMessage = null, CommandOption[]? Options = null)
+    string OperationId, string Namespace, string Name, string Id, string Path, string Title,
+    SafetyOverrides Safety, string? InterfaceName = null)
 {
     [JsonIgnore]
-    public string Prefix => CommandType[(CommandType.LastIndexOf('.') + 1)..^"Command".Length];
+    public string Prefix => Pascal(InterfaceName ?? "") + Pascal(Name);
+    [JsonIgnore]
+    public string CommandType => Namespace + "." + Prefix + "Command";
+    [JsonIgnore]
+    internal string HandlerName => Pascal(Name) + Pascal(InterfaceName ?? "");
+
+    internal static string Pascal(string name) => string.Concat(Regex.Split(name, @"[^\p{L}\p{Nd}]+")
+        .Where(part => part.Length > 0).Select(part => char.ToUpperInvariant(part[0]) + part[1..]));
 
     internal void Validate()
     {
-        McpManifest.Require(!string.IsNullOrWhiteSpace(OperationId) && Guid.TryParse(Id, out _),
-            "Commands require an operation identity and valid tool GUID.");
+        McpManifest.Require(Namespace is not null && Namespace.Split('.').All(McpManifest.IsIdentifier) &&
+            !string.IsNullOrWhiteSpace(Name) && McpManifest.IsIdentifier(Prefix),
+            "Service operation names must derive valid C# identifiers.");
+        McpManifest.Require(OperationId == string.Join(".", new[] { Namespace, InterfaceName, Name }.Where(part => part is not null)) &&
+            Guid.TryParse(Id, out _), "Commands require the original operation identity and a valid tool GUID.");
         McpManifest.Require(!string.IsNullOrWhiteSpace(Path) && Path.Split(' ').All(McpManifest.IsCommandSegment),
             "A command path must contain valid space-separated segments.");
-        McpManifest.Require(!string.IsNullOrWhiteSpace(Title) && McpManifest.IsTypeName(CommandType) &&
-            CommandType.EndsWith("Command", StringComparison.Ordinal) && McpManifest.IsIdentifier(Prefix),
-            "A command needs a title and qualified type ending in Command.");
-        McpManifest.Require(Handler is not null && McpManifest.IsIdentifier(ResultName) && Safety is not null,
-            "A typed handler, result property name, and reviewed safety are required.");
-        McpManifest.ValidateMember(Handler);
-        McpManifest.ValidateMember(Description);
-        McpManifest.ValidateMember(ErrorPolicy);
-        McpManifest.Require(Options is null || (Options.All(option => option is not null &&
-            McpManifest.IsIdentifier(option.Name) && (option.Description is null) != (option.DescriptionMember is null)) &&
-            Options.Select(option => option.Name).Distinct(StringComparer.Ordinal).Count() == Options.Length),
-            "Option description overrides must be unique and specify exactly one description.");
-        foreach (var option in Options ?? [])
-        {
-            McpManifest.ValidateMember(option.DescriptionMember);
-        }
-        if (ErrorMessage is not null)
-        {
-            _ = string.Format(System.Globalization.CultureInfo.InvariantCulture, ErrorMessage, 500, "detail");
-        }
+        McpManifest.Require(!string.IsNullOrWhiteSpace(Title) && Safety is not null, "A title and safety annotations are required.");
     }
 }
 
-public sealed record CommandOption(string Name, string? Description = null, StaticMember? DescriptionMember = null);
-
 internal sealed record CommandModel(
-    CommandSelection Selection, InputServiceMethod Operation, CSharpType HandlerType,
-    CSharpType ReturnType, OptionMapping[] Options)
+    CommandSelection Selection, InputServiceMethod Operation, CSharpType HandlerType, CSharpType ReturnType,
+    OptionMapping[] Options, StaticMember Handler, string ResultName,
+    StaticMember? Description, StaticMember? ErrorPolicy, string? ErrorMessage)
 {
     internal static CommandModel Create(CommandSelection selection, InputServiceMethod operation)
     {
@@ -60,23 +49,34 @@ internal sealed record CommandModel(
         var compilation = CodeModelGenerator.Instance.SourceInputModel.Customization
             ?? throw new InvalidOperationException("Complete commands require an existing consumer source compilation.");
         var signature = InferHandler(selection, compilation, operation);
-        return new(selection, operation, McpProvider.ResolveType(selection.Handler.Type),
-            McpProvider.ResolveType(signature.Result.ToDisplayString()), signature.Options);
+        var handler = signature.Method;
+        var customization = signature.Customization;
+        return new(selection, operation, McpProvider.ResolveType(handler.ContainingType.ToDisplayString()),
+            McpProvider.ResolveType(signature.Result.ToDisplayString()), signature.Options,
+            new StaticMember(handler.ContainingType.ToDisplayString(), handler.Name),
+            selection.InterfaceName is { Length: > 0 } resource ? CommandSelection.Pascal(resource) : signature.Result.Name,
+            Constant(compilation, customization, "Description"), Policy(compilation, customization),
+            Constant(compilation, customization, "DefaultErrorMessage") is { } format
+                ? (string)customization!.GetMembers(format.Member).OfType<IFieldSymbol>().Single().ConstantValue! : null);
     }
 
-    internal static (IMethodSymbol Method, ITypeSymbol Result, OptionMapping[] Options) InferHandler(
+    internal static (IMethodSymbol Method, ITypeSymbol Result, OptionMapping[] Options, INamedTypeSymbol? Customization) InferHandler(
         CommandSelection selection, Compilation compilation, InputServiceMethod? operation = null)
     {
-        var handler = compilation.GetTypeByMetadataName(selection.Handler.Type);
-        McpManifest.Require(handler is { TypeKind: TypeKind.Interface, IsGenericType: false },
-            $"Handler '{selection.Handler.Type}' must resolve to an existing nongeneric interface.");
-        var methods = handler.GetMembers(selection.Handler.Member).OfType<IMethodSymbol>().ToArray();
-        McpManifest.Require(methods is [ { IsStatic: false, IsGenericMethod: false, DeclaredAccessibility: Accessibility.Public } ],
-            $"Handler '{selection.Handler.Type}.{selection.Handler.Member}' must resolve to exactly one public instance method.");
+        var types = SourceTypes(compilation.Assembly.GlobalNamespace).ToArray();
+        var methods = types.Where(type => type.TypeKind == TypeKind.Interface)
+            .SelectMany(type => type.GetMembers().OfType<IMethodSymbol>())
+            .Where(method => method.Name == selection.HandlerName || method.Name == selection.HandlerName + "Async").ToArray();
+        McpManifest.Require(methods is [{ IsStatic: false, IsGenericMethod: false, DeclaredAccessibility: Accessibility.Public,
+            ContainingType.IsGenericType: false }],
+            $"Operation '{selection.OperationId}' requires exactly one nongeneric source-interface handler named " +
+            $"'{selection.HandlerName}' or '{selection.HandlerName}Async'; found {methods.Length}.");
         var method = methods[0];
+        McpManifest.Require(compilation.IsSymbolAccessibleWithin(method, compilation.Assembly),
+            "The service handler must be accessible to the generated command.");
         McpManifest.Require(method.ReturnType is INamedTypeSymbol { Name: "Task", Arity: 1 } task &&
             task.ContainingNamespace.ToDisplayString() == "System.Threading.Tasks",
-            $"A command handler must return Task<T>; '{selection.Handler.Type}.{selection.Handler.Member}' resolves to '{method.ReturnType.ToDisplayString()}'.");
+            $"A command handler must return Task<T>; '{method}' resolves to '{method.ReturnType.ToDisplayString()}'.");
         var result = ((INamedTypeSymbol)method.ReturnType).TypeArguments[0];
         McpManifest.Require(result is INamedTypeSymbol { IsGenericType: false, TypeKind: TypeKind.Class or TypeKind.Struct } &&
             result.NullableAnnotation != NullableAnnotation.Annotated,
@@ -86,13 +86,20 @@ internal sealed record CommandModel(
             "A command handler must accept exactly one CancellationToken as its final parameter.");
         McpManifest.Require(method.Parameters.All(parameter => parameter.RefKind == RefKind.None && !parameter.IsParams),
             "By-reference and params handler arguments are not supported.");
-        var parameters = method.Parameters[..^1];
-        var overrides = selection.Options ?? [];
-        McpManifest.Require(overrides.All(option => parameters.Any(parameter => parameter.Name == option.Name)),
-            "Every option description override must name a handler parameter.");
+        var customizations = types.Where(type => type.Name == selection.Prefix + "Customization").ToArray();
+        McpManifest.Require(customizations.Length <= 1, $"Customization '{selection.Prefix}Customization' must be unique.");
+        var customization = customizations.SingleOrDefault();
+        McpManifest.Require(customization is null || customization.IsStatic, "Command customizations must be static classes.");
+        _ = Constant(compilation, customization, "Description");
+        _ = Policy(compilation, customization);
+        if (Constant(compilation, customization, "DefaultErrorMessage") is { } format)
+        {
+            _ = string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                (string)customization!.GetMembers(format.Member).OfType<IFieldSymbol>().Single().ConstantValue!, 500, "detail");
+        }
         var docs = method.GetDocumentationCommentXml();
         var documentation = string.IsNullOrWhiteSpace(docs) ? null : XElement.Parse(docs);
-        var options = parameters.Select(parameter =>
+        var options = method.Parameters[..^1].Select(parameter =>
         {
             var nullable = parameter.NullableAnnotation == NullableAnnotation.Annotated ||
                 parameter.Type is INamedTypeSymbol { OriginalDefinition.SpecialType: SpecialType.System_Nullable_T };
@@ -113,37 +120,47 @@ internal sealed record CommandModel(
                 (!parameter.HasExplicitDefaultValue || parameter.ExplicitDefaultValue is null) &&
                 (!parameter.IsOptional || nullable),
                 $"Unsupported default for handler parameter '{parameter.Name}'; only nullable optional arguments are supported.");
-            var description = overrides.SingleOrDefault(option => option.Name == parameter.Name);
-            var text = description?.Description ??
-                documentation?.Elements("param").SingleOrDefault(element => element.Attribute("name")?.Value == parameter.Name)?.Value.Trim() ??
+            var name = char.ToUpperInvariant(parameter.Name[0]) + parameter.Name[1..];
+            var description = Constant(compilation, customization, name + "Description");
+            var text = documentation?.Elements("param").SingleOrDefault(element => element.Attribute("name")?.Value == parameter.Name)?.Value.Trim() ??
                 operation?.Parameters.SingleOrDefault(input => input.Name == parameter.Name)?.Doc;
-            McpManifest.Require(description?.DescriptionMember is not null || !string.IsNullOrWhiteSpace(text),
-                $"Handler option '{parameter.Name}' needs documentation or a description override.");
-            return new OptionMapping(char.ToUpperInvariant(parameter.Name[0]) + parameter.Name[1..], type,
-                !nullable, Description: text, DescriptionMember: description?.DescriptionMember);
+            McpManifest.Require(description is not null || !string.IsNullOrWhiteSpace(text),
+                $"Handler option '{parameter.Name}' needs XML documentation or a '{name}Description' customization constant.");
+            return new OptionMapping(name, type, !nullable, text, description);
         }).ToArray();
         McpManifest.Require(options.Select(option => option.Name).Distinct(StringComparer.OrdinalIgnoreCase).Count() == options.Length,
             "Handler parameter names collide after C# option-name normalization.");
-        ValidateStatic(compilation, selection.Description, isMethod: false);
-        ValidateStatic(compilation, selection.ErrorPolicy, isMethod: true);
-        foreach (var option in overrides)
-        {
-            ValidateStatic(compilation, option.DescriptionMember, isMethod: false);
-        }
-        return (method, result, options);
+        return (method, result, options, customization);
     }
 
-    private static void ValidateStatic(Compilation compilation, StaticMember? reference, bool isMethod)
+    private static IEnumerable<INamedTypeSymbol> SourceTypes(INamespaceSymbol ns) =>
+        ns.GetTypeMembers().Where(type => type.DeclaringSyntaxReferences.Length > 0)
+            .Concat(ns.GetNamespaceMembers().SelectMany(SourceTypes));
+
+    private static StaticMember? Constant(Compilation compilation, INamedTypeSymbol? type, string name)
     {
-        if (reference is null)
+        var members = type?.GetMembers(name) ?? [];
+        if (members.IsEmpty)
         {
-            return;
+            return null;
         }
-        var members = compilation.GetTypeByMetadataName(reference.Type)?.GetMembers(reference.Member) ?? [];
-        McpManifest.Require(members.Length == 1 && compilation.IsSymbolAccessibleWithin(members[0], compilation.Assembly) && (isMethod
-            ? members is [IMethodSymbol { IsStatic: true, IsGenericMethod: false, Parameters: [{ RefKind: RefKind.None, Type: { } type }], ReturnType.SpecialType: SpecialType.System_String }] &&
-                type.ToDisplayString() == "System.Exception"
-            : members is [IFieldSymbol { IsConst: true, Type.SpecialType: SpecialType.System_String, ConstantValue: string }]),
-            $"Cannot resolve {(isMethod ? "error-policy method" : "description constant")} '{reference.Type}.{reference.Member}'.");
+        McpManifest.Require(members is [IFieldSymbol { IsConst: true, Type.SpecialType: SpecialType.System_String, ConstantValue: string }] &&
+            compilation.IsSymbolAccessibleWithin(members[0], compilation.Assembly),
+            $"Customization '{type}.{name}' must be an accessible string constant.");
+        return new StaticMember(type!.ToDisplayString(), name);
+    }
+
+    private static StaticMember? Policy(Compilation compilation, INamedTypeSymbol? type)
+    {
+        var members = type?.GetMembers("GetErrorMessage") ?? [];
+        if (members.IsEmpty)
+        {
+            return null;
+        }
+        McpManifest.Require(members is [IMethodSymbol { IsStatic: true, IsGenericMethod: false,
+            Parameters: [{ RefKind: RefKind.None, Type: { } argument }], ReturnType.SpecialType: SpecialType.System_String }] &&
+            argument.ToDisplayString() == "System.Exception" && compilation.IsSymbolAccessibleWithin(members[0], compilation.Assembly),
+            $"Customization '{type}.GetErrorMessage' must be an accessible static string-returning method accepting Exception.");
+        return new StaticMember(type!.ToDisplayString(), "GetErrorMessage");
     }
 }

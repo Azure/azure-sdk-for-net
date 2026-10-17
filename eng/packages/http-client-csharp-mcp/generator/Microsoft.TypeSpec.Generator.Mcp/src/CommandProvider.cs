@@ -57,7 +57,7 @@ internal sealed class CommandProvider : McpProvider
         ];
     }
 
-    internal static ValueExpression CommandDescription(CommandModel model) => model.Selection.Description is { } member
+    internal static ValueExpression CommandDescription(CommandModel model) => model.Description is { } member
         ? Static(ResolveType(member.Type)).Property(member.Member)
         : Literal(model.Operation.Documentation ?? model.Operation.Summary ?? model.Operation.Name);
 
@@ -80,7 +80,7 @@ internal sealed class CommandProvider : McpProvider
         var handler = new VariableExpression(_model.HandlerType, "handler");
         var logger = new VariableExpression(ExistingType("Microsoft.Extensions.Logging", "ILogger`1").MakeGenericType([Type]), "logger");
         var arguments = _model.Options.Select(option => ((ValueExpression)options).Property(option.Name)).Append(cancellation).ToArray();
-        var result = Declare("value", _model.ReturnType, handler.Invoke(_model.Selection.Handler.Member, arguments, true), out var value);
+        var result = Declare("value", _model.ReturnType, handler.Invoke(_model.Handler.Member, arguments, true), out var value);
         var json = new ToolJsonContextProvider(Manifest, _model.Selection.Prefix + "JsonContext", Result);
         var serialized = Static(ExistingType("Microsoft.Mcp.Core.Models.Command", "ResponseResult")).Invoke("Create",
         [
@@ -106,7 +106,7 @@ internal sealed class CommandProvider : McpProvider
                 ])),
                 Return(response)
             ]), this);
-        return _model.Selection.ErrorPolicy is null && _model.Selection.ErrorMessage is null
+        return _model.ErrorPolicy is null && _model.ErrorMessage is null
             ? [execute]
             : [execute, BuildErrorMessage()];
     }
@@ -115,13 +115,13 @@ internal sealed class CommandProvider : McpProvider
     {
         var exception = new ParameterProvider("exception", $"The operation failure.", typeof(Exception));
         var statements = new List<MethodBodyStatement>();
-        if (_model.Selection.ErrorPolicy is { } policy)
+        if (_model.ErrorPolicy is { } policy)
         {
             statements.Add(Declare("message", typeof(string),
                 Static(ResolveType(policy.Type)).Invoke(policy.Member, [exception]), out var message));
             statements.Add(new IfStatement(message.NotEqual(Null)) { Return(message) });
         }
-        if (_model.Selection.ErrorMessage is { } format)
+        if (_model.ErrorMessage is { } format)
         {
             var declaration = new DeclarationExpression(ExistingType("Azure", "RequestFailedException"), "request", out var request);
             statements.Add(new IfStatement(((ValueExpression)exception).Is(declaration))
@@ -151,7 +151,7 @@ internal sealed class CommandResultProvider(McpManifest manifest, TypeProvider c
     protected override string BuildNamespace() => model.Selection.CommandType[..model.Selection.CommandType.LastIndexOf('.')];
     protected override PropertyProvider[] BuildProperties() =>
     [
-        new PropertyProvider(null, MethodSignatureModifiers.Public, model.ReturnType, model.Selection.ResultName,
+        new PropertyProvider(null, MethodSignatureModifiers.Public, model.ReturnType, model.ResultName,
             new AutoPropertyBody(false), this)
     ];
 
@@ -161,7 +161,7 @@ internal sealed class CommandResultProvider(McpManifest manifest, TypeProvider c
         return
         [
             new ConstructorProvider(new ConstructorSignature(Type, null, MethodSignatureModifiers.Public, [parameter]),
-                This.Property(model.Selection.ResultName).Assign(parameter).Terminate(), this)
+                This.Property(model.ResultName).Assign(parameter).Terminate(), this)
         ];
     }
 }

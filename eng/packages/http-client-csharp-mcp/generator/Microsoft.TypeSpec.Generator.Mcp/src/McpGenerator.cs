@@ -29,7 +29,7 @@ public sealed class McpGenerator(GeneratorContext context) : CodeModelGenerator(
                 return _commandSource;
             }
             var source = base.SourceInputModel;
-            if (Manifest.CommandSelections.Length == 0)
+            if (Manifest.Commands.Length == 0)
             {
                 return source;
             }
@@ -43,7 +43,7 @@ public sealed class McpGenerator(GeneratorContext context) : CodeModelGenerator(
             }
             // Selected commands replace handwritten declarations under a consumer build switch.
             // Do not let customization filtering silently suppress their generated implementations.
-            var declarations = Manifest.CommandSelections.SelectMany(command =>
+            var declarations = Manifest.Commands.SelectMany(command =>
                 compilation.GetTypeByMetadataName(command.CommandType)?.DeclaringSyntaxReferences ?? [])
                 .GroupBy(reference => reference.SyntaxTree);
             foreach (var group in declarations)
@@ -59,24 +59,15 @@ public sealed class McpGenerator(GeneratorContext context) : CodeModelGenerator(
 
     protected override void Configure()
     {
-        foreach (var reference in Manifest.MetadataReferences)
+        foreach (var path in ConsumerMetadata.Resolve(Configuration.OutputDirectory))
         {
-            var path = Path.Combine(Configuration.OutputDirectory, reference.Replace('\\', Path.DirectorySeparatorChar));
-            if (!File.Exists(path))
-            {
-                throw new InvalidOperationException($"Build the consumer before generation: missing metadata reference '{path}'.");
-            }
             AddMetadataReference(MetadataReference.CreateFromFile(path));
         }
     }
 
     public override Task WriteAdditionalFiles(string outputPath)
     {
-        foreach (var tool in Manifest.Operations)
-        {
-            OptionsSyntaxAdapter.Rewrite(Path.Combine(outputPath, "src", "Generated", tool.Types.Options + ".cs"), tool.Options);
-        }
-        foreach (var command in Manifest.CommandSelections)
+        foreach (var command in Manifest.Commands)
         {
             var model = CommandModel.Create(command, InputLibrary.InputNamespace.Clients.SelectMany(client => client.Methods)
                 .Single(method => method.CrossLanguageDefinitionId == command.OperationId));

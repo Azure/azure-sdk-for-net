@@ -11,9 +11,6 @@ namespace Microsoft.TypeSpec.Generator.Mcp;
 
 internal sealed class ToolJsonContextProvider(McpManifest manifest, string name, TypeProvider result) : McpProvider(manifest, name)
 {
-    internal ToolJsonContextProvider(McpManifest manifest, ToolSelection selection)
-        : this(manifest, selection.Types.JsonContext, new ToolResultProvider(manifest, selection)) { }
-
     protected override CSharpType BuildBaseType() => typeof(JsonSerializerContext);
 
     protected override TypeSignatureModifiers BuildDeclarationModifiers() =>

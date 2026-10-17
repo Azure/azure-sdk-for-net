@@ -9,7 +9,7 @@ using System;
 using Azure.Mcp.Tools.Storage.Commands.Blob.Container;
 using Microsoft.Mcp.Core.Commands;
 
-namespace Azure.Mcp.Tools.Storage.GeneratedMcp
+namespace Storage.Blob
 {
     internal static partial class ContainerCreateCatalog
     {

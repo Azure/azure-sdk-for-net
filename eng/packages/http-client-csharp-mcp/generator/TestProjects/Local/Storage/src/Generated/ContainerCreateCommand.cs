@@ -7,14 +7,14 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Mcp.Tools.Storage.GeneratedMcp;
+using Azure.Mcp.Tools.Storage.Commands.Blob.Container;
 using Azure.Mcp.Tools.Storage.Models;
 using Azure.Mcp.Tools.Storage.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Mcp.Core.Commands;
 using Microsoft.Mcp.Core.Models.Command;
 
-namespace Azure.Mcp.Tools.Storage.Commands.Blob.Container
+namespace Storage.Blob
 {
     /// <summary></summary>
     [CommandMetadata(Id = "f5088334-e630-4df0-a5be-ac87787acad0", Name = "create", Title = "Create Storage Blob Container", Description = ContainerCreateCustomization.Description, OperationPlane = ToolOperationPlane.Data, Destructive = true, Idempotent = false, OpenWorld = false, ReadOnly = false, Secret = false, LocalRequired = false)]

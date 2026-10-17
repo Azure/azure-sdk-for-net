@@ -9,23 +9,23 @@ namespace Microsoft.TypeSpec.Generator.Mcp.Tests;
 public sealed class ManifestTests
 {
     [Test]
-    public void MultipleServicesAndOperationsHaveNoGeneratorSpecificIdentity()
+    public void MultipleOperationsDeriveNamesWithoutGeneratorSpecificIdentity()
     {
         var manifest = ManifestFixtures.Create();
         manifest.Validate();
-        Assert.That(manifest.Operations.Select(t => t.Group[0]), Is.EquivalentTo(new[] { "keyvault", "servicebus" }));
-        Assert.That(manifest.Operations.Select(t => t.Types.Binding), Is.Unique);
-        Assert.That(manifest.Composites[0].Path, Is.EqualTo("keyvault secret list"));
+        Assert.That(manifest.Commands.Select(tool => tool.Path.Split(' ')[0]), Is.EquivalentTo(new[] { "keyvault", "servicebus" }));
+        Assert.That(manifest.Commands.Select(tool => tool.CommandType),
+            Is.EqualTo(new[] { "Services.SecretGetCommand", "Services.QueueRemoveCommand" }));
     }
 
     [Test]
     public void OperationSelectionIsExactAndIgnoresUnselectedOperations()
     {
         var manifest = ManifestFixtures.Create();
-        manifest.ValidateOperationIds(["Services.Secrets.get", "Services.Queues.remove", "Services.Secrets.list"]);
-        Assert.Throws<InvalidOperationException>(() => manifest.ValidateOperationIds(["Services.Secrets.get"]));
+        manifest.ValidateOperationIds(["Services.Secret.get", "Services.Queue.remove", "Services.Secret.list"]);
+        Assert.Throws<InvalidOperationException>(() => manifest.ValidateOperationIds(["Services.Secret.get"]));
         Assert.Throws<InvalidOperationException>(() => manifest.ValidateOperationIds(
-            ["Services.Secrets.get", "Services.Queues.remove", "Services.Queues.remove"]));
+            ["Services.Secret.get", "Services.Queue.remove", "Services.Queue.remove"]));
     }
 
     [TestCase("GET", false, true, true)]
@@ -38,122 +38,71 @@ public sealed class ManifestTests
     public void SafetyDefaultsAreConservative(string verb, bool destructive, bool idempotent, bool readOnly)
     {
         var flags = ToolSafety.FromHttpMethod(verb);
-        Assert.That(flags.Destructive, Is.EqualTo(destructive));
-        Assert.That(flags.Idempotent, Is.EqualTo(idempotent));
-        Assert.That(flags.ReadOnly, Is.EqualTo(readOnly));
-        Assert.That(flags.OpenWorld, Is.True);
+        Assert.That(flags, Is.EqualTo(new ToolSafety(destructive, idempotent, readOnly, true)));
     }
 
     [Test]
     public void ReviewedSafetyOverridesWinAndMissingOverridesKeepDefaults()
     {
         var defaults = ToolSafety.FromHttpMethod("PUT");
-        var flags = new SafetyOverrides(true, false, false, false).Apply(defaults);
-        Assert.That(flags, Is.EqualTo(new ToolSafety(true, false, false, false)));
-        Assert.That(new SafetyOverrides(null, null, null, null).Apply(defaults), Is.EqualTo(defaults));
+        Assert.That(new SafetyOverrides(true, false, false, false).Apply(defaults), Is.EqualTo(new ToolSafety(true, false, false, false)));
+        Assert.That(new SafetyOverrides().Apply(defaults), Is.EqualTo(defaults));
         Assert.Throws<InvalidOperationException>(() => ToolSafety.FromHttpMethod("UNKNOWN"));
     }
 
     [TestCase("operation")]
     [TestCase("id")]
-    [TestCase("group")]
-    [TestCase("name")]
-    [TestCase("binding")]
-    [TestCase("option-type")]
+    [TestCase("path")]
+    [TestCase("title")]
     [TestCase("safety")]
+    [TestCase("namespace")]
+    [TestCase("outside-service")]
     [TestCase("empty")]
     [TestCase("duplicate")]
-    [TestCase("duplicate-composite")]
-    [TestCase("colliding-composite")]
-    [TestCase("duplicate-type")]
-    [TestCase("duplicate-type-case")]
-    [TestCase("duplicate-option")]
-    [TestCase("reference-traversal")]
-    [TestCase("invalid-namespace")]
-    [TestCase("unknown-target")]
-    [TestCase("unknown-argument")]
-    [TestCase("ambiguous-argument")]
-    [TestCase("nonprimitive-argument")]
-    [TestCase("missing-cancellation")]
-    [TestCase("invalid-format")]
-    public void InvalidManifestIsRejected(string change)
+    [TestCase("duplicate-id")]
+    [TestCase("duplicate-path")]
+    [TestCase("duplicate-output")]
+    [TestCase("duplicate-output-case")]
+    public void InvalidCodeModelIsRejected(string change)
     {
         var manifest = ManifestFixtures.Create();
-        var tool = manifest.Operations[0];
-        var invalidTool = change switch
-        {
-            "operation" => tool with { OperationId = "" },
-            "id" => tool with { Id = "not-a-guid" },
-            "group" => tool with { Group = ["invalid group"] },
-            "name" => tool with { Name = "../bad" },
-            "binding" => tool with { Binding = null! },
-            "option-type" => tool with { Options = [tool.Options[0] with { Type = "unreviewed-reflection" }] },
-            "safety" => tool with { Safety = null! },
-            "duplicate-type" => tool with { Types = tool.Types with { Catalog = tool.Types.Options } },
-            "duplicate-type-case" => tool with { Types = tool.Types with { Catalog = tool.Types.Options.ToLowerInvariant() } },
-            "duplicate-option" => tool with { Options = [tool.Options[0], tool.Options[0]] },
-            "unknown-target" => tool with { Binding = tool.Binding with { Calls = [tool.Binding.Calls[0] with { Target = "missing" }] } },
-            "unknown-argument" => tool with
-            {
-                Binding = tool.Binding with
-                {
-                    Calls = [tool.Binding.Calls[0] with { Arguments = [new BindingArgument(Variable: "missing"), .. tool.Binding.Calls[0].Arguments] }]
-                }
-            },
-            "ambiguous-argument" => tool with
-            {
-                Binding = tool.Binding with
-                {
-                    Calls = [tool.Binding.Calls[0] with
-                {
-                    Arguments = [new BindingArgument(Variable: "name", Literal: JsonSerializer.SerializeToElement("value")), .. tool.Binding.Calls[0].Arguments]
-                }]
-                }
-            },
-            "nonprimitive-argument" => tool with
-            {
-                Binding = tool.Binding with
-                {
-                    Calls = [tool.Binding.Calls[0] with
-                {
-                    Arguments = [new BindingArgument(Literal: JsonSerializer.SerializeToElement(new[] { 1 })), .. tool.Binding.Calls[0].Arguments]
-                }]
-                }
-            },
-            "missing-cancellation" => tool with
-            {
-                Binding = tool.Binding with
-                {
-                    Calls = [tool.Binding.Calls[0] with { Arguments = [new BindingArgument(Variable: "name")] }]
-                }
-            },
-            "invalid-format" => tool with { ErrorMessage = "{not-valid" },
-            _ => tool
-        };
+        var command = manifest.Commands[0];
         var invalid = change switch
         {
-            "empty" => manifest with { Operations = [] },
-            "duplicate" => manifest with { Operations = [tool, tool] },
-            "duplicate-composite" => manifest with { Composites = [manifest.Composites[0], manifest.Composites[0]] },
-            "colliding-composite" => manifest with { Composites = [new("keyvault secret get", "Collision")] },
-            "reference-traversal" => manifest with { MetadataReferences = ["..\\another.dll"] },
-            "invalid-namespace" => manifest with { Namespace = "invalid..namespace" },
-            _ => manifest with { Operations = [invalidTool] }
+            "operation" => command with { OperationId = "not-the-source-operation" },
+            "id" => command with { Id = "invalid" },
+            "path" => command with { Path = "../bad" },
+            "title" => command with { Title = "" },
+            "safety" => command with { Safety = null! },
+            "namespace" => command with { Namespace = "invalid..namespace" },
+            "outside-service" => command with { Namespace = "Other", OperationId = "Other.Secret.get" },
+            _ => command
         };
-        Assert.Throws<InvalidOperationException>(invalid.Validate);
+        var model = change switch
+        {
+            "empty" => manifest with { Commands = [] },
+            "duplicate" => manifest with { Commands = [command, command] },
+            "duplicate-id" => manifest with { Commands = [command, manifest.Commands[1] with { Id = command.Id }] },
+            "duplicate-path" => manifest with { Commands = [command, manifest.Commands[1] with { Path = command.Path }] },
+            "duplicate-output" => manifest with { Commands = [command, command with
+                { Namespace = "Services.Nested", OperationId = "Services.Nested.Secret.get", Id = manifest.Commands[1].Id, Path = "other get" }] },
+            "duplicate-output-case" => manifest with { Commands = [command, command with
+                { InterfaceName = "secret", OperationId = "Services.secret.get", Id = manifest.Commands[1].Id, Path = "other get" }] },
+            _ => manifest with { Commands = [invalid] }
+        };
+        Assert.Throws<InvalidOperationException>(model.Validate);
     }
 
     [TestCase("{}")]
     [TestCase("null")]
-    [TestCase("{\"namespace\":\"Example\",\"metadataReferences\":[],\"operations\":null,\"composites\":[]}")]
+    [TestCase("{\"namespace\":\"Example\",\"commands\":null}")]
     public void MalformedJsonDoesNotSilentlyBecomeAnEmptyToolset(string json)
     {
         var path = Path.GetTempFileName();
         try
         {
             File.WriteAllText(path, json);
-            Assert.That(() => McpManifest.Load(path),
-                Throws.InstanceOf<JsonException>().Or.InstanceOf<InvalidOperationException>());
+            Assert.That(() => McpManifest.Load(path), Throws.InstanceOf<JsonException>().Or.InstanceOf<InvalidOperationException>());
         }
         finally
         {
@@ -162,8 +111,9 @@ public sealed class ManifestTests
     }
 
     [TestCase("\"unexpected\":true")]
-    [TestCase("\"namespace\":\"Example.Generated\"")]
-    public void UnknownAndDuplicatePropertiesInOtherwiseValidTransportAreRejected(string extra)
+    [TestCase("\"namespace\":\"Other\"")]
+    [TestCase("\"metadataReferences\":[]")]
+    public void UnknownDuplicateAndOldClrConfigurationAreRejected(string extra)
     {
         var path = Path.GetTempFileName();
         try
@@ -171,24 +121,6 @@ public sealed class ManifestTests
             var json = JsonSerializer.Serialize(ManifestFixtures.Create(), ManifestFixtures.JsonOptions);
             File.WriteAllText(path, json[..^1] + "," + extra + "}");
             Assert.Throws<JsonException>(() => McpManifest.Load(path));
-        }
-        finally
-        {
-            File.Delete(path);
-        }
-    }
-
-    [Test]
-    public void InternalCodeModelPreservesExplicitNullLiterals()
-    {
-        var path = Path.GetTempFileName();
-        try
-        {
-            var manifest = ManifestFixtures.Create();
-            File.WriteAllText(path, JsonSerializer.Serialize(manifest, ManifestFixtures.JsonOptions));
-            var loaded = McpManifest.Load(path);
-            Assert.That(JsonSerializer.Serialize(loaded), Is.EqualTo(JsonSerializer.Serialize(manifest)));
-            Assert.That(loaded.Operations[0].Binding.Calls[0].Arguments[1].Literal.ValueKind, Is.EqualTo(JsonValueKind.Null));
         }
         finally
         {

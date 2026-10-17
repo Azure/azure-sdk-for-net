@@ -6,9 +6,8 @@
 #nullable disable
 
 using System.Text.Json.Serialization;
-using Azure.Mcp.Tools.Storage.Commands.Blob.Container;
 
-namespace Azure.Mcp.Tools.Storage.GeneratedMcp
+namespace Storage.Blob
 {
     [JsonSerializable(typeof(ContainerCreateCommand.ContainerCreateCommandResult))]
     [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault)]

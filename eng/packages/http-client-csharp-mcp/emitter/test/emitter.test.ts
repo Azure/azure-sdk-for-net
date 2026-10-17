@@ -37,10 +37,16 @@ async function createContext(
   );
   const storage =
     source ??
-    (await readFile(
-      new URL("./fixtures/sdk-binding.tsp", import.meta.url),
-      "utf8"
-    ));
+    `
+    using Azure.Mcp;
+    using TypeSpec.Http;
+    @service namespace Example;
+    interface Item {
+      @put @route("/items/{name}")
+      @tool("12b53c92-f2cf-4a1a-880d-c6f44a0d49d6", "example item create", "Create item")
+      create(@path name: string): void;
+    }
+  `;
   host.addTypeSpecFile("main.tsp", 'import "./mcp.tsp";\n' + storage);
   await host.compile("main.tsp");
   return {
@@ -57,57 +63,116 @@ describe("MCP emitter", () => {
     vi.mocked(emitCodeModel).mockResolvedValue([undefined, []]);
   });
 
-  it("preserves the legacy SDK-binding projection", async () => {
+  it("derives identity from the service and operation without CLR configuration", async () => {
     const { program } = await createContext();
     const model = getMcpConfiguration(program);
-    expect(model?.namespace).toBe("Azure.Mcp.Tools.Storage.GeneratedMcp");
-    expect(model?.operations.map((tool) => tool.operationId)).toEqual([
-      "StoragePilot.Containers.create"
+    expect(model?.namespace).toBe("Example");
+    expect(model?.commands.map((tool) => tool.operationId)).toEqual([
+      "Example.Item.create"
     ]);
-    expect(model?.composites).toHaveLength(3);
+    expect(model?.commands[0].namespace).toBe("Example");
+    expect(model?.commands[0].interfaceName).toBe("Item");
+    for (const property of [
+      "metadataReferences",
+      "outputNamespace",
+      "operations",
+      "types"
+    ]) {
+      expect(model).not.toHaveProperty(property);
+    }
+    for (const property of [
+      "handler",
+      "commandType",
+      "resultName",
+      "binding",
+      "options"
+    ]) {
+      expect(model?.commands[0]).not.toHaveProperty(property);
+    }
   });
 
   it.each(["augment", "direct"])(
     "selects only the original command operation, not inherited client aliases (%s)",
     async (style) => {
-      const configuration = `#{
-        id: "12b53c92-f2cf-4a1a-880d-c6f44a0d49d6",
-        path: "example item create",
-        title: "Create item",
-        commandType: "Example.ItemCreateCommand",
-        handler: #{type: "Example.IService", member: "CreateAsync"},
-        resultName: "Item",
-        safety: #{}
-      }`;
+      const configuration = `"12b53c92-f2cf-4a1a-880d-c6f44a0d49d6", "example item create", "Create item"`;
       const source = `
         using Azure.Mcp;
         using TypeSpec.Http;
-        @service @server("{endpoint}", "Endpoint.", {endpoint: url})
-        @mcpService(#{outputNamespace: "Example.Generated"})
+        @service
         namespace Example;
         interface Items {
-          ${style === "direct" ? `@command(${configuration})` : ""}
+          ${style === "direct" ? `@tool(${configuration}) @openWorld(false)` : ""}
           @put @route("/items/{name}")
           create(@path name: string): void;
           @get @route("/items/{name}")
           get(@path name: string): void;
         }
         @route("/client") interface ItemClient extends Items {}
-        ${style === "augment" ? `@@command(Items.create, ${configuration});` : ""}
+        ${style === "augment" ? `@@tool(Items.create, ${configuration}); @@openWorld(Items.create, false);` : ""}
       `;
       const { program } = await createContext({}, source);
       const model = getMcpConfiguration(program);
-      expect(model?.operations).toEqual([]);
       expect(model?.commands.map((command) => command.operationId)).toEqual([
         "Example.Items.create"
       ]);
-      expect(model?.metadataReferences).toEqual([]);
-      expect(model?.composites).toEqual([]);
+      expect(model?.commands[0].safety).toEqual({ openWorld: false });
       expect(model?.commands[0]).not.toHaveProperty("binding");
       expect(model?.commands[0]).not.toHaveProperty("wire");
       expect(model?.commands[0]).not.toHaveProperty("types");
     }
   );
+
+  it("uses the existing service, nested namespace, summary, and focused safety decorators", async () => {
+    const { program } = await createContext(
+      {},
+      `
+      using Azure.Mcp;
+      using TypeSpec.Http;
+      @service namespace Example {
+        namespace Nested {
+          @get @route("/value")
+          @summary("Get value")
+          @tool("12b53c92-f2cf-4a1a-880d-c6f44a0d49d6", "example value get")
+          @destructive(false) @idempotent @readOnly @openWorld(false)
+          op fetch(): void;
+        }
+      }
+      `
+    );
+    const model = getMcpConfiguration(program)!;
+    expect(model.namespace).toBe("Example");
+    expect(model.commands[0]).toMatchObject({
+      namespace: "Example.Nested",
+      name: "fetch",
+      operationId: "Example.Nested.fetch",
+      title: "Get value",
+      safety: {
+        destructive: false,
+        idempotent: true,
+        readOnly: true,
+        openWorld: false
+      }
+    });
+  });
+
+  it("rejects safety annotations on unselected operations", async () => {
+    await expect(
+      createContext(
+        {},
+        `
+      using Azure.Mcp;
+      using TypeSpec.Http;
+      @service namespace Example {
+        @get @route("/selected")
+        @tool("12b53c92-f2cf-4a1a-880d-c6f44a0d49d6", "example get")
+        op selected(): void;
+        @get @route("/other") @readOnly
+        op other(): void;
+      }
+    `
+      )
+    ).rejects.toThrow("Tool safety overrides require");
+  });
 
   it.each([false, true])(
     "retains transport only when save-inputs=%s",
@@ -119,8 +184,8 @@ describe("MCP emitter", () => {
       );
       if (saveInputs) {
         const file = await read;
-        expect(JSON.parse(file.text).operations[0].operationId).toBe(
-          "StoragePilot.Containers.create"
+        expect(JSON.parse(file.text).commands[0].operationId).toBe(
+          "Example.Item.create"
         );
       } else {
         await expect(read).rejects.toThrow();
@@ -169,8 +234,6 @@ describe("MCP emitter", () => {
     const file = await context.program.host.readFile(
       "/output/tspMcpCodeModel.json"
     );
-    expect(JSON.parse(file.text).namespace).toBe(
-      "Azure.Mcp.Tools.Storage.GeneratedMcp"
-    );
+    expect(JSON.parse(file.text).namespace).toBe("Example");
   });
 });
