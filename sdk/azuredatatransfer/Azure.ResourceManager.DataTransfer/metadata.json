@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.AzureDataTransfer": "2026-02-06-preview"
+  }
+}

@@ -1,0 +1,6 @@
+directory: specification/azuredatatransfer/resource-manager/Microsoft.AzureDataTransfer/AzureDataTransfer
+commit: d218330c5a3b727df9504ba852e97259479e8fef
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
