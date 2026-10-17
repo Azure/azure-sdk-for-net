@@ -77,7 +77,7 @@ if ($existingNamespace) {
 }
 
 $publish = Join-Path $state 'publish'
-dotnet publish (Join-Path $PSScriptRoot 'Integration.Identity.Container.csproj') --configuration Release `
+dotnet publish (Join-Path $PSScriptRoot '..\Azure.Core.Tests.csproj') --configuration Release `
     --framework net10.0 --runtime linux-x64 --self-contained false --output $publish --verbosity quiet
 $expectedCoreHash = (Get-FileHash (Join-Path $publish 'Azure.Core.dll') -Algorithm SHA256).Hash
 
@@ -124,6 +124,7 @@ $identityManifest | kubectl @kube apply --filename -
 kubectl @kube --namespace wi-proxy delete job wi-proxy-enabled wi-proxy-disabled --ignore-not-found --wait=true
 
 foreach ($mode in @('enabled', 'disabled')) {
+    $testMethod = if ($mode -eq 'enabled') { 'AuthenticateWithProxy' } else { 'AuthenticateWithoutProxy' }
     $jobManifest = @"
 apiVersion: batch/v1
 kind: Job
@@ -154,14 +155,37 @@ spec:
           type: RuntimeDefault
       containers:
         - name: app
-          image: mcr.microsoft.com/dotnet/runtime:10.0
+          image: mcr.microsoft.com/dotnet/sdk:10.0
           command: ["/bin/sh", "-c"]
-          args: ["while [ ! -f /app/.ready ]; do sleep 1; done; exec dotnet /app/Integration.Identity.Container.dll $mode"]
+          args:
+            - >-
+              while [ ! -f /app/.ready ]; do sleep 1; done;
+              dotnet vstest /app/Azure.Core.Tests.dll
+              --TestCaseFilter:FullyQualifiedName=Azure.Core.Tests.IdentityBinding.WorkloadIdentityBindingLiveTests.$testMethod
+              --TestAdapterPath:/app
+              '--logger:trx;LogFileName=$mode.trx'
+              '--logger:console;verbosity=detailed'
+              --ResultsDirectory:/tmp/test-results;
+              result=`$?;
+              grep -o '<Counters [^>]*/>' /tmp/test-results/$mode.trx;
+              exit "`$result"
           env:
             - name: ARM_RESOURCE_ID
               value: "$($group.id)"
+            - name: AZURE_TEST_MODE
+              value: Live
+            - name: AZURE_CORE_IDENTITY_BINDING_TESTS
+              value: "true"
             - name: DOTNET_CLI_HOME
               value: /tmp
+            - name: HOME
+              value: /tmp
+            - name: DOTNET_NOLOGO
+              value: "true"
+            - name: DOTNET_CLI_TELEMETRY_OPTOUT
+              value: "1"
+            - name: DOTNET_GENERATE_ASPNET_CERTIFICATE
+              value: "false"
           securityContext:
             readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false
@@ -169,11 +193,11 @@ spec:
               drop: ["ALL"]
           resources:
             requests:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 250m
+              memory: 256Mi
             limits:
-              cpu: "1"
-              memory: 512Mi
+              cpu: "2"
+              memory: 1Gi
           volumeMounts:
             - name: app
               mountPath: /app
@@ -219,22 +243,43 @@ try {
 }
 finally {
     foreach ($mode in @('enabled', 'disabled')) {
-        kubectl @kube --namespace wi-proxy logs "job/wi-proxy-$mode" --container app |
+        $output = @(kubectl @kube --namespace wi-proxy logs "job/wi-proxy-$mode" --container app)
+        $output | Set-Content (Join-Path $state "$mode.log") -Encoding utf8
+        # NUnit repeats live console output in the detailed per-test result.
+        $output | Where-Object { $_.TrimStart().StartsWith('{"scenario":') } |
+            ForEach-Object { $_.Trim() } | Select-Object -Unique |
             Set-Content (Join-Path $state "$mode.jsonl") -Encoding utf8
     }
 }
 
+$nunitResults = @{}
 foreach ($mode in @('enabled', 'disabled')) {
     $results = @(Get-Content (Join-Path $state "$mode.jsonl") | ForEach-Object { $_ | ConvertFrom-Json })
-    $expectedScenarios = if ($mode -eq 'enabled') { @('candidate', 'configuration', 'async', 'cache', 'sync', 'concurrent', 'arm-authentication') } else { @('candidate', 'configuration', 'disabled') }
+    $expectedScenarios = if ($mode -eq 'enabled') { @('candidate', 'configuration', 'async', 'cache', 'sync', 'concurrent', 'arm-authentication', 'nunit') } else { @('candidate', 'configuration', 'disabled', 'nunit') }
     if ($results.Count -ne $expectedScenarios.Count -or ($results | Where-Object { $_.passed -ne $true }) -or
         (Compare-Object $expectedScenarios @($results.scenario))) {
         throw "Unexpected or failing results in $mode.jsonl."
     }
     $candidate = $results | Where-Object { $_.scenario -eq 'candidate' }
-    if ($candidate.details.coreSha256 -ne $expectedCoreHash) {
+    if ($candidate.details.coreSha256 -ne $expectedCoreHash -or $candidate.details.credentialAssembly -ne 'Azure.Core') {
         throw 'The pod did not run the Azure.Core candidate published from this worktree.'
     }
+    $testMethod = if ($mode -eq 'enabled') { 'AuthenticateWithProxy' } else { 'AuthenticateWithoutProxy' }
+    $nunit = $results | Where-Object { $_.scenario -eq 'nunit' }
+    if ($nunit.details.assembly -ne 'Azure.Core.Tests' -or
+        $nunit.details.test -ne "Azure.Core.Tests.IdentityBinding.WorkloadIdentityBindingLiveTests.$testMethod") {
+        throw 'The pod did not execute the expected Azure.Core NUnit test.'
+    }
+    $counterLines = @(Get-Content (Join-Path $state "$mode.log") | Where-Object { $_.TrimStart().StartsWith('<Counters ') })
+    if ($counterLines.Count -ne 1) {
+        throw "Expected one genuine TRX result counter in $mode.log."
+    }
+    [xml] $counters = $counterLines[0].Trim()
+    if ($counters.Counters.total -ne '1' -or $counters.Counters.executed -ne '1' -or
+        $counters.Counters.passed -ne '1' -or $counters.Counters.failed -ne '0') {
+        throw "The Azure.Core NUnit test must pass, not be skipped or undiscovered: $mode."
+    }
+    $nunitResults[$mode] = @{ test = $nunit.details.test; passed = 1; failed = 0 }
     Get-Content (Join-Path $state "$mode.jsonl")
 }
 $jobs = kubectl @kube --namespace wi-proxy get jobs --output json | ConvertFrom-Json
@@ -245,7 +290,8 @@ $pods = kubectl @kube --namespace wi-proxy get pods --output json | ConvertFrom-
     cluster = $cluster.name
     kubernetesVersion = $cluster.currentKubernetesVersion
     coreSha256 = $expectedCoreHash
+    nunitResults = $nunitResults
     jobs = @($jobs.items | ForEach-Object { @{ name = $_.metadata.name; succeeded = $_.status.succeeded } })
     images = @($pods.items.status.containerStatuses.imageID)
 } | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $state 'summary.json') -Encoding utf8
-Write-Host "Both live jobs passed. Redacted evidence: $state"
+Write-Host "Both Azure.Core NUnit live tests and Kubernetes jobs passed. Redacted evidence: $state"
