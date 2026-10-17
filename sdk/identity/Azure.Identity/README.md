@@ -116,6 +116,8 @@ As of version 1.8.0, `ManagedIdentityCredential` supports [token caching](#token
 
 `WorkloadIdentityCredential` supports an opt-in identity binding mode to work around [Entra ID's limit on federated identity credentials (FICs)](https://learn.microsoft.com/entra/workload-id/workload-identity-federation-considerations#federated-identity-credential-considerations) per managed identity. When enabled via the `IsAzureProxyEnabled` option, the credential redirects token requests to an AKS-provided proxy that handles the FIC exchange centrally, allowing multiple pods to share the same identity without hitting FIC limits.
 
+AKS identity binding support is generally available in Azure.Core 1.64.0 and later. The credential types remain in the `Azure.Identity` namespace. `IsAzureProxyEnabled` is disabled by default and no longer requires an experimental diagnostic suppression. Follow the [AKS identity binding setup instructions](https://learn.microsoft.com/azure/aks/identity-bindings) to configure the binding and Kubernetes permissions; enabling the SDK option alone doesn't configure these resources.
+
 **Note:** This feature is only available when using `WorkloadIdentityCredential` directly. It is not supported by `DefaultAzureCredential` or `ManagedIdentityCredential`.
 
 ### Usage
