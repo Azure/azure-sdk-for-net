@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Relationships.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ServiceGroupMemberRelationshipListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ServiceGroupMemberRelationshipListResult(value ?? new ChangeTrackingList<ServiceGroupMemberRelationshipData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

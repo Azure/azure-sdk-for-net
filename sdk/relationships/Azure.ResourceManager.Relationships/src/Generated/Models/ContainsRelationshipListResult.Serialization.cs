@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Relationships.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContainsRelationshipListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ContainsRelationshipListResult(value ?? new ChangeTrackingList<ContainsRelationship>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
