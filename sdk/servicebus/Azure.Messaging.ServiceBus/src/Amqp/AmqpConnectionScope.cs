@@ -606,7 +606,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     refreshTimerFactory: () => (ActiveLinks.ContainsKey(link) ? refreshTimer : null),
                     identifier: identifier);
 
-                refreshTimer = new Timer(refreshHandler, null, CalculateLinkAuthorizationRefreshInterval(authExpirationUtc), Timeout.InfiniteTimeSpan);
+                refreshTimer = new Timer(refreshHandler, null, CalculateNextAuthorizationRefreshInterval(TokenProvider, authExpirationUtc), Timeout.InfiniteTimeSpan);
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
@@ -776,7 +776,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     refreshTimerFactory: () => (ActiveLinks.ContainsKey(link) ? refreshTimer : null),
                     identifier: identifier);
 
-                refreshTimer = new Timer(refreshHandler, null, CalculateLinkAuthorizationRefreshInterval(authExpirationUtc), Timeout.InfiniteTimeSpan);
+                refreshTimer = new Timer(refreshHandler, null, CalculateNextAuthorizationRefreshInterval(TokenProvider, authExpirationUtc), Timeout.InfiniteTimeSpan);
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
@@ -915,7 +915,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     identifier: identifier
                 );
 
-                refreshTimer = new Timer(refreshHandler, null, CalculateLinkAuthorizationRefreshInterval(authExpirationUtc), Timeout.InfiniteTimeSpan);
+                refreshTimer = new Timer(refreshHandler, null, CalculateNextAuthorizationRefreshInterval(TokenProvider, authExpirationUtc), Timeout.InfiniteTimeSpan);
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
@@ -1066,6 +1066,33 @@ namespace Azure.Messaging.ServiceBus.Amqp
         protected virtual void CloseConnection(AmqpConnection connection) => connection.SafeClose();
 
         /// <summary>
+        ///   Calculates when authorization should next be refreshed. A credential refresh time
+        ///   earlier than the token's expiration is used so the credential is called then, while
+        ///   the token presented to the service keeps its real expiration.
+        /// </summary>
+        ///
+        private TimeSpan CalculateNextAuthorizationRefreshInterval(CbsTokenProvider tokenProvider, DateTime authorizationExpiresUtc) =>
+            CalculateLinkAuthorizationRefreshInterval(GetAuthorizationRefreshBasisUtc(authorizationExpiresUtc, tokenProvider.CredentialRefreshAt));
+
+        /// <summary>
+        ///   Selects the expiration time to feed into <see cref="CalculateLinkAuthorizationRefreshInterval" />.
+        ///   When <paramref name="credentialRefreshAt" /> is earlier than the authorization expiration, the
+        ///   refresh buffer is added back so the interval lands on that refresh time. Otherwise the
+        ///   authorization expiration is used unchanged.
+        /// </summary>
+        ///
+        internal static DateTime GetAuthorizationRefreshBasisUtc(DateTime authorizationExpiresUtc, DateTimeOffset? credentialRefreshAt)
+        {
+            if (credentialRefreshAt is DateTimeOffset refreshAt && refreshAt.UtcDateTime < authorizationExpiresUtc)
+            {
+                DateTime basis = refreshAt.UtcDateTime.Add(AuthorizationRefreshBuffer);
+                return basis < authorizationExpiresUtc ? basis : authorizationExpiresUtc;
+            }
+
+            return authorizationExpiresUtc;
+        }
+
+        /// <summary>
         ///   Calculates the interval after which authorization for an AMQP link should be
         ///   refreshed.
         /// </summary>
@@ -1153,7 +1180,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     if (authExpirationUtc >= DateTimeOffset.UtcNow)
                     {
-                        refreshTimer.Change(CalculateLinkAuthorizationRefreshInterval(authExpirationUtc), Timeout.InfiniteTimeSpan);
+                        refreshTimer.Change(CalculateNextAuthorizationRefreshInterval(tokenProvider, authExpirationUtc), Timeout.InfiniteTimeSpan);
                     }
                 }
                 catch (ObjectDisposedException)

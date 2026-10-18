@@ -151,6 +151,54 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.GetAuthorizationRefreshBasisUtc" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void GetAuthorizationRefreshBasisUtcUsesAnEarlierRefreshOn()
+        {
+            var expires = new DateTime(2015, 10, 27, 1, 0, 0, DateTimeKind.Utc);
+            var refreshOn = new DateTimeOffset(2015, 10, 27, 0, 30, 0, TimeSpan.Zero);
+            var buffer = GetAuthorizationRefreshBuffer();
+
+            var basis = AmqpConnectionScope.GetAuthorizationRefreshBasisUtc(expires, refreshOn);
+
+            Assert.That(basis, Is.EqualTo(refreshOn.UtcDateTime.Add(buffer)), "The refresh buffer should be added back so the timer lands on RefreshOn.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.GetAuthorizationRefreshBasisUtc" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void GetAuthorizationRefreshBasisUtcKeepsTheAuthorizationExpirationWithoutRefreshOn()
+        {
+            var expires = new DateTime(2015, 10, 27, 1, 0, 0, DateTimeKind.Utc);
+
+            var basis = AmqpConnectionScope.GetAuthorizationRefreshBasisUtc(expires, credentialRefreshAt: null);
+
+            Assert.That(basis, Is.EqualTo(expires), "Authorization should keep refreshing from its expiration when RefreshOn is absent.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.GetAuthorizationRefreshBasisUtc" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void GetAuthorizationRefreshBasisUtcDoesNotSchedulePastTheAuthorizationExpiration()
+        {
+            var expires = new DateTime(2015, 10, 27, 1, 0, 0, DateTimeKind.Utc);
+            var refreshOn = new DateTimeOffset(expires.AddMinutes(-2), TimeSpan.Zero);
+
+            var basis = AmqpConnectionScope.GetAuthorizationRefreshBasisUtc(expires, refreshOn);
+
+            Assert.That(basis, Is.EqualTo(expires), "The refresh basis should not be later than the authorization expiration.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpConnectionScope.OpenAmqpObjectAsync" />
         ///   method.
         /// </summary>
