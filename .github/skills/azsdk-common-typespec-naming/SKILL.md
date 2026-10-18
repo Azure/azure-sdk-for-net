@@ -5,7 +5,7 @@ license: MIT
 metadata:
   version: "1.0.0"
   distribution: shared
-compatibility: "Guidance/review use local references. Apply prefers azure-sdk-mcp:azsdk_customized_code_update, with a direct-edit fallback when unavailable. TypeSpec validation tooling is still required."
+compatibility: "Guidance/review use local references. Apply uses scoped direct edits to TypeSpec naming overrides. TypeSpec validation tooling is still required."
 ---
 
 # TypeSpec SDK Naming
@@ -17,7 +17,7 @@ One source of naming rules for authoring and read-only naming review. Read the [
 1. **Choose intent.** Guidance/planning and review are read-only. Use apply only when the user or calling authoring workflow authorizes edits. Never interpret review feedback alone as permission to fix.
 2. **Select coverage.** Identify language and ARM/data-plane context from supplied evidence. Read the dispatcher's matching profile references before recommending names; invoking this skill does not load those rules. This is required in default client configuration planning as well as explicit naming requests. Resolve missing information only for affected naming decisions; do not block unrelated REST work.
 3. **Evaluate.** Apply compatibility before naming style: supplied evidence of a shipped SDK name makes that name the required output unless an intentional breaking rename is explicitly authorized. Apply naming conventions only to unshipped names. Preserve wire contracts and other languages. Return targets, proposed names, scopes, rationale, exceptions and blockers. Ordinary declaration authoring remains with the caller.
-4. **Apply only when authorized.** Follow the [apply workflow](references/apply.md): prefer `azure-sdk-mcp:azsdk_customized_code_update` with `editScope: SpecInputs`. If that tool is unavailable, use the workflow's scoped direct-edit fallback. Never edit SDK custom code or generated code for a TypeSpec naming fix.
+4. **Apply only when authorized.** Follow the [apply workflow](references/apply.md): directly edit scoped naming overrides in `client.tsp` and necessary imports/loading. Do not call `azsdk_customized_code_update` for naming-only changes. Never edit SDK custom code or generated code for a TypeSpec naming fix.
 5. **Report evidence.** Distinguish recommendations, applied changes and verified generated names. Review reports findings without writes or generation; after apply, validate as described in the apply workflow.
 
 ## Consumers
