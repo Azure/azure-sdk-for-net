@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2026-10-18)
 
 ### Features Added
 
@@ -16,8 +16,6 @@
 
 - Fixed relationship collection paging to handle relative continuation tokens and propagate cancellation tokens during async enumeration.
 - Fixed `Contains` relationship operations to honor configured API version overrides.
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2026-04-03)
 
