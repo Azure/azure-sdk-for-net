@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationPolicyData, DataReplicationPolicyResource>(new PolicyGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataReplicationPolicyData, DataReplicationPolicyResource>(new DataReplicationPolicyDataAsyncCollectionResultOfT(
                 _policyRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationPolicyData, DataReplicationPolicyResource>(new PolicyGetAllCollectionResultOfT(
+            return new PageableWrapper<DataReplicationPolicyData, DataReplicationPolicyResource>(new DataReplicationPolicyDataCollectionResultOfT(
                 _policyRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

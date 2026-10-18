@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new QuotaRequestDetailsList(value, nextLink, additionalBinaryDataProperties);
+            return new QuotaRequestDetailsList(value ?? new ChangeTrackingList<QuotaRequestDetailData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

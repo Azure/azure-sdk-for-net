@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Schedule changes for a scheduled action. Omitted properties keep their current values. </summary>
+    /// <summary> Schedule changes for a recurring bulk action. Omitted properties keep their current values. </summary>
     public partial class ScheduledActionsSchedulePatch : IJsonModel<ScheduledActionsSchedulePatch>
     {
         /// <param name="data"> The data to parse. </param>

@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SignalRResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string signalRApiVersion);
             _signalRResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", ResourceType.Namespace, Diagnostics);
-            _signalRResourcesRestClient = new SignalRResources(_signalRResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, signalRApiVersion ?? "2025-01-01-preview");
+            _signalRResourcesRestClient = new SignalRResources(_signalRResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.SignalRService/signalR", out string signalRResourcesApiVersionOverride) ? signalRResourcesApiVersionOverride : "2025-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new SignalRResourcesGetSignalRPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new SignalRPrivateLinkResourceAsyncCollectionResultOfT(
                 _signalRResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new SignalRResourcesGetSignalRPrivateLinkResourcesCollectionResultOfT(
+            return new SignalRPrivateLinkResourceCollectionResultOfT(
                 _signalRResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new SignalRResourcesGetSkusAsyncCollectionResultOfT(
+            return new SignalRSkuAsyncCollectionResultOfT(
                 _signalRResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new SignalRResourcesGetSkusCollectionResultOfT(
+            return new SignalRSkuCollectionResultOfT(
                 _signalRResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -979,10 +979,9 @@ namespace Azure.ResourceManager.SignalR
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1022,10 +1021,9 @@ namespace Azure.ResourceManager.SignalR
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

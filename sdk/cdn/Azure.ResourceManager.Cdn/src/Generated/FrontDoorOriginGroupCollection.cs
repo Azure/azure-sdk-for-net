@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorOriginGroupData, FrontDoorOriginGroupResource>(new FrontDoorOriginGroupsGetByProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FrontDoorOriginGroupData, FrontDoorOriginGroupResource>(new FrontDoorOriginGroupDataAsyncCollectionResultOfT(
                 _frontDoorOriginGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorOriginGroupData, FrontDoorOriginGroupResource>(new FrontDoorOriginGroupsGetByProfileCollectionResultOfT(
+            return new PageableWrapper<FrontDoorOriginGroupData, FrontDoorOriginGroupResource>(new FrontDoorOriginGroupDataCollectionResultOfT(
                 _frontDoorOriginGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

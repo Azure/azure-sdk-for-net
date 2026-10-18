@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.DevCenter
     internal partial class NetworkConnections
     {
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of NetworkConnections for mocking. </summary>
         protected NetworkConnections()
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal NetworkConnections(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal NetworkConnections(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
-            _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(NetworkConnections).Assembly, applicationId);
         }
 
@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.DevCenter
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevCenter/networkConnections/", false);
             uri.AppendPath(networkConnectionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevCenter/networkConnections") ?? "2026-01-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.DevCenter
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevCenter/networkConnections/", false);
             uri.AppendPath(networkConnectionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevCenter/networkConnections") ?? "2026-01-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +96,7 @@ namespace Azure.ResourceManager.DevCenter
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevCenter/networkConnections/", false);
             uri.AppendPath(networkConnectionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevCenter/networkConnections") ?? "2026-01-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +118,7 @@ namespace Azure.ResourceManager.DevCenter
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevCenter/networkConnections/", false);
             uri.AppendPath(networkConnectionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevCenter/networkConnections") ?? "2026-01-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,10 +136,7 @@ namespace Azure.ResourceManager.DevCenter
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevCenter/networkConnections", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevCenter/networkConnections") ?? "2026-01-01-preview", true);
             if (top != null)
             {
                 uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
@@ -176,10 +161,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevCenter/networkConnections") ?? "2026-01-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -196,10 +178,7 @@ namespace Azure.ResourceManager.DevCenter
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DevCenter/networkConnections", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevCenter/networkConnections") ?? "2026-01-01-preview", true);
             if (top != null)
             {
                 uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
@@ -224,10 +203,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevCenter/networkConnections") ?? "2026-01-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -248,10 +224,7 @@ namespace Azure.ResourceManager.DevCenter
             uri.AppendPath("/providers/Microsoft.DevCenter/networkConnections/", false);
             uri.AppendPath(networkConnectionName, true);
             uri.AppendPath("/runHealthChecks", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevCenter/networkConnections") ?? "2026-01-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -271,10 +244,7 @@ namespace Azure.ResourceManager.DevCenter
             uri.AppendPath("/providers/Microsoft.DevCenter/networkConnections/", false);
             uri.AppendPath(networkConnectionName, true);
             uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevCenter/networkConnections") ?? "2026-01-01-preview", true);
             if (top != null)
             {
                 uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
@@ -299,10 +269,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevCenter/networkConnections") ?? "2026-01-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -323,10 +290,7 @@ namespace Azure.ResourceManager.DevCenter
             uri.AppendPath("/providers/Microsoft.DevCenter/networkConnections/", false);
             uri.AppendPath(networkConnectionName, true);
             uri.AppendPath("/healthChecks/latest", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevCenter/networkConnections/healthChecks") ?? "2026-01-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -347,10 +311,7 @@ namespace Azure.ResourceManager.DevCenter
             uri.AppendPath("/providers/Microsoft.DevCenter/networkConnections/", false);
             uri.AppendPath(networkConnectionName, true);
             uri.AppendPath("/healthChecks", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevCenter/networkConnections/healthChecks") ?? "2026-01-01-preview", true);
             if (top != null)
             {
                 uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
@@ -375,10 +336,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevCenter/networkConnections/healthChecks") ?? "2026-01-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

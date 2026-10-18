@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Configuration and status of a scheduled action. </summary>
+    /// <summary> Configuration and status of a recurring bulk action. </summary>
     public partial class ScheduledActionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="actionType"> The operation performed on the targeted resources. </param>
         /// <param name="startsOn"> The date and time, including UTC offset, when the schedule becomes active. </param>
         /// <param name="schedule"> The recurring schedule. </param>
-        /// <param name="notificationSettings"> Notification settings that apply to the scheduled action. </param>
+        /// <param name="notificationSettings"> Notification settings that apply to the recurring bulk action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="notificationSettings"/> is null. </exception>
         public ScheduledActionProperties(ScheduledActionsResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startsOn, ScheduledActionsSchedule schedule, IEnumerable<NotificationProperties> notificationSettings)
         {
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="startsOn"> The date and time, including UTC offset, when the schedule becomes active. </param>
         /// <param name="endsOn"> The date and time, including UTC offset, after which no new occurrences are scheduled. </param>
         /// <param name="schedule"> The recurring schedule. </param>
-        /// <param name="notificationSettings"> Notification settings that apply to the scheduled action. </param>
+        /// <param name="notificationSettings"> Notification settings that apply to the recurring bulk action. </param>
         /// <param name="disabled"> Indicates whether new occurrences are disabled. </param>
-        /// <param name="provisioningState"> Read-only. The provisioning state of the scheduled action. </param>
+        /// <param name="provisioningState"> Read-only. The provisioning state of the recurring bulk action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ScheduledActionProperties(ScheduledActionsResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startsOn, DateTimeOffset? endsOn, ScheduledActionsSchedule schedule, IList<NotificationProperties> notificationSettings, bool? disabled, ScheduledActionsProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> The recurring schedule. </summary>
         public ScheduledActionsSchedule Schedule { get; set; }
 
-        /// <summary> Notification settings that apply to the scheduled action. </summary>
+        /// <summary> Notification settings that apply to the recurring bulk action. </summary>
         public IList<NotificationProperties> NotificationSettings { get; }
 
         /// <summary> Indicates whether new occurrences are disabled. </summary>
         public bool? Disabled { get; set; }
 
-        /// <summary> Read-only. The provisioning state of the scheduled action. </summary>
+        /// <summary> Read-only. The provisioning state of the recurring bulk action. </summary>
         public ScheduledActionsProvisioningState? ProvisioningState { get; }
     }
 }

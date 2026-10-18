@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KeyVaultPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new KeyVaultPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<KeyVaultPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

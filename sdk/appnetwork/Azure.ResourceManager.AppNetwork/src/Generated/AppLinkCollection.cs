@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AppNetwork
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AppLinkResource.ResourceType, out string appLinkApiVersion);
             _appLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppNetwork", AppLinkResource.ResourceType.Namespace, Diagnostics);
-            _appLinksRestClient = new AppLinks(_appLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appLinkApiVersion ?? "2026-08-01-preview");
+            _appLinksRestClient = new AppLinks(_appLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AppLink/appLinks", out string appLinksApiVersionOverride) ? appLinksApiVersionOverride : "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.AppNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppLinkData, AppLinkResource>(new AppLinksGetByResourceGroupAsyncCollectionResultOfT(_appLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppLinkCollection.GetAll"), data => new AppLinkResource(Client, data));
+            return new AsyncPageableWrapper<AppLinkData, AppLinkResource>(new AppLinkDataAsyncCollectionResultOfT(_appLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppLinkCollection.GetAll"), data => new AppLinkResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.AppNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppLinkData, AppLinkResource>(new AppLinksGetByResourceGroupCollectionResultOfT(_appLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppLinkCollection.GetAll"), data => new AppLinkResource(Client, data));
+            return new PageableWrapper<AppLinkData, AppLinkResource>(new AppLinkDataCollectionResultOfT(_appLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppLinkCollection.GetAll"), data => new AppLinkResource(Client, data));
         }
 
         /// <summary>

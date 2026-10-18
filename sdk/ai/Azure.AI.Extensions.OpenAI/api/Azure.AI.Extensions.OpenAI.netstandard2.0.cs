@@ -535,6 +535,20 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.BrowserAutomationPreviewTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.BrowserAutomationPreviewTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class BrowserAutomationTool : OpenAI.Responses.ResponseTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.BrowserAutomationTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.BrowserAutomationTool>
+    {
+        public BrowserAutomationTool(Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions browserAutomation) : base (default(OpenAI.Responses.ResponseToolKind)) { }
+        public Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions BrowserAutomation { get { throw null; } set { } }
+        protected override OpenAI.Responses.ResponseTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override OpenAI.Responses.ResponseTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Extensions.OpenAI.BrowserAutomationTool System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.BrowserAutomationTool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.BrowserAutomationTool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.BrowserAutomationTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.BrowserAutomationTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.BrowserAutomationTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.BrowserAutomationTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class BrowserAutomationToolCall : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.BrowserAutomationToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.BrowserAutomationToolCall>
     {
         public BrowserAutomationToolCall(string callId, string arguments, Azure.AI.Extensions.OpenAI.ToolCallStatus status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
@@ -676,6 +690,7 @@ namespace Azure.AI.Extensions.OpenAI
         public static Azure.AI.Extensions.OpenAI.BingGroundingToolCall BingGroundingToolCall(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, string arguments = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
         public static Azure.AI.Extensions.OpenAI.BingGroundingToolCallOutput BingGroundingToolCallOutput(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, System.BinaryData output = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
         public static Azure.AI.Extensions.OpenAI.BrowserAutomationPreviewTool BrowserAutomationPreviewTool(Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions browserAutomationPreview = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.BrowserAutomationTool BrowserAutomationTool(Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions browserAutomation = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.BrowserAutomationToolCall BrowserAutomationToolCall(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, string arguments = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
         public static Azure.AI.Extensions.OpenAI.BrowserAutomationToolCallOutput BrowserAutomationToolCallOutput(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, System.BinaryData output = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
         public static Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions BrowserAutomationToolConnectionOptions(string projectConnectionId = null) { throw null; }
@@ -695,6 +710,9 @@ namespace Azure.AI.Extensions.OpenAI
         public static Azure.AI.Extensions.OpenAI.MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = null, string scope = null, Azure.AI.Extensions.OpenAI.MemorySearchResultOptions searchOptions = null, int? updateDelayInSeconds = default(int?)) { throw null; }
         public static Azure.AI.Extensions.OpenAI.MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default(int?)) { throw null; }
         public static Azure.AI.Extensions.OpenAI.MemorySearchToolCall MemorySearchToolCall(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress, System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.MemoryOutputItem> memories = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig MicrosoftCopilotToolsetConfig(Azure.AI.Extensions.OpenAI.MicrosoftCopilotBuiltInTool name = Azure.AI.Extensions.OpenAI.MicrosoftCopilotBuiltInTool.FilesystemRead, bool? enabled = default(bool?)) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig MicrosoftCopilotToolsetDefaultConfig(bool? enabled = default(bool?)) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetPreview MicrosoftCopilotToolsetPreview(Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig defaultConfig = null, System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig> configs = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(Azure.AI.Extensions.OpenAI.FabricDataAgentToolOptions toolOptions = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, System.Uri consentLink = null, string serverLabel = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.OpenApiAnonymousAuthenticationDetails OpenApiAnonymousAuthenticationDetails() { throw null; }
@@ -943,6 +961,58 @@ namespace Azure.AI.Extensions.OpenAI
         Azure.AI.Extensions.OpenAI.MemorySearchToolCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MemorySearchToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MemorySearchToolCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MemorySearchToolCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum MicrosoftCopilotBuiltInTool
+    {
+        FilesystemRead = 0,
+        FilesystemWrite = 1,
+        Shell = 2,
+        Web = 3,
+        Subagents = 4,
+    }
+    public partial class MicrosoftCopilotToolsetConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig>
+    {
+        internal MicrosoftCopilotToolsetConfig() { }
+        public bool? Enabled { get { throw null; } }
+        public Azure.AI.Extensions.OpenAI.MicrosoftCopilotBuiltInTool Name { get { throw null; } }
+        protected virtual Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MicrosoftCopilotToolsetDefaultConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig>
+    {
+        internal MicrosoftCopilotToolsetDefaultConfig() { }
+        public bool? Enabled { get { throw null; } }
+        protected virtual Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MicrosoftCopilotToolsetPreview : OpenAI.Responses.ResponseTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetPreview>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetPreview>
+    {
+        internal MicrosoftCopilotToolsetPreview() : base (default(OpenAI.Responses.ResponseToolKind)) { }
+        public System.Collections.Generic.IList<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig> Configs { get { throw null; } }
+        public Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig DefaultConfig { get { throw null; } }
+        protected override OpenAI.Responses.ResponseTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override OpenAI.Responses.ResponseTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetPreview System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetPreview>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetPreview>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetPreview System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetPreview>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetPreview>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetPreview>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MicrosoftFabricPreviewTool : OpenAI.Responses.ResponseTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.MicrosoftFabricPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftFabricPreviewTool>
     {
@@ -1378,6 +1448,7 @@ namespace Azure.AI.Extensions.OpenAI
         public static OpenAI.Responses.ResponseToolKind get_FabricIQPreview() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_GitHubCopilotToolsetPreviewValue() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_MemorySearchPreview() { throw null; }
+        public static OpenAI.Responses.ResponseToolKind get_MicrosoftCopilotToolsetPreview() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_Namespace() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_OpenAPI() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_SharePointGroundingPreview() { throw null; }
@@ -1400,6 +1471,7 @@ namespace Azure.AI.Extensions.OpenAI
             public static OpenAI.Responses.ResponseToolKind FabricIQPreview { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind GitHubCopilotToolsetPreviewValue { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind MemorySearchPreview { get { throw null; } }
+            public static OpenAI.Responses.ResponseToolKind MicrosoftCopilotToolsetPreview { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind Namespace { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind OpenAPI { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind SharePointGroundingPreview { get { throw null; } }

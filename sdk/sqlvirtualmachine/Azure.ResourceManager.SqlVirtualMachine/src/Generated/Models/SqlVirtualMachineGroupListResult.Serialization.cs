@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SqlVirtualMachineGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SqlVirtualMachineGroupListResult(value ?? new ChangeTrackingList<SqlVmGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

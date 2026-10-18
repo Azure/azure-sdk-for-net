@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StaticSiteResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string staticSiteApiVersion);
             _staticSiteARMResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _staticSiteARMResourcesRestClient = new StaticSiteARMResources(_staticSiteARMResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteApiVersion ?? "2026-03-15");
+            _staticSiteARMResourcesRestClient = new StaticSiteARMResources(_staticSiteARMResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Web/staticSites", out string staticSiteARMResourcesApiVersionOverride) ? staticSiteARMResourcesApiVersionOverride : "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -1035,7 +1034,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new StaticSiteARMResourcesGetDatabaseConnectionsWithDetailsAsyncCollectionResultOfT(
+            return new StaticSiteDatabaseConnectionDataAsyncCollectionResultOfT(
                 _staticSiteARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1073,7 +1072,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new StaticSiteARMResourcesGetDatabaseConnectionsWithDetailsCollectionResultOfT(
+            return new StaticSiteDatabaseConnectionDataCollectionResultOfT(
                 _staticSiteARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1399,7 +1398,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new StaticSiteARMResourcesGetStaticSiteFunctionsAsyncCollectionResultOfT(
+            return new StaticSiteFunctionOverviewAsyncCollectionResultOfT(
                 _staticSiteARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1437,7 +1436,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new StaticSiteARMResourcesGetStaticSiteFunctionsCollectionResultOfT(
+            return new StaticSiteFunctionOverviewCollectionResultOfT(
                 _staticSiteARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1576,7 +1575,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new StaticSiteARMResourcesGetUsersAsyncCollectionResultOfT(
+            return new StaticSiteUserAsyncCollectionResultOfT(
                 _staticSiteARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1620,7 +1619,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new StaticSiteARMResourcesGetUsersCollectionResultOfT(
+            return new StaticSiteUserCollectionResultOfT(
                 _staticSiteARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

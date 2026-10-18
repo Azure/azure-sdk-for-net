@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFunctionDefinitionGroupData, NetworkFunctionDefinitionGroupResource>(new NetworkFunctionDefinitionGroupsGetByPublisherAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkFunctionDefinitionGroupData, NetworkFunctionDefinitionGroupResource>(new NetworkFunctionDefinitionGroupDataAsyncCollectionResultOfT(
                 _networkFunctionDefinitionGroupsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFunctionDefinitionGroupData, NetworkFunctionDefinitionGroupResource>(new NetworkFunctionDefinitionGroupsGetByPublisherCollectionResultOfT(
+            return new PageableWrapper<NetworkFunctionDefinitionGroupData, NetworkFunctionDefinitionGroupResource>(new NetworkFunctionDefinitionGroupDataCollectionResultOfT(
                 _networkFunctionDefinitionGroupsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AiGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AiGatewayResource.ResourceType, out string aiGatewayApiVersion);
             _aiGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AiGatewayResource.ResourceType.Namespace, Diagnostics);
-            _aiGatewaysRestClient = new AiGateways(_aiGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, aiGatewayApiVersion ?? "2026-03-15");
+            _aiGatewaysRestClient = new AiGateways(_aiGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Web/aigateways", out string aiGatewaysApiVersionOverride) ? aiGatewaysApiVersionOverride : "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -295,7 +294,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AiGatewayData, AiGatewayResource>(new AiGatewaysGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AiGatewayData, AiGatewayResource>(new AiGatewayDataAsync0CollectionResultOfT(
                 _aiGatewaysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -342,7 +341,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AiGatewayData, AiGatewayResource>(new AiGatewaysGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<AiGatewayData, AiGatewayResource>(new AiGatewayData0CollectionResultOfT(
                 _aiGatewaysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

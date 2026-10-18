@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudBareMetalMachineKeySetData, NetworkCloudBareMetalMachineKeySetResource>(new BareMetalMachineKeySetsGetByClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudBareMetalMachineKeySetData, NetworkCloudBareMetalMachineKeySetResource>(new NetworkCloudBareMetalMachineKeySetDataAsyncCollectionResultOfT(
                 _bareMetalMachineKeySetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudBareMetalMachineKeySetData, NetworkCloudBareMetalMachineKeySetResource>(new BareMetalMachineKeySetsGetByClusterCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudBareMetalMachineKeySetData, NetworkCloudBareMetalMachineKeySetResource>(new NetworkCloudBareMetalMachineKeySetDataCollectionResultOfT(
                 _bareMetalMachineKeySetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

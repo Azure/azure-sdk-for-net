@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlVmGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SqlVmGroupResource.ResourceType, out string sqlVmGroupApiVersion);
             _sqlVirtualMachineGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVmGroupResource.ResourceType.Namespace, Diagnostics);
-            _sqlVirtualMachineGroupsRestClient = new SqlVirtualMachineGroups(_sqlVirtualMachineGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlVmGroupApiVersion ?? "2023-10-01");
+            _sqlVirtualMachineGroupsRestClient = new SqlVirtualMachineGroups(_sqlVirtualMachineGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups", out string sqlVirtualMachineGroupsApiVersionOverride) ? sqlVirtualMachineGroupsApiVersionOverride : "2023-10-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVirtualMachineGroupsGetByResourceGroupAsyncCollectionResultOfT(_sqlVirtualMachineGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SqlVmGroupCollection.GetAll"), data => new SqlVmGroupResource(Client, data));
+            return new AsyncPageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVmGroupDataAsyncCollectionResultOfT(_sqlVirtualMachineGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SqlVmGroupCollection.GetAll"), data => new SqlVmGroupResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVirtualMachineGroupsGetByResourceGroupCollectionResultOfT(_sqlVirtualMachineGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SqlVmGroupCollection.GetAll"), data => new SqlVmGroupResource(Client, data));
+            return new PageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVmGroupDataCollectionResultOfT(_sqlVirtualMachineGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SqlVmGroupCollection.GetAll"), data => new SqlVmGroupResource(Client, data));
         }
 
         /// <summary>

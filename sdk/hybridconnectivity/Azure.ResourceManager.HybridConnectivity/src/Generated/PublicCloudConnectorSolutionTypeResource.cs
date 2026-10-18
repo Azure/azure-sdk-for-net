@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublicCloudConnectorSolutionTypeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string publicCloudConnectorSolutionTypeApiVersion);
             _solutionTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", ResourceType.Namespace, Diagnostics);
-            _solutionTypesRestClient = new SolutionTypes(_solutionTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicCloudConnectorSolutionTypeApiVersion ?? "2024-12-01");
+            _solutionTypesRestClient = new SolutionTypes(_solutionTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridConnectivity/solutionTypes", out string solutionTypesApiVersionOverride) ? solutionTypesApiVersionOverride : "2027-01-01");
             ValidateResourceId(id);
         }
 
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

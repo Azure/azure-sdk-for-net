@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HybridContainerServiceVirtualNetworkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HybridContainerServiceVirtualNetworkResource.ResourceType, out string hybridContainerServiceVirtualNetworkApiVersion);
             _virtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", HybridContainerServiceVirtualNetworkResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridContainerServiceVirtualNetworkApiVersion ?? "2026-04-01-preview");
+            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridContainerService/virtualNetworks", out string virtualNetworksApiVersionOverride) ? virtualNetworksApiVersionOverride : "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridContainerServiceVirtualNetworkData, HybridContainerServiceVirtualNetworkResource>(new VirtualNetworksGetByResourceGroupAsyncCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridContainerServiceVirtualNetworkCollection.GetAll"), data => new HybridContainerServiceVirtualNetworkResource(Client, data));
+            return new AsyncPageableWrapper<HybridContainerServiceVirtualNetworkData, HybridContainerServiceVirtualNetworkResource>(new HybridContainerServiceVirtualNetworkDataAsyncCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridContainerServiceVirtualNetworkCollection.GetAll"), data => new HybridContainerServiceVirtualNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridContainerServiceVirtualNetworkData, HybridContainerServiceVirtualNetworkResource>(new VirtualNetworksGetByResourceGroupCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridContainerServiceVirtualNetworkCollection.GetAll"), data => new HybridContainerServiceVirtualNetworkResource(Client, data));
+            return new PageableWrapper<HybridContainerServiceVirtualNetworkData, HybridContainerServiceVirtualNetworkResource>(new HybridContainerServiceVirtualNetworkDataCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridContainerServiceVirtualNetworkCollection.GetAll"), data => new HybridContainerServiceVirtualNetworkResource(Client, data));
         }
 
         /// <summary>

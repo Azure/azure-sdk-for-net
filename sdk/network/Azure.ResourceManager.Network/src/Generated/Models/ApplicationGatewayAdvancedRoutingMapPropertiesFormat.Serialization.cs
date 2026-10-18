@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network.Models
                 defaultRedirectConfiguration,
                 defaultRewriteRuleSet,
                 defaultAuthConfigs ?? new ChangeTrackingList<ApplicationGatewayAuthConfig>(),
-                advancedRoutingRules,
+                advancedRoutingRules ?? new ChangeTrackingList<ApplicationGatewayAdvancedRoutingRule>(),
                 provisioningState,
                 additionalBinaryDataProperties);
         }
