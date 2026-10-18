@@ -66,6 +66,10 @@ internal sealed class TelemetryWebSocket(WebSocket inner, VoiceAgentRealtimeTele
         try
         {
             await inner.CloseOutputAsync(closeStatus, statusDescription, cancellationToken).ConfigureAwait(false);
+            if (inner.State == WebSocketState.Closed)
+            {
+                telemetry.Close(inner.CloseStatus ?? closeStatus, true);
+            }
         }
         catch (Exception exception)
         {
@@ -88,7 +92,12 @@ internal sealed class TelemetryWebSocket(WebSocket inner, VoiceAgentRealtimeTele
         }
         if (result.MessageType == WebSocketMessageType.Close)
         {
-            telemetry.Close(result.CloseStatus, inner.State == WebSocketState.Closed);
+            // CloseReceived is only half of a normal closing handshake.
+            if (result.CloseStatus is not WebSocketCloseStatus.NormalClosure and not WebSocketCloseStatus.EndpointUnavailable ||
+                inner.State != WebSocketState.CloseReceived)
+            {
+                telemetry.Close(result.CloseStatus, inner.State == WebSocketState.Closed);
+            }
         }
         else if (result.MessageType == WebSocketMessageType.Text)
         {
@@ -99,18 +108,26 @@ internal sealed class TelemetryWebSocket(WebSocket inner, VoiceAgentRealtimeTele
 
     public override async Task SendAsync(ArraySegment<byte> buffer, WebSocketMessageType messageType, bool endOfMessage, CancellationToken cancellationToken)
     {
+        if (messageType == WebSocketMessageType.Text)
+        {
+            telemetry.BeginSend();
+        }
         try
         {
             await inner.SendAsync(buffer, messageType, endOfMessage, cancellationToken).ConfigureAwait(false);
         }
         catch (Exception exception)
         {
+            if (messageType == WebSocketMessageType.Text)
+            {
+                telemetry.CompleteSend(buffer, endOfMessage, false);
+            }
             telemetry.TransportFailed(exception, true, inner.State);
             throw;
         }
         if (messageType == WebSocketMessageType.Text)
         {
-            telemetry.ObserveFrame(buffer, endOfMessage, true);
+            telemetry.CompleteSend(buffer, endOfMessage, true);
         }
     }
 }

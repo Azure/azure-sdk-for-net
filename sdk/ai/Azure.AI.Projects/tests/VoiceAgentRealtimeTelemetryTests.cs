@@ -1260,6 +1260,499 @@ public class VoiceAgentRealtimeTelemetryTests
         AssertPrivate(ExceptionSecret);
     }
 
+    [TestCase(false, WebSocketCloseStatus.NormalClosure)]
+    [TestCase(true, WebSocketCloseStatus.NormalClosure)]
+    [TestCase(false, WebSocketCloseStatus.EndpointUnavailable)]
+    [TestCase(true, WebSocketCloseStatus.EndpointUnavailable)]
+    public async Task NormalPeerCloseWaitsForHandshakeCompletion(bool closeOutput, WebSocketCloseStatus closeStatus)
+    {
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        Observe(telemetry, new { type = "response.created", response = new { id = "response-peer-close" } });
+        StubWebSocket inner = new();
+        inner.QueueClose(closeStatus, ExceptionSecret);
+        using WebSocket socket = telemetry.CreateWebSocket(inner);
+        Activity caller = Activity.Current;
+
+        WebSocketReceiveResult received = await socket.ReceiveAsync(new ArraySegment<byte>(new byte[512]), CancellationToken.None);
+        Assert.Multiple(() =>
+        {
+            Assert.That(received.CloseStatusDescription, Is.EqualTo(ExceptionSecret), "Do not change the application's close result.");
+            Assert.That(inner.State, Is.EqualTo(WebSocketState.CloseReceived));
+            Assert.That(_activities, Has.Count.EqualTo(1), "Only the handshake span has ended before replying to peer close.");
+            Assert.That(Activity.Current, Is.SameAs(caller));
+        });
+
+        if (closeOutput)
+        {
+            await socket.CloseOutputAsync(closeStatus, ExceptionSecret, CancellationToken.None);
+        }
+        else
+        {
+            await socket.CloseAsync(closeStatus, ExceptionSecret, CancellationToken.None);
+        }
+        Assert.Multiple(() =>
+        {
+            Assert.That(inner.State, Is.EqualTo(WebSocketState.Closed));
+            Assert.That(inner.DisposeCount, Is.EqualTo(0));
+            Assert.That(_activities, Has.Count.EqualTo(3));
+            Assert.That(Tag(Span(SessionName), Prefix + "close.was_clean"), Is.True);
+            Assert.That(Tag(Span(SessionName), Prefix + "close.code"), Is.EqualTo((int)closeStatus));
+            Assert.That(Span(SessionName).Status, Is.Not.EqualTo(ActivityStatusCode.Error));
+            Assert.That(Tag(Span(ResponseName), Prefix + "response.status"), Is.EqualTo("interrupted"));
+            Assert.That(Activity.Current, Is.SameAs(caller));
+        });
+        socket.Dispose();
+        Assert.That(_activities, Has.Count.EqualTo(3));
+        AssertPrivate(ExceptionSecret);
+    }
+
+    [TestCaseSource(nameof(ConcurrentSendCases))]
+    public async Task ResponseInputWaitsForConcurrentSendOutcome(string inputKind, string outcome, bool finishFirst, bool captureContent)
+    {
+        SetContentCapture(captureContent);
+        const string previousInput = "previous-input-content";
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        Observe(telemetry, new
+        {
+            type = "conversation.item.create",
+            item = new { type = "message", role = "user", content = new[] { new { type = "input_text", text = previousInput } } }
+        }, isSend: true);
+        string audio = Convert.ToBase64String(new byte[] { 11, 22, 33, 44, 55 });
+        string message = inputKind switch
+        {
+            "audio" => "{\"type\":\"input_audio_buffer.append\",\"audio\":\"" + audio + "\"}",
+            "text" => "{\"type\":\"conversation.item.create\",\"item\":{\"type\":\"message\",\"role\":\"user\",\"content\":[{\"type\":\"input_text\",\"text\":\"" + MessageSecret + "\"}]}}",
+            "tool" => "{\"type\":\"conversation.item.create\",\"item\":{\"type\":\"function_call_output\",\"call_id\":\"pending-call\",\"output\":\"" + MessageSecret + "\"}}",
+            _ => "{\"type\":\"response.create\"}"
+        };
+        TaskCompletionSource<bool> completion = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        StubWebSocket inner = new() { SendCompletion = completion };
+        inner.QueueText("{\"type\":\"response.created\",\"response\":{\"id\":\"concurrent-input\"}}");
+        inner.QueueText("{\"type\":\"response.done\",\"response\":{\"id\":\"concurrent-input\",\"status\":\"completed\"}}");
+        using WebSocket socket = telemetry.CreateWebSocket(inner);
+        Activity response = null;
+        _listener.ActivityStarted = activity =>
+        {
+            if (activity.OperationName == ResponseName)
+            {
+                response = activity;
+            }
+        };
+        Activity caller = Activity.Current;
+
+        Task send = socket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(message)), WebSocketMessageType.Text, true, CancellationToken.None);
+        Assert.That(send.IsCompleted, Is.False);
+        await socket.ReceiveAsync(new ArraySegment<byte>(new byte[512]), CancellationToken.None);
+        Assert.That(Tag(response, "gen_ai.input.messages"), Is.Null, "Do not publish the previous input while send success is unknown.");
+        TimeSpan observedResponseDuration = default;
+        if (finishFirst)
+        {
+            await socket.ReceiveAsync(new ArraySegment<byte>(new byte[512]), CancellationToken.None);
+            observedResponseDuration = response.Duration;
+            Assert.That(observedResponseDuration, Is.GreaterThan(TimeSpan.Zero));
+            Assert.That(_activities.Any(activity => activity.OperationName == ResponseName), Is.False,
+                "A finished response must not be exported before its pending input is resolved.");
+        }
+        bool succeeded = outcome == "success";
+        if (succeeded)
+        {
+            completion.SetResult(true);
+            await send;
+        }
+        else
+        {
+            Exception failure = outcome == "cancelled" ? new OperationCanceledException(ExceptionSecret) : new WebSocketException(ExceptionSecret);
+            completion.SetException(failure);
+            Exception actual = outcome == "cancelled"
+                ? Assert.ThrowsAsync<OperationCanceledException>(async () => await send)
+                : Assert.ThrowsAsync<WebSocketException>(async () => await send);
+            Assert.That(actual, Is.SameAs(failure));
+        }
+        if (!finishFirst)
+        {
+            await socket.ReceiveAsync(new ArraySegment<byte>(new byte[512]), CancellationToken.None);
+        }
+        telemetry.Close(WebSocketCloseStatus.NormalClosure, true);
+
+        bool newInput = succeeded && inputKind != "response";
+        bool audioInput = newInput && inputKind == "audio";
+        string role = newInput && inputKind == "tool" ? "tool" : "user";
+        string type = audioInput ? "audio" : role == "tool" ? "tool_call_response" : "text";
+        string contentKey = role == "tool" ? "response" : "content";
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Status, Is.EqualTo(ActivityStatusCode.Ok));
+            Assert.That(Tag(Span(SessionName), Prefix + "input.audio.bytes"), Is.EqualTo(audioInput ? 5L : 0L));
+            Assert.That(inner.SendCount, Is.EqualTo(succeeded ? 1 : 0));
+            Assert.That(response.ParentSpanId, Is.EqualTo(Span(SessionName).SpanId));
+            Assert.That(_activities, Has.Count.EqualTo(3));
+            Assert.That(Activity.Current, Is.SameAs(caller));
+        });
+        if (succeeded)
+        {
+            using JsonDocument input = JsonDocument.Parse((string)Tag(response, "gen_ai.input.messages"));
+            JsonElement observed = input.RootElement[0];
+            JsonElement part = observed.GetProperty("parts")[0];
+            Assert.Multiple(() =>
+            {
+                Assert.That(observed.GetProperty("role").GetString(), Is.EqualTo(role));
+                Assert.That(part.GetProperty("type").GetString(), Is.EqualTo(type));
+                Assert.That(part.TryGetProperty(contentKey, out _), Is.EqualTo(captureContent && !audioInput));
+            });
+            if (captureContent && !audioInput)
+            {
+                Assert.That(part.GetProperty(contentKey).GetString(), Is.EqualTo(newInput ? MessageSecret : previousInput));
+            }
+        }
+        else
+        {
+            Assert.That(Tag(response, "gen_ai.input.messages"), Is.Null,
+                "An unconfirmed send must not silently attribute the response to an older unrelated input.");
+        }
+        if (finishFirst)
+        {
+            Assert.That(response.Duration, Is.EqualTo(observedResponseDuration),
+                "Waiting for send outcome must not extend the response's measured duration.");
+        }
+        AssertPrivate(audio, ExceptionSecret);
+        AssertLogPrivate(previousInput, MessageSecret);
+        if (!captureContent)
+        {
+            AssertPrivate(previousInput, MessageSecret);
+        }
+        else if (!newInput || audioInput)
+        {
+            AssertPrivate(MessageSecret);
+        }
+    }
+
+    private static IEnumerable<TestCaseData> ConcurrentSendCases()
+    {
+        foreach (string kind in new[] { "text", "audio", "tool", "response" })
+        {
+            foreach (string outcome in new[] { "success", "failed", "cancelled" })
+            {
+                foreach (bool finishFirst in new[] { false, true })
+                {
+                    foreach (bool capture in new[] { false, true })
+                    {
+                        yield return new TestCaseData(kind, outcome, finishFirst, capture);
+                    }
+                }
+            }
+        }
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task DisposalWhileSendIsPendingCompletesActivitiesWithoutRecordingUnconfirmedInput(bool responseDone)
+    {
+        SetContentCapture(true);
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        TaskCompletionSource<bool> completion = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        StubWebSocket inner = new() { SendCompletion = completion };
+        inner.QueueText("{\"type\":\"response.created\",\"response\":{\"id\":\"disposed-input\"}}");
+        if (responseDone)
+        {
+            inner.QueueText("{\"type\":\"response.done\",\"response\":{\"id\":\"disposed-input\",\"status\":\"completed\"}}");
+        }
+        using WebSocket socket = telemetry.CreateWebSocket(inner);
+
+        Task send = socket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(
+            "{\"type\":\"conversation.item.create\",\"item\":{\"type\":\"function_call_output\",\"call_id\":\"pending-call\",\"output\":\"" + MessageSecret + "\"}}")),
+            WebSocketMessageType.Text, true, CancellationToken.None);
+        await socket.ReceiveAsync(new ArraySegment<byte>(new byte[512]), CancellationToken.None);
+        if (responseDone)
+        {
+            await socket.ReceiveAsync(new ArraySegment<byte>(new byte[512]), CancellationToken.None);
+        }
+        socket.Dispose();
+        Assert.That(_activities, Has.Count.EqualTo(3));
+        Assert.That(Tag(Span(ResponseName), Prefix + "response.status"), Is.EqualTo(responseDone ? "completed" : "interrupted"));
+        Assert.That(Tag(Span(ResponseName), "gen_ai.input.messages"), Is.Null);
+        completion.SetResult(true);
+        await send;
+        Assert.That(_activities, Has.Count.EqualTo(3), "Late send completion must not mutate or re-export stopped Activities.");
+        AssertPrivate(MessageSecret);
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task FragmentedInputCorrelationCommitsOnlySuccessfulFinalFrames(bool succeeded)
+    {
+        SetContentCapture(true);
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        StubWebSocket inner = new();
+        using WebSocket socket = telemetry.CreateWebSocket(inner);
+        string message = "{\"type\":\"conversation.item.create\",\"item\":{\"type\":\"message\",\"role\":\"user\",\"content\":[{\"type\":\"input_text\",\"text\":\"" + MessageSecret + "\"}]}}";
+        byte[] bytes = Encoding.UTF8.GetBytes(message);
+        int split = bytes.Length / 2;
+        await socket.SendAsync(new ArraySegment<byte>(bytes, 0, split), WebSocketMessageType.Text, false, CancellationToken.None);
+        TaskCompletionSource<bool> completion = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        inner.SendCompletion = completion;
+        inner.QueueText("{\"type\":\"response.created\",\"response\":{\"id\":\"fragmented-race\"}}");
+        inner.QueueText("{\"type\":\"response.done\",\"response\":{\"id\":\"fragmented-race\",\"status\":\"completed\"}}");
+
+        Task send = socket.SendAsync(new ArraySegment<byte>(bytes, split, bytes.Length - split), WebSocketMessageType.Text, true, CancellationToken.None);
+        await socket.ReceiveAsync(new ArraySegment<byte>(new byte[512]), CancellationToken.None);
+        await socket.ReceiveAsync(new ArraySegment<byte>(new byte[512]), CancellationToken.None);
+        if (succeeded)
+        {
+            completion.SetResult(true);
+            await send;
+        }
+        else
+        {
+            completion.SetException(new WebSocketException(ExceptionSecret));
+            Assert.ThrowsAsync<WebSocketException>(async () => await send);
+        }
+        Activity response = Span(ResponseName);
+        if (succeeded)
+        {
+            using JsonDocument input = JsonDocument.Parse((string)Tag(response, "gen_ai.input.messages"));
+            Assert.That(input.RootElement[0].GetProperty("parts")[0].GetProperty("content").GetString(), Is.EqualTo(MessageSecret));
+        }
+        else
+        {
+            Assert.That(Tag(response, "gen_ai.input.messages"), Is.Null);
+            inner.SendCompletion = null;
+            await socket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(
+                "{\"type\":\"conversation.item.create\",\"item\":{\"type\":\"message\",\"role\":\"user\",\"content\":[{\"type\":\"input_text\",\"text\":\"recovered-input\"}]}}")),
+                WebSocketMessageType.Text, true, CancellationToken.None);
+        }
+        socket.Dispose();
+        Assert.That(Span(SessionName).Events.Any(item => item.Name == "voice_agents.warning"), Is.False);
+        if (!succeeded)
+        {
+            AssertPrivate(MessageSecret);
+        }
+        AssertPrivate(ExceptionSecret);
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task PendingSendRetainsVadTurnAndTranscriptOrder(bool captureContent)
+    {
+        SetContentCapture(captureContent);
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        TaskCompletionSource<bool> completion = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        StubWebSocket inner = new() { SendCompletion = completion };
+        using WebSocket socket = telemetry.CreateWebSocket(inner);
+        string audio = Convert.ToBase64String(new byte[] { 11, 22, 33, 44, 55 });
+        for (int turn = 1; turn <= 2; turn++)
+        {
+            inner.QueueText("{\"type\":\"input_audio_buffer.speech_started\",\"item_id\":\"turn-" + turn + "\"}");
+            inner.QueueText("{\"type\":\"input_audio_buffer.committed\",\"item_id\":\"turn-" + turn + "\"}");
+            inner.QueueText("{\"type\":\"response.created\",\"response\":{\"id\":\"response-" + turn + "\"}}");
+            inner.QueueText("{\"type\":\"response.done\",\"response\":{\"id\":\"response-" + turn + "\",\"status\":\"completed\"}}");
+        }
+        inner.QueueText("{\"type\":\"conversation.item.input_audio_transcription.completed\",\"item_id\":\"turn-2\",\"transcript\":\"" + MetadataSecret + "\"}");
+        inner.QueueText("{\"type\":\"conversation.item.input_audio_transcription.completed\",\"item_id\":\"turn-1\",\"transcript\":\"" + MessageSecret + "\"}");
+
+        Task send = socket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(
+            "{\"type\":\"input_audio_buffer.append\",\"audio\":\"" + audio + "\"}")), WebSocketMessageType.Text, true, CancellationToken.None);
+        for (int i = 0; i < 10; i++)
+        {
+            await socket.ReceiveAsync(new ArraySegment<byte>(new byte[512]), CancellationToken.None);
+        }
+        DateTimeOffset observed = DateTimeOffset.UtcNow;
+        Assert.That(_activities, Has.Count.EqualTo(1));
+        completion.SetResult(true);
+        await send;
+        socket.Dispose();
+
+        for (int turn = 1; turn <= 2; turn++)
+        {
+            Activity response = _activities.Single(activity => Equals(Tag(activity, "gen_ai.response.id"), "response-" + turn));
+            using JsonDocument input = JsonDocument.Parse((string)Tag(response, "gen_ai.input.messages"));
+            JsonElement part = input.RootElement[0].GetProperty("parts")[0];
+            Assert.That(part.GetProperty("type").GetString(), Is.EqualTo("audio"));
+            Assert.That(part.TryGetProperty("content", out _), Is.EqualTo(captureContent));
+            if (captureContent)
+            {
+                Assert.That(part.GetProperty("content").GetString(), Is.EqualTo(turn == 1 ? MessageSecret : MetadataSecret));
+            }
+        }
+        Activity session = Span(SessionName);
+        Assert.That(Tag(session, Prefix + "input.audio.bytes"), Is.EqualTo(5L));
+        Assert.That(session.Events.All(activityEvent => activityEvent.Timestamp <= observed), Is.True,
+            "Deferred telemetry keeps the original event observation timestamps.");
+        using JsonDocument lastInput = JsonDocument.Parse((string)Tag(session, "gen_ai.input.messages"));
+        if (captureContent)
+        {
+            Assert.That(lastInput.RootElement[0].GetProperty("parts")[0].GetProperty("content").GetString(), Is.EqualTo(MetadataSecret));
+        }
+        AssertPrivate(audio);
+        AssertLogPrivate(MessageSecret, MetadataSecret);
+        if (!captureContent)
+        {
+            AssertPrivate(MessageSecret, MetadataSecret);
+        }
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task PendingAudioItemAcknowledgementDoesNotLoseTranscript(bool captureContent)
+    {
+        SetContentCapture(captureContent);
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        TaskCompletionSource<bool> completion = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        StubWebSocket inner = new() { SendCompletion = completion };
+        using WebSocket socket = telemetry.CreateWebSocket(inner);
+        inner.QueueText("{\"type\":\"conversation.item.added\",\"item\":{\"id\":\"pending-audio\",\"role\":\"user\",\"content\":[{\"type\":\"input_audio\"}]}}");
+        inner.QueueText("{\"type\":\"conversation.item.input_audio_transcription.completed\",\"item_id\":\"pending-audio\",\"transcript\":\"" + MessageSecret + "\"}");
+        inner.QueueText("{\"type\":\"response.created\",\"response\":{\"id\":\"acknowledged-audio\"}}");
+        inner.QueueText("{\"type\":\"response.done\",\"response\":{\"id\":\"acknowledged-audio\",\"status\":\"completed\"}}");
+
+        Task send = socket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(
+            "{\"type\":\"conversation.item.create\",\"item\":{\"type\":\"message\",\"role\":\"user\",\"content\":[{\"type\":\"input_audio\",\"audio\":\"AQID\"}]}}")),
+            WebSocketMessageType.Text, true, CancellationToken.None);
+        for (int i = 0; i < 4; i++)
+        {
+            await socket.ReceiveAsync(new ArraySegment<byte>(new byte[512]), CancellationToken.None);
+        }
+        completion.SetResult(true);
+        await send;
+        socket.Dispose();
+
+        using JsonDocument input = JsonDocument.Parse((string)Tag(Span(ResponseName), "gen_ai.input.messages"));
+        JsonElement part = input.RootElement[0].GetProperty("parts")[0];
+        Assert.That(part.TryGetProperty("content", out _), Is.EqualTo(captureContent));
+        if (captureContent)
+        {
+            Assert.That(part.GetProperty("content").GetString(), Is.EqualTo(MessageSecret));
+        }
+        Assert.That(Tag(Span(SessionName), Prefix + "input.audio.bytes"), Is.EqualTo(3L));
+        AssertPrivate("AQID");
+        AssertLogPrivate(MessageSecret);
+        if (!captureContent)
+        {
+            AssertPrivate(MessageSecret);
+        }
+    }
+
+    [Test]
+    public async Task PendingInputEventOverflowOmitsUncertainInputAndReleasesFinishedResponses()
+    {
+        SetContentCapture(true);
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        TaskCompletionSource<bool> completion = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        StubWebSocket inner = new() { SendCompletion = completion };
+        using WebSocket socket = telemetry.CreateWebSocket(inner);
+        inner.QueueText("{\"type\":\"response.created\",\"response\":{\"id\":\"before-overflow\"}}");
+        inner.QueueText("{\"type\":\"response.done\",\"response\":{\"id\":\"before-overflow\",\"status\":\"completed\"}}");
+        for (int i = 0; i < 65; i++)
+        {
+            inner.QueueText("{\"type\":\"input_audio_buffer.committed\",\"item_id\":\"overflow-" + i + "\"}");
+        }
+        inner.QueueText("{\"type\":\"response.created\",\"response\":{\"id\":\"after-overflow\"}}");
+        inner.QueueText("{\"type\":\"response.done\",\"response\":{\"id\":\"after-overflow\",\"status\":\"completed\"}}");
+
+        Task send = socket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(
+            "{\"type\":\"conversation.item.create\",\"item\":{\"type\":\"function_call_output\",\"call_id\":\"pending-call\",\"output\":\"" + MessageSecret + "\"}}")),
+            WebSocketMessageType.Text, true, CancellationToken.None);
+        for (int i = 0; i < 69; i++)
+        {
+            await socket.ReceiveAsync(new ArraySegment<byte>(new byte[512]), CancellationToken.None);
+        }
+        Assert.That(_activities, Has.Count.EqualTo(3), "Overflow releases both finished responses without waiting indefinitely for the send.");
+        completion.SetResult(true);
+        await send;
+        socket.Dispose();
+
+        Assert.That(_activities, Has.Count.EqualTo(4));
+        foreach (Activity response in _activities.Where(activity => activity.OperationName == ResponseName))
+        {
+            Assert.That(Tag(response, "gen_ai.input.messages"), Is.Null);
+            Assert.That(response.Status, Is.EqualTo(ActivityStatusCode.Ok));
+        }
+        Assert.That(Tag(Span(SessionName), "gen_ai.input.messages"), Is.Null);
+        Assert.That(Span(SessionName).Events.Count(activityEvent => activityEvent.Name == "voice_agents.warning"), Is.EqualTo(1));
+        AssertPrivate(MessageSecret);
+    }
+
+    [Test]
+    public async Task PendingFinishedResponsesStayBoundedAndCompleteAfterFailedSend()
+    {
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        TaskCompletionSource<bool> completion = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        StubWebSocket inner = new() { SendCompletion = completion };
+        using WebSocket socket = telemetry.CreateWebSocket(inner);
+        for (int i = 0; i < 65; i++)
+        {
+            inner.QueueText("{\"type\":\"response.created\",\"response\":{\"id\":\"bounded-" + i + "\"}}");
+            inner.QueueText("{\"type\":\"response.done\",\"response\":{\"id\":\"bounded-" + i + "\",\"status\":\"completed\"}}");
+        }
+        Task send = socket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"type\":\"input_audio_buffer.append\",\"audio\":\"AQID\"}")),
+            WebSocketMessageType.Text, true, CancellationToken.None);
+        for (int i = 0; i < 130; i++)
+        {
+            await socket.ReceiveAsync(new ArraySegment<byte>(new byte[512]), CancellationToken.None);
+        }
+        Assert.That(_activities, Has.Count.EqualTo(1));
+        completion.SetException(new WebSocketException(ExceptionSecret));
+        Assert.ThrowsAsync<WebSocketException>(async () => await send);
+        Assert.That(_activities.Count(activity => activity.OperationName == ResponseName), Is.EqualTo(64));
+        socket.Dispose();
+        Assert.That(Tag(Span(SessionName), Prefix + "responses.untracked"), Is.EqualTo(1));
+        Assert.That(Tag(Span(SessionName), Prefix + "responses.finished"), Is.EqualTo(64));
+        Assert.That(_activities.Where(activity => activity.OperationName == ResponseName)
+            .All(activity => Tag(activity, "gen_ai.input.messages") == null), Is.True);
+        AssertPrivate(ExceptionSecret, "AQID");
+    }
+
+    [Test]
+    public async Task NormalPeerCloseStillEndsOnDisposalWithoutHandshake()
+    {
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        Observe(telemetry, new { type = "response.created", response = new { id = "response-unanswered-close" } });
+        StubWebSocket inner = new();
+        inner.QueueClose(WebSocketCloseStatus.NormalClosure, ExceptionSecret);
+        using WebSocket socket = telemetry.CreateWebSocket(inner);
+        await socket.ReceiveAsync(new ArraySegment<byte>(new byte[512]), CancellationToken.None);
+        socket.Dispose();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(_activities, Has.Count.EqualTo(3));
+            Assert.That(Tag(Span(SessionName), Prefix + "close.was_clean"), Is.False);
+            Assert.That(Span(SessionName).Status, Is.Not.EqualTo(ActivityStatusCode.Error));
+            Assert.That(Tag(Span(ResponseName), Prefix + "response.status"), Is.EqualTo("interrupted"));
+        });
+        AssertPrivate(ExceptionSecret);
+    }
+
+    [Test]
+    public async Task LocalCloseOutputWaitsForPeerReply()
+    {
+        RealtimeTelemetry telemetry = StartTelemetry();
+        telemetry.Connected();
+        StubWebSocket inner = new();
+        inner.QueueClose(WebSocketCloseStatus.NormalClosure, ExceptionSecret);
+        using WebSocket socket = telemetry.CreateWebSocket(inner);
+
+        await socket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, ExceptionSecret, CancellationToken.None);
+        Assert.That(_activities, Has.Count.EqualTo(1));
+        Assert.That(inner.State, Is.EqualTo(WebSocketState.CloseSent));
+        await socket.ReceiveAsync(new ArraySegment<byte>(new byte[512]), CancellationToken.None);
+        Assert.Multiple(() =>
+        {
+            Assert.That(_activities, Has.Count.EqualTo(2));
+            Assert.That(Tag(Span(SessionName), Prefix + "close.was_clean"), Is.True);
+            Assert.That(Tag(Span(SessionName), Prefix + "close.code"), Is.EqualTo(1000));
+        });
+        AssertPrivate(ExceptionSecret);
+    }
+
     [Test]
     public async Task UnexpectedCloseRecordsSafeCodeAndStopsPendingResponseWithoutLoggingReason()
     {
@@ -1520,6 +2013,7 @@ public class VoiceAgentRealtimeTelemetryTests
         internal Exception SendFailure { get; set; }
         internal Exception ReceiveFailure { get; set; }
         internal WebSocketState? StateAfterFailure { get; set; }
+        internal TaskCompletionSource<bool> SendCompletion { get; set; }
         internal int DisposeCount { get; private set; }
         internal int SendCount { get; private set; }
 
@@ -1559,7 +2053,7 @@ public class VoiceAgentRealtimeTelemetryTests
             cancellationToken.ThrowIfCancellationRequested();
             _closeStatus = closeStatus;
             _closeDescription = statusDescription;
-            _state = WebSocketState.CloseSent;
+            _state = _state == WebSocketState.CloseReceived ? WebSocketState.Closed : WebSocketState.CloseSent;
             return Task.CompletedTask;
         }
 
@@ -1571,8 +2065,18 @@ public class VoiceAgentRealtimeTelemetryTests
                 return Task.FromException(SendFailure);
             }
             cancellationToken.ThrowIfCancellationRequested();
+            if (SendCompletion != null)
+            {
+                return CompletePendingSendAsync(SendCompletion.Task);
+            }
             SendCount++;
             return Task.CompletedTask;
+        }
+
+        private async Task CompletePendingSendAsync(Task completion)
+        {
+            await completion.ConfigureAwait(false);
+            SendCount++;
         }
 
         public override Task<WebSocketReceiveResult> ReceiveAsync(ArraySegment<byte> buffer, CancellationToken cancellationToken)
@@ -1590,7 +2094,7 @@ public class VoiceAgentRealtimeTelemetryTests
             {
                 _closeStatus = result.CloseStatus;
                 _closeDescription = result.CloseStatusDescription;
-                _state = WebSocketState.CloseReceived;
+                _state = _state == WebSocketState.CloseSent ? WebSocketState.Closed : WebSocketState.CloseReceived;
             }
             return Task.FromResult(result);
         }

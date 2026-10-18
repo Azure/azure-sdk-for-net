@@ -50,6 +50,10 @@ internal sealed class VoiceAgentRealtimeTelemetry
     private int _responsesUntracked;
     private int _eventsRecorded;
     private int _eventsUntracked;
+    private int _pendingSends;
+    private List<PendingInputEvent> _pendingInputEvents;
+    private bool _pendingInputOverflow;
+    private bool _pendingSendFailed;
 
     private VoiceAgentRealtimeTelemetry(Uri endpoint, string agentName, string transport, bool captureContent, bool enableLogging, Activity session)
     {
@@ -210,6 +214,134 @@ internal sealed class VoiceAgentRealtimeTelemetry
         }
     }
 
+    internal void BeginSend()
+    {
+        lock (_gate)
+        {
+            if (!_ended)
+            {
+                if (_pendingSends == 0)
+                {
+                    _pendingInputOverflow = false;
+                    _pendingSendFailed = false;
+                }
+                _pendingSends++;
+            }
+        }
+    }
+
+    internal void CompleteSend(ArraySegment<byte> bytes, bool endOfMessage, bool succeeded)
+    {
+        lock (_gate)
+        {
+            if (_ended)
+            {
+                return;
+            }
+            if (succeeded)
+            {
+                ObserveFrame(bytes, endOfMessage, true);
+            }
+            else
+            {
+                _pendingSendFailed = true;
+                _sendBuffer?.Dispose();
+                _sendBuffer = null;
+                _skipSendMessage = !endOfMessage;
+            }
+            _pendingSends--;
+            if (_pendingSends != 0)
+            {
+                return;
+            }
+
+            if (_pendingInputOverflow)
+            {
+                _inputAudioItems.Clear();
+                _pendingAudioCommits.Items.Clear();
+                _pendingAudioCommits.Skipped = 0;
+                _pendingAudioMessages.Items.Clear();
+                _pendingAudioMessages.Skipped = 0;
+                _inputAudioBuffer = null;
+                _pendingAudioClears = 0;
+                _inputSequence++;
+                _lastInput = null;
+                _session.SetTag("gen_ai.input.messages", null);
+            }
+            else
+            {
+                if (!_pendingSendFailed)
+                {
+                    ResolvePendingInputs(0);
+                }
+                if (_pendingInputEvents != null)
+                {
+                    for (int index = 0; index < _pendingInputEvents.Count; index++)
+                    {
+                        ObserveInputEvent(_pendingInputEvents[index]);
+                        if (!_pendingSendFailed)
+                        {
+                            ResolvePendingInputs(index + 1);
+                        }
+                    }
+                }
+            }
+            if (_pendingSendFailed || _pendingInputOverflow)
+            {
+                DiscardPendingInputs();
+            }
+            _pendingInputEvents?.Clear();
+            CompleteReadyResponses();
+        }
+    }
+
+    private void ResolvePendingInputs(int observedEvents)
+    {
+        foreach (ResponseActivity response in _responses.Values)
+        {
+            if (response.PendingInput && response.PendingInputEvents == observedEvents)
+            {
+                response.PendingInput = false;
+                response.InputSequence = _inputSequence;
+                response.Activity?.SetTag("gen_ai.input.messages", _lastInput);
+            }
+        }
+    }
+
+    private void DiscardPendingInputs()
+    {
+        foreach (ResponseActivity response in _responses.Values)
+        {
+            if (response.PendingInput)
+            {
+                response.PendingInput = false;
+                response.InputSequence = -1;
+                response.Activity?.SetTag("gen_ai.input.messages", null);
+            }
+        }
+    }
+
+    private void CompleteReadyResponses()
+    {
+        List<string> completed = null;
+        foreach (KeyValuePair<string, ResponseActivity> tracked in _responses)
+        {
+            if (tracked.Value.Finished && !tracked.Value.PendingInput)
+            {
+                (completed ??= new List<string>()).Add(tracked.Key);
+            }
+        }
+        if (completed != null)
+        {
+            foreach (string id in completed)
+            {
+                Activity activity = _responses[id].Activity;
+                _responses.Remove(id);
+                StopDetachedActivity(activity);
+            }
+        }
+    }
+
     internal void ObserveFrame(ArraySegment<byte> bytes, bool endOfMessage, bool isSend)
     {
         lock (_gate)
@@ -367,6 +499,10 @@ internal sealed class VoiceAgentRealtimeTelemetry
 
     private void ObserveReceived(JsonElement root, string type)
     {
+        if (TryObserveInputEvent(root, type))
+        {
+            return;
+        }
         switch (type)
         {
             case "session.created":
@@ -382,51 +518,6 @@ internal sealed class VoiceAgentRealtimeTelemetry
                     RecordAudioFormat(session, "output");
                 }
                 AddEvent(_session, "voice_agents." + type);
-                break;
-            case "input_audio_buffer.speech_started":
-                if (Identifier(root, "item_id") is string speechItem && !_inputAudioItems.ContainsKey(speechItem))
-                {
-                    InputAudio input = _inputAudioBuffer != null && _inputAudioBuffer.ItemId == null
-                        ? _inputAudioBuffer : StartInputAudio();
-                    RememberInputAudio(speechItem, input);
-                    _inputAudioBuffer = input;
-                }
-                break;
-            case "input_audio_buffer.committed":
-                if (Identifier(root, "item_id") is string committedItem)
-                {
-                    bool pending = _pendingAudioCommits.Items.Count > 0 || _pendingAudioCommits.Skipped > 0;
-                    InputAudio input = MatchInputAudio(_pendingAudioCommits, committedItem);
-                    if (input == null && !pending)
-                    {
-                        input = _inputAudioBuffer ?? StartInputAudio();
-                        RememberInputAudio(committedItem, input);
-                    }
-                    if (ReferenceEquals(_inputAudioBuffer, input))
-                    {
-                        _inputAudioBuffer = null;
-                    }
-                }
-                AddEvent(_session, type);
-                break;
-            case "input_audio_buffer.cleared":
-                if (_pendingAudioClears > 0)
-                {
-                    _pendingAudioClears--;
-                }
-                else
-                {
-                    ClearInputAudio();
-                }
-                AddEvent(_session, type);
-                break;
-            case "conversation.item.added":
-            case "conversation.item.created":
-                if (root.TryGetProperty("item", out JsonElement item) && String(item, "role") == "user" &&
-                    Identifier(item, "id") is string itemId && HasAudioPart(item))
-                {
-                    MatchInputAudio(_pendingAudioMessages, itemId);
-                }
                 break;
             case "response.created":
                 if (root.TryGetProperty("response", out JsonElement created))
@@ -505,17 +596,6 @@ internal sealed class VoiceAgentRealtimeTelemetry
             case "warning":
                 AddEvent(_session, "voice_agents.warning");
                 break;
-            case "conversation.item.input_audio_transcription.completed":
-                if (Identifier(root, "item_id") is string transcriptItem &&
-                    _inputAudioItems.TryGetValue(transcriptItem, out InputAudio transcribed))
-                {
-                    SetInputAudioSummary(transcribed, _captureContent ? Limit(String(root, "transcript")) : null);
-                }
-                AddEvent(_session, "voice_agents.transcription.completed");
-                break;
-            case "conversation.item.input_audio_transcription.failed":
-                AddEvent(_session, "voice_agents.transcription.failed");
-                break;
             case "response.mcp_call.completed":
             case "response.mcp_call.failed":
                 AddEvent(_session, type, new ActivityTagsCollection { { Prefix + "item.id", Identifier(root, "item_id") } });
@@ -536,6 +616,114 @@ internal sealed class VoiceAgentRealtimeTelemetry
                 break;
             case "conversation.item.deleted":
                 AddEvent(_session, type);
+                break;
+        }
+    }
+
+    private bool TryObserveInputEvent(JsonElement root, string type)
+    {
+        string itemId;
+        if (type is "conversation.item.added" or "conversation.item.created")
+        {
+            if (!root.TryGetProperty("item", out JsonElement item) || String(item, "role") != "user" ||
+                !HasAudioPart(item) || Identifier(item, "id") is not string id)
+            {
+                return true;
+            }
+            itemId = id;
+        }
+        else if (type is "input_audio_buffer.speech_started" or "input_audio_buffer.committed" or "input_audio_buffer.cleared" or
+            "conversation.item.input_audio_transcription.completed" or "conversation.item.input_audio_transcription.failed")
+        {
+            itemId = Identifier(root, "item_id");
+        }
+        else
+        {
+            return false;
+        }
+
+        PendingInputEvent input = new(type, itemId,
+            _captureContent && type == "conversation.item.input_audio_transcription.completed" ? Limit(String(root, "transcript")) : null);
+        if (_pendingSends == 0)
+        {
+            ObserveInputEvent(input);
+        }
+        else if (!_pendingInputOverflow)
+        {
+            // Replay only bounded metadata after the send outcome; VAD/ASR can arrive first.
+            _pendingInputEvents ??= new List<PendingInputEvent>();
+            if (_pendingInputEvents.Count < MaxInputItems)
+            {
+                _pendingInputEvents.Add(input);
+            }
+            else
+            {
+                _pendingInputOverflow = true;
+                _pendingInputEvents.Clear();
+                _untrackedInputItems++;
+                AddEvent(_session, "voice_agents.warning");
+                DiscardPendingInputs();
+                CompleteReadyResponses();
+            }
+        }
+        return true;
+    }
+
+    private void ObserveInputEvent(PendingInputEvent inputEvent)
+    {
+        switch (inputEvent.Type)
+        {
+            case "input_audio_buffer.speech_started":
+                if (inputEvent.ItemId is string speechItem && !_inputAudioItems.ContainsKey(speechItem))
+                {
+                    InputAudio input = _inputAudioBuffer != null && _inputAudioBuffer.ItemId == null
+                        ? _inputAudioBuffer : StartInputAudio();
+                    RememberInputAudio(speechItem, input);
+                    _inputAudioBuffer = input;
+                }
+                break;
+            case "input_audio_buffer.committed":
+                if (inputEvent.ItemId is string committedItem)
+                {
+                    bool pending = _pendingAudioCommits.Items.Count > 0 || _pendingAudioCommits.Skipped > 0;
+                    InputAudio input = MatchInputAudio(_pendingAudioCommits, committedItem);
+                    if (input == null && !pending)
+                    {
+                        input = _inputAudioBuffer ?? StartInputAudio();
+                        RememberInputAudio(committedItem, input);
+                    }
+                    if (ReferenceEquals(_inputAudioBuffer, input))
+                    {
+                        _inputAudioBuffer = null;
+                    }
+                }
+                AddEvent(_session, inputEvent.Type, timestamp: inputEvent.Timestamp);
+                break;
+            case "input_audio_buffer.cleared":
+                if (_pendingAudioClears > 0)
+                {
+                    _pendingAudioClears--;
+                }
+                else
+                {
+                    ClearInputAudio();
+                }
+                AddEvent(_session, inputEvent.Type, timestamp: inputEvent.Timestamp);
+                break;
+            case "conversation.item.added":
+            case "conversation.item.created":
+                MatchInputAudio(_pendingAudioMessages, inputEvent.ItemId);
+                break;
+            case "conversation.item.input_audio_transcription.completed":
+                if (inputEvent.ItemId is string transcriptItem &&
+                    _inputAudioItems.TryGetValue(transcriptItem, out InputAudio transcribed))
+                {
+                    SetInputAudioSummary(transcribed, inputEvent.Transcript);
+                }
+                AddEvent(_session, "voice_agents.transcription.completed", timestamp: inputEvent.Timestamp);
+                break;
+            case "conversation.item.input_audio_transcription.failed":
+                AddEvent(_session, "voice_agents.transcription.failed", timestamp: inputEvent.Timestamp);
                 break;
         }
     }
@@ -711,21 +899,28 @@ internal sealed class VoiceAgentRealtimeTelemetry
         activity?.SetTag("gen_ai.response.id", id);
         activity?.SetTag("gen_ai.request.model", _model);
         activity?.SetTag("gen_ai.conversation.id", Identifier(response, "conversation_id") ?? _conversationId);
-        if (_lastInput != null)
+        // A receive can outrun the send continuation. Do not attribute a response
+        // to the previous input while the outgoing send's outcome is unknown.
+        if (_pendingSends == 0 && _lastInput != null)
         {
             activity?.SetTag("gen_ai.input.messages", _lastInput);
         }
-        _responses.Add(id, new ResponseActivity(activity) { InputSequence = _inputSequence });
+        _responses.Add(id, new ResponseActivity(activity)
+        {
+            InputSequence = _pendingSends == 0 ? _inputSequence : -1,
+            PendingInput = _pendingSends != 0 && !_pendingInputOverflow,
+            PendingInputEvents = _pendingInputEvents?.Count ?? 0
+        });
     }
 
     private void FinishResponse(JsonElement response)
     {
         string id = Identifier(response, "id");
-        if (id == null || !_responses.TryGetValue(id, out ResponseActivity state))
+        if (id == null || !_responses.TryGetValue(id, out ResponseActivity state) || state.Finished)
         {
             return;
         }
-        _responses.Remove(id);
+        state.Finished = true;
         string status = String(response, "status");
         string safeStatus = status is "completed" or "cancelled" or "failed" or "incomplete" ? status : "unknown";
         state.Activity?.SetTag(Prefix + "response.status", safeStatus);
@@ -763,7 +958,21 @@ internal sealed class VoiceAgentRealtimeTelemetry
             SetNumberTag(state.Activity, usage, "output_tokens", "gen_ai.usage.output_tokens");
         }
         RecordOutputMessages(state, response);
-        StopDetachedActivity(state.Activity);
+        if (state.PendingInput)
+        {
+            // Preserve the protocol boundary using the same monotonic clock as latency measurements.
+            if (state.Activity != null)
+            {
+                long ticks = (long)((Stopwatch.GetTimestamp() - state.StartTimestamp) *
+                    (TimeSpan.TicksPerSecond / (double)Stopwatch.Frequency));
+                state.Activity.SetEndTime(state.Activity.StartTimeUtc.AddTicks(Math.Max(1L, ticks)));
+            }
+        }
+        else
+        {
+            _responses.Remove(id);
+            StopDetachedActivity(state.Activity);
+        }
         _responsesFinished++;
     }
 
@@ -839,7 +1048,7 @@ internal sealed class VoiceAgentRealtimeTelemetry
     private ResponseActivity FindResponse(JsonElement root)
     {
         string id = Identifier(root, "response_id");
-        return id != null && _responses.TryGetValue(id, out ResponseActivity result) ? result : null;
+        return id != null && _responses.TryGetValue(id, out ResponseActivity result) && !result.Finished ? result : null;
     }
 
     private string InputSummary(JsonElement item)
@@ -936,12 +1145,21 @@ internal sealed class VoiceAgentRealtimeTelemetry
         _ended = true;
         foreach (ResponseActivity response in _responses.Values)
         {
-            response.Activity?.SetTag(Prefix + "response.status", "interrupted");
-            response.Activity?.SetTag(Prefix + "output.audio.bytes", response.OutputAudioBytes);
-            RecordOutputMessages(response, default);
+            if (response.PendingInput)
+            {
+                response.Activity?.SetTag("gen_ai.input.messages", null);
+            }
+            if (!response.Finished)
+            {
+                response.Activity?.SetTag(Prefix + "response.status", "interrupted");
+                response.Activity?.SetTag(Prefix + "output.audio.bytes", response.OutputAudioBytes);
+                RecordOutputMessages(response, default);
+            }
             StopDetachedActivity(response.Activity);
         }
         _responses.Clear();
+        _pendingSends = 0;
+        _pendingInputEvents?.Clear();
         _inputAudioItems.Clear();
         _pendingAudioCommits.Items.Clear();
         _pendingAudioMessages.Items.Clear();
@@ -997,13 +1215,13 @@ internal sealed class VoiceAgentRealtimeTelemetry
         activity?.SetTag("gen_ai.agent.type", "voice");
     }
 
-    private void AddEvent(Activity activity, string name, ActivityTagsCollection tags = null)
+    private void AddEvent(Activity activity, string name, ActivityTagsCollection tags = null, DateTimeOffset timestamp = default)
     {
         if (activity?.IsAllDataRequested == true)
         {
             if (_eventsRecorded < 256)
             {
-                activity.AddEvent(new ActivityEvent(name, tags: tags));
+                activity.AddEvent(new ActivityEvent(name, timestamp: timestamp, tags: tags));
                 _eventsRecorded++;
             }
             else
@@ -1120,6 +1338,9 @@ internal sealed class VoiceAgentRealtimeTelemetry
         internal bool FirstTextReceived { get; set; }
         internal long InputSequence { get; set; }
         internal Dictionary<string, ToolCall> ToolCalls { get; set; }
+        internal bool PendingInput { get; set; }
+        internal bool Finished { get; set; }
+        internal int PendingInputEvents { get; set; }
     }
 
     private sealed class ToolCall(string name, string arguments)
@@ -1140,5 +1361,13 @@ internal sealed class VoiceAgentRealtimeTelemetry
     {
         internal List<InputAudio> Items { get; } = new();
         internal long Skipped { get; set; }
+    }
+
+    private sealed class PendingInputEvent(string type, string itemId, string transcript)
+    {
+        internal string Type { get; } = type;
+        internal string ItemId { get; } = itemId;
+        internal string Transcript { get; } = transcript;
+        internal DateTimeOffset Timestamp { get; } = DateTimeOffset.UtcNow;
     }
 }
