@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
 
         // Preserve the recording name while making the method's coverage explicit.
         [TestCase(TestName = "CreateUpdateDeleteTest2")]
-        public async Task CreateUpdateDeleteWithMaintenanceWindowsAndKeyspaceNotifications()
+        public async Task CreateUpdateDeleteWithMaintenanceWindows()
         {
             await SetCollectionsAsync();
 
@@ -179,7 +179,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 ClientProtocol = RedisEnterpriseClientProtocol.Encrypted,
                 ClusteringPolicy = RedisEnterpriseClusteringPolicy.OssCluster,
                 EvictionPolicy = RedisEnterpriseEvictionPolicy.NoEviction,
-                NotifyKeyspaceEvents = "KEA",
+                // TODO: Re-enable stable keyspace-notification coverage after the RP accepts
+                // notifyKeyspaceEvents for API version 2026-09-01.
+                // NotifyKeyspaceEvents = "KEA",
             };
 
             var databaseResponse = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
@@ -187,21 +189,21 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
             Assert.AreEqual(RedisEnterpriseClusteringPolicy.OssCluster, databaseResponse.Data.ClusteringPolicy);
             Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
-            Assert.AreEqual("KEA", databaseResponse.Data.NotifyKeyspaceEvents);
+            // Assert.AreEqual("KEA", databaseResponse.Data.NotifyKeyspaceEvents);
 
             databaseResponse = await databaseCollection.GetAsync(databaseName);
             Assert.AreEqual(databaseName, databaseResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
             Assert.AreEqual(RedisEnterpriseClusteringPolicy.OssCluster, databaseResponse.Data.ClusteringPolicy);
             Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
-            Assert.AreEqual("KEA", databaseResponse.Data.NotifyKeyspaceEvents);
+            // Assert.AreEqual("KEA", databaseResponse.Data.NotifyKeyspaceEvents);
 
-            databaseData.NotifyKeyspaceEvents = "KEm";
-            databaseResponse = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
-            Assert.AreEqual("KEm", databaseResponse.Data.NotifyKeyspaceEvents);
+            // databaseData.NotifyKeyspaceEvents = "KEm";
+            // databaseResponse = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
+            // Assert.AreEqual("KEm", databaseResponse.Data.NotifyKeyspaceEvents);
 
-            databaseResponse = await databaseResponse.GetAsync();
-            Assert.AreEqual("KEm", databaseResponse.Data.NotifyKeyspaceEvents);
+            // databaseResponse = await databaseResponse.GetAsync();
+            // Assert.AreEqual("KEm", databaseResponse.Data.NotifyKeyspaceEvents);
 
             // Disabling high availability
             data.HighAvailability = RedisEnterpriseHighAvailability.Enabled;
