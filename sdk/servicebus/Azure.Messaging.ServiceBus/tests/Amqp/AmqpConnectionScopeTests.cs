@@ -161,10 +161,39 @@ namespace Azure.Messaging.ServiceBus.Tests
             var expires = new DateTime(2015, 10, 27, 1, 0, 0, DateTimeKind.Utc);
             var refreshOn = new DateTimeOffset(2015, 10, 27, 0, 30, 0, TimeSpan.Zero);
             var buffer = GetAuthorizationRefreshBuffer();
+            var maxJitter = TimeSpan.FromSeconds(GetAuthorizationBaseJitterSeconds());
 
             var basis = AmqpConnectionScope.GetAuthorizationRefreshBasisUtc(expires, refreshOn);
 
-            Assert.That(basis, Is.EqualTo(refreshOn.UtcDateTime.Add(buffer)), "The refresh buffer should be added back so the timer lands on RefreshOn.");
+            Assert.That(basis, Is.EqualTo(refreshOn.UtcDateTime.Add(buffer).Add(maxJitter)), "The refresh buffer and maximum jitter should be added back so the timer cannot fire before RefreshOn.");
+        }
+
+        /// <summary>
+        ///   Verifies that jitter subtracted by <see cref="AmqpConnectionScope.CalculateLinkAuthorizationRefreshInterval" />
+        ///   cannot schedule a credential refresh before the cached token is due.
+        /// </summary>
+        ///
+        [Test]
+        public void RefreshOnScheduleDoesNotFireBeforeTheCachedTokenIsDue()
+        {
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
+            var endpoint = new Uri("sb://mine.hubs.com");
+            var mockScope = new MockConnectionScope(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null);
+            var now = new DateTime(2015, 10, 27, 0, 0, 0, DateTimeKind.Utc);
+            var expires = now.AddHours(1);
+            var refreshOn = new DateTimeOffset(now.AddMinutes(5), TimeSpan.Zero);
+            var buffer = GetAuthorizationRefreshBuffer();
+            var maxJitter = TimeSpan.FromSeconds(GetAuthorizationBaseJitterSeconds());
+            var minimumRefresh = GetMinimumAuthorizationRefresh();
+
+            var basis = AmqpConnectionScope.GetAuthorizationRefreshBasisUtc(expires, refreshOn);
+            var earliestFire = basis.Subtract(buffer).Subtract(maxJitter);
+            var interval = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(basis, now);
+
+            Assert.That(earliestFire, Is.EqualTo(refreshOn.UtcDateTime), "The earliest jittered tick should land on RefreshOn, when the cache will refresh.");
+            Assert.That(now.Add(interval), Is.GreaterThanOrEqualTo(refreshOn.UtcDateTime), "The calculated tick should not reuse the cached token.");
+            Assert.That(now.Add(interval), Is.LessThanOrEqualTo(refreshOn.UtcDateTime.Add(maxJitter)), "Jitter should keep the tick within the refresh window.");
+            Assert.That(interval, Is.GreaterThan(minimumRefresh), "A five-minute RefreshOn should not be postponed to the minimum refresh interval.");
         }
 
         /// <summary>

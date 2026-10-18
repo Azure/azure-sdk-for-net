@@ -1077,15 +1077,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///   Selects the expiration time to feed into <see cref="CalculateLinkAuthorizationRefreshInterval" />.
         ///   When <paramref name="credentialRefreshAt" /> is earlier than the authorization expiration, the
-        ///   refresh buffer is added back so the interval lands on that refresh time. Otherwise the
-        ///   authorization expiration is used unchanged.
+        ///   refresh buffer and the maximum jitter are added back. The interval calculator subtracts both,
+        ///   so the timer cannot fire before the cache treats the token as due. Otherwise the authorization
+        ///   expiration is used unchanged.
         /// </summary>
         ///
         internal static DateTime GetAuthorizationRefreshBasisUtc(DateTime authorizationExpiresUtc, DateTimeOffset? credentialRefreshAt)
         {
             if (credentialRefreshAt is DateTimeOffset refreshAt && refreshAt.UtcDateTime < authorizationExpiresUtc)
             {
-                DateTime basis = refreshAt.UtcDateTime.Add(AuthorizationRefreshBuffer);
+                DateTime basis = refreshAt.UtcDateTime
+                    .Add(AuthorizationRefreshBuffer)
+                    .Add(TimeSpan.FromSeconds(AuthorizationBaseJitterSeconds));
+
                 return basis < authorizationExpiresUtc ? basis : authorizationExpiresUtc;
             }
 
