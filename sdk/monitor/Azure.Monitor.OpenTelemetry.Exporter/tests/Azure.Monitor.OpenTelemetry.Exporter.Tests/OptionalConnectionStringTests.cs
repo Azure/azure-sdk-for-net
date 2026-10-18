@@ -98,12 +98,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// Statistics identify a component by key and pick their region from its endpoint. Without a
-        /// connection string there is neither, and a routed destination cannot supply them because it
-        /// is chosen per item, long after construction.
+        /// Network statistics still need a configured customer key. Attach can describe the host
+        /// application without one.
         /// </summary>
         [Fact]
-        public void NoSdkStatisticsAreCollectedWithoutAConnectionString()
+        public void NoNetworkSdkStatisticsAreCollectedWithoutAConnectionString()
         {
             using var listener = new TestEventListener();
             listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Verbose, EventKeywords.All);
@@ -113,11 +112,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 new MockPlatform(),
                 multiEndpointEnabled: true);
 
-            Assert.Null(StatsbeatOf(transmitter));
+            Assert.NotNull(transmitter._statsbeat);
+            Assert.Null(transmitter._statsbeat.NetworkSdkStatsManager);
 
-            // Null alone would not prove the guard: statsbeat cannot map the placeholder endpoint to
-            // a region, so removing the guard leaves it null anyway, by way of a caught exception.
-            // Never attempting it is the behaviour under test.
             Assert.Empty(listener.Messages.Where(e => e.EventName == "ErrorInitializingStatsbeat"));
         }
 
@@ -403,9 +400,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
             }
         }
-
-        private static object? StatsbeatOf(AzureMonitorTransmitter transmitter)
-            => FieldOf(transmitter, "_statsbeat");
 
         private static object? DrainHandlerOf(AzureMonitorTransmitter transmitter)
             => FieldOf(transmitter, "_transmitFromStorageHandler");

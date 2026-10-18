@@ -326,6 +326,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public async Task RoutingOnlyAttachUsesTheNonEuDistroConfiguration()
+        {
+            string? requestedUrl = null;
+            using var handler = new StubHandler(request =>
+            {
+                requestedUrl = request.RequestUri!.AbsoluteUri;
+                return OkJson("{\"ver\":1,\"enabled\":true,\"url\":\"stats.example.invalid\"}");
+            });
+            using var statsbeat = new AzureMonitorStatsbeat(
+                ConnectionVars.CreateUnconfigured(), new MockPlatform(), handler, multiEndpointEnabled: true);
+
+            await AwaitInitAsync(statsbeat);
+
+            Assert.Equal("https://data.stats.monitor.azure.com/cfg/v1.json", requestedUrl);
+            Assert.Equal(
+                "InstrumentationKey=c4a29126-a7cb-47e5-b348-11414998b11e;IngestionEndpoint=https://stats.example.invalid/",
+                statsbeat._statsbeat_ConnectionString);
+            Assert.NotNull(statsbeat._statsbeatMeterProvider);
+            Assert.Null(statsbeat.NetworkSdkStatsManager);
+        }
+
+        [Fact]
+        public async Task RoutingOnlyAttachHonorsRemoteDisablement()
+        {
+            using var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":false}"));
+            using var statsbeat = new AzureMonitorStatsbeat(
+                ConnectionVars.CreateUnconfigured(), new MockPlatform(), handler, multiEndpointEnabled: true);
+
+            await AwaitInitAsync(statsbeat);
+
+            Assert.Null(statsbeat._statsbeatMeterProvider);
+            Assert.Null(statsbeat._statsbeat_ConnectionString);
+            Assert.Null(statsbeat.NetworkSdkStatsManager);
+        }
+
+        [Fact]
         public async Task DistroSwitchOn_ConfigFetchFails_FallsBackToLegacyNonEuEndpoint()
         {
             var handler = new StubHandler(_ => new HttpResponseMessage(HttpStatusCode.NotFound));
