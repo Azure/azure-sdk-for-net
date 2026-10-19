@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> An object representing collection of DatabaseEditions and their operations over a DatabaseEditionResource. </returns>
         public virtual DatabaseEditionCollection GetDatabaseEditions(AzureLocation location)
         {
-            return GetCachedClient(client => new DatabaseEditionCollection(client, Id, location));
+            return new DatabaseEditionCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> An object representing collection of DatabaseSystemShapes and their operations over a DatabaseSystemShapeResource. </returns>
         public virtual DatabaseSystemShapeCollection GetDatabaseSystemShapes(AzureLocation location)
         {
-            return GetCachedClient(client => new DatabaseSystemShapeCollection(client, Id, location));
+            return new DatabaseSystemShapeCollection(Client, Id, location);
         }
 
         /// <summary>
