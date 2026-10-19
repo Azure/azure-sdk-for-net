@@ -26,16 +26,18 @@ namespace Azure.Health.Deidentification.Samples
             );
 
             string storageAccountUrl = TestEnvironment.GetStorageAccountLocation();
+            // Unique per run so repeated live runs against the same resource don't collide.
+            string jobName = $"net-sample-{Guid.NewGuid():N}".Substring(0, 23);
 
             #region Snippet:AzHealthDeidSample2_CreateJob
             DeidentificationJob job = new()
             {
-                SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "folder1/"),
-                TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_folder1/"),
+                SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "example_patient_1/"),
+                TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_folder1/") { Overwrite = true },
                 OperationType = DeidentificationOperationType.Redact,
             };
 
-            job = client.DeidentifyDocuments(WaitUntil.Started, "my-job-1", job).Value;
+            job = client.DeidentifyDocuments(WaitUntil.Started, jobName, job).Value;
             Console.WriteLine($"Job status: {job.Status}"); // Job status: NotStarted
             #endregion
         }
