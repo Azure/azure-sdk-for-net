@@ -16,6 +16,8 @@ dotnet add package Azure.Provisioning.SiteManager --prerelease
 
 You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
+### Authenticate the Client
+
 ## Key concepts
 
 This library allows you to define Azure Site Manager resources declaratively in .NET.
