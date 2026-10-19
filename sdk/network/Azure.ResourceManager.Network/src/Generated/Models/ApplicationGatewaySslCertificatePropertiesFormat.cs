@@ -11,7 +11,6 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Properties of SSL certificates of an application gateway. </summary>
     internal partial class ApplicationGatewaySslCertificatePropertiesFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

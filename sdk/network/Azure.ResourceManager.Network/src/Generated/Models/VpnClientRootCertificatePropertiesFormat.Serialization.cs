@@ -13,7 +13,6 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Properties of SSL certificates of application gateway. </summary>
     internal partial class VpnClientRootCertificatePropertiesFormat : IJsonModel<VpnClientRootCertificatePropertiesFormat>
     {
         /// <summary> Initializes a new instance of <see cref="VpnClientRootCertificatePropertiesFormat"/> for deserialization. </summary>
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(VpnClientRootCertificatePropertiesFormat)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("publicCertData"u8);
-            writer.WriteBase64StringValue(PublicCertData, "D");
+            SerializePublicCertData(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("publicCertData"u8))
                 {
-                    publicCertData = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    DeserializeCertificateData(prop, ref publicCertData);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

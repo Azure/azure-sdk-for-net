@@ -13,7 +13,6 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Properties of SSL certificates of an application gateway. </summary>
     internal partial class ApplicationGatewaySslCertificatePropertiesFormat : IJsonModel<ApplicationGatewaySslCertificatePropertiesFormat>
     {
         /// <param name="data"> The data to parse. </param>
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteBase64StringValue(Data, "D");
+                SerializeData(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(PublicCertData))
             {
                 writer.WritePropertyName("publicCertData"u8);
-                writer.WriteBase64StringValue(PublicCertData, "D");
+                SerializePublicCertData(writer, options);
             }
             if (Optional.IsDefined(KeyVaultSecretId))
             {
@@ -157,11 +156,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    data = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    DeserializeCertificateData(prop, ref data);
                     continue;
                 }
                 if (prop.NameEquals("password"u8))
@@ -171,11 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("publicCertData"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    publicCertData = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    DeserializeCertificateData(prop, ref publicCertData);
                     continue;
                 }
                 if (prop.NameEquals("keyVaultSecretId"u8))

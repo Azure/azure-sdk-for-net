@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -39,6 +40,17 @@ namespace Azure.ResourceManager.Network
         public static BinaryData ParseBinaryData(BinaryData value) => value;
         /// <summary> Invokes the FormatBinaryData compatibility operation. </summary>
         public static BinaryData FormatBinaryData(BinaryData value) => value;
+        internal static void SerializeCertificateData(Utf8JsonWriter writer, BinaryData value)
+        {
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(value);
+#else
+            using (JsonDocument document = JsonDocument.Parse(value))
+            {
+                document.RootElement.WriteTo(writer);
+            }
+#endif
+        }
         internal static WritableSubResource ToWritable(NetworkSubResource value) => value is null ? default : new WritableSubResource { Id = value.Id };
         internal static NetworkSubResource ToNetwork(WritableSubResource value) => value is null ? default : new NetworkSubResource { Id = value.Id };
     }

@@ -11,7 +11,6 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Authentication certificates properties of an application gateway. </summary>
     internal partial class ApplicationGatewayAuthenticationCertificatePropertiesFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
