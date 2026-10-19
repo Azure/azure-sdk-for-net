@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Disable Azure CLI upload progress and parse only stdout so native stderr cannot corrupt a successful JSON result.
+- Preserve safe upload/fallback exit codes and known storage error codes without logging CLI response bodies, tokens or request details.
+- Exercise the actual Azure CLI against a localhost-only storage fixture, without Azure credentials or model evaluations.
+- Align entrypoint tests with the existing GitHub App migration instead of expecting the removed PAT variable group.
 - Retain one complete, latest-attempt evaluation archive per build in Blob storage.
 - Use authenticated Azure CLI publication instead of a custom Node Azure SDK transport.
 - Read the storage account from pipeline-owned configuration and keep publishing policy in YAML.

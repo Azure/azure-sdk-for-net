@@ -14,16 +14,33 @@ $ErrorActionPreference = 'Stop'
 function Invoke-AzJson([string[]] $Arguments) {
     # Capture all CLI output, especially tokens and errors; never echo raw Azure responses.
     $output = az @Arguments --only-show-errors --output json 2>&1
-    if ($LASTEXITCODE -ne 0) { throw 'Azure CLI operation failed.' }
+    $exitCode = $LASTEXITCODE
+    if ($exitCode -ne 0) {
+        $code = 'cli_failed'
+        # Only fixed error codes may leave this boundary, never CLI messages or request data.
+        $match = [regex]::Match(($output -join "`n"), '(?:\(|ErrorCode:\s*)(AuthorizationPermissionMismatch|AuthorizationFailure|AuthenticationFailed|BlobNotFound|ContainerNotFound|BlobAlreadyExists|ConditionNotMet|InvalidAuthenticationInfo|InvalidHeaderValue|InvalidMetadata|ResourceNotFound)(?:\)|\s|$)')
+        if ($match.Success) { $code = $match.Groups[1].Value }
+        $failure = [InvalidOperationException]::new('Azure CLI operation failed.')
+        $failure.Data['CliFailure'] = "exit=$exitCode, code=$code"
+        throw $failure
+    }
     # ConvertFrom-Json auto-converts ISO strings into dates on some PowerShell versions.
     # Keep Blob metadata strings exact, including their required UTC Z suffix.
-    $document = [System.Text.Json.JsonDocument]::Parse($output -join "`n")
+    # Native stderr is captured as ErrorRecord objects; progress/warnings are not JSON.
+    $stdout = @($output | Where-Object { $_ -isnot [System.Management.Automation.ErrorRecord] }) -join "`n"
+    try { $document = [System.Text.Json.JsonDocument]::Parse($stdout) }
+    catch {
+        $failure = [InvalidOperationException]::new('Azure CLI returned invalid JSON.')
+        $failure.Data['CliFailure'] = 'exit=0, code=invalid_cli_json'
+        throw $failure
+    }
     try { return $document.RootElement.Clone() } finally { $document.Dispose() }
 }
 
 $operation = 'validate_inputs'
 $failureCode = 'invalid_bundle'
 $stored = $false
+$uploadFailure = $null
 try {
     $BundlePath = [System.IO.Path]::GetFullPath($BundlePath)
     $archive = Get-Item -LiteralPath $BundlePath
@@ -67,10 +84,11 @@ try {
     try {
         # CLI owns transport retries. Never overwrite, rebuild the ZIP, or create a container.
         Invoke-AzJson -Arguments (@('storage', 'blob', 'upload') + $storage + @('--file', $BundlePath,
-            '--type', 'block', '--overwrite', 'false', '--if-none-match', '*', '--content-type', 'application/zip',
+            '--type', 'block', '--overwrite', 'false', '--if-none-match', '*', '--no-progress', '--content-type', 'application/zip',
             '--metadata', 'schema=1', "sha256=$hash", "publisher=$owner", "storedat=$storedAt", '--timeout', '30', '--socket-timeout', '30')) | Out-Null
     } catch {
         # Also covers a lost success response: adopt only the same already-stored archive.
+        $uploadFailure = $_.Exception.Data['CliFailure']
         $operation = 'verify_existing_blob'
         $saved = Invoke-AzJson -Arguments (@('storage', 'blob', 'show') + $storage + @('--timeout', '30'))
         $failureCode = 'submission_conflict'
@@ -130,6 +148,8 @@ try {
     if ($stored) {
         Write-Warning 'Archive stored; dashboard refresh failed. Reload/startup/daily reconciliation can recover it.'
     } else {
-        throw "Evaluation publication failed: $operation ($failureCode). No raw Azure response was logged."
+        $detail = @($(if ($uploadFailure) { "Upload: $uploadFailure." }),
+            $(if ($_.Exception.Data['CliFailure']) { "Current operation: $($_.Exception.Data['CliFailure'])." })) -join ' '
+        throw "Evaluation publication failed: $operation ($failureCode). $detail No raw Azure response was logged."
     }
 }

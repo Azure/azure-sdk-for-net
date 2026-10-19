@@ -370,7 +370,7 @@ for (const tier of ["workflow", "skill", "live"]) test(`${tier} forwards only th
     assert.doesNotMatch(content, /eval-dashboard\.yml|EvalDashboardPublicationEnabled|System.DefinitionId|autoPublishDashboardResults|allowAzureStorageNetworkAccess/);
     const inputs = content.slice(content.indexOf("\nparameters:\n"), content.indexOf("\nvariables:\n"));
     assert.deepEqual([...inputs.matchAll(/- name: (\w+)/g)].map(match => match[1]), ["publishDashboardResults"]);
-    assert.match(content, /group: AzSDK_Eval_Variable_group/); assert.match(content, new RegExp(`TestType: ${tier === "live" ? "live" : "mock"}`));
+    assert.doesNotMatch(content, /group: AzSDK_Eval_Variable_group/); assert.match(content, new RegExp(`TestType: ${tier === "live" ? "live" : "mock"}`));
     if (tier === "live") { assert.match(content, /UseAzSdkAuthentication: true/); assert.match(content, /failOnFailedTests: true/); }
     if (tier === "skill") assert.match(content, /vallyRoot: \.github\/skills/);
 });
