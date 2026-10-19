@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="serverId"> The arc ingress gateway server app id. </param>
         /// <param name="tenantId"> The target resource home tenant id. </param>
         /// <returns> A new <see cref="Models.IngressGatewayAsset"/> instance for mocking. </returns>
-        public static IngressGatewayAsset IngressGatewayAsset(string namespaceName, string namespaceNameSuffix, string hybridConnectionName, string accessKey, long? expiresOn, string serviceConfigurationToken, string hostname, Guid? serverId, Guid? tenantId)
+        public static IngressGatewayAsset IngressGatewayAsset(string namespaceName = default, string namespaceNameSuffix = default, string hybridConnectionName = default, string accessKey = default, long? expiresOn = default, string serviceConfigurationToken = default, string hostname = default, Guid? serverId = default, Guid? tenantId = default)
         {
             return new IngressGatewayAsset(namespaceName is null && namespaceNameSuffix is null && hybridConnectionName is null && accessKey is null && expiresOn is null && serviceConfigurationToken is null ? default : new RelayNamespaceAccessProperties(
                 namespaceName,
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="kind"> The kind of the public cloud connector. </param>
         /// <returns> A new <see cref="HybridConnectivity.PublicCloudConnectorData"/> instance for mocking. </returns>
-        public static PublicCloudConnectorData PublicCloudConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PublicCloudConnectorProperties properties, PublicCloudHostType? kind)
+        public static PublicCloudConnectorData PublicCloudConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PublicCloudConnectorProperties properties = default, PublicCloudHostType? kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="connectorPrimaryIdentifier"> Connector primary identifier. </param>
         /// <returns> A new <see cref="Models.PublicCloudConnectorProperties"/> instance for mocking. </returns>
-        public static PublicCloudConnectorProperties PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile, GcpCloudProfile gcpCloudProfile, PublicCloudHostType hostType = default, PublicCloudResourceProvisioningState? provisioningState = default, string connectorPrimaryIdentifier = default)
+        public static PublicCloudConnectorProperties PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile = default, GcpCloudProfile gcpCloudProfile = default, PublicCloudHostType hostType = default, PublicCloudResourceProvisioningState? provisioningState = default, string connectorPrimaryIdentifier = default)
         {
             return new PublicCloudConnectorProperties(
                 awsCloudProfile,
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="hostTypes"> The supported host types for the current solution type. </param>
         /// <param name="solutionSettings"> Array of solution settings and its description. </param>
         /// <returns> A new <see cref="Models.PublicCloudConnectorSolutionTypeProperties"/> instance for mocking. </returns>
-        public static PublicCloudConnectorSolutionTypeProperties PublicCloudConnectorSolutionTypeProperties(string solutionType, string description, IEnumerable<string> supportedAzureRegions, IEnumerable<PublicCloudHostType> hostTypes, IEnumerable<PublicCloudConnectorSolutionTypeSettingsProperties> solutionSettings)
+        public static PublicCloudConnectorSolutionTypeProperties PublicCloudConnectorSolutionTypeProperties(string solutionType = default, string description = default, IEnumerable<string> supportedAzureRegions = default, IEnumerable<PublicCloudHostType> hostTypes = default, IEnumerable<PublicCloudConnectorSolutionTypeSettingsProperties> solutionSettings = default)
         {
             supportedAzureRegions ??= new ChangeTrackingList<string>();
             hostTypes ??= new ChangeTrackingList<PublicCloudHostType>();
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="hostTypes"> The supported host types for the current solution setting. </param>
         /// <param name="defaultValue"> Default value for this solution settings property. </param>
         /// <returns> A new <see cref="Models.PublicCloudConnectorSolutionTypeSettingsProperties"/> instance for mocking. </returns>
-        public static PublicCloudConnectorSolutionTypeSettingsProperties PublicCloudConnectorSolutionTypeSettingsProperties(string name, string displayName, string @type, string description, IEnumerable<string> allowedValues, IEnumerable<PublicCloudHostType> hostTypes, string defaultValue)
+        public static PublicCloudConnectorSolutionTypeSettingsProperties PublicCloudConnectorSolutionTypeSettingsProperties(string name = default, string displayName = default, string @type = default, string description = default, IEnumerable<string> allowedValues = default, IEnumerable<PublicCloudHostType> hostTypes = default, string defaultValue = default)
         {
             allowedValues ??= new ChangeTrackingList<string>();
             hostTypes ??= new ChangeTrackingList<PublicCloudHostType>();
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="solutionAdditionalProperties"></param>
         /// <returns> A new <see cref="Models.PublicCloudConnectorSolutionTypeSettings"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PublicCloudConnectorSolutionTypeSettings PublicCloudConnectorSolutionTypeSettings(string solutionType = default, IDictionary<string, string> solutionAdditionalProperties = default)
+        public static PublicCloudConnectorSolutionTypeSettings PublicCloudConnectorSolutionTypeSettings(string solutionType, IDictionary<string, string> solutionAdditionalProperties)
         {
             return new PublicCloudConnectorSolutionTypeSettings(solutionType, solutionAdditionalProperties is null ? default : new PublicCloudConnectorSolutionSettings(solutionAdditionalProperties ?? new ChangeTrackingDictionary<string, string>(), default), default);
         }
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="HybridConnectivity.PublicCloudConnectorData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PublicCloudConnectorData PublicCloudConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PublicCloudConnectorProperties properties = default)
+        public static PublicCloudConnectorData PublicCloudConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PublicCloudConnectorProperties properties)
         {
             return new PublicCloudConnectorData(
                 id,
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="connectorPrimaryIdentifier"> Connector primary identifier. </param>
         /// <returns> A new <see cref="Models.PublicCloudConnectorProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PublicCloudConnectorProperties PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile = default, PublicCloudHostType hostType = default, PublicCloudResourceProvisioningState? provisioningState = default, string connectorPrimaryIdentifier = default)
+        public static PublicCloudConnectorProperties PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile, PublicCloudHostType hostType, PublicCloudResourceProvisioningState? provisioningState, string connectorPrimaryIdentifier)
         {
             return new PublicCloudConnectorProperties(
                 awsCloudProfile,
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="lastSyncedOn"> The last time resources were inventoried. </param>
         /// <returns> A new <see cref="Models.PublicCloudConnectorSolutionConfigurationProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PublicCloudConnectorSolutionConfigurationProperties PublicCloudConnectorSolutionConfigurationProperties(PublicCloudResourceProvisioningState? provisioningState = default, string solutionType = default, IDictionary<string, string> solutionAdditionalProperties = default, PublicCloudConnectorSolutionConfigurationStatus? status = default, string statusDetails = default, DateTimeOffset? lastSyncedOn = default)
+        public static PublicCloudConnectorSolutionConfigurationProperties PublicCloudConnectorSolutionConfigurationProperties(PublicCloudResourceProvisioningState? provisioningState, string solutionType, IDictionary<string, string> solutionAdditionalProperties, PublicCloudConnectorSolutionConfigurationStatus? status, string statusDetails, DateTimeOffset? lastSyncedOn)
         {
             return new PublicCloudConnectorSolutionConfigurationProperties(
                 provisioningState,
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="solutionSettings"> Array of solution settings and its description. </param>
         /// <returns> A new <see cref="Models.PublicCloudConnectorSolutionTypeProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PublicCloudConnectorSolutionTypeProperties PublicCloudConnectorSolutionTypeProperties(string solutionType = default, string description = default, IEnumerable<string> supportedAzureRegions = default, IEnumerable<PublicCloudConnectorSolutionTypeSettingsProperties> solutionSettings = default)
+        public static PublicCloudConnectorSolutionTypeProperties PublicCloudConnectorSolutionTypeProperties(string solutionType, string description, IEnumerable<string> supportedAzureRegions, IEnumerable<PublicCloudConnectorSolutionTypeSettingsProperties> solutionSettings)
         {
             return new PublicCloudConnectorSolutionTypeProperties(
                 solutionType,
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="defaultValue"> Default value for this solution settings property. </param>
         /// <returns> A new <see cref="Models.PublicCloudConnectorSolutionTypeSettingsProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PublicCloudConnectorSolutionTypeSettingsProperties PublicCloudConnectorSolutionTypeSettingsProperties(string name = default, string displayName = default, string @type = default, string description = default, IEnumerable<string> allowedValues = default, string defaultValue = default)
+        public static PublicCloudConnectorSolutionTypeSettingsProperties PublicCloudConnectorSolutionTypeSettingsProperties(string name, string displayName, string @type, string description, IEnumerable<string> allowedValues, string defaultValue)
         {
             return new PublicCloudConnectorSolutionTypeSettingsProperties(
                 name,
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="serviceConfigurationToken"> The token to access the enabled service. </param>
         /// <returns> A new <see cref="Models.IngressGatewayAsset"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IngressGatewayAsset IngressGatewayAsset(string hostname = default, Guid? serverId = default, Guid? tenantId = default, string namespaceName = default, string namespaceNameSuffix = default, string hybridConnectionName = default, string accessKey = default, long? expiresOn = default, string serviceConfigurationToken = default)
+        public static IngressGatewayAsset IngressGatewayAsset(string hostname, Guid? serverId, Guid? tenantId, string namespaceName, string namespaceNameSuffix, string hybridConnectionName, string accessKey, long? expiresOn, string serviceConfigurationToken)
         {
             return new IngressGatewayAsset(namespaceName is null && namespaceNameSuffix is null && hybridConnectionName is null && accessKey is null && expiresOn is null && serviceConfigurationToken is null ? default : new RelayNamespaceAccessProperties(
                 namespaceName,
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.PublicCloudConnectorPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PublicCloudConnectorPatch PublicCloudConnectorPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> awsCloudExcludedAccounts = default, IDictionary<string, string> tags = default)
+        public static PublicCloudConnectorPatch PublicCloudConnectorPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> awsCloudExcludedAccounts, IDictionary<string, string> tags)
         {
             return new PublicCloudConnectorPatch(
                 id,
