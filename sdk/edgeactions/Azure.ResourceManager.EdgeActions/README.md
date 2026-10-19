@@ -133,13 +133,26 @@ cleans up resource groups, including when a test fails.
 To create fresh recordings using an Azure CLI login with permission to manage these test resources:
 
 ```powershell
-$env:AZURE_SUBSCRIPTION_ID = az account show --query id -o tsv
-$env:AZURE_TENANT_ID = az account show --query tenantId -o tsv
+az login
+az account set --subscription "<subscription-id>"
 $env:EDGEACTIONS_USE_AZURE_CLI = "true"
 $env:AZURE_TEST_MODE = "Record"
 dotnet test sdk\edgeactions\Azure.ResourceManager.EdgeActions\tests\Azure.ResourceManager.EdgeActions.Tests.csproj -f net10.0
 Remove-Item Env:AZURE_TEST_MODE
 ```
+
+With this opt-in, local Record/Live setup reads the selected Azure CLI account and fills missing
+subscription and tenant settings for the test process. Explicit `EDGEACTIONS_SUBSCRIPTION_ID` /
+`EDGEACTIONS_TENANT_ID` or `AZURE_SUBSCRIPTION_ID` / `AZURE_TENANT_ID` settings remain authoritative:
+an explicit subscription selects the account queried, and a mismatched tenant fails setup rather
+than silently changing the target. The tests never run `az login` or change the selected CLI account.
+
+Before recording requests, setup checks `Microsoft.Cdn` registration in that subscription. It registers
+the provider only when needed and waits up to 10 minutes for registration to complete. This requires
+permission to register resource providers; authentication, permission, and timeout failures fail setup.
+Initialization runs once per test process and is excluded from recordings. Playback performs no CLI
+account lookup or provider registration, even when the opt-in remains set. CI, service-principal, and
+pipeline credentials retain their existing behavior.
 
 To record just the version deployment and execution-filter scenarios with the same credentials:
 

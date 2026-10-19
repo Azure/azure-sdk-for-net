@@ -40,11 +40,13 @@ namespace Azure.ResourceManager.EdgeActions.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClientAsync()
         {
+            var options = new ArmClientOptions();
+            Client = GetArmClient(options);
+            await TestEnvironment.InitializeLocalAzureCliAsync(options.Environment.Value);
             int deploymentCount = (int?)TestContext.CurrentContext.Test.Properties.Get(DeploymentCountProperty) ?? 0;
             _testTimeout = new CancellationTokenSource(GetTestTimeout(deploymentCount));
-            Client = GetArmClient();
         }
 
         [TearDown]
