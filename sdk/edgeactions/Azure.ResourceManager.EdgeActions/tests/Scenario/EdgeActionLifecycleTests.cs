@@ -101,7 +101,25 @@ namespace Azure.ResourceManager.EdgeActions.Tests
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "Successful deployment recordings are blocked by the test service returning an internal error during deployVersionCode polling.")]
+        public async Task ExecutionFilterLifecycle()
+        {
+            EdgeActionResource action = await CreateEdgeAction();
+            EdgeActionVersionCollection versions = action.GetEdgeActionVersions();
+            var data = new EdgeActionVersionData(EdgeLocation)
+            {
+                Properties = new EdgeActionVersionProperties(EdgeActionVersionDeploymentType.File, EdgeActionIsDefaultVersion.False)
+            };
+            EdgeActionVersionResource first = (await versions.CreateOrUpdateAsync(WaitUntil.Completed, "v1", data)).Value;
+            EdgeActionVersionResource second = (await versions.CreateOrUpdateAsync(WaitUntil.Completed, "v2", data)).Value;
+
+            await ExerciseExecutionFilter(action, first, second);
+
+            await second.DeleteAsync(WaitUntil.Completed);
+            await first.DeleteAsync(WaitUntil.Completed);
+            await action.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [RecordedTest]
         [TestCase("file")]
         [TestCase("zip")]
         public async Task VersionsAndExecutionFilters(string deploymentType)
@@ -161,6 +179,18 @@ namespace Azure.ResourceManager.EdgeActions.Tests
             Assert.That((await first.GetAsync()).Value.Data.Properties.IsDefaultVersion, Is.EqualTo(EdgeActionIsDefaultVersion.False));
             Assert.That((await second.GetAsync()).Value.Data.Properties.IsDefaultVersion, Is.EqualTo(EdgeActionIsDefaultVersion.True));
 
+            await ExerciseExecutionFilter(action, first, second);
+
+            // The service requires non-default versions to be deleted before the default version.
+            await first.DeleteAsync(WaitUntil.Completed);
+            await second.DeleteAsync(WaitUntil.Completed);
+            Assert.That((await versions.ExistsAsync("v1")).Value, Is.False);
+            Assert.That((await versions.ExistsAsync("v2")).Value, Is.False);
+            await action.DeleteAsync(WaitUntil.Completed);
+        }
+
+        private static async Task ExerciseExecutionFilter(EdgeActionResource action, EdgeActionVersionResource first, EdgeActionVersionResource second)
+        {
             EdgeActionExecutionFilterCollection filters = action.GetEdgeActionExecutionFilters();
             const string filterName = "sdkfilter";
             var filterData = new EdgeActionExecutionFilterData(EdgeLocation)
@@ -174,7 +204,7 @@ namespace Azure.ResourceManager.EdgeActions.Tests
             Assert.That(filter.Data.Properties.ExecutionFilterIdentifierHeaderValue, Is.EqualTo("initial"));
             Assert.That((await filters.ExistsAsync(filterName)).Value, Is.True);
             Assert.That((await filters.GetAsync(filterName)).Value.Data.Properties.VersionId, Is.EqualTo(first.Id));
-            names.Clear();
+            var names = new List<string>();
             await foreach (EdgeActionExecutionFilterResource item in filters.GetAllAsync())
             {
                 names.Add(item.Id.Name);
@@ -200,12 +230,6 @@ namespace Azure.ResourceManager.EdgeActions.Tests
 
             await filter.DeleteAsync(WaitUntil.Completed);
             Assert.That((await filters.ExistsAsync(filterName)).Value, Is.False);
-            // The service requires non-default versions to be deleted before the default version.
-            await first.DeleteAsync(WaitUntil.Completed);
-            await second.DeleteAsync(WaitUntil.Completed);
-            Assert.That((await versions.ExistsAsync("v1")).Value, Is.False);
-            Assert.That((await versions.ExistsAsync("v2")).Value, Is.False);
-            await action.DeleteAsync(WaitUntil.Completed);
         }
 
         private async Task<EdgeActionResource> CreateEdgeAction()

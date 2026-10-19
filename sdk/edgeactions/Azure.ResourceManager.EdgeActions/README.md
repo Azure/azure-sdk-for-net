@@ -118,8 +118,11 @@ these are not substitutes for service recordings.
 Recorded scenarios cover resource lookup, tag replacement and clearing, and version metadata
 CRUD for file and ZIP deployment types. `VersionsAndExecutionFilters` additionally covers code
 deployment, version-code retrieval, default-version swaps, and execution-filter lifecycle operations.
-That scenario is live-only: attempts to record deployment returned an internal service error
-during polling, so successful recordings are not available for those operations.
+`ExecutionFilterLifecycle` independently covers filters referencing newly created versions, so
+deployment failures do not prevent filter creation, reassignment, update, and deletion from running.
+All scenarios participate in Record and Playback modes in both sync and async fixtures.
+Service failures must fail the recording run; do not skip scenarios or publish failed diagnostic
+recordings as successful coverage.
 
 Resource groups use the
 `dotnetsdk-edgeaction-test-` prefix in East US, and Edge Actions use the `eadotnet` prefix in
@@ -138,10 +141,16 @@ dotnet test sdk\edgeactions\Azure.ResourceManager.EdgeActions\tests\Azure.Resour
 Remove-Item Env:AZURE_TEST_MODE
 ```
 
-To run the deployment-dependent scenario with the same credentials, set
-`AZURE_TEST_MODE=Live` and add `--filter FullyQualifiedName~VersionsAndExecutionFilters`.
-Live mode does not save recordings. Once the service failure is resolved, remove the
-scenario's `LiveOnly` attribute and record both deployment types in sync and async modes.
+To record just the version deployment and execution-filter scenarios with the same credentials:
+
+```powershell
+$env:AZURE_TEST_MODE = "Record"
+dotnet test sdk\edgeactions\Azure.ResourceManager.EdgeActions\tests\Azure.ResourceManager.EdgeActions.Tests.csproj -f net10.0 --filter 'FullyQualifiedName~VersionsAndExecutionFilters|FullyQualifiedName~ExecutionFilterLifecycle'
+Remove-Item Env:AZURE_TEST_MODE
+```
+
+Deployment and filter operations can take several minutes each. A terminal `Failed` polling
+status is an operation failure, even when the polling endpoint returns HTTP 200.
 
 The CLI credential is an opt-in for local development; normal framework credentials remain
 the default. Test Proxy sanitizes signed polling query values without collapsing status and
