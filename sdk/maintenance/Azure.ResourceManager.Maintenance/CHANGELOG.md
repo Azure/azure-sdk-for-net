@@ -1,8 +1,9 @@
 # Release History
 
-## 1.2.0-beta.12 (Unreleased)
+## 1.2.0-beta.12 (2026-10-20)
 
 ### Features Added
+Release ScheduledEvents Acknowledge Error Details classes
 
 ### Breaking Changes
 
