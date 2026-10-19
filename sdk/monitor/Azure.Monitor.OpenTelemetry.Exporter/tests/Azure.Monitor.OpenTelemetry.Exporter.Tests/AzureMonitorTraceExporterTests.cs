@@ -18,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var testIkey = "test_ikey";
             var testEndpoint = "https://www.bing.com/";
 
-            var exporter = new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}" });
+            using var exporter = new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}", DisableOfflineStorage = true, EnableStatsbeat = false });
 
             GetInternalFields(exporter, out string? ikey, out string? endpoint);
             Assert.Equal(testIkey, ikey);
@@ -30,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var testIkey = "test_ikey";
 
-            var exporter = new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = $"InstrumentationKey={testIkey};" });
+            using var exporter = new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = $"InstrumentationKey={testIkey};", DisableOfflineStorage = true, EnableStatsbeat = false });
 
             GetInternalFields(exporter, out string? ikey, out string? endpoint);
             Assert.Equal(testIkey, ikey);

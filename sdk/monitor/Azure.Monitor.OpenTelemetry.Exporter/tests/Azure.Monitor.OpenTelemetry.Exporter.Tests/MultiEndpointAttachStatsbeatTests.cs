@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
@@ -158,14 +157,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private sealed class AttachTestScope : IDisposable
         {
-            private readonly List<TelemetryItem> _telemetryItems = new();
-            private readonly ITransmitter? _previousStatsTransmitter;
+            private readonly MockStatsbeatScope _stats = new();
 
             internal AttachTestScope(bool multiEndpointEnabled, bool configured, bool useOverride = true)
             {
-                ResourceProviderId = "attach-test-" + Guid.NewGuid().ToString("N");
-                Platform = new MockPlatform();
-                Platform.SetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_SITE_NAME, ResourceProviderId);
+                ResourceProviderId = _stats.ResourceProviderId;
+                Platform = _stats.Platform;
 
                 StatsConnectionString = useOverride
                     ? $"InstrumentationKey={Guid.NewGuid()};IngestionEndpoint=https://stats.example.invalid/"
@@ -175,8 +172,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     Platform.SetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_CONNECTION_STRING, StatsConnectionString);
                 }
 
-                TransmitterFactory.Instance._transmitters.TryGetValue(StatsConnectionString, out _previousStatsTransmitter);
-                TransmitterFactory.Instance.Set(StatsConnectionString, new MockTransmitter(_telemetryItems));
+                _stats.Add(StatsConnectionString);
 
                 Transmitter = new AzureMonitorTransmitter(
                     new AzureMonitorExporterOptions
@@ -202,9 +198,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             internal MetricsData[] Measurements()
             {
-                lock (_telemetryItems)
+                lock (_stats.TelemetryItems)
                 {
-                    return _telemetryItems
+                    return _stats.TelemetryItems
                         .Select(item => item.Data.BaseData)
                         .OfType<MetricsData>()
                         .ToArray();
@@ -216,14 +212,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 // Complete the final collection before another test publishes an Attach callback.
                 Transmitter._statsbeat?._statsbeatMeterProvider?.Dispose();
                 Transmitter.Dispose();
-                if (_previousStatsTransmitter != null)
-                {
-                    TransmitterFactory.Instance.Set(StatsConnectionString, _previousStatsTransmitter);
-                }
-                else
-                {
-                    TransmitterFactory.Instance._transmitters.Remove(StatsConnectionString);
-                }
+                _stats.Dispose();
             }
         }
     }

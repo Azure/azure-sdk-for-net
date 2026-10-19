@@ -17,6 +17,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 
 using OpenTelemetry;
+using OpenTelemetry.Metrics;
 
 using Xunit;
 
@@ -90,7 +91,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void ATransmitterCanBeBuiltWithoutAConnectionString()
         {
             using var transmitter = new AzureMonitorTransmitter(
-                new AzureMonitorExporterOptions { DisableOfflineStorage = true },
+                new AzureMonitorExporterOptions { DisableOfflineStorage = true, EnableStatsbeat = false },
                 new MockPlatform(),
                 multiEndpointEnabled: true);
 
@@ -104,18 +105,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void NoNetworkSdkStatisticsAreCollectedWithoutAConnectionString()
         {
+            using var stats = new MockStatsbeatScope();
             using var listener = new TestEventListener();
             listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Verbose, EventKeywords.All);
 
             using var transmitter = new AzureMonitorTransmitter(
                 new AzureMonitorExporterOptions { DisableOfflineStorage = true },
-                new MockPlatform(),
+                stats.Platform,
                 multiEndpointEnabled: true);
 
             Assert.NotNull(transmitter._statsbeat);
             Assert.Null(transmitter._statsbeat.NetworkSdkStatsManager);
 
             Assert.Empty(listener.Messages.Where(e => e.EventName == "ErrorInitializingStatsbeat"));
+            Assert.True(transmitter._statsbeat._statsbeatMeterProvider!.ForceFlush());
+            var attach = Assert.Single(stats.TelemetryItems.Select(item => item.Data.BaseData).OfType<MetricsData>());
+            Assert.Equal("Attach", Assert.Single(attach.Metrics).Name);
+            Assert.Equal("N/A", attach.Properties["cikey"]);
         }
 
         // ---------- Routing off: unchanged ----------

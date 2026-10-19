@@ -25,9 +25,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     {
         private readonly bool _previousSwitchValue;
         private readonly bool _hadSwitch;
+        private readonly MockStatsbeatScope _stats = new();
 
         public DistroSdkStatsRoutingTests()
         {
+            _stats.AddEndpoint("data.example.invalid");
+            _stats.AddEndpoint("bare.host.invalid");
+            _stats.AddEndpoint("full.url.invalid");
+            _stats.AddEndpoint("stats.example.invalid");
             _hadSwitch = AppContext.TryGetSwitch(
                 StatsbeatConstants.RouteSdkStatsToDistroEndpointSwitchName, out _previousSwitchValue);
             AppContext.SetSwitch(StatsbeatConstants.RouteSdkStatsToDistroEndpointSwitchName, true);
@@ -35,6 +40,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         public void Dispose()
         {
+            _stats.Dispose();
             if (_hadSwitch)
             {
                 AppContext.SetSwitch(StatsbeatConstants.RouteSdkStatsToDistroEndpointSwitchName, _previousSwitchValue);
@@ -85,7 +91,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void DistroSwitchOn_ConstructorDoesNotThrow_ForUnknownRegion()
+        public async Task DistroSwitchOn_ConstructorDoesNotThrow_ForUnknownRegion()
         {
             // Counterpart to StatsbeatIsNotInitializedForUnknownRegions: when the distro
             // switch is on the constructor must complete without throwing even if the
@@ -95,19 +101,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var customerCs = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://foo.in.applicationinsights.azure.com/";
             var connectionStringVars = ConnectionStringParser.GetValues(customerCs);
 
-            // No throw == passing assertion for this case. The Statsbeat MeterProvider
-            // will only build later (and only if the remote config returns enabled=true
-            // and a valid url); we cannot synchronously assert on that here without
-            // standing up an in-process HTTP stub.
-            using var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform());
+            using var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":false}"));
+            using var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars, _stats.Platform, handler);
+            await AwaitInitAsync(statsBeatInstance);
 
-            // _statsbeat_ConnectionString stays null until the background fetch completes
-            // and returns a non-null, enabled config — neither expected during this test.
             Assert.Null(statsBeatInstance._statsbeat_ConnectionString);
         }
 
         [Fact]
-        public void DistroSwitchOn_SlowOrUnreachableConfigEndpoint_DoesNotBlockConstruction()
+        public async Task DistroSwitchOn_SlowOrUnreachableConfigEndpoint_DoesNotBlockConstruction()
         {
             // Customer impact contract: even when the SDK statistics configuration endpoint
             // hangs for the full attempt timeout (per-attempt 10s) and all retries, the
@@ -123,13 +125,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var customerCs = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://westus.in.applicationinsights.azure.com/";
             var connectionStringVars = ConnectionStringParser.GetValues(customerCs);
+            var stopwatch = Stopwatch.StartNew();
+            using var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars, _stats.Platform, handler);
+            stopwatch.Stop();
 
             try
             {
-                var stopwatch = Stopwatch.StartNew();
-                using var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform(), handler);
-                stopwatch.Stop();
-
                 Assert.True(
                     stopwatch.Elapsed < TimeSpan.FromSeconds(1),
                     $"Constructor should not block on the SDK statistics config fetch; took {stopwatch.ElapsedMilliseconds}ms.");
@@ -151,6 +152,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 {
                     Content = new StringContent("{\"ver\":1,\"enabled\":false}", System.Text.Encoding.UTF8, "application/json"),
                 });
+                await AwaitInitAsync(statsBeatInstance);
             }
         }
 
@@ -196,7 +198,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":true,\"url\":\"data.example.invalid\"}"));
             var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
 
-            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            using var statsbeat = new AzureMonitorStatsbeat(vars, _stats.Platform, handler);
             await AwaitInitAsync(statsbeat);
 
             Assert.NotNull(statsbeat._statsbeatMeterProvider);
@@ -214,7 +216,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":true,\"url\":\"bare.host.invalid\"}"));
             var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
 
-            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            using var statsbeat = new AzureMonitorStatsbeat(vars, _stats.Platform, handler);
             await AwaitInitAsync(statsbeat);
 
             Assert.NotNull(statsbeat._statsbeat_ConnectionString);
@@ -227,7 +229,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":true,\"url\":\"https://full.url.invalid/\"}"));
             var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
 
-            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            using var statsbeat = new AzureMonitorStatsbeat(vars, _stats.Platform, handler);
             await AwaitInitAsync(statsbeat);
 
             // The trailing slash is normalized away then re-added; the scheme is not duplicated.
@@ -255,7 +257,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var vars = ConnectionStringParser.GetValues(
                 $"InstrumentationKey={DistinctCustomerIkey};IngestionEndpoint=https://{region}.in.applicationinsights.azure.com/");
 
-            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            using var statsbeat = new AzureMonitorStatsbeat(vars, _stats.Platform, handler);
             await AwaitInitAsync(statsbeat);
 
             Assert.Equal(
@@ -317,7 +319,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":false}"));
             var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
 
-            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            using var statsbeat = new AzureMonitorStatsbeat(vars, _stats.Platform, handler);
             await AwaitInitAsync(statsbeat);
 
             // Explicit kill switch: no MeterProvider, no fallback.
@@ -335,7 +337,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 return OkJson("{\"ver\":1,\"enabled\":true,\"url\":\"stats.example.invalid\"}");
             });
             using var statsbeat = new AzureMonitorStatsbeat(
-                ConnectionVars.CreateUnconfigured(), new MockPlatform(), handler, multiEndpointEnabled: true);
+                ConnectionVars.CreateUnconfigured(), _stats.Platform, handler, multiEndpointEnabled: true);
 
             await AwaitInitAsync(statsbeat);
 
@@ -352,7 +354,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             using var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":false}"));
             using var statsbeat = new AzureMonitorStatsbeat(
-                ConnectionVars.CreateUnconfigured(), new MockPlatform(), handler, multiEndpointEnabled: true);
+                ConnectionVars.CreateUnconfigured(), _stats.Platform, handler, multiEndpointEnabled: true);
 
             await AwaitInitAsync(statsbeat);
 
@@ -367,7 +369,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var handler = new StubHandler(_ => new HttpResponseMessage(HttpStatusCode.NotFound));
             var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
 
-            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            using var statsbeat = new AzureMonitorStatsbeat(vars, _stats.Platform, handler);
             await AwaitInitAsync(statsbeat);
 
             Assert.NotNull(statsbeat._statsbeatMeterProvider);
@@ -382,7 +384,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var handler = new StubHandler(_ => new HttpResponseMessage(HttpStatusCode.InternalServerError));
             var vars = ConnectionStringParser.GetValues(EuCustomerCs);
 
-            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            using var statsbeat = new AzureMonitorStatsbeat(vars, _stats.Platform, handler);
             await AwaitInitAsync(statsbeat);
 
             Assert.NotNull(statsbeat._statsbeatMeterProvider);
@@ -399,7 +401,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var handler = new StubHandler(_ => throw new HttpRequestException("dns failure"));
             var vars = ConnectionStringParser.GetValues(UnknownRegionCustomerCs);
 
-            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            using var statsbeat = new AzureMonitorStatsbeat(vars, _stats.Platform, handler);
             await AwaitInitAsync(statsbeat);
 
             Assert.NotNull(statsbeat._statsbeatMeterProvider);
@@ -414,7 +416,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var handler = new StubHandler(_ => OkJson("not a json document"));
             var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
 
-            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            using var statsbeat = new AzureMonitorStatsbeat(vars, _stats.Platform, handler);
             await AwaitInitAsync(statsbeat);
 
             Assert.NotNull(statsbeat._statsbeatMeterProvider);
@@ -429,7 +431,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var handler = new StubHandler(_ => OkJson("{\"ver\":99,\"enabled\":true,\"url\":\"x\"}"));
             var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
 
-            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            using var statsbeat = new AzureMonitorStatsbeat(vars, _stats.Platform, handler);
             await AwaitInitAsync(statsbeat);
 
             Assert.NotNull(statsbeat._statsbeatMeterProvider);
@@ -446,7 +448,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":true}"));
             var vars = ConnectionStringParser.GetValues(NonEuCustomerCs);
 
-            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            using var statsbeat = new AzureMonitorStatsbeat(vars, _stats.Platform, handler);
             await AwaitInitAsync(statsbeat);
 
             Assert.NotNull(statsbeat._statsbeatMeterProvider);
