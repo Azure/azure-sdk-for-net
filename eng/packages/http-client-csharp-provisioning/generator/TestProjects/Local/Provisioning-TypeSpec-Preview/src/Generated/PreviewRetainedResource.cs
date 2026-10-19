@@ -113,6 +113,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PreviewRetainedResourceValue
         {
             get

@@ -930,6 +930,29 @@ namespace Azure.Generator.Provisioning.Tests
                 .SetName("PrimitiveTypeIsWrappedInBicepValue_Url");
         }
 
+        [Test]
+        public void CustomEnumExperimentalAttributeIsNotDuplicated()
+        {
+            var input = CreateStringEnum(apiVersions: ["2024-03-01-preview"]);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputEnums: () => [input],
+                customizationSources:
+                [
+                    """
+                    using System.Diagnostics.CodeAnalysis;
+                    namespace Azure.Provisioning.Tests;
+                    [Experimental("CUSTOM001")]
+                    public enum TestEnum { One, Derived }
+                    """
+                ]);
+
+            var provider = new ProvisioningEnumProvider(input);
+
+            Assert.That(provider.CustomCodeView, Is.Not.Null);
+            Assert.That(provider.CustomCodeView!.Attributes.Single().Type.Name, Is.EqualTo("ExperimentalAttribute"));
+            Assert.That(provider.Attributes.Any(attribute => attribute.Type.Name == "ExperimentalAttribute"), Is.False);
+        }
+
         private static InputEnumType CreateStringEnum(string name = "TestEnum", string? access = "public", IReadOnlyList<string>? apiVersions = null)
         {
             var values = new List<InputEnumTypeValue>();

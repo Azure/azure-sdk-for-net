@@ -24,7 +24,13 @@ public class VersioningTests
             $"Azure.Provisioning.ProvisioningTypeSpec.Preview.{typeName}");
 
         Assert.That(type, Is.Not.Null);
-        Assert.That(GetExperimentalDiagnosticId(type!), Is.EqualTo(experimental ? "AZPROVISION001" : null));
+        var diagnosticId = typeName switch
+        {
+            "PreviewOnlyResource" => "CUSTOMRESOURCE001",
+            "PreviewOnlyResourceProperties" => "CUSTOMMODEL001",
+            _ => experimental ? "AZPROVISION001" : null
+        };
+        Assert.That(GetExperimentalDiagnosticId(type!), Is.EqualTo(diagnosticId));
     }
 
     [TestCase("InitialStableProperty", false)]
@@ -35,7 +41,7 @@ public class VersioningTests
     [TestCase("PreviewRetainedEnum", true)]
     public void ExperimentalPropertiesReflectSelectedApiVersion(string propertyName, bool experimental)
     {
-        var property = typeof(VersionedResourceProperties).GetProperty(propertyName);
+        var property = typeof(VersionedResource).GetProperty(propertyName);
 
         Assert.That(property, Is.Not.Null);
         Assert.That(GetExperimentalDiagnosticId(property!), Is.EqualTo(experimental ? "AZPROVISION001" : null));
@@ -54,7 +60,7 @@ public class VersioningTests
     public void PreviewProjectionContainsExpectedApis()
     {
         var assembly = typeof(VersionedResource).Assembly;
-        var propertyNames = typeof(VersionedResourceProperties)
+        var propertyNames = typeof(VersionedResource)
             .GetProperties()
             .Select(property => property.Name);
 
@@ -62,10 +68,35 @@ public class VersioningTests
         Assert.That(assembly.GetType("Azure.Provisioning.ProvisioningTypeSpec.Preview.PreviewRetainedResource"), Is.Not.Null);
         Assert.That(assembly.GetType("Azure.Provisioning.ProvisioningTypeSpec.Preview.LatestStableResource"), Is.Null);
         Assert.That(assembly.GetType("Azure.Provisioning.ProvisioningTypeSpec.Preview.LatestStableEnum"), Is.Null);
-        Assert.That(propertyNames, Does.Contain(nameof(VersionedResourceProperties.InitialStableProperty)));
-        Assert.That(propertyNames, Does.Contain(nameof(VersionedResourceProperties.PreviewOnlyProperty)));
-        Assert.That(propertyNames, Does.Contain(nameof(VersionedResourceProperties.PreviewRetainedProperty)));
+        Assert.That(propertyNames, Does.Contain(nameof(VersionedResource.InitialStableProperty)));
+        Assert.That(propertyNames, Does.Contain(nameof(VersionedResource.PreviewOnlyProperty)));
+        Assert.That(propertyNames, Does.Contain(nameof(VersionedResource.PreviewRetainedProperty)));
         Assert.That(propertyNames, Does.Not.Contain("LatestStableProperty"));
+    }
+
+    [TestCase("FlattenedPreviewValue")]
+    [TestCase("SharedValue")]
+    [TestCase("NestedPreviewValue")]
+    [TestCase("PreviewSafeWrapperSharedValue")]
+    public void FlattenedPathsPreservePreviewRestrictions(string propertyName)
+    {
+        var property = typeof(VersionedResource).GetProperty(propertyName);
+
+        Assert.That(property, Is.Not.Null);
+        Assert.That(GetExperimentalDiagnosticId(property!), Is.EqualTo("AZPROVISION001"));
+    }
+
+    [Test]
+    public void SharedStableLeafRemainsUnmarked()
+    {
+        var leaf = typeof(VersionedResource).Assembly.GetType(
+            "Azure.Provisioning.ProvisioningTypeSpec.Preview.SharedFlattenedLeaf");
+        Assert.That(leaf, Is.Not.Null);
+        Assert.That(GetExperimentalDiagnosticId(leaf!), Is.Null);
+        Assert.That(GetExperimentalDiagnosticId(leaf!.GetProperty("SharedValue")!), Is.Null);
+        var stableProperty = typeof(VersionedResource).GetProperty("StableSharedValue");
+        Assert.That(stableProperty, Is.Not.Null);
+        Assert.That(GetExperimentalDiagnosticId(stableProperty!), Is.Null);
     }
 
     private static object? GetExperimentalDiagnosticId(MemberInfo member)

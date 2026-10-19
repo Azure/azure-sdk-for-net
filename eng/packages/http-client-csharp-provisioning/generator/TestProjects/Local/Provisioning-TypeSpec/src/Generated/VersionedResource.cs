@@ -96,7 +96,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        public VersionedResourceProperties Properties
+        internal VersionedResourceProperties Properties
         {
             get
             {
@@ -107,6 +107,193 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 AssignOrReplace(ref _properties, value);
+            }
+        }
+
+        /// <summary> Gets or sets the InitialStableProperty. </summary>
+        public BicepValue<string> InitialStableProperty
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InitialStableProperty;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.InitialStableProperty = value;
+            }
+        }
+
+        /// <summary> Gets or sets the PreviewRetainedProperty. </summary>
+        public BicepValue<string> PreviewRetainedProperty
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreviewRetainedProperty;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.PreviewRetainedProperty = value;
+            }
+        }
+
+        /// <summary> Gets or sets the LatestStableProperty. </summary>
+        public BicepValue<string> LatestStableProperty
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LatestStableProperty;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.LatestStableProperty = value;
+            }
+        }
+
+        /// <summary> Gets or sets the InitialStableEnum. </summary>
+        public BicepValue<InitialStableEnum> InitialStableEnum
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InitialStableEnum;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.InitialStableEnum = value;
+            }
+        }
+
+        /// <summary> Gets or sets the PreviewRetainedEnum. </summary>
+        public BicepValue<PreviewRetainedEnum> PreviewRetainedEnum
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreviewRetainedEnum;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.PreviewRetainedEnum = value;
+            }
+        }
+
+        /// <summary> Gets or sets the LatestStableEnum. </summary>
+        public BicepValue<LatestStableEnum> LatestStableEnum
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LatestStableEnum;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.LatestStableEnum = value;
+            }
+        }
+
+        /// <summary> Gets or sets the FlattenedPreviewValue. </summary>
+        public BicepValue<string> FlattenedPreviewValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FlattenedPreviewValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.FlattenedPreviewValue = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SharedValue. </summary>
+        public BicepValue<string> SharedValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SharedValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.SharedValue = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SharedValue. </summary>
+        public BicepValue<string> PreviewSafeWrapperSharedValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreviewSafeWrapperSharedValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.PreviewSafeWrapperSharedValue = value;
+            }
+        }
+
+        /// <summary> Gets or sets the NestedPreviewValue. </summary>
+        public BicepValue<string> NestedPreviewValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NestedPreviewValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.NestedPreviewValue = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SharedValue. </summary>
+        public BicepValue<string> StableSharedValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StableSharedValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.StableSharedValue = value;
             }
         }
 

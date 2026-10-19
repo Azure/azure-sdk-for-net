@@ -65,6 +65,7 @@ namespace Azure.Generator.Provisioning
             RemoveVisitor("InheritableSystemObjectModelVisitor");
             // Remove the "Data" suffix that the mgmt ResourceVisitor appends to resource models
             AddVisitor(new ResourceDataSuffixVisitor());
+            AddVisitor(new ExperimentalFlattenedPropertyVisitor());
         }
     }
 }

@@ -35,7 +35,7 @@ public class VersioningTests
     [TestCase("LatestStableEnum")]
     public void StableProjectionPropertiesAreNotExperimental(string propertyName)
     {
-        var property = typeof(VersionedResourceProperties).GetProperty(propertyName);
+        var property = typeof(VersionedResource).GetProperty(propertyName);
 
         Assert.That(property, Is.Not.Null);
         AssertNotExperimental(property!);
@@ -57,7 +57,7 @@ public class VersioningTests
     public void StableProjectionContainsExpectedApis()
     {
         var assembly = typeof(VersionedResource).Assembly;
-        var propertyNames = typeof(VersionedResourceProperties)
+        var propertyNames = typeof(VersionedResource)
             .GetProperties()
             .Select(property => property.Name);
 
@@ -65,10 +65,23 @@ public class VersioningTests
         Assert.That(assembly.GetType("Azure.Provisioning.ProvisioningTypeSpec.PreviewRetainedResource"), Is.Not.Null);
         Assert.That(assembly.GetType("Azure.Provisioning.ProvisioningTypeSpec.LatestStableResource"), Is.Not.Null);
         Assert.That(assembly.GetType("Azure.Provisioning.ProvisioningTypeSpec.PreviewOnlyEnum"), Is.Null);
-        Assert.That(propertyNames, Does.Contain(nameof(VersionedResourceProperties.InitialStableProperty)));
+        Assert.That(propertyNames, Does.Contain(nameof(VersionedResource.InitialStableProperty)));
         Assert.That(propertyNames, Does.Not.Contain("PreviewOnlyProperty"));
-        Assert.That(propertyNames, Does.Contain(nameof(VersionedResourceProperties.PreviewRetainedProperty)));
-        Assert.That(propertyNames, Does.Contain(nameof(VersionedResourceProperties.LatestStableProperty)));
+        Assert.That(propertyNames, Does.Contain(nameof(VersionedResource.PreviewRetainedProperty)));
+        Assert.That(propertyNames, Does.Contain(nameof(VersionedResource.LatestStableProperty)));
+    }
+
+    [TestCase("FlattenedPreviewValue")]
+    [TestCase("SharedValue")]
+    [TestCase("NestedPreviewValue")]
+    [TestCase("PreviewSafeWrapperSharedValue")]
+    [TestCase("StableSharedValue")]
+    public void RetainedFlattenedPathsAreNotExperimental(string propertyName)
+    {
+        var property = typeof(VersionedResource).GetProperty(propertyName);
+
+        Assert.That(property, Is.Not.Null);
+        AssertNotExperimental(property!);
     }
 
     private static void AssertNotExperimental(MemberInfo member)

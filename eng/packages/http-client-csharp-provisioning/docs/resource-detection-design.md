@@ -390,6 +390,12 @@ Generating that later stable API removes the attribute. An API available in any
 stable version through the selected version is not experimental. Individual
 preview `ResourceVersions` fields remain experimental.
 
+Custom partial types with an existing `Experimental` annotation retain their
+diagnostic ID; the generator does not add a second inferred annotation.
+Flattened properties retain preview restrictions from every wrapper property
+and enclosing model along their forwarding path. A shared stable leaf is not
+marked globally merely because one flattened path is preview-only.
+
 Enum types carry API-version metadata, but individual enum values do not.
 Experimental marking therefore applies to enum types, not individual values.
 

@@ -179,8 +179,8 @@ namespace Azure.Generator.Provisioning.Providers
             => TypeSignatureModifiers.Public | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
 
         protected override IReadOnlyList<MethodBodyStatement> BuildAttributes()
-            => [.. base.BuildAttributes(), .. ApiVersionHelpers.BuildExperimentalAttributes(
-                _resourceProjection?.ApiVersions ?? _inputModel.ApiVersions)];
+            => ApiVersionHelpers.BuildTypeAttributes(this, base.BuildAttributes(),
+                _resourceProjection?.ApiVersions ?? _inputModel.ApiVersions);
 
         protected override CSharpType? BuildBaseType()
         {

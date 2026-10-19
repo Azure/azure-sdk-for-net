@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
 {
-    /// <summary> Properties of a preview-only resource. </summary>
-    [Experimental("AZPROVISION001")]
     internal partial class PreviewOnlyResourceProperties : ProvisionableConstruct
     {
         private BicepValue<string> _value;

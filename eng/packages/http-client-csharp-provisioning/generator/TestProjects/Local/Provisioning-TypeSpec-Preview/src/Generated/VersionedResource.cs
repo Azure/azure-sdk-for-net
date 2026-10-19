@@ -97,7 +97,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        public VersionedResourceProperties Properties
+        internal VersionedResourceProperties Properties
         {
             get
             {
@@ -108,6 +108,201 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             {
                 Initialize();
                 AssignOrReplace(ref _properties, value);
+            }
+        }
+
+        /// <summary> Gets or sets the InitialStableProperty. </summary>
+        public BicepValue<string> InitialStableProperty
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InitialStableProperty;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.InitialStableProperty = value;
+            }
+        }
+
+        /// <summary> Gets or sets the PreviewOnlyProperty. </summary>
+        [Experimental("AZPROVISION001")]
+        public BicepValue<string> PreviewOnlyProperty
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreviewOnlyProperty;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.PreviewOnlyProperty = value;
+            }
+        }
+
+        /// <summary> Gets or sets the PreviewRetainedProperty. </summary>
+        [Experimental("AZPROVISION001")]
+        public BicepValue<string> PreviewRetainedProperty
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreviewRetainedProperty;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.PreviewRetainedProperty = value;
+            }
+        }
+
+        /// <summary> Gets or sets the InitialStableEnum. </summary>
+        public BicepValue<InitialStableEnum> InitialStableEnum
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InitialStableEnum;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.InitialStableEnum = value;
+            }
+        }
+
+        /// <summary> Gets or sets the PreviewOnlyEnum. </summary>
+        [Experimental("AZPROVISION001")]
+        public BicepValue<PreviewOnlyEnum> PreviewOnlyEnum
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreviewOnlyEnum;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.PreviewOnlyEnum = value;
+            }
+        }
+
+        /// <summary> Gets or sets the PreviewRetainedEnum. </summary>
+        [Experimental("AZPROVISION001")]
+        public BicepValue<PreviewRetainedEnum> PreviewRetainedEnum
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreviewRetainedEnum;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.PreviewRetainedEnum = value;
+            }
+        }
+
+        /// <summary> Gets or sets the FlattenedPreviewValue. </summary>
+        [Experimental("AZPROVISION001")]
+        public BicepValue<string> FlattenedPreviewValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FlattenedPreviewValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.FlattenedPreviewValue = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SharedValue. </summary>
+        [Experimental("AZPROVISION001")]
+        public BicepValue<string> SharedValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SharedValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.SharedValue = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SharedValue. </summary>
+        [Experimental("AZPROVISION001")]
+        public BicepValue<string> PreviewSafeWrapperSharedValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreviewSafeWrapperSharedValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.PreviewSafeWrapperSharedValue = value;
+            }
+        }
+
+        /// <summary> Gets or sets the NestedPreviewValue. </summary>
+        [Experimental("AZPROVISION001")]
+        public BicepValue<string> NestedPreviewValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NestedPreviewValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.NestedPreviewValue = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SharedValue. </summary>
+        public BicepValue<string> StableSharedValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StableSharedValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VersionedResourceProperties();
+                }
+                Properties.StableSharedValue = value;
             }
         }
 

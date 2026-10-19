@@ -172,6 +172,86 @@ namespace Azure.Generator.Provisioning.Tests
             AssertExperimental(provider.Attributes);
         }
 
+        [TestCase("Experimental")]
+        [TestCase("global::System.Diagnostics.CodeAnalysis.ExperimentalAttribute")]
+        public void CustomModelExperimentalAttributeIsNotDuplicated(string attributeName)
+        {
+            var model = CreateModel("PreviewModel", apiVersions: ["2024-01-01-preview"]);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                armProviderSchema: () => new ArmProviderSchema([], []),
+                customizationSources:
+                [
+                    $$"""
+                    using System.Diagnostics.CodeAnalysis;
+                    namespace Azure.Provisioning.Tests;
+                    [{{attributeName}}("CUSTOM001")]
+                    public partial class PreviewModel { }
+                    """
+                ]);
+
+            var provider = new ProvisioningModelProvider(model);
+
+            Assert.That(provider.CustomCodeView, Is.Not.Null);
+            Assert.That(provider.CustomCodeView!.Attributes.Single().Type.Name, Is.EqualTo("ExperimentalAttribute"));
+            Assert.That(provider.Attributes, Is.Empty);
+        }
+
+        [Test]
+        public void CustomResourceExperimentalAttributeIsNotDuplicated()
+        {
+            var model = CreateModel("PreviewWidget");
+            var resource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01-preview"],
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                customizationSources:
+                [
+                    """
+                    using System.Diagnostics.CodeAnalysis;
+                    namespace Azure.Provisioning.Tests;
+                    [Experimental("CUSTOM001")]
+                    public partial class PreviewWidget { }
+                    """
+                ]);
+
+            var provider = CreateResourceProvider(resource);
+
+            Assert.That(provider.CustomCodeView, Is.Not.Null);
+            Assert.That(provider.CustomCodeView!.Attributes.Single().Type.Name, Is.EqualTo("ExperimentalAttribute"));
+            Assert.That(provider.Attributes, Is.Empty);
+        }
+
+        [Test]
+        public void UnrelatedCustomAttributeDoesNotSuppressExperimentalInference()
+        {
+            var model = CreateModel("PreviewModel", apiVersions: ["2024-01-01-preview"]);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                armProviderSchema: () => new ArmProviderSchema([], []),
+                customizationSources:
+                [
+                    """
+                    namespace Other
+                    {
+                        public class ExperimentalAttribute : System.Attribute { }
+                    }
+                    namespace Azure.Provisioning.Tests
+                    {
+                        [Other.Experimental]
+                        public partial class PreviewModel { }
+                    }
+                    """
+                ]);
+
+            AssertExperimental(new ProvisioningModelProvider(model).Attributes);
+        }
+
         [Test]
         public void StableModelWithPreviewOnlyPropertyMarksOnlyPropertyExperimental()
         {
