@@ -14,7 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Batch
 {
     /// <summary> Contains information about an Azure Batch account. </summary>
-    public partial class BatchAccountRenamed : ProvisionableResource
+    public partial class BatchAccount : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -24,10 +24,10 @@ namespace Azure.Provisioning.Batch
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
 
-        /// <summary> Creates a new BatchAccountRenamed. </summary>
+        /// <summary> Creates a new BatchAccount. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public BatchAccountRenamed(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts", resourceVersion ?? "2025-06-01")
+        public BatchAccount(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts", resourceVersion ?? "2025-06-01")
         {
         }
 
@@ -343,7 +343,7 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Define all the provisionable properties for BatchAccountRenamed. </summary>
+        /// <summary> Define all the provisionable properties for BatchAccount. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -353,21 +353,21 @@ namespace Azure.Provisioning.Batch
             _properties = DefineModelProperty<BatchAccountProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing BatchAccountRenamed. </summary>
+        /// <summary> Creates a reference to an existing BatchAccount. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static BatchAccountRenamed FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static BatchAccount FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            BatchAccountRenamed result = new BatchAccountRenamed(bicepIdentifier, resourceVersion);
+            BatchAccount result = new BatchAccount(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for BatchAccountRenamed that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for BatchAccount that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>

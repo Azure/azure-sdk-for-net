@@ -1,5 +1,11 @@
 namespace Azure.Provisioning.Batch
 {
+    public partial class AccessRulePropertiesSubscription : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public AccessRulePropertiesSubscription() { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class AutomaticOSUpgradePolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AutomaticOSUpgradePolicy() { }
@@ -30,8 +36,43 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.BicepList<string> FullyQualifiedDomainNames { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Batch.NetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
         public Azure.Provisioning.BicepList<string> PhoneNumbers { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.SubResource> Subscriptions { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Batch.AccessRulePropertiesSubscription> Subscriptions { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public partial class BatchAccount : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public BatchAccount(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> AccountEndpoint { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> ActiveJobAndJobScheduleQuota { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Batch.BatchAuthenticationMode> AllowedAuthenticationModes { get { throw null; } }
+        public Azure.Provisioning.Batch.BatchAccountAutoStorageConfiguration AutoStorage { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> DedicatedCoreQuota { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Batch.BatchVmFamilyCoreQuota> DedicatedCoreQuotaPerVmFamily { get { throw null; } }
+        public Azure.Provisioning.Batch.BatchAccountEncryptionConfiguration Encryption { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsDedicatedCoreQuotaPerVmFamilyEnforced { get { throw null; } }
+        public Azure.Provisioning.Batch.BatchKeyVaultReference KeyVaultReference { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> LowPriorityCoreQuota { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Batch.BatchNetworkProfile NetworkProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> NodeManagementEndpoint { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchAccountPoolAllocationMode> PoolAllocationMode { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> PoolQuota { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Batch.BatchPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Batch.BatchAccount FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2024_07_01;
+            public static readonly string V2025_06_01;
+        }
     }
     public partial class BatchAccountAutoScaleSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -60,7 +101,7 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Batch.BatchAccountRenamed Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Batch.BatchAccount Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } }
@@ -95,6 +136,22 @@ namespace Azure.Provisioning.Batch
         [System.Runtime.Serialization.DataMemberAttribute(Name="Microsoft.KeyVault")]
         MicrosoftKeyVault = 1,
     }
+    public partial class BatchAccountNetworkSecurityPerimeterConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal BatchAccountNetworkSecurityPerimeterConfiguration() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Batch.BatchAccount Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Batch.NetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Batch.BatchAccountNetworkSecurityPerimeterConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2024_07_01;
+            public static readonly string V2025_06_01;
+        }
+    }
     public partial class BatchAccountPool : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public BatchAccountPool(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -116,7 +173,7 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.BicepList<Azure.Provisioning.Batch.BatchMountConfiguration> MountConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Batch.BatchNetworkConfiguration NetworkConfiguration { get { throw null; } set { } }
-        public Azure.Provisioning.Batch.BatchAccountRenamed Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Batch.BatchAccount Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchAccountPoolProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ProvisioningStateTransitOn { get { throw null; } }
         public Azure.Provisioning.Batch.BatchResizeOperationStatus ResizeOperationStatus { get { throw null; } }
@@ -188,57 +245,6 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.BicepValue<bool> WaitForSuccess { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class BatchAccountRenamed : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public BatchAccountRenamed(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> AccountEndpoint { get { throw null; } }
-        public Azure.Provisioning.BicepValue<int> ActiveJobAndJobScheduleQuota { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Batch.BatchAuthenticationMode> AllowedAuthenticationModes { get { throw null; } }
-        public Azure.Provisioning.Batch.BatchAccountAutoStorageConfiguration AutoStorage { get { throw null; } }
-        public Azure.Provisioning.BicepValue<int> DedicatedCoreQuota { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Batch.BatchVmFamilyCoreQuota> DedicatedCoreQuotaPerVmFamily { get { throw null; } }
-        public Azure.Provisioning.Batch.BatchAccountEncryptionConfiguration Encryption { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsDedicatedCoreQuotaPerVmFamilyEnforced { get { throw null; } }
-        public Azure.Provisioning.Batch.BatchKeyVaultReference KeyVaultReference { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> LowPriorityCoreQuota { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Batch.BatchNetworkProfile NetworkProfile { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> NodeManagementEndpoint { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchAccountPoolAllocationMode> PoolAllocationMode { get { throw null; } }
-        public Azure.Provisioning.BicepValue<int> PoolQuota { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Batch.BatchPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Batch.BatchAccountRenamed FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2024_07_01;
-            public static readonly string V2025_06_01;
-        }
-    }
-    public partial class BatchAccountRenamedNetworkSecurityPerimeterConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        internal BatchAccountRenamedNetworkSecurityPerimeterConfiguration() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Batch.BatchAccountRenamed Parent { get { throw null; } set { } }
-        public Azure.Provisioning.Batch.NetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Batch.BatchAccountRenamedNetworkSecurityPerimeterConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2024_07_01;
-            public static readonly string V2025_06_01;
-        }
-    }
     public partial class BatchApplication : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public BatchApplication(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -248,7 +254,7 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Batch.BatchAccountRenamed Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Batch.BatchAccount Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -587,7 +593,7 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Batch.BatchAccountRenamed Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Batch.BatchAccount Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -617,7 +623,7 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Batch.BatchAccountRenamed Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Batch.BatchAccount Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> RequiredMembers { get { throw null; } }
         public Azure.Provisioning.BicepList<string> RequiredZoneNames { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }

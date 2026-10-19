@@ -13,18 +13,18 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Batch
 {
     /// <summary> Network security perimeter (NSP) configuration resource. </summary>
-    public partial class BatchAccountRenamedNetworkSecurityPerimeterConfiguration : ProvisionableResource
+    public partial class BatchAccountNetworkSecurityPerimeterConfiguration : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
         private NetworkSecurityPerimeterConfigurationProperties _properties;
-        private ResourceReference<BatchAccountRenamed> _parent;
+        private ResourceReference<BatchAccount> _parent;
 
-        /// <summary> Creates a new BatchAccountRenamedNetworkSecurityPerimeterConfiguration. </summary>
+        /// <summary> Creates a new BatchAccountNetworkSecurityPerimeterConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal BatchAccountRenamedNetworkSecurityPerimeterConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/networkSecurityPerimeterConfigurations", resourceVersion ?? "2025-06-01")
+        internal BatchAccountNetworkSecurityPerimeterConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/networkSecurityPerimeterConfigurations", resourceVersion ?? "2025-06-01")
         {
         }
 
@@ -74,7 +74,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public BatchAccountRenamed Parent
+        public BatchAccount Parent
         {
             get
             {
@@ -88,7 +88,7 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Define all the provisionable properties for BatchAccountRenamedNetworkSecurityPerimeterConfiguration. </summary>
+        /// <summary> Define all the provisionable properties for BatchAccountNetworkSecurityPerimeterConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -96,21 +96,21 @@ namespace Azure.Provisioning.Batch
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<NetworkSecurityPerimeterConfigurationProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<BatchAccountRenamed>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<BatchAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing BatchAccountRenamedNetworkSecurityPerimeterConfiguration. </summary>
+        /// <summary> Creates a reference to an existing BatchAccountNetworkSecurityPerimeterConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static BatchAccountRenamedNetworkSecurityPerimeterConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static BatchAccountNetworkSecurityPerimeterConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            BatchAccountRenamedNetworkSecurityPerimeterConfiguration result = new BatchAccountRenamedNetworkSecurityPerimeterConfiguration(bicepIdentifier, resourceVersion);
+            BatchAccountNetworkSecurityPerimeterConfiguration result = new BatchAccountNetworkSecurityPerimeterConfiguration(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for BatchAccountRenamedNetworkSecurityPerimeterConfiguration that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for BatchAccountNetworkSecurityPerimeterConfiguration that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>
