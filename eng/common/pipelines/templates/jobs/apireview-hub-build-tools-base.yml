@@ -75,13 +75,6 @@ jobs:
       # Language templates publish every file needed by artifact generation to the bin directory.
       - ${{ parameters.stepList }}
 
-      - task: CopyFiles@2
-        displayName: Package API Review Hub generation metadata script
-        inputs:
-          SourceFolder: $(ToolsSourceDirectory)/eng/common/scripts
-          Contents: Write-ApiReviewGenerationMetadata.ps1
-          TargetFolder: $(BinOutputDirectory)/api-review-hub
-
       - publish: $(BinOutputDirectory)
         artifact: bin
         displayName: Publish built tools
