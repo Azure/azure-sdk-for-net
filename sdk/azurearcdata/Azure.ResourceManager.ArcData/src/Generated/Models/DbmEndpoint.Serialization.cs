@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 writer.WritePropertyName("isDynamicPort"u8);
                 writer.WriteBooleanValue(IsDynamicPort.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IPAddress))
+            if (options.Format != "W" && Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IPAddress);
+                writer.WriteStringValue(IpAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(CertificateName))
             {

@@ -754,9 +754,9 @@ namespace Azure.ResourceManager.ArcData.Models
     }
     public partial class ActiveDirectoryConnectorDnsDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails>
     {
-        public ActiveDirectoryConnectorDnsDetails(System.Collections.Generic.IEnumerable<string> nameserverIPAddresses) { }
+        public ActiveDirectoryConnectorDnsDetails(System.Collections.Generic.IEnumerable<string> nameserverIpAddresses) { }
         public string DomainName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> NameserverIPAddresses { get { throw null; } }
+        public System.Collections.Generic.IList<string> NameserverIpAddresses { get { throw null; } }
         public long? Replicas { get { throw null; } set { } }
         public bool? ShouldPreferK8sDnsForPtrLookups { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1082,7 +1082,7 @@ namespace Azure.ResourceManager.ArcData.Models
     public static partial class ArmArcDataModelFactory
     {
         public static Azure.ResourceManager.ArcData.ActiveDirectoryConnectorData ActiveDirectoryConnectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails ActiveDirectoryConnectorDnsDetails(string domainName = null, System.Collections.Generic.IEnumerable<string> nameserverIPAddresses = null, long? replicas = default(long?), bool? shouldPreferK8sDnsForPtrLookups = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails ActiveDirectoryConnectorDnsDetails(string domainName = null, System.Collections.Generic.IEnumerable<string> nameserverIpAddresses = null, long? replicas = default(long?), bool? shouldPreferK8sDnsForPtrLookups = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDomainDetails ActiveDirectoryConnectorDomainDetails(string realm = null, string netbiosDomainName = null, Azure.ResourceManager.ArcData.Models.AccountProvisioningMode? serviceAccountProvisioning = default(Azure.ResourceManager.ArcData.Models.AccountProvisioningMode?), string ouDistinguishedName = null, Azure.ResourceManager.ArcData.Models.ActiveDirectoryDomainControllers domainControllers = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorProperties ActiveDirectoryConnectorProperties(Azure.ResourceManager.ArcData.Models.BasicLoginInformation domainServiceAccountLoginInformation = null, string provisioningState = null, Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorSpec spec = null, Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorStatus status = null) { throw null; }
         public static Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorSpec ActiveDirectoryConnectorSpec(Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDomainDetails activeDirectory = null, Azure.ResourceManager.ArcData.Models.ActiveDirectoryConnectorDnsDetails dns = null) { throw null; }
@@ -1859,7 +1859,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public Azure.ResourceManager.ArcData.Models.ConnectionAuth? ConnectionAuth { get { throw null; } }
         public Azure.ResourceManager.ArcData.Models.EncryptionAlgorithm? EncryptionAlgorithm { get { throw null; } }
         public string EndpointName { get { throw null; } }
-        public string IPAddress { get { throw null; } }
+        public string IpAddress { get { throw null; } }
         public bool? IsDynamicPort { get { throw null; } }
         public bool? IsEncryptionEnabled { get { throw null; } }
         public int? Port { get { throw null; } }

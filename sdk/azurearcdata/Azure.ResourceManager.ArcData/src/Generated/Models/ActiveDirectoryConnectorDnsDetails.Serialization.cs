@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ArcData.Models
             }
             writer.WritePropertyName("nameserverIPAddresses"u8);
             writer.WriteStartArray();
-            foreach (string item in NameserverIPAddresses)
+            foreach (string item in NameserverIpAddresses)
             {
                 if (item == null)
                 {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 return null;
             }
             string domainName = default;
-            IList<string> nameserverIPAddresses = default;
+            IList<string> nameserverIpAddresses = default;
             long? replicas = default;
             bool? shouldPreferK8sDnsForPtrLookups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ArcData.Models
                             array.Add(item.GetString());
                         }
                     }
-                    nameserverIPAddresses = array;
+                    nameserverIpAddresses = array;
                     continue;
                 }
                 if (prop.NameEquals("replicas"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ActiveDirectoryConnectorDnsDetails(domainName, nameserverIPAddresses ?? new ChangeTrackingList<string>(), replicas, shouldPreferK8sDnsForPtrLookups, additionalBinaryDataProperties);
+            return new ActiveDirectoryConnectorDnsDetails(domainName, nameserverIpAddresses ?? new ChangeTrackingList<string>(), replicas, shouldPreferK8sDnsForPtrLookups, additionalBinaryDataProperties);
         }
     }
 }

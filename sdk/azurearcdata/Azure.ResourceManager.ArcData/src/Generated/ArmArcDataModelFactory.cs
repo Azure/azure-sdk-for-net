@@ -2221,15 +2221,15 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> DNS server details. </summary>
         /// <param name="domainName"> DNS domain name for which DNS lookups should be forwarded to the Active Directory DNS servers. </param>
-        /// <param name="nameserverIPAddresses"> List of Active Directory DNS server IP addresses. </param>
+        /// <param name="nameserverIpAddresses"> List of Active Directory DNS server IP addresses. </param>
         /// <param name="replicas"> Replica count for DNS proxy service. Default value is 1. </param>
         /// <param name="shouldPreferK8sDnsForPtrLookups"> Flag indicating whether to prefer Kubernetes DNS server response over AD DNS server response for IP address lookups. </param>
         /// <returns> A new <see cref="Models.ActiveDirectoryConnectorDnsDetails"/> instance for mocking. </returns>
-        public static ActiveDirectoryConnectorDnsDetails ActiveDirectoryConnectorDnsDetails(string domainName = default, IEnumerable<string> nameserverIPAddresses = default, long? replicas = default, bool? shouldPreferK8sDnsForPtrLookups = default)
+        public static ActiveDirectoryConnectorDnsDetails ActiveDirectoryConnectorDnsDetails(string domainName = default, IEnumerable<string> nameserverIpAddresses = default, long? replicas = default, bool? shouldPreferK8sDnsForPtrLookups = default)
         {
-            nameserverIPAddresses ??= new ChangeTrackingList<string>();
+            nameserverIpAddresses ??= new ChangeTrackingList<string>();
 
-            return new ActiveDirectoryConnectorDnsDetails(domainName, (nameserverIPAddresses ?? new ChangeTrackingList<string>()).ToList(), replicas, shouldPreferK8sDnsForPtrLookups, default);
+            return new ActiveDirectoryConnectorDnsDetails(domainName, (nameserverIpAddresses ?? new ChangeTrackingList<string>()).ToList(), replicas, shouldPreferK8sDnsForPtrLookups, default);
         }
 
         /// <summary> The status of the Kubernetes custom resource. </summary>
