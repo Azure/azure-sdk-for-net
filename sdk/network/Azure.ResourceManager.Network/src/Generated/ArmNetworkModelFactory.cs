@@ -2578,31 +2578,6 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationGatewayBackendHealthServer(address, ipConfiguration, health, healthProbeLog, default);
         }
 
-        /// <param name="protocol"> The protocol used for the probe. </param>
-        /// <param name="host"> Host name to send the probe to. </param>
-        /// <param name="path"> Relative path of probe. Valid path starts from '/'. Probe is sent to &lt;Protocol&gt;://&lt;host&gt;:&lt;port&gt;&lt;path&gt;. </param>
-        /// <param name="timeout"> The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable values are from 1 second to 86400 seconds. </param>
-        /// <param name="pickHostNameFromBackendHttpSettings"> Whether the host header should be picked from the backend http settings. Default value is false. </param>
-        /// <param name="enableProbeProxyProtocolHeader"> Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false. </param>
-        /// <param name="match"> Criterion for classifying a healthy probe response. </param>
-        /// <param name="backendAddressPoolId"> Resource ID. </param>
-        /// <param name="backendHttpSettingsId"> Resource ID. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayOnDemandProbe"/> instance for mocking. </returns>
-        public static ApplicationGatewayOnDemandProbe ApplicationGatewayOnDemandProbe(ApplicationGatewayProtocol? protocol = default, string host = default, string path = default, int? timeout = default, bool? pickHostNameFromBackendHttpSettings = default, bool? enableProbeProxyProtocolHeader = default, ApplicationGatewayProbeHealthResponseMatch match = default, ResourceIdentifier backendAddressPoolId = default, ResourceIdentifier backendHttpSettingsId = default)
-        {
-            return new ApplicationGatewayOnDemandProbe(
-                protocol,
-                host,
-                path,
-                timeout,
-                pickHostNameFromBackendHttpSettings,
-                enableProbeProxyProtocolHeader,
-                match,
-                backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
-                backendHttpSettingsId is null ? default : new NetworkSubResource(backendHttpSettingsId, default),
-                default);
-        }
-
         /// <summary> Result of on demand test probe. </summary>
         /// <param name="backendAddressPool"> Reference to an ApplicationGatewayBackendAddressPool resource. </param>
         /// <param name="backendHealthHttpSettings"> Application gateway BackendHealthHttp settings. </param>

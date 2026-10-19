@@ -49,6 +49,8 @@ namespace Azure.ResourceManager.Network.Mocking
 
         /// <summary> Invokes the GetApplicationGatewayAvailableSslOptions compatibility operation. </summary>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated and it will be removed in a future version. Please use GetApplicationGatewayAvailableSslOptionsInfo().Get() instead.")]
         public virtual Response<ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(CancellationToken cancellationToken)
         {
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -105,6 +107,8 @@ namespace Azure.ResourceManager.Network.Mocking
 
         /// <summary> Invokes the GetApplicationGatewayAvailableSslOptionsAsync compatibility operation. </summary>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated and it will be removed in a future version. Please use GetApplicationGatewayAvailableSslOptionsInfo().GetAsync() instead.")]
         public virtual async Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(CancellationToken cancellationToken)
         {
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);

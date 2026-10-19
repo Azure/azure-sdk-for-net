@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.Network.Models
     // The renamed numeric wire property must not consume or discard the legacy string input.
     // Preserve this overload and store its values only in the independent Rules collection.
     [CodeGenSuppress("ManagedRuleSetRuleGroup", typeof(string), typeof(IEnumerable<string>))]
+    // The released parameter name must feed the renamed canonical property rather than being discarded.
+    [CodeGenSuppress("ApplicationGatewayOnDemandProbe", typeof(ApplicationGatewayProtocol?), typeof(string), typeof(string), typeof(int?), typeof(bool?), typeof(bool?), typeof(ApplicationGatewayProbeHealthResponseMatch), typeof(ResourceIdentifier), typeof(ResourceIdentifier))]
     // Preserve the old endpoint factory signature without dropping its renamed type argument.
 #pragma warning disable CS0618 // The compatibility overload must reference the obsolete endpoint type.
     [CodeGenSuppress("ConnectionMonitorEndpoint", typeof(string), typeof(EndpointType?), typeof(ResourceIdentifier), typeof(string), typeof(ConnectionMonitorEndpointFilter), typeof(ConnectionMonitorEndpointScope), typeof(CoverageLevel?), typeof(string), typeof(Guid?))]
@@ -51,6 +53,32 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(WebApplicationFirewallPolicyTier?), typeof(ETag?))]
     public static partial class ArmNetworkModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayOnDemandProbe"/> for mocking. </summary>
+        /// <param name="protocol"> The protocol used for the probe. </param>
+        /// <param name="host"> Host name to send the probe to. </param>
+        /// <param name="path"> Relative path of the probe. </param>
+        /// <param name="timeout"> The probe timeout in seconds. </param>
+        /// <param name="pickHostNameFromBackendHttpSettings"> Whether the host header is picked from backend HTTP settings. </param>
+        /// <param name="enableProbeProxyProtocolHeader"> Whether to send a Proxy Protocol header with the probe. </param>
+        /// <param name="match"> Criterion for classifying a healthy probe response. </param>
+        /// <param name="backendAddressPoolId"> The backend address pool resource ID. </param>
+        /// <param name="backendHttpSettingsId"> The backend HTTP settings resource ID. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayOnDemandProbe"/> instance for mocking. </returns>
+        public static ApplicationGatewayOnDemandProbe ApplicationGatewayOnDemandProbe(ApplicationGatewayProtocol? protocol = default, string host = default, string path = default, int? timeout = default, bool? pickHostNameFromBackendHttpSettings = default, bool? enableProbeProxyProtocolHeader = default, ApplicationGatewayProbeHealthResponseMatch match = default, ResourceIdentifier backendAddressPoolId = default, ResourceIdentifier backendHttpSettingsId = default)
+        {
+            return new ApplicationGatewayOnDemandProbe(
+                protocol,
+                host,
+                path,
+                timeout,
+                pickHostNameFromBackendHttpSettings,
+                enableProbeProxyProtocolHeader,
+                match,
+                backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
+                backendHttpSettingsId is null ? default : new NetworkSubResource(backendHttpSettingsId, default),
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.PeerRouteList"/> for mocking. </summary>
         /// <param name="localAddress"> The peer's local address. </param>
         /// <param name="network"> The route's network prefix. </param>
@@ -187,9 +215,8 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectionMonitorEndpoint"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable CS0618 // Retain the released factory signature for callers of the obsolete type.
+        [Obsolete("This overload is deprecated and it will be removed in a future version. Please use the overload accepting ConnectionMonitorEndpointType instead.")]
         public static ConnectionMonitorEndpoint ConnectionMonitorEndpoint(string name = default, EndpointType? @type = default, ResourceIdentifier resourceId = default, string address = default, ConnectionMonitorEndpointFilter filter = default, ConnectionMonitorEndpointScope scope = default, CoverageLevel? coverageLevel = default, string locationDetailsRegion = default, Guid? subscriptionId = default)
-#pragma warning restore CS0618
         {
             return new ConnectionMonitorEndpoint(
                 name,
@@ -336,6 +363,8 @@ namespace Azure.ResourceManager.Network.Models
         // This released legacy model has no generated factory; set its typed base storage beneath the read-only getter.
         // This metadata repair does not add support for the other currently unassigned envelope arguments.
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayAvailableSslOptionsInfo"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated and it will be removed in a future version. Please use ApplicationGatewayAvailableSslOptionsInfoData instead.")]
         public static ApplicationGatewayAvailableSslOptionsInfo ApplicationGatewayAvailableSslOptionsInfo(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, IEnumerable<WritableSubResource> predefinedPolicies = default, ApplicationGatewaySslPolicyName? defaultPolicy = default, IEnumerable<ApplicationGatewaySslCipherSuite> availableCipherSuites = default, IEnumerable<ApplicationGatewaySslProtocol> availableProtocols = default)
         {
             var result = new ApplicationGatewayAvailableSslOptionsInfo();

@@ -29,19 +29,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="path"> Relative path of probe. Valid path starts from '/'. Probe is sent to &lt;Protocol&gt;://&lt;host&gt;:&lt;port&gt;&lt;path&gt;. </param>
         /// <param name="timeout"> The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable values are from 1 second to 86400 seconds. </param>
         /// <param name="pickHostNameFromBackendHttpSettings"> Whether the host header should be picked from the backend http settings. Default value is false. </param>
-        /// <param name="enableProbeProxyProtocolHeader"> Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false. </param>
+        /// <param name="isProbeProxyProtocolHeaderEnabled"> Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false. </param>
         /// <param name="match"> Criterion for classifying a healthy probe response. </param>
         /// <param name="backendAddressPool"> Reference to backend pool of application gateway to which probe request will be sent. </param>
         /// <param name="backendHttpSettings"> Reference to backend http setting of application gateway to be used for test probe. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayOnDemandProbe(ApplicationGatewayProtocol? protocol, string host, string path, int? timeout, bool? pickHostNameFromBackendHttpSettings, bool? enableProbeProxyProtocolHeader, ApplicationGatewayProbeHealthResponseMatch match, NetworkSubResource backendAddressPool, NetworkSubResource backendHttpSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayOnDemandProbe(ApplicationGatewayProtocol? protocol, string host, string path, int? timeout, bool? pickHostNameFromBackendHttpSettings, bool? isProbeProxyProtocolHeaderEnabled, ApplicationGatewayProbeHealthResponseMatch match, NetworkSubResource backendAddressPool, NetworkSubResource backendHttpSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Protocol = protocol;
             Host = host;
             Path = path;
             Timeout = timeout;
             PickHostNameFromBackendHttpSettings = pickHostNameFromBackendHttpSettings;
-            EnableProbeProxyProtocolHeader = enableProbeProxyProtocolHeader;
+            IsProbeProxyProtocolHeaderEnabled = isProbeProxyProtocolHeaderEnabled;
             Match = match;
             BackendAddressPool = backendAddressPool;
             BackendHttpSettings = backendHttpSettings;
@@ -67,10 +67,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Whether the host header should be picked from the backend http settings. Default value is false. </summary>
         [WirePath("pickHostNameFromBackendHttpSettings")]
         public bool? PickHostNameFromBackendHttpSettings { get; set; }
-
-        /// <summary> Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false. </summary>
-        [WirePath("enableProbeProxyProtocolHeader")]
-        public bool? EnableProbeProxyProtocolHeader { get; set; }
 
         /// <summary> Criterion for classifying a healthy probe response. </summary>
         [WirePath("match")]

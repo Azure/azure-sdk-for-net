@@ -3,19 +3,17 @@
 
 #nullable disable
 
-using Azure.Core;
-using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
-
 namespace Azure.ResourceManager.Network.Models
 {
-    [CodeGenSuppress("ActiveBaseSecurityAdminRule")]
     public abstract partial class ActiveBaseSecurityAdminRule
     {
         /// <summary> Initializes a new instance of the ActiveBaseSecurityAdminRule class. </summary>
         protected ActiveBaseSecurityAdminRule()
         {
         }
+
+        // This protected overload shipped in 1.17.0; external subclasses can call it.
+        /// <summary> Initializes a new instance of the ActiveBaseSecurityAdminRule class. </summary>
+        protected ActiveBaseSecurityAdminRule(bool _) { }
     }
 }

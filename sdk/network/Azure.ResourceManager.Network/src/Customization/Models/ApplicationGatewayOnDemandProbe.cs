@@ -5,19 +5,26 @@
 
 using System;
 using System.ComponentModel;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class ApplicationGatewayOnDemandProbe
     {
-        // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.
-        /// <inheritdoc cref="EnableProbeProxyProtocolHeader"/>
+        // Bind the service field to the original .NET boolean-property name.
+        /// <summary> Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false. </summary>
+        [CodeGenMember("EnableProbeProxyProtocolHeader")]
+        [WirePath("enableProbeProxyProtocolHeader")]
+        public bool? IsProbeProxyProtocolHeaderEnabled { get; set; }
+
+        // Preserve the TypeSpec name shipped in 1.17.0 without independent serialized storage.
+        /// <inheritdoc cref="IsProbeProxyProtocolHeaderEnabled"/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is deprecated and it will be removed in a future version. Please use EnableProbeProxyProtocolHeader instead.")]
-        public bool? IsProbeProxyProtocolHeaderEnabled
+        [Obsolete("This property is deprecated and it will be removed in a future version. Please use IsProbeProxyProtocolHeaderEnabled instead.")]
+        public bool? EnableProbeProxyProtocolHeader
         {
-            get => EnableProbeProxyProtocolHeader;
-            set => EnableProbeProxyProtocolHeader = value;
+            get => IsProbeProxyProtocolHeaderEnabled;
+            set => IsProbeProxyProtocolHeaderEnabled = value;
         }
     }
 }

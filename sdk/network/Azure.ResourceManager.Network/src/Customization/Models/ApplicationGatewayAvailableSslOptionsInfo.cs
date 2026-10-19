@@ -4,19 +4,19 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text.Json;
-using Azure;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     // Keep the released model in Models: only the replacement *Data resource type is generated.
-    // The persistence adapters below preserve ResourceType, not the complete legacy payload.
+    // The persistence adapters in the serialization partial preserve ResourceType, not the complete legacy payload.
     /// <summary> Compatibility type for available SSL options info. </summary>
-    public partial class ApplicationGatewayAvailableSslOptionsInfo : NetworkTrackedResourceData, IJsonModel<ApplicationGatewayAvailableSslOptionsInfo>, IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This model is deprecated and it will be removed in a future version. Please use ApplicationGatewayAvailableSslOptionsInfoData instead.")]
+    public partial class ApplicationGatewayAvailableSslOptionsInfo : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAvailableSslOptionsInfo"/>. </summary>
         public ApplicationGatewayAvailableSslOptionsInfo()
@@ -88,43 +88,5 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Available protocols. </summary>
         [WirePath("properties.availableProtocols")]
         public IList<ApplicationGatewaySslProtocol> AvailableProtocols { get; }
-
-        // The legacy type has no generated reader; reuse the base reader to retain ResourceType.
-        ApplicationGatewayAvailableSslOptionsInfo IJsonModel<ApplicationGatewayAvailableSslOptionsInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            => FromMetadata(((IJsonModel<NetworkTrackedResourceData>)new NetworkTrackedResourceData()).Create(ref reader, options));
-
-        // Call the base core directly: covariant interface delegation would re-enter this writer recursively.
-        void IJsonModel<ApplicationGatewayAvailableSslOptionsInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            base.JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-        // Reuse the generated base persistence reader; the legacy adapter currently restores only ResourceType.
-        ApplicationGatewayAvailableSslOptionsInfo IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-            => FromMetadata(ModelReaderWriter.Read<NetworkTrackedResourceData>(data, options, AzureResourceManagerNetworkContext.Default));
-
-        string IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        // Preserve native metadata persistence and the base writer's read-only wire visibility rules.
-        BinaryData IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>.Write(ModelReaderWriterOptions options)
-            => ModelReaderWriter.Write<NetworkTrackedResourceData>(this, options, AzureResourceManagerNetworkContext.Default);
-
-        // Transfer only the repaired ResourceType path; this is not full legacy-payload deserialization.
-        private static ApplicationGatewayAvailableSslOptionsInfo FromMetadata(NetworkTrackedResourceData metadata)
-        {
-            if (metadata is null)
-            {
-                return null;
-            }
-            var result = new ApplicationGatewayAvailableSslOptionsInfo();
-            ((NetworkTrackedResourceData)result).ResourceType = metadata.ResourceType;
-            return result;
-        }
-
-        // Let the generated base serialize metadata and decide which fields belong in persisted versus wire JSON.
-        /// <summary> Writes the model as JSON. </summary>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => base.JsonModelWriteCore(writer, options);
     }
 }

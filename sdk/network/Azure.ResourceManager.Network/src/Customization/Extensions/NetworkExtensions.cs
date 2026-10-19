@@ -36,6 +36,8 @@ namespace Azure.ResourceManager.Network
         public static Response<CloudServiceSwapResource> GetCloudServiceSwap(this ResourceGroupResource resourceGroupResource, string cloudServiceName, CancellationToken cancellationToken)
             => resourceGroupResource.GetCachedClient(client => new MockableNetworkResourceGroupResource(client, resourceGroupResource.Id)).GetCloudServiceSwap(cloudServiceName, cancellationToken);
         /// <summary> Invokes the GetApplicationGatewayAvailableSslOptions compatibility operation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated and it will be removed in a future version. Please use GetApplicationGatewayAvailableSslOptionsInfo().Get() instead.")]
         public static Response<ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
             => subscriptionResource.GetCachedClient(client => new MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetApplicationGatewayAvailableSslOptions(cancellationToken);
         /// <summary> Invokes the GetApplicationGatewaySslPredefinedPolicy compatibility operation. </summary>
@@ -49,6 +51,8 @@ namespace Azure.ResourceManager.Network
         public static Task<Response<CloudServiceSwapResource>> GetCloudServiceSwapAsync(this ResourceGroupResource resourceGroupResource, string cloudServiceName, CancellationToken cancellationToken)
             => resourceGroupResource.GetCachedClient(client => new MockableNetworkResourceGroupResource(client, resourceGroupResource.Id)).GetCloudServiceSwapAsync(cloudServiceName, cancellationToken);
         /// <summary> Invokes the GetApplicationGatewayAvailableSslOptionsAsync compatibility operation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated and it will be removed in a future version. Please use GetApplicationGatewayAvailableSslOptionsInfo().GetAsync() instead.")]
         public static async Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
             => await subscriptionResource.GetCachedClient(client => new MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetApplicationGatewayAvailableSslOptionsAsync(cancellationToken).ConfigureAwait(false);
         /// <summary> Invokes the GetApplicationGatewaySslPredefinedPolicyAsync compatibility operation. </summary>
