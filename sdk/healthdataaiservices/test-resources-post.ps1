@@ -1,20 +1,57 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-# This script is used to set up SIP Configuration domains for Azure Communication Services SIP Routing SDK GA tests
+# This script prepares the storage account used by the Health Deidentification live tests: it opens the
+# storage network ACL, waits until the storage data plane is reachable, and uploads the test documents.
 
-# It is invoked by the https://github.com/Azure/azure-sdk-for-net/blob/main/eng/New-TestResources.ps1
-# script after the ARM template, defined in https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/test-resources.json,
-# is finished being deployed. The ARM template is responsible for creating the Storage accounts needed for live tests.
+# It is invoked by https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/TestResources/New-TestResources.ps1
+# after test-resources.bicep in this directory has been deployed.
 
 param (
     [hashtable] $DeploymentOutputs,
     [string] $TenantId,
     [string] $TestApplicationId,
-    [string] $TestApplicationSecret
+    [string] $TestApplicationSecret,
+
+    # Maximum time to wait for each storage readiness check (network ACL and RBAC propagation).
+    [int] $ReadinessTimeoutSeconds = 300
 )
 
-# Retrieve the connection string from environment variables
+# Runs $ScriptBlock until it succeeds or $TimeoutSeconds elapses. Role assignments and network ACL changes
+# can take minutes to propagate, so a fixed sleep is either too short (flaky tests) or too long (slow happy path).
+function Invoke-WithRetry {
+    param (
+        [Parameter(Mandatory)] [string] $Name,
+        [Parameter(Mandatory)] [scriptblock] $ScriptBlock,
+        [int] $TimeoutSeconds = $ReadinessTimeoutSeconds,
+        [int] $InitialDelaySeconds = 2,
+        [int] $MaxDelaySeconds = 30
+    )
+
+    $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+    $delay = $InitialDelaySeconds
+    $attempt = 0
+    while ($true) {
+        $attempt++
+        try {
+            $result = & $ScriptBlock
+            if ($attempt -gt 1) {
+                Write-Host "$Name succeeded after $attempt attempts ($([int]$stopwatch.Elapsed.TotalSeconds)s)."
+            }
+            return $result
+        }
+        catch {
+            $elapsed = [int]$stopwatch.Elapsed.TotalSeconds
+            if ($elapsed + $delay -gt $TimeoutSeconds) {
+                throw "$Name did not succeed within $TimeoutSeconds seconds ($attempt attempts). Last error: $($_.Exception.Message)"
+            }
+            Write-Host "$Name not ready yet (attempt $attempt, ${elapsed}s elapsed): $($_.Exception.Message). Retrying in ${delay}s."
+            Start-Sleep -Seconds $delay
+            $delay = [Math]::Min($delay * 2, $MaxDelaySeconds)
+        }
+    }
+}
+
 $resourceGroup = $DeploymentOutputs['HEALTHDATAAISERVICES_RESOURCE_GROUP']
 $endpoint = $DeploymentOutputs['HEALTHDATAAISERVICES_DEID_SERVICE_ENDPOINT']
 $storageAccountName = $DeploymentOutputs['HEALTHDATAAISERVICES_STORAGE_ACCOUNT_NAME']
@@ -39,25 +76,39 @@ $storageContext = New-AzStorageContext -StorageAccountName $storageAccountName -
 # TODO: disable local storage account auth
 $networkRuleSet = New-Object -TypeName Microsoft.Azure.Commands.Management.Storage.Models.PSNetworkRuleSet
 $networkRuleSet.DefaultAction = "Allow"
-Set-AzStorageAccount -ResourceGroupName $resourceGroup -Name $storageAccountName -NetworkRuleSet $networkRuleSet
+Invoke-WithRetry -Name "Opening storage network ACL" -ScriptBlock {
+    Set-AzStorageAccount -ResourceGroupName $resourceGroup -Name $storageAccountName -NetworkRuleSet $networkRuleSet -ErrorAction Stop | Out-Null
+}
 
-# Sleep for 15 seconds to allow the network rule to take effect
-Write-Host "[Fix] Temporary sleep to allow network rule to take effect."
-Start-Sleep -Seconds 30
-
-Get-AzStorageContainer -Name $containerName -Context $storageContext
+# Wait for the network ACL change and the test principal's Storage Blob Data Contributor role to take effect.
+Invoke-WithRetry -Name "Storage container access check" -ScriptBlock {
+    Get-AzStorageContainer -Name $containerName -Context $storageContext -ErrorAction Stop | Out-Null
+}
 
 # Upload the folder and its contents to the container
 # Gets last folder name + filename. example_patient_1/doctor_dictation.txt
-Get-ChildItem -Path $localFolderPath -Recurse | ForEach-Object {
+$expectedBlobs = @(Get-ChildItem -Path $localFolderPath -Recurse -File | ForEach-Object {
     $relativePath = $_.FullName
     $folderName = Split-Path -Path (Split-Path -Path $relativePath -Parent) -Leaf
     $blobName = Split-Path -Path $relativePath -Leaf
     $destinationBlob = $blobName -replace ":", ""
 
     $destinationBlob = "$folderName/$destinationBlob"
+    $file = $_.FullName
     Write-Host "Uploading file '$destinationBlob'"
-    Set-AzStorageBlobContent -File $_.FullName -Container $containerName -Blob $destinationBlob -Context $storageContext -Force
+    Invoke-WithRetry -Name "Uploading '$destinationBlob'" -ScriptBlock {
+        Set-AzStorageBlobContent -File $file -Container $containerName -Blob $destinationBlob -Context $storageContext -Force -ErrorAction Stop | Out-Null
+    }
+    $destinationBlob
+})
+
+# Confirm the uploaded blobs are readable through the data plane before tests start.
+Invoke-WithRetry -Name "Uploaded blob verification" -ScriptBlock {
+    $actualBlobs = @(Get-AzStorageBlob -Container $containerName -Context $storageContext -ErrorAction Stop | ForEach-Object { $_.Name })
+    $missingBlobs = @($expectedBlobs | Where-Object { $actualBlobs -notcontains $_ })
+    if ($missingBlobs.Count -gt 0) {
+        throw "Missing blobs: $($missingBlobs -join ', ')"
+    }
 }
 
 Write-Host "Folder '$localFolderPath' uploaded to container '$containerName' successfully."
