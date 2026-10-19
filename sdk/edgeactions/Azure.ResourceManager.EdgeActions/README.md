@@ -166,7 +166,10 @@ test-proxy push -a sdk\edgeactions\Azure.ResourceManager.EdgeActions\assets.json
 Response-schema checks must use the OpenAPI version and commit pinned by `tsp-location.yaml`,
 not assume that a passing playback run proves schema compliance. For this refresh, check only
 the `status` field of async-operation polling bodies and defer the known `validationStatus`
-nullability discrepancy; final resource and version-code bodies still require validation.
+nullability discrepancy. Also skip validation of the final HTTP 200 response obtained by following
+`swapDefault`'s `Location` header until the RP fix is available after this SDK release. This exception
+does not apply to polling failures or subsequent ordinary GETs of the same version resource.
+All other responses, including other final resource and version-code bodies, still require validation.
 
 For details on contributing to this repository, see the [contributing
 guide][cg].
