@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed HTTP transport retention without requiring client disposal. Bearer requests share the default transport; certificate-bound requests use a bounded, automatically cleaned-up pool with request and response-stream leases. The beta `Dispose` API remains as a compatibility no-op. Custom transports remain supported for bearer tokens and fail explicitly for certificate-bound tokens.
+
 ### Other Changes
 
 ## 4.10.0-beta.4 (2026-10-08)

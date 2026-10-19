@@ -21,7 +21,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     {
         private const string OTelKeyIdKey = "az.keyvault.key.id";
         private readonly HttpPipeline  _pipeline;
-        private DisposableHttpPipeline _ownedPipeline;
         private readonly string _apiVersion;
 
         private ClientDiagnostics _clientDiagnostics;
@@ -57,28 +56,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             _apiVersion = options.GetVersionString();
 
-            _ownedPipeline = HttpPipelineBuilder.Build(
-                options,
+            _pipeline = HttpPipelineBuilder.Build(
+                options.CloneForPipeline(),
                 perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
                 perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification)],
-                transportOptions: new HttpPipelineTransportOptions(),
                 responseClassifier: null);
-            _pipeline = _ownedPipeline;
 
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
-        /// Releases the HTTP pipeline resources owned by this resolver.
+        /// Retained for compatibility. Client transport resources are managed automatically.
         /// </summary>
         /// <remarks>
-        /// Reuse the resolver and dispose it only after all operations and use of resolved cryptography clients
-        /// have completed. Resolved clients share this resolver's pipeline; disposing them does not dispose the
-        /// shared pipeline. Caller-provided transports and credentials are not disposed.
+        /// Transport cleanup does not require this method. Caller-provided resources are never disposed.
         /// </remarks>
         public virtual void Dispose()
         {
-            Interlocked.Exchange(ref _ownedPipeline, null)?.Dispose();
             GC.SuppressFinalize(this);
         }
 
@@ -88,7 +82,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="keyId">The key identifier of the key used by the created <see cref="CryptographyClient"/>. You should validate that this URI references a valid Key Vault or Managed HSM resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A new <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specified <paramref name="keyId"/>.</returns>
-        /// <remarks>Keep this resolver alive until you have finished using the returned client.</remarks>
+        /// <remarks>The returned client can be used independently of this resolver's lifetime.</remarks>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> is null.</exception>
         public virtual CryptographyClient Resolve(Uri keyId, CancellationToken cancellationToken = default)
         {
@@ -122,7 +116,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="keyId">The key identifier of the key used by the created <see cref="CryptographyClient"/>. You should validate that this URI references a valid Key Vault or Managed HSM resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A new <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specified <paramref name="keyId"/>.</returns>
-        /// <remarks>Keep this resolver alive until you have finished using the returned client.</remarks>
+        /// <remarks>The returned client can be used independently of this resolver's lifetime.</remarks>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> is null.</exception>
         public virtual async Task<CryptographyClient> ResolveAsync(Uri keyId, CancellationToken cancellationToken = default)
         {

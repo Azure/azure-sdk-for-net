@@ -21,7 +21,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             ReadField<KeyVaultCertificatesClient>(client, "_generated").Pipeline;
 
         [Test]
-        public async Task DisposeReleasesGeneratedAndDownloadPipelineOnlyOnce([Values] bool isAsync)
+        public async Task DisposeDoesNotAffectGeneratedOrDownloadPipeline([Values] bool isAsync)
         {
             ResponsePolicy policy = new(request => request.Uri.Path.StartsWith("/certificates/")
                 ? new MockResponse(200).WithJson("""{"id":"https://disposal.vault.azure.net/certificates/certificate/version","sid":"https://disposal.vault.azure.net/secrets/certificate/version"}""")
@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.That(policy.RequestCount, Is.EqualTo(3));
             lifetime.AssertAlive();
             DisposeRepeatedly(client, concurrent: true);
-            lifetime.AssertDisposedOnce();
+            lifetime.AssertAlive();
         }
     }
 }

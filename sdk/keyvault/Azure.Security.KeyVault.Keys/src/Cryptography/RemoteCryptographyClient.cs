@@ -14,7 +14,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private const string OTelKeyIdKey = "az.keyvault.key.id";
         private readonly Uri _keyId;
         private readonly string _keyIdStr;
-        private DisposableHttpPipeline _ownedPipeline;
 
         protected RemoteCryptographyClient()
         {
@@ -30,14 +29,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             options ??= new CryptographyClientOptions();
             string apiVersion = options.GetVersionString();
 
-            _ownedPipeline = HttpPipelineBuilder.Build(
-                options,
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(
+                options.CloneForPipeline(),
                 perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
                 perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification)],
-                transportOptions: new HttpPipelineTransportOptions(),
                 responseClassifier: null);
 
-            Pipeline = new KeyVaultPipeline(keyId, apiVersion, _ownedPipeline, new ClientDiagnostics(options));
+            Pipeline = new KeyVaultPipeline(keyId, apiVersion, pipeline, new ClientDiagnostics(options));
         }
 
         internal RemoteCryptographyClient(KeyVaultPipeline pipeline)
@@ -47,7 +45,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal KeyVaultPipeline Pipeline { get; }
 
-        public void Dispose() => Interlocked.Exchange(ref _ownedPipeline, null)?.Dispose();
+        public void Dispose() { }
 
         public bool SupportsOperation(KeyOperation operation) => true;
 

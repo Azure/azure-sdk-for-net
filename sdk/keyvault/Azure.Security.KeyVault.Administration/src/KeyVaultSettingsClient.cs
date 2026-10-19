@@ -62,15 +62,13 @@ namespace Azure.Security.KeyVault.Administration
         public virtual Uri VaultUri { get; }
 
         /// <summary>
-        /// Releases the HTTP pipeline resources owned by this client.
+        /// Retained for compatibility. Client transport resources are managed automatically.
         /// </summary>
         /// <remarks>
-        /// Reuse the client and dispose it after its operations have completed.
-        /// Caller-provided transports and credentials are not disposed.
+        /// Transport cleanup does not require this method. Caller-provided resources are never disposed.
         /// </remarks>
         public virtual void Dispose()
         {
-            _restClient?.Dispose();
             GC.SuppressFinalize(this);
         }
 

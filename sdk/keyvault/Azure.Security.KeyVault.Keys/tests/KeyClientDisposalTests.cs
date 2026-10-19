@@ -48,10 +48,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             DisposeRepeatedly(sibling);
             lifetime.AssertAlive();
             DisposeRepeatedly(parent, concurrent: true);
-            lifetime.AssertDisposedOnce();
+            lifetime.AssertAlive();
+            result = isAsync
+                ? await child.WrapKeyAsync(KeyWrapAlgorithm.A256KW, new byte[] { 1, 2, 3, 4 })
+                : child.WrapKey(KeyWrapAlgorithm.A256KW, new byte[] { 1, 2, 3, 4 });
+            Assert.That(result.EncryptedKey, Is.EqualTo(new byte[] { 116, 101, 115, 116 }));
             DisposeRepeatedly(child);
             DisposeRepeatedly(sibling);
-            lifetime.AssertDisposedOnce();
+            lifetime.AssertAlive();
         }
     }
 }

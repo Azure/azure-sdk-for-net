@@ -89,12 +89,14 @@ namespace Azure.Security.KeyVault.Tests
                 new MockResponse(401).WithHeader("WWW-Authenticate", KeyVaultChallenge),
                 new MockResponse(200));
 
-            Response response = await SendGetRequest(transport, policy, uri: new Uri("https://myvault.vault.azure.net"));
+            using var binding = new CertificateBoundTestTransport(transport);
+            Response response = await SendGetRequest(binding.Transport, policy, uri: new Uri("https://myvault.vault.azure.net"));
 
             Assert.That(response.Status, Is.EqualTo(200));
-            Assert.That(transport.TransportUpdates, Has.Count.EqualTo(1));
-            Assert.That(transport.TransportUpdates[0].ClientCertificates, Has.Count.EqualTo(1));
-            Assert.That(transport.TransportUpdates[0].ClientCertificates[0], Is.SameAs(certificate));
+            Assert.That(transport.TransportUpdates, Is.Empty);
+            Assert.That(binding.BoundCertificates, Has.Count.EqualTo(1));
+            Assert.That(binding.BoundCertificates[0], Is.Not.SameAs(certificate));
+            Assert.That(binding.BoundCertificates[0].RawData, Is.EqualTo(certificate.RawData));
             Assert.That(transport.Requests[1].Headers.TryGetValue("x-ms-tokenboundauth", out string headerValue), Is.True);
             Assert.That(headerValue, Is.EqualTo("true"));
         }

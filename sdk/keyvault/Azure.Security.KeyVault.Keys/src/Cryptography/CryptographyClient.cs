@@ -183,17 +183,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual string KeyId => _keyId;
 
         /// <summary>
-        /// Releases the HTTP pipeline resources owned by this client.
+        /// Retained for compatibility. Client transport resources are managed automatically.
         /// </summary>
         /// <remarks>
-        /// Dispose the client after its operations have completed. Clients created by a <see cref="KeyClient"/>
-        /// or <see cref="KeyResolver"/> borrow their creator's pipeline and do not dispose it. Keep the creator
-        /// alive until all use of the returned client has completed. Caller-provided transports and credentials
-        /// are not disposed. Local-only clients do not own an HTTP pipeline.
+        /// Transport cleanup does not require this method. Parent and child clients can be used independently.
+        /// Caller-provided transports, credentials, certificates, and key material are never disposed.
         /// </remarks>
         public virtual void Dispose()
         {
-            _remoteProvider?.Dispose();
             GC.SuppressFinalize(this);
         }
 

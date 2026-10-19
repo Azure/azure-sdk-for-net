@@ -133,13 +133,17 @@ A `CryptographyClient` providing both synchronous and asynchronous operations ex
 
 ### Thread safety
 
-Client service methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)), so reuse client instances across threads. Do not call `Dispose` while operations are in progress.
+Client service methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)), so reuse client instances across threads.
 
 ### Client lifetime
 
-`KeyClient`, `CryptographyClient`, and `KeyResolver` implement `IDisposable`. Reuse them rather than creating a client for each request, and dispose them when their intended lifetimes end. Finish all operations, polling, pageable enumeration, and use of returned cryptographic streams before disposal. Caller-provided transports, credentials, and key material remain application-owned.
+`KeyClient`, `CryptographyClient`, and `KeyResolver` do not require disposal. Their beta `IDisposable` and virtual `Dispose` members are retained for compatibility and preserve finalization suppression, but do not dispose transports. Reuse clients for efficiency. Application-provided transports, credentials, certificates, and key material remain application-owned.
 
-Cryptography clients returned by `KeyClient.GetCryptographyClient` or `KeyResolver.Resolve`/`ResolveAsync` share their parent's HTTP pipeline. Disposing a returned client does not dispose the shared pipeline. Keep the key client or resolver alive until all use of its returned clients has completed. A directly constructed remote `CryptographyClient` owns its pipeline; a local-only `CryptographyClient` has no HTTP pipeline to dispose.
+Cryptography clients returned by `KeyClient.GetCryptographyClient` or `KeyResolver.Resolve`/`ResolveAsync` can be used independently of their parent's lifetime. A local-only `CryptographyClient` has no HTTP transport.
+
+Bearer authentication uses the shared default transport (or your custom transport). Certificate-bound authentication uses immutable, certificate-specific transports shared by compatible clients. Each Key Vault package assembly caches at most 64 transports, including active transports. Idle transports are cleaned up automatically after two minutes, checked every 30 seconds. Read unbuffered response streams to completion or dispose them; active and detached streams keep their transport alive. If all 64 transports are active, requests needing another certificate fail rather than creating unbounded transports or falling back to bearer authentication.
+
+Certificate-bound tokens require the built-in platform transport and a certificate with a private key. A custom transport, including a wrapped `HttpClient` or an application-wide default transport, continues to work with bearer tokens but fails with `NotSupportedException` when a certificate-bound token is used. Custom transports are never rebound or disposed by the SDK.
 
 ### Additional concepts
 <!-- CLIENT COMMON BAR -->

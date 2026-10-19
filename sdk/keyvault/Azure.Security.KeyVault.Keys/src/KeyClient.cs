@@ -25,7 +25,6 @@ namespace Azure.Security.KeyVault.Keys
         private const string OTelKeyNameKey = "az.keyvault.key.name";
         private const string OTelKeyVersionKey = "az.keyvault.key.version";
         private readonly KeyVaultPipeline _pipeline;
-        private DisposableHttpPipeline _ownedPipeline;
 
         private readonly ClientDiagnostics _clientDiagnostics;
 
@@ -70,15 +69,14 @@ namespace Azure.Security.KeyVault.Keys
             options ??= new KeyClientOptions();
             string apiVersion = options.GetVersionString();
 
-            _ownedPipeline = HttpPipelineBuilder.Build(
-                options,
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(
+                options.CloneForPipeline(),
                 perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
                 perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification)],
-                transportOptions: new HttpPipelineTransportOptions(),
                 responseClassifier: null);
 
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = new KeyVaultPipeline(vaultUri, apiVersion, _ownedPipeline, _clientDiagnostics);
+            _pipeline = new KeyVaultPipeline(vaultUri, apiVersion, pipeline, _clientDiagnostics);
         }
 
         /// <summary>
@@ -87,17 +85,14 @@ namespace Azure.Security.KeyVault.Keys
         public virtual Uri VaultUri => _pipeline.VaultUri;
 
         /// <summary>
-        /// Releases the HTTP pipeline resources owned by this client.
+        /// Retained for compatibility. Client transport resources are managed automatically.
         /// </summary>
         /// <remarks>
-        /// Reuse the client for its intended lifetime and dispose it after its operations, including long-running
-        /// operations and pageable enumeration, have completed. Cryptography clients created by
-        /// <see cref="GetCryptographyClient"/> share this client's pipeline and must no longer be used after disposal.
-        /// Caller-provided transports and credentials are not disposed.
+        /// Transport cleanup does not require this method, including for clients returned by <see cref="GetCryptographyClient"/>.
+        /// Caller-provided transports, credentials, and certificates are never disposed.
         /// </remarks>
         public virtual void Dispose()
         {
-            Interlocked.Exchange(ref _ownedPipeline, null)?.Dispose();
             GC.SuppressFinalize(this);
         }
 
@@ -1525,8 +1520,7 @@ namespace Azure.Security.KeyVault.Keys
         /// Given a key <paramref name="keyName"/> and optional <paramref name="keyVersion"/>, a new <see cref="CryptographyClient"/> will be created
         /// using the same <see cref="VaultUri"/> and options passed to this <see cref="KeyClient"/>, including the <see cref="KeyClientOptions.ServiceVersion"/>,
         /// <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, and other options.
-        /// Keep this <see cref="KeyClient"/> alive until you have finished using the returned client.
-        /// Disposing the returned client does not dispose this client's shared pipeline.
+        /// Parent and child clients can be used independently; neither requires disposal.
         /// </para>
         /// <para>
         /// If you want to create a <see cref="CryptographyClient"/> using a different Key Vault or Managed HSM endpoint, with different options, or even with a

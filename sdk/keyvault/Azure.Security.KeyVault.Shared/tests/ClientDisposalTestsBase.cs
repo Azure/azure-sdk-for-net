@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Tests
         protected abstract HttpPipeline GetPipeline(TClient client);
 
         [Test]
-        public void DisposeReleasesOwnedTransportOnce([Values] bool explicitOptions, [Values] bool concurrent)
+        public void DefaultClientsShareTransportWithoutRequiringDisposal([Values] bool explicitOptions, [Values] bool concurrent)
         {
             using DisposableCredential credential = new();
             using TClient client = CreateClient(credential, explicitOptions ? CreateOptions() : null);
@@ -36,7 +36,9 @@ namespace Azure.Security.KeyVault.Tests
 
             DisposeRepeatedly(client, concurrent);
 
-            lifetime.AssertDisposedOnce();
+            lifetime.AssertAlive();
+            using TClient second = CreateClient(credential, explicitOptions ? CreateOptions() : null);
+            Assert.That(GetUnderlyingTransport(GetPipeline(client)), Is.SameAs(GetUnderlyingTransport(GetPipeline(second))));
             Assert.That(credential.DisposeCount, Is.Zero);
         }
 
@@ -49,9 +51,10 @@ namespace Azure.Security.KeyVault.Tests
             options.Transport = transport;
             using TClient first = CreateClient(credential, options);
             using TClient second = CreateClient(credential, options);
-            Assert.That(GetTransport(GetPipeline(first)), Is.SameAs(transport));
-            Assert.That(GetTransport(GetPipeline(second)), Is.SameAs(transport));
-            Assert.That(ReadField<bool>(GetPipeline(first), "isTransportOwnedInternally"), Is.False);
+            Assert.That(GetUnderlyingTransport(GetPipeline(first)), Is.SameAs(transport));
+            Assert.That(GetUnderlyingTransport(GetPipeline(second)), Is.SameAs(transport));
+            Assert.That(GetPipeline(first), Is.Not.InstanceOf<DisposableHttpPipeline>());
+            Assert.That(options.Transport, Is.SameAs(transport));
 
             DisposeRepeatedly(first, concurrent: true);
             Assert.That(transport.DisposeCount, Is.Zero);
@@ -79,11 +82,39 @@ namespace Azure.Security.KeyVault.Tests
             TOptions options = CreateOptions();
             options.Transport = transport;
             using TClient client = CreateClient(new MockCredential(), options);
-            Assert.That(GetTransport(GetPipeline(client)), Is.SameAs(transport));
+            Assert.That(GetUnderlyingTransport(GetPipeline(client)), Is.SameAs(transport));
 
             DisposeRepeatedly(client, concurrent: true);
 
             Assert.DoesNotThrow(httpClient.CancelPendingRequests);
+        }
+
+        [Test]
+        public void SharedOptionsAreNotMutatedAndAllCustomerPoliciesRunOnce()
+        {
+            using var transport = new DisposableMockTransport();
+            TOptions options = CreateOptions();
+            options.Transport = transport;
+            var perCall = new CountingPolicy();
+            var perRetry = new CountingPolicy();
+            var beforeTransport = new CountingPolicy();
+            options.AddPolicy(perCall, HttpPipelinePosition.PerCall);
+            options.AddPolicy(perRetry, HttpPipelinePosition.PerRetry);
+            options.AddPolicy(beforeTransport, HttpPipelinePosition.BeforeTransport);
+            var clients = new TClient[16];
+            Parallel.For(0, clients.Length, i => clients[i] = CreateClient(new MockCredential(), options));
+            foreach (TClient client in clients)
+            {
+                using Request request = GetPipeline(client).CreateRequest();
+                request.Uri.Reset(VaultUri);
+                using Response response = GetPipeline(client).SendRequest(request, default);
+                client.Dispose();
+            }
+            Assert.That(options.Transport, Is.SameAs(transport));
+            Assert.That(perCall.Count, Is.EqualTo(clients.Length));
+            Assert.That(perRetry.Count, Is.EqualTo(clients.Length));
+            Assert.That(beforeTransport.Count, Is.EqualTo(clients.Length));
+            Assert.That(transport.DisposeCount, Is.Zero);
         }
 
         [Test]
@@ -120,6 +151,9 @@ namespace Azure.Security.KeyVault.Tests
         protected static HttpPipelineTransport GetTransport(HttpPipeline pipeline) =>
             ReadField<HttpPipelineTransport>(pipeline, "_transport", typeof(HttpPipeline));
 
+        protected static HttpPipelineTransport GetUnderlyingTransport(HttpPipeline pipeline) =>
+            ReadField<HttpPipelineTransport>(GetTransport(pipeline), "_transport");
+
         protected sealed class DefaultTransportLifetime
         {
             private readonly HttpPipelineTransport _transport;
@@ -128,12 +162,11 @@ namespace Azure.Security.KeyVault.Tests
 
             public DefaultTransportLifetime(HttpPipeline pipeline)
             {
-                Assert.That(pipeline, Is.InstanceOf<DisposableHttpPipeline>());
-                Assert.That(ReadField<bool>(pipeline, "isTransportOwnedInternally"), Is.True);
-                _transport = GetTransport(pipeline);
+                Assert.That(pipeline, Is.Not.InstanceOf<DisposableHttpPipeline>());
+                _transport = GetUnderlyingTransport(pipeline);
                 if (_transport is HttpClientTransport)
                 {
-                    Assert.That(_transport, Is.Not.SameAs(HttpClientTransport.Shared));
+                    Assert.That(_transport, Is.SameAs(HttpClientTransport.Shared));
                     _clientWrapper = ReadField<object>(_transport, "_clientWrapper");
                     _httpClient = ReadField<HttpClient>(_clientWrapper, "_client");
                 }
@@ -162,20 +195,6 @@ namespace Azure.Security.KeyVault.Tests
                     Assert.That(request, Is.Not.Null);
                 }
             }
-
-            public void AssertDisposedOnce()
-            {
-                if (_httpClient != null)
-                {
-                    Assert.Throws<ObjectDisposedException>(_httpClient.CancelPendingRequests);
-                    // HttpClient.Dispose is idempotent, but an extra pipeline disposal incorrectly releases the wrapper again.
-                    Assert.That(ReadField<int>(_clientWrapper, "_refCount"), Is.Zero);
-                }
-                else
-                {
-                    Assert.That(_transport, Is.Not.InstanceOf<IDisposable>());
-                }
-            }
         }
 
         protected sealed class ResponsePolicy : HttpPipelinePolicy
@@ -197,6 +216,12 @@ namespace Azure.Security.KeyVault.Tests
                 Process(message, pipeline);
                 return default;
             }
+        }
+
+        private sealed class CountingPolicy : HttpPipelineSynchronousPolicy
+        {
+            internal int Count;
+            public override void OnSendingRequest(HttpMessage message) => Interlocked.Increment(ref Count);
         }
 
         protected sealed class DisposableMockTransport : MockTransport, IDisposable

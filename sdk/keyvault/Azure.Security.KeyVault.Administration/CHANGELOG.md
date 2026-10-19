@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed HTTP transport retention without requiring client disposal. Bearer requests share the default transport; certificate-bound requests use a bounded, automatically cleaned-up pool with request and response-stream leases. The beta `Dispose` API remains as a compatibility no-op. Custom transports remain supported for bearer tokens and fail explicitly for certificate-bound tokens.
+
 - Fixed an issue in the challenge-based authentication policy where a cached authentication challenge accepted with challenge resource verification disabled could be reused by a separate default-strict client without revalidating the challenge resource.
 - Improved authentication challenge resource validation.
 

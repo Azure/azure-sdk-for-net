@@ -22,8 +22,8 @@ namespace Azure.Security.KeyVault.Secrets
     /// (de)serialization, and LRO polling — is delegated to the TypeSpec-generated
     /// <c>KeyVaultSecretsClient</c> (internal). Public method signatures, return
     /// types, exception contracts and recorded HTTP traffic match every previously
-    /// shipped version of this package. Reuse clients and call <see cref="Dispose"/>
-    /// when their lifetime ends. The legacy hand-written transport (KeyVaultPipeline,
+    /// shipped version of this package. Reuse clients; disposing them is not required.
+    /// The legacy hand-written transport (KeyVaultPipeline,
     /// SecretBackup, JSON read/write methods on the model classes) is no longer
     /// invoked.
     /// </remarks>
@@ -36,7 +36,6 @@ namespace Azure.Security.KeyVault.Secrets
         private readonly Uri _vaultUri;
         private readonly KeyVaultSecretsClient _generated;
         private readonly ClientDiagnostics _diagnostics;
-        private DisposableHttpPipeline _ownedPipeline;
 
         /// <summary>For mocking.</summary>
         protected SecretClient() { }
@@ -68,17 +67,16 @@ namespace Azure.Security.KeyVault.Secrets
             var authPolicy = new ChallengeBasedAuthenticationPolicy(
                 credential, options.DisableChallengeResourceVerification);
 
-            _ownedPipeline = HttpPipelineBuilder.Build(
-                options,
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(
+                options.CloneForPipeline(),
                 perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
                 perRetryPolicies: [authPolicy],
-                transportOptions: new HttpPipelineTransportOptions(),
                 responseClassifier: null);
 
             _generated = new KeyVaultSecretsClient(
                 vaultUri,
                 MapApiVersion(options.Version),
-                _ownedPipeline,
+                pipeline,
                 _diagnostics);
         }
 
@@ -94,15 +92,13 @@ namespace Azure.Security.KeyVault.Secrets
         public virtual Uri VaultUri => _vaultUri;
 
         /// <summary>
-        /// Releases the HTTP pipeline resources owned by this client.
+        /// Retained for compatibility. Client transport resources are managed automatically.
         /// </summary>
         /// <remarks>
-        /// Reuse the client for its intended lifetime and dispose it after its operations, including long-running
-        /// operations and pageable enumeration, have completed. Caller-provided transports and credentials are not disposed.
+        /// Transport cleanup does not require this method. Caller-provided resources are never disposed.
         /// </remarks>
         public virtual void Dispose()
         {
-            Interlocked.Exchange(ref _ownedPipeline, null)?.Dispose();
             GC.SuppressFinalize(this);
         }
 

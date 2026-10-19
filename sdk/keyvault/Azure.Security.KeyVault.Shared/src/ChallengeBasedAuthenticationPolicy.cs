@@ -21,6 +21,7 @@ namespace Azure.Security.KeyVault
         private const string TokenBindingValidationFailure = "[MtlsCnfClaimRequestDataValidationFailed]";
         private readonly bool _verifyChallengeResource;
         private readonly TenantTokenBindingCredential _credential;
+        private readonly KeyVaultTokenCache _tokenCache;
 
         /// <summary>
         /// Challenges are cached using the Key Vault or Managed HSM endpoint URI authority as the key.
@@ -36,6 +37,7 @@ namespace Azure.Security.KeyVault
             : base(credential, Array.Empty<string>())
         {
             _credential = credential;
+            _tokenCache = new KeyVaultTokenCache(credential);
             _verifyChallengeResource = !disableChallengeResourceVerification;
         }
 
@@ -49,6 +51,9 @@ namespace Azure.Security.KeyVault
 
         private async ValueTask AuthorizeRequestInternal(HttpMessage message, bool async)
         {
+            message.SetProperty(typeof(KeyVaultTransport.RequestAuthentication), null);
+            message.Request.Headers.Remove(HttpHeader.Names.Authorization);
+            message.Request.Headers.Remove(TokenBoundAuthHeaderName);
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
@@ -77,14 +82,7 @@ namespace Azure.Security.KeyVault
                     requestUri: message.Request.Uri.ToUri(),
                     requestMethod: message.Request.Method.ToString());
                 context = _credential.GetEffectiveRequestContext(context);
-                if (async)
-                {
-                    await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
-                }
-                else
-                {
-                    AuthenticateAndAuthorizeRequest(message, context);
-                }
+                await AuthenticateAsync(message, context, async).ConfigureAwait(false);
 
                 UpdateTokenBoundAuthHeader(message);
                 return;
@@ -206,17 +204,18 @@ namespace Azure.Security.KeyVault
                 requestUri: message.Request.Uri.ToUri(),
                 requestMethod: message.Request.Method.ToString());
             context = _credential.GetEffectiveRequestContext(context);
-            if (async)
-            {
-                await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
-            }
-            else
-            {
-                AuthenticateAndAuthorizeRequest(message, context);
-            }
+            await AuthenticateAsync(message, context, async).ConfigureAwait(false);
 
             UpdateTokenBoundAuthHeader(message);
             return true;
+        }
+
+        private async ValueTask AuthenticateAsync(HttpMessage message, TokenRequestContext context, bool async)
+        {
+            KeyVaultTransport.RequestAuthentication authentication =
+                await _tokenCache.GetAsync(context, async, message.CancellationToken).ConfigureAwait(false);
+            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, authentication.Header);
+            message.SetProperty(typeof(KeyVaultTransport.RequestAuthentication), authentication);
         }
 
         private static void UpdateTokenBoundAuthHeader(HttpMessage message)
