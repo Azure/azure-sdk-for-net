@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// a byte array with a length matching one of the AES key lengths (128, 192, 256) and the
     /// content-type of the secret is application/octet-stream.
     /// </summary>
-    public class KeyResolver : IKeyEncryptionKeyResolver, IDisposable
+    public class KeyResolver : IKeyEncryptionKeyResolver
     {
         private const string OTelKeyIdKey = "az.keyvault.key.id";
         private readonly HttpPipeline  _pipeline;
@@ -63,17 +63,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 responseClassifier: null);
 
             _clientDiagnostics = new ClientDiagnostics(options);
-        }
-
-        /// <summary>
-        /// Retained for compatibility. Client transport resources are managed automatically.
-        /// </summary>
-        /// <remarks>
-        /// Transport cleanup does not require this method. Caller-provided resources are never disposed.
-        /// </remarks>
-        public virtual void Dispose()
-        {
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>

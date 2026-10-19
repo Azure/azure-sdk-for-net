@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration
     /// The rest client for the KeyVault service.
     /// </summary>
     [CodeGenType("KeyVaultRestClient")]
-    internal partial class KeyVaultRestClient : IDisposable
+    internal partial class KeyVaultRestClient
     {
         /// <summary> Initializes a new instance of KeyVaultRestClient. </summary>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
@@ -63,7 +63,5 @@ namespace Azure.Security.KeyVault.Administration
             _apiVersion = options.GetVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
-
-        public void Dispose() { }
     }
 }

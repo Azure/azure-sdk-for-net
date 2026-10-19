@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
-    public class KeyClientDisposalTests : ClientDisposalTestsBase<KeyClient, KeyClientOptions>
+    public class KeyClientLifetimeTests : ClientLifetimeTestsBase<KeyClient, KeyClientOptions>
     {
         protected override KeyClient CreateClient(TokenCredential credential, KeyClientOptions options = null) =>
             options == null ? new KeyClient(VaultUri, credential) : new KeyClient(VaultUri, credential, options);
@@ -21,40 +21,35 @@ namespace Azure.Security.KeyVault.Keys.Tests
         protected override HttpPipeline GetPipeline(KeyClient client) => GetKeyVaultPipeline(client);
 
         [Test]
-        public async Task DisposingCryptographyChildDoesNotDisposeParentOrSibling([Values] bool isAsync)
+        public async Task CryptographyChildrenRetainPipelineWithoutParentReference([Values] bool isAsync)
         {
             ResponsePolicy policy = new(request => request.Method == RequestMethod.Get
-                ? new MockResponse(200).WithJson("""{"key":{"kid":"https://disposal.vault.azure.net/keys/key/version","kty":"oct-HSM"}}""")
-                : new MockResponse(200).WithJson("""{"kid":"https://disposal.vault.azure.net/keys/key/version","value":"dGVzdA"}"""));
+                ? new MockResponse(200).WithJson("""{"key":{"kid":"https://lifetime.vault.azure.net/keys/key/version","kty":"oct-HSM"}}""")
+                : new MockResponse(200).WithJson("""{"kid":"https://lifetime.vault.azure.net/keys/key/version","value":"dGVzdA"}"""));
             KeyClientOptions options = new();
             options.AddPolicy(policy, HttpPipelinePosition.PerCall);
-            using KeyClient parent = CreateClient(new MockCredential(), options);
-            using CryptographyClient child = parent.GetCryptographyClient("key");
-            using CryptographyClient sibling = parent.GetCryptographyClient("key");
+            KeyClient parent = CreateClient(new MockCredential(), options);
+            CryptographyClient child = parent.GetCryptographyClient("key");
+            CryptographyClient sibling = parent.GetCryptographyClient("key");
             HttpPipeline pipeline = GetPipeline(parent);
             Assert.That(GetKeyVaultPipeline(child), Is.SameAs(pipeline));
             Assert.That(GetKeyVaultPipeline(sibling), Is.SameAs(pipeline));
             DefaultTransportLifetime lifetime = new(pipeline);
 
-            DisposeRepeatedly(child, concurrent: true);
-            lifetime.AssertAlive();
             KeyVaultKey key = isAsync ? await parent.GetKeyAsync("key") : parent.GetKey("key");
             Assert.That(key.Name, Is.EqualTo("key"));
+            parent = null;
             WrapResult result = isAsync
                 ? await sibling.WrapKeyAsync(KeyWrapAlgorithm.A256KW, new byte[] { 1, 2, 3, 4 })
                 : sibling.WrapKey(KeyWrapAlgorithm.A256KW, new byte[] { 1, 2, 3, 4 });
             Assert.That(result.EncryptedKey, Is.EqualTo(new byte[] { 116, 101, 115, 116 }));
 
-            DisposeRepeatedly(sibling);
-            lifetime.AssertAlive();
-            DisposeRepeatedly(parent, concurrent: true);
+            sibling = null;
             lifetime.AssertAlive();
             result = isAsync
                 ? await child.WrapKeyAsync(KeyWrapAlgorithm.A256KW, new byte[] { 1, 2, 3, 4 })
                 : child.WrapKey(KeyWrapAlgorithm.A256KW, new byte[] { 1, 2, 3, 4 });
             Assert.That(result.EncryptedKey, Is.EqualTo(new byte[] { 116, 101, 115, 116 }));
-            DisposeRepeatedly(child);
-            DisposeRepeatedly(sibling);
             lifetime.AssertAlive();
         }
     }

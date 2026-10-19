@@ -137,7 +137,9 @@ Client service methods are thread-safe and independent of each other ([guideline
 
 ### Client lifetime
 
-`KeyClient`, `CryptographyClient`, and `KeyResolver` do not require disposal. Their beta `IDisposable` and virtual `Dispose` members are retained for compatibility and preserve finalization suppression, but do not dispose transports. Reuse clients for efficiency. Application-provided transports, credentials, certificates, and key material remain application-owned.
+`KeyClient`, `CryptographyClient`, and `KeyResolver` are not disposable; transport resources are cleaned up automatically. Reuse clients for efficiency. Application-provided transports, HTTP clients, credentials, certificates, and key material remain application-owned.
+
+The beta `IDisposable` implementations and virtual `Dispose` methods have been removed. When upgrading from a beta that exposed them, remove client `using` statements and explicit `Dispose` calls. Derived clients must remove `Dispose` overrides and any `base.Dispose()` calls, and manage any resources they own independently. This is a breaking change for consumers of those beta APIs.
 
 Cryptography clients returned by `KeyClient.GetCryptographyClient` or `KeyResolver.Resolve`/`ResolveAsync` can be used independently of their parent's lifetime. A local-only `CryptographyClient` has no HTTP transport.
 

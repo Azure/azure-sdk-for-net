@@ -172,7 +172,9 @@ Client service methods are thread-safe and independent of each other ([guideline
 
 ### Client lifetime
 
-`KeyVaultAccessControlClient`, `KeyVaultBackupClient`, `KeyVaultEkmClient`, and `KeyVaultSettingsClient` do not require disposal. Their beta `IDisposable` and virtual `Dispose` members are retained for compatibility and preserve finalization suppression, but do not dispose transports. Reuse clients for efficiency. Application-provided transports, credentials, and certificates remain application-owned.
+`KeyVaultAccessControlClient`, `KeyVaultBackupClient`, `KeyVaultEkmClient`, and `KeyVaultSettingsClient` are not disposable; transport resources are cleaned up automatically. Reuse clients for efficiency. Application-provided transports, HTTP clients, credentials, and certificates remain application-owned.
+
+The beta `IDisposable` implementations and virtual `Dispose` methods have been removed. When upgrading from a beta that exposed them, remove client `using` statements and explicit `Dispose` calls. Derived clients must remove `Dispose` overrides and any `base.Dispose()` calls, and manage any resources they own independently. This is a breaking change for consumers of those beta APIs.
 
 Bearer authentication uses the shared default transport (or your custom transport). Certificate-bound authentication uses immutable, certificate-specific transports shared by compatible clients. Each Key Vault package assembly caches at most 64 transports, including active transports. Idle transports are cleaned up automatically after two minutes, checked every 30 seconds. Read unbuffered response streams to completion or dispose them; active and detached streams keep their transport alive. If all 64 transports are active, requests needing another certificate fail rather than creating unbounded transports or falling back to bearer authentication.
 

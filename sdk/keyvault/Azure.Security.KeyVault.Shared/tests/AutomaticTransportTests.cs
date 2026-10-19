@@ -151,6 +151,38 @@ namespace Azure.Security.KeyVault.Tests
         }
 
         [Test]
+        public async Task TimerCleansCompletedPopRequestsAndPipelineRemainsUsable([Values] bool async)
+        {
+            using X509Certificate2 certificate = Certificate();
+            var transports = new List<BindingTransport>();
+            long ticks = DateTimeOffset.UtcNow.Ticks;
+            using var pool = new CertificateTransportPool(1, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(10),
+                c => Add(transports, c), () => new DateTimeOffset(Interlocked.Read(ref ticks), TimeSpan.Zero));
+            HttpPipeline pipeline = Pipeline(pool);
+            Assert.That(pipeline, Is.Not.InstanceOf<IDisposable>());
+
+            using HttpMessage first = Message(pipeline, certificate);
+            await Send(pipeline, first, async);
+            BindingTransport retired = transports.Single();
+            Assert.That(retired.DisposeCount, Is.Zero);
+            Interlocked.Add(ref ticks, TimeSpan.FromMinutes(3).Ticks);
+            Assert.That(SpinWait.SpinUntil(() => Volatile.Read(ref retired.DisposeCount) == 1, TimeSpan.FromSeconds(5)), Is.True);
+            Assert.That(new StreamReader(first.Response.ContentStream).ReadToEnd(), Is.EqualTo("body"));
+            Assert.That(certificate.HasPrivateKey, Is.True);
+
+            using HttpMessage second = Message(pipeline, certificate);
+            await Send(pipeline, second, async);
+            Assert.That(second.Response.Status, Is.EqualTo(200));
+            Assert.That(transports, Has.Count.EqualTo(2));
+            BindingTransport replacement = transports[1];
+            Assert.That(replacement, Is.Not.SameAs(retired));
+            Interlocked.Add(ref ticks, TimeSpan.FromMinutes(3).Ticks);
+            Assert.That(SpinWait.SpinUntil(() => Volatile.Read(ref replacement.DisposeCount) == 1, TimeSpan.FromSeconds(5)), Is.True);
+            Assert.That(retired.DisposeCount, Is.EqualTo(1));
+            Assert.That(certificate.HasPrivateKey, Is.True);
+        }
+
+        [Test]
         public void TimerErrorsAreObservedWithoutLoggingExceptionContents()
         {
             using var observed = new ManualResetEventSlim();

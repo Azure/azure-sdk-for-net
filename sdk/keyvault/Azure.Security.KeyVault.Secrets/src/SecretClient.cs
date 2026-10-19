@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Secrets
     /// invoked.
     /// </remarks>
     [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/security-keyvault-secrets")]
-    public class SecretClient : IDisposable
+    public class SecretClient
     {
         private const string OTelSecretNameKey    = "az.keyvault.secret.name";
         private const string OTelSecretVersionKey = "az.keyvault.secret.version";
@@ -90,17 +90,6 @@ namespace Azure.Security.KeyVault.Secrets
 
         /// <summary>The vault URI used to construct this client.</summary>
         public virtual Uri VaultUri => _vaultUri;
-
-        /// <summary>
-        /// Retained for compatibility. Client transport resources are managed automatically.
-        /// </summary>
-        /// <remarks>
-        /// Transport cleanup does not require this method. Caller-provided resources are never disposed.
-        /// </remarks>
-        public virtual void Dispose()
-        {
-            GC.SuppressFinalize(this);
-        }
 
 #pragma warning disable AZC0002 // Client method should have Optional CancellationToken.
         /// <summary>

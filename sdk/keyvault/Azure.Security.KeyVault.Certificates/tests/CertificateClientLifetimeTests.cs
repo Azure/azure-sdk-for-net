@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
-    public class CertificateClientDisposalTests : ClientDisposalTestsBase<CertificateClient, CertificateClientOptions>
+    public class CertificateClientLifetimeTests : ClientLifetimeTestsBase<CertificateClient, CertificateClientOptions>
     {
         protected override CertificateClient CreateClient(TokenCredential credential, CertificateClientOptions options = null) =>
             options == null ? new CertificateClient(VaultUri, credential) : new CertificateClient(VaultUri, credential, options);
@@ -21,14 +21,14 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             ReadField<KeyVaultCertificatesClient>(client, "_generated").Pipeline;
 
         [Test]
-        public async Task DisposeDoesNotAffectGeneratedOrDownloadPipeline([Values] bool isAsync)
+        public async Task GeneratedAndDownloadOperationsShareUsablePipeline([Values] bool isAsync)
         {
             ResponsePolicy policy = new(request => request.Uri.Path.StartsWith("/certificates/")
-                ? new MockResponse(200).WithJson("""{"id":"https://disposal.vault.azure.net/certificates/certificate/version","sid":"https://disposal.vault.azure.net/secrets/certificate/version"}""")
+                ? new MockResponse(200).WithJson("""{"id":"https://lifetime.vault.azure.net/certificates/certificate/version","sid":"https://lifetime.vault.azure.net/secrets/certificate/version"}""")
                 : new MockResponse(403));
             CertificateClientOptions options = new();
             options.AddPolicy(policy, HttpPipelinePosition.PerCall);
-            using CertificateClient client = CreateClient(new MockCredential(), options);
+            CertificateClient client = CreateClient(new MockCredential(), options);
             HttpPipeline pipeline = GetPipeline(client);
             Assert.That(GetKeyVaultPipeline(client), Is.SameAs(pipeline));
             DefaultTransportLifetime lifetime = new(pipeline);
@@ -45,8 +45,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
 
             Assert.That(policy.RequestCount, Is.EqualTo(3));
-            lifetime.AssertAlive();
-            DisposeRepeatedly(client, concurrent: true);
             lifetime.AssertAlive();
         }
     }

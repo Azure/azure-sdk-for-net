@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
-    internal class RemoteCryptographyClient : ICryptographyProvider, IDisposable
+    internal class RemoteCryptographyClient : ICryptographyProvider
     {
         private const string OTelKeyIdKey = "az.keyvault.key.id";
         private readonly Uri _keyId;
@@ -44,8 +44,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         internal KeyVaultPipeline Pipeline { get; }
-
-        public void Dispose() { }
 
         public bool SupportsOperation(KeyOperation operation) => true;
 

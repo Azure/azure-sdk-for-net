@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Administration
     /// The rest client for the KeyVault External Key Manager (EKM) service.
     /// </summary>
     [CodeGenType("KeyVaultEkmRestClient")]
-    public partial class KeyVaultEkmClient : IDisposable
+    public partial class KeyVaultEkmClient
     {
         /// <summary>
         /// Gets the vault URI.
@@ -67,17 +67,6 @@ namespace Azure.Security.KeyVault.Administration
             Pipeline = HttpPipelineBuilder.Build(options.CloneForPipeline(), new HttpPipelinePolicy[] { authenticationPolicy });
             _apiVersion = options.GetVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary>
-        /// Retained for compatibility. Client transport resources are managed automatically.
-        /// </summary>
-        /// <remarks>
-        /// Transport cleanup does not require this method. Caller-provided resources are never disposed.
-        /// </remarks>
-        public virtual void Dispose()
-        {
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>

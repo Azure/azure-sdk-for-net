@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys
     /// supports creating, retrieving, updating, deleting, purging, backing up, restoring, and listing the <see cref="KeyVaultKey"/>.
     /// The client also supports listing <see cref="DeletedKey"/> for a soft-delete enabled Azure Key Vault.
     /// </summary>
-    public class KeyClient : IDisposable
+    public class KeyClient
     {
         internal const string KeysPath = "/keys/";
         internal const string DeletedKeysPath = "/deletedkeys/";
@@ -83,18 +83,6 @@ namespace Azure.Security.KeyVault.Keys
         /// Gets the <see cref="Uri"/> of the vault used to create this instance of the <see cref="KeyClient"/>.
         /// </summary>
         public virtual Uri VaultUri => _pipeline.VaultUri;
-
-        /// <summary>
-        /// Retained for compatibility. Client transport resources are managed automatically.
-        /// </summary>
-        /// <remarks>
-        /// Transport cleanup does not require this method, including for clients returned by <see cref="GetCryptographyClient"/>.
-        /// Caller-provided transports, credentials, and certificates are never disposed.
-        /// </remarks>
-        public virtual void Dispose()
-        {
-            GC.SuppressFinalize(this);
-        }
 
         /// <summary>
         /// Creates and stores a new key in Key Vault. The create key operation can be used to create any key type in Azure Key Vault.

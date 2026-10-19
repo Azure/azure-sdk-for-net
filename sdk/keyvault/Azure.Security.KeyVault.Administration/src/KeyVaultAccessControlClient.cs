@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration
     /// The client supports creating, listing, updating, and deleting <see cref="KeyVaultRoleAssignment"/> and <see cref="KeyVaultRoleDefinition" />.
     /// </summary>
     [CodeGenType("KeyVaultAccessControlRestClient")]
-    public partial class KeyVaultAccessControlClient : IDisposable
+    public partial class KeyVaultAccessControlClient
     {
         private readonly ClientDiagnostics _diagnostics;
 
@@ -87,17 +87,6 @@ namespace Azure.Security.KeyVault.Administration
             Pipeline = HttpPipelineBuilder.Build(options.CloneForPipeline(), new HttpPipelinePolicy[] { authenticationPolicy });
             _apiVersion = options.GetVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary>
-        /// Retained for compatibility. Client transport resources are managed automatically.
-        /// </summary>
-        /// <remarks>
-        /// Transport cleanup does not require this method. Caller-provided resources are never disposed.
-        /// </remarks>
-        public virtual void Dispose()
-        {
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>

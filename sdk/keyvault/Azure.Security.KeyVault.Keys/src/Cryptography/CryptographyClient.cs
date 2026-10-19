@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// A client used to perform cryptographic operations with Azure Key Vault keys.
     /// </summary>
     [CallerShouldAudit(CallerShouldAuditReason)]
-    public class CryptographyClient : IKeyEncryptionKey, IDisposable
+    public class CryptographyClient : IKeyEncryptionKey
     {
         private const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-keys";
         private const string GetOperation = "get";
@@ -181,18 +181,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Gets the <see cref="KeyVaultKey.Id"/> of the key used to perform cryptographic operations for the client.
         /// </summary>
         public virtual string KeyId => _keyId;
-
-        /// <summary>
-        /// Retained for compatibility. Client transport resources are managed automatically.
-        /// </summary>
-        /// <remarks>
-        /// Transport cleanup does not require this method. Parent and child clients can be used independently.
-        /// Caller-provided transports, credentials, certificates, and key material are never disposed.
-        /// </remarks>
-        public virtual void Dispose()
-        {
-            GC.SuppressFinalize(this);
-        }
 
         /// <summary>
         /// Gets whether this <see cref="CryptographyClient"/> runs only local operations.

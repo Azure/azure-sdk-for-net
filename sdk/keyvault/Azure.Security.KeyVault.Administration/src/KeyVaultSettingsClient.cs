@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// The KeyVaultSettingsClient provides synchronous and asynchronous methods to get and update Managed HSM settings.
     /// </summary>
-    public class KeyVaultSettingsClient : IDisposable
+    public class KeyVaultSettingsClient
     {
         private readonly KeyVaultRestClient _restClient;
         private readonly ClientDiagnostics _diagnostics;
@@ -60,17 +60,6 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <value></value>
         public virtual Uri VaultUri { get; }
-
-        /// <summary>
-        /// Retained for compatibility. Client transport resources are managed automatically.
-        /// </summary>
-        /// <remarks>
-        /// Transport cleanup does not require this method. Caller-provided resources are never disposed.
-        /// </remarks>
-        public virtual void Dispose()
-        {
-            GC.SuppressFinalize(this);
-        }
 
         /// <summary>
         /// Gets the specified account setting.

@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Certificates
     /// is retained only for DownloadCertificate because that API hits the
     /// Secrets endpoint, not the Certificates endpoint.
     /// </remarks>
-    public class CertificateClient : IDisposable
+    public class CertificateClient
     {
         internal const string CertificatesPath = "/certificates/";
         private const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-certificates";
@@ -123,17 +123,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// Gets the <see cref="Uri"/> of the vault used to create this instance of the <see cref="CertificateClient"/>.
         /// </summary>
         public virtual Uri VaultUri => _vaultUri;
-
-        /// <summary>
-        /// Retained for compatibility. Client transport resources are managed automatically.
-        /// </summary>
-        /// <remarks>
-        /// Transport cleanup does not require this method. Caller-provided resources are never disposed.
-        /// </remarks>
-        public virtual void Dispose()
-        {
-            GC.SuppressFinalize(this);
-        }
 
         #region StartCreateCertificate
 
