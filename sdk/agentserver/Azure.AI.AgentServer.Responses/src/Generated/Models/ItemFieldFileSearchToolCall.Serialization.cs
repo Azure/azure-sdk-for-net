@@ -97,13 +97,20 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Results))
             {
-                writer.WritePropertyName("results"u8);
-                writer.WriteStartArray();
-                foreach (FileSearchToolCallResults item in Results)
+                if (Results != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("results"u8);
+                    writer.WriteStartArray();
+                    foreach (FileSearchToolCallResults item in Results)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("results"u8);
+                }
             }
         }
 
@@ -137,7 +144,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string id = default;
             ItemFileSearchToolCallStatus status = default;
             IList<string> queries = default;
-            IList<FileSearchToolCallResults> results = default;
+            IList<FileSearchToolCallResults> results = new ChangeTrackingList<FileSearchToolCallResults>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -176,6 +183,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        results = null;
                         continue;
                     }
                     List<FileSearchToolCallResults> array = new List<FileSearchToolCallResults>();
@@ -188,7 +196,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemFieldFileSearchToolCall(
@@ -196,8 +204,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 additionalBinaryDataProperties,
                 id,
                 status,
-                queries,
-                results ?? new ChangeTrackingList<FileSearchToolCallResults>());
+                queries ?? new ChangeTrackingList<string>(),
+                results);
         }
     }
 }

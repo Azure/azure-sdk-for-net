@@ -122,7 +122,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<ResponseItem>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default));
+                            array.Add(ModelReaderWriter.Read<ResponseItem>(item.GetUtf8Bytes(), options, AzureAIAgentServerResponsesContext.Default));
                         }
                     }
                     data = array;
@@ -145,10 +145,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentsPagedResultOutputItem(data, firstId, lastId, hasMore, additionalBinaryDataProperties);
+            return new AgentsPagedResultOutputItem(data ?? new ChangeTrackingList<ResponseItem>(), firstId, lastId, hasMore, additionalBinaryDataProperties);
         }
     }
 }

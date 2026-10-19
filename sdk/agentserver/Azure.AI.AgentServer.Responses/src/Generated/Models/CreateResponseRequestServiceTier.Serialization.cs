@@ -18,6 +18,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             CreateResponseRequestServiceTier.Flex => "flex",
             CreateResponseRequestServiceTier.Scale => "scale",
             CreateResponseRequestServiceTier.Priority => "priority",
+            CreateResponseRequestServiceTier.Fast => "fast",
+            CreateResponseRequestServiceTier.Ultrafast => "ultrafast",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CreateResponseRequestServiceTier value.")
         };
 
@@ -43,6 +45,14 @@ namespace Azure.AI.AgentServer.Responses.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "priority"))
             {
                 return CreateResponseRequestServiceTier.Priority;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fast"))
+            {
+                return CreateResponseRequestServiceTier.Fast;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ultrafast"))
+            {
+                return CreateResponseRequestServiceTier.Ultrafast;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CreateResponseRequestServiceTier value.");
         }

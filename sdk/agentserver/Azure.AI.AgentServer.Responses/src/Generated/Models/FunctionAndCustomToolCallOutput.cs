@@ -11,7 +11,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary>
     /// The FunctionAndCustomToolCallOutput.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionAndCustomToolCallOutputInputTextContent"/>, <see cref="FunctionAndCustomToolCallOutputInputImageContent"/>, and <see cref="FunctionAndCustomToolCallOutputInputFileContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionAndCustomToolCallOutputInputFileContent"/>, <see cref="FunctionAndCustomToolCallOutputInputImageContent"/>, and <see cref="FunctionAndCustomToolCallOutputInputTextContent"/>.
     /// </summary>
     internal abstract partial class FunctionAndCustomToolCallOutput
     {

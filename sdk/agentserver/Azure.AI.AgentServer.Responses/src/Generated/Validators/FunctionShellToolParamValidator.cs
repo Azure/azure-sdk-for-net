@@ -31,6 +31,13 @@ internal static partial class FunctionShellToolParamValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: allowed_callers
+        if (element.TryGetProperty("allowed_callers", out var allowedCallersProp) && allowedCallersProp.ValueKind != JsonValueKind.Null)
+        {
+            if (allowedCallersProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.allowed_callers", $"Expected array, got {allowedCallersProp.ValueKind}"));
+        }
+
         // Optional: description
         if (element.TryGetProperty("description", out var descriptionProp))
         {

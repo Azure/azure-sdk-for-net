@@ -82,18 +82,21 @@ namespace Azure.AI.AgentServer.Responses.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            writer.WritePropertyName("annotations"u8);
-            writer.WriteStartArray();
-            foreach (ResponseMessageAnnotation item in Annotations)
+            if (Optional.IsCollectionDefined(Annotations))
             {
-                if (item == null)
+                writer.WritePropertyName("annotations"u8);
+                writer.WriteStartArray();
+                foreach (ResponseMessageAnnotation item in Annotations)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item, options);
                 }
-                writer.WriteObjectValue(item, options);
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Logprobs))
             {
                 writer.WritePropertyName("logprobs"u8);
@@ -150,6 +153,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("annotations"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<ResponseMessageAnnotation> array = new List<ResponseMessageAnnotation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -159,7 +166,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<ResponseMessageAnnotation>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default));
+                            array.Add(ModelReaderWriter.Read<ResponseMessageAnnotation>(item.GetUtf8Bytes(), options, AzureAIAgentServerResponsesContext.Default));
                         }
                     }
                     annotations = array;
@@ -181,10 +188,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MessageContentOutputTextContent(@type, additionalBinaryDataProperties, text, annotations, logprobs ?? new ChangeTrackingList<LogProb>());
+            return new MessageContentOutputTextContent(@type, additionalBinaryDataProperties, text, annotations ?? new ChangeTrackingList<ResponseMessageAnnotation>(), logprobs ?? new ChangeTrackingList<LogProb>());
         }
     }
 }

@@ -49,6 +49,13 @@ internal static partial class WebSearchToolValidator
                 errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
         }
 
+        // Optional: external_web_access
+        if (element.TryGetProperty("external_web_access", out var externalWebAccessProp))
+        {
+            if (externalWebAccessProp.ValueKind != JsonValueKind.True && externalWebAccessProp.ValueKind != JsonValueKind.False)
+                errors.Add(new ValidationError("$.external_web_access", $"Expected boolean, got {externalWebAccessProp.ValueKind}"));
+        }
+
         // Optional: filters
         if (element.TryGetProperty("filters", out var filtersProp) && filtersProp.ValueKind != JsonValueKind.Null)
         {

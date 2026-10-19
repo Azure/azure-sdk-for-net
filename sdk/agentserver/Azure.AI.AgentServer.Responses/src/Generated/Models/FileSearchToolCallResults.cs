@@ -14,6 +14,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private VectorStoreFileAttributes _attributes;
+        private bool _attributesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FileSearchToolCallResults"/>. </summary>
         public FileSearchToolCallResults()
@@ -32,7 +34,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             FileId = fileId;
             Text = text;
             Filename = filename;
-            Attributes = attributes;
+            _attributes = attributes;
             Score = score;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -47,7 +49,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Filename { get; set; }
 
         /// <summary> Gets or sets the Attributes. </summary>
-        public VectorStoreFileAttributes Attributes { get; set; }
+        public VectorStoreFileAttributes Attributes
+        {
+            get
+            {
+                return _attributes;
+            }
+            set
+            {
+                _attributes = value;
+                _attributesIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the Score. </summary>
         public float? Score { get; set; }

@@ -80,6 +80,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
+            if (Optional.IsDefined(SessionAffinity))
+            {
+                writer.WritePropertyName("session_affinity"u8);
+                writer.WriteObjectValue(SessionAffinity, options);
+            }
             writer.WritePropertyName("routing_trace"u8);
             writer.WriteStartArray();
             foreach (RoutingTraceEntry item in RoutingTrace)
@@ -130,6 +135,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ModelRouterMode mode = default;
+            SessionAffinityDetails sessionAffinity = default;
             IList<RoutingTraceEntry> routingTrace = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,6 +143,15 @@ namespace Azure.AI.AgentServer.Responses.Models
                 if (prop.NameEquals("mode"u8))
                 {
                     mode = new ModelRouterMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("session_affinity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sessionAffinity = SessionAffinityDetails.DeserializeSessionAffinityDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("routing_trace"u8))
@@ -151,10 +166,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ModelRouterDetails(mode, routingTrace, additionalBinaryDataProperties);
+            return new ModelRouterDetails(mode, sessionAffinity, routingTrace ?? new ChangeTrackingList<RoutingTraceEntry>(), additionalBinaryDataProperties);
         }
     }
 }

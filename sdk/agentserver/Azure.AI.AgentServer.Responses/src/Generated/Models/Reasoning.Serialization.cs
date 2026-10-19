@@ -73,20 +73,58 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 throw new FormatException($"The model {nameof(Reasoning)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Effort))
+            if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("effort"u8);
-                writer.WriteStringValue(Effort.Value.ToSerialString());
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(Summary))
+            if (Optional.IsDefined(Effort, _effortIsDefined))
             {
-                writer.WritePropertyName("summary"u8);
-                writer.WriteStringValue(Summary.Value.ToSerialString());
+                if (Effort != null)
+                {
+                    writer.WritePropertyName("effort"u8);
+                    writer.WriteStringValue(Effort.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("effort"u8);
+                }
             }
-            if (Optional.IsDefined(GenerateSummary))
+            if (Optional.IsDefined(Summary, _summaryIsDefined))
             {
-                writer.WritePropertyName("generate_summary"u8);
-                writer.WriteStringValue(GenerateSummary.Value.ToSerialString());
+                if (Summary != null)
+                {
+                    writer.WritePropertyName("summary"u8);
+                    writer.WriteStringValue(Summary.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("summary"u8);
+                }
+            }
+            if (Optional.IsDefined(Context, _contextIsDefined))
+            {
+                if (Context != null)
+                {
+                    writer.WritePropertyName("context"u8);
+                    writer.WriteStringValue(Context.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("context"u8);
+                }
+            }
+            if (Optional.IsDefined(GenerateSummary, _generateSummaryIsDefined))
+            {
+                if (GenerateSummary != null)
+                {
+                    writer.WritePropertyName("generate_summary"u8);
+                    writer.WriteStringValue(GenerateSummary.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("generate_summary"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -130,24 +168,41 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            CreateResponseRequestReasoningEffort? effort = default;
+            ReasoningModeEnum? mode = default;
+            bool effortIsDefined = false;
+            ReasoningEffort? effort = default;
+            bool summaryIsDefined = false;
             CreateResponseRequestReasoningSummary? summary = default;
+            bool contextIsDefined = false;
+            CreateResponseRequestReasoningContext? context = default;
+            bool generateSummaryIsDefined = false;
             CreateResponseRequestReasoningGenerateSummary? generateSummary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("mode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mode = new ReasoningModeEnum(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("effort"u8))
                 {
+                    effortIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         effort = null;
                         continue;
                     }
-                    effort = prop.Value.GetString().ToCreateResponseRequestReasoningEffort();
+                    effort = new ReasoningEffort(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("summary"u8))
                 {
+                    summaryIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         summary = null;
@@ -156,8 +211,20 @@ namespace Azure.AI.AgentServer.Responses.Models
                     summary = prop.Value.GetString().ToCreateResponseRequestReasoningSummary();
                     continue;
                 }
+                if (prop.NameEquals("context"u8))
+                {
+                    contextIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        context = null;
+                        continue;
+                    }
+                    context = prop.Value.GetString().ToCreateResponseRequestReasoningContext();
+                    continue;
+                }
                 if (prop.NameEquals("generate_summary"u8))
                 {
+                    generateSummaryIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         generateSummary = null;
@@ -168,10 +235,22 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new Reasoning(effort, summary, generateSummary, additionalBinaryDataProperties);
+            return new Reasoning(
+                mode,
+                effort,
+                summary,
+                context,
+                generateSummary,
+                additionalBinaryDataProperties)
+            {
+                _effortIsDefined = effortIsDefined,
+                _summaryIsDefined = summaryIsDefined,
+                _contextIsDefined = contextIsDefined,
+                _generateSummaryIsDefined = generateSummaryIsDefined
+            };
         }
     }
 }

@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.Extensions.OpenAI;
@@ -19,11 +18,53 @@ namespace Azure.AI.AgentServer.Responses
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Metadata _metadata;
+        private bool _metadataIsDefined;
+        private long? _topLogprobs;
+        private bool _topLogprobsIsDefined;
+        private double? _temperature;
+        private bool _temperatureIsDefined;
+        private double? _topP;
+        private bool _topPIsDefined;
+        private string _safetyIdentifier;
+        private bool _safetyIdentifierIsDefined;
+        private string _promptCacheKey;
+        private bool _promptCacheKeyIsDefined;
+        private CreateResponseRequestPromptCacheRetention? _promptCacheRetention;
+        private bool _promptCacheRetentionIsDefined;
+        private string _previousResponseId;
+        private bool _previousResponseIdIsDefined;
+        private bool? _background;
+        private bool _backgroundIsDefined;
+        private long? _maxToolCalls;
+        private bool _maxToolCallsIsDefined;
+        private CreateResponseRequestServiceTier? _serviceTier;
+        private bool _serviceTierIsDefined;
+        private CreateResponseRequestTruncation? _truncation;
+        private bool _truncationIsDefined;
+        private Reasoning _reasoning;
+        private bool _reasoningIsDefined;
+        private bool? _parallelToolCalls;
+        private bool _parallelToolCallsIsDefined;
+        private bool? _store;
+        private bool _storeIsDefined;
+        private string _instructions;
+        private bool _instructionsIsDefined;
+        private ModerationParam _moderation;
+        private bool _moderationIsDefined;
+        private bool? _stream;
+        private bool _streamIsDefined;
+        private ResponseStreamOptions _streamOptions;
+        private bool _streamOptionsIsDefined;
+        private ResponseConversationOptions _conversation;
+        private bool _conversationIsDefined;
+        private long? _maxOutputTokens;
+        private bool _maxOutputTokensIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CreateResponseRequest"/>. </summary>
         internal CreateResponseRequest()
         {
-            Tools = new ChangeTrackingList<ResponseTool>();
+            Tools = new ChangeTrackingList<Tool>();
             Include = new ChangeTrackingList<IncludeEnum>();
             ContextManagement = new ChangeTrackingList<ContextManagementParam>();
             StructuredInputs = new ChangeTrackingDictionary<string, BinaryData>();
@@ -37,35 +78,34 @@ namespace Azure.AI.AgentServer.Responses
         /// <param name="user">
         /// This field is being replaced by `safety_identifier` and `prompt_cache_key`. Use `prompt_cache_key` instead to maintain caching optimizations.
         ///   A stable identifier for your end-users.
-        ///   Used to boost cache hit rates by better bucketing similar requests and  to help OpenAI detect and prevent abuse. [Learn more](/docs/guides/safety-best-practices#safety-identifiers).
+        ///   Used to boost cache hit rates by better bucketing similar requests and  to help OpenAI detect and prevent abuse. [Learn more](https://developers.openai.com/api/docs/guides/safety-best-practices#implement-safety-identifiers).
         /// </param>
-        /// <param name="safetyIdentifier">
-        /// A stable identifier used to help detect users of your application that may be violating OpenAI's usage policies.
-        ///   The IDs should be a string that uniquely identifies each user, with a maximum length of 64 characters. We recommend hashing their username or email address, in order to avoid sending us any identifying information. [Learn more](/docs/guides/safety-best-practices#safety-identifiers).
-        /// </param>
-        /// <param name="promptCacheKey"> Used by OpenAI to cache responses for similar requests to optimize your cache hit rates. Replaces the `user` field. [Learn more](/docs/guides/prompt-caching). </param>
-        /// <param name="serviceTier"></param>
+        /// <param name="safetyIdentifier"></param>
+        /// <param name="promptCacheKey"></param>
         /// <param name="promptCacheRetention"></param>
         /// <param name="previousResponseId"></param>
         /// <param name="model"> The model deployment to use for the creation of this response. </param>
-        /// <param name="reasoning"></param>
         /// <param name="background"></param>
-        /// <param name="maxOutputTokens"></param>
         /// <param name="maxToolCalls"></param>
         /// <param name="text"></param>
         /// <param name="tools"></param>
         /// <param name="toolChoice"></param>
         /// <param name="prompt"></param>
+        /// <param name="promptCacheOptions"></param>
+        /// <param name="serviceTier"></param>
         /// <param name="truncation"></param>
+        /// <param name="reasoning"></param>
         /// <param name="input"></param>
         /// <param name="include"></param>
         /// <param name="parallelToolCalls"></param>
         /// <param name="store"></param>
         /// <param name="instructions"></param>
+        /// <param name="moderation"></param>
         /// <param name="stream"></param>
         /// <param name="streamOptions"></param>
         /// <param name="conversation"></param>
         /// <param name="contextManagement"> Context management configuration for this request. </param>
+        /// <param name="maxOutputTokens"></param>
         /// <param name="agent">
         /// (Deprecated) Use agent_reference instead.
         /// The agent to use for generating the response.
@@ -78,105 +118,159 @@ namespace Azure.AI.AgentServer.Responses
         /// <param name="agentReference"> The agent to use for generating the response. </param>
         /// <param name="structuredInputs"> The structured inputs to the response that can participate in prompt template substitution or tool argument bindings. </param>
         /// <param name="userSecurityContext"> User security context contains several parameters that describe the application itself, and the end user that interacts with the application. These fields assist your security operations teams to investigate and mitigate security incidents by providing a comprehensive approach to protecting your AI applications. [Learn more](https://aka.ms/TP4AI/Documentation/EndUserContext) about protecting AI applications using Microsoft Defender for Cloud. </param>
+        /// <param name="routingConfig">
+        /// Per-request configuration for Model Router inference calls.
+        /// Supported on Model Router endpoints (deployed or instant if supported).
+        /// Returns a 400 (Bad Request) error when the target is not a Model Router endpoint.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        [Experimental("AAIP002")]
-        internal CreateResponseRequest(Metadata metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, CreateResponseRequestServiceTier? serviceTier, CreateResponseRequestPromptCacheRetention? promptCacheRetention, string previousResponseId, string model, Reasoning reasoning, bool? background, long? maxOutputTokens, long? maxToolCalls, ResponseTextParam text, IList<ResponseTool> tools, BinaryData toolChoice, Prompt prompt, CreateResponseRequestTruncation? truncation, BinaryData input, IList<IncludeEnum> include, bool? parallelToolCalls, bool? store, string instructions, bool? stream, ResponseStreamOptions streamOptions, BinaryData conversation, IList<ContextManagementParam> contextManagement, AgentReference agent, string agentSessionId, AgentReference agentReference, IDictionary<string, BinaryData> structuredInputs, AzureUserSecurityContext userSecurityContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateResponseRequest(Metadata metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, CreateResponseRequestPromptCacheRetention? promptCacheRetention, string previousResponseId, string model, bool? background, long? maxToolCalls, ResponseTextParam text, IList<Tool> tools, BinaryData toolChoice, Prompt prompt, ResponsePromptCacheOptionsParam promptCacheOptions, CreateResponseRequestServiceTier? serviceTier, CreateResponseRequestTruncation? truncation, Reasoning reasoning, BinaryData input, IList<IncludeEnum> include, bool? parallelToolCalls, bool? store, string instructions, ModerationParam moderation, bool? stream, ResponseStreamOptions streamOptions, ResponseConversationOptions conversation, IList<ContextManagementParam> contextManagement, long? maxOutputTokens, AgentReference agent, string agentSessionId, AgentReference agentReference, IDictionary<string, BinaryData> structuredInputs, AzureUserSecurityContext userSecurityContext, RoutingConfiguration routingConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Metadata = metadata;
-            TopLogprobs = topLogprobs;
-            Temperature = temperature;
-            TopP = topP;
+            _metadata = metadata;
+            _topLogprobs = topLogprobs;
+            _temperature = temperature;
+            _topP = topP;
             User = user;
-            SafetyIdentifier = safetyIdentifier;
-            PromptCacheKey = promptCacheKey;
-            ServiceTier = serviceTier;
-            PromptCacheRetention = promptCacheRetention;
-            PreviousResponseId = previousResponseId;
+            _safetyIdentifier = safetyIdentifier;
+            _promptCacheKey = promptCacheKey;
+            _promptCacheRetention = promptCacheRetention;
+            _previousResponseId = previousResponseId;
             Model = model;
-            Reasoning = reasoning;
-            Background = background;
-            MaxOutputTokens = maxOutputTokens;
-            MaxToolCalls = maxToolCalls;
+            _background = background;
+            _maxToolCalls = maxToolCalls;
             Text = text;
             Tools = tools;
             ToolChoice = toolChoice;
             Prompt = prompt;
-            Truncation = truncation;
+            PromptCacheOptions = promptCacheOptions;
+            _serviceTier = serviceTier;
+            _truncation = truncation;
+            _reasoning = reasoning;
             Input = input;
             Include = include;
-            ParallelToolCalls = parallelToolCalls;
-            Store = store;
-            Instructions = instructions;
-            Stream = stream;
-            StreamOptions = streamOptions;
-            Conversation = conversation;
+            _parallelToolCalls = parallelToolCalls;
+            _store = store;
+            _instructions = instructions;
+            _moderation = moderation;
+            _stream = stream;
+            _streamOptions = streamOptions;
+            _conversation = conversation;
             ContextManagement = contextManagement;
+            _maxOutputTokens = maxOutputTokens;
             Agent = agent;
             AgentSessionId = agentSessionId;
             AgentReference = agentReference;
             StructuredInputs = structuredInputs;
             UserSecurityContext = userSecurityContext;
+            RoutingConfig = routingConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the Metadata. </summary>
-        public Metadata Metadata { get; }
+        public Metadata Metadata
+        {
+            get
+            {
+                return _metadata;
+            }
+        }
 
         /// <summary> Gets the TopLogprobs. </summary>
-        public long? TopLogprobs { get; }
+        public long? TopLogprobs
+        {
+            get
+            {
+                return _topLogprobs;
+            }
+        }
 
         /// <summary> Gets the Temperature. </summary>
-        public double? Temperature { get; }
+        public double? Temperature
+        {
+            get
+            {
+                return _temperature;
+            }
+        }
 
         /// <summary> Gets the TopP. </summary>
-        public double? TopP { get; }
+        public double? TopP
+        {
+            get
+            {
+                return _topP;
+            }
+        }
 
         /// <summary>
         /// This field is being replaced by `safety_identifier` and `prompt_cache_key`. Use `prompt_cache_key` instead to maintain caching optimizations.
         ///   A stable identifier for your end-users.
-        ///   Used to boost cache hit rates by better bucketing similar requests and  to help OpenAI detect and prevent abuse. [Learn more](/docs/guides/safety-best-practices#safety-identifiers).
+        ///   Used to boost cache hit rates by better bucketing similar requests and  to help OpenAI detect and prevent abuse. [Learn more](https://developers.openai.com/api/docs/guides/safety-best-practices#implement-safety-identifiers).
         /// </summary>
         public string User { get; }
 
-        /// <summary>
-        /// A stable identifier used to help detect users of your application that may be violating OpenAI's usage policies.
-        ///   The IDs should be a string that uniquely identifies each user, with a maximum length of 64 characters. We recommend hashing their username or email address, in order to avoid sending us any identifying information. [Learn more](/docs/guides/safety-best-practices#safety-identifiers).
-        /// </summary>
-        public string SafetyIdentifier { get; }
+        /// <summary> Gets the SafetyIdentifier. </summary>
+        public string SafetyIdentifier
+        {
+            get
+            {
+                return _safetyIdentifier;
+            }
+        }
 
-        /// <summary> Used by OpenAI to cache responses for similar requests to optimize your cache hit rates. Replaces the `user` field. [Learn more](/docs/guides/prompt-caching). </summary>
-        public string PromptCacheKey { get; }
-
-        /// <summary> Gets the ServiceTier. </summary>
-        public CreateResponseRequestServiceTier? ServiceTier { get; }
+        /// <summary> Gets the PromptCacheKey. </summary>
+        public string PromptCacheKey
+        {
+            get
+            {
+                return _promptCacheKey;
+            }
+        }
 
         /// <summary> Gets the PromptCacheRetention. </summary>
-        public CreateResponseRequestPromptCacheRetention? PromptCacheRetention { get; }
+        public CreateResponseRequestPromptCacheRetention? PromptCacheRetention
+        {
+            get
+            {
+                return _promptCacheRetention;
+            }
+        }
 
         /// <summary> Gets the PreviousResponseId. </summary>
-        public string PreviousResponseId { get; }
+        public string PreviousResponseId
+        {
+            get
+            {
+                return _previousResponseId;
+            }
+        }
 
         /// <summary> The model deployment to use for the creation of this response. </summary>
         public string Model { get; }
 
-        /// <summary> Gets the Reasoning. </summary>
-        public Reasoning Reasoning { get; }
-
         /// <summary> Gets the Background. </summary>
-        public bool? Background { get; }
-
-        /// <summary> Gets the MaxOutputTokens. </summary>
-        public long? MaxOutputTokens { get; }
+        public bool? Background
+        {
+            get
+            {
+                return _background;
+            }
+        }
 
         /// <summary> Gets the MaxToolCalls. </summary>
-        public long? MaxToolCalls { get; }
+        public long? MaxToolCalls
+        {
+            get
+            {
+                return _maxToolCalls;
+            }
+        }
 
         /// <summary> Gets the Text. </summary>
         public ResponseTextParam Text { get; }
 
         /// <summary> Gets the Tools. </summary>
-        [Experimental("AAIP002")]
-        public IList<ResponseTool> Tools { get; }
+        public IList<Tool> Tools { get; }
 
         /// <summary>
         /// Gets the ToolChoice.
@@ -222,8 +316,35 @@ namespace Azure.AI.AgentServer.Responses
         /// <summary> Gets the Prompt. </summary>
         public Prompt Prompt { get; }
 
+        /// <summary> Gets the PromptCacheOptions. </summary>
+        public ResponsePromptCacheOptionsParam PromptCacheOptions { get; }
+
+        /// <summary> Gets the ServiceTier. </summary>
+        public CreateResponseRequestServiceTier? ServiceTier
+        {
+            get
+            {
+                return _serviceTier;
+            }
+        }
+
         /// <summary> Gets the Truncation. </summary>
-        public CreateResponseRequestTruncation? Truncation { get; }
+        public CreateResponseRequestTruncation? Truncation
+        {
+            get
+            {
+                return _truncation;
+            }
+        }
+
+        /// <summary> Gets the Reasoning. </summary>
+        public Reasoning Reasoning
+        {
+            get
+            {
+                return _reasoning;
+            }
+        }
 
         /// <summary>
         /// Gets the Input.
@@ -270,63 +391,79 @@ namespace Azure.AI.AgentServer.Responses
         public IList<IncludeEnum> Include { get; }
 
         /// <summary> Gets the ParallelToolCalls. </summary>
-        public bool? ParallelToolCalls { get; }
+        public bool? ParallelToolCalls
+        {
+            get
+            {
+                return _parallelToolCalls;
+            }
+        }
 
         /// <summary> Gets the Store. </summary>
-        public bool? Store { get; }
+        public bool? Store
+        {
+            get
+            {
+                return _store;
+            }
+        }
 
         /// <summary> Gets the Instructions. </summary>
-        public string Instructions { get; }
+        public string Instructions
+        {
+            get
+            {
+                return _instructions;
+            }
+        }
+
+        /// <summary> Gets the Moderation. </summary>
+        public ModerationParam Moderation
+        {
+            get
+            {
+                return _moderation;
+            }
+        }
 
         /// <summary> Gets the Stream. </summary>
-        public bool? Stream { get; }
+        public bool? Stream
+        {
+            get
+            {
+                return _stream;
+            }
+        }
 
         /// <summary> Gets the StreamOptions. </summary>
-        public ResponseStreamOptions StreamOptions { get; }
+        public ResponseStreamOptions StreamOptions
+        {
+            get
+            {
+                return _streamOptions;
+            }
+        }
 
-        /// <summary>
-        /// Gets the Conversation.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="string"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="ConversationParam"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Conversation { get; }
+        /// <summary> Gets the Conversation. </summary>
+        public ResponseConversationOptions Conversation
+        {
+            get
+            {
+                return _conversation;
+            }
+        }
 
         /// <summary> Context management configuration for this request. </summary>
         public IList<ContextManagementParam> ContextManagement { get; }
+
+        /// <summary> Gets the MaxOutputTokens. </summary>
+        public long? MaxOutputTokens
+        {
+            get
+            {
+                return _maxOutputTokens;
+            }
+        }
 
         /// <summary>
         /// (Deprecated) Use agent_reference instead.
@@ -374,5 +511,12 @@ namespace Azure.AI.AgentServer.Responses
 
         /// <summary> User security context contains several parameters that describe the application itself, and the end user that interacts with the application. These fields assist your security operations teams to investigate and mitigate security incidents by providing a comprehensive approach to protecting your AI applications. [Learn more](https://aka.ms/TP4AI/Documentation/EndUserContext) about protecting AI applications using Microsoft Defender for Cloud. </summary>
         public AzureUserSecurityContext UserSecurityContext { get; }
+
+        /// <summary>
+        /// Per-request configuration for Model Router inference calls.
+        /// Supported on Model Router endpoints (deployed or instant if supported).
+        /// Returns a 400 (Bad Request) error when the target is not a Model Router endpoint.
+        /// </summary>
+        public RoutingConfiguration RoutingConfig { get; }
     }
 }

@@ -12,6 +12,19 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// <summary> Image generation call. </summary>
     public partial class ItemFieldImageGenToolCall : ItemField
     {
+        private ItemImageGenToolCallSize? _size;
+        private bool _sizeIsDefined;
+        private ItemImageGenToolCallQuality? _quality;
+        private bool _qualityIsDefined;
+        private ImageGenActionEnum? _action;
+        private bool _actionIsDefined;
+        private ImageBackground? _background;
+        private bool _backgroundIsDefined;
+        private ImageOutputFormat? _outputFormat;
+        private bool _outputFormatIsDefined;
+        private string _revisedPrompt;
+        private bool _revisedPromptIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ItemFieldImageGenToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the image generation call. </param>
         /// <param name="status"> The status of the image generation call. </param>
@@ -29,11 +42,23 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="id"> The unique ID of the image generation call. </param>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        internal ItemFieldImageGenToolCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemImageGenToolCallStatus status, string result) : base(@type, additionalBinaryDataProperties)
+        /// <param name="size"></param>
+        /// <param name="quality"></param>
+        /// <param name="action"></param>
+        /// <param name="background"></param>
+        /// <param name="outputFormat"></param>
+        /// <param name="revisedPrompt"></param>
+        internal ItemFieldImageGenToolCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemImageGenToolCallStatus status, string result, ItemImageGenToolCallSize? size, ItemImageGenToolCallQuality? quality, ImageGenActionEnum? action, ImageBackground? background, ImageOutputFormat? outputFormat, string revisedPrompt) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
             Result = result;
+            _size = size;
+            _quality = quality;
+            _action = action;
+            _background = background;
+            _outputFormat = outputFormat;
+            _revisedPrompt = revisedPrompt;
         }
 
         /// <summary> The unique ID of the image generation call. </summary>
@@ -44,5 +69,59 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Gets the Result. </summary>
         public string Result { get; }
+
+        /// <summary> Gets the Size. </summary>
+        public ItemImageGenToolCallSize? Size
+        {
+            get
+            {
+                return _size;
+            }
+        }
+
+        /// <summary> Gets the Quality. </summary>
+        public ItemImageGenToolCallQuality? Quality
+        {
+            get
+            {
+                return _quality;
+            }
+        }
+
+        /// <summary> Gets the Action. </summary>
+        public ImageGenActionEnum? Action
+        {
+            get
+            {
+                return _action;
+            }
+        }
+
+        /// <summary> Gets the Background. </summary>
+        public ImageBackground? Background
+        {
+            get
+            {
+                return _background;
+            }
+        }
+
+        /// <summary> Gets the OutputFormat. </summary>
+        public ImageOutputFormat? OutputFormat
+        {
+            get
+            {
+                return _outputFormat;
+            }
+        }
+
+        /// <summary> Gets the RevisedPrompt. </summary>
+        public string RevisedPrompt
+        {
+            get
+            {
+                return _revisedPrompt;
+            }
+        }
     }
 }

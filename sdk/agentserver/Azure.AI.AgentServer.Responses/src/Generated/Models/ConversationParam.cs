@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -18,11 +17,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ConversationParam"/>. </summary>
         /// <param name="id"> The unique ID of the conversation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ConversationParam(string id)
+        internal ConversationParam(string id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
             Id = id;
         }
 

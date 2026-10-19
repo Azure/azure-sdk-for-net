@@ -31,10 +31,8 @@ internal static partial class MessageContentOutputTextContentValidator
             return ValidationResult.Failure(errors);
         }
 
-        // Required: annotations
-        if (!element.TryGetProperty("annotations", out var annotationsProp))
-            errors.Add(new ValidationError("$.annotations", "Required property 'annotations' is missing"));
-        else
+        // Optional: annotations
+        if (element.TryGetProperty("annotations", out var annotationsProp))
         {
             if (annotationsProp.ValueKind != JsonValueKind.Array)
                 errors.Add(new ValidationError("$.annotations", $"Expected array, got {annotationsProp.ValueKind}"));

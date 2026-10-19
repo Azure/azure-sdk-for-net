@@ -38,10 +38,8 @@ internal static partial class WebSearchActionSearchValidator
                 errors.Add(new ValidationError("$.queries", $"Expected array, got {queriesProp.ValueKind}"));
         }
 
-        // Required: query
-        if (!element.TryGetProperty("query", out var queryProp))
-            errors.Add(new ValidationError("$.query", "Required property 'query' is missing"));
-        else
+        // Optional: query
+        if (element.TryGetProperty("query", out var queryProp))
         {
             if (queryProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.query", $"Expected string, got {queryProp.ValueKind}"));

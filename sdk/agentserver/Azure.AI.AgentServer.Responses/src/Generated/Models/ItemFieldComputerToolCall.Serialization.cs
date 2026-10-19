@@ -93,7 +93,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
-                foreach (ComputerCallAction item in Actions)
+                foreach (ComputerAction item in Actions)
                 {
                     if (item == null)
                     {
@@ -144,8 +144,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
-            ComputerCallAction action = default;
-            IList<ComputerCallAction> actions = default;
+            ComputerAction action = default;
+            IList<ComputerAction> actions = default;
             IList<ComputerCallSafetyCheckParam> pendingSafetyChecks = default;
             ItemComputerToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
@@ -171,7 +171,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     {
                         continue;
                     }
-                    action = ModelReaderWriter.Read<ComputerCallAction>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
+                    action = ModelReaderWriter.Read<ComputerAction>(prop.Value.GetUtf8Bytes(), options, AzureAIAgentServerResponsesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("actions"u8))
@@ -180,7 +180,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     {
                         continue;
                     }
-                    List<ComputerCallAction> array = new List<ComputerCallAction>();
+                    List<ComputerAction> array = new List<ComputerAction>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -189,7 +189,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<ComputerCallAction>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default));
+                            array.Add(ModelReaderWriter.Read<ComputerAction>(item.GetUtf8Bytes(), options, AzureAIAgentServerResponsesContext.Default));
                         }
                     }
                     actions = array;
@@ -212,7 +212,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemFieldComputerToolCall(
@@ -221,8 +221,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 id,
                 callId,
                 action,
-                actions ?? new ChangeTrackingList<ComputerCallAction>(),
-                pendingSafetyChecks,
+                actions ?? new ChangeTrackingList<ComputerAction>(),
+                pendingSafetyChecks ?? new ChangeTrackingList<ComputerCallSafetyCheckParam>(),
                 status);
         }
     }

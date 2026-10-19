@@ -12,12 +12,16 @@ namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary>
     /// Reference to a prompt template and its variables.
-    /// [Learn more](/docs/guides/text?api-mode=responses#reusable-prompts).
+    /// [Learn more](https://developers.openai.com/api/docs/guides/text?api-mode=responses#version-prompts-in-code).
     /// </summary>
     public partial class Prompt
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _version;
+        private bool _versionIsDefined;
+        private ResponsePromptVariables _variables;
+        private bool _variablesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="Prompt"/>. </summary>
         /// <param name="id"> The unique identifier of the prompt template to use. </param>
@@ -37,8 +41,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         internal Prompt(string id, string version, ResponsePromptVariables variables, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Version = version;
-            Variables = variables;
+            _version = version;
+            _variables = variables;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,9 +50,31 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Id { get; set; }
 
         /// <summary> Gets or sets the Version. </summary>
-        public string Version { get; set; }
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+                _versionIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the Variables. </summary>
-        public ResponsePromptVariables Variables { get; set; }
+        public ResponsePromptVariables Variables
+        {
+            get
+            {
+                return _variables;
+            }
+            set
+            {
+                _variables = value;
+                _variablesIsDefined = true;
+            }
+        }
     }
 }

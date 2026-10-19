@@ -12,6 +12,11 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// <summary> Input image. </summary>
     internal partial class FunctionAndCustomToolCallOutputInputImageContent : FunctionAndCustomToolCallOutput
     {
+        private Uri _imageUrl;
+        private bool _imageUrlIsDefined;
+        private string _fileId;
+        private bool _fileIdIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputImageContent"/>. </summary>
         /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </param>
         public FunctionAndCustomToolCallOutputInputImageContent(ImageDetail detail) : base(FunctionAndCustomToolCallOutputType.InputImage)
@@ -25,20 +30,47 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="imageUrl"></param>
         /// <param name="fileId"></param>
         /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </param>
-        internal FunctionAndCustomToolCallOutputInputImageContent(FunctionAndCustomToolCallOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri imageUrl, string fileId, ImageDetail detail) : base(@type, additionalBinaryDataProperties)
+        /// <param name="promptCacheBreakpoint"></param>
+        internal FunctionAndCustomToolCallOutputInputImageContent(FunctionAndCustomToolCallOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri imageUrl, string fileId, ImageDetail detail, PromptCacheBreakpointConfig promptCacheBreakpoint) : base(@type, additionalBinaryDataProperties)
         {
-            ImageUrl = imageUrl;
-            FileId = fileId;
+            _imageUrl = imageUrl;
+            _fileId = fileId;
             Detail = detail;
+            PromptCacheBreakpoint = promptCacheBreakpoint;
         }
 
         /// <summary> Gets or sets the ImageUrl. </summary>
-        public Uri ImageUrl { get; set; }
+        public Uri ImageUrl
+        {
+            get
+            {
+                return _imageUrl;
+            }
+            set
+            {
+                _imageUrl = value;
+                _imageUrlIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the FileId. </summary>
-        public string FileId { get; set; }
+        public string FileId
+        {
+            get
+            {
+                return _fileId;
+            }
+            set
+            {
+                _fileId = value;
+                _fileIdIsDefined = true;
+            }
+        }
 
         /// <summary> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </summary>
         public ImageDetail Detail { get; set; }
+
+        /// <summary> Gets or sets the PromptCacheBreakpoint. </summary>
+        public PromptCacheBreakpointConfig PromptCacheBreakpoint { get; set; }
     }
 }

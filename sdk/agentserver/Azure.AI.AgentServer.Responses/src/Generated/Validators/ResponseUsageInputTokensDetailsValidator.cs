@@ -31,6 +31,13 @@ internal static partial class ResponseUsageInputTokensDetailsValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Required: cache_write_tokens
+        if (!element.TryGetProperty("cache_write_tokens", out var cacheWriteTokensProp))
+            errors.Add(new ValidationError("$.cache_write_tokens", "Required property 'cache_write_tokens' is missing"));
+        else
+        {
+        }
+
         // Required: cached_tokens
         if (!element.TryGetProperty("cached_tokens", out var cachedTokensProp))
             errors.Add(new ValidationError("$.cached_tokens", "Required property 'cached_tokens' is missing"));

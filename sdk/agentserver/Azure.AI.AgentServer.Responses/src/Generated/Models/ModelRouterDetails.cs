@@ -27,17 +27,22 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ModelRouterDetails"/>. </summary>
         /// <param name="mode"> The routing mode for the request. </param>
+        /// <param name="sessionAffinity"> Session affinity metadata for the routing decision. Omitted when affinity metadata is unavailable or the preview feature is not enabled. </param>
         /// <param name="routingTrace"> Ordered trace of routing decisions. Contains one entry for Chat Completions, and may contain multiple entries for Responses API or agent scenarios where multiple inference turns occur. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelRouterDetails(ModelRouterMode mode, IList<RoutingTraceEntry> routingTrace, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelRouterDetails(ModelRouterMode mode, SessionAffinityDetails sessionAffinity, IList<RoutingTraceEntry> routingTrace, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
+            SessionAffinity = sessionAffinity;
             RoutingTrace = routingTrace;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The routing mode for the request. </summary>
         public ModelRouterMode Mode { get; }
+
+        /// <summary> Session affinity metadata for the routing decision. Omitted when affinity metadata is unavailable or the preview feature is not enabled. </summary>
+        public SessionAffinityDetails SessionAffinity { get; }
 
         /// <summary> Ordered trace of routing decisions. Contains one entry for Chat Completions, and may contain multiple entries for Responses API or agent scenarios where multiple inference turns occur. </summary>
         public IList<RoutingTraceEntry> RoutingTrace { get; }

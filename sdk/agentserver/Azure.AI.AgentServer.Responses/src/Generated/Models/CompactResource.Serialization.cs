@@ -149,7 +149,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string @object = default;
             IList<ItemField> output = default;
             DateTimeOffset createdOn = default;
-            ResponseTokenUsage usage = default;
+            ResponseUsage usage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,18 +180,18 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("usage"u8))
                 {
-                    usage = ModelReaderWriter.Read<ResponseTokenUsage>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
+                    usage = ModelReaderWriter.Read<ResponseUsage>(prop.Value.GetUtf8Bytes(), options, AzureAIAgentServerResponsesContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CompactResource(
                 id,
                 @object,
-                output,
+                output ?? new ChangeTrackingList<ItemField>(),
                 createdOn,
                 usage,
                 additionalBinaryDataProperties);

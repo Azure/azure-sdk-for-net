@@ -16,6 +16,20 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private BinaryData _input;
+        private bool _inputIsDefined;
+        private string _previousResponseId;
+        private bool _previousResponseIdIsDefined;
+        private string _instructions;
+        private bool _instructionsIsDefined;
+        private string _promptCacheKey;
+        private bool _promptCacheKeyIsDefined;
+        private PromptCacheRetentionEnum? _promptCacheRetention;
+        private bool _promptCacheRetentionIsDefined;
+        private PromptCacheOptionsParam _promptCacheOptions;
+        private bool _promptCacheOptionsIsDefined;
+        private ServiceTierEnum? _serviceTier;
+        private bool _serviceTierIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CompactResponseMethodPublicBody"/>. </summary>
         /// <param name="model"> The model deployment to use for the compaction of this response. </param>
@@ -30,14 +44,20 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="previousResponseId"></param>
         /// <param name="instructions"></param>
         /// <param name="promptCacheKey"></param>
+        /// <param name="promptCacheRetention"></param>
+        /// <param name="promptCacheOptions"></param>
+        /// <param name="serviceTier"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CompactResponseMethodPublicBody(string model, BinaryData input, string previousResponseId, string instructions, string promptCacheKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CompactResponseMethodPublicBody(string model, BinaryData input, string previousResponseId, string instructions, string promptCacheKey, PromptCacheRetentionEnum? promptCacheRetention, PromptCacheOptionsParam promptCacheOptions, ServiceTierEnum? serviceTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
-            Input = input;
-            PreviousResponseId = previousResponseId;
-            Instructions = instructions;
-            PromptCacheKey = promptCacheKey;
+            _input = input;
+            _previousResponseId = previousResponseId;
+            _instructions = instructions;
+            _promptCacheKey = promptCacheKey;
+            _promptCacheRetention = promptCacheRetention;
+            _promptCacheOptions = promptCacheOptions;
+            _serviceTier = serviceTier;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -83,15 +103,66 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Input { get; }
+        public BinaryData Input
+        {
+            get
+            {
+                return _input;
+            }
+        }
 
         /// <summary> Gets the PreviousResponseId. </summary>
-        public string PreviousResponseId { get; }
+        public string PreviousResponseId
+        {
+            get
+            {
+                return _previousResponseId;
+            }
+        }
 
         /// <summary> Gets the Instructions. </summary>
-        public string Instructions { get; }
+        public string Instructions
+        {
+            get
+            {
+                return _instructions;
+            }
+        }
 
         /// <summary> Gets the PromptCacheKey. </summary>
-        public string PromptCacheKey { get; }
+        public string PromptCacheKey
+        {
+            get
+            {
+                return _promptCacheKey;
+            }
+        }
+
+        /// <summary> Gets the PromptCacheRetention. </summary>
+        public PromptCacheRetentionEnum? PromptCacheRetention
+        {
+            get
+            {
+                return _promptCacheRetention;
+            }
+        }
+
+        /// <summary> Gets the PromptCacheOptions. </summary>
+        public PromptCacheOptionsParam PromptCacheOptions
+        {
+            get
+            {
+                return _promptCacheOptions;
+            }
+        }
+
+        /// <summary> Gets the ServiceTier. </summary>
+        public ServiceTierEnum? ServiceTier
+        {
+            get
+            {
+                return _serviceTier;
+            }
+        }
     }
 }

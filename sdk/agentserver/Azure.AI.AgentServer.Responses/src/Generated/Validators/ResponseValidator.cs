@@ -100,7 +100,7 @@ internal static partial class ResponseValidator
         // Optional: conversation
         if (element.TryGetProperty("conversation", out var conversationProp) && conversationProp.ValueKind != JsonValueKind.Null)
         {
-            var conversationResult = ConversationReferenceValidator.Validate(conversationProp);
+            var conversationResult = ResponseConversationValidator.Validate(conversationProp);
             if (!conversationResult.IsValid)
             {
                 foreach (var e in conversationResult.Errors)
@@ -218,6 +218,17 @@ internal static partial class ResponseValidator
             }
         }
 
+        // Optional: moderation
+        if (element.TryGetProperty("moderation", out var moderationProp) && moderationProp.ValueKind != JsonValueKind.Null)
+        {
+            var moderationResult = ModerationValidator.Validate(moderationProp);
+            if (!moderationResult.IsValid)
+            {
+                foreach (var e in moderationResult.Errors)
+                    errors.Add(new ValidationError("$.moderation" + e.Path.Substring(1), e.Message));
+            }
+        }
+
         // Required: object
         if (!element.TryGetProperty("object", out var objectValProp))
             errors.Add(new ValidationError("$.object", "Required property 'object' is missing"));
@@ -286,11 +297,33 @@ internal static partial class ResponseValidator
             }
         }
 
+        // Optional: prompt_cache_diagnostics
+        if (element.TryGetProperty("prompt_cache_diagnostics", out var promptCacheDiagnosticsProp))
+        {
+            var promptCacheDiagnosticsResult = PromptCacheDiagnosticsValidator.Validate(promptCacheDiagnosticsProp);
+            if (!promptCacheDiagnosticsResult.IsValid)
+            {
+                foreach (var e in promptCacheDiagnosticsResult.Errors)
+                    errors.Add(new ValidationError("$.prompt_cache_diagnostics" + e.Path.Substring(1), e.Message));
+            }
+        }
+
         // Optional: prompt_cache_key
-        if (element.TryGetProperty("prompt_cache_key", out var promptCacheKeyProp))
+        if (element.TryGetProperty("prompt_cache_key", out var promptCacheKeyProp) && promptCacheKeyProp.ValueKind != JsonValueKind.Null)
         {
             if (promptCacheKeyProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.prompt_cache_key", $"Expected string, got {promptCacheKeyProp.ValueKind}"));
+        }
+
+        // Optional: prompt_cache_options
+        if (element.TryGetProperty("prompt_cache_options", out var promptCacheOptionsProp))
+        {
+            var promptCacheOptionsResult = PromptCacheOptionsValidator.Validate(promptCacheOptionsProp);
+            if (!promptCacheOptionsResult.IsValid)
+            {
+                foreach (var e in promptCacheOptionsResult.Errors)
+                    errors.Add(new ValidationError("$.prompt_cache_options" + e.Path.Substring(1), e.Message));
+            }
         }
 
         // Optional: prompt_cache_retention
@@ -298,8 +331,8 @@ internal static partial class ResponseValidator
         {
             if (promptCacheRetentionProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.prompt_cache_retention", $"Expected string, got {promptCacheRetentionProp.ValueKind}"));
-            else if (promptCacheRetentionProp.GetString() is not ("in-memory" or "24h"))
-                errors.Add(new ValidationError("$.prompt_cache_retention", $"Value '{promptCacheRetentionProp.GetString()}' is not valid. Allowed: in-memory, 24h"));
+            else if (promptCacheRetentionProp.GetString() is not ("in_memory" or "24h"))
+                errors.Add(new ValidationError("$.prompt_cache_retention", $"Value '{promptCacheRetentionProp.GetString()}' is not valid. Allowed: in_memory, 24h"));
         }
 
         // Optional: reasoning
@@ -314,16 +347,10 @@ internal static partial class ResponseValidator
         }
 
         // Optional: safety_identifier
-        if (element.TryGetProperty("safety_identifier", out var safetyIdentifierProp))
+        if (element.TryGetProperty("safety_identifier", out var safetyIdentifierProp) && safetyIdentifierProp.ValueKind != JsonValueKind.Null)
         {
             if (safetyIdentifierProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.safety_identifier", $"Expected string, got {safetyIdentifierProp.ValueKind}"));
-            else
-            {
-                var strVal = safetyIdentifierProp.GetString()!;
-                if (strVal.Length > 64)
-                    errors.Add(new ValidationError("$.safety_identifier", $"String length {strVal.Length} exceeds maximum 64"));
-            }
         }
 
         // Optional: service_tier
@@ -331,8 +358,8 @@ internal static partial class ResponseValidator
         {
             if (serviceTierProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.service_tier", $"Expected string, got {serviceTierProp.ValueKind}"));
-            else if (serviceTierProp.GetString() is not ("auto" or "default" or "flex" or "scale" or "priority"))
-                errors.Add(new ValidationError("$.service_tier", $"Value '{serviceTierProp.GetString()}' is not valid. Allowed: auto, default, flex, scale, priority"));
+            else if (serviceTierProp.GetString() is not ("auto" or "default" or "flex" or "scale" or "priority" or "fast" or "ultrafast"))
+                errors.Add(new ValidationError("$.service_tier", $"Value '{serviceTierProp.GetString()}' is not valid. Allowed: auto, default, flex, scale, priority, fast, ultrafast"));
         }
 
         // Optional: status

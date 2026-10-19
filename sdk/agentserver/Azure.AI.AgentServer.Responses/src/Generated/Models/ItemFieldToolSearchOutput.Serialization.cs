@@ -95,7 +95,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStringValue(Execution.ToSerialString());
             writer.WritePropertyName("tools"u8);
             writer.WriteStartArray();
-            foreach (ResponseTool item in Tools)
+            foreach (Tool item in Tools)
             {
                 if (item == null)
                 {
@@ -144,7 +144,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string id = default;
             string callId = default;
             ToolSearchExecutionType execution = default;
-            IList<ResponseTool> tools = default;
+            IList<Tool> tools = default;
             FunctionCallOutputStatusEnum status = default;
             string createdBy = default;
             foreach (var prop in element.EnumerateObject())
@@ -176,7 +176,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    List<ResponseTool> array = new List<ResponseTool>();
+                    List<Tool> array = new List<Tool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -185,7 +185,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<ResponseTool>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default));
+                            array.Add(ModelReaderWriter.Read<Tool>(item.GetUtf8Bytes(), options, AzureAIAgentServerResponsesContext.Default));
                         }
                     }
                     tools = array;
@@ -203,7 +203,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemFieldToolSearchOutput(
@@ -212,7 +212,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 id,
                 callId,
                 execution,
-                tools,
+                tools ?? new ChangeTrackingList<Tool>(),
                 status,
                 createdBy);
         }

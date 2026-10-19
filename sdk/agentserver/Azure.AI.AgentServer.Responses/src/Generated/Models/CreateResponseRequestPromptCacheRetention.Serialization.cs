@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this CreateResponseRequestPromptCacheRetention value) => value switch
         {
-            CreateResponseRequestPromptCacheRetention.InMemory => "in-memory",
+            CreateResponseRequestPromptCacheRetention.InMemory => "in_memory",
             CreateResponseRequestPromptCacheRetention._24h => "24h",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CreateResponseRequestPromptCacheRetention value.")
         };
@@ -21,7 +21,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="value"> The value to deserialize. </param>
         public static CreateResponseRequestPromptCacheRetention ToCreateResponseRequestPromptCacheRetention(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in-memory"))
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_memory"))
             {
                 return CreateResponseRequestPromptCacheRetention.InMemory;
             }

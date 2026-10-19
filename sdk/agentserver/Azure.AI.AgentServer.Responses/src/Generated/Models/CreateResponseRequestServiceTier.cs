@@ -18,6 +18,10 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Scale. </summary>
         Scale,
         /// <summary> Priority. </summary>
-        Priority
+        Priority,
+        /// <summary> Fast. </summary>
+        Fast,
+        /// <summary> Ultrafast. </summary>
+        Ultrafast
     }
 }

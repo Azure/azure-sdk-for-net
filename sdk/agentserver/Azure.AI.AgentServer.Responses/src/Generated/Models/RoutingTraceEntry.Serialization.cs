@@ -162,10 +162,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RoutingTraceEntry(outputId, latencyMs, attempts, additionalBinaryDataProperties);
+            return new RoutingTraceEntry(outputId, latencyMs, attempts ?? new ChangeTrackingList<ModelRouterAttempt>(), additionalBinaryDataProperties);
         }
     }
 }

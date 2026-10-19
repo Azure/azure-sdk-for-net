@@ -63,6 +63,17 @@ internal static partial class ModelRouterDetailsValidator
             }
         }
 
+        // Optional: session_affinity
+        if (element.TryGetProperty("session_affinity", out var sessionAffinityProp))
+        {
+            var sessionAffinityResult = SessionAffinityDetailsValidator.Validate(sessionAffinityProp);
+            if (!sessionAffinityResult.IsValid)
+            {
+                foreach (var e in sessionAffinityResult.Errors)
+                    errors.Add(new ValidationError("$.session_affinity" + e.Path.Substring(1), e.Message));
+            }
+        }
+
         ValidateCustom(element, errors);
 
         return errors.Count == 0 ? ValidationResult.Success : ValidationResult.Failure(errors);

@@ -139,8 +139,8 @@ internal static partial class ImageGenToolValidator
         {
             if (qualityProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.quality", $"Expected string, got {qualityProp.ValueKind}"));
-            else if (qualityProp.GetString() is not ("low" or "medium" or "high" or "auto"))
-                errors.Add(new ValidationError("$.quality", $"Value '{qualityProp.GetString()}' is not valid. Allowed: low, medium, high, auto"));
+            else if (qualityProp.GetString() is not ("low" or "medium" or "high" or "xhigh" or "max" or "auto"))
+                errors.Add(new ValidationError("$.quality", $"Value '{qualityProp.GetString()}' is not valid. Allowed: low, medium, high, xhigh, max, auto"));
         }
 
         // Optional: size
@@ -148,8 +148,6 @@ internal static partial class ImageGenToolValidator
         {
             if (sizeProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.size", $"Expected string, got {sizeProp.ValueKind}"));
-            else if (sizeProp.GetString() is not ("1024x1024" or "1024x1536" or "1536x1024" or "auto"))
-                errors.Add(new ValidationError("$.size", $"Value '{sizeProp.GetString()}' is not valid. Allowed: 1024x1024, 1024x1536, 1536x1024, auto"));
         }
 
         // Optional: tool_configs

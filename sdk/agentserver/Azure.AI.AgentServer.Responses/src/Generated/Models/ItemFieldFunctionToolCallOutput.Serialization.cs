@@ -84,8 +84,33 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("call_id"u8);
-            writer.WriteStringValue(CallId);
+            if (Optional.IsDefined(CallId))
+            {
+                writer.WritePropertyName("call_id"u8);
+                writer.WriteStringValue(CallId);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            if (Optional.IsDefined(Caller, _callerIsDefined))
+            {
+                if (Caller != null)
+                {
+                    writer.WritePropertyName("caller"u8);
+                    writer.WriteObjectValue(Caller, options);
+                }
+                else
+                {
+                    writer.WriteNull("caller"u8);
+                }
+            }
             writer.WritePropertyName("output"u8);
 #if NET6_0_OR_GREATER
             writer.WriteRawValue(Output);
@@ -131,6 +156,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
+            string name = default;
+            string @namespace = default;
+            bool callerIsDefined = false;
+            ToolCallCallerParam caller = default;
             BinaryData output = default;
             OutputItemFunctionToolCallOutputStatus? status = default;
             foreach (var prop in element.EnumerateObject())
@@ -150,9 +179,30 @@ namespace Azure.AI.AgentServer.Responses.Models
                     callId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("namespace"u8))
+                {
+                    @namespace = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("caller"u8))
+                {
+                    callerIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        caller = null;
+                        continue;
+                    }
+                    caller = ToolCallCallerParam.DeserializeToolCallCallerParam(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("output"u8))
                 {
-                    output = BinaryData.FromString(prop.Value.GetRawText());
+                    output = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -166,7 +216,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemFieldFunctionToolCallOutput(
@@ -174,8 +224,14 @@ namespace Azure.AI.AgentServer.Responses.Models
                 additionalBinaryDataProperties,
                 id,
                 callId,
+                name,
+                @namespace,
+                caller,
                 output,
-                status);
+                status)
+            {
+                _callerIsDefined = callerIsDefined
+            };
         }
     }
 }

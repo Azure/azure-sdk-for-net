@@ -11,7 +11,11 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> MaxOutputTokens. </summary>
         MaxOutputTokens,
+        /// <summary> MaxMessages. </summary>
+        MaxMessages,
         /// <summary> ContentFilter. </summary>
-        ContentFilter
+        ContentFilter,
+        /// <summary> Steered. </summary>
+        Steered
     }
 }

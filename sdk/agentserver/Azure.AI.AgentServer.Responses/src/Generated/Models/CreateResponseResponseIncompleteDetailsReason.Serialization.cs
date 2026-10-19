@@ -14,7 +14,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         public static string ToSerialString(this CreateResponseResponseIncompleteDetailsReason value) => value switch
         {
             CreateResponseResponseIncompleteDetailsReason.MaxOutputTokens => "max_output_tokens",
+            CreateResponseResponseIncompleteDetailsReason.MaxMessages => "max_messages",
             CreateResponseResponseIncompleteDetailsReason.ContentFilter => "content_filter",
+            CreateResponseResponseIncompleteDetailsReason.Steered => "steered",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CreateResponseResponseIncompleteDetailsReason value.")
         };
 
@@ -25,9 +27,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return CreateResponseResponseIncompleteDetailsReason.MaxOutputTokens;
             }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "max_messages"))
+            {
+                return CreateResponseResponseIncompleteDetailsReason.MaxMessages;
+            }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "content_filter"))
             {
                 return CreateResponseResponseIncompleteDetailsReason.ContentFilter;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "steered"))
+            {
+                return CreateResponseResponseIncompleteDetailsReason.Steered;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CreateResponseResponseIncompleteDetailsReason value.");
         }

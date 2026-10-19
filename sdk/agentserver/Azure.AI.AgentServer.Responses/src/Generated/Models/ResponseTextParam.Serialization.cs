@@ -15,7 +15,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// <summary>
     /// Configuration options for a text response from the model. Can be plain
     /// text or structured JSON data. Learn more:
-    /// <list type="bullet"><item><description>[Text inputs and outputs](/docs/guides/text)</description></item><item><description>[Structured Outputs](/docs/guides/structured-outputs)</description></item></list>
+    /// <list type="bullet"><item><description>[Text inputs and outputs](https://developers.openai.com/api/docs/guides/text)</description></item><item><description>[Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs)</description></item></list>
     /// </summary>
     public partial class ResponseTextParam : IJsonModel<ResponseTextParam>
     {
@@ -82,10 +82,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format, options);
             }
-            if (Optional.IsDefined(Verbosity))
+            if (Optional.IsDefined(Verbosity, _verbosityIsDefined))
             {
-                writer.WritePropertyName("verbosity"u8);
-                writer.WriteStringValue(Verbosity.Value.ToSerialString());
+                if (Verbosity != null)
+                {
+                    writer.WritePropertyName("verbosity"u8);
+                    writer.WriteStringValue(Verbosity.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("verbosity"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -130,6 +137,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             TextResponseFormatConfiguration format = default;
+            bool verbosityIsDefined = false;
             ResponseTextParamVerbosity? verbosity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -145,6 +153,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("verbosity"u8))
                 {
+                    verbosityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         verbosity = null;
@@ -155,10 +164,13 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResponseTextParam(format, verbosity, additionalBinaryDataProperties);
+            return new ResponseTextParam(format, verbosity, additionalBinaryDataProperties)
+            {
+                _verbosityIsDefined = verbosityIsDefined
+            };
         }
     }
 }

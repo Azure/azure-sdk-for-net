@@ -92,6 +92,78 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 writer.WriteNull("result"u8);
             }
+            if (Optional.IsDefined(Size, _sizeIsDefined))
+            {
+                if (Size != null)
+                {
+                    writer.WritePropertyName("size"u8);
+                    writer.WriteStringValue(Size.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("size"u8);
+                }
+            }
+            if (Optional.IsDefined(Quality, _qualityIsDefined))
+            {
+                if (Quality != null)
+                {
+                    writer.WritePropertyName("quality"u8);
+                    writer.WriteStringValue(Quality.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("quality"u8);
+                }
+            }
+            if (Optional.IsDefined(Action, _actionIsDefined))
+            {
+                if (Action != null)
+                {
+                    writer.WritePropertyName("action"u8);
+                    writer.WriteStringValue(Action.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("action"u8);
+                }
+            }
+            if (Optional.IsDefined(Background, _backgroundIsDefined))
+            {
+                if (Background != null)
+                {
+                    writer.WritePropertyName("background"u8);
+                    writer.WriteStringValue(Background.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("background"u8);
+                }
+            }
+            if (Optional.IsDefined(OutputFormat, _outputFormatIsDefined))
+            {
+                if (OutputFormat != null)
+                {
+                    writer.WritePropertyName("output_format"u8);
+                    writer.WriteStringValue(OutputFormat.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("output_format"u8);
+                }
+            }
+            if (Optional.IsDefined(RevisedPrompt, _revisedPromptIsDefined))
+            {
+                if (RevisedPrompt != null)
+                {
+                    writer.WritePropertyName("revised_prompt"u8);
+                    writer.WriteStringValue(RevisedPrompt);
+                }
+                else
+                {
+                    writer.WriteNull("revised_prompt"u8);
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -124,6 +196,18 @@ namespace Azure.AI.AgentServer.Responses.Models
             string id = default;
             ItemImageGenToolCallStatus status = default;
             string result = default;
+            bool sizeIsDefined = false;
+            ItemImageGenToolCallSize? size = default;
+            bool qualityIsDefined = false;
+            ItemImageGenToolCallQuality? quality = default;
+            bool actionIsDefined = false;
+            ImageGenActionEnum? action = default;
+            bool backgroundIsDefined = false;
+            ImageBackground? background = default;
+            bool outputFormatIsDefined = false;
+            ImageOutputFormat? outputFormat = default;
+            bool revisedPromptIsDefined = false;
+            string revisedPrompt = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -151,12 +235,97 @@ namespace Azure.AI.AgentServer.Responses.Models
                     result = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("size"u8))
+                {
+                    sizeIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        size = null;
+                        continue;
+                    }
+                    size = new ItemImageGenToolCallSize(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("quality"u8))
+                {
+                    qualityIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        quality = null;
+                        continue;
+                    }
+                    quality = prop.Value.GetString().ToItemImageGenToolCallQuality();
+                    continue;
+                }
+                if (prop.NameEquals("action"u8))
+                {
+                    actionIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        action = null;
+                        continue;
+                    }
+                    action = prop.Value.GetString().ToImageGenActionEnum();
+                    continue;
+                }
+                if (prop.NameEquals("background"u8))
+                {
+                    backgroundIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        background = null;
+                        continue;
+                    }
+                    background = prop.Value.GetString().ToImageBackground();
+                    continue;
+                }
+                if (prop.NameEquals("output_format"u8))
+                {
+                    outputFormatIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        outputFormat = null;
+                        continue;
+                    }
+                    outputFormat = prop.Value.GetString().ToImageOutputFormat();
+                    continue;
+                }
+                if (prop.NameEquals("revised_prompt"u8))
+                {
+                    revisedPromptIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        revisedPrompt = null;
+                        continue;
+                    }
+                    revisedPrompt = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ItemFieldImageGenToolCall(@type, additionalBinaryDataProperties, id, status, result);
+            return new ItemFieldImageGenToolCall(
+                @type,
+                additionalBinaryDataProperties,
+                id,
+                status,
+                result,
+                size,
+                quality,
+                action,
+                background,
+                outputFormat,
+                revisedPrompt)
+            {
+                _sizeIsDefined = sizeIsDefined,
+                _qualityIsDefined = qualityIsDefined,
+                _actionIsDefined = actionIsDefined,
+                _backgroundIsDefined = backgroundIsDefined,
+                _outputFormatIsDefined = outputFormatIsDefined,
+                _revisedPromptIsDefined = revisedPromptIsDefined
+            };
         }
     }
 }

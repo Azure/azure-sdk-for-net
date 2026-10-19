@@ -86,80 +86,135 @@ namespace Azure.AI.AgentServer.Responses
             {
                 throw new FormatException($"The model {nameof(CreateResponseRequest)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Metadata))
+            if (Optional.IsDefined(Metadata, _metadataIsDefined))
             {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                if (Metadata != null)
+                {
+                    writer.WritePropertyName("metadata"u8);
+                    writer.WriteObjectValue(Metadata, options);
+                }
+                else
+                {
+                    writer.WriteNull("metadata"u8);
+                }
             }
-            if (Optional.IsDefined(TopLogprobs))
+            if (Optional.IsDefined(TopLogprobs, _topLogprobsIsDefined))
             {
-                writer.WritePropertyName("top_logprobs"u8);
-                writer.WriteNumberValue(TopLogprobs.Value);
+                if (TopLogprobs != null)
+                {
+                    writer.WritePropertyName("top_logprobs"u8);
+                    writer.WriteNumberValue(TopLogprobs.Value);
+                }
+                else
+                {
+                    writer.WriteNull("top_logprobs"u8);
+                }
             }
-            if (Optional.IsDefined(Temperature))
+            if (Optional.IsDefined(Temperature, _temperatureIsDefined))
             {
-                writer.WritePropertyName("temperature"u8);
-                writer.WriteNumberValue(Temperature.Value);
+                if (Temperature != null)
+                {
+                    writer.WritePropertyName("temperature"u8);
+                    writer.WriteNumberValue(Temperature.Value);
+                }
+                else
+                {
+                    writer.WriteNull("temperature"u8);
+                }
             }
-            if (Optional.IsDefined(TopP))
+            if (Optional.IsDefined(TopP, _topPIsDefined))
             {
-                writer.WritePropertyName("top_p"u8);
-                writer.WriteNumberValue(TopP.Value);
+                if (TopP != null)
+                {
+                    writer.WritePropertyName("top_p"u8);
+                    writer.WriteNumberValue(TopP.Value);
+                }
+                else
+                {
+                    writer.WriteNull("top_p"u8);
+                }
             }
             if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Optional.IsDefined(SafetyIdentifier))
+            if (Optional.IsDefined(SafetyIdentifier, _safetyIdentifierIsDefined))
             {
-                writer.WritePropertyName("safety_identifier"u8);
-                writer.WriteStringValue(SafetyIdentifier);
+                if (SafetyIdentifier != null)
+                {
+                    writer.WritePropertyName("safety_identifier"u8);
+                    writer.WriteStringValue(SafetyIdentifier);
+                }
+                else
+                {
+                    writer.WriteNull("safety_identifier"u8);
+                }
             }
-            if (Optional.IsDefined(PromptCacheKey))
+            if (Optional.IsDefined(PromptCacheKey, _promptCacheKeyIsDefined))
             {
-                writer.WritePropertyName("prompt_cache_key"u8);
-                writer.WriteStringValue(PromptCacheKey);
+                if (PromptCacheKey != null)
+                {
+                    writer.WritePropertyName("prompt_cache_key"u8);
+                    writer.WriteStringValue(PromptCacheKey);
+                }
+                else
+                {
+                    writer.WriteNull("prompt_cache_key"u8);
+                }
             }
-            if (Optional.IsDefined(ServiceTier))
+            if (Optional.IsDefined(PromptCacheRetention, _promptCacheRetentionIsDefined))
             {
-                writer.WritePropertyName("service_tier"u8);
-                writer.WriteStringValue(ServiceTier.Value.ToSerialString());
+                if (PromptCacheRetention != null)
+                {
+                    writer.WritePropertyName("prompt_cache_retention"u8);
+                    writer.WriteStringValue(PromptCacheRetention.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("prompt_cache_retention"u8);
+                }
             }
-            if (Optional.IsDefined(PromptCacheRetention))
+            if (Optional.IsDefined(PreviousResponseId, _previousResponseIdIsDefined))
             {
-                writer.WritePropertyName("prompt_cache_retention"u8);
-                writer.WriteStringValue(PromptCacheRetention.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(PreviousResponseId))
-            {
-                writer.WritePropertyName("previous_response_id"u8);
-                writer.WriteStringValue(PreviousResponseId);
+                if (PreviousResponseId != null)
+                {
+                    writer.WritePropertyName("previous_response_id"u8);
+                    writer.WriteStringValue(PreviousResponseId);
+                }
+                else
+                {
+                    writer.WriteNull("previous_response_id"u8);
+                }
             }
             if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (Optional.IsDefined(Reasoning))
+            if (Optional.IsDefined(Background, _backgroundIsDefined))
             {
-                writer.WritePropertyName("reasoning"u8);
-                writer.WriteObjectValue(Reasoning, options);
+                if (Background != null)
+                {
+                    writer.WritePropertyName("background"u8);
+                    writer.WriteBooleanValue(Background.Value);
+                }
+                else
+                {
+                    writer.WriteNull("background"u8);
+                }
             }
-            if (Optional.IsDefined(Background))
+            if (Optional.IsDefined(MaxToolCalls, _maxToolCallsIsDefined))
             {
-                writer.WritePropertyName("background"u8);
-                writer.WriteBooleanValue(Background.Value);
-            }
-            if (Optional.IsDefined(MaxOutputTokens))
-            {
-                writer.WritePropertyName("max_output_tokens"u8);
-                writer.WriteNumberValue(MaxOutputTokens.Value);
-            }
-            if (Optional.IsDefined(MaxToolCalls))
-            {
-                writer.WritePropertyName("max_tool_calls"u8);
-                writer.WriteNumberValue(MaxToolCalls.Value);
+                if (MaxToolCalls != null)
+                {
+                    writer.WritePropertyName("max_tool_calls"u8);
+                    writer.WriteNumberValue(MaxToolCalls.Value);
+                }
+                else
+                {
+                    writer.WriteNull("max_tool_calls"u8);
+                }
             }
             if (Optional.IsDefined(Text))
             {
@@ -170,7 +225,7 @@ namespace Azure.AI.AgentServer.Responses
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
-                foreach (ResponseTool item in Tools)
+                foreach (Tool item in Tools)
                 {
                     if (item == null)
                     {
@@ -198,10 +253,46 @@ namespace Azure.AI.AgentServer.Responses
                 writer.WritePropertyName("prompt"u8);
                 writer.WriteObjectValue(Prompt, options);
             }
-            if (Optional.IsDefined(Truncation))
+            if (Optional.IsDefined(PromptCacheOptions))
             {
-                writer.WritePropertyName("truncation"u8);
-                writer.WriteStringValue(Truncation.Value.ToSerialString());
+                writer.WritePropertyName("prompt_cache_options"u8);
+                writer.WriteObjectValue(PromptCacheOptions, options);
+            }
+            if (Optional.IsDefined(ServiceTier, _serviceTierIsDefined))
+            {
+                if (ServiceTier != null)
+                {
+                    writer.WritePropertyName("service_tier"u8);
+                    writer.WriteStringValue(ServiceTier.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("service_tier"u8);
+                }
+            }
+            if (Optional.IsDefined(Truncation, _truncationIsDefined))
+            {
+                if (Truncation != null)
+                {
+                    writer.WritePropertyName("truncation"u8);
+                    writer.WriteStringValue(Truncation.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("truncation"u8);
+                }
+            }
+            if (Optional.IsDefined(Reasoning, _reasoningIsDefined))
+            {
+                if (Reasoning != null)
+                {
+                    writer.WritePropertyName("reasoning"u8);
+                    writer.WriteObjectValue(Reasoning, options);
+                }
+                else
+                {
+                    writer.WriteNull("reasoning"u8);
+                }
             }
             if (Optional.IsDefined(Input))
             {
@@ -217,60 +308,133 @@ namespace Azure.AI.AgentServer.Responses
             }
             if (Optional.IsCollectionDefined(Include))
             {
-                writer.WritePropertyName("include"u8);
-                writer.WriteStartArray();
-                foreach (IncludeEnum item in Include)
+                if (Include != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("include"u8);
+                    writer.WriteStartArray();
+                    foreach (IncludeEnum item in Include)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ParallelToolCalls))
-            {
-                writer.WritePropertyName("parallel_tool_calls"u8);
-                writer.WriteBooleanValue(ParallelToolCalls.Value);
-            }
-            if (Optional.IsDefined(Store))
-            {
-                writer.WritePropertyName("store"u8);
-                writer.WriteBooleanValue(Store.Value);
-            }
-            if (Optional.IsDefined(Instructions))
-            {
-                writer.WritePropertyName("instructions"u8);
-                writer.WriteStringValue(Instructions);
-            }
-            if (Optional.IsDefined(Stream))
-            {
-                writer.WritePropertyName("stream"u8);
-                writer.WriteBooleanValue(Stream.Value);
-            }
-            if (Optional.IsDefined(StreamOptions))
-            {
-                writer.WritePropertyName("stream_options"u8);
-                writer.WriteObjectValue(StreamOptions, options);
-            }
-            if (Optional.IsDefined(Conversation))
-            {
-                writer.WritePropertyName("conversation"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(Conversation);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Conversation))
+                else
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    writer.WriteNull("include"u8);
                 }
-#endif
+            }
+            if (Optional.IsDefined(ParallelToolCalls, _parallelToolCallsIsDefined))
+            {
+                if (ParallelToolCalls != null)
+                {
+                    writer.WritePropertyName("parallel_tool_calls"u8);
+                    writer.WriteBooleanValue(ParallelToolCalls.Value);
+                }
+                else
+                {
+                    writer.WriteNull("parallel_tool_calls"u8);
+                }
+            }
+            if (Optional.IsDefined(Store, _storeIsDefined))
+            {
+                if (Store != null)
+                {
+                    writer.WritePropertyName("store"u8);
+                    writer.WriteBooleanValue(Store.Value);
+                }
+                else
+                {
+                    writer.WriteNull("store"u8);
+                }
+            }
+            if (Optional.IsDefined(Instructions, _instructionsIsDefined))
+            {
+                if (Instructions != null)
+                {
+                    writer.WritePropertyName("instructions"u8);
+                    writer.WriteStringValue(Instructions);
+                }
+                else
+                {
+                    writer.WriteNull("instructions"u8);
+                }
+            }
+            if (Optional.IsDefined(Moderation, _moderationIsDefined))
+            {
+                if (Moderation != null)
+                {
+                    writer.WritePropertyName("moderation"u8);
+                    writer.WriteObjectValue(Moderation, options);
+                }
+                else
+                {
+                    writer.WriteNull("moderation"u8);
+                }
+            }
+            if (Optional.IsDefined(Stream, _streamIsDefined))
+            {
+                if (Stream != null)
+                {
+                    writer.WritePropertyName("stream"u8);
+                    writer.WriteBooleanValue(Stream.Value);
+                }
+                else
+                {
+                    writer.WriteNull("stream"u8);
+                }
+            }
+            if (Optional.IsDefined(StreamOptions, _streamOptionsIsDefined))
+            {
+                if (StreamOptions != null)
+                {
+                    writer.WritePropertyName("stream_options"u8);
+                    writer.WriteObjectValue(StreamOptions, options);
+                }
+                else
+                {
+                    writer.WriteNull("stream_options"u8);
+                }
+            }
+            if (Optional.IsDefined(Conversation, _conversationIsDefined))
+            {
+                if (Conversation != null)
+                {
+                    writer.WritePropertyName("conversation"u8);
+                    writer.WriteObjectValue(Conversation, options);
+                }
+                else
+                {
+                    writer.WriteNull("conversation"u8);
+                }
             }
             if (Optional.IsCollectionDefined(ContextManagement))
             {
-                writer.WritePropertyName("context_management"u8);
-                writer.WriteStartArray();
-                foreach (ContextManagementParam item in ContextManagement)
+                if (ContextManagement != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("context_management"u8);
+                    writer.WriteStartArray();
+                    foreach (ContextManagementParam item in ContextManagement)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("context_management"u8);
+                }
+            }
+            if (Optional.IsDefined(MaxOutputTokens, _maxOutputTokensIsDefined))
+            {
+                if (MaxOutputTokens != null)
+                {
+                    writer.WritePropertyName("max_output_tokens"u8);
+                    writer.WriteNumberValue(MaxOutputTokens.Value);
+                }
+                else
+                {
+                    writer.WriteNull("max_output_tokens"u8);
+                }
             }
             if (Optional.IsDefined(Agent))
             {
@@ -315,6 +479,11 @@ namespace Azure.AI.AgentServer.Responses
                 writer.WritePropertyName("user_security_context"u8);
                 writer.WriteObjectValue(UserSecurityContext, options);
             }
+            if (Optional.IsDefined(RoutingConfig))
+            {
+                writer.WritePropertyName("routing_config"u8);
+                writer.WriteObjectValue(RoutingConfig, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -357,45 +526,70 @@ namespace Azure.AI.AgentServer.Responses
             {
                 return null;
             }
+            bool metadataIsDefined = false;
             Metadata metadata = default;
+            bool topLogprobsIsDefined = false;
             long? topLogprobs = default;
+            bool temperatureIsDefined = false;
             double? temperature = default;
+            bool topPIsDefined = false;
             double? topP = default;
             string user = default;
+            bool safetyIdentifierIsDefined = false;
             string safetyIdentifier = default;
+            bool promptCacheKeyIsDefined = false;
             string promptCacheKey = default;
-            CreateResponseRequestServiceTier? serviceTier = default;
+            bool promptCacheRetentionIsDefined = false;
             CreateResponseRequestPromptCacheRetention? promptCacheRetention = default;
+            bool previousResponseIdIsDefined = false;
             string previousResponseId = default;
             string model = default;
-            Reasoning reasoning = default;
+            bool backgroundIsDefined = false;
             bool? background = default;
-            long? maxOutputTokens = default;
+            bool maxToolCallsIsDefined = false;
             long? maxToolCalls = default;
             ResponseTextParam text = default;
-            IList<ResponseTool> tools = default;
+            IList<Tool> tools = default;
             BinaryData toolChoice = default;
             Prompt prompt = default;
+            ResponsePromptCacheOptionsParam promptCacheOptions = default;
+            bool serviceTierIsDefined = false;
+            CreateResponseRequestServiceTier? serviceTier = default;
+            bool truncationIsDefined = false;
             CreateResponseRequestTruncation? truncation = default;
+            bool reasoningIsDefined = false;
+            Reasoning reasoning = default;
             BinaryData input = default;
-            IList<IncludeEnum> include = default;
+            IList<IncludeEnum> include = new ChangeTrackingList<IncludeEnum>();
+            bool parallelToolCallsIsDefined = false;
             bool? parallelToolCalls = default;
+            bool storeIsDefined = false;
             bool? store = default;
+            bool instructionsIsDefined = false;
             string instructions = default;
+            bool moderationIsDefined = false;
+            ModerationParam moderation = default;
+            bool streamIsDefined = false;
             bool? stream = default;
+            bool streamOptionsIsDefined = false;
             ResponseStreamOptions streamOptions = default;
-            BinaryData conversation = default;
-            IList<ContextManagementParam> contextManagement = default;
+            bool conversationIsDefined = false;
+            ResponseConversationOptions conversation = default;
+            IList<ContextManagementParam> contextManagement = new ChangeTrackingList<ContextManagementParam>();
+            bool maxOutputTokensIsDefined = false;
+            long? maxOutputTokens = default;
             AgentReference agent = default;
             string agentSessionId = default;
             AgentReference agentReference = default;
             IDictionary<string, BinaryData> structuredInputs = default;
             AzureUserSecurityContext userSecurityContext = default;
+            RoutingConfiguration routingConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("metadata"u8))
                 {
+                    metadataIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         metadata = null;
@@ -406,6 +600,7 @@ namespace Azure.AI.AgentServer.Responses
                 }
                 if (prop.NameEquals("top_logprobs"u8))
                 {
+                    topLogprobsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         topLogprobs = null;
@@ -416,6 +611,7 @@ namespace Azure.AI.AgentServer.Responses
                 }
                 if (prop.NameEquals("temperature"u8))
                 {
+                    temperatureIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         temperature = null;
@@ -426,6 +622,7 @@ namespace Azure.AI.AgentServer.Responses
                 }
                 if (prop.NameEquals("top_p"u8))
                 {
+                    topPIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         topP = null;
@@ -441,26 +638,29 @@ namespace Azure.AI.AgentServer.Responses
                 }
                 if (prop.NameEquals("safety_identifier"u8))
                 {
+                    safetyIdentifierIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        safetyIdentifier = null;
+                        continue;
+                    }
                     safetyIdentifier = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("prompt_cache_key"u8))
                 {
-                    promptCacheKey = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("service_tier"u8))
-                {
+                    promptCacheKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        serviceTier = null;
+                        promptCacheKey = null;
                         continue;
                     }
-                    serviceTier = prop.Value.GetString().ToCreateResponseRequestServiceTier();
+                    promptCacheKey = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("prompt_cache_retention"u8))
                 {
+                    promptCacheRetentionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         promptCacheRetention = null;
@@ -471,6 +671,7 @@ namespace Azure.AI.AgentServer.Responses
                 }
                 if (prop.NameEquals("previous_response_id"u8))
                 {
+                    previousResponseIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         previousResponseId = null;
@@ -484,18 +685,9 @@ namespace Azure.AI.AgentServer.Responses
                     model = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("reasoning"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        reasoning = null;
-                        continue;
-                    }
-                    reasoning = Reasoning.DeserializeReasoning(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("background"u8))
                 {
+                    backgroundIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         background = null;
@@ -504,18 +696,9 @@ namespace Azure.AI.AgentServer.Responses
                     background = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("max_output_tokens"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        maxOutputTokens = null;
-                        continue;
-                    }
-                    maxOutputTokens = prop.Value.GetInt64();
-                    continue;
-                }
                 if (prop.NameEquals("max_tool_calls"u8))
                 {
+                    maxToolCallsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         maxToolCalls = null;
@@ -539,7 +722,7 @@ namespace Azure.AI.AgentServer.Responses
                     {
                         continue;
                     }
-                    List<ResponseTool> array = new List<ResponseTool>();
+                    List<Tool> array = new List<Tool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -548,7 +731,7 @@ namespace Azure.AI.AgentServer.Responses
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<ResponseTool>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default));
+                            array.Add(ModelReaderWriter.Read<Tool>(item.GetUtf8Bytes(), options, AzureAIAgentServerResponsesContext.Default));
                         }
                     }
                     tools = array;
@@ -560,7 +743,7 @@ namespace Azure.AI.AgentServer.Responses
                     {
                         continue;
                     }
-                    toolChoice = BinaryData.FromString(prop.Value.GetRawText());
+                    toolChoice = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("prompt"u8))
@@ -572,8 +755,29 @@ namespace Azure.AI.AgentServer.Responses
                     prompt = Prompt.DeserializePrompt(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("prompt_cache_options"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    promptCacheOptions = ResponsePromptCacheOptionsParam.DeserializeResponsePromptCacheOptionsParam(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("service_tier"u8))
+                {
+                    serviceTierIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        serviceTier = null;
+                        continue;
+                    }
+                    serviceTier = prop.Value.GetString().ToCreateResponseRequestServiceTier();
+                    continue;
+                }
                 if (prop.NameEquals("truncation"u8))
                 {
+                    truncationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         truncation = null;
@@ -582,19 +786,31 @@ namespace Azure.AI.AgentServer.Responses
                     truncation = prop.Value.GetString().ToCreateResponseRequestTruncation();
                     continue;
                 }
+                if (prop.NameEquals("reasoning"u8))
+                {
+                    reasoningIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        reasoning = null;
+                        continue;
+                    }
+                    reasoning = Reasoning.DeserializeReasoning(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("input"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    input = BinaryData.FromString(prop.Value.GetRawText());
+                    input = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("include"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        include = null;
                         continue;
                     }
                     List<IncludeEnum> array = new List<IncludeEnum>();
@@ -607,6 +823,7 @@ namespace Azure.AI.AgentServer.Responses
                 }
                 if (prop.NameEquals("parallel_tool_calls"u8))
                 {
+                    parallelToolCallsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         parallelToolCalls = null;
@@ -617,6 +834,7 @@ namespace Azure.AI.AgentServer.Responses
                 }
                 if (prop.NameEquals("store"u8))
                 {
+                    storeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         store = null;
@@ -627,6 +845,7 @@ namespace Azure.AI.AgentServer.Responses
                 }
                 if (prop.NameEquals("instructions"u8))
                 {
+                    instructionsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         instructions = null;
@@ -635,8 +854,20 @@ namespace Azure.AI.AgentServer.Responses
                     instructions = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("moderation"u8))
+                {
+                    moderationIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        moderation = null;
+                        continue;
+                    }
+                    moderation = ModerationParam.DeserializeModerationParam(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("stream"u8))
                 {
+                    streamIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stream = null;
@@ -647,6 +878,7 @@ namespace Azure.AI.AgentServer.Responses
                 }
                 if (prop.NameEquals("stream_options"u8))
                 {
+                    streamOptionsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         streamOptions = null;
@@ -657,18 +889,20 @@ namespace Azure.AI.AgentServer.Responses
                 }
                 if (prop.NameEquals("conversation"u8))
                 {
+                    conversationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         conversation = null;
                         continue;
                     }
-                    conversation = BinaryData.FromString(prop.Value.GetRawText());
+                    conversation = ModelReaderWriter.Read<ResponseConversationOptions>(prop.Value.GetUtf8Bytes(), options, AzureAIAgentServerResponsesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("context_management"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        contextManagement = null;
                         continue;
                     }
                     List<ContextManagementParam> array = new List<ContextManagementParam>();
@@ -679,13 +913,24 @@ namespace Azure.AI.AgentServer.Responses
                     contextManagement = array;
                     continue;
                 }
+                if (prop.NameEquals("max_output_tokens"u8))
+                {
+                    maxOutputTokensIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        maxOutputTokens = null;
+                        continue;
+                    }
+                    maxOutputTokens = prop.Value.GetInt64();
+                    continue;
+                }
                 if (prop.NameEquals("agent"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    agent = ModelReaderWriter.Read<AgentReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
+                    agent = ModelReaderWriter.Read<AgentReference>(prop.Value.GetUtf8Bytes(), options, AzureAIAgentServerResponsesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("agent_session_id"u8))
@@ -699,7 +944,7 @@ namespace Azure.AI.AgentServer.Responses
                     {
                         continue;
                     }
-                    agentReference = ModelReaderWriter.Read<AgentReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
+                    agentReference = ModelReaderWriter.Read<AgentReference>(prop.Value.GetUtf8Bytes(), options, AzureAIAgentServerResponsesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("structured_inputs"u8))
@@ -717,7 +962,7 @@ namespace Azure.AI.AgentServer.Responses
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     structuredInputs = dictionary;
@@ -732,9 +977,18 @@ namespace Azure.AI.AgentServer.Responses
                     userSecurityContext = AzureUserSecurityContext.DeserializeAzureUserSecurityContext(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("routing_config"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    routingConfig = RoutingConfiguration.DeserializeRoutingConfiguration(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CreateResponseRequest(
@@ -745,34 +999,60 @@ namespace Azure.AI.AgentServer.Responses
                 user,
                 safetyIdentifier,
                 promptCacheKey,
-                serviceTier,
                 promptCacheRetention,
                 previousResponseId,
                 model,
-                reasoning,
                 background,
-                maxOutputTokens,
                 maxToolCalls,
                 text,
-                tools ?? new ChangeTrackingList<ResponseTool>(),
+                tools ?? new ChangeTrackingList<Tool>(),
                 toolChoice,
                 prompt,
+                promptCacheOptions,
+                serviceTier,
                 truncation,
+                reasoning,
                 input,
-                include ?? new ChangeTrackingList<IncludeEnum>(),
+                include,
                 parallelToolCalls,
                 store,
                 instructions,
+                moderation,
                 stream,
                 streamOptions,
                 conversation,
-                contextManagement ?? new ChangeTrackingList<ContextManagementParam>(),
+                contextManagement,
+                maxOutputTokens,
                 agent,
                 agentSessionId,
                 agentReference,
                 structuredInputs ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 userSecurityContext,
-                additionalBinaryDataProperties);
+                routingConfig,
+                additionalBinaryDataProperties)
+            {
+                _metadataIsDefined = metadataIsDefined,
+                _topLogprobsIsDefined = topLogprobsIsDefined,
+                _temperatureIsDefined = temperatureIsDefined,
+                _topPIsDefined = topPIsDefined,
+                _safetyIdentifierIsDefined = safetyIdentifierIsDefined,
+                _promptCacheKeyIsDefined = promptCacheKeyIsDefined,
+                _promptCacheRetentionIsDefined = promptCacheRetentionIsDefined,
+                _previousResponseIdIsDefined = previousResponseIdIsDefined,
+                _backgroundIsDefined = backgroundIsDefined,
+                _maxToolCallsIsDefined = maxToolCallsIsDefined,
+                _serviceTierIsDefined = serviceTierIsDefined,
+                _truncationIsDefined = truncationIsDefined,
+                _reasoningIsDefined = reasoningIsDefined,
+                _parallelToolCallsIsDefined = parallelToolCallsIsDefined,
+                _storeIsDefined = storeIsDefined,
+                _instructionsIsDefined = instructionsIsDefined,
+                _moderationIsDefined = moderationIsDefined,
+                _streamIsDefined = streamIsDefined,
+                _streamOptionsIsDefined = streamOptionsIsDefined,
+                _conversationIsDefined = conversationIsDefined,
+                _maxOutputTokensIsDefined = maxOutputTokensIsDefined
+            };
         }
     }
 }

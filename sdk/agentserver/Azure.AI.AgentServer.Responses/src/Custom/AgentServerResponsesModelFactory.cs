@@ -126,7 +126,7 @@ internal static partial class AgentServerResponsesModelFactory
     /// <returns>A new <see cref="Models.DeleteResponseResult"/> with <c>Deleted = true</c>.</returns>
     public static DeleteResponseResult DeleteResponseResult(string id = default!)
     {
-        return new DeleteResponseResult(id, true, "response", additionalBinaryDataProperties: null);
+        return new DeleteResponseResult(id, "response", true, additionalBinaryDataProperties: null);
     }
 
     /// <summary>Creates an <see cref="Models.AgentsPagedResultOutputItem"/> instance for mocking.</summary>

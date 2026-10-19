@@ -40,6 +40,13 @@ internal static partial class ItemFunctionToolCallValidator
                 errors.Add(new ValidationError("$.arguments", $"Expected string, got {argumentsProp.ValueKind}"));
         }
 
+        // Optional: async
+        if (element.TryGetProperty("async", out var asyncProp))
+        {
+            if (asyncProp.ValueKind != JsonValueKind.True && asyncProp.ValueKind != JsonValueKind.False)
+                errors.Add(new ValidationError("$.async", $"Expected boolean, got {asyncProp.ValueKind}"));
+        }
+
         // Required: call_id
         if (!element.TryGetProperty("call_id", out var callIdProp))
             errors.Add(new ValidationError("$.call_id", "Required property 'call_id' is missing"));
@@ -47,6 +54,24 @@ internal static partial class ItemFunctionToolCallValidator
         {
             if (callIdProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.call_id", $"Expected string, got {callIdProp.ValueKind}"));
+        }
+
+        // Optional: caller
+        if (element.TryGetProperty("caller", out var callerProp) && callerProp.ValueKind != JsonValueKind.Null)
+        {
+            var callerResult = ToolCallCallerValidator.Validate(callerProp);
+            if (!callerResult.IsValid)
+            {
+                foreach (var e in callerResult.Errors)
+                    errors.Add(new ValidationError("$.caller" + e.Path.Substring(1), e.Message));
+            }
+        }
+
+        // Optional: id
+        if (element.TryGetProperty("id", out var idProp) && idProp.ValueKind != JsonValueKind.Null)
+        {
+            if (idProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));
         }
 
         // Required: name

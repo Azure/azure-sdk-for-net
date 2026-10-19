@@ -80,15 +80,29 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Code))
+            if (Optional.IsDefined(Code, _codeIsDefined))
             {
-                writer.WritePropertyName("code"u8);
-                writer.WriteStringValue(Code);
+                if (Code != null)
+                {
+                    writer.WritePropertyName("code"u8);
+                    writer.WriteStringValue(Code);
+                }
+                else
+                {
+                    writer.WriteNull("code"u8);
+                }
             }
-            if (Optional.IsDefined(Message))
+            if (Optional.IsDefined(Message, _messageIsDefined))
             {
-                writer.WritePropertyName("message"u8);
-                writer.WriteStringValue(Message);
+                if (Message != null)
+                {
+                    writer.WritePropertyName("message"u8);
+                    writer.WriteStringValue(Message);
+                }
+                else
+                {
+                    writer.WriteNull("message"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +147,9 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             string id = default;
+            bool codeIsDefined = false;
             string code = default;
+            bool messageIsDefined = false;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -145,6 +161,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("code"u8))
                 {
+                    codeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         code = null;
@@ -155,6 +172,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("message"u8))
                 {
+                    messageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         message = null;
@@ -165,10 +183,14 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ComputerCallSafetyCheckParam(id, code, message, additionalBinaryDataProperties);
+            return new ComputerCallSafetyCheckParam(id, code, message, additionalBinaryDataProperties)
+            {
+                _codeIsDefined = codeIsDefined,
+                _messageIsDefined = messageIsDefined
+            };
         }
     }
 }

@@ -12,12 +12,14 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// <summary>
     /// Configuration options for a text response from the model. Can be plain
     /// text or structured JSON data. Learn more:
-    /// <list type="bullet"><item><description>[Text inputs and outputs](/docs/guides/text)</description></item><item><description>[Structured Outputs](/docs/guides/structured-outputs)</description></item></list>
+    /// <list type="bullet"><item><description>[Text inputs and outputs](https://developers.openai.com/api/docs/guides/text)</description></item><item><description>[Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs)</description></item></list>
     /// </summary>
     public partial class ResponseTextParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private ResponseTextParamVerbosity? _verbosity;
+        private bool _verbosityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ResponseTextParam"/>. </summary>
         public ResponseTextParam()
@@ -31,7 +33,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         internal ResponseTextParam(TextResponseFormatConfiguration format, ResponseTextParamVerbosity? verbosity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Format = format;
-            Verbosity = verbosity;
+            _verbosity = verbosity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +41,17 @@ namespace Azure.AI.AgentServer.Responses.Models
         public TextResponseFormatConfiguration Format { get; set; }
 
         /// <summary> Gets or sets the Verbosity. </summary>
-        public ResponseTextParamVerbosity? Verbosity { get; set; }
+        public ResponseTextParamVerbosity? Verbosity
+        {
+            get
+            {
+                return _verbosity;
+            }
+            set
+            {
+                _verbosity = value;
+                _verbosityIsDefined = true;
+            }
+        }
     }
 }

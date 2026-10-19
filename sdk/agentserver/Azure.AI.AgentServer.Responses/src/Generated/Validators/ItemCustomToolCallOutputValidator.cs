@@ -40,6 +40,17 @@ internal static partial class ItemCustomToolCallOutputValidator
                 errors.Add(new ValidationError("$.call_id", $"Expected string, got {callIdProp.ValueKind}"));
         }
 
+        // Optional: caller
+        if (element.TryGetProperty("caller", out var callerProp) && callerProp.ValueKind != JsonValueKind.Null)
+        {
+            var callerResult = ToolCallCallerParamValidator.Validate(callerProp);
+            if (!callerResult.IsValid)
+            {
+                foreach (var e in callerResult.Errors)
+                    errors.Add(new ValidationError("$.caller" + e.Path.Substring(1), e.Message));
+            }
+        }
+
         // Optional: id
         if (element.TryGetProperty("id", out var idProp))
         {
