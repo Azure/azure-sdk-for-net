@@ -114,6 +114,8 @@ jobs:
         env:
           EVAL_ARGS: $(evalArgs)
 
+      - template: /eng/common/pipelines/templates/steps/login-to-copilot.yml
+
       # Runs the eval via the invoke template (auth-conditional in the common default).
       - template: ${{ parameters.evalInvokeTemplate }}
         parameters:
