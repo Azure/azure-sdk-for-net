@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.EdgeActions.Tests
         {
             EdgeActionResource action = await CreateEdgeAction();
             EdgeActionCollection actions = Client.GetResourceGroupResource(action.Id.Parent).GetEdgeActions();
-            Assert.That((await actions.ExistsAsync(action.Id.Name)).Value, Is.True);
-            Assert.That((await actions.GetIfExistsAsync(action.Id.Name)).HasValue, Is.True);
-            Assert.That((await actions.GetAsync(action.Id.Name)).Value.Data.Tags["purpose"], Is.EqualTo("initial"));
+            Assert.That((await actions.ExistsAsync(action.Id.Name, TestCancellationToken)).Value, Is.True);
+            Assert.That((await actions.GetIfExistsAsync(action.Id.Name, TestCancellationToken)).HasValue, Is.True);
+            Assert.That((await actions.GetAsync(action.Id.Name, TestCancellationToken)).Value.Data.Tags["purpose"], Is.EqualTo("initial"));
 
             var names = new List<string>();
-            await foreach (EdgeActionResource item in actions.GetAllAsync())
+            await foreach (EdgeActionResource item in actions.GetAllAsync(cancellationToken: TestCancellationToken))
             {
                 names.Add(item.Id.Name);
             }
@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.EdgeActions.Tests
 
             var patch = new EdgeActionPatch();
             patch.Tags.Add("purpose", "updated");
-            EdgeActionResource updated = (await action.UpdateAsync(WaitUntil.Completed, patch)).Value;
+            EdgeActionResource updated = (await action.UpdateAsync(WaitUntil.Completed, patch, TestCancellationToken)).Value;
             Assert.That(updated.Data.Tags.Count, Is.EqualTo(1));
             Assert.That(updated.Data.Tags["purpose"], Is.EqualTo("updated"));
             Assert.That(updated.Data.Sku.Name, Is.EqualTo("Standard"));
             Assert.That(updated.Data.Sku.Tier, Is.EqualTo("Standard"));
             Assert.That(updated.Data.Location, Is.EqualTo(EdgeLocation));
-            Assert.That((await action.GetAsync()).Value.Data.Tags, Is.EquivalentTo(updated.Data.Tags));
+            Assert.That((await action.GetAsync(TestCancellationToken)).Value.Data.Tags, Is.EquivalentTo(updated.Data.Tags));
 
             patch.Tags.Clear();
-            updated = (await action.UpdateAsync(WaitUntil.Completed, patch)).Value;
+            updated = (await action.UpdateAsync(WaitUntil.Completed, patch, TestCancellationToken)).Value;
             Assert.That(updated.Data.Tags, Is.Empty);
-            Assert.That((await action.GetAsync()).Value.Data.Tags, Is.Empty);
+            Assert.That((await action.GetAsync(TestCancellationToken)).Value.Data.Tags, Is.Empty);
             RequestFailedException error = Assert.ThrowsAsync<RequestFailedException>(
-                async () => await action.UpdateAsync(WaitUntil.Completed, new EdgeActionPatch()));
+                async () => await action.UpdateAsync(WaitUntil.Completed, new EdgeActionPatch(), TestCancellationToken));
             Assert.That(error.Status, Is.EqualTo(400));
 
-            await action.DeleteAsync(WaitUntil.Completed);
-            Assert.That((await actions.ExistsAsync(action.Id.Name)).Value, Is.False);
+            await action.DeleteAsync(WaitUntil.Completed, TestCancellationToken);
+            Assert.That((await actions.ExistsAsync(action.Id.Name, TestCancellationToken)).Value, Is.False);
         }
 
         [RecordedTest]
@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.EdgeActions.Tests
             {
                 Properties = new EdgeActionVersionProperties(new EdgeActionVersionDeploymentType(deploymentType), EdgeActionIsDefaultVersion.False)
             };
-            EdgeActionVersionResource version = (await versions.CreateOrUpdateAsync(WaitUntil.Completed, "v1", data)).Value;
+            EdgeActionVersionResource version = (await versions.CreateOrUpdateAsync(WaitUntil.Completed, "v1", data, TestCancellationToken)).Value;
             AssertVersion(version, action, "v1", deploymentType);
             Assert.That(version.Data.Properties.IsDefaultVersion, Is.EqualTo(EdgeActionIsDefaultVersion.True));
-            Assert.That((await versions.ExistsAsync("v1")).Value, Is.True);
-            Assert.That((await versions.GetIfExistsAsync("missing")).HasValue, Is.False);
-            AssertVersion((await versions.GetAsync("v1")).Value, action, "v1", deploymentType);
+            Assert.That((await versions.ExistsAsync("v1", TestCancellationToken)).Value, Is.True);
+            Assert.That((await versions.GetIfExistsAsync("missing", TestCancellationToken)).HasValue, Is.False);
+            AssertVersion((await versions.GetAsync("v1", TestCancellationToken)).Value, action, "v1", deploymentType);
             var names = new List<string>();
-            await foreach (EdgeActionVersionResource item in versions.GetAllAsync())
+            await foreach (EdgeActionVersionResource item in versions.GetAllAsync(cancellationToken: TestCancellationToken))
             {
                 names.Add(item.Id.Name);
             }
@@ -88,19 +88,20 @@ namespace Azure.ResourceManager.EdgeActions.Tests
 
             var patch = new EdgeActionVersionPatch();
             patch.Tags.Add("purpose", "updated");
-            EdgeActionVersionResource updated = (await version.UpdateAsync(WaitUntil.Completed, patch)).Value;
+            EdgeActionVersionResource updated = (await version.UpdateAsync(WaitUntil.Completed, patch, TestCancellationToken)).Value;
             AssertVersion(updated, action, "v1", deploymentType);
             Assert.That(updated.Data.Tags["purpose"], Is.EqualTo("updated"));
             Assert.That(updated.Data.Properties.IsDefaultVersion, Is.EqualTo(EdgeActionIsDefaultVersion.True));
-            Assert.That((await version.GetAsync()).Value.Data.Tags, Is.EquivalentTo(updated.Data.Tags));
+            Assert.That((await version.GetAsync(TestCancellationToken)).Value.Data.Tags, Is.EquivalentTo(updated.Data.Tags));
             patch.Tags.Clear();
-            Assert.That((await version.UpdateAsync(WaitUntil.Completed, patch)).Value.Data.Tags, Is.Empty);
-            await version.DeleteAsync(WaitUntil.Completed);
-            Assert.That((await versions.ExistsAsync("v1")).Value, Is.False);
-            await action.DeleteAsync(WaitUntil.Completed);
+            Assert.That((await version.UpdateAsync(WaitUntil.Completed, patch, TestCancellationToken)).Value.Data.Tags, Is.Empty);
+            await version.DeleteAsync(WaitUntil.Completed, TestCancellationToken);
+            Assert.That((await versions.ExistsAsync("v1", TestCancellationToken)).Value, Is.False);
+            await action.DeleteAsync(WaitUntil.Completed, TestCancellationToken);
         }
 
         [RecordedTest]
+        [Property(DeploymentCountProperty, 2)]
         public async Task ExecutionFilterLifecycle()
         {
             EdgeActionResource action = await CreateEdgeAction();
@@ -109,19 +110,20 @@ namespace Azure.ResourceManager.EdgeActions.Tests
             {
                 Properties = new EdgeActionVersionProperties(EdgeActionVersionDeploymentType.File, EdgeActionIsDefaultVersion.False)
             };
-            EdgeActionVersionResource first = (await versions.CreateOrUpdateAsync(WaitUntil.Completed, "v1", data)).Value;
-            EdgeActionVersionResource second = (await versions.CreateOrUpdateAsync(WaitUntil.Completed, "v2", data)).Value;
+            EdgeActionVersionResource first = (await versions.CreateOrUpdateAsync(WaitUntil.Completed, "v1", data, TestCancellationToken)).Value;
+            EdgeActionVersionResource second = (await versions.CreateOrUpdateAsync(WaitUntil.Completed, "v2", data, TestCancellationToken)).Value;
 
             await ExerciseExecutionFilter(action, first, second);
 
-            await second.DeleteAsync(WaitUntil.Completed);
-            await first.DeleteAsync(WaitUntil.Completed);
-            await action.DeleteAsync(WaitUntil.Completed);
+            await second.DeleteAsync(WaitUntil.Completed, TestCancellationToken);
+            await first.DeleteAsync(WaitUntil.Completed, TestCancellationToken);
+            await action.DeleteAsync(WaitUntil.Completed, TestCancellationToken);
         }
 
         [RecordedTest]
         [TestCase("file")]
         [TestCase("zip")]
+        [Property(DeploymentCountProperty, 3)]
         public async Task VersionsAndExecutionFilters(string deploymentType)
         {
             EdgeActionResource action = await CreateEdgeAction();
@@ -133,12 +135,12 @@ namespace Azure.ResourceManager.EdgeActions.Tests
                 {
                     Properties = new EdgeActionVersionProperties(new EdgeActionVersionDeploymentType(deploymentType), EdgeActionIsDefaultVersion.False)
                 };
-                EdgeActionVersionResource version = (await versions.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+                EdgeActionVersionResource version = (await versions.CreateOrUpdateAsync(WaitUntil.Completed, name, data, TestCancellationToken)).Value;
                 AssertVersion(version, action, name, deploymentType);
                 Assert.That(version.Data.Properties.IsDefaultVersion, Is.EqualTo(name == "v1" ? EdgeActionIsDefaultVersion.True : EdgeActionIsDefaultVersion.False));
 
                 var code = new EdgeActionVersionCode(CreateCode(deploymentType), name);
-                EdgeActionVersionResource deployed = (await version.DeployVersionCodeAsync(WaitUntil.Completed, code)).Value;
+                EdgeActionVersionResource deployed = (await version.DeployVersionCodeAsync(WaitUntil.Completed, code, TestCancellationToken)).Value;
                 AssertVersion(deployed, action, name, deploymentType);
                 Assert.That(deployed.Data.Properties.ValidationStatus, Is.EqualTo(EdgeActionVersionValidationStatus.Succeeded));
                 Assert.That(deployed.Data.Properties.IsDefaultVersion, Is.EqualTo(version.Data.Properties.IsDefaultVersion));
@@ -146,50 +148,50 @@ namespace Azure.ResourceManager.EdgeActions.Tests
             }
 
             var names = new List<string>();
-            await foreach (EdgeActionVersionResource item in versions.GetAllAsync())
+            await foreach (EdgeActionVersionResource item in versions.GetAllAsync(cancellationToken: TestCancellationToken))
             {
                 names.Add(item.Id.Name);
             }
             Assert.That(names, Is.EquivalentTo(new[] { "v1", "v2" }));
-            Assert.That((await versions.ExistsAsync("v1")).Value, Is.True);
-            Assert.That((await versions.GetIfExistsAsync("missing")).HasValue, Is.False);
+            Assert.That((await versions.ExistsAsync("v1", TestCancellationToken)).Value, Is.True);
+            Assert.That((await versions.GetIfExistsAsync("missing", TestCancellationToken)).HasValue, Is.False);
 
             EdgeActionVersionResource first = createdVersions[0];
             EdgeActionVersionResource second = createdVersions[1];
-            EdgeActionVersionCode downloaded = (await first.GetVersionCodeAsync(WaitUntil.Completed)).Value;
+            EdgeActionVersionCode downloaded = (await first.GetVersionCodeAsync(WaitUntil.Completed, TestCancellationToken)).Value;
             Assert.That(downloaded.Name, Is.Not.Null.And.Not.Empty);
             AssertCode(downloaded.Content);
 
             var patch = new EdgeActionVersionPatch();
             patch.Tags.Add("purpose", "updated");
-            EdgeActionVersionResource updated = (await first.UpdateAsync(WaitUntil.Completed, patch)).Value;
+            EdgeActionVersionResource updated = (await first.UpdateAsync(WaitUntil.Completed, patch, TestCancellationToken)).Value;
             AssertVersion(updated, action, "v1", deploymentType);
             Assert.That(updated.Data.Tags["purpose"], Is.EqualTo("updated"));
             Assert.That(updated.Data.Properties.IsDefaultVersion, Is.EqualTo(EdgeActionIsDefaultVersion.True));
-            Assert.That((await first.GetAsync()).Value.Data.Tags, Is.EquivalentTo(updated.Data.Tags));
+            Assert.That((await first.GetAsync(TestCancellationToken)).Value.Data.Tags, Is.EquivalentTo(updated.Data.Tags));
             RequestFailedException error = Assert.ThrowsAsync<RequestFailedException>(async () => await first.UpdateAsync(
                 WaitUntil.Completed, new EdgeActionVersionPatch
                 {
                     Properties = new EdgeActionVersionUpdateProperties { IsDefaultVersion = EdgeActionIsDefaultVersion.False }
-                }));
+                }, TestCancellationToken));
             Assert.That(error.Status, Is.EqualTo(400));
 
-            ArmOperation swap = await second.SwapDefaultAsync(WaitUntil.Completed);
+            ArmOperation swap = await second.SwapDefaultAsync(WaitUntil.Completed, TestCancellationToken);
             Assert.That(swap.HasCompleted, Is.True);
-            Assert.That((await first.GetAsync()).Value.Data.Properties.IsDefaultVersion, Is.EqualTo(EdgeActionIsDefaultVersion.False));
-            Assert.That((await second.GetAsync()).Value.Data.Properties.IsDefaultVersion, Is.EqualTo(EdgeActionIsDefaultVersion.True));
+            Assert.That((await first.GetAsync(TestCancellationToken)).Value.Data.Properties.IsDefaultVersion, Is.EqualTo(EdgeActionIsDefaultVersion.False));
+            Assert.That((await second.GetAsync(TestCancellationToken)).Value.Data.Properties.IsDefaultVersion, Is.EqualTo(EdgeActionIsDefaultVersion.True));
 
             await ExerciseExecutionFilter(action, first, second);
 
             // The service requires non-default versions to be deleted before the default version.
-            await first.DeleteAsync(WaitUntil.Completed);
-            await second.DeleteAsync(WaitUntil.Completed);
-            Assert.That((await versions.ExistsAsync("v1")).Value, Is.False);
-            Assert.That((await versions.ExistsAsync("v2")).Value, Is.False);
-            await action.DeleteAsync(WaitUntil.Completed);
+            await first.DeleteAsync(WaitUntil.Completed, TestCancellationToken);
+            await second.DeleteAsync(WaitUntil.Completed, TestCancellationToken);
+            Assert.That((await versions.ExistsAsync("v1", TestCancellationToken)).Value, Is.False);
+            Assert.That((await versions.ExistsAsync("v2", TestCancellationToken)).Value, Is.False);
+            await action.DeleteAsync(WaitUntil.Completed, TestCancellationToken);
         }
 
-        private static async Task ExerciseExecutionFilter(EdgeActionResource action, EdgeActionVersionResource first, EdgeActionVersionResource second)
+        private async Task ExerciseExecutionFilter(EdgeActionResource action, EdgeActionVersionResource first, EdgeActionVersionResource second)
         {
             EdgeActionExecutionFilterCollection filters = action.GetEdgeActionExecutionFilters();
             const string filterName = "sdkfilter";
@@ -197,15 +199,15 @@ namespace Azure.ResourceManager.EdgeActions.Tests
             {
                 Properties = new EdgeActionExecutionFilterProperties(first.Id, "x-sdk-test", "initial")
             };
-            EdgeActionExecutionFilterResource filter = (await filters.CreateOrUpdateAsync(WaitUntil.Completed, filterName, filterData)).Value;
+            EdgeActionExecutionFilterResource filter = (await filters.CreateOrUpdateAsync(WaitUntil.Completed, filterName, filterData, TestCancellationToken)).Value;
             Assert.That(filter.Id, Is.EqualTo(EdgeActionExecutionFilterResource.CreateResourceIdentifier(action.Id.SubscriptionId, action.Id.ResourceGroupName, action.Id.Name, filterName)));
             Assert.That(filter.Data.Properties.VersionId, Is.EqualTo(first.Id));
             Assert.That(filter.Data.Properties.ExecutionFilterIdentifierHeaderName, Is.EqualTo("x-sdk-test"));
             Assert.That(filter.Data.Properties.ExecutionFilterIdentifierHeaderValue, Is.EqualTo("initial"));
-            Assert.That((await filters.ExistsAsync(filterName)).Value, Is.True);
-            Assert.That((await filters.GetAsync(filterName)).Value.Data.Properties.VersionId, Is.EqualTo(first.Id));
+            Assert.That((await filters.ExistsAsync(filterName, TestCancellationToken)).Value, Is.True);
+            Assert.That((await filters.GetAsync(filterName, TestCancellationToken)).Value.Data.Properties.VersionId, Is.EqualTo(first.Id));
             var names = new List<string>();
-            await foreach (EdgeActionExecutionFilterResource item in filters.GetAllAsync())
+            await foreach (EdgeActionExecutionFilterResource item in filters.GetAllAsync(cancellationToken: TestCancellationToken))
             {
                 names.Add(item.Id.Name);
             }
@@ -221,15 +223,15 @@ namespace Azure.ResourceManager.EdgeActions.Tests
                 }
             };
             filterPatch.Tags.Add("purpose", "updated");
-            filter = (await filter.UpdateAsync(WaitUntil.Completed, filterPatch)).Value;
+            filter = (await filter.UpdateAsync(WaitUntil.Completed, filterPatch, TestCancellationToken)).Value;
             Assert.That(filter.Data.Properties.VersionId, Is.EqualTo(second.Id));
             Assert.That(filter.Data.Properties.ExecutionFilterIdentifierHeaderName, Is.EqualTo("x-sdk-test-updated"));
             Assert.That(filter.Data.Properties.ExecutionFilterIdentifierHeaderValue, Is.EqualTo("updated"));
             Assert.That(filter.Data.Tags["purpose"], Is.EqualTo("updated"));
-            Assert.That((await filter.GetAsync()).Value.Data.Properties.VersionId, Is.EqualTo(second.Id));
+            Assert.That((await filter.GetAsync(TestCancellationToken)).Value.Data.Properties.VersionId, Is.EqualTo(second.Id));
 
-            await filter.DeleteAsync(WaitUntil.Completed);
-            Assert.That((await filters.ExistsAsync(filterName)).Value, Is.False);
+            await filter.DeleteAsync(WaitUntil.Completed, TestCancellationToken);
+            Assert.That((await filters.ExistsAsync(filterName, TestCancellationToken)).Value, Is.False);
         }
 
         private async Task<EdgeActionResource> CreateEdgeAction()
@@ -238,11 +240,11 @@ namespace Azure.ResourceManager.EdgeActions.Tests
             ResourceGroupResource group = await CreateResourceGroup(subscription, "dotnetsdk-edgeaction-test-");
             string name = Recording.GenerateAssetName("eadotnet");
             EdgeActionCollection actions = group.GetEdgeActions();
-            Assert.That((await actions.ExistsAsync(name)).Value, Is.False, "Refusing to overwrite an existing Edge Action.");
+            Assert.That((await actions.ExistsAsync(name, TestCancellationToken)).Value, Is.False, "Refusing to overwrite an existing Edge Action.");
             var data = new EdgeActionData(EdgeLocation, new EdgeActionSkuType("Standard", "Standard"));
             data.Tags.Add("purpose", "initial");
             data.Tags.Add("remove-me", "initial");
-            EdgeActionResource action = (await actions.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+            EdgeActionResource action = (await actions.CreateOrUpdateAsync(WaitUntil.Completed, name, data, TestCancellationToken)).Value;
             Assert.That(action.Id.Name, Is.EqualTo(name));
             Assert.That(action.Data.Location, Is.EqualTo(EdgeLocation));
             Assert.That(action.Data.Properties.ProvisioningState, Is.EqualTo(EdgeActionProvisioningState.Succeeded));

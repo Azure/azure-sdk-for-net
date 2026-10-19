@@ -152,6 +152,15 @@ Remove-Item Env:AZURE_TEST_MODE
 Deployment and filter operations can take several minutes each. A terminal `Failed` polling
 status is an operation failure, even when the polling endpoint returns HTTP 200.
 
+Recorded scenarios use a shared cancellation token for the entire test, including requests and LRO
+polling in both sync and async fixtures. Timeout budgets are 20 minutes without deployments, or
+40 minutes per budgeted deployment plus a 10-minute buffer: 50, 90, and 130 minutes for one, two,
+and three deployments. Lookup, tag, and version-metadata tests use 20 minutes; the independent
+filter lifecycle uses 90 minutes. The combined version/swap scenario uses the requested 130-minute
+total budget for two code deployments and the swap; its existing filter steps share that budget.
+The framework's shorter playback limits remain unchanged, and resource-group cleanup runs
+independently of the test's cancellation token.
+
 The CLI credential is an opt-in for local development; normal framework credentials remain
 the default. Test Proxy sanitizes signed polling query values without collapsing status and
 result URLs, and playback continues to match API versions.

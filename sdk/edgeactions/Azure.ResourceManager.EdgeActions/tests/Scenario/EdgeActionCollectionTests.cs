@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.EdgeActions.Tests.Scenario
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "dotnetsdk-edgeaction-test-");
             EdgeActionCollection collection = rg.GetEdgeActions();
 
-            bool exists = await collection.ExistsAsync("nonexistent-edgeaction");
+            bool exists = await collection.ExistsAsync("nonexistent-edgeaction", TestCancellationToken);
             Assert.IsFalse(exists);
-            Assert.That((await collection.GetIfExistsAsync("nonexistent-edgeaction")).HasValue, Is.False);
+            Assert.That((await collection.GetIfExistsAsync("nonexistent-edgeaction", TestCancellationToken)).HasValue, Is.False);
         }
     }
 }

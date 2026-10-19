@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -106,6 +108,33 @@ namespace Azure.ResourceManager.EdgeActions.Tests
             Assert.That(transport.Requests[0].Uri.ToUri().AbsolutePath, Is.EqualTo(VersionId + "/getVersionCode"));
             Assert.That(transport.Requests[1].Uri.ToUri().AbsoluteUri, Is.EqualTo(StatusUrl));
             Assert.That(transport.Requests[2].Uri.ToUri().AbsoluteUri, Is.EqualTo(ResultUrl));
+        }
+
+        [Test]
+        public void SwapDefaultHonorsCancellationWhilePolling()
+        {
+            using var timeout = new CancellationTokenSource();
+            var transport = new MockTransport(request =>
+            {
+                if (request.Method == RequestMethod.Post)
+                {
+                    return Accepted();
+                }
+                timeout.Cancel();
+                return JsonResponse(200, """{"status":"InProgress"}""");
+            });
+            EdgeActionVersionResource version = CreateVersion(transport);
+            if (IsAsync)
+            {
+                Assert.That(async () => await version.SwapDefaultAsync(WaitUntil.Completed, timeout.Token),
+                    Throws.InstanceOf<OperationCanceledException>());
+            }
+            else
+            {
+                Assert.That(() => version.SwapDefault(WaitUntil.Completed, timeout.Token),
+                    Throws.InstanceOf<OperationCanceledException>());
+            }
+            Assert.That(transport.Requests.Count, Is.EqualTo(2));
         }
 
         [Test]
