@@ -1563,23 +1563,21 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> A Launch mode Fleet's virtual machine. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="name"> The name of the virtual machine. </param>
+        /// <param name="id"> The compute RP resource id of the virtual machine. subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </param>
+        /// <param name="type"> ARM resource type - virtual machine. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
         /// <param name="vmSize"> The VM size of the virtual machine. </param>
         /// <param name="zone"> The availability zone of the virtual machine. </param>
         /// <param name="priority"> The priority of the virtual machine. </param>
         /// <returns> A new <see cref="Models.ComputeFleetVirtualMachine"/> instance for mocking. </returns>
-        public static ComputeFleetVirtualMachine ComputeFleetVirtualMachine(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeFleetVmOperationStatus operationStatus = default, ComputeFleetApiError error = default, string vmSize = default, string zone = default, string priority = default)
+        public static ComputeFleetVirtualMachine ComputeFleetVirtualMachine(string name = default, ResourceIdentifier id = default, string @type = default, ComputeFleetVmOperationStatus operationStatus = default, ComputeFleetApiError error = default, string vmSize = default, string zone = default, string priority = default)
         {
             return new ComputeFleetVirtualMachine(
-                id,
                 name,
-                resourceType,
-                systemData,
+                id,
+                @type,
                 operationStatus,
                 error,
                 vmSize,
