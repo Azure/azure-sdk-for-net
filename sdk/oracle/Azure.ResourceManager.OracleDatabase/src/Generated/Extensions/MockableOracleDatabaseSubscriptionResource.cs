@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> An object representing collection of OracleSystemVersions and their operations over a OracleSystemVersionResource. </returns>
         public virtual OracleSystemVersionCollection GetOracleSystemVersions(AzureLocation location)
         {
-            return GetCachedClient(client => new OracleSystemVersionCollection(client, Id, location));
+            return new OracleSystemVersionCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> An object representing collection of OracleGIVersions and their operations over a OracleGIVersionResource. </returns>
         public virtual OracleGIVersionCollection GetOracleGIVersions(AzureLocation location)
         {
-            return GetCachedClient(client => new OracleGIVersionCollection(client, Id, location));
+            return new OracleGIVersionCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> An object representing collection of OracleDBSystemShapes and their operations over a OracleDBSystemShapeResource. </returns>
         public virtual OracleDBSystemShapeCollection GetOracleDBSystemShapes(AzureLocation location)
         {
-            return GetCachedClient(client => new OracleDBSystemShapeCollection(client, Id, location));
+            return new OracleDBSystemShapeCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> An object representing collection of OracleDnsPrivateViews and their operations over a OracleDnsPrivateViewResource. </returns>
         public virtual OracleDnsPrivateViewCollection GetOracleDnsPrivateViews(AzureLocation location)
         {
-            return GetCachedClient(client => new OracleDnsPrivateViewCollection(client, Id, location));
+            return new OracleDnsPrivateViewCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> An object representing collection of OracleDnsPrivateZones and their operations over a OracleDnsPrivateZoneResource. </returns>
         public virtual OracleDnsPrivateZoneCollection GetOracleDnsPrivateZones(AzureLocation location)
         {
-            return GetCachedClient(client => new OracleDnsPrivateZoneCollection(client, Id, location));
+            return new OracleDnsPrivateZoneCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> An object representing collection of OracleFlexComponents and their operations over a OracleFlexComponentResource. </returns>
         public virtual OracleFlexComponentCollection GetOracleFlexComponents(AzureLocation location)
         {
-            return GetCachedClient(client => new OracleFlexComponentCollection(client, Id, location));
+            return new OracleFlexComponentCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> An object representing collection of AutonomousDatabaseCharacterSets and their operations over a AutonomousDatabaseCharacterSetResource. </returns>
         public virtual AutonomousDatabaseCharacterSetCollection GetAutonomousDatabaseCharacterSets(AzureLocation location)
         {
-            return GetCachedClient(client => new AutonomousDatabaseCharacterSetCollection(client, Id, location));
+            return new AutonomousDatabaseCharacterSetCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> An object representing collection of AutonomousDatabaseNationalCharacterSets and their operations over a AutonomousDatabaseNationalCharacterSetResource. </returns>
         public virtual AutonomousDatabaseNationalCharacterSetCollection GetAutonomousDatabaseNationalCharacterSets(AzureLocation location)
         {
-            return GetCachedClient(client => new AutonomousDatabaseNationalCharacterSetCollection(client, Id, location));
+            return new AutonomousDatabaseNationalCharacterSetCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> An object representing collection of AutonomousDBVersions and their operations over a AutonomousDBVersionResource. </returns>
         public virtual AutonomousDBVersionCollection GetAutonomousDBVersions(AzureLocation location)
         {
-            return GetCachedClient(client => new AutonomousDBVersionCollection(client, Id, location));
+            return new AutonomousDBVersionCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> An object representing collection of OracleDBVersions and their operations over a OracleDBVersionResource. </returns>
         public virtual OracleDBVersionCollection GetOracleDBVersions(AzureLocation location)
         {
-            return GetCachedClient(client => new OracleDBVersionCollection(client, Id, location));
+            return new OracleDBVersionCollection(Client, Id, location);
         }
 
         /// <summary>
