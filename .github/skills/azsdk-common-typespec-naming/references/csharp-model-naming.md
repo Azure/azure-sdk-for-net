@@ -19,16 +19,16 @@ Choose names from HTTP usage, not a global string replacement:
 
 ## Model Suffixes
 
-| Existing suffix                      | Preferred name                           | Exception / context                                                                                                |
-| ------------------------------------ | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `Parameter`, `Parameters`, `Request` | `Content`, or `Patch` for the PATCH body | Apply the HTTP-role rules above                                                                                    |
-| `Response`                           | `Result`                                 | Confirm it represents a response                                                                                   |
+| Existing suffix                      | Preferred name                           | Exception / context                                                                                                      |
+| ------------------------------------ | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `Parameter`, `Parameters`, `Request` | `Content`, or `Patch` for the PATCH body | Apply the HTTP-role rules above                                                                                          |
+| `Response`                           | `Result`                                 | Confirm it represents a response                                                                                         |
 | `Options`                            | `Config`                                 | Preserve `ClientOptions` types and genuine method options bags that aggregate parameters from multiple request locations |
-| `Update`                             | `Patch` / `Content`                      | Contextual review guidance; use the actual body role                                                               |
-| `Definition`                         | Remove                                   | Keep if removal conflicts with another resource                                                                    |
-| `Data`                               | Remove                                   | Keep for types deriving from `ResourceData` / `TrackedResourceData`                                                |
-| `Operation`                          | Remove or use a descriptive `Info` name  | Keep for `Operation` / `Operation<T>`; do not invent resource inheritance to justify `Data`                        |
-| `Collection`                         | `Group` / `List` where meaningful        | Preserve domain terminology such as `MongoDBCollection` and emitter-generated `ArmCollection` resource collections |
+| `Update`                             | `Patch` / `Content`                      | Contextual review guidance; use the actual body role                                                                     |
+| `Definition`                         | Remove                                   | Keep if removal conflicts with another resource                                                                          |
+| `Data`                               | Remove                                   | Keep for types deriving from `ResourceData` / `TrackedResourceData`                                                      |
+| `Operation`                          | Remove or use a descriptive `Info` name  | Keep for `Operation` / `Operation<T>`; do not invent resource inheritance to justify `Data`                              |
+| `Collection`                         | `Group` / `List` where meaningful        | Preserve domain terminology such as `MongoDBCollection` and emitter-generated `ArmCollection` resource collections       |
 
 ## Resources and Domain Context
 

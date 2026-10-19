@@ -19,10 +19,10 @@ const validationCall = (typeSpecProjectRootPath) => ({
 
 test("fixture exposes customization as a trap and validation with production arguments", () => {
   const result = handleRequest({ id: 1, method: "tools/list" }).result;
-  assert.deepEqual(result.tools.map((tool) => tool.name), [
-    "azsdk_customized_code_update",
-    "azsdk_run_typespec_validation",
-  ]);
+  assert.deepEqual(
+    result.tools.map((tool) => tool.name),
+    ["azsdk_customized_code_update", "azsdk_run_typespec_validation"],
+  );
   assert.deepEqual(result.tools[1].inputSchema.required, [
     "typeSpecProjectRootPath",
   ]);
@@ -34,7 +34,10 @@ test("customization calls fail explicitly instead of pretending to edit", () => 
     method: "tools/call",
     params: {
       name: "azsdk_customized_code_update",
-      arguments: { editScope: "SpecInputs", tspProjectPath: "/fixtures/Widget" },
+      arguments: {
+        editScope: "SpecInputs",
+        tspProjectPath: "/fixtures/Widget",
+      },
     },
   }).result;
   assert.equal(result.isError, true);

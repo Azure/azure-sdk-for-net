@@ -23,7 +23,9 @@ if (
     fs.readFileSync(clientPath, "utf8"),
   )
 ) {
-  console.error("Expected the applied C# naming override and entrypoint import.");
+  console.error(
+    "Expected the applied C# naming override and entrypoint import.",
+  );
   process.exit(1);
 }
 
