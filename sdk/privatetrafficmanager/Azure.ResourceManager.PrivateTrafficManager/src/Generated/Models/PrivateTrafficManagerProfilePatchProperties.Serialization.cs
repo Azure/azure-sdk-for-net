@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
-                foreach (ProfileEndpoint item in Endpoints)
+                foreach (PrivateTrafficManagerProfileEndpoint item in Endpoints)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             ResourceIdentifier topologyMapId = default;
             PrivateTrafficManagerProfileStatus? profileStatus = default;
             TrafficRoutingMethod? trafficRoutingMethod = default;
-            IList<ProfileEndpoint> endpoints = default;
+            IList<PrivateTrafficManagerProfileEndpoint> endpoints = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -212,10 +212,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    List<ProfileEndpoint> array = new List<ProfileEndpoint>();
+                    List<PrivateTrafficManagerProfileEndpoint> array = new List<PrivateTrafficManagerProfileEndpoint>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProfileEndpoint.DeserializeProfileEndpoint(item, options));
+                        array.Add(PrivateTrafficManagerProfileEndpoint.DeserializePrivateTrafficManagerProfileEndpoint(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                 topologyMapId,
                 profileStatus,
                 trafficRoutingMethod,
-                endpoints ?? new ChangeTrackingList<ProfileEndpoint>(),
+                endpoints ?? new ChangeTrackingList<PrivateTrafficManagerProfileEndpoint>(),
                 additionalBinaryDataProperties);
         }
     }

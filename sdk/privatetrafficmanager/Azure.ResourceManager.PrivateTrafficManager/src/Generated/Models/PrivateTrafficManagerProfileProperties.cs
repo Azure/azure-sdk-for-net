@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerProfileProperties"/>. </summary>
         public PrivateTrafficManagerProfileProperties()
         {
-            Endpoints = new ChangeTrackingList<ProfileEndpoint>();
+            Endpoints = new ChangeTrackingList<PrivateTrafficManagerProfileEndpoint>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerProfileProperties"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="endpoints"> The list of endpoints in the Private Traffic Manager profile. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateTrafficManagerProfileProperties(CustomTopologyMapMode? customTopologyMapMode, PrivateTrafficManagerDnsConfig dnsConfig, ResourceIdentifier topologyMapId, PrivateTrafficManagerProfileStatus? profileStatus, TrafficRoutingMethod? trafficRoutingMethod, IList<ProfileEndpoint> endpoints, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateTrafficManagerProfileProperties(CustomTopologyMapMode? customTopologyMapMode, PrivateTrafficManagerDnsConfig dnsConfig, ResourceIdentifier topologyMapId, PrivateTrafficManagerProfileStatus? profileStatus, TrafficRoutingMethod? trafficRoutingMethod, IList<PrivateTrafficManagerProfileEndpoint> endpoints, PrivateTrafficManagerProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CustomTopologyMapMode = customTopologyMapMode;
             DnsConfig = dnsConfig;
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public TrafficRoutingMethod? TrafficRoutingMethod { get; set; }
 
         /// <summary> The list of endpoints in the Private Traffic Manager profile. </summary>
-        public IList<ProfileEndpoint> Endpoints { get; }
+        public IList<PrivateTrafficManagerProfileEndpoint> Endpoints { get; }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PrivateTrafficManagerProvisioningState? ProvisioningState { get; }
     }
 }

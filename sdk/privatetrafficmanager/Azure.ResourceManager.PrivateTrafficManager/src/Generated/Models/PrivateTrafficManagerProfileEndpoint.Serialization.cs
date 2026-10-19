@@ -15,56 +15,56 @@ using Azure.ResourceManager.PrivateTrafficManager;
 namespace Azure.ResourceManager.PrivateTrafficManager.Models
 {
     /// <summary> Class representing an inline endpoint within a Traffic Manager profile. </summary>
-    public partial class ProfileEndpoint : IJsonModel<ProfileEndpoint>
+    public partial class PrivateTrafficManagerProfileEndpoint : IJsonModel<PrivateTrafficManagerProfileEndpoint>
     {
-        /// <summary> Initializes a new instance of <see cref="ProfileEndpoint"/> for deserialization. </summary>
-        internal ProfileEndpoint()
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerProfileEndpoint"/> for deserialization. </summary>
+        internal PrivateTrafficManagerProfileEndpoint()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProfileEndpoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PrivateTrafficManagerProfileEndpoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProfileEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerProfileEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProfileEndpoint(document.RootElement, options);
+                        return DeserializePrivateTrafficManagerProfileEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProfileEndpoint)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateTrafficManagerProfileEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProfileEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerProfileEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPrivateTrafficManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProfileEndpoint)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateTrafficManagerProfileEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProfileEndpoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PrivateTrafficManagerProfileEndpoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProfileEndpoint IPersistableModel<ProfileEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PrivateTrafficManagerProfileEndpoint IPersistableModel<PrivateTrafficManagerProfileEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProfileEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PrivateTrafficManagerProfileEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProfileEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PrivateTrafficManagerProfileEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProfileEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerProfileEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProfileEndpoint)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateTrafficManagerProfileEndpoint)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -158,24 +158,24 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProfileEndpoint IJsonModel<ProfileEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PrivateTrafficManagerProfileEndpoint IJsonModel<PrivateTrafficManagerProfileEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProfileEndpoint JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PrivateTrafficManagerProfileEndpoint JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProfileEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerProfileEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProfileEndpoint)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateTrafficManagerProfileEndpoint)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProfileEndpoint(document.RootElement, options);
+            return DeserializePrivateTrafficManagerProfileEndpoint(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProfileEndpoint DeserializeProfileEndpoint(JsonElement element, ModelReaderWriterOptions options)
+        internal static PrivateTrafficManagerProfileEndpoint DeserializePrivateTrafficManagerProfileEndpoint(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -184,14 +184,14 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             string name = default;
             string target = default;
             string monitoringTarget = default;
-            EndpointAdministrativeStatus? endpointStatus = default;
+            PrivateTrafficManagerEndpointStatus? endpointStatus = default;
             PrivateTrafficManagerEndpointKind? kind = default;
             long? weight = default;
             long? priority = default;
-            EndpointAlwaysServe? alwaysServe = default;
+            PrivateTrafficManagerEndpointAlwaysServeStatus? alwaysServe = default;
             ResourceIdentifier healthPolicyId = default;
             IList<ResourceIdentifier> virtualNetworkIds = default;
-            ProvisioningState? provisioningState = default;
+            PrivateTrafficManagerProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    endpointStatus = new EndpointAdministrativeStatus(prop.Value.GetString());
+                    endpointStatus = new PrivateTrafficManagerEndpointStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    alwaysServe = new EndpointAlwaysServe(prop.Value.GetString());
+                    alwaysServe = new PrivateTrafficManagerEndpointAlwaysServeStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("healthPolicyId"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new PrivateTrafficManagerProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProfileEndpoint(
+            return new PrivateTrafficManagerProfileEndpoint(
                 name,
                 target,
                 monitoringTarget,

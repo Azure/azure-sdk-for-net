@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             }
             string target = default;
             string monitoringTarget = default;
-            EndpointAdministrativeStatus? endpointStatus = default;
+            PrivateTrafficManagerEndpointStatus? endpointStatus = default;
             long? weight = default;
             long? priority = default;
-            EndpointAlwaysServe? alwaysServe = default;
+            PrivateTrafficManagerEndpointAlwaysServeStatus? alwaysServe = default;
             ResourceIdentifier healthPolicyId = default;
             IList<ResourceIdentifier> virtualNetworkIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    endpointStatus = new EndpointAdministrativeStatus(prop.Value.GetString());
+                    endpointStatus = new PrivateTrafficManagerEndpointStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("weight"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    alwaysServe = new EndpointAlwaysServe(prop.Value.GetString());
+                    alwaysServe = new PrivateTrafficManagerEndpointAlwaysServeStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("healthPolicyId"u8))

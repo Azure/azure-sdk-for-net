@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             }
             IList<ResourceIdentifier> probingGatewayIds = default;
             IList<ResourceIdentifier> virtualNetworkIds = default;
-            ProvisioningState? provisioningState = default;
+            PrivateTrafficManagerProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new PrivateTrafficManagerProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

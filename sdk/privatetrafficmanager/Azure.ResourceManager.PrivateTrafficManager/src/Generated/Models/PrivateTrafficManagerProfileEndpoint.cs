@@ -13,16 +13,16 @@ using Azure.ResourceManager.PrivateTrafficManager;
 namespace Azure.ResourceManager.PrivateTrafficManager.Models
 {
     /// <summary> Class representing an inline endpoint within a Traffic Manager profile. </summary>
-    public partial class ProfileEndpoint
+    public partial class PrivateTrafficManagerProfileEndpoint
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProfileEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerProfileEndpoint"/>. </summary>
         /// <param name="name"> The name of the endpoint. </param>
         /// <param name="target"> The fully-qualified DNS name or IP address of the endpoint. Traffic Manager returns this value in DNS responses to direct traffic to this endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="target"/> is null. </exception>
-        public ProfileEndpoint(string name, string target)
+        public PrivateTrafficManagerProfileEndpoint(string name, string target)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(target, nameof(target));
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             VirtualNetworkIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProfileEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerProfileEndpoint"/>. </summary>
         /// <param name="name"> The name of the endpoint. </param>
         /// <param name="target"> The fully-qualified DNS name or IP address of the endpoint. Traffic Manager returns this value in DNS responses to direct traffic to this endpoint. </param>
         /// <param name="monitoringTarget"> Monitoring target is where Private Traffic Manager will gather health information.It can differ from the endpoint target, for example when the target is an IPv6 address. If not configured, the endpoint target is used. It is required when the target is IPv6 and cannot itself be an IPv6 address. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="virtualNetworkIds"> The virtual network ARM resource IDs assigned to this endpoint when using the 'VNet' traffic routing method. A virtual network must not be assigned to more than one endpoint in the profile. A profile can have at most one fallback endpoint; an endpoint with no virtual networks is that fallback. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProfileEndpoint(string name, string target, string monitoringTarget, EndpointAdministrativeStatus? endpointStatus, PrivateTrafficManagerEndpointKind? kind, long? weight, long? priority, EndpointAlwaysServe? alwaysServe, ResourceIdentifier healthPolicyId, IList<ResourceIdentifier> virtualNetworkIds, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateTrafficManagerProfileEndpoint(string name, string target, string monitoringTarget, PrivateTrafficManagerEndpointStatus? endpointStatus, PrivateTrafficManagerEndpointKind? kind, long? weight, long? priority, PrivateTrafficManagerEndpointAlwaysServeStatus? alwaysServe, ResourceIdentifier healthPolicyId, IList<ResourceIdentifier> virtualNetworkIds, PrivateTrafficManagerProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Target = target;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public string MonitoringTarget { get; set; }
 
         /// <summary> The status of the endpoint. If the endpoint is Enabled, it is probed for endpoint health and is included in the traffic routing method. </summary>
-        public EndpointAdministrativeStatus? EndpointStatus { get; set; }
+        public PrivateTrafficManagerEndpointStatus? EndpointStatus { get; set; }
 
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
         public PrivateTrafficManagerEndpointKind? Kind { get; set; }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public long? Priority { get; set; }
 
         /// <summary> Indicates whether endpoint is Always Serve or not. Always Serve endpoints are always considered to be healthy. </summary>
-        public EndpointAlwaysServe? AlwaysServe { get; set; }
+        public PrivateTrafficManagerEndpointAlwaysServeStatus? AlwaysServe { get; set; }
 
         /// <summary> The health policy associated with this endpoint. </summary>
         public ResourceIdentifier HealthPolicyId { get; set; }
@@ -92,6 +92,6 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public IList<ResourceIdentifier> VirtualNetworkIds { get; }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PrivateTrafficManagerProvisioningState? ProvisioningState { get; }
     }
 }

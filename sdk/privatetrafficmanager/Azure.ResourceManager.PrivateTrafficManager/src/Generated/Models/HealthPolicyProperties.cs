@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="probeConfig"> Probe monitoring settings of the Traffic Manager profile. Only applicable when the parent health policy `kind` is `Probe`. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthPolicyProperties(ProbeConfig probeConfig, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthPolicyProperties(ProbeConfig probeConfig, PrivateTrafficManagerProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProbeConfig = probeConfig;
             ProvisioningState = provisioningState;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public ProbeConfig ProbeConfig { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PrivateTrafficManagerProvisioningState? ProvisioningState { get; }
     }
 }

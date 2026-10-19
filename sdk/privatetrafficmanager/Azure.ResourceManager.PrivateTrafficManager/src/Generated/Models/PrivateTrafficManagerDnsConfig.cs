@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="recordType"> The record type of the Traffic Manager profile. </param>
         /// <param name="timeToLiveInSeconds"> The TTL of the DNS records in seconds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateTrafficManagerDnsConfig(DnsRecordType? recordType, long? timeToLiveInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateTrafficManagerDnsConfig(PrivateTrafficManagerDnsRecordType? recordType, long? timeToLiveInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecordType = recordType;
             TimeToLiveInSeconds = timeToLiveInSeconds;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         }
 
         /// <summary> The record type of the Traffic Manager profile. </summary>
-        public DnsRecordType? RecordType { get; set; }
+        public PrivateTrafficManagerDnsRecordType? RecordType { get; set; }
 
         /// <summary> The TTL of the DNS records in seconds. </summary>
         public long? TimeToLiveInSeconds { get; set; }

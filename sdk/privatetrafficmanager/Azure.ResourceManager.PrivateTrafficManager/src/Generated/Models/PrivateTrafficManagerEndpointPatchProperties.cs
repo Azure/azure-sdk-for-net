@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="healthPolicyId"> The health policy associated with this endpoint. </param>
         /// <param name="virtualNetworkIds"> The virtual network ARM resource IDs assigned to this endpoint when using the 'VNet' traffic routing method. A virtual network must not be assigned to more than one endpoint in the profile. A profile can have at most one fallback endpoint; an endpoint with no virtual networks is that fallback. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateTrafficManagerEndpointPatchProperties(string target, string monitoringTarget, EndpointAdministrativeStatus? endpointStatus, long? weight, long? priority, EndpointAlwaysServe? alwaysServe, ResourceIdentifier healthPolicyId, IList<ResourceIdentifier> virtualNetworkIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateTrafficManagerEndpointPatchProperties(string target, string monitoringTarget, PrivateTrafficManagerEndpointStatus? endpointStatus, long? weight, long? priority, PrivateTrafficManagerEndpointAlwaysServeStatus? alwaysServe, ResourceIdentifier healthPolicyId, IList<ResourceIdentifier> virtualNetworkIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Target = target;
             MonitoringTarget = monitoringTarget;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public string MonitoringTarget { get; set; }
 
         /// <summary> The status of the endpoint. If the endpoint is Enabled, it is probed for endpoint health and is included in the traffic routing method. </summary>
-        public EndpointAdministrativeStatus? EndpointStatus { get; set; }
+        public PrivateTrafficManagerEndpointStatus? EndpointStatus { get; set; }
 
         /// <summary> The weight of this endpoint when using the 'Weighted' traffic routing method. Possible values are from 1 to 1000. </summary>
         public long? Weight { get; set; }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public long? Priority { get; set; }
 
         /// <summary> Indicates whether endpoint is Always Serve or not. Always Serve endpoints are always considered to be healthy. </summary>
-        public EndpointAlwaysServe? AlwaysServe { get; set; }
+        public PrivateTrafficManagerEndpointAlwaysServeStatus? AlwaysServe { get; set; }
 
         /// <summary> The health policy associated with this endpoint. </summary>
         public ResourceIdentifier HealthPolicyId { get; set; }

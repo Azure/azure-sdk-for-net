@@ -12,7 +12,7 @@ using Azure.ResourceManager.PrivateTrafficManager;
 namespace Azure.ResourceManager.PrivateTrafficManager.Models
 {
     /// <summary> The record type of the Traffic Manager profile. </summary>
-    public readonly partial struct DnsRecordType : IEquatable<DnsRecordType>
+    public readonly partial struct PrivateTrafficManagerDnsRecordType : IEquatable<PrivateTrafficManagerDnsRecordType>
     {
         private readonly string _value;
         /// <summary> IPv4 address record type for DNS resolution. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <summary> Canonical name record type that maps an alias to a domain name. </summary>
         private const string CNAMEValue = "CNAME";
 
-        /// <summary> Initializes a new instance of <see cref="DnsRecordType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerDnsRecordType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DnsRecordType(string value)
+        public PrivateTrafficManagerDnsRecordType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         }
 
         /// <summary> IPv4 address record type for DNS resolution. </summary>
-        public static DnsRecordType A { get; } = new DnsRecordType(AValue);
+        public static PrivateTrafficManagerDnsRecordType A { get; } = new PrivateTrafficManagerDnsRecordType(AValue);
 
         /// <summary> IPv6 address record type for DNS resolution. </summary>
-        public static DnsRecordType AAAA { get; } = new DnsRecordType(AAAAValue);
+        public static PrivateTrafficManagerDnsRecordType AAAA { get; } = new PrivateTrafficManagerDnsRecordType(AAAAValue);
 
         /// <summary> Canonical name record type that maps an alias to a domain name. </summary>
-        public static DnsRecordType CNAME { get; } = new DnsRecordType(CNAMEValue);
+        public static PrivateTrafficManagerDnsRecordType CNAME { get; } = new PrivateTrafficManagerDnsRecordType(CNAMEValue);
 
-        /// <summary> Determines if two <see cref="DnsRecordType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PrivateTrafficManagerDnsRecordType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DnsRecordType left, DnsRecordType right) => left.Equals(right);
+        public static bool operator ==(PrivateTrafficManagerDnsRecordType left, PrivateTrafficManagerDnsRecordType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DnsRecordType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="PrivateTrafficManagerDnsRecordType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DnsRecordType left, DnsRecordType right) => !left.Equals(right);
+        public static bool operator !=(PrivateTrafficManagerDnsRecordType left, PrivateTrafficManagerDnsRecordType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DnsRecordType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PrivateTrafficManagerDnsRecordType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DnsRecordType(string value) => new DnsRecordType(value);
+        public static implicit operator PrivateTrafficManagerDnsRecordType(string value) => new PrivateTrafficManagerDnsRecordType(value);
 
-        /// <summary> Converts a string to a <see cref="DnsRecordType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PrivateTrafficManagerDnsRecordType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DnsRecordType?(string value) => value == null ? null : new DnsRecordType(value);
+        public static implicit operator PrivateTrafficManagerDnsRecordType?(string value) => value == null ? null : new PrivateTrafficManagerDnsRecordType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DnsRecordType other && Equals(other);
+        public override bool Equals(object obj) => obj is PrivateTrafficManagerDnsRecordType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DnsRecordType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PrivateTrafficManagerDnsRecordType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

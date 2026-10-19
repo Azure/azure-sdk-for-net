@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             }
             string target = default;
             string monitoringTarget = default;
-            EndpointAdministrativeStatus? endpointStatus = default;
+            PrivateTrafficManagerEndpointStatus? endpointStatus = default;
             PrivateTrafficManagerEndpointKind? kind = default;
             long? weight = default;
             long? priority = default;
-            EndpointAlwaysServe? alwaysServe = default;
+            PrivateTrafficManagerEndpointAlwaysServeStatus? alwaysServe = default;
             ResourceIdentifier healthPolicyId = default;
             IList<ResourceIdentifier> virtualNetworkIds = default;
-            ProvisioningState? provisioningState = default;
+            PrivateTrafficManagerProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    endpointStatus = new EndpointAdministrativeStatus(prop.Value.GetString());
+                    endpointStatus = new PrivateTrafficManagerEndpointStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    alwaysServe = new EndpointAlwaysServe(prop.Value.GetString());
+                    alwaysServe = new PrivateTrafficManagerEndpointAlwaysServeStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("healthPolicyId"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new PrivateTrafficManagerProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

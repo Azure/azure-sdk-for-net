@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="virtualNetworkIds"> The virtual network ARM resource IDs assigned to this endpoint when using the 'VNet' traffic routing method. A virtual network must not be assigned to more than one endpoint in the profile. A profile can have at most one fallback endpoint; an endpoint with no virtual networks is that fallback. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.PrivateTrafficManagerEndpointProperties"/> instance for mocking. </returns>
-        public static PrivateTrafficManagerEndpointProperties PrivateTrafficManagerEndpointProperties(string target = default, string monitoringTarget = default, EndpointAdministrativeStatus? endpointStatus = default, PrivateTrafficManagerEndpointKind? kind = default, long? weight = default, long? priority = default, EndpointAlwaysServe? alwaysServe = default, ResourceIdentifier healthPolicyId = default, IEnumerable<ResourceIdentifier> virtualNetworkIds = default, ProvisioningState? provisioningState = default)
+        public static PrivateTrafficManagerEndpointProperties PrivateTrafficManagerEndpointProperties(string target = default, string monitoringTarget = default, PrivateTrafficManagerEndpointStatus? endpointStatus = default, PrivateTrafficManagerEndpointKind? kind = default, long? weight = default, long? priority = default, PrivateTrafficManagerEndpointAlwaysServeStatus? alwaysServe = default, ResourceIdentifier healthPolicyId = default, IEnumerable<ResourceIdentifier> virtualNetworkIds = default, PrivateTrafficManagerProvisioningState? provisioningState = default)
         {
             virtualNetworkIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="healthPolicyId"> The health policy associated with this endpoint. </param>
         /// <param name="virtualNetworkIds"> The virtual network ARM resource IDs assigned to this endpoint when using the 'VNet' traffic routing method. A virtual network must not be assigned to more than one endpoint in the profile. A profile can have at most one fallback endpoint; an endpoint with no virtual networks is that fallback. </param>
         /// <returns> A new <see cref="Models.PrivateTrafficManagerEndpointPatchProperties"/> instance for mocking. </returns>
-        public static PrivateTrafficManagerEndpointPatchProperties PrivateTrafficManagerEndpointPatchProperties(string target = default, string monitoringTarget = default, EndpointAdministrativeStatus? endpointStatus = default, long? weight = default, long? priority = default, EndpointAlwaysServe? alwaysServe = default, ResourceIdentifier healthPolicyId = default, IEnumerable<ResourceIdentifier> virtualNetworkIds = default)
+        public static PrivateTrafficManagerEndpointPatchProperties PrivateTrafficManagerEndpointPatchProperties(string target = default, string monitoringTarget = default, PrivateTrafficManagerEndpointStatus? endpointStatus = default, long? weight = default, long? priority = default, PrivateTrafficManagerEndpointAlwaysServeStatus? alwaysServe = default, ResourceIdentifier healthPolicyId = default, IEnumerable<ResourceIdentifier> virtualNetworkIds = default)
         {
             virtualNetworkIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="probeConfig"> Probe monitoring settings of the Traffic Manager profile. Only applicable when the parent health policy `kind` is `Probe`. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.HealthPolicyProperties"/> instance for mocking. </returns>
-        public static HealthPolicyProperties HealthPolicyProperties(ProbeConfig probeConfig = default, ProvisioningState? provisioningState = default)
+        public static HealthPolicyProperties HealthPolicyProperties(ProbeConfig probeConfig = default, PrivateTrafficManagerProvisioningState? provisioningState = default)
         {
             return new HealthPolicyProperties(probeConfig, provisioningState, default);
         }
@@ -229,9 +229,9 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="endpoints"> The list of endpoints in the Private Traffic Manager profile. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.PrivateTrafficManagerProfileProperties"/> instance for mocking. </returns>
-        public static PrivateTrafficManagerProfileProperties PrivateTrafficManagerProfileProperties(CustomTopologyMapMode? customTopologyMapMode = default, PrivateTrafficManagerDnsConfig dnsConfig = default, ResourceIdentifier topologyMapId = default, PrivateTrafficManagerProfileStatus? profileStatus = default, TrafficRoutingMethod? trafficRoutingMethod = default, IEnumerable<ProfileEndpoint> endpoints = default, ProvisioningState? provisioningState = default)
+        public static PrivateTrafficManagerProfileProperties PrivateTrafficManagerProfileProperties(CustomTopologyMapMode? customTopologyMapMode = default, PrivateTrafficManagerDnsConfig dnsConfig = default, ResourceIdentifier topologyMapId = default, PrivateTrafficManagerProfileStatus? profileStatus = default, TrafficRoutingMethod? trafficRoutingMethod = default, IEnumerable<PrivateTrafficManagerProfileEndpoint> endpoints = default, PrivateTrafficManagerProvisioningState? provisioningState = default)
         {
-            endpoints ??= new ChangeTrackingList<ProfileEndpoint>();
+            endpoints ??= new ChangeTrackingList<PrivateTrafficManagerProfileEndpoint>();
 
             return new PrivateTrafficManagerProfileProperties(
                 customTopologyMapMode,
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                 topologyMapId,
                 profileStatus,
                 trafficRoutingMethod,
-                (endpoints ?? new ChangeTrackingList<ProfileEndpoint>()).ToList(),
+                (endpoints ?? new ChangeTrackingList<PrivateTrafficManagerProfileEndpoint>()).ToList(),
                 provisioningState,
                 default);
         }
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="recordType"> The record type of the Traffic Manager profile. </param>
         /// <param name="timeToLiveInSeconds"> The TTL of the DNS records in seconds. </param>
         /// <returns> A new <see cref="Models.PrivateTrafficManagerDnsConfig"/> instance for mocking. </returns>
-        public static PrivateTrafficManagerDnsConfig PrivateTrafficManagerDnsConfig(DnsRecordType? recordType = default, long? timeToLiveInSeconds = default)
+        public static PrivateTrafficManagerDnsConfig PrivateTrafficManagerDnsConfig(PrivateTrafficManagerDnsRecordType? recordType = default, long? timeToLiveInSeconds = default)
         {
             return new PrivateTrafficManagerDnsConfig(recordType, timeToLiveInSeconds, default);
         }
@@ -265,12 +265,12 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="healthPolicyId"> The health policy associated with this endpoint. </param>
         /// <param name="virtualNetworkIds"> The virtual network ARM resource IDs assigned to this endpoint when using the 'VNet' traffic routing method. A virtual network must not be assigned to more than one endpoint in the profile. A profile can have at most one fallback endpoint; an endpoint with no virtual networks is that fallback. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.ProfileEndpoint"/> instance for mocking. </returns>
-        public static ProfileEndpoint ProfileEndpoint(string name = default, string target = default, string monitoringTarget = default, EndpointAdministrativeStatus? endpointStatus = default, PrivateTrafficManagerEndpointKind? kind = default, long? weight = default, long? priority = default, EndpointAlwaysServe? alwaysServe = default, ResourceIdentifier healthPolicyId = default, IEnumerable<ResourceIdentifier> virtualNetworkIds = default, ProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.PrivateTrafficManagerProfileEndpoint"/> instance for mocking. </returns>
+        public static PrivateTrafficManagerProfileEndpoint PrivateTrafficManagerProfileEndpoint(string name = default, string target = default, string monitoringTarget = default, PrivateTrafficManagerEndpointStatus? endpointStatus = default, PrivateTrafficManagerEndpointKind? kind = default, long? weight = default, long? priority = default, PrivateTrafficManagerEndpointAlwaysServeStatus? alwaysServe = default, ResourceIdentifier healthPolicyId = default, IEnumerable<ResourceIdentifier> virtualNetworkIds = default, PrivateTrafficManagerProvisioningState? provisioningState = default)
         {
             virtualNetworkIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new ProfileEndpoint(
+            return new PrivateTrafficManagerProfileEndpoint(
                 name,
                 target,
                 monitoringTarget,
@@ -304,9 +304,9 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="trafficRoutingMethod"> The traffic routing method of the Private Traffic Manager profile. </param>
         /// <param name="endpoints"> The list of endpoints in the Private Traffic Manager profile. </param>
         /// <returns> A new <see cref="Models.PrivateTrafficManagerProfilePatchProperties"/> instance for mocking. </returns>
-        public static PrivateTrafficManagerProfilePatchProperties PrivateTrafficManagerProfilePatchProperties(CustomTopologyMapMode? customTopologyMapMode = default, PrivateTrafficManagerDnsConfig dnsConfig = default, ResourceIdentifier topologyMapId = default, PrivateTrafficManagerProfileStatus? profileStatus = default, TrafficRoutingMethod? trafficRoutingMethod = default, IEnumerable<ProfileEndpoint> endpoints = default)
+        public static PrivateTrafficManagerProfilePatchProperties PrivateTrafficManagerProfilePatchProperties(CustomTopologyMapMode? customTopologyMapMode = default, PrivateTrafficManagerDnsConfig dnsConfig = default, ResourceIdentifier topologyMapId = default, PrivateTrafficManagerProfileStatus? profileStatus = default, TrafficRoutingMethod? trafficRoutingMethod = default, IEnumerable<PrivateTrafficManagerProfileEndpoint> endpoints = default)
         {
-            endpoints ??= new ChangeTrackingList<ProfileEndpoint>();
+            endpoints ??= new ChangeTrackingList<PrivateTrafficManagerProfileEndpoint>();
 
             return new PrivateTrafficManagerProfilePatchProperties(
                 customTopologyMapMode,
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                 topologyMapId,
                 profileStatus,
                 trafficRoutingMethod,
-                (endpoints ?? new ChangeTrackingList<ProfileEndpoint>()).ToList(),
+                (endpoints ?? new ChangeTrackingList<PrivateTrafficManagerProfileEndpoint>()).ToList(),
                 default);
         }
 
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="probingGatewayId"> The ARM resource ID of the probing gateway. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.ProfileProbingGatewayProperties"/> instance for mocking. </returns>
-        public static ProfileProbingGatewayProperties ProfileProbingGatewayProperties(ResourceIdentifier probingGatewayId = default, ProvisioningState? provisioningState = default)
+        public static ProfileProbingGatewayProperties ProfileProbingGatewayProperties(ResourceIdentifier probingGatewayId = default, PrivateTrafficManagerProvisioningState? provisioningState = default)
         {
             return new ProfileProbingGatewayProperties(probingGatewayId, provisioningState, default);
         }
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="virtualNetworkIds"> The list of Network IDs that forms the Site. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.TopologyMapSiteProperties"/> instance for mocking. </returns>
-        public static TopologyMapSiteProperties TopologyMapSiteProperties(IEnumerable<ResourceIdentifier> probingGatewayIds = default, IEnumerable<ResourceIdentifier> virtualNetworkIds = default, ProvisioningState? provisioningState = default)
+        public static TopologyMapSiteProperties TopologyMapSiteProperties(IEnumerable<ResourceIdentifier> probingGatewayIds = default, IEnumerable<ResourceIdentifier> virtualNetworkIds = default, PrivateTrafficManagerProvisioningState? provisioningState = default)
         {
             probingGatewayIds ??= new ChangeTrackingList<ResourceIdentifier>();
             virtualNetworkIds ??= new ChangeTrackingList<ResourceIdentifier>();
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="catchAllSiteName"> The Name of the CatchAll site. There is only one CatchAll site in a TopologyMap. </param>
         /// <param name="provisioningState"> The provisioning state of the TopologyMap resource. </param>
         /// <returns> A new <see cref="Models.TopologyMapProperties"/> instance for mocking. </returns>
-        public static TopologyMapProperties TopologyMapProperties(IEnumerable<TopologyMapInlineSite> sites = default, string catchAllSiteName = default, ProvisioningState? provisioningState = default)
+        public static TopologyMapProperties TopologyMapProperties(IEnumerable<TopologyMapInlineSite> sites = default, string catchAllSiteName = default, PrivateTrafficManagerProvisioningState? provisioningState = default)
         {
             sites ??= new ChangeTrackingList<TopologyMapInlineSite>();
 

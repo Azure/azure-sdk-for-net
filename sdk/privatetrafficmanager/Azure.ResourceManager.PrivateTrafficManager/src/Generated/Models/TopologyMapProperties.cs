@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="catchAllSiteName"> The Name of the CatchAll site. There is only one CatchAll site in a TopologyMap. </param>
         /// <param name="provisioningState"> The provisioning state of the TopologyMap resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TopologyMapProperties(IList<TopologyMapInlineSite> sites, string catchAllSiteName, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TopologyMapProperties(IList<TopologyMapInlineSite> sites, string catchAllSiteName, PrivateTrafficManagerProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sites = sites;
             CatchAllSiteName = catchAllSiteName;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public string CatchAllSiteName { get; set; }
 
         /// <summary> The provisioning state of the TopologyMap resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PrivateTrafficManagerProvisioningState? ProvisioningState { get; }
     }
 }

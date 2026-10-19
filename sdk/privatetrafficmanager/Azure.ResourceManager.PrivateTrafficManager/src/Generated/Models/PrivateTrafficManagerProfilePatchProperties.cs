@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerProfilePatchProperties"/>. </summary>
         public PrivateTrafficManagerProfilePatchProperties()
         {
-            Endpoints = new ChangeTrackingList<ProfileEndpoint>();
+            Endpoints = new ChangeTrackingList<PrivateTrafficManagerProfileEndpoint>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerProfilePatchProperties"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="trafficRoutingMethod"> The traffic routing method of the Private Traffic Manager profile. </param>
         /// <param name="endpoints"> The list of endpoints in the Private Traffic Manager profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateTrafficManagerProfilePatchProperties(CustomTopologyMapMode? customTopologyMapMode, PrivateTrafficManagerDnsConfig dnsConfig, ResourceIdentifier topologyMapId, PrivateTrafficManagerProfileStatus? profileStatus, TrafficRoutingMethod? trafficRoutingMethod, IList<ProfileEndpoint> endpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateTrafficManagerProfilePatchProperties(CustomTopologyMapMode? customTopologyMapMode, PrivateTrafficManagerDnsConfig dnsConfig, ResourceIdentifier topologyMapId, PrivateTrafficManagerProfileStatus? profileStatus, TrafficRoutingMethod? trafficRoutingMethod, IList<PrivateTrafficManagerProfileEndpoint> endpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CustomTopologyMapMode = customTopologyMapMode;
             DnsConfig = dnsConfig;
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public TrafficRoutingMethod? TrafficRoutingMethod { get; set; }
 
         /// <summary> The list of endpoints in the Private Traffic Manager profile. </summary>
-        public IList<ProfileEndpoint> Endpoints { get; }
+        public IList<PrivateTrafficManagerProfileEndpoint> Endpoints { get; }
     }
 }

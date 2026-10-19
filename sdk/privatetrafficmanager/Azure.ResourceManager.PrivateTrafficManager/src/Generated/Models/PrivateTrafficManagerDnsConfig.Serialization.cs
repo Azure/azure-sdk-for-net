@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             {
                 return null;
             }
-            DnsRecordType? recordType = default;
+            PrivateTrafficManagerDnsRecordType? recordType = default;
             long? timeToLiveInSeconds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    recordType = new DnsRecordType(prop.Value.GetString());
+                    recordType = new PrivateTrafficManagerDnsRecordType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ttl"u8))

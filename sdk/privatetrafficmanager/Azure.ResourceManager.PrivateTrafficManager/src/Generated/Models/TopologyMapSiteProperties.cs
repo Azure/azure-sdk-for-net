@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="virtualNetworkIds"> The list of Network IDs that forms the Site. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TopologyMapSiteProperties(IList<ResourceIdentifier> probingGatewayIds, IList<ResourceIdentifier> virtualNetworkIds, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TopologyMapSiteProperties(IList<ResourceIdentifier> probingGatewayIds, IList<ResourceIdentifier> virtualNetworkIds, PrivateTrafficManagerProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProbingGatewayIds = probingGatewayIds;
             VirtualNetworkIds = virtualNetworkIds;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public IList<ResourceIdentifier> VirtualNetworkIds { get; }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PrivateTrafficManagerProvisioningState? ProvisioningState { get; }
     }
 }
