@@ -71,7 +71,7 @@ to configure the binding, service-account permissions, and workload identity
 webhook settings. Enabling the SDK option does not create resources or grant
 permission to use the managed identity. Use `WorkloadIdentityCredential` directly;
 this mode is not supported by `DefaultAzureCredential` or `ManagedIdentityCredential`.
-The [Azure.Core live tests](tests/IdentityBinding/README.md) describe validation
+The [Azure.Core live tests](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/tests/IdentityBinding/WorkloadIdentityBindingTests.md) describe validation
 against real AKS resources.
 
 ### Configuring Service Clients Using `ClientOptions`
