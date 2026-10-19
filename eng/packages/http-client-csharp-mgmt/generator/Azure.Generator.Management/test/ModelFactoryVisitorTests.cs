@@ -509,6 +509,75 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void RestoringHiddenFactoryOverloadDoesNotMutateLastContractParameters()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousParameter = new ParameterProvider(
+                "value",
+                $"Published parameter description.",
+                typeof(string),
+                Default,
+                attributes: [new AttributeStatement(typeof(System.Diagnostics.CodeAnalysis.AllowNullAttribute))],
+                property: model.Properties.Single(),
+                initializationValue: Literal("initialized"),
+                location: ParameterLocation.Query,
+                wireInfo: new WireInformation(default, "publishedValue"),
+                validation: ParameterValidationType.AssertNotNull,
+                inputParameter: InputFactory.MethodParameter("value", InputPrimitiveType.String))
+            {
+                SpreadSource = model
+            };
+            var previousDescription = previousParameter.Description;
+            var previousSignature = new MethodSignature(
+                "TestModel",
+                $"Published factory description.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"Published return description.",
+                [previousParameter]);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
+            modelFactory.Update(methods: []);
+
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+
+            var restoredMethod = modelFactory.Methods.Single();
+            var restoredParameter = restoredMethod.Signature.Parameters.Single();
+            Assert.Multiple(() =>
+            {
+                Assert.That(Management.Visitors.ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(restoredMethod), Is.True);
+                Assert.That(restoredParameter.DefaultValue, Is.Null,
+                    "The restored hidden overload still requires an explicit argument.");
+                Assert.That(restoredParameter, Is.Not.SameAs(previousParameter),
+                    "A restored signature must own its mutable parameter providers.");
+                Assert.That(restoredParameter.Name, Is.EqualTo(previousParameter.Name));
+                Assert.That(restoredParameter.Type, Is.SameAs(previousParameter.Type));
+                Assert.That(restoredParameter.Attributes, Is.SameAs(previousParameter.Attributes));
+                Assert.That(restoredParameter.Property, Is.SameAs(previousParameter.Property));
+                Assert.That(restoredParameter.InitializationValue, Is.SameAs(previousParameter.InitializationValue));
+                Assert.That(restoredParameter.Location, Is.EqualTo(previousParameter.Location));
+                Assert.That(restoredParameter.WireInfo, Is.SameAs(previousParameter.WireInfo));
+                Assert.That(restoredParameter.Validation, Is.EqualTo(previousParameter.Validation));
+                Assert.That(restoredParameter.InputParameter, Is.SameAs(previousParameter.InputParameter));
+                Assert.That(restoredParameter.SpreadSource, Is.SameAs(previousParameter.SpreadSource));
+                Assert.That(lastContractView.Methods.Single().Signature.Parameters.Single(), Is.SameAs(previousParameter));
+                Assert.That(previousParameter.DefaultValue, Is.SameAs(Default),
+                    "Requiring a hidden overload's arguments must not change published optionality.");
+                Assert.That(previousParameter.Description, Is.SameAs(previousDescription),
+                    "Regenerating documentation must not change the historical contract either.");
+            });
+        }
+
+        [Test]
         public void RestoredHiddenFactoryOverloadRequiresAllParametersAndKeepsCurrentOverloadOptional()
         {
             // Regression for #63828: DataProtectionBackup replaces the nullable enum with a settings model.

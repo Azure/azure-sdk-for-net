@@ -313,12 +313,28 @@ namespace Azure.Generator.Management.Visitors
                     ? signature.Attributes
                     : [.. signature.Attributes, new AttributeStatement(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))];
 
-            foreach (var parameter in signature.Parameters)
+            // Restored methods own their mutable parameters. Updating descriptions or defaults
+            // must not change the published contract used by later compatibility processing.
+            var parameters = signature.Parameters.Select(parameter => new ParameterProvider(
+                parameter.Name,
+                parameterDescriptions.TryGetValue(parameter.Name, out var currentDescription) ? currentDescription : $"",
+                parameter.Type,
+                defaultValue: parameter.DefaultValue,
+                isRef: parameter.IsRef,
+                isOut: parameter.IsOut,
+                isIn: parameter.IsIn,
+                isParams: parameter.IsParams,
+                attributes: parameter.Attributes,
+                property: parameter.Property,
+                field: parameter.Field,
+                initializationValue: parameter.InitializationValue,
+                location: parameter.Location,
+                wireInfo: parameter.WireInfo,
+                validation: parameter.Validation,
+                inputParameter: parameter.InputParameter)
             {
-                parameter.Update(description: parameterDescriptions.TryGetValue(parameter.Name, out var currentDescription)
-                    ? currentDescription
-                    : $"");
-            }
+                SpreadSource = parameter.SpreadSource
+            }).ToArray();
 
             return new MethodSignature(
                 signature.Name,
@@ -326,7 +342,7 @@ namespace Azure.Generator.Management.Visitors
                 signature.Modifiers,
                 signature.ReturnType,
                 $"A new {signature.ReturnType:C} instance for mocking.",
-                signature.Parameters,
+                parameters,
                 attributes,
                 signature.GenericArguments,
                 signature.GenericParameterConstraints,
