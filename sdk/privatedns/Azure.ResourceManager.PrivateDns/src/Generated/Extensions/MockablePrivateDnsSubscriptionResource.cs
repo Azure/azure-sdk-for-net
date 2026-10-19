@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
 
         private ClientDiagnostics PrivateZonesClientDiagnostics => _privateZonesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PrivateDns.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateZones PrivateZonesRestClient => _privateZonesRestClient ??= new PrivateZones(PrivateZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01-preview");
+        private PrivateZones PrivateZonesRestClient => _privateZonesRestClient ??= new PrivateZones(PrivateZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/privateDnsZones", out string apiVersion) ? apiVersion : "2026-06-01-preview");
 
         private ClientDiagnostics PrivateDnsResourceReferenceClientDiagnostics => _privateDnsResourceReferenceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PrivateDns.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateDnsZoneData, PrivateDnsZoneResource>(new PrivateZonesGetAllAsyncCollectionResultOfT(PrivateZonesRestClient, Id.SubscriptionId, top, context, "MockablePrivateDnsSubscriptionResource.GetPrivateDnsZones"), data => new PrivateDnsZoneResource(Client, data));
+            return new AsyncPageableWrapper<PrivateDnsZoneData, PrivateDnsZoneResource>(new PrivateDnsZoneDataAsync0CollectionResultOfT(PrivateZonesRestClient, Id.SubscriptionId, top, context, "MockablePrivateDnsSubscriptionResource.GetPrivateDnsZones"), data => new PrivateDnsZoneResource(Client, data));
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateDnsZoneData, PrivateDnsZoneResource>(new PrivateZonesGetAllCollectionResultOfT(PrivateZonesRestClient, Id.SubscriptionId, top, context, "MockablePrivateDnsSubscriptionResource.GetPrivateDnsZones"), data => new PrivateDnsZoneResource(Client, data));
+            return new PageableWrapper<PrivateDnsZoneData, PrivateDnsZoneResource>(new PrivateDnsZoneData0CollectionResultOfT(PrivateZonesRestClient, Id.SubscriptionId, top, context, "MockablePrivateDnsSubscriptionResource.GetPrivateDnsZones"), data => new PrivateDnsZoneResource(Client, data));
         }
 
         /// <summary>

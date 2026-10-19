@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BaseAdminRuleData, BaseAdminRuleResource>(new AdminRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BaseAdminRuleData, BaseAdminRuleResource>(new BaseAdminRuleDataAsyncCollectionResultOfT(
                 _adminRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BaseAdminRuleData, BaseAdminRuleResource>(new AdminRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<BaseAdminRuleData, BaseAdminRuleResource>(new BaseAdminRuleDataCollectionResultOfT(
                 _adminRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

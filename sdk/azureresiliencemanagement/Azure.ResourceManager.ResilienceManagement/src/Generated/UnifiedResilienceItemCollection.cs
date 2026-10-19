@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(UnifiedResilienceItemResource.ResourceType, out string unifiedResilienceItemApiVersion);
             _unifiedResilienceItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", UnifiedResilienceItemResource.ResourceType.Namespace, Diagnostics);
-            _unifiedResilienceItemsRestClient = new UnifiedResilienceItems(_unifiedResilienceItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, unifiedResilienceItemApiVersion ?? "2026-04-01-preview");
+            _unifiedResilienceItemsRestClient = new UnifiedResilienceItems(_unifiedResilienceItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, unifiedResilienceItemApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<UnifiedResilienceItemData, UnifiedResilienceItemResource>(new UnifiedResilienceItemsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<UnifiedResilienceItemData, UnifiedResilienceItemResource>(new UnifiedResilienceItemDataAsyncCollectionResultOfT(
                 _unifiedResilienceItemsRestClient,
                 Id.Name,
                 skipToken,
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<UnifiedResilienceItemData, UnifiedResilienceItemResource>(new UnifiedResilienceItemsGetAllCollectionResultOfT(
+            return new PageableWrapper<UnifiedResilienceItemData, UnifiedResilienceItemResource>(new UnifiedResilienceItemDataCollectionResultOfT(
                 _unifiedResilienceItemsRestClient,
                 Id.Name,
                 skipToken,
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>

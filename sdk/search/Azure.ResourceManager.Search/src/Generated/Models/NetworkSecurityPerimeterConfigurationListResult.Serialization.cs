@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Search.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkSecurityPerimeterConfigurationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new NetworkSecurityPerimeterConfigurationListResult(value ?? new ChangeTrackingList<SearchServiceNetworkSecurityPerimeterConfigurationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

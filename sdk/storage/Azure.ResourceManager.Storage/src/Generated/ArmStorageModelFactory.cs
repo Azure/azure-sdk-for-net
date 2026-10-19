@@ -1905,7 +1905,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageConnectorSource"/> instance for mocking. </returns>
         public static StorageConnectorSource StorageConnectorSource(string @type = default)
         {
-            return new UnknownStorageConnectorSource(default, default);
+            return new UnknownStorageConnectorSource(@type is null ? default : new StorageConnectorSourceType(@type), default);
         }
 
         /// <summary> The properties of data share source. </summary>
@@ -1914,7 +1914,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.DataShareSource"/> instance for mocking. </returns>
         public static DataShareSource DataShareSource(StorageConnectorConnection connection = default, StorageConnectorAuthProperties authProperties = default)
         {
-            return new DataShareSource(default, default, connection, authProperties);
+            return new DataShareSource(StorageConnectorSourceType.DataShare, default, connection, authProperties);
         }
 
         /// <summary>
@@ -1925,7 +1925,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageConnectorConnection"/> instance for mocking. </returns>
         public static StorageConnectorConnection StorageConnectorConnection(string @type = default)
         {
-            return new UnknownStorageConnectorConnection(default, default);
+            return new UnknownStorageConnectorConnection(@type is null ? default : new StorageConnectorConnectionType(@type), default);
         }
 
         /// <summary> The connection details for Data Share source. </summary>
@@ -1933,7 +1933,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.DataShareConnection"/> instance for mocking. </returns>
         public static DataShareConnection DataShareConnection(string dataShareUri = default)
         {
-            return new DataShareConnection(default, default, dataShareUri);
+            return new DataShareConnection(StorageConnectorConnectionType.DataShare, default, dataShareUri);
         }
 
         /// <summary>
@@ -1944,7 +1944,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageConnectorAuthProperties"/> instance for mocking. </returns>
         public static StorageConnectorAuthProperties StorageConnectorAuthProperties(string @type = default)
         {
-            return new UnknownStorageConnectorAuthProperties(default, default);
+            return new UnknownStorageConnectorAuthProperties(@type is null ? default : new StorageConnectorAuthType(@type), default);
         }
 
         /// <summary> The managed identity auth properties for dataShare connection. </summary>
@@ -1952,7 +1952,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageConnectorManagedIdentityAuth"/> instance for mocking. </returns>
         public static StorageConnectorManagedIdentityAuth StorageConnectorManagedIdentityAuth(string identityResourceId = default)
         {
-            return new StorageConnectorManagedIdentityAuth(default, default, identityResourceId);
+            return new StorageConnectorManagedIdentityAuth(StorageConnectorAuthType.ManagedIdentity, default, identityResourceId);
         }
 
         /// <summary> A Connector is a tracked ARM resource modeled as a sub-resource of a Storage Account. </summary>
@@ -1999,7 +1999,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageConnectorSourcePatch"/> instance for mocking. </returns>
         public static StorageConnectorSourcePatch StorageConnectorSourcePatch(string @type = default)
         {
-            return new UnknownStorageConnectorSourcePatch(default, default);
+            return new UnknownStorageConnectorSourcePatch(@type is null ? default : new StorageConnectorSourceType(@type), default);
         }
 
         /// <summary> The properties of data share source. </summary>
@@ -2007,7 +2007,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.DataShareSourcePatch"/> instance for mocking. </returns>
         public static DataShareSourcePatch DataShareSourcePatch(StorageConnectorAuthPropertiesPatch authProperties = default)
         {
-            return new DataShareSourcePatch(default, default, authProperties);
+            return new DataShareSourcePatch(StorageConnectorSourceType.DataShare, default, authProperties);
         }
 
         /// <summary>
@@ -2018,7 +2018,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageConnectorAuthPropertiesPatch"/> instance for mocking. </returns>
         public static StorageConnectorAuthPropertiesPatch StorageConnectorAuthPropertiesPatch(string @type = default)
         {
-            return new UnknownStorageConnectorAuthPropertiesPatch(default, default);
+            return new UnknownStorageConnectorAuthPropertiesPatch(@type is null ? default : new StorageConnectorAuthType(@type), default);
         }
 
         /// <summary> The managed identity auth properties for dataShare connection. </summary>
@@ -2026,7 +2026,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageConnectorManagedIdentityAuthPatch"/> instance for mocking. </returns>
         public static StorageConnectorManagedIdentityAuthPatch StorageConnectorManagedIdentityAuthPatch(string identityResourceId = default)
         {
-            return new StorageConnectorManagedIdentityAuthPatch(default, default, identityResourceId);
+            return new StorageConnectorManagedIdentityAuthPatch(StorageConnectorAuthType.ManagedIdentity, default, identityResourceId);
         }
 
         /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>

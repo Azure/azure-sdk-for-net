@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.SerialConsole
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SerialPortData, SerialPortResource>(new SerialPortsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SerialPortData, SerialPortResource>(new SerialPortDataAsyncCollectionResultOfT(
                 _serialPortsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.SerialConsole
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SerialPortData, SerialPortResource>(new SerialPortsGetAllCollectionResultOfT(
+            return new PageableWrapper<SerialPortData, SerialPortResource>(new SerialPortDataCollectionResultOfT(
                 _serialPortsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SynapseLinkWorkspaceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SynapseLinkWorkspaceListResult(value ?? new ChangeTrackingList<SqlSynapseLinkWorkspace>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

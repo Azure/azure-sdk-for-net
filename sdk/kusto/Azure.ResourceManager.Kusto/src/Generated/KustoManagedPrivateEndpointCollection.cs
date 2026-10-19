@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KustoManagedPrivateEndpointData, KustoManagedPrivateEndpointResource>(new ManagedPrivateEndpointsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KustoManagedPrivateEndpointData, KustoManagedPrivateEndpointResource>(new KustoManagedPrivateEndpointDataAsyncCollectionResultOfT(
                 _managedPrivateEndpointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KustoManagedPrivateEndpointData, KustoManagedPrivateEndpointResource>(new ManagedPrivateEndpointsGetAllCollectionResultOfT(
+            return new PageableWrapper<KustoManagedPrivateEndpointData, KustoManagedPrivateEndpointResource>(new KustoManagedPrivateEndpointDataCollectionResultOfT(
                 _managedPrivateEndpointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="CloudExadataInfrastructureProperties"/>. </summary>
         /// <param name="definedFileSystemConfiguration"> Defined file system configurations. </param>
         /// <param name="exadataInfraOcid"> Exadata infra ocid. </param>
+        /// <param name="resourceAnchorId"> Azure Resource Anchor ID. </param>
         /// <param name="computeCount"> The number of compute servers for the cloud Exadata infrastructure. </param>
         /// <param name="storageCount"> The number of storage servers for the cloud Exadata infrastructure. </param>
         /// <param name="totalStorageSizeInGbs"> The total storage allocated to the cloud Exadata infrastructure resource, in gigabytes (GB). </param>
@@ -47,6 +49,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="provisioningState"> CloudExadataInfrastructure provisioning state. </param>
         /// <param name="lifecycleState"> CloudExadataInfrastructure lifecycle state. </param>
         /// <param name="shape"> The model name of the cloud Exadata infrastructure resource. </param>
+        /// <param name="proximityPlacementGroup"> Proximity placement group settings. </param>
         /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
         /// <param name="cpuCount"> The total number of CPU cores allocated. </param>
         /// <param name="maxCpuCount"> The total number of CPU cores available. </param>
@@ -70,10 +73,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="computeModel"> The compute model of the Exadata Infrastructure. </param>
         /// <param name="exascaleConfig"> The exascale config details for the cloud Exadata infrastructure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudExadataInfrastructureProperties(IReadOnlyList<DefinedFileSystemConfiguration> definedFileSystemConfiguration, string exadataInfraOcid, int? computeCount, int? storageCount, int? totalStorageSizeInGbs, int? availableStorageSizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, OracleDatabaseMaintenanceWindow maintenanceWindow, EstimatedPatchingTime estimatedPatchingTime, IList<OracleCustomerContact> customerContacts, OracleDatabaseProvisioningState? provisioningState, CloudExadataInfrastructureLifecycleState? lifecycleState, string shape, Uri ociUri, int? cpuCount, int? maxCpuCount, int? memorySizeInGbs, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, int? maxDBNodeStorageSizeInGbs, double? dataStorageSizeInTbs, double? maxDataStorageInTbs, string dbServerVersion, string storageServerVersion, int? activatedStorageCount, int? additionalStorageCount, string displayName, string lastMaintenanceRunOcid, string nextMaintenanceRunOcid, string monthlyDBServerVersion, string monthlyStorageServerVersion, string databaseServerType, string storageServerType, OracleDatabaseComputeModel? computeModel, ExascaleConfigDetails exascaleConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudExadataInfrastructureProperties(IReadOnlyList<DefinedFileSystemConfiguration> definedFileSystemConfiguration, string exadataInfraOcid, ResourceIdentifier resourceAnchorId, int? computeCount, int? storageCount, int? totalStorageSizeInGbs, int? availableStorageSizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, OracleDatabaseMaintenanceWindow maintenanceWindow, EstimatedPatchingTime estimatedPatchingTime, IList<OracleCustomerContact> customerContacts, OracleDatabaseProvisioningState? provisioningState, CloudExadataInfrastructureLifecycleState? lifecycleState, string shape, ProximityPlacementGroup proximityPlacementGroup, Uri ociUri, int? cpuCount, int? maxCpuCount, int? memorySizeInGbs, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, int? maxDBNodeStorageSizeInGbs, double? dataStorageSizeInTbs, double? maxDataStorageInTbs, string dbServerVersion, string storageServerVersion, int? activatedStorageCount, int? additionalStorageCount, string displayName, string lastMaintenanceRunOcid, string nextMaintenanceRunOcid, string monthlyDBServerVersion, string monthlyStorageServerVersion, string databaseServerType, string storageServerType, OracleDatabaseComputeModel? computeModel, ExascaleConfigDetails exascaleConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DefinedFileSystemConfiguration = definedFileSystemConfiguration;
             ExadataInfraOcid = exadataInfraOcid;
+            ResourceAnchorId = resourceAnchorId;
             ComputeCount = computeCount;
             StorageCount = storageCount;
             TotalStorageSizeInGbs = totalStorageSizeInGbs;
@@ -86,6 +90,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             ProvisioningState = provisioningState;
             LifecycleState = lifecycleState;
             Shape = shape;
+            ProximityPlacementGroup = proximityPlacementGroup;
             OciUri = ociUri;
             CpuCount = cpuCount;
             MaxCpuCount = maxCpuCount;
@@ -116,6 +121,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Exadata infra ocid. </summary>
         public string ExadataInfraOcid { get; }
+
+        /// <summary> Azure Resource Anchor ID. </summary>
+        public ResourceIdentifier ResourceAnchorId { get; set; }
 
         /// <summary> The number of compute servers for the cloud Exadata infrastructure. </summary>
         public int? ComputeCount { get; set; }
@@ -152,6 +160,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> The model name of the cloud Exadata infrastructure resource. </summary>
         public string Shape { get; set; }
+
+        /// <summary> Proximity placement group settings. </summary>
+        public ProximityPlacementGroup ProximityPlacementGroup { get; set; }
 
         /// <summary> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </summary>
         public Uri OciUri { get; }

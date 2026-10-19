@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualNetworkLinkData, VirtualNetworkLinkResource>(new VirtualNetworkLinksGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualNetworkLinkData, VirtualNetworkLinkResource>(new VirtualNetworkLinkDataAsyncCollectionResultOfT(
                 _virtualNetworkLinksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualNetworkLinkData, VirtualNetworkLinkResource>(new VirtualNetworkLinksGetAllCollectionResultOfT(
+            return new PageableWrapper<VirtualNetworkLinkData, VirtualNetworkLinkResource>(new VirtualNetworkLinkDataCollectionResultOfT(
                 _virtualNetworkLinksRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

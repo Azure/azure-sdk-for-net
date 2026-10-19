@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal InterconnectGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(InterconnectGroupResource.ResourceType, out string interconnectGroupApiVersion);
             _interconnectGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", InterconnectGroupResource.ResourceType.Namespace, Diagnostics);
-            _interconnectGroupsRestClient = new InterconnectGroups(_interconnectGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, interconnectGroupApiVersion ?? "2026-01-01");
+            _interconnectGroupsRestClient = new InterconnectGroups(_interconnectGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InterconnectGroupData, InterconnectGroupResource>(new InterconnectGroupsListAsyncCollectionResultOfT(_interconnectGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "InterconnectGroupCollection.GetAll"), data => new InterconnectGroupResource(Client, data));
+            return new AsyncPageableWrapper<InterconnectGroupData, InterconnectGroupResource>(new InterconnectGroupDataAsyncCollectionResultOfT(_interconnectGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "InterconnectGroupCollection.GetAll"), data => new InterconnectGroupResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InterconnectGroupData, InterconnectGroupResource>(new InterconnectGroupsListCollectionResultOfT(_interconnectGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "InterconnectGroupCollection.GetAll"), data => new InterconnectGroupResource(Client, data));
+            return new PageableWrapper<InterconnectGroupData, InterconnectGroupResource>(new InterconnectGroupDataCollectionResultOfT(_interconnectGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "InterconnectGroupCollection.GetAll"), data => new InterconnectGroupResource(Client, data));
         }
 
         /// <summary>

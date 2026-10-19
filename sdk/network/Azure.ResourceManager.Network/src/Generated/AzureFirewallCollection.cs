@@ -40,9 +40,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AzureFirewallCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AzureFirewallResource.ResourceType, out string azureFirewallApiVersion);
             _azureFirewallsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", AzureFirewallResource.ResourceType.Namespace, Diagnostics);
-            _azureFirewallsRestClient = new AzureFirewalls(_azureFirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, azureFirewallApiVersion ?? "2026-01-01");
+            _azureFirewallsRestClient = new AzureFirewalls(_azureFirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -297,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallsListAsyncCollectionResultOfT(_azureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AzureFirewallCollection.GetAll"), data => new AzureFirewallResource(Client, data));
+            return new AsyncPageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallDataAsyncCollectionResultOfT(_azureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AzureFirewallCollection.GetAll"), data => new AzureFirewallResource(Client, data));
         }
 
         /// <summary>
@@ -325,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallsListCollectionResultOfT(_azureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AzureFirewallCollection.GetAll"), data => new AzureFirewallResource(Client, data));
+            return new PageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallDataCollectionResultOfT(_azureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AzureFirewallCollection.GetAll"), data => new AzureFirewallResource(Client, data));
         }
 
         /// <summary>

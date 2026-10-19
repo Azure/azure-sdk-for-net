@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             return new SharedAccessAuthorizationRuleProperties(
-                accessRights,
+                accessRights ?? new ChangeTrackingList<AuthorizationRuleAccessRightExt>(),
                 primaryKey,
                 secondaryKey,
                 keyName,

@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(ConditionalCreditResource.ResourceType, out string conditionalCreditApiVersion);
             _conditionalCreditsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ConditionalCreditResource.ResourceType.Namespace, Diagnostics);
-            _conditionalCreditsRestClient = new ConditionalCredits(_conditionalCreditsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, conditionalCreditApiVersion ?? "2025-12-01-preview");
+            _conditionalCreditsRestClient = new ConditionalCredits(
+                _conditionalCreditsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                conditionalCreditApiVersion ?? "2025-12-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditsGetByResourceGroupAsyncCollectionResultOfT(_conditionalCreditsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ConditionalCreditCollection.GetAll"), data => new ConditionalCreditResource(Client, data));
+            return new AsyncPageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditDataAsyncCollectionResultOfT(_conditionalCreditsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ConditionalCreditCollection.GetAll"), data => new ConditionalCreditResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditsGetByResourceGroupCollectionResultOfT(_conditionalCreditsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ConditionalCreditCollection.GetAll"), data => new ConditionalCreditResource(Client, data));
+            return new PageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditDataCollectionResultOfT(_conditionalCreditsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ConditionalCreditCollection.GetAll"), data => new ConditionalCreditResource(Client, data));
         }
 
         /// <summary>

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HcpOpenShiftClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HcpOpenShiftClusterResource.ResourceType, out string hcpOpenShiftClusterApiVersion);
             _hcpOpenShiftClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShiftHcp", HcpOpenShiftClusterResource.ResourceType.Namespace, Diagnostics);
-            _hcpOpenShiftClustersRestClient = new HcpOpenShiftClusters(_hcpOpenShiftClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hcpOpenShiftClusterApiVersion ?? "2026-09-01-preview");
+            _hcpOpenShiftClustersRestClient = new HcpOpenShiftClusters(_hcpOpenShiftClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.RedHatOpenShift/hcpOpenShiftClusters", out string hcpOpenShiftClustersApiVersionOverride) ? hcpOpenShiftClustersApiVersionOverride : "2026-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HcpOpenShiftClusterData, HcpOpenShiftClusterResource>(new HcpOpenShiftClustersGetByResourceGroupAsyncCollectionResultOfT(_hcpOpenShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HcpOpenShiftClusterCollection.GetAll"), data => new HcpOpenShiftClusterResource(Client, data));
+            return new AsyncPageableWrapper<HcpOpenShiftClusterData, HcpOpenShiftClusterResource>(new HcpOpenShiftClusterDataAsyncCollectionResultOfT(_hcpOpenShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HcpOpenShiftClusterCollection.GetAll"), data => new HcpOpenShiftClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HcpOpenShiftClusterData, HcpOpenShiftClusterResource>(new HcpOpenShiftClustersGetByResourceGroupCollectionResultOfT(_hcpOpenShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HcpOpenShiftClusterCollection.GetAll"), data => new HcpOpenShiftClusterResource(Client, data));
+            return new PageableWrapper<HcpOpenShiftClusterData, HcpOpenShiftClusterResource>(new HcpOpenShiftClusterDataCollectionResultOfT(_hcpOpenShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HcpOpenShiftClusterCollection.GetAll"), data => new HcpOpenShiftClusterResource(Client, data));
         }
 
         /// <summary>

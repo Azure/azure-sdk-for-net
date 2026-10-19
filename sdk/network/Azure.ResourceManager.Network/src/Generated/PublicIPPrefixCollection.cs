@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublicIPPrefixCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PublicIPPrefixResource.ResourceType, out string publicIPPrefixApiVersion);
             _publicIPPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PublicIPPrefixResource.ResourceType.Namespace, Diagnostics);
-            _publicIPPrefixesRestClient = new PublicIPPrefixes(_publicIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicIPPrefixApiVersion ?? "2026-01-01");
+            _publicIPPrefixesRestClient = new PublicIPPrefixes(_publicIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicIPPrefixData, PublicIPPrefixResource>(new PublicIPPrefixesListAsyncCollectionResultOfT(_publicIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicIPPrefixCollection.GetAll"), data => new PublicIPPrefixResource(Client, data));
+            return new AsyncPageableWrapper<PublicIPPrefixData, PublicIPPrefixResource>(new PublicIPPrefixDataAsyncCollectionResultOfT(_publicIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicIPPrefixCollection.GetAll"), data => new PublicIPPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicIPPrefixData, PublicIPPrefixResource>(new PublicIPPrefixesListCollectionResultOfT(_publicIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicIPPrefixCollection.GetAll"), data => new PublicIPPrefixResource(Client, data));
+            return new PageableWrapper<PublicIPPrefixData, PublicIPPrefixResource>(new PublicIPPrefixDataCollectionResultOfT(_publicIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicIPPrefixCollection.GetAll"), data => new PublicIPPrefixResource(Client, data));
         }
 
         /// <summary>

@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
 
         private ClientDiagnostics SapVirtualInstancesClientDiagnostics => _sapVirtualInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SapVirtualInstances SapVirtualInstancesRestClient => _sapVirtualInstancesRestClient ??= new SapVirtualInstances(SapVirtualInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-09-01");
+        private SapVirtualInstances SapVirtualInstancesRestClient => _sapVirtualInstancesRestClient ??= new SapVirtualInstances(
+            SapVirtualInstancesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-09-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Gets all Virtual Instances for SAP solutions resources in a Subscription.
@@ -65,7 +71,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetBySubscriptionAsyncCollectionResultOfT(SapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapVirtualInstances"), data => new SapVirtualInstanceResource(Client, data));
+            return new AsyncPageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstanceDataAsync0CollectionResultOfT(SapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapVirtualInstances"), data => new SapVirtualInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +99,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetBySubscriptionCollectionResultOfT(SapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapVirtualInstances"), data => new SapVirtualInstanceResource(Client, data));
+            return new PageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstanceData0CollectionResultOfT(SapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapVirtualInstances"), data => new SapVirtualInstanceResource(Client, data));
         }
 
         /// <summary>

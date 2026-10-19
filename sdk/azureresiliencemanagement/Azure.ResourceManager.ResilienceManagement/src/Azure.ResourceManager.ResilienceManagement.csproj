@@ -2,7 +2,9 @@
   <PropertyGroup>
     <Description>A .NET SDK for Azure Resilience Management, enabling programmatic management of resilience features, resources, and configurations.</Description>
     <AssemblyTitle>SDK Code Generation Azure.ResourceManager.ResilienceManagement</AssemblyTitle>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>azure;management;arm;resource manager;azureresiliencemanagement;resilience</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>

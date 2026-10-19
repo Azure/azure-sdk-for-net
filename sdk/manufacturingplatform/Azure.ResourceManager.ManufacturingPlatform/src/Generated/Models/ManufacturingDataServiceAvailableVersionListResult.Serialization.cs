@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManufacturingDataServiceAvailableVersionListResult(versions, additionalBinaryDataProperties);
+            return new ManufacturingDataServiceAvailableVersionListResult(versions ?? new ChangeTrackingList<ManufacturingDataServiceApplicationVersion>(), additionalBinaryDataProperties);
         }
     }
 }

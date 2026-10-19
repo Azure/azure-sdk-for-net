@@ -5,6 +5,8 @@ This sample demonstrates a **multi-turn conversational agent** backed by a durab
 ## Key concepts
 
 - **Multi-turn task**: `AddResilientMultiTurnTask` with `steerable: true` — accepts a new input while a turn is still running.
+- **Explicit opt-in**: call `SetResilientTasksEnabled()` on the host or service collection before
+  startup. Registering the multi-turn task alone does not initialize task storage or recovery.
 - **Session convergence**: the same `TaskId` is reused for every turn, so the chain accumulates context.
 - **DeleteAsync**: explicitly ends the chain when the conversation is over.
 - **No streaming required**: the response is a simple JSON reply (though you could combine this with SSE).

@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The GitHub Copilot managed harness for prompt agents. </summary>
+    /// <summary> The legacy GitHub Copilot managed harness retained for compatibility. Use `MicrosoftCopilotHarness` for new prompt agents. </summary>
     public partial class GitHubCopilotHarness : AgentHarness, IJsonModel<GitHubCopilotHarness>
     {
         /// <param name="data"> The data to parse. </param>

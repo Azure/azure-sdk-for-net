@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             TryGetApiVersion(DataProtectionBackupVaultResource.ResourceType, out string dataProtectionBackupVaultApiVersion);
             _backupVaultResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupVaultResource.ResourceType.Namespace, Diagnostics);
-            _backupVaultResourcesRestClient = new BackupVaultResources(_backupVaultResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataProtectionBackupVaultApiVersion ?? "2026-06-01");
+            _backupVaultResourcesRestClient = new BackupVaultResources(_backupVaultResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DataProtection/backupVaults", out string backupVaultResourcesApiVersionOverride) ? backupVaultResourcesApiVersionOverride : "2026-06-01");
             _backupVaultOperationResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupVaultResource.ResourceType.Namespace, Diagnostics);
             _backupVaultOperationResultsRestClient = new BackupVaultOperationResults(_backupVaultOperationResultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataProtectionBackupVaultApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultOperationResultsGetInResourceGroupAsyncCollectionResultOfT(_backupVaultOperationResultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataProtectionBackupVaultCollection.GetAll"), data => new DataProtectionBackupVaultResource(Client, data));
+            return new AsyncPageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new DataProtectionBackupVaultDataAsync0CollectionResultOfT(_backupVaultOperationResultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataProtectionBackupVaultCollection.GetAll"), data => new DataProtectionBackupVaultResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultOperationResultsGetInResourceGroupCollectionResultOfT(_backupVaultOperationResultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataProtectionBackupVaultCollection.GetAll"), data => new DataProtectionBackupVaultResource(Client, data));
+            return new PageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new DataProtectionBackupVaultData0CollectionResultOfT(_backupVaultOperationResultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataProtectionBackupVaultCollection.GetAll"), data => new DataProtectionBackupVaultResource(Client, data));
         }
 
         /// <summary>

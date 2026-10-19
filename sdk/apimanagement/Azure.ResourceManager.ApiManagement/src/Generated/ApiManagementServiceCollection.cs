@@ -42,7 +42,13 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementServiceResource.ResourceType, out string apiManagementServiceApiVersion);
             _apiManagementServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementServiceResource.ResourceType.Namespace, Diagnostics);
-            _apiManagementServiceRestClient = new ApiManagementService(_apiManagementServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _apiManagementServiceRestClient = new ApiManagementService(
+                _apiManagementServiceClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                apiManagementServiceApiVersion ?? "2025-09-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -297,7 +303,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementServiceData, ApiManagementServiceResource>(new ApiManagementServiceGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementServiceData, ApiManagementServiceResource>(new ApiManagementServiceDataAsyncCollectionResultOfT(
                 _apiManagementServiceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -334,7 +340,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementServiceData, ApiManagementServiceResource>(new ApiManagementServiceGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<ApiManagementServiceData, ApiManagementServiceResource>(new ApiManagementServiceDataCollectionResultOfT(
                 _apiManagementServiceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ScenarioErrors(errorCode, errorMessage, permission, resource, additionalBinaryDataProperties);
+            return new ScenarioErrors(errorCode, errorMessage, permission ?? new ChangeTrackingList<PermissionError>(), resource ?? new ChangeTrackingList<ResourceStateError>(), additionalBinaryDataProperties);
         }
     }
 }

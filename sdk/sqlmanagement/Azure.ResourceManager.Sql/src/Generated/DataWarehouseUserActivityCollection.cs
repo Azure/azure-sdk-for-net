@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataWarehouseUserActivityData, DataWarehouseUserActivityResource>(new DataWarehouseUserActivitiesGetByDatabaseAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataWarehouseUserActivityData, DataWarehouseUserActivityResource>(new DataWarehouseUserActivityDataAsyncCollectionResultOfT(
                 _dataWarehouseUserActivitiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataWarehouseUserActivityData, DataWarehouseUserActivityResource>(new DataWarehouseUserActivitiesGetByDatabaseCollectionResultOfT(
+            return new PageableWrapper<DataWarehouseUserActivityData, DataWarehouseUserActivityResource>(new DataWarehouseUserActivityDataCollectionResultOfT(
                 _dataWarehouseUserActivitiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(DnsResolverResource.ResourceType, out string dnsResolverApiVersion);
             _dnsResolversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverResource.ResourceType.Namespace, Diagnostics);
-            _dnsResolversRestClient = new DnsResolvers(_dnsResolversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverApiVersion ?? "2025-10-01-preview");
+            _dnsResolversRestClient = new DnsResolvers(
+                _dnsResolversClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dnsResolverApiVersion ?? "2025-10-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -297,7 +303,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsResolverData, DnsResolverResource>(new DnsResolversGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DnsResolverData, DnsResolverResource>(new DnsResolverDataAsyncCollectionResultOfT(
                 _dnsResolversRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +338,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsResolverData, DnsResolverResource>(new DnsResolversGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DnsResolverData, DnsResolverResource>(new DnsResolverDataCollectionResultOfT(
                 _dnsResolversRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

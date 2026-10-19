@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 filter,
                 additionalBinaryDataProperties,
                 queryString,
-                subscriptionIds);
+                subscriptionIds ?? new ChangeTrackingList<string>());
         }
     }
 }

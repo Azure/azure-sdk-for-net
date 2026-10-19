@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerGroupSandboxCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ContainerGroupSandboxResource.ResourceType, out string containerGroupSandboxApiVersion);
             _sandboxGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ContainerGroupSandboxResource.ResourceType.Namespace, Diagnostics);
-            _sandboxGroupsRestClient = new SandboxGroups(_sandboxGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupSandboxApiVersion ?? "2026-07-01");
+            _sandboxGroupsRestClient = new SandboxGroups(_sandboxGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerInstance/sandboxGroups", out string sandboxGroupsApiVersionOverride) ? sandboxGroupsApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupSandboxData, ContainerGroupSandboxResource>(new SandboxGroupsGetByResourceGroupAsyncCollectionResultOfT(_sandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupSandboxCollection.GetAll"), data => new ContainerGroupSandboxResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupSandboxData, ContainerGroupSandboxResource>(new ContainerGroupSandboxDataAsync0CollectionResultOfT(_sandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupSandboxCollection.GetAll"), data => new ContainerGroupSandboxResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupSandboxData, ContainerGroupSandboxResource>(new SandboxGroupsGetByResourceGroupCollectionResultOfT(_sandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupSandboxCollection.GetAll"), data => new ContainerGroupSandboxResource(Client, data));
+            return new PageableWrapper<ContainerGroupSandboxData, ContainerGroupSandboxResource>(new ContainerGroupSandboxData0CollectionResultOfT(_sandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupSandboxCollection.GetAll"), data => new ContainerGroupSandboxResource(Client, data));
         }
 
         /// <summary>

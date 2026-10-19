@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KeyGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new KeyGroupListResult(value ?? new ChangeTrackingList<CdnKeyGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkInterfaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkInterfaceResource.ResourceType, out string networkInterfaceApiVersion);
             _networkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkInterfaceResource.ResourceType.Namespace, Diagnostics);
-            _networkInterfacesRestClient = new NetworkInterfaces(_networkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkInterfaceApiVersion ?? "2026-01-01");
+            _networkInterfacesRestClient = new NetworkInterfaces(_networkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfacesListAsyncCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkInterfaceCollection.GetAll"), data => new NetworkInterfaceResource(Client, data));
+            return new AsyncPageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfaceDataAsyncCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkInterfaceCollection.GetAll"), data => new NetworkInterfaceResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfacesListCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkInterfaceCollection.GetAll"), data => new NetworkInterfaceResource(Client, data));
+            return new PageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfaceDataCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkInterfaceCollection.GetAll"), data => new NetworkInterfaceResource(Client, data));
         }
 
         /// <summary>

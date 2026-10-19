@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseWatcherHealthValidationData, DatabaseWatcherHealthValidationResource>(new HealthValidationsGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DatabaseWatcherHealthValidationData, DatabaseWatcherHealthValidationResource>(new DatabaseWatcherHealthValidationDataAsyncCollectionResultOfT(
                 _healthValidationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseWatcherHealthValidationData, DatabaseWatcherHealthValidationResource>(new HealthValidationsGetByParentCollectionResultOfT(
+            return new PageableWrapper<DatabaseWatcherHealthValidationData, DatabaseWatcherHealthValidationResource>(new DatabaseWatcherHealthValidationDataCollectionResultOfT(
                 _healthValidationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

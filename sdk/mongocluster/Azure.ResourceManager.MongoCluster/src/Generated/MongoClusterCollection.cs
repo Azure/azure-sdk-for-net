@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.MongoCluster
         {
             TryGetApiVersion(MongoClusterResource.ResourceType, out string mongoClusterApiVersion);
             _mongoClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", MongoClusterResource.ResourceType.Namespace, Diagnostics);
-            _mongoClustersRestClient = new MongoClusters(_mongoClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoClusterApiVersion ?? "2026-06-15-preview");
+            _mongoClustersRestClient = new MongoClusters(
+                _mongoClustersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                mongoClusterApiVersion ?? "2026-06-15-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetByResourceGroupAsyncCollectionResultOfT(_mongoClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MongoClusterCollection.GetAll"), data => new MongoClusterResource(Client, data));
+            return new AsyncPageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClusterDataAsyncCollectionResultOfT(_mongoClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MongoClusterCollection.GetAll"), data => new MongoClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetByResourceGroupCollectionResultOfT(_mongoClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MongoClusterCollection.GetAll"), data => new MongoClusterResource(Client, data));
+            return new PageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClusterDataCollectionResultOfT(_mongoClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MongoClusterCollection.GetAll"), data => new MongoClusterResource(Client, data));
         }
 
         /// <summary>

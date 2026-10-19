@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkProfileCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkProfileResource.ResourceType, out string networkProfileApiVersion);
             _networkProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkProfileResource.ResourceType.Namespace, Diagnostics);
-            _networkProfilesRestClient = new NetworkProfiles(_networkProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkProfileApiVersion ?? "2026-01-01");
+            _networkProfilesRestClient = new NetworkProfiles(_networkProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -290,7 +289,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkProfileData, NetworkProfileResource>(new NetworkProfilesListAsyncCollectionResultOfT(_networkProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkProfileCollection.GetAll"), data => new NetworkProfileResource(Client, data));
+            return new AsyncPageableWrapper<NetworkProfileData, NetworkProfileResource>(new NetworkProfileDataAsyncCollectionResultOfT(_networkProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkProfileCollection.GetAll"), data => new NetworkProfileResource(Client, data));
         }
 
         /// <summary>
@@ -318,7 +317,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkProfileData, NetworkProfileResource>(new NetworkProfilesListCollectionResultOfT(_networkProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkProfileCollection.GetAll"), data => new NetworkProfileResource(Client, data));
+            return new PageableWrapper<NetworkProfileData, NetworkProfileResource>(new NetworkProfileDataCollectionResultOfT(_networkProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkProfileCollection.GetAll"), data => new NetworkProfileResource(Client, data));
         }
 
         /// <summary>

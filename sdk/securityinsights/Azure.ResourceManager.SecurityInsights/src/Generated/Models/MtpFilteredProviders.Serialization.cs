@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MtpFilteredProviders(alerts, additionalBinaryDataProperties);
+            return new MtpFilteredProviders(alerts ?? new ChangeTrackingList<MtpProvider>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResourceListSelectionCriteria(objectType, resourceIdentifiers, resourceNameOverrides ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new ResourceListSelectionCriteria(objectType, resourceIdentifiers ?? new ChangeTrackingList<string>(), resourceNameOverrides ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

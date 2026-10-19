@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProbeData, ProbeResource>(new LoadBalancerProbesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ProbeData, ProbeResource>(new ProbeDataAsyncCollectionResultOfT(
                 _loadBalancerProbesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProbeData, ProbeResource>(new LoadBalancerProbesGetAllCollectionResultOfT(
+            return new PageableWrapper<ProbeData, ProbeResource>(new ProbeDataCollectionResultOfT(
                 _loadBalancerProbesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
