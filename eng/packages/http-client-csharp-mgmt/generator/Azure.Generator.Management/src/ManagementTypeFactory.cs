@@ -95,10 +95,37 @@ namespace Azure.Generator.Management
 
         /// <inheritdoc/>
         protected override CSharpType? CreateLastContractModelBaseCore(CSharpType previousBase, InputModelType currentModel)
-            => currentModel.BaseModel is not null &&
-                KnownManagementTypes.TryGetInheritableSystemType(previousBase, out var knownBase)
-                    ? knownBase
-                    : null;
+        {
+            if (!KnownManagementTypes.TryGetInheritableSystemType(previousBase, out var knownBase))
+            {
+                return null;
+            }
+
+            if (currentModel.BaseModel is null)
+            {
+                // Historical CLR properties may not expose wire names. Check MPG aliases before
+                // MTG treats an incompatible property (such as string type) as model-local.
+                var systemBase = new SystemObjectModelProvider(knownBase, currentModel);
+                foreach (var property in currentModel.Properties)
+                {
+                    if (!ArmResourcePropertyProjection.TryGetAliasedName(property, out var propertyName))
+                    {
+                        continue;
+                    }
+
+                    var frameworkProperty = knownBase.FrameworkType.GetProperty(propertyName);
+                    if (frameworkProperty is null ||
+                        !IsLastContractModelBasePropertyCompatibleCore(knownBase, property, new PropertyProvider(
+                            null, MethodSignatureModifiers.Public, new CSharpType(frameworkProperty.PropertyType),
+                            propertyName, new AutoPropertyBody(frameworkProperty.SetMethod?.IsPublic == true), systemBase)))
+                    {
+                        return null;
+                    }
+                }
+            }
+
+            return knownBase;
+        }
 
         /// <inheritdoc/>
         protected override bool IsLastContractModelBasePropertyCompatibleCore(

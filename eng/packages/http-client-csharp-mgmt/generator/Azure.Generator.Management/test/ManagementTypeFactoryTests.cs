@@ -94,8 +94,9 @@ namespace Azure.Generator.Mgmt.Tests
                 "Known ARM data bases are abstract marker classes without abstract members");
         }
 
-        [Test]
-        public void KnownLastContractTrackedResourceDataCreatesMappedProvider()
+        [TestCase(false)]
+        [TestCase(true)]
+        public void KnownLastContractTrackedResourceDataCreatesMappedProvider(bool isFlat)
         {
             var currentBase = InputFactory.Model(
                 "CurrentResource",
@@ -107,9 +108,10 @@ namespace Azure.Generator.Mgmt.Tests
                     InputFactory.Property("tags", new InputDictionaryType("tags", InputPrimitiveType.String, InputPrimitiveType.String)),
                     InputFactory.Property("location", _azureLocation)
                 ]);
-            var model = InputFactory.Model("WidgetData", properties: [], baseModel: currentBase);
+            var model = InputFactory.Model("WidgetData",
+                properties: isFlat ? currentBase.Properties : [], baseModel: isFlat ? null : currentBase);
             var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [currentBase, model],
+                inputModels: () => isFlat ? [model] : [currentBase, model],
                 primaryNamespace: "Azure.ResourceManager.Test",
                 lastContractCompilation: () => Helpers.GetCompilationFromDirectory());
 
@@ -165,6 +167,42 @@ namespace Azure.Generator.Mgmt.Tests
             });
         }
 
+        [Test]
+        public void KnownLastContractResourceDataIsRestoredForFlatModel()
+        {
+            // The shipped contract inherits ResourceData, but the current TypeSpec model has no extends.
+            // Keep the ARM property types compatible to isolate missing base restoration from type conversion.
+            var model = InputFactory.Model(
+                "WidgetData",
+                properties:
+                [
+                    InputFactory.Property("id", _armResourceIdentifier, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", _armResourceType, isReadOnly: true),
+                    InputFactory.Property("description", InputPrimitiveType.String)
+                ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                primaryNamespace: "Azure.ResourceManager.Test",
+                lastContractCompilation: () => Helpers.GetCompilationFromDirectory(
+                    method: nameof(KnownLastContractResourceDataCreatesMappedProvider)));
+
+            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+            Assert.That(model.BaseModel, Is.Null, "The current input must remain flat");
+            Assert.That(
+                KnownManagementTypes.TryGetInheritableSystemType(provider.LastContractView!.BaseType!, out var previousBase),
+                Is.True);
+            Assert.That(previousBase!.FrameworkType, Is.EqualTo(typeof(ResourceData)));
+
+            Assert.That(provider.BaseType?.FullyQualifiedName, Is.EqualTo(typeof(ResourceData).FullName),
+                "A flat input must preserve the known ResourceData base from the previous GA contract");
+            Assert.That(provider.BaseModelProvider, Is.TypeOf<SystemObjectModelProvider>());
+            Assert.That(((SystemObjectModelProvider)provider.BaseModelProvider!).SystemType.FrameworkType,
+                Is.EqualTo(typeof(ResourceData)));
+            Assert.That(provider.Properties.Select(property => property.Name), Is.EqualTo(new[] { "Description" }),
+                "ARM identity properties must be inherited rather than redeclared on the flat model");
+        }
+
         [TestCase("id")]
         [TestCase("name")]
         [TestCase("type")]
@@ -188,6 +226,16 @@ namespace Azure.Generator.Mgmt.Tests
                 InputFactory.Property(wireName, InputPrimitiveType.String, isReadOnly: wireName != "location"));
         }
 
+        [TestCase("id")]
+        [TestCase("type")]
+        [TestCase("location")]
+        public void PlainStringLastContractPropertyOnFlatModelIsNotConverted(string wireName)
+        {
+            AssertIncompatibleLastContractPropertyIsNotMapped(
+                InputFactory.Property(wireName, InputPrimitiveType.String, isReadOnly: wireName != "location"),
+                isFlat: true);
+        }
+
         [TestCase("name", false)]
         [TestCase("location", true)]
         public void IncompatibleLastContractPropertyAccessorIsNotMapped(string wireName, bool isReadOnly)
@@ -202,6 +250,20 @@ namespace Azure.Generator.Mgmt.Tests
         {
             AssertIncompatibleLastContractPropertyIsNotMapped(
                 InputFactory.Property(wireName, new InputNullableType(GetArmPropertyType(wireName)), isReadOnly: wireName == "type"));
+        }
+
+        [Test]
+        public void NullableResourceTypeOnFlatModelIsNotMapped()
+        {
+            AssertIncompatibleLastContractPropertyIsNotMapped(
+                InputFactory.Property("type", new InputNullableType(_armResourceType), isReadOnly: true), isFlat: true);
+        }
+
+        [Test]
+        public void WritableResourceTypeOnFlatModelIsNotMapped()
+        {
+            AssertIncompatibleLastContractPropertyIsNotMapped(
+                InputFactory.Property("type", _armResourceType), isFlat: true);
         }
 
         [Test]
@@ -310,34 +372,36 @@ namespace Azure.Generator.Mgmt.Tests
             _ => InputPrimitiveType.String
         };
 
-        private static void AssertIncompatibleLastContractPropertyIsNotMapped(InputModelProperty property)
+        private static void AssertIncompatibleLastContractPropertyIsNotMapped(InputModelProperty property, bool isFlat = false)
         {
             var currentBase = InputFactory.Model("CurrentResource", properties: [property]);
-            var model = InputFactory.Model("WidgetData", properties: [], baseModel: currentBase);
+            var model = InputFactory.Model("WidgetData",
+                properties: isFlat ? [property] : [], baseModel: isFlat ? null : currentBase);
             var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [currentBase, model],
+                inputModels: () => isFlat ? [model] : [currentBase, model],
                 primaryNamespace: "Azure.ResourceManager.Test",
                 lastContractCompilation: () => Helpers.GetCompilationFromDirectory(
                     method: nameof(KnownLastContractTrackedResourceDataCreatesMappedProvider)));
 
             var provider = plugin.Object.TypeFactory.CreateModel(model)!;
 
-            Assert.That(provider.BaseType?.Name, Is.EqualTo("CurrentResource"));
+            Assert.That(provider.BaseType?.Name, Is.EqualTo(isFlat ? null : "CurrentResource"));
         }
 
-        [Test]
-        public void UnknownLastContractBaseIsNotMapped()
+        [TestCase(false)]
+        [TestCase(true)]
+        public void UnknownLastContractBaseIsNotMapped(bool isFlat)
         {
             var currentBase = InputFactory.Model("CurrentResource", properties: []);
-            var model = InputFactory.Model("WidgetData", properties: [], baseModel: currentBase);
+            var model = InputFactory.Model("WidgetData", properties: [], baseModel: isFlat ? null : currentBase);
             var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [currentBase, model],
+                inputModels: () => isFlat ? [model] : [currentBase, model],
                 primaryNamespace: "Azure.ResourceManager.Test",
                 lastContractCompilation: () => Helpers.GetCompilationFromDirectory());
 
             var provider = plugin.Object.TypeFactory.CreateModel(model)!;
 
-            Assert.That(provider.BaseType?.Name, Is.EqualTo("CurrentResource"));
+            Assert.That(provider.BaseType?.Name, Is.EqualTo(isFlat ? null : "CurrentResource"));
         }
 
         [Test]

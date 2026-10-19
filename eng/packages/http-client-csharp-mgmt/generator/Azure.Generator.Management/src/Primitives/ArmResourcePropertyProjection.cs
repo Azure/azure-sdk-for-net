@@ -29,7 +29,12 @@ namespace Azure.Generator.Management.Primitives
         {
             name = null;
             return currentType.WithNullable(false).Equals(new CSharpType(typeof(ResourceType))) &&
-                _propertyNames.TryGetValue(property.SerializedName ?? property.Name, out name);
+                TryGetAliasedName(property, out name);
         }
+
+        public static bool TryGetAliasedName(
+            InputModelProperty property,
+            [NotNullWhen(true)] out string? name)
+            => _propertyNames.TryGetValue(property.SerializedName ?? property.Name, out name);
     }
 }
