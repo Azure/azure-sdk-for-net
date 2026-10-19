@@ -2183,7 +2183,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="userAssignedIdentities"></param>
         /// <returns> A new <see cref="Hci.HciClusterData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciClusterData HciClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciProvisioningState? provisioningState = default, HciClusterStatus? status = default, HciClusterConnectivityStatus? connectivityStatus = default, Guid? cloudId = default, string cloudManagementEndpoint = default, Guid? aadClientId = default, Guid? aadTenantId = default, Guid? aadApplicationObjectId = default, Guid? aadServicePrincipalObjectId = default, SoftwareAssuranceProperties softwareAssuranceProperties = default, LogCollectionProperties logCollectionProperties = default, RemoteSupportProperties remoteSupportProperties = default, HciClusterDesiredProperties desiredProperties = default, HciClusterReportedProperties reportedProperties = default, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = default, float? trialDaysRemaining = default, string billingModel = default, DateTimeOffset? registrationTimestamp = default, DateTimeOffset? lastSyncTimestamp = default, DateTimeOffset? lastBillingTimestamp = default, string serviceEndpoint = default, string resourceProviderObjectId = default, Guid? principalId = default, Guid? tenantId = default, HciManagedServiceIdentityType? typeIdentityType = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
+        public static HciClusterData HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, Guid? principalId, Guid? tenantId, HciManagedServiceIdentityType? typeIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
         {
             return new HciClusterData(
                 id,
@@ -2240,7 +2240,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="logCollectionError"> Log Collection Error details of the cluster. </param>
         /// <returns> A new <see cref="Models.LogCollectionSession"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LogCollectionSession LogCollectionSession(DateTimeOffset? logStartOn = default, DateTimeOffset? logEndOn = default, DateTimeOffset? timeCollected = default, long? logSize = default, LogCollectionStatus? logCollectionStatus = default, LogCollectionJobType? logCollectionJobType = default, string correlationId = default, DateTimeOffset? endTimeCollected = default, LogCollectionError logCollectionError = default)
+        public static LogCollectionSession LogCollectionSession(DateTimeOffset? logStartOn, DateTimeOffset? logEndOn, DateTimeOffset? timeCollected, long? logSize, LogCollectionStatus? logCollectionStatus, LogCollectionJobType? logCollectionJobType, string correlationId, DateTimeOffset? endTimeCollected, LogCollectionError logCollectionError)
         {
             return new LogCollectionSession(
                 logStartOn,
@@ -2263,7 +2263,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="remoteSupportSessionDetails"></param>
         /// <returns> A new <see cref="Models.RemoteSupportProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RemoteSupportProperties RemoteSupportProperties(HciClusterAccessLevel? accessLevel = default, DateTimeOffset? expireOn = default, RemoteSupportType? remoteSupportType = default, IEnumerable<RemoteSupportNodeSettings> remoteSupportNodeSettings = default, IEnumerable<PerNodeRemoteSupportSession> remoteSupportSessionDetails = default)
+        public static RemoteSupportProperties RemoteSupportProperties(HciClusterAccessLevel? accessLevel, DateTimeOffset? expireOn, RemoteSupportType? remoteSupportType, IEnumerable<RemoteSupportNodeSettings> remoteSupportNodeSettings, IEnumerable<PerNodeRemoteSupportSession> remoteSupportSessionDetails)
         {
             return new RemoteSupportProperties(
                 accessLevel,
@@ -2283,7 +2283,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="accessLevel"> Remote Support Access Level. </param>
         /// <returns> A new <see cref="Models.PerNodeRemoteSupportSession"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PerNodeRemoteSupportSession PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn = default, DateTimeOffset? sessionEndOn = default, string nodeName = default, long? duration = default, HciClusterAccessLevel? accessLevel = default)
+        public static PerNodeRemoteSupportSession PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn, DateTimeOffset? sessionEndOn, string nodeName, long? duration, HciClusterAccessLevel? accessLevel)
         {
             return new PerNodeRemoteSupportSession(
                 sessionStartOn,
@@ -2309,7 +2309,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="oemActivation"> OEM activation status of the cluster. </param>
         /// <returns> A new <see cref="Models.HciClusterReportedProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciClusterReportedProperties HciClusterReportedProperties(string clusterName = default, Guid? clusterId = default, string clusterVersion = default, IEnumerable<HciClusterNode> nodes = default, DateTimeOffset? lastUpdatedOn = default, ImdsAttestationState? imdsAttestation = default, HciClusterDiagnosticLevel? diagnosticLevel = default, IEnumerable<string> supportedCapabilities = default, ClusterNodeType? clusterType = default, string manufacturer = default, OemActivation? oemActivation = default)
+        public static HciClusterReportedProperties HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IEnumerable<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IEnumerable<string> supportedCapabilities, ClusterNodeType? clusterType, string manufacturer, OemActivation? oemActivation)
         {
             return new HciClusterReportedProperties(
                 clusterName,
@@ -2340,7 +2340,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="userAssignedIdentities"></param>
         /// <returns> A new <see cref="Models.HciClusterPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciClusterPatch HciClusterPatch(IDictionary<string, string> tags = default, string cloudManagementEndpoint = default, Guid? aadClientId = default, Guid? aadTenantId = default, HciClusterDesiredProperties desiredProperties = default, Guid? principalId = default, Guid? tenantId = default, HciManagedServiceIdentityType? managedServiceIdentityType = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
+        public static HciClusterPatch HciClusterPatch(IDictionary<string, string> tags, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, HciClusterDesiredProperties desiredProperties, Guid? principalId, Guid? tenantId, HciManagedServiceIdentityType? managedServiceIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
         {
             return new HciClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && desiredProperties is null ? default : new ClusterPatchProperties(cloudManagementEndpoint, aadClientId, aadTenantId, desiredProperties, default), default);
         }
@@ -2367,7 +2367,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="steps"> Recursive model for child steps of this step. </param>
         /// <returns> A new <see cref="Hci.HciClusterUpdateRunData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciClusterUpdateRunData HciClusterUpdateRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, HciProvisioningState? provisioningState = default, DateTimeOffset? timeStarted = default, DateTimeOffset? lastUpdatedOn = default, string duration = default, UpdateRunPropertiesState? state = default, string namePropertiesProgressName = default, string description = default, string errorMessage = default, string status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? lastCompletedOn = default, string expectedExecutionTime = default, IEnumerable<HciUpdateStep> steps = default)
+        public static HciClusterUpdateRunData HciClusterUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? timeStarted, DateTimeOffset? lastUpdatedOn, string duration, UpdateRunPropertiesState? state, string namePropertiesProgressName, string description, string errorMessage, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastCompletedOn, string expectedExecutionTime, IEnumerable<HciUpdateStep> steps)
         {
             return new HciClusterUpdateRunData(
                 id,
@@ -2418,7 +2418,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="state"> Overall update state of the stamp. Indicates the current status of update deployment across the stamp, including preparation, application, and any issues encountered. </param>
         /// <returns> A new <see cref="Hci.HciClusterUpdateSummaryData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciClusterUpdateSummaryData HciClusterUpdateSummaryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, HciProvisioningState? provisioningState = default, string oemFamily = default, string currentOemVersion = default, string hardwareModel = default, IEnumerable<HciPackageVersionInfo> packageVersions = default, string currentVersion = default, string currentSbeVersion = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset? lastCheckedOn = default, HciHealthState? healthState = default, IEnumerable<HciPrecheckResult> healthCheckResult = default, DateTimeOffset? healthCheckOn = default, HciClusterUpdateState? state = default)
+        public static HciClusterUpdateSummaryData HciClusterUpdateSummaryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, string oemFamily, string currentOemVersion, string hardwareModel, IEnumerable<HciPackageVersionInfo> packageVersions, string currentVersion, string currentSbeVersion, DateTimeOffset? lastUpdatedOn, DateTimeOffset? lastCheckedOn, HciHealthState? healthState, IEnumerable<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, HciClusterUpdateState? state)
         {
             return new HciClusterUpdateSummaryData(
                 id,
@@ -2474,7 +2474,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="notifyMessage"> Brief message with instructions for updates of AvailabilityType Notify. </param>
         /// <returns> A new <see cref="Hci.HciClusterUpdateData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciClusterUpdateData HciClusterUpdateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, HciProvisioningState? provisioningState = default, DateTimeOffset? installedOn = default, string description = default, string minSbeVersionRequired = default, HciUpdateState? state = default, IEnumerable<HciClusterUpdatePrerequisite> prerequisites = default, IEnumerable<HciPackageVersionInfo> componentVersions = default, HciNodeRebootRequirement? rebootRequired = default, HciHealthState? healthState = default, IEnumerable<HciPrecheckResult> healthCheckResult = default, DateTimeOffset? healthCheckOn = default, string packagePath = default, float? packageSizeInMb = default, string displayName = default, string version = default, string publisher = default, string releaseLink = default, HciAvailabilityType? availabilityType = default, string packageType = default, string additionalProperties = default, float? progressPercentage = default, string notifyMessage = default)
+        public static HciClusterUpdateData HciClusterUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? installedOn, string description, string minSbeVersionRequired, HciUpdateState? state, IEnumerable<HciClusterUpdatePrerequisite> prerequisites, IEnumerable<HciPackageVersionInfo> componentVersions, HciNodeRebootRequirement? rebootRequired, HciHealthState? healthState, IEnumerable<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, string packagePath, float? packageSizeInMb, string displayName, string version, string publisher, string releaseLink, HciAvailabilityType? availabilityType, string packageType, string additionalProperties, float? progressPercentage, string notifyMessage)
         {
             return new HciClusterUpdateData(
                 id,
@@ -2516,7 +2516,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
         /// <returns> A new <see cref="Models.HciReportedProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciReportedProperties HciReportedProperties(HciEdgeDeviceState? deviceState = default, IEnumerable<HciEdgeDeviceArcExtension> extensions = default, HciNetworkProfile networkProfile = default, HciOSProfile osProfile = default, SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default)
+        public static HciReportedProperties HciReportedProperties(HciEdgeDeviceState? deviceState, IEnumerable<HciEdgeDeviceArcExtension> extensions, HciNetworkProfile networkProfile, HciOSProfile osProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo)
         {
             return new HciReportedProperties(
                 deviceState,
@@ -2548,7 +2548,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="nicStatus"> The status of NIC, up, disconnected. </param>
         /// <returns> A new <see cref="Models.HciNicDetail"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciNicDetail HciNicDetail(string adapterName = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string ipv4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string defaultIsolationId = default, string macAddress = default, string slot = default, string switchName = default, string nicType = default, string vlanId = default, string nicStatus = default)
+        public static HciNicDetail HciNicDetail(string adapterName, string interfaceDescription, string componentId, string driverVersion, string ipv4Address, string subnetMask, string defaultGateway, IEnumerable<string> dnsServers, string defaultIsolationId, string macAddress, string slot, string switchName, string nicType, string vlanId, string nicStatus)
         {
             return new HciNicDetail(
                 adapterName,
@@ -2575,7 +2575,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="extensions"> List of Arc extensions installed on edge device. </param>
         /// <returns> A new <see cref="Models.HciEdgeDeviceReportedProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciEdgeDeviceReportedProperties HciEdgeDeviceReportedProperties(HciEdgeDeviceState? deviceState = default, IEnumerable<HciEdgeDeviceArcExtension> extensions = default)
+        public static HciEdgeDeviceReportedProperties HciEdgeDeviceReportedProperties(HciEdgeDeviceState? deviceState, IEnumerable<HciEdgeDeviceArcExtension> extensions)
         {
             return new HciEdgeDeviceReportedProperties(deviceState, extensions is null ? default : new ExtensionProfile((extensions ?? new ChangeTrackingList<HciEdgeDeviceArcExtension>()).ToList(), default), default, default);
         }
