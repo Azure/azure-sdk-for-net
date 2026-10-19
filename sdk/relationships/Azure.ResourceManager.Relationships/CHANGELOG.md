@@ -1,9 +1,12 @@
 # Release History
 
-## 1.0.0-beta.2 (2026-10-18)
+## 1.0.0 (2026-10-19)
+
+This is the first stable release of the Relationships management client library.
 
 ### Features Added
 
+- Updated the service API version to `2026-08-01`.
 - Added APIs for listing `Contains` relationships at resource group and subscription scopes.
 - Added resource and collection APIs for managing `DependencyOf` relationships scoped to a service group.
 - Added pageable enumeration for `DependencyOf` and service group member relationship collections.
