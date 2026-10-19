@@ -43,6 +43,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         // Allowed values are: Playback, Live, Record.
         // Uncomment this line to debug the connection to locally running test-proxy (the connection will be made to default port 5000).
         // UseLocalDebugProxy = true;
+        TestTimeoutInSeconds = 30;
         ProjectsTestSanitizers.ApplySanitizers(this);
     }
 
@@ -319,7 +320,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             },
             ToolType.BrowserAutomationGA => new BrowserAutomationToolboxTool(
             new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_MCP_CONNECTION_NAME)
+                new BrowserAutomationToolConnectionOptions(TestEnvironment.BROWSER_AUTOMATION_NAME)
             ))
             {
                 Name = "browser-automation",

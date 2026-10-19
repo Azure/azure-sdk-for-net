@@ -30,13 +30,16 @@ public class OptionalNullableSerializationTests
         foreach (var name in new[] { "Text", "Number", "Child" })
         {
             var property = model.Properties.Single(p => p.Name == name);
-            var presenceField = $"_{char.ToLowerInvariant(name[0])}{name[1..]}IsDefined";
+            var variableName = $"{char.ToLowerInvariant(name[0])}{name[1..]}";
+            var presenceField = $"_{variableName}IsDefined";
             Assert.Multiple(() =>
             {
                 Assert.That(property.BackingField, Is.Not.Null, name);
                 Assert.That(modelCode, Does.Contain($"{presenceField} = true"), name);
                 Assert.That(serializationCode, Does.Contain($"Optional.IsDefined({name}, {presenceField})"), name);
-                Assert.That(serializationCode, Does.Contain($"{presenceField} ="), name);
+                Assert.That(serializationCode, Does.Contain($"{variableName}IsDefined = true;"), name);
+                Assert.That(serializationCode, Does.Contain($"{presenceField} = {variableName}IsDefined"), name);
+                Assert.That(serializationCode, Does.Contain($"writer.WriteNull(\"{variableName}\"u8);"), name);
             });
         }
 

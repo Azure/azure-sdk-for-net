@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/agricultureplatform/Azure.ResourceManager.AgriculturePlatform
+    - sdk/agricultureplatform/Azure.Provisioning.AgriculturePlatform
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -17,3 +18,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.AgriculturePlatform
       safeName: AzureResourceManagerAgriculturePlatform
+    - name: Azure.Provisioning.AgriculturePlatform
+      safeName: AzureProvisioningAgriculturePlatform
