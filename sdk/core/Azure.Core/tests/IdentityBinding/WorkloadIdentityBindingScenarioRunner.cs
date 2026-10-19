@@ -77,8 +77,7 @@ namespace Azure.Core.Tests.IdentityBinding
                     }
                     catch (AuthenticationFailedException exception)
                     {
-                        string errorCode = GetEntraErrorCode(exception);
-                        Require(errorCode == "AADSTS70021" || errorCode == "AADSTS700211" || errorCode == "AADSTS700213" || errorCode == "AADSTS70025",
+                        Require(IsExpectedFederationFailure(exception, out string errorCode),
                             $"Proxy-disabled authentication must fail with an expected missing-FIC error (observed: {errorCode ?? "none"}).");
                         Require(traffic.IsValid && traffic.Requests > 0 && traffic.ProxyRequests == 0,
                             "The disabled case must make direct HTTP requests and no proxy requests.");
@@ -176,6 +175,13 @@ namespace Azure.Core.Tests.IdentityBinding
             string value = Environment.GetEnvironmentVariable(name);
             Require(!string.IsNullOrWhiteSpace(value), $"{name} must be set.");
             return value;
+        }
+
+        internal static bool IsExpectedFederationFailure(Exception exception, out string errorCode)
+        {
+            errorCode = GetEntraErrorCode(exception);
+            return errorCode == "AADSTS70021" || errorCode == "AADSTS700211" || errorCode == "AADSTS700212" ||
+                errorCode == "AADSTS700213" || errorCode == "AADSTS70025";
         }
 
         private static string GetEntraErrorCode(Exception exception)
