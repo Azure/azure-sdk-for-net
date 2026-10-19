@@ -12,6 +12,8 @@
 
 ### Bugs Fixed
 
+- Fixed session receiver operations reporting `ObjectDisposedException` after automatic session-lock-loss cleanup instead of the stored `SessionLockLost` exception. Explicitly closing or disposing the receiver still reports `ObjectDisposedException`.
+
 ### Other Changes
 
 ## 7.21.0 (2026-10-06)
