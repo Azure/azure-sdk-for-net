@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <summary> Invokes the SwapPublicIPAddressesLoadBalancer compatibility operation. </summary>
         public virtual ArmOperation SwapPublicIPAddressesLoadBalancer(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken)
             => SwapPublicIpAddresses(waitUntil, location, content, cancellationToken);
+
         // Keep the released historical names for binary compatibility.
         // The PrivateLinkService suffix is redundant; these aliases forward to the preferred shorter generated names.
         /// <summary> Invokes the CheckPrivateLinkServiceVisibilityPrivateLinkService compatibility operation. </summary>
@@ -30,13 +31,22 @@ namespace Azure.ResourceManager.Network.Mocking
         [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibility instead.")]
         public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken)
             => CheckPrivateLinkServiceVisibility(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
-        /// <summary> Invokes the GetApplicationGatewayWafDynamicManifests compatibility operation. </summary>
+
+        // Keep the released regional facade and its virtual mocking surface.
+        // The collection retains the location and uses the distinct list and singleton endpoints.
+        /// <summary> Gets the regional application gateway WAF manifest collection. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This collection facade is deprecated and retained for backward compatibility. There is no equivalent native public listing API.")]
         public virtual ApplicationGatewayWafDynamicManifestCollection GetApplicationGatewayWafDynamicManifests(AzureLocation location)
             => new ApplicationGatewayWafDynamicManifestCollection(Client, Id, location);
-        /// <summary> Invokes the GetApplicationGatewayWafDynamicManifest compatibility operation. </summary>
+
+        /// <summary> Gets the regional application gateway WAF singleton manifest. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use ArmClient.GetApplicationGatewayWafDynamicManifestResource(ApplicationGatewayWafDynamicManifestResource.CreateResourceIdentifier(subscriptionId, location)).Get(cancellationToken) instead.")]
         [ForwardsClientCalls]
-        public virtual Response<ApplicationGatewayWafDynamicManifestResource> GetApplicationGatewayWafDynamicManifest(AzureLocation location, CancellationToken cancellationToken)
+        public virtual Response<ApplicationGatewayWafDynamicManifestResource> GetApplicationGatewayWafDynamicManifest(AzureLocation location, CancellationToken cancellationToken = default)
             => GetApplicationGatewayWafDynamicManifests(location).Get(cancellationToken);
+
         /// <summary> Invokes the GetApplicationGatewayAvailableSslOptions compatibility operation. </summary>
         [ForwardsClientCalls]
         public virtual Response<ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(CancellationToken cancellationToken)
@@ -66,6 +76,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 throw;
             }
         }
+
         /// <summary> Invokes the GetApplicationGatewaySslPredefinedPolicy compatibility operation. </summary>
         [ForwardsClientCalls]
         public virtual Response<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewaySslPredefinedPolicy(string predefinedPolicyName, CancellationToken cancellationToken)
@@ -74,18 +85,24 @@ namespace Azure.ResourceManager.Network.Mocking
             var response = resource.GetSslPredefinedPolicy(predefinedPolicyName, cancellationToken);
             return Response.FromValue(NetworkExtensions.NormalizeApplicationGatewaySslPredefinedPolicy(response.Value, Id.SubscriptionId), response.GetRawResponse());
         }
+
         /// <summary> Invokes the CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync compatibility operation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibilityAsync instead.")]
         public virtual Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken)
             => CheckPrivateLinkServiceVisibilityAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
+
         /// <summary> Invokes the SwapPublicIPAddressesLoadBalancerAsync compatibility operation. </summary>
         public virtual Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken)
             => SwapPublicIpAddressesAsync(waitUntil, location, content, cancellationToken);
-        /// <summary> Invokes the GetApplicationGatewayWafDynamicManifestAsync compatibility operation. </summary>
+
+        /// <summary> Gets the regional application gateway WAF singleton manifest. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use ArmClient.GetApplicationGatewayWafDynamicManifestResource(ApplicationGatewayWafDynamicManifestResource.CreateResourceIdentifier(subscriptionId, location)).GetAsync(cancellationToken) instead.")]
         [ForwardsClientCalls]
-        public virtual Task<Response<ApplicationGatewayWafDynamicManifestResource>> GetApplicationGatewayWafDynamicManifestAsync(AzureLocation location, CancellationToken cancellationToken)
+        public virtual Task<Response<ApplicationGatewayWafDynamicManifestResource>> GetApplicationGatewayWafDynamicManifestAsync(AzureLocation location, CancellationToken cancellationToken = default)
             => GetApplicationGatewayWafDynamicManifests(location).GetAsync(cancellationToken);
+
         /// <summary> Invokes the GetApplicationGatewayAvailableSslOptionsAsync compatibility operation. </summary>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(CancellationToken cancellationToken)
@@ -115,6 +132,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 throw;
             }
         }
+
         /// <summary> Invokes the GetApplicationGatewaySslPredefinedPolicyAsync compatibility operation. </summary>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetApplicationGatewaySslPredefinedPolicyAsync(string predefinedPolicyName, CancellationToken cancellationToken)

@@ -481,18 +481,35 @@ namespace Azure.ResourceManager.Network
         public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken)
             => GetMockableNetworkSubscriptionResource(subscriptionResource).CheckPrivateLinkServiceVisibilityPrivateLinkService(waitUntil, location, content, cancellationToken);
 
+        // Preserve the released regional facade; native subscription access does not retain a location.
+        // The collection still performs true listing, for which no equivalent native public API exists.
         /// <summary> Gets the regional application gateway WAF manifest collection. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This collection facade is deprecated and retained for backward compatibility. There is no equivalent native public listing API.")]
         public static ApplicationGatewayWafDynamicManifestCollection GetApplicationGatewayWafDynamicManifests(this SubscriptionResource subscriptionResource, AzureLocation location)
-            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayWafDynamicManifests(location);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayWafDynamicManifests(location);
+        }
 
-        /// <summary> Gets the regional application gateway WAF manifest. </summary>
+        /// <summary> Gets the regional application gateway WAF singleton manifest. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use ArmClient.GetApplicationGatewayWafDynamicManifestResource(ApplicationGatewayWafDynamicManifestResource.CreateResourceIdentifier(subscriptionId, location)).GetAsync(cancellationToken) instead.")]
         [ForwardsClientCalls]
-        public static Task<Response<ApplicationGatewayWafDynamicManifestResource>> GetApplicationGatewayWafDynamicManifestAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
-            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayWafDynamicManifestAsync(location, cancellationToken);
+        public static Task<Response<ApplicationGatewayWafDynamicManifestResource>> GetApplicationGatewayWafDynamicManifestAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayWafDynamicManifestAsync(location, cancellationToken);
+        }
 
-        /// <summary> Gets the regional application gateway WAF manifest. </summary>
+        /// <summary> Gets the regional application gateway WAF singleton manifest. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use ArmClient.GetApplicationGatewayWafDynamicManifestResource(ApplicationGatewayWafDynamicManifestResource.CreateResourceIdentifier(subscriptionId, location)).Get(cancellationToken) instead.")]
         [ForwardsClientCalls]
-        public static Response<ApplicationGatewayWafDynamicManifestResource> GetApplicationGatewayWafDynamicManifest(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
-            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayWafDynamicManifest(location, cancellationToken);
+        public static Response<ApplicationGatewayWafDynamicManifestResource> GetApplicationGatewayWafDynamicManifest(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayWafDynamicManifest(location, cancellationToken);
+        }
     }
 }
