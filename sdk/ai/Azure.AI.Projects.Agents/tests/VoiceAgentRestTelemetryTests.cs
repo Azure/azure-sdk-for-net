@@ -146,6 +146,23 @@ public class VoiceAgentRestTelemetryTests
         }
     }
 
+    private static IEnumerable<TestCaseData> ResponseOwnershipCases()
+    {
+        foreach (string operation in new[] { "create", "version", "update" })
+        {
+            foreach (bool isAsync in new[] { false, true })
+            {
+                foreach (bool metricsOnly in new[] { false, true })
+                {
+                    foreach (bool nestedFails in new[] { false, true })
+                    {
+                        yield return new TestCaseData(operation, isAsync, metricsOnly, nestedFails);
+                    }
+                }
+            }
+        }
+    }
+
     [TestCaseSource(nameof(MutationCases))]
     public async Task MutationsRetainExistingSdkDiagnostics(string operation, bool isAsync, bool typed)
     {
@@ -320,6 +337,125 @@ public class VoiceAgentRestTelemetryTests
         Activity span = GetOnlyGenAiSpan();
         AssertCommon(span, "create_agent", "create_agent", 200);
         Assert.That(span.GetTagItem("gen_ai.agent.version"), Is.EqualTo("1"));
+        AssertPrivateSafe(span);
+    }
+
+    [TestCaseSource(nameof(ResponseOwnershipCases))]
+    public async Task VoiceResponsesAreRecordedOnlyByTheirOwningOperation(string operation, bool isAsync, bool metricsOnly, bool nestedFails)
+    {
+        if (metricsOnly)
+        {
+            _listener.Dispose();
+        }
+        ConcurrentQueue<Dictionary<string, object>> measurements = new();
+        using MeterListener metrics = new()
+        {
+            InstrumentPublished = (instrument, listener) =>
+            {
+                if (instrument.Meter.Name == SourceName && instrument.Name == "gen_ai.client.operation.duration")
+                {
+                    listener.EnableMeasurementEvents(instrument);
+                }
+            }
+        };
+        metrics.SetMeasurementEventCallback<double>((instrument, measurement, tags, state) =>
+            measurements.Enqueue(tags.ToArray().ToDictionary(tag => tag.Key, tag => tag.Value)));
+        metrics.Start();
+
+        int nestedStatus = nestedFails ? 503 : 200;
+        int voiceStatus = nestedFails ? 200 : 503;
+        const string unrelatedResponse = """{"id":"unrelated-id","name":"unrelated-agent","version":"99"}""";
+        AgentAdministrationClient unrelatedClient = CreateClient(isAsync,
+            _ => new MockPipelineResponse(nestedStatus).WithContent(unrelatedResponse));
+        AgentAdministrationClient voiceClient = CreateClient(isAsync,
+            _ => new MockPipelineResponse(voiceStatus).WithContent(AgentResponse));
+        RequestOptions options = new() { ErrorOptions = ClientErrorBehaviors.NoThrow };
+        options.AddPolicy(new NestedRequestPolicy(
+            () =>
+            {
+                using BinaryContent content = JsonContent("""{"kind":"voice","prompt":"private-rest-content"}""");
+                ClientResult nested = unrelatedClient.GenerateAgent(content, new RequestOptions { ErrorOptions = ClientErrorBehaviors.NoThrow });
+                Assert.That(nested.GetRawResponse().Status, Is.EqualTo(nestedStatus));
+            },
+            async () =>
+            {
+                using BinaryContent content = JsonContent("""{"kind":"voice","prompt":"private-rest-content"}""");
+                ClientResult nested = await unrelatedClient.GenerateAgentAsync(content, new RequestOptions { ErrorOptions = ClientErrorBehaviors.NoThrow });
+                Assert.That(nested.GetRawResponse().Status, Is.EqualTo(nestedStatus));
+            }), PipelinePosition.PerCall);
+
+        ClientResult result = await CreateVoiceDefinition(voiceClient, operation, isAsync, VoiceDefinition, options);
+
+        Assert.That(result.GetRawResponse().Status, Is.EqualTo(voiceStatus));
+        Dictionary<string, object>[] recorded = measurements.ToArray();
+        Assert.That(recorded, Has.Length.EqualTo(1));
+        Assert.That(recorded[0].TryGetValue("error.type", out object errorType) ? errorType : null,
+            Is.EqualTo(nestedFails ? null : "503"));
+        Assert.That(recorded[0].TryGetValue("gen_ai.agent.version", out object version) ? version : null,
+            Is.EqualTo(nestedFails ? "1" : null));
+        if (metricsOnly)
+        {
+            Assert.That(_activities.Where(activity => activity.Source.Name == SourceName), Is.Empty);
+        }
+        else
+        {
+            Activity span = GetOnlyGenAiSpan();
+            AssertCommon(span, "create_agent", "create_agent", voiceStatus);
+            Assert.Multiple(() =>
+            {
+                Assert.That(span.Status, Is.EqualTo(nestedFails ? ActivityStatusCode.Unset : ActivityStatusCode.Error));
+                Assert.That(span.GetTagItem("error.type"), Is.EqualTo(nestedFails ? null : "503"));
+                Assert.That(span.GetTagItem("gen_ai.agent.id"), Is.EqualTo(nestedFails ? "agent_123" : null));
+                Assert.That(span.GetTagItem("gen_ai.agent.name"), Is.EqualTo(AgentName));
+                Assert.That(span.GetTagItem("gen_ai.agent.version"), Is.EqualTo(nestedFails ? "1" : null));
+            });
+            AssertPrivateSafe(span);
+        }
+    }
+
+    [TestCase("create", false)]
+    [TestCase("create", true)]
+    [TestCase("version", false)]
+    [TestCase("version", true)]
+    [TestCase("update", false)]
+    [TestCase("update", true)]
+    public async Task UnbufferedVoiceResponsesAreNotConsumed(string operation, bool isAsync)
+    {
+        AgentAdministrationClient client = CreateClient(isAsync, _ => new MockPipelineResponse(200).WithContent(AgentResponse));
+        RequestOptions options = new() { BufferResponse = false };
+
+        ClientResult result = await CreateVoiceDefinition(client, operation, isAsync, VoiceDefinition, options);
+
+        Activity span = GetOnlyGenAiSpan();
+        AssertCommon(span, "create_agent", "create_agent", 200);
+        Assert.That(span.GetTagItem("gen_ai.agent.id"), Is.Null);
+        Assert.That(span.GetTagItem("gen_ai.agent.version"), Is.Null);
+        BinaryData content = isAsync
+            ? await BinaryData.FromStreamAsync(result.GetRawResponse().ContentStream)
+            : BinaryData.FromStream(result.GetRawResponse().ContentStream);
+        Assert.That(content.ToString(), Is.EqualTo(AgentResponse));
+        AssertPrivateSafe(span);
+    }
+
+    [TestCase("create", false)]
+    [TestCase("create", true)]
+    [TestCase("version", false)]
+    [TestCase("version", true)]
+    [TestCase("update", false)]
+    [TestCase("update", true)]
+    public async Task MalformedVoiceResponsesDoNotChangeSuccessfulCalls(string operation, bool isAsync)
+    {
+        const string response = "not-json-private-rest-content";
+        AgentAdministrationClient client = CreateClient(isAsync, _ => new MockPipelineResponse(200).WithContent(response));
+
+        ClientResult result = await CreateVoiceDefinition(client, operation, isAsync, VoiceDefinition);
+
+        Assert.That(result.GetRawResponse().Content.ToString(), Is.EqualTo(response));
+        Activity span = GetOnlyGenAiSpan();
+        AssertCommon(span, "create_agent", "create_agent", 200);
+        Assert.That(span.Status, Is.EqualTo(ActivityStatusCode.Unset));
+        Assert.That(span.GetTagItem("error.type"), Is.Null);
+        Assert.That(span.GetTagItem("az.ai.voice_agents.telemetry.error.type"), Is.EqualTo(typeof(JsonException).FullName));
         AssertPrivateSafe(span);
     }
 
@@ -874,7 +1010,7 @@ public class VoiceAgentRestTelemetryTests
 
     private static BinaryContent JsonContent(string json) => BinaryContent.Create(BinaryData.FromString(json));
 
-    private static async Task<ClientResult> CreateVoiceDefinition(AgentAdministrationClient client, string operation, bool isAsync, string definition)
+    private static async Task<ClientResult> CreateVoiceDefinition(AgentAdministrationClient client, string operation, bool isAsync, string definition, RequestOptions options = null)
     {
         string request = operation == "create"
             ? "{\"name\":\"voice-agent\",\"definition\":" + definition + "}"
@@ -882,9 +1018,9 @@ public class VoiceAgentRestTelemetryTests
         using BinaryContent content = JsonContent(request);
         return operation switch
         {
-            "create" => isAsync ? await client.CreateAgentAsync(content) : client.CreateAgent(content),
-            "version" => isAsync ? await client.CreateAgentVersionAsync(AgentName, content) : client.CreateAgentVersion(AgentName, content),
-            "update" => isAsync ? await client.UpdateAgentAsync(AgentName, content) : client.UpdateAgent(AgentName, content),
+            "create" => isAsync ? await client.CreateAgentAsync(content, options: options) : client.CreateAgent(content, options: options),
+            "version" => isAsync ? await client.CreateAgentVersionAsync(AgentName, content, options: options) : client.CreateAgentVersion(AgentName, content, options: options),
+            "update" => isAsync ? await client.UpdateAgentAsync(AgentName, content, options: options) : client.UpdateAgent(AgentName, content, options: options),
             _ => throw new ArgumentOutOfRangeException(nameof(operation))
         };
     }
@@ -939,6 +1075,21 @@ public class VoiceAgentRestTelemetryTests
         CreateTelephonyCallJobContent content = new(new TelephonyOutboundDestination(TelephonyOutboundDestinationType.PhoneNumber, "+15555550101"), "private-connection", "+15555550102") { Purpose = PrivateContent };
         content.StructuredInputs["secret"] = BinaryData.FromString("\"private-rest-content\"");
         return content;
+    }
+
+    private sealed class NestedRequestPolicy(Action send, Func<Task> sendAsync) : PipelinePolicy
+    {
+        public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+        {
+            ProcessNext(message, pipeline, currentIndex);
+            send();
+        }
+
+        public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+        {
+            await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
+            await sendAsync().ConfigureAwait(false);
+        }
     }
 
     private sealed class FakeTokenProvider : AuthenticationTokenProvider

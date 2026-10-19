@@ -73,25 +73,21 @@ namespace Azure.AI.Projects.Agents.Telemetry
 
         private int _hasEnded = 0;
         private readonly OpenTelemetryScopeType _scopeType;
-        private static readonly AsyncLocal<OpenTelemetryScope> s_currentVoiceAgentScope = new();
-        private readonly OpenTelemetryScope _previousVoiceAgentScope;
         private readonly bool _isVoiceAgentOperation;
 
-        internal static void RecordVoiceAgentResponse(PipelineMessage message)
+        private void RecordVoiceAgentResponse(PipelineResponse response, bool bufferResponse)
         {
-            OpenTelemetryScope scope = s_currentVoiceAgentScope.Value;
-            if (scope == null || Volatile.Read(ref scope._hasEnded) != 0)
+            if (!s_enableTelemetry || Volatile.Read(ref _hasEnded) != 0)
             {
                 return;
             }
 
-            PipelineResponse response = message.Response;
-            scope._activity?.SetTag(HttpResponseStatusCodeKey, response.Status);
+            _activity?.SetTag(HttpResponseStatusCodeKey, response.Status);
             if (response.IsError)
             {
-                scope._errorType = response.Status.ToString(CultureInfo.InvariantCulture);
+                _errorType = response.Status.ToString(CultureInfo.InvariantCulture);
             }
-            else if (message.BufferResponse)
+            else if (bufferResponse)
             {
                 // Never buffer or consume a protocol caller's streaming response for telemetry.
                 try
@@ -100,31 +96,31 @@ namespace Azure.AI.Projects.Agents.Telemetry
                     JsonElement root = document.RootElement;
                     if (root.ValueKind == JsonValueKind.Object)
                     {
-                        scope._response = new RecordedResponse(false);
+                        _response = new RecordedResponse(false);
                         if (root.TryGetProperty("id", out JsonElement id) && id.ValueKind == JsonValueKind.String)
                         {
-                            scope._response.AgentId = id.GetString();
+                            _response.AgentId = id.GetString();
                         }
                         if (root.TryGetProperty("name", out JsonElement name) && name.ValueKind == JsonValueKind.String)
                         {
-                            scope.SetTagMaybe(GenAiAgentNameKey, name.GetString());
+                            SetTagMaybe(GenAiAgentNameKey, name.GetString());
                         }
                         if (root.TryGetProperty("version", out JsonElement version) && version.ValueKind == JsonValueKind.String)
                         {
-                            scope._response.Version = version.GetString();
+                            _response.Version = version.GetString();
                         }
                         else if (root.TryGetProperty("versions", out JsonElement versions) && versions.ValueKind == JsonValueKind.Object &&
                             versions.TryGetProperty("latest", out JsonElement latest) && latest.ValueKind == JsonValueKind.Object &&
                             latest.TryGetProperty("version", out version) && version.ValueKind == JsonValueKind.String)
                         {
-                            scope._response.Version = version.GetString();
+                            _response.Version = version.GetString();
                         }
                     }
                 }
                 catch (JsonException)
                 {
                     // A malformed protocol response must not turn a successful HTTP call into a failure.
-                    scope.SetTagMaybe(VoiceAgentTelemetryErrorTypeKey, typeof(JsonException).FullName);
+                    SetTagMaybe(VoiceAgentTelemetryErrorTypeKey, typeof(JsonException).FullName);
                 }
             }
         }
@@ -518,9 +514,6 @@ namespace Azure.AI.Projects.Agents.Telemetry
             if (isVoiceAgentOperation)
             {
                 _activity?.SetCustomProperty("scm.sdk.scope", bool.TrueString);
-                // Metrics-only calls have no Activity to carry the response scope.
-                _previousVoiceAgentScope = s_currentVoiceAgentScope.Value;
-                s_currentVoiceAgentScope.Value = this;
             }
 
             // Record the request to telemetry.
@@ -549,9 +542,13 @@ namespace Azure.AI.Projects.Agents.Telemetry
             _duration = Stopwatch.StartNew();
         }
 
-        public void RecordCreateAgentResponse(ClientResult response)
+        public void RecordCreateAgentResponse(ClientResult response, bool bufferResponse = true)
         {
-            if (s_enableTelemetry && !_isVoiceAgentOperation)
+            if (_isVoiceAgentOperation)
+            {
+                RecordVoiceAgentResponse(response.GetRawResponse(), bufferResponse);
+            }
+            else if (s_enableTelemetry)
             {
                 ProjectsAgentRecord agentClientResult = response.ToProjectAgentsResult<ProjectsAgentRecord>();
                 _response = new RecordedResponse(s_traceContent);
@@ -560,9 +557,13 @@ namespace Azure.AI.Projects.Agents.Telemetry
             }
         }
 
-        public void RecordUpdateAgentResponse(ClientResult response)
+        public void RecordUpdateAgentResponse(ClientResult response, bool bufferResponse = true)
         {
-            if (s_enableTelemetry && !_isVoiceAgentOperation)
+            if (_isVoiceAgentOperation)
+            {
+                RecordVoiceAgentResponse(response.GetRawResponse(), bufferResponse);
+            }
+            else if (s_enableTelemetry)
             {
                 ProjectsAgentRecord agentClientResult = response.ToProjectAgentsResult<ProjectsAgentRecord>();
                 _response = new RecordedResponse(s_traceContent);
@@ -572,9 +573,13 @@ namespace Azure.AI.Projects.Agents.Telemetry
             }
         }
 
-        public void RecordCreateAgentVersionResponse(ClientResult response)
+        public void RecordCreateAgentVersionResponse(ClientResult response, bool bufferResponse = true)
         {
-            if (s_enableTelemetry && !_isVoiceAgentOperation)
+            if (_isVoiceAgentOperation)
+            {
+                RecordVoiceAgentResponse(response.GetRawResponse(), bufferResponse);
+            }
+            else if (s_enableTelemetry)
             {
                 ProjectsAgentVersion agentVersion = response.ToProjectAgentsResult<ProjectsAgentVersion>();
                 _response = new RecordedResponse(s_traceContent);
@@ -725,10 +730,6 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 }
                 finally
                 {
-                    if (_isVoiceAgentOperation && ReferenceEquals(s_currentVoiceAgentScope.Value, this))
-                    {
-                        s_currentVoiceAgentScope.Value = _previousVoiceAgentScope;
-                    }
                     _activity?.Dispose();
                 }
             }

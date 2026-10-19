@@ -6,7 +6,6 @@ using System.ClientModel.Primitives;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents.Telemetry;
 
 namespace Azure.AI.Projects.Agents;
 
@@ -18,7 +17,6 @@ internal static partial class ClientPipelineExtensions
         RequestOptions options)
     {
         await pipeline.SendAsync(message).ConfigureAwait(false);
-        OpenTelemetryScope.RecordVoiceAgentResponse(message);
 
         if (message.Response.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
         {
@@ -41,7 +39,6 @@ internal static partial class ClientPipelineExtensions
         RequestOptions options)
     {
         pipeline.Send(message);
-        OpenTelemetryScope.RecordVoiceAgentResponse(message);
 
         if (message.Response.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
         {
