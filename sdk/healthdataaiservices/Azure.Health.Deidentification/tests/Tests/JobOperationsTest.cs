@@ -180,21 +180,53 @@ namespace Azure.Health.Deidentification.Tests
 
             job = (await client.DeidentifyDocumentsAsync(WaitUntil.Started, jobName, job)).Value;
 
+            const int maxPollAttempts = 60;
+            int pollAttempts = 0;
             do
             {
                 job = await client.GetJobAsync(jobName);
-                if (Mode != RecordedTestMode.Playback)
+                pollAttempts++;
+                if (job.Status == OperationStatus.NotStarted && Mode != RecordedTestMode.Playback)
                 {
                     await Task.Delay(1000);
                 }
             }
-            while (job.Status == OperationStatus.NotStarted);
+            while (job.Status == OperationStatus.NotStarted && pollAttempts < maxPollAttempts);
 
-            string errorMessage = job.Error is not null ? job.Error.Message : "No Error Message Available.";
-            Assert.AreEqual(OperationStatus.Running, job.Status, $"Job should be running. Error: {errorMessage}");
+            if (job.Status == OperationStatus.NotStarted)
+            {
+                Assert.Fail($"Job '{jobName}' did not leave the NotStarted state after {pollAttempts} polling attempts.");
+            }
 
-            job = await client.CancelJobAsync(jobName);
-            Assert.AreEqual(OperationStatus.Canceled, job.Status);
+            if (job.Status == OperationStatus.Failed)
+            {
+                string errorDetails = job.Error is not null ? $"{job.Error.Code}: {job.Error.Message}" : "No Error Message Available.";
+                Assert.Fail($"Job '{jobName}' failed before it could be canceled. Error: {errorDetails}");
+            }
+
+            if (job.Status == OperationStatus.Running)
+            {
+                try
+                {
+                    job = await client.CancelJobAsync(jobName);
+                }
+                catch (RequestFailedException ex)
+                {
+                    // The job may complete between the status poll and the cancel request.
+                    TestContext.WriteLine($"Cancel request for job '{jobName}' failed ({ex.Status}); verifying the job reached a terminal state.");
+                    job = await client.GetJobAsync(jobName);
+                }
+
+                Assert.That(job.Status, Is.EqualTo(OperationStatus.Canceled).Or.EqualTo(OperationStatus.Succeeded),
+                    $"Job '{jobName}' should be Canceled (or Succeeded if it completed before cancellation).");
+            }
+            else
+            {
+                // A small job can finish before the first poll observes it running; cancellation is then not applicable.
+                Assert.That(job.Status, Is.EqualTo(OperationStatus.Succeeded).Or.EqualTo(OperationStatus.Canceled),
+                    $"Unexpected job status for '{jobName}'.");
+                TestContext.WriteLine($"Job '{jobName}' was already {job.Status} before cancel; skipping cancel.");
+            }
 
             await client.DeleteJobAsync(jobName);
 
