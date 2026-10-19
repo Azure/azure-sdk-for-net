@@ -57,10 +57,12 @@ Code samples for using the management library for .NET can be found in the follo
 ### Create an EdgeAction
 
 ```csharp
+using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeActions;
+using Azure.ResourceManager.EdgeActions.Models;
 using Azure.ResourceManager.Resources;
 
 ArmClient client = new ArmClient(new DefaultAzureCredential());
@@ -68,10 +70,9 @@ SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
 ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("myResourceGroup");
 
 EdgeActionCollection edgeActions = resourceGroup.GetEdgeActions();
-EdgeActionData data = new EdgeActionData(new AzureLocation("WestUS"))
-{
-    Sku = new EdgeActionSkuType("Standard", "Standard")
-};
+EdgeActionData data = new EdgeActionData(
+    new AzureLocation("global"),
+    new EdgeActionSkuType("Standard", "Standard"));
 
 ArmOperation<EdgeActionResource> operation = await edgeActions.CreateOrUpdateAsync(
     WaitUntil.Completed,
@@ -100,6 +101,63 @@ await foreach (EdgeActionResource edgeAction in resourceGroup.GetEdgeActions())
 For more information about Microsoft Azure SDK, see [this website](https://azure.github.io/azure-sdk/).
 
 ## Contributing
+
+### Running tests
+
+The tests use the repository's [management recorded-test framework](../../core/Azure.Core.TestFramework/README.md).
+Run from the repository root:
+
+```powershell
+dotnet test sdk\edgeactions\Azure.ResourceManager.EdgeActions\tests\Azure.ResourceManager.EdgeActions.Tests.csproj -f net10.0
+```
+
+Playback is the default and does not require Azure credentials. Offline tests under `tests\Unit`
+cover patch serialization and sync/async long-running-operation behavior using mock responses;
+these are not substitutes for service recordings.
+
+Recorded scenarios cover resource lookup, tag replacement and clearing, and version metadata
+CRUD for file and ZIP deployment types. `VersionsAndExecutionFilters` additionally covers code
+deployment, version-code retrieval, default-version swaps, and execution-filter lifecycle operations.
+That scenario is live-only: attempts to record deployment returned an internal service error
+during polling, so successful recordings are not available for those operations.
+
+Resource groups use the
+`dotnetsdk-edgeaction-test-` prefix in East US, and Edge Actions use the `eadotnet` prefix in
+the `global` location. Both use `Recording.GenerateAssetName`; child versions (`v1`, `v2`)
+and filters (`sdkfilter`) are scoped to each test's new Edge Action. The management framework
+cleans up resource groups, including when a test fails.
+
+To create fresh recordings using an Azure CLI login with permission to manage these test resources:
+
+```powershell
+$env:AZURE_SUBSCRIPTION_ID = az account show --query id -o tsv
+$env:AZURE_TENANT_ID = az account show --query tenantId -o tsv
+$env:EDGEACTIONS_USE_AZURE_CLI = "true"
+$env:AZURE_TEST_MODE = "Record"
+dotnet test sdk\edgeactions\Azure.ResourceManager.EdgeActions\tests\Azure.ResourceManager.EdgeActions.Tests.csproj -f net10.0
+Remove-Item Env:AZURE_TEST_MODE
+```
+
+To run the deployment-dependent scenario with the same credentials, set
+`AZURE_TEST_MODE=Live` and add `--filter FullyQualifiedName~VersionsAndExecutionFilters`.
+Live mode does not save recordings. Once the service failure is resolved, remove the
+scenario's `LiveOnly` attribute and record both deployment types in sync and async modes.
+
+The CLI credential is an opt-in for local development; normal framework credentials remain
+the default. Test Proxy sanitizes signed polling query values without collapsing status and
+result URLs, and playback continues to match API versions.
+
+Recordings are stored in the external Azure SDK assets repository, not in this package.
+After reviewing recordings for sensitive data, publish them and commit the updated `assets.json`:
+
+```powershell
+test-proxy push -a sdk\edgeactions\Azure.ResourceManager.EdgeActions\assets.json
+```
+
+Response-schema checks must use the OpenAPI version and commit pinned by `tsp-location.yaml`,
+not assume that a passing playback run proves schema compliance. For this refresh, check only
+the `status` field of async-operation polling bodies and defer the known `validationStatus`
+nullability discrepancy; final resource and version-code bodies still require validation.
 
 For details on contributing to this repository, see the [contributing
 guide][cg].
