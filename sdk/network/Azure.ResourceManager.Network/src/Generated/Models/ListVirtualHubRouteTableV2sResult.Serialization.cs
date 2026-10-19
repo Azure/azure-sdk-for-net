@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListVirtualHubRouteTableV2sResult(value, nextLink, additionalBinaryDataProperties);
+            return new ListVirtualHubRouteTableV2sResult(value ?? new ChangeTrackingList<VirtualHubRouteTableV2Data>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

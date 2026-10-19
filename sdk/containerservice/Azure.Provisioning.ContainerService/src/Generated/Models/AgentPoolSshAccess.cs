@@ -13,6 +13,8 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> Can SSH onto the node as a local user using private key. </summary>
         LocalUser = 0,
         /// <summary> SSH service will be turned off on the node. </summary>
-        Disabled = 1
+        Disabled = 1,
+        /// <summary> SSH to node with EntraId integration. More information can be found under https://aka.ms/aks/ssh/aad. </summary>
+        EntraId = 2
     }
 }

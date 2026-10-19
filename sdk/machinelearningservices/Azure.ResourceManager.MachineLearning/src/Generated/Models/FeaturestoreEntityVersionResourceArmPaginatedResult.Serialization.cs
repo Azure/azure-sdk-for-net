@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FeaturestoreEntityVersionResourceArmPaginatedResult(value, nextLink, additionalBinaryDataProperties);
+            return new FeaturestoreEntityVersionResourceArmPaginatedResult(value ?? new ChangeTrackingList<MachineLearningFeaturestoreEntityVersionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

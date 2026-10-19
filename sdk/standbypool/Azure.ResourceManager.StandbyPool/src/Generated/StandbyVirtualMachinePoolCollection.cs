@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StandbyVirtualMachinePoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(StandbyVirtualMachinePoolResource.ResourceType, out string standbyVirtualMachinePoolApiVersion);
             _standbyVirtualMachinePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyVirtualMachinePoolResource.ResourceType.Namespace, Diagnostics);
-            _standbyVirtualMachinePoolsRestClient = new StandbyVirtualMachinePools(_standbyVirtualMachinePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, standbyVirtualMachinePoolApiVersion ?? "2025-10-01");
+            _standbyVirtualMachinePoolsRestClient = new StandbyVirtualMachinePools(_standbyVirtualMachinePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.StandbyPool/standbyVirtualMachinePools", out string standbyVirtualMachinePoolsApiVersionOverride) ? standbyVirtualMachinePoolsApiVersionOverride : "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolsGetByResourceGroupAsyncCollectionResultOfT(_standbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandbyVirtualMachinePoolCollection.GetAll"), data => new StandbyVirtualMachinePoolResource(Client, data));
+            return new AsyncPageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolDataAsyncCollectionResultOfT(_standbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandbyVirtualMachinePoolCollection.GetAll"), data => new StandbyVirtualMachinePoolResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolsGetByResourceGroupCollectionResultOfT(_standbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandbyVirtualMachinePoolCollection.GetAll"), data => new StandbyVirtualMachinePoolResource(Client, data));
+            return new PageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolDataCollectionResultOfT(_standbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandbyVirtualMachinePoolCollection.GetAll"), data => new StandbyVirtualMachinePoolResource(Client, data));
         }
 
         /// <summary>

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Compute.BulkActions;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
@@ -27,15 +28,21 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Initializes a new instance of <see cref="BulkCreateCustomOverride"/>. </summary>
         /// <param name="virtualMachineName"> ARM VM name for this VM. Optional; when omitted the name is generated from the prefix as {prefix}_{index}. </param>
+        /// <param name="zone"> The availability zone this VM is created in. Overrides the operation-level zones for this VM only. A null value does not override, so the VM is placed using the operation-level zones; an empty value does override and deploys this VM as a regional (non-zonal) VM. </param>
+        /// <param name="extendedLocation"> The extended location this VM is created in. Overrides the operation-level extendedLocation for this VM only; when omitted the VM inherits the operation-level extendedLocation. </param>
+        /// <param name="placement"> The placement constraints applied to this VM. Overrides the operation-level placement for this VM only; when omitted the VM inherits the operation-level placement. </param>
         /// <param name="virtualMachineProfile"> VM profile, the same shape as operation-level ComputeProfile.virtualMachineProfile. Overrides the operation-level VM profile. </param>
         /// <param name="tags"> Tags overriding the operation-level tags. </param>
         /// <param name="identity"> Identity overriding the operation-level identity. </param>
         /// <param name="plan"> Plan overriding the operation-level plan. </param>
         /// <param name="extensions"> Extensions. When non-empty they replace the operation-level extensions; when omitted the operation-level extensions are inherited. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkCreateCustomOverride(string virtualMachineName, BulkActionVMProperties virtualMachineProfile, IDictionary<string, string> tags, VirtualMachineIdentity identity, ArmPlan plan, IList<BulkActionVMExtension> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkCreateCustomOverride(string virtualMachineName, string zone, ExtendedLocation extendedLocation, BulkActionsVirtualMachinePlacement placement, BulkActionVMProperties virtualMachineProfile, IDictionary<string, string> tags, VirtualMachineIdentity identity, ArmPlan plan, IList<BulkActionVMExtension> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualMachineName = virtualMachineName;
+            Zone = zone;
+            ExtendedLocation = extendedLocation;
+            Placement = placement;
             VirtualMachineProfile = virtualMachineProfile;
             Tags = tags;
             Identity = identity;
@@ -46,6 +53,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> ARM VM name for this VM. Optional; when omitted the name is generated from the prefix as {prefix}_{index}. </summary>
         public string VirtualMachineName { get; set; }
+
+        /// <summary> The availability zone this VM is created in. Overrides the operation-level zones for this VM only. A null value does not override, so the VM is placed using the operation-level zones; an empty value does override and deploys this VM as a regional (non-zonal) VM. </summary>
+        public string Zone { get; set; }
+
+        /// <summary> The extended location this VM is created in. Overrides the operation-level extendedLocation for this VM only; when omitted the VM inherits the operation-level extendedLocation. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
+
+        /// <summary> The placement constraints applied to this VM. Overrides the operation-level placement for this VM only; when omitted the VM inherits the operation-level placement. </summary>
+        public BulkActionsVirtualMachinePlacement Placement { get; set; }
 
         /// <summary> VM profile, the same shape as operation-level ComputeProfile.virtualMachineProfile. Overrides the operation-level VM profile. </summary>
         public BulkActionVMProperties VirtualMachineProfile { get; set; }

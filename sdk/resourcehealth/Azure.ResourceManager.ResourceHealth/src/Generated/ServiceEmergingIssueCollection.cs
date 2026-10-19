@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceEmergingIssueData, ServiceEmergingIssueResource>(new EmergingIssuesGetAllAsyncCollectionResultOfT(_emergingIssuesRestClient, context, "ServiceEmergingIssueCollection.GetAll"), data => new ServiceEmergingIssueResource(Client, data));
+            return new AsyncPageableWrapper<ServiceEmergingIssueData, ServiceEmergingIssueResource>(new ServiceEmergingIssueDataAsyncCollectionResultOfT(_emergingIssuesRestClient, context, "ServiceEmergingIssueCollection.GetAll"), data => new ServiceEmergingIssueResource(Client, data));
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceEmergingIssueData, ServiceEmergingIssueResource>(new EmergingIssuesGetAllCollectionResultOfT(_emergingIssuesRestClient, context, "ServiceEmergingIssueCollection.GetAll"), data => new ServiceEmergingIssueResource(Client, data));
+            return new PageableWrapper<ServiceEmergingIssueData, ServiceEmergingIssueResource>(new ServiceEmergingIssueDataCollectionResultOfT(_emergingIssuesRestClient, context, "ServiceEmergingIssueCollection.GetAll"), data => new ServiceEmergingIssueResource(Client, data));
         }
 
         /// <summary>

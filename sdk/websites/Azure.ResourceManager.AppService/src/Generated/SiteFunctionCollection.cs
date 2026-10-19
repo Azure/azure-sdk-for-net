@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FunctionEnvelopeData, SiteFunctionResource>(new FunctionEnvelopesGetFunctionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FunctionEnvelopeData, SiteFunctionResource>(new FunctionEnvelopeDataAsync0CollectionResultOfT(
                 _functionEnvelopesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FunctionEnvelopeData, SiteFunctionResource>(new FunctionEnvelopesGetFunctionsCollectionResultOfT(
+            return new PageableWrapper<FunctionEnvelopeData, SiteFunctionResource>(new FunctionEnvelopeData0CollectionResultOfT(
                 _functionEnvelopesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

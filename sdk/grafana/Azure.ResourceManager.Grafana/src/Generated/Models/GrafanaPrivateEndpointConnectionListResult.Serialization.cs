@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GrafanaPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new GrafanaPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<GrafanaPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FirewallPolicyRuleCollectionGroupData, FirewallPolicyRuleCollectionGroupResource>(new FirewallPolicyRuleCollectionGroupsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FirewallPolicyRuleCollectionGroupData, FirewallPolicyRuleCollectionGroupResource>(new FirewallPolicyRuleCollectionGroupDataAsyncCollectionResultOfT(
                 _firewallPolicyRuleCollectionGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FirewallPolicyRuleCollectionGroupData, FirewallPolicyRuleCollectionGroupResource>(new FirewallPolicyRuleCollectionGroupsGetAllCollectionResultOfT(
+            return new PageableWrapper<FirewallPolicyRuleCollectionGroupData, FirewallPolicyRuleCollectionGroupResource>(new FirewallPolicyRuleCollectionGroupDataCollectionResultOfT(
                 _firewallPolicyRuleCollectionGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

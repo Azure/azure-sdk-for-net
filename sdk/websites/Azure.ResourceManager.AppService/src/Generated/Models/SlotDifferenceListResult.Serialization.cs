@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SlotDifferenceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SlotDifferenceListResult(value ?? new ChangeTrackingList<SlotDifference>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -144,7 +144,7 @@ namespace Azure.Storage.Queues.Models
                 writer.WriteObjectValue(MinuteMetrics, options);
                 writer.WriteEndElement();
             }
-            if (Optional.IsCollectionDefined(Cors))
+            if (Cors != null && Optional.IsCollectionDefined(Cors))
             {
                 writer.WriteStartElement("Cors");
                 foreach (QueueCorsRule item in Cors)

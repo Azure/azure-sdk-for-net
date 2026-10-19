@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityConnectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SecurityConnectorResource.ResourceType, out string securityConnectorApiVersion);
             _securityConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorResource.ResourceType.Namespace, Diagnostics);
-            _securityConnectorsRestClient = new SecurityConnectors(_securityConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorApiVersion ?? "2024-08-01-preview");
+            _securityConnectorsRestClient = new SecurityConnectors(_securityConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityConnectorData, SecurityConnectorResource>(new SecurityConnectorsGetByResourceGroupAsyncCollectionResultOfT(_securityConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityConnectorCollection.GetAll"), data => new SecurityConnectorResource(Client, data));
+            return new AsyncPageableWrapper<SecurityConnectorData, SecurityConnectorResource>(new SecurityConnectorDataAsyncCollectionResultOfT(_securityConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityConnectorCollection.GetAll"), data => new SecurityConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityConnectorData, SecurityConnectorResource>(new SecurityConnectorsGetByResourceGroupCollectionResultOfT(_securityConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityConnectorCollection.GetAll"), data => new SecurityConnectorResource(Client, data));
+            return new PageableWrapper<SecurityConnectorData, SecurityConnectorResource>(new SecurityConnectorDataCollectionResultOfT(_securityConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityConnectorCollection.GetAll"), data => new SecurityConnectorResource(Client, data));
         }
 
         /// <summary>

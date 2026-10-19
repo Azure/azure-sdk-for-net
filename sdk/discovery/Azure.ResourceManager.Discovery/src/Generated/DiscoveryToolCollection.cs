@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryToolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiscoveryToolResource.ResourceType, out string discoveryToolApiVersion);
             _toolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoveryToolResource.ResourceType.Namespace, Diagnostics);
-            _toolsRestClient = new Tools(_toolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryToolApiVersion ?? "2026-06-01");
+            _toolsRestClient = new Tools(_toolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Discovery/tools", out string toolsApiVersionOverride) ? toolsApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscoveryToolData, DiscoveryToolResource>(new ToolsGetByResourceGroupAsyncCollectionResultOfT(_toolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryToolCollection.GetAll"), data => new DiscoveryToolResource(Client, data));
+            return new AsyncPageableWrapper<DiscoveryToolData, DiscoveryToolResource>(new DiscoveryToolDataAsyncCollectionResultOfT(_toolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryToolCollection.GetAll"), data => new DiscoveryToolResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscoveryToolData, DiscoveryToolResource>(new ToolsGetByResourceGroupCollectionResultOfT(_toolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryToolCollection.GetAll"), data => new DiscoveryToolResource(Client, data));
+            return new PageableWrapper<DiscoveryToolData, DiscoveryToolResource>(new DiscoveryToolDataCollectionResultOfT(_toolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryToolCollection.GetAll"), data => new DiscoveryToolResource(Client, data));
         }
 
         /// <summary>

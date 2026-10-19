@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkEncryption"/>. </summary>
-        /// <param name="enabled"> Indicates if encryption is enabled on the virtual network. </param>
+        /// <param name="isEnabled"> Indicates if encryption is enabled on the virtual network. </param>
         /// <param name="enforcement"> If the encrypted VNet allows VM that does not support encryption. This field is for future support, AllowUnencrypted is the only supported value at general availability. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkEncryption(bool enabled, VirtualNetworkEncryptionEnforcement? enforcement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkEncryption(bool isEnabled, VirtualNetworkEncryptionEnforcement? enforcement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsEnabled = enabled;
+            IsEnabled = isEnabled;
             Enforcement = enforcement;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

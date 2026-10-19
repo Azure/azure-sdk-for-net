@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkTapRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkTapRuleResource.ResourceType, out string networkTapRuleApiVersion);
             _networkTapRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkTapRuleResource.ResourceType.Namespace, Diagnostics);
-            _networkTapRulesRestClient = new NetworkTapRules(_networkTapRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkTapRuleApiVersion ?? "2025-07-15");
+            _networkTapRulesRestClient = new NetworkTapRules(_networkTapRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkTapRules", out string networkTapRulesApiVersionOverride) ? networkTapRulesApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkTapRuleData, NetworkTapRuleResource>(new NetworkTapRulesGetByResourceGroupAsyncCollectionResultOfT(_networkTapRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapRuleCollection.GetAll"), data => new NetworkTapRuleResource(Client, data));
+            return new AsyncPageableWrapper<NetworkTapRuleData, NetworkTapRuleResource>(new NetworkTapRuleDataAsyncCollectionResultOfT(_networkTapRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapRuleCollection.GetAll"), data => new NetworkTapRuleResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkTapRuleData, NetworkTapRuleResource>(new NetworkTapRulesGetByResourceGroupCollectionResultOfT(_networkTapRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapRuleCollection.GetAll"), data => new NetworkTapRuleResource(Client, data));
+            return new PageableWrapper<NetworkTapRuleData, NetworkTapRuleResource>(new NetworkTapRuleDataCollectionResultOfT(_networkTapRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapRuleCollection.GetAll"), data => new NetworkTapRuleResource(Client, data));
         }
 
         /// <summary>

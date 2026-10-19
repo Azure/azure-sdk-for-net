@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsClientGetCatalogAsyncCollectionResultOfT(
+            return new ReservationCatalogAsyncCollectionResultOfT(
                 ReservationsClientRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 reservedResourceType,
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsClientGetCatalogCollectionResultOfT(
+            return new ReservationCatalogCollectionResultOfT(
                 ReservationsClientRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 reservedResourceType,

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CustomIPPrefixCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(CustomIPPrefixResource.ResourceType, out string customIPPrefixApiVersion);
             _customIPPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", CustomIPPrefixResource.ResourceType.Namespace, Diagnostics);
-            _customIPPrefixesRestClient = new CustomIPPrefixes(_customIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customIPPrefixApiVersion ?? "2026-01-01");
+            _customIPPrefixesRestClient = new CustomIPPrefixes(_customIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CustomIPPrefixData, CustomIPPrefixResource>(new CustomIPPrefixesListAsyncCollectionResultOfT(_customIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CustomIPPrefixCollection.GetAll"), data => new CustomIPPrefixResource(Client, data));
+            return new AsyncPageableWrapper<CustomIPPrefixData, CustomIPPrefixResource>(new CustomIPPrefixDataAsyncCollectionResultOfT(_customIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CustomIPPrefixCollection.GetAll"), data => new CustomIPPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CustomIPPrefixData, CustomIPPrefixResource>(new CustomIPPrefixesListCollectionResultOfT(_customIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CustomIPPrefixCollection.GetAll"), data => new CustomIPPrefixResource(Client, data));
+            return new PageableWrapper<CustomIPPrefixData, CustomIPPrefixResource>(new CustomIPPrefixDataCollectionResultOfT(_customIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CustomIPPrefixCollection.GetAll"), data => new CustomIPPrefixResource(Client, data));
         }
 
         /// <summary>

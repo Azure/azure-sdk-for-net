@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor.Agents.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor.Agents
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.Monitor.Agents
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ObservabilityAgentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string observabilityAgentApiVersion);
             _observabilityAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Agents", ResourceType.Namespace, Diagnostics);
-            _observabilityAgentsRestClient = new ObservabilityAgents(_observabilityAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, observabilityAgentApiVersion ?? "2026-05-01-preview");
+            _observabilityAgentsRestClient = new ObservabilityAgents(_observabilityAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Monitor/observabilityAgents", out string observabilityAgentsApiVersionOverride) ? observabilityAgentsApiVersionOverride : "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -505,10 +505,9 @@ namespace Azure.ResourceManager.Monitor.Agents
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -548,10 +547,9 @@ namespace Azure.ResourceManager.Monitor.Agents
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

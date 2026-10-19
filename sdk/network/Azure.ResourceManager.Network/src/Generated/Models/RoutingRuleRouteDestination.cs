@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RoutingRuleRouteDestination"/>. </summary>
-        /// <param name="type"> Destination type. </param>
+        /// <param name="destinationType"> Destination type. </param>
         /// <param name="destinationAddress"> Destination address. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingRuleRouteDestination(RoutingRuleDestinationType @type, string destinationAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutingRuleRouteDestination(RoutingRuleDestinationType destinationType, string destinationAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DestinationType = @type;
+            DestinationType = destinationType;
             DestinationAddress = destinationAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

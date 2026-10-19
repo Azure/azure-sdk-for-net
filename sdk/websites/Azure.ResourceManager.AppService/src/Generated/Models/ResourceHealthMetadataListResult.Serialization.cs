@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResourceHealthMetadataListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ResourceHealthMetadataListResult(value ?? new ChangeTrackingList<ResourceHealthMetadataData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

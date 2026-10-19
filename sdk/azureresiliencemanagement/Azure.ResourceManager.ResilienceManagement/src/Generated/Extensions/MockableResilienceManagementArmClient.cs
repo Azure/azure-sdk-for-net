@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
             return new GoalAssignmentCollection(Client, scope);
         }
 
-        /// <summary> Get a GoalAssignment. </summary>
+        /// <summary> Gets a goal assignment. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="goalAssignmentName"> The name of the GoalAssignment. </param>
+        /// <param name="goalAssignmentName"> The name of the goal assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="goalAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="goalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
             return GetGoalAssignments(scope).Get(goalAssignmentName, cancellationToken);
         }
 
-        /// <summary> Get a GoalAssignment. </summary>
+        /// <summary> Gets a goal assignment. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="goalAssignmentName"> The name of the GoalAssignment. </param>
+        /// <param name="goalAssignmentName"> The name of the goal assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="goalAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="goalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -73,51 +73,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
             Argument.AssertNotNullOrEmpty(goalAssignmentName, nameof(goalAssignmentName));
 
             return await GetGoalAssignments(scope).GetAsync(goalAssignmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets an object representing a <see cref="GoalTemplateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GoalTemplateResource"/> object. </returns>
-        public virtual GoalTemplateResource GetGoalTemplateResource(ResourceIdentifier id)
-        {
-            GoalTemplateResource.ValidateResourceId(id);
-            return new GoalTemplateResource(Client, id);
-        }
-
-        /// <summary> Gets a collection of <see cref="GoalTemplateCollection"/> objects within the specified scope. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="GoalTemplateResource"/> objects. </returns>
-        public virtual GoalTemplateCollection GetGoalTemplates(ResourceIdentifier scope)
-        {
-            return new GoalTemplateCollection(Client, scope);
-        }
-
-        /// <summary> Get a GoalTemplate. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="goalTemplateName"> The name of the goalTemplate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="goalTemplateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="goalTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GoalTemplateResource> GetGoalTemplate(ResourceIdentifier scope, string goalTemplateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(goalTemplateName, nameof(goalTemplateName));
-
-            return GetGoalTemplates(scope).Get(goalTemplateName, cancellationToken);
-        }
-
-        /// <summary> Get a GoalTemplate. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="goalTemplateName"> The name of the goalTemplate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="goalTemplateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="goalTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GoalTemplateResource>> GetGoalTemplateAsync(ResourceIdentifier scope, string goalTemplateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(goalTemplateName, nameof(goalTemplateName));
-
-            return await GetGoalTemplates(scope).GetAsync(goalTemplateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="GoalMembersResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -137,9 +92,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
             return new GoalMembersCollection(Client, scope);
         }
 
-        /// <summary> Get a GoalResource. </summary>
+        /// <summary> Gets a goal resource. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="goalResourceName"> The name of the GoalAssignment. </param>
+        /// <param name="goalResourceName"> The name of the goal resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="goalResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="goalResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -151,9 +106,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
             return GetAllGoalMembers(scope).Get(goalResourceName, cancellationToken);
         }
 
-        /// <summary> Get a GoalResource. </summary>
+        /// <summary> Gets a goal resource. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="goalResourceName"> The name of the GoalAssignment. </param>
+        /// <param name="goalResourceName"> The name of the goal resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="goalResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="goalResourceName"/> is an empty string, and was expected to be non-empty. </exception>
