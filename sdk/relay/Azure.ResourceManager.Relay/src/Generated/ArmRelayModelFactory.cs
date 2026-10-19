@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="clusterArmId"> Cluster ARM ID of the Namespace. </param>
         /// <param name="sku"> SKU of the namespace. </param>
         /// <returns> A new <see cref="Relay.RelayNamespaceData"/> instance for mocking. </returns>
-        public static RelayNamespaceData RelayNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, RelayTlsVersion? minimumTlsVersion, ResourceIdentifier clusterArmId, RelaySku sku = default)
+        public static RelayNamespaceData RelayNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default, RelayTlsVersion? minimumTlsVersion = default, ResourceIdentifier clusterArmId = default, RelaySku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="clusterArmId"> Cluster ARM ID of the Namespace. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.RelayNamespacePatch"/> instance for mocking. </returns>
-        public static RelayNamespacePatch RelayNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelaySku sku, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, RelayTlsVersion? minimumTlsVersion, ResourceIdentifier clusterArmId, IDictionary<string, string> tags = default)
+        public static RelayNamespacePatch RelayNamespacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RelaySku sku = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default, RelayTlsVersion? minimumTlsVersion = default, ResourceIdentifier clusterArmId = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.RelayNamespacePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RelayNamespacePatch RelayNamespacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RelaySku sku = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default, IDictionary<string, string> tags = default)
+        public static RelayNamespacePatch RelayNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelaySku sku, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, IDictionary<string, string> tags)
         {
             return new RelayNamespacePatch(
                 id,
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
         /// <returns> A new <see cref="Relay.RelayNamespaceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RelayNamespaceData RelayNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RelaySku sku = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default)
+        public static RelayNamespaceData RelayNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RelaySku sku, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess)
         {
             return new RelayNamespaceData(
                 id,
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Relay.RelayPrivateEndpointConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RelayPrivateEndpointConnectionData RelayPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, RelayPrivateLinkServiceConnectionState connectionState = default, RelayPrivateEndpointConnectionProvisioningState? provisioningState = default, AzureLocation? location = default)
+        public static RelayPrivateEndpointConnectionData RelayPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, RelayPrivateLinkServiceConnectionState connectionState, RelayPrivateEndpointConnectionProvisioningState? provisioningState, AzureLocation? location)
         {
             return new RelayPrivateEndpointConnectionData(
                 id,
