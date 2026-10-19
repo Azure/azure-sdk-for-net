@@ -362,6 +362,18 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
             if (body is ObjectExpression objExpr)
             {
                 HydrateProperties(resource.ProvisionableProperties, objExpr);
+                PropertyExpression? dependsOn = objExpr.Properties.FirstOrDefault(p => p.Name == "dependsOn");
+                if (dependsOn?.Value is ArrayExpression dependencies)
+                {
+                    foreach (BicepExpression dependency in dependencies.Values)
+                    {
+                        resource.PreservedDependencies.Add(dependency);
+                    }
+                }
+                else if (dependsOn != null)
+                {
+                    throw new FormatException("Expected resource 'dependsOn' value to be an ArrayExpression.");
+                }
             }
             else
             {
