@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CognitiveServicesCommitmentPlanCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(CognitiveServicesCommitmentPlanResource.ResourceType, out string cognitiveServicesCommitmentPlanApiVersion);
             _commitmentPlanOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesCommitmentPlanResource.ResourceType.Namespace, Diagnostics);
-            _commitmentPlanOperationGroupRestClient = new CommitmentPlanOperationGroup(_commitmentPlanOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesCommitmentPlanApiVersion ?? "2026-07-01");
+            _commitmentPlanOperationGroupRestClient = new CommitmentPlanOperationGroup(_commitmentPlanOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.CognitiveServices/commitmentPlans", out string commitmentPlanOperationGroupApiVersionOverride) ? commitmentPlanOperationGroupApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 

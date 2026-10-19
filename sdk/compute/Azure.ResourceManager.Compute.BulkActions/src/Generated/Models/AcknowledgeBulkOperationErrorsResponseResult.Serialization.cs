@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AcknowledgeBulkOperationErrorsResponseResult(acknowledged, notFound, skipped, additionalBinaryDataProperties);
+            return new AcknowledgeBulkOperationErrorsResponseResult(acknowledged ?? new ChangeTrackingList<string>(), notFound ?? new ChangeTrackingList<string>(), skipped ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

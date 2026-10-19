@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
         {
             TryGetApiVersion(ResourceType, out string sreAgentApiVersion);
             _agentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService.SreAgent", ResourceType.Namespace, Diagnostics);
-            _agentsRestClient = new Agents(_agentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sreAgentApiVersion ?? "2026-01-01");
+            _agentsRestClient = new Agents(_agentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.App/agents", out string agentsApiVersionOverride) ? agentsApiVersionOverride : "2026-01-01");
             _agentsConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService.SreAgent", ResourceType.Namespace, Diagnostics);
             _agentsConnectorsRestClient = new AgentsConnectors(_agentsConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sreAgentApiVersion ?? "2026-01-01");
             ValidateResourceId(id);

@@ -1215,25 +1215,25 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new SavingsPlanUpdateValidateContent((benefits ?? new ChangeTrackingList<BillingBenefitsSavingsPlanPatchProperties>()).ToList(), default);
         }
 
-        /// <summary> The SavingsPlanValidateResponse. </summary>
+        /// <summary> The SavingsPlanValidateResult. </summary>
         /// <param name="benefits"></param>
         /// <param name="nextLink"> Url to get the next page. </param>
-        /// <returns> A new <see cref="Models.SavingsPlanValidateResponse"/> instance for mocking. </returns>
-        public static SavingsPlanValidateResponse SavingsPlanValidateResponse(IEnumerable<SavingsPlanValidateResult> benefits = default, string nextLink = default)
+        /// <returns> A new <see cref="Models.SavingsPlanValidateResult"/> instance for mocking. </returns>
+        public static SavingsPlanValidateResult SavingsPlanValidateResult(IEnumerable<SavingsPlanValidationDetail> benefits = default, string nextLink = default)
         {
-            benefits ??= new ChangeTrackingList<SavingsPlanValidateResult>();
+            benefits ??= new ChangeTrackingList<SavingsPlanValidationDetail>();
 
-            return new SavingsPlanValidateResponse((benefits ?? new ChangeTrackingList<SavingsPlanValidateResult>()).ToList(), nextLink, default);
+            return new SavingsPlanValidateResult((benefits ?? new ChangeTrackingList<SavingsPlanValidationDetail>()).ToList(), nextLink, default);
         }
 
         /// <summary> Benefit scope response property. </summary>
         /// <param name="isValid"> Indicates if the provided input was valid. </param>
         /// <param name="reasonCode"> Failure reason code if the provided input was invalid. </param>
         /// <param name="reason"> Failure reason if the provided input was invalid. </param>
-        /// <returns> A new <see cref="Models.SavingsPlanValidateResult"/> instance for mocking. </returns>
-        public static SavingsPlanValidateResult SavingsPlanValidateResult(bool? isValid = default, string reasonCode = default, string reason = default)
+        /// <returns> A new <see cref="Models.SavingsPlanValidationDetail"/> instance for mocking. </returns>
+        public static SavingsPlanValidationDetail SavingsPlanValidationDetail(bool? isValid = default, string reasonCode = default, string reason = default)
         {
-            return new SavingsPlanValidateResult(isValid, reasonCode, reason, default);
+            return new SavingsPlanValidationDetail(isValid, reasonCode, reason, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1472,12 +1472,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Benefit validate response. </summary>
         /// <param name="benefits"> Defines benefit validation response for benefits. </param>
         /// <param name="nextLink"> Url to get the next page. </param>
-        /// <returns> A new <see cref="Models.BenefitValidateResponse"/> instance for mocking. </returns>
-        public static BenefitValidateResponse BenefitValidateResponse(IEnumerable<BenefitValidateResponseProperty> benefits = default, string nextLink = default)
+        /// <returns> A new <see cref="Models.BenefitValidateResult"/> instance for mocking. </returns>
+        public static BenefitValidateResult BenefitValidateResult(IEnumerable<BenefitValidateResponseProperty> benefits = default, string nextLink = default)
         {
             benefits ??= new ChangeTrackingList<BenefitValidateResponseProperty>();
 
-            return new BenefitValidateResponse((benefits ?? new ChangeTrackingList<BenefitValidateResponseProperty>()).ToList(), nextLink, default);
+            return new BenefitValidateResult((benefits ?? new ChangeTrackingList<BenefitValidateResponseProperty>()).ToList(), nextLink, default);
         }
 
         /// <summary> Benefit validate response property. </summary>

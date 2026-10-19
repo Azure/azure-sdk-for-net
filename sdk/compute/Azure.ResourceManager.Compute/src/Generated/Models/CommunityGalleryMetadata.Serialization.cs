@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute.Models
                 publisherUri,
                 publisherContact,
                 eula,
-                publicNames,
+                publicNames ?? new ChangeTrackingList<string>(),
                 privacyStatementUri,
                 additionalBinaryDataProperties);
         }

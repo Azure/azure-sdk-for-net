@@ -22,7 +22,9 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
         private SystemData _systemData;
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
+#pragma warning disable CUSTOMMODEL001 // This generated code depends on experimental functionality.
         private PreviewOnlyResourceProperties _properties;
+#pragma warning restore CUSTOMMODEL001 // This generated code depends on experimental functionality.
 
         /// <summary> Creates a new PreviewOnlyResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -96,6 +98,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             }
         }
 
+#pragma warning disable CUSTOMMODEL001 // This generated code depends on experimental functionality.
         /// <summary> Gets or sets the Properties. </summary>
         internal PreviewOnlyResourceProperties Properties
         {
@@ -110,6 +113,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
                 AssignOrReplace(ref _properties, value);
             }
         }
+#pragma warning restore CUSTOMMODEL001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets or sets the Value. </summary>
         [Experimental("CUSTOMRESOURCE001")]

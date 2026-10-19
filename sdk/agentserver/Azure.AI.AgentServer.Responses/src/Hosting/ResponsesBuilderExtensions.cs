@@ -26,7 +26,9 @@ public static class ResponsesBuilderExtensions
     /// <returns>The builder for chaining.</returns>
     /// <remarks>
     /// In a hosted Foundry environment, credential and endpoint settings bind from the
-    /// <c>ResponsesServer</c> configuration section. The <paramref name="configure"/> callback is
+    /// <c>ResponsesServer</c> configuration section; values the section does not provide default to
+    /// the platform (<c>FOUNDRY_PROJECT_ENDPOINT</c> and a <c>DefaultAzureCredential</c> limited by
+    /// default to the production credentials). The <paramref name="configure"/> callback is
     /// applied afterward and therefore remains authoritative for response options.
     /// </remarks>
     public static AgentHostBuilder AddResponses<THandler>(
@@ -54,7 +56,9 @@ public static class ResponsesBuilderExtensions
     /// <returns>The builder for chaining.</returns>
     /// <remarks>
     /// In a hosted Foundry environment, credential and endpoint settings bind from the
-    /// <c>ResponsesServer</c> configuration section. The <paramref name="configure"/> callback is
+    /// <c>ResponsesServer</c> configuration section; values the section does not provide default to
+    /// the platform (<c>FOUNDRY_PROJECT_ENDPOINT</c> and a <c>DefaultAzureCredential</c> limited by
+    /// default to the production credentials). The <paramref name="configure"/> callback is
     /// applied afterward and therefore remains authoritative for response options.
     /// </remarks>
     public static AgentHostBuilder AddResponses(
@@ -84,7 +88,9 @@ public static class ResponsesBuilderExtensions
     /// <returns>The builder for chaining.</returns>
     /// <remarks>
     /// In a hosted Foundry environment, credential and endpoint settings bind from the
-    /// <c>ResponsesServer</c> configuration section. The <paramref name="configure"/> callback is
+    /// <c>ResponsesServer</c> configuration section; values the section does not provide default to
+    /// the platform (<c>FOUNDRY_PROJECT_ENDPOINT</c> and a <c>DefaultAzureCredential</c> limited by
+    /// default to the production credentials). The <paramref name="configure"/> callback is
     /// applied afterward and therefore remains authoritative for response options.
     /// </remarks>
     public static AgentHostBuilder AddResponses(

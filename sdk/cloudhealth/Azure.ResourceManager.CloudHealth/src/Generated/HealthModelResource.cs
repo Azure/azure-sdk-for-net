@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HealthModelResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string healthModelApiVersion);
             _healthModelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", ResourceType.Namespace, Diagnostics);
-            _healthModelsRestClient = new HealthModels(_healthModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthModelApiVersion ?? "2026-09-01-preview");
+            _healthModelsRestClient = new HealthModels(_healthModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.CloudHealth/healthmodels", out string healthModelsApiVersionOverride) ? healthModelsApiVersionOverride : "2026-11-01");
             ValidateResourceId(id);
         }
 
@@ -107,7 +106,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +202,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +261,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +320,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +369,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

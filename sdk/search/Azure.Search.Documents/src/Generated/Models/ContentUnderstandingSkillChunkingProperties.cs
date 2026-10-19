@@ -16,11 +16,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private ContentUnderstandingSkillChunkingUnit? _unit;
-        internal bool _unitIsDefined;
+        private bool _unitIsDefined;
         private int? _maximumLength;
-        internal bool _maximumLengthIsDefined;
+        private bool _maximumLengthIsDefined;
         private int? _overlapLength;
-        internal bool _overlapLengthIsDefined;
+        private bool _overlapLengthIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ContentUnderstandingSkillChunkingProperties"/>. </summary>
         public ContentUnderstandingSkillChunkingProperties()

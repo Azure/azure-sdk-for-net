@@ -16,9 +16,6 @@ namespace Azure.ResourceManager.ComputeBulkActions
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AllInstancesDown))]
-    [ModelReaderWriterBuildable(typeof(ApiEntityReference))]
-    [ModelReaderWriterBuildable(typeof(ApplicationProfile))]
     [ModelReaderWriterBuildable(typeof(ArmPlan))]
     [ModelReaderWriterBuildable(typeof(BulkActionCancelOperationsContent))]
     [ModelReaderWriterBuildable(typeof(BulkActionCancelOperationsResult))]
@@ -44,7 +41,6 @@ namespace Azure.ResourceManager.ComputeBulkActions
     [ModelReaderWriterBuildable(typeof(BulkActionRetryPolicy))]
     [ModelReaderWriterBuildable(typeof(BulkActionStartResourceOperationResult))]
     [ModelReaderWriterBuildable(typeof(BulkActionVirtualMachineResult))]
-    [ModelReaderWriterBuildable(typeof(CapacityReservationProfile))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsAdditionalCapabilities))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsAdditionalUnattendContent))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsApiError))]
@@ -52,7 +48,6 @@ namespace Azure.ResourceManager.ComputeBulkActions
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsBootDiagnostics))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsDataDisk))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsDiffDiskSettings))]
-    [ModelReaderWriterBuildable(typeof(ComputeBulkActionsDiskEncryptionSetReference))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsDiskEncryptionSettings))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsEventGridAndResourceGraph))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsHostEndpointSettings))]
@@ -107,23 +102,11 @@ namespace Azure.ResourceManager.ComputeBulkActions
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsWinRMListener))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsZoneAllocationPolicy))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsZonePreference))]
-    [ModelReaderWriterBuildable(typeof(DiagnosticsProfile))]
-    [ModelReaderWriterBuildable(typeof(EncryptionIdentity))]
-    [ModelReaderWriterBuildable(typeof(LaunchBulkInstancesOperationListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
-    [ModelReaderWriterBuildable(typeof(Models.Resources))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(ScheduledEventsAdditionalPublishingTargets))]
-    [ModelReaderWriterBuildable(typeof(SshConfiguration))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(UserInitiatedReboot))]
-    [ModelReaderWriterBuildable(typeof(UserInitiatedRedeploy))]
-    [ModelReaderWriterBuildable(typeof(VirtualHardDisk))]
-    [ModelReaderWriterBuildable(typeof(VirtualMachineListResult))]
-    [ModelReaderWriterBuildable(typeof(VirtualMachineNetworkInterfaceDnsSettingsConfiguration))]
-    [ModelReaderWriterBuildable(typeof(WinRMConfiguration))]
     public partial class AzureResourceManagerComputeBulkActionsContext : ModelReaderWriterContext
     {
     }

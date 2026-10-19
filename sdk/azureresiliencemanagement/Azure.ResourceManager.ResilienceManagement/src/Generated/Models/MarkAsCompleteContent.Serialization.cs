@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            DrillRunSubtasks drillRunStage = default;
+            DrillRunStage drillRunStage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("drillRunStage"u8))
                 {
-                    drillRunStage = new DrillRunSubtasks(prop.Value.GetString());
+                    drillRunStage = new DrillRunStage(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

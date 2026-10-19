@@ -50,7 +50,13 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private ClientDiagnostics PrivateLinkServicesClientDiagnostics => _privateLinkServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateLinkServices PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServices(PrivateLinkServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private PrivateLinkServices PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServices(
+            PrivateLinkServicesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-01-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ExpressRouteGatewaysClientDiagnostics => _expressRouteGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -58,13 +64,7 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private ClientDiagnostics PublicIPAddressesOperationGroupClientDiagnostics => _publicIPAddressesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicIPAddressesOperationGroup PublicIPAddressesOperationGroupRestClient => _publicIPAddressesOperationGroupRestClient ??= new PublicIPAddressesOperationGroup(
-            PublicIPAddressesOperationGroupClientDiagnostics,
-            Pipeline,
-            Diagnostics.ApplicationId,
-            Endpoint,
-            "2026-01-01",
-            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private PublicIPAddressesOperationGroup PublicIPAddressesOperationGroupRestClient => _publicIPAddressesOperationGroupRestClient ??= new PublicIPAddressesOperationGroup(PublicIPAddressesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AvailableResourceGroupDelegationsClientDiagnostics => _availableResourceGroupDelegationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -3818,7 +3818,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PublicIPAddressDataAsync1CollectionResultOfT(
+            return new PublicIPAddressDataAsync2CollectionResultOfT(
                 PublicIPAddressesOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3857,7 +3857,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PublicIPAddressData1CollectionResultOfT(
+            return new PublicIPAddressData2CollectionResultOfT(
                 PublicIPAddressesOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

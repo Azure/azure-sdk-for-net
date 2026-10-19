@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataCollectionEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DataCollectionEndpointResource.ResourceType, out string dataCollectionEndpointApiVersion);
             _dataCollectionEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", DataCollectionEndpointResource.ResourceType.Namespace, Diagnostics);
-            _dataCollectionEndpointsRestClient = new DataCollectionEndpoints(_dataCollectionEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataCollectionEndpointApiVersion ?? "2024-03-11");
+            _dataCollectionEndpointsRestClient = new DataCollectionEndpoints(_dataCollectionEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

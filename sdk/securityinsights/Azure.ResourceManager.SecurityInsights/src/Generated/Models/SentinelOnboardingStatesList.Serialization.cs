@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SentinelOnboardingStatesList(value, additionalBinaryDataProperties);
+            return new SentinelOnboardingStatesList(value ?? new ChangeTrackingList<SecurityInsightsSentinelOnboardingStateData>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -78,13 +78,13 @@ namespace Azure.AI.Projects.Agents
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("prompt"u8);
             writer.WriteStringValue(Prompt);
-            if (Optional.IsDefined(ToolChoice))
+            if (Optional.IsDefined(InternalToolChoice))
             {
                 writer.WritePropertyName("tool_choice"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(ToolChoice);
+                writer.WriteRawValue(InternalToolChoice);
 #else
-                using (JsonDocument document = JsonDocument.Parse(ToolChoice))
+                using (JsonDocument document = JsonDocument.Parse(InternalToolChoice))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -120,7 +120,7 @@ namespace Azure.AI.Projects.Agents
             string @type = "llm_generated";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string prompt = default;
-            BinaryData toolChoice = default;
+            BinaryData internalToolChoice = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -139,7 +139,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    toolChoice = prop.Value.GetUtf8Bytes();
+                    internalToolChoice = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
@@ -147,7 +147,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VoiceAgentLlmGeneratedGreetingConfig(@type, additionalBinaryDataProperties, prompt, toolChoice);
+            return new VoiceAgentLlmGeneratedGreetingConfig(@type, additionalBinaryDataProperties, prompt, internalToolChoice);
         }
     }
 }

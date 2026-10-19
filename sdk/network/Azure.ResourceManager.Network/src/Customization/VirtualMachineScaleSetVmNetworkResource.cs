@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<PublicIPAddressData> GetAllPublicIPAddressDataAsync(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new VmssVmPublicIPAddressesAsyncCollectionResultOfT(
+            return new PublicIPAddressDataAsync1CollectionResultOfT(
                 CreateVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient(),
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<PublicIPAddressData> GetAllPublicIPAddressData(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new VmssVmPublicIPAddressesCollectionResultOfT(
+            return new PublicIPAddressData1CollectionResultOfT(
                 CreateVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient(),
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

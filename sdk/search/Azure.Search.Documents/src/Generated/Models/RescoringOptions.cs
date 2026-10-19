@@ -16,11 +16,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private bool? _enableRescoring;
-        internal bool _enableRescoringIsDefined;
+        private bool _enableRescoringIsDefined;
         private double? _defaultOversampling;
-        internal bool _defaultOversamplingIsDefined;
+        private bool _defaultOversamplingIsDefined;
         private VectorSearchCompressionRescoreStorageMethod? _rescoreStorageMethod;
-        internal bool _rescoreStorageMethodIsDefined;
+        private bool _rescoreStorageMethodIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RescoringOptions"/>. </summary>
         public RescoringOptions()

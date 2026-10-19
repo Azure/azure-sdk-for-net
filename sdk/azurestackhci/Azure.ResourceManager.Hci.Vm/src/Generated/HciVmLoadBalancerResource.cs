@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmLoadBalancerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string hciVmLoadBalancerApiVersion);
             _loadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmLoadBalancerApiVersion ?? "2025-09-01-preview");
+            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/loadBalancers", out string loadBalancersApiVersionOverride) ? loadBalancersApiVersionOverride : "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

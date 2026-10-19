@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Dell.Storage
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DellFileSystemCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DellFileSystemResource.ResourceType, out string dellFileSystemApiVersion);
             _fileSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dell.Storage", DellFileSystemResource.ResourceType.Namespace, Diagnostics);
-            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dellFileSystemApiVersion ?? "2025-03-21");
+            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Dell.Storage/filesystems", out string fileSystemsApiVersionOverride) ? fileSystemsApiVersionOverride : "2025-03-21");
             ValidateResourceId(id);
         }
 

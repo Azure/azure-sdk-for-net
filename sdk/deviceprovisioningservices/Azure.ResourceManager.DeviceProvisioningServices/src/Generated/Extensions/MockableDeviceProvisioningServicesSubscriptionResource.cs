@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
 
         private ClientDiagnostics ProvisioningServiceDescriptionsClientDiagnostics => _provisioningServiceDescriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProvisioningServiceDescriptions ProvisioningServiceDescriptionsRestClient => _provisioningServiceDescriptionsRestClient ??= new ProvisioningServiceDescriptions(ProvisioningServiceDescriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-31");
+        private ProvisioningServiceDescriptions ProvisioningServiceDescriptionsRestClient => _provisioningServiceDescriptionsRestClient ??= new ProvisioningServiceDescriptions(ProvisioningServiceDescriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Devices/provisioningServices", out string apiVersion) ? apiVersion : "2026-08-31");
 
         private ClientDiagnostics IotDpsResourceOperationGroupClientDiagnostics => _iotDpsResourceOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

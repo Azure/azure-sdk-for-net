@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 scanDnsName,
                 scanIPs ?? new ChangeTrackingList<string>(),
                 shape,
-                sshPublicKeys,
+                sshPublicKeys ?? new ChangeTrackingList<string>(),
                 storageVolumePerformanceMode,
                 timeZone,
                 version,

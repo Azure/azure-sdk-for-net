@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal KeyVaultSecretProviderClassResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string keyVaultSecretProviderClassApiVersion);
             _azureKeyVaultSecretProviderClassesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension", ResourceType.Namespace, Diagnostics);
-            _azureKeyVaultSecretProviderClassesRestClient = new AzureKeyVaultSecretProviderClasses(_azureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, keyVaultSecretProviderClassApiVersion ?? "2026-09-25-preview");
+            _azureKeyVaultSecretProviderClassesRestClient = new AzureKeyVaultSecretProviderClasses(_azureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses", out string azureKeyVaultSecretProviderClassesApiVersionOverride) ? azureKeyVaultSecretProviderClassesApiVersionOverride : "2026-09-25-preview");
             ValidateResourceId(id);
         }
 

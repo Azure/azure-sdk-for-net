@@ -18,9 +18,15 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
         private BicepValue<string> _previewOnlyProperty;
         private BicepValue<string> _previewRetainedProperty;
         private BicepValue<InitialStableEnum> _initialStableEnum;
+#pragma warning disable AZPROVISION001 // This generated code depends on experimental functionality.
         private BicepValue<PreviewOnlyEnum> _previewOnlyEnum;
+#pragma warning restore AZPROVISION001 // This generated code depends on experimental functionality.
+#pragma warning disable AZPROVISION001 // This generated code depends on experimental functionality.
         private BicepValue<PreviewRetainedEnum> _previewRetainedEnum;
+#pragma warning restore AZPROVISION001 // This generated code depends on experimental functionality.
+#pragma warning disable AZPROVISION001 // This generated code depends on experimental functionality.
         private PreviewFlattenedWrapper _previewWrapper;
+#pragma warning restore AZPROVISION001 // This generated code depends on experimental functionality.
         private SharedFlattenedLeaf _previewSharedWrapper;
         private SharedFlattenedLeaf _previewSafeWrapper;
         private NestedFlattenedWrapper _nestedWrapper;

@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WebhookProperties(status, scope, actions, provisioningState, additionalBinaryDataProperties);
+            return new WebhookProperties(status, scope, actions ?? new ChangeTrackingList<ContainerRegistryWebhookAction>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

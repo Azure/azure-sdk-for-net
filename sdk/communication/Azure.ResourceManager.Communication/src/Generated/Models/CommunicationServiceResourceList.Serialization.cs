@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Communication.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CommunicationServiceResourceList(value, nextLink, additionalBinaryDataProperties);
+            return new CommunicationServiceResourceList(value ?? new ChangeTrackingList<CommunicationServiceResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

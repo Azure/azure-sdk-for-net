@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApiListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ApiListResult(value ?? new ChangeTrackingList<ApiCenterApiData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

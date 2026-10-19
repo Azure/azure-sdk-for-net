@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Initializes a new instance of <see cref="OccurrenceExtensionProperties"/>. </summary>
         /// <param name="resourceId"> The Azure resource ID of the targeted virtual machine. </param>
-        /// <param name="scheduledActionId"> The Azure resource ID of the scheduled action that owns the occurrence. </param>
+        /// <param name="scheduledActionId"> The Azure resource ID of the recurring bulk action that owns the occurrence. </param>
         internal OccurrenceExtensionProperties(ResourceIdentifier resourceId, ResourceIdentifier scheduledActionId)
         {
             ResourceId = resourceId;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="scheduledOn"> Read-only. The UTC date and time when the operation is scheduled for this resource. </param>
         /// <param name="provisioningState"> Read-only. The current state of the operation for this resource. </param>
         /// <param name="errorDetails"> Read-only. Error details when the operation fails for this resource. </param>
-        /// <param name="scheduledActionId"> The Azure resource ID of the scheduled action that owns the occurrence. </param>
+        /// <param name="scheduledActionId"> The Azure resource ID of the recurring bulk action that owns the occurrence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal OccurrenceExtensionProperties(ResourceIdentifier resourceId, IList<NotificationProperties> notificationSettings, DateTimeOffset scheduledOn, OccurrenceResourceProvisioningState? provisioningState, ResponseError errorDetails, ResourceIdentifier scheduledActionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Read-only. Error details when the operation fails for this resource. </summary>
         public ResponseError ErrorDetails { get; }
 
-        /// <summary> The Azure resource ID of the scheduled action that owns the occurrence. </summary>
+        /// <summary> The Azure resource ID of the recurring bulk action that owns the occurrence. </summary>
         public ResourceIdentifier ScheduledActionId { get; }
     }
 }

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScVmmServerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ScVmmServerResource.ResourceType, out string scVmmServerApiVersion);
             _vmmServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ScVmm", ScVmmServerResource.ResourceType.Namespace, Diagnostics);
-            _vmmServersRestClient = new VmmServers(_vmmServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scVmmServerApiVersion ?? "2025-03-13");
+            _vmmServersRestClient = new VmmServers(_vmmServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ScVmm/vmmServers", out string vmmServersApiVersionOverride) ? vmmServersApiVersionOverride : "2025-03-13");
             ValidateResourceId(id);
         }
 

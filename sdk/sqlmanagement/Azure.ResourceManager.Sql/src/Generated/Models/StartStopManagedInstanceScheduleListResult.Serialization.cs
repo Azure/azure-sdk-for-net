@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StartStopManagedInstanceScheduleListResult(value, nextLink, additionalBinaryDataProperties);
+            return new StartStopManagedInstanceScheduleListResult(value ?? new ChangeTrackingList<ManagedInstanceStartStopScheduleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

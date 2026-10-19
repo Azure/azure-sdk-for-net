@@ -14,7 +14,9 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
     /// <summary> An outer wrapper for nested flattening. </summary>
     internal partial class NestedFlattenedWrapper : ProvisionableConstruct
     {
+#pragma warning disable AZPROVISION001 // This generated code depends on experimental functionality.
         private NestedPreviewFlattenedWrapper _inner;
+#pragma warning restore AZPROVISION001 // This generated code depends on experimental functionality.
 
         /// <summary> Creates a new NestedFlattenedWrapper. </summary>
         public NestedFlattenedWrapper()
