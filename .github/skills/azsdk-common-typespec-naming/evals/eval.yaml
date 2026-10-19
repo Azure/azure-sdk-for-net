@@ -729,7 +729,7 @@ stimuli:
         type: file-matches
         config:
           path: client.tsp
-          pattern: '(?s)import "@azure-tools/typespec-client-generator-core";\s+using Azure.ClientGenerator.Core;\s+namespace Widget;\s+@@clientName\(WidgetProperties.enabled, "enabled", "java"\);\s+@@clientName\(WidgetProperties.enabled, "enabled", "python"\);\s+// Preserve this trailing customization\.\s+@@clientName\(WidgetProperties, "WidgetSettings", "python"\);'
+          pattern: '(?sm)(?=.*^\s*import "@azure-tools/typespec-client-generator-core";)(?=.*^\s*using Azure\.ClientGenerator\.Core;)(?=.*^\s*namespace Widget;)(?=.*^\s*@@clientName\(WidgetProperties\.enabled, "enabled", "java"\);)(?=.*^\s*@@clientName\(WidgetProperties\.enabled, "enabled", "python"\);)(?=.*^\s*// Preserve this trailing customization\.\s*$)(?=.*^\s*@@clientName\(WidgetProperties, "WidgetSettings", "python"\);)'
       - type: output-matches
         config:
           pattern: '"applied"\s*:\s*true'
