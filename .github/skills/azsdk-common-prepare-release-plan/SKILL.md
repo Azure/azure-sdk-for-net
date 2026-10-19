@@ -134,10 +134,10 @@ DO NOT USE FOR: SDK code generation, pipeline troubleshooting, API review feedba
 
 **Steps**:
 
-1. **Identify Plan** — Get the work item ID or release plan ID from the user.
+1. **Identify Plan** — Get the positive Release Plan ID from the user, not the Azure DevOps work item ID.
 2. **Confirm** — Ask user to confirm abandonment: "Are you sure you want to abandon this release plan? This action updates the status to Abandoned."
 3. **Abandon** — Run `azure-sdk-mcp:azsdk_abandon_release_plan` with:
-   - `workItemId` or `releasePlanId`
+   - `releasePlanId` (required positive Release Plan ID — not the Azure DevOps work item ID; `workItemId` is not supported for abandonment)
 
 **Tool**: `azure-sdk-mcp:azsdk_abandon_release_plan`
 
