@@ -22,7 +22,7 @@ namespace Azure.Provisioning.CosmosDB
         {
         }
 
-        /// <summary> Gets or sets the BackupIntervalInMinutes. </summary>
+        /// <summary> Gets the BackupIntervalInMinutes. </summary>
         public BicepValue<int> BackupIntervalInMinutes
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _backupIntervalInMinutes;
             }
-            set
-            {
-                Initialize();
-                _backupIntervalInMinutes.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the BackupRetentionIntervalInHours. </summary>
+        /// <summary> Gets the BackupRetentionIntervalInHours. </summary>
         public BicepValue<int> BackupRetentionIntervalInHours
         {
             get
@@ -45,25 +40,15 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _backupRetentionIntervalInHours;
             }
-            set
-            {
-                Initialize();
-                _backupRetentionIntervalInHours.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the BackupStorageRedundancy. </summary>
+        /// <summary> Gets the BackupStorageRedundancy. </summary>
         public BicepValue<CosmosDBBackupStorageRedundancy> BackupStorageRedundancy
         {
             get
             {
                 Initialize();
                 return _backupStorageRedundancy;
-            }
-            set
-            {
-                Initialize();
-                _backupStorageRedundancy.Assign(value);
             }
         }
 

@@ -31,18 +31,13 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets or sets the Sites. </summary>
+        /// <summary> Gets the Sites. </summary>
         public BicepList<WebChatSite> Sites
         {
             get
             {
                 Initialize();
                 return _sites;
-            }
-            set
-            {
-                Initialize();
-                _sites.Assign(value);
             }
         }
 

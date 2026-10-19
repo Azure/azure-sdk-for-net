@@ -193,7 +193,8 @@ export function resolveArmResources(
   assignListOperationsToResources(
     sdkContext,
     resources,
-    schemaToResolvedResource
+    schemaToResolvedResource,
+    methodMap
   );
 
   // Convert non-resource methods
@@ -244,7 +245,8 @@ export function resolveArmResources(
       // Get method ID from the operation
       const methodId = getMethodIdFromOperation(
         sdkContext,
-        operation.operation
+        operation.operation,
+        methodMap
       );
       if (!methodId) {
         continue;
@@ -339,7 +341,11 @@ function convertResolvedResourceToMetadata(
 
     if (lifecycle.read && lifecycle.read.length > 0) {
       for (const readOp of lifecycle.read) {
-        const methodId = getMethodIdFromOperation(sdkContext, readOp.operation);
+        const methodId = getMethodIdFromOperation(
+          sdkContext,
+          readOp.operation,
+          methodMap
+        );
         if (methodId) {
           const opPath = new RequestPath(readOp.path);
           methods.push({
@@ -360,7 +366,8 @@ function convertResolvedResourceToMetadata(
       for (const createOp of lifecycle.createOrUpdate) {
         const methodId = getMethodIdFromOperation(
           sdkContext,
-          createOp.operation
+          createOp.operation,
+          methodMap
         );
         if (methodId) {
           const opPath = new RequestPath(createOp.path);
@@ -378,7 +385,8 @@ function convertResolvedResourceToMetadata(
       for (const updateOp of lifecycle.update) {
         const methodId = getMethodIdFromOperation(
           sdkContext,
-          updateOp.operation
+          updateOp.operation,
+          methodMap
         );
         if (methodId) {
           const opPath = new RequestPath(updateOp.path);
@@ -396,7 +404,8 @@ function convertResolvedResourceToMetadata(
       for (const deleteOp of lifecycle.delete) {
         const methodId = getMethodIdFromOperation(
           sdkContext,
-          deleteOp.operation
+          deleteOp.operation,
+          methodMap
         );
         if (methodId) {
           const opPath = new RequestPath(deleteOp.path);
@@ -414,7 +423,11 @@ function convertResolvedResourceToMetadata(
   // Convert action operations
   if (resolvedResource.operations.actions) {
     for (const actionOp of resolvedResource.operations.actions) {
-      const methodId = getMethodIdFromOperation(sdkContext, actionOp.operation);
+      const methodId = getMethodIdFromOperation(
+        sdkContext,
+        actionOp.operation,
+        methodMap
+      );
       if (methodId) {
         // Classify as List only if the action is pageable AND its response item type
         // is a known resource model. This prevents metadata-returning pageable actions
@@ -519,16 +532,15 @@ function convertResolvedResourceToMetadata(
 }
 
 /**
- * Get method ID (cross-language definition ID) from an Operation.
- * Uses TCGC's getCrossLanguageDefinitionId utility directly.
+ * Returns an operation's cross-language ID only if it exists in the SDK package.
  */
 function getMethodIdFromOperation(
   sdkContext: CSharpEmitterContext,
-  operation: Operation
+  operation: Operation,
+  methodMap: ReadonlyMap<string, SdkMethod<SdkHttpOperation>>
 ): string | undefined {
-  // Use TCGC's utility to get the cross-language definition ID directly
-  // CSharpEmitterContext extends SdkContext which extends TCGCContext
-  return getCrossLanguageDefinitionId(sdkContext, operation);
+  const methodId = getCrossLanguageDefinitionId(sdkContext, operation);
+  return methodMap.has(methodId) ? methodId : undefined;
 }
 
 /**
@@ -645,7 +657,8 @@ function getExplicitResourceNameFromOperations(
 function assignListOperationsToResources(
   sdkContext: CSharpEmitterContext,
   resources: ArmResourceSchema[],
-  schemaToResolvedResource: Map<ArmResourceSchema, ResolvedResource>
+  schemaToResolvedResource: Map<ArmResourceSchema, ResolvedResource>,
+  methodMap: ReadonlyMap<string, SdkMethod<SdkHttpOperation>>
 ): void {
   // Precompute resources grouped by model ID to avoid repeated full scans
   const resourcesByModelId = new Map<string, ArmResourceSchema[]>();
@@ -665,7 +678,11 @@ function assignListOperationsToResources(
     const resourcesForModel = resourcesByModelId.get(modelId) ?? [];
 
     for (const listOp of resolvedResource.operations.lists) {
-      const methodId = getMethodIdFromOperation(sdkContext, listOp.operation);
+      const methodId = getMethodIdFromOperation(
+        sdkContext,
+        listOp.operation,
+        methodMap
+      );
       if (!methodId) continue;
 
       let targetResource: ArmResourceSchema | undefined;

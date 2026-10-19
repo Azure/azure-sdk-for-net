@@ -23,7 +23,7 @@ namespace Azure.Provisioning.CosmosDB
         {
         }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> Gets the Status. </summary>
         public BicepValue<BackupPolicyMigrationStatus> Status
         {
             get
@@ -31,14 +31,9 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _status;
             }
-            set
-            {
-                Initialize();
-                _status.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the TargetType. </summary>
+        /// <summary> Gets the TargetType. </summary>
         public BicepValue<BackupPolicyType> TargetType
         {
             get
@@ -46,25 +41,15 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _targetType;
             }
-            set
-            {
-                Initialize();
-                _targetType.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the StartsOn. </summary>
+        /// <summary> Gets the StartsOn. </summary>
         public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
                 return _startsOn;
-            }
-            set
-            {
-                Initialize();
-                _startsOn.Assign(value);
             }
         }
 

@@ -11,6 +11,7 @@ import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
+import { getAllSdkClients } from "../src/sdk-client-utils.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
 import {
   ArmResourceSchema,
@@ -21,6 +22,119 @@ describe("Resource Detection", () => {
   let runner: TestHost;
   beforeEach(async () => {
     runner = await createEmitterTestHost();
+  });
+
+  it.each([
+    undefined,
+    "Widgets.get",
+    "Widgets.createOrUpdate",
+    "Widgets.update",
+    "Widgets.delete",
+    "Widgets.listByResourceGroup",
+    "Widgets.restart",
+    "Operations.list"
+  ])(
+    "excludes operations outside the SDK package: %s",
+    async (excludedOperation) => {
+      const program = await typeSpecCompile(
+        `
+model Widget is TrackedResource<WidgetProperties> {
+  ...ResourceNameParameter<Widget>;
+}
+
+model WidgetProperties {
+  value?: string;
+}
+
+@armResourceOperations
+interface Widgets {
+  get is ArmResourceRead<Widget>;
+  createOrUpdate is ArmResourceCreateOrReplaceSync<Widget>;
+  update is ArmCustomPatchSync<
+    Widget,
+    Azure.ResourceManager.Foundations.ResourceUpdateModel<Widget, WidgetProperties>
+  >;
+  delete is ArmResourceDeleteSync<Widget>;
+  listByResourceGroup is ArmResourceListByParent<Widget>;
+  restart is ArmResourceActionSync<Widget, void, void>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+${excludedOperation ? `@@scope(${excludedOperation}, "!csharp");` : ""}
+`,
+        runner
+      );
+      const sdkContext = await createCSharpSdkContext(
+        createEmitterContext(program)
+      );
+      createModel(sdkContext);
+
+      const schema = resolveArmResources(program, sdkContext);
+      const actualMethodIds = [
+        ...schema.resources.flatMap((resource) =>
+          resource.metadata.methods.map((method) => method.methodId)
+        ),
+        ...schema.nonResourceMethods.map((method) => method.methodId)
+      ];
+      const expectedMethodIds = getAllSdkClients(sdkContext).flatMap((client) =>
+        client.methods.map((method) => method.crossLanguageDefinitionId)
+      );
+      strictEqual(expectedMethodIds.length, excludedOperation ? 6 : 7);
+      deepStrictEqual(actualMethodIds.sort(), expectedMethodIds.sort());
+      strictEqual(
+        schema.resources.length,
+        excludedOperation === "Widgets.get" ? 0 : 1
+      );
+    }
+  );
+
+  it("excludes resources whose operations are all outside the SDK package", async () => {
+    const program = await typeSpecCompile(
+      `
+model Widget is TrackedResource<{}> {
+  ...ResourceNameParameter<Widget>;
+}
+
+model HiddenWidget is TrackedResource<{}> {
+  ...ResourceNameParameter<HiddenWidget>;
+}
+
+@armResourceOperations
+interface Widgets {
+  get is ArmResourceRead<Widget>;
+}
+
+@armResourceOperations
+interface HiddenWidgets {
+  @scope("!csharp")
+  get is ArmResourceRead<HiddenWidget>;
+  @scope("!csharp")
+  listByResourceGroup is ArmResourceListByParent<HiddenWidget>;
+}
+`,
+      runner
+    );
+    const sdkContext = await createCSharpSdkContext(
+      createEmitterContext(program)
+    );
+    const [codeModel] = createModel(sdkContext);
+    ok(codeModel);
+    ok(
+      !codeModel.models.some(
+        (model) =>
+          model.crossLanguageDefinitionId ===
+          "Microsoft.ContosoProviderHub.HiddenWidget"
+      )
+    );
+
+    const schema = resolveArmResources(program, sdkContext);
+    deepStrictEqual(
+      schema.resources.map((resource) => resource.resourceModelId),
+      ["Microsoft.ContosoProviderHub.Widget"]
+    );
+    strictEqual(schema.resources[0].metadata.methods.length, 1);
+    deepStrictEqual(schema.nonResourceMethods, []);
   });
 
   it.each([

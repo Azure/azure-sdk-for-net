@@ -24,7 +24,7 @@ namespace Azure.Provisioning.CosmosDB
         /// <summary> Creates a new NotebookWorkspace. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public NotebookWorkspace(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/notebookWorkspaces", resourceVersion ?? "2026-03-15")
+        internal NotebookWorkspace(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/notebookWorkspaces", resourceVersion ?? "2026-03-15")
         {
         }
 
@@ -63,18 +63,13 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal NotebookWorkspaceProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -98,11 +93,7 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new NotebookWorkspaceProperties();
-                }
-                return Properties.NotebookServerEndpoint;
+                return Properties is null ? default : Properties.NotebookServerEndpoint;
             }
         }
 
@@ -111,11 +102,7 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new NotebookWorkspaceProperties();
-                }
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 

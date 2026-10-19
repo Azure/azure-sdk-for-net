@@ -24,7 +24,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets or sets the EmailAddress. </summary>
+        /// <summary> Gets the EmailAddress. </summary>
         public BicepValue<string> EmailAddress
         {
             get
@@ -32,14 +32,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _emailAddress;
             }
-            set
-            {
-                Initialize();
-                _emailAddress.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AuthMethod. </summary>
+        /// <summary> Gets the AuthMethod. </summary>
         public BicepValue<EmailChannelAuthMethod> AuthMethod
         {
             get
@@ -47,14 +42,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _authMethod;
             }
-            set
-            {
-                Initialize();
-                _authMethod.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Password. </summary>
+        /// <summary> Gets the Password. </summary>
         public BicepValue<string> Password
         {
             get
@@ -62,14 +52,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _password;
             }
-            set
-            {
-                Initialize();
-                _password.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the MagicCode. </summary>
+        /// <summary> Gets the MagicCode. </summary>
         public BicepValue<string> MagicCode
         {
             get
@@ -77,14 +62,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _magicCode;
             }
-            set
-            {
-                Initialize();
-                _magicCode.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsEnabled. </summary>
+        /// <summary> Gets the IsEnabled. </summary>
         public BicepValue<bool> IsEnabled
         {
             get
@@ -92,22 +72,17 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isEnabled;
             }
-            set
-            {
-                Initialize();
-                _isEnabled.Assign(value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for EmailChannelProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _emailAddress = DefineProperty<string>(nameof(EmailAddress), new string[] { "emailAddress" }, isRequired: true);
+            _emailAddress = DefineProperty<string>(nameof(EmailAddress), new string[] { "emailAddress" });
             _authMethod = DefineProperty<EmailChannelAuthMethod>(nameof(AuthMethod), new string[] { "authMethod" });
             _password = DefineProperty<string>(nameof(Password), new string[] { "password" });
             _magicCode = DefineProperty<string>(nameof(MagicCode), new string[] { "magicCode" });
-            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" }, isRequired: true);
+            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" });
             DefineAdditionalProperties();
         }
 

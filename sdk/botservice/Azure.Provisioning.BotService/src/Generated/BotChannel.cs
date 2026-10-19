@@ -33,7 +33,7 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new BotChannel. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public BotChannel(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.BotService/botServices/channels", resourceVersion ?? "2023-09-15-preview")
+        internal BotChannel(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.BotService/botServices/channels", resourceVersion ?? "2023-09-15-preview")
         {
         }
 
@@ -72,7 +72,7 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         public BotChannelProperties Properties
         {
             get
@@ -80,14 +80,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _properties;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
-            }
         }
 
-        /// <summary> Gets or sets the Location. </summary>
+        /// <summary> Gets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
             get
@@ -95,14 +90,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _location;
             }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Tags. </summary>
+        /// <summary> Gets the Tags. </summary>
         public BicepDictionary<string> Tags
         {
             get
@@ -110,14 +100,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _tags;
             }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Sku. </summary>
+        /// <summary> Gets the Sku. </summary>
         public BotServiceSku Sku
         {
             get
@@ -125,14 +110,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _sku;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _sku, value);
-            }
         }
 
-        /// <summary> Gets or sets the Kind. </summary>
+        /// <summary> Gets the Kind. </summary>
         public BicepValue<BotServiceKind> Kind
         {
             get
@@ -140,25 +120,15 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _kind;
             }
-            set
-            {
-                Initialize();
-                _kind.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ETag. </summary>
+        /// <summary> Gets the ETag. </summary>
         public BicepValue<ETag> ETag
         {
             get
             {
                 Initialize();
                 return _eTag;
-            }
-            set
-            {
-                Initialize();
-                _eTag.Assign(value);
             }
         }
 
