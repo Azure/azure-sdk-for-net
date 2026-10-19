@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <summary> Initializes a new instance of <see cref="AzureMonitorWorkspaceActions"/>. </summary>
         public AzureMonitorWorkspaceActions()
         {
-            DefaultActionGroups = new ChangeTrackingList<DefaultActionGroupResource>();
+            DefaultActionGroups = new ChangeTrackingList<DefaultActionGroupReference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureMonitorWorkspaceActions"/>. </summary>
         /// <param name="defaultActionGroups"> The default action groups associated with the Azure Monitor Workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureMonitorWorkspaceActions(IList<DefaultActionGroupResource> defaultActionGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureMonitorWorkspaceActions(IList<DefaultActionGroupReference> defaultActionGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DefaultActionGroups = defaultActionGroups;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The default action groups associated with the Azure Monitor Workspace. </summary>
-        public IList<DefaultActionGroupResource> DefaultActionGroups { get; } = new ChangeTrackingList<DefaultActionGroupResource>();
+        public IList<DefaultActionGroupReference> DefaultActionGroups { get; } = new ChangeTrackingList<DefaultActionGroupReference>();
     }
 }

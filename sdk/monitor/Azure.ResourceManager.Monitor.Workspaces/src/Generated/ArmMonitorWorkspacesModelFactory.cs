@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to Azure Monitor Workspace. </param>
         /// <param name="actionsDefaultActionGroups"> The default action groups associated with the Azure Monitor Workspace. </param>
         /// <returns> A new <see cref="Models.MonitorWorkspaceProperties"/> instance for mocking. </returns>
-        public static MonitorWorkspaceProperties MonitorWorkspaceProperties(string accountId, MonitorWorkspaceMetrics metrics, MonitorWorkspaceProvisioningState? provisioningState, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, Uri endpointsQuery, IEnumerable<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess, IEnumerable<DefaultActionGroupResource> actionsDefaultActionGroups = default)
+        public static MonitorWorkspaceProperties MonitorWorkspaceProperties(string accountId, MonitorWorkspaceMetrics metrics, MonitorWorkspaceProvisioningState? provisioningState, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, Uri endpointsQuery, IEnumerable<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess, IEnumerable<DefaultActionGroupReference> actionsDefaultActionGroups = default)
         {
             privateEndpointConnections ??= new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>();
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 endpointsQuery is null ? default : new AzureMonitorWorkspaceEndpoints(endpointsQuery, default),
                 (privateEndpointConnections ?? new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>()).ToList(),
                 publicNetworkAccess,
-                actionsDefaultActionGroups is null ? default : new AzureMonitorWorkspaceActions((actionsDefaultActionGroups ?? new ChangeTrackingList<DefaultActionGroupResource>()).ToList(), default),
+                actionsDefaultActionGroups is null ? default : new AzureMonitorWorkspaceActions((actionsDefaultActionGroups ?? new ChangeTrackingList<DefaultActionGroupReference>()).ToList(), default),
                 default);
         }
 
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <summary> A reference to an Azure Monitor action group. </summary>
         /// <param name="id"> The resource ID of the action group. </param>
-        /// <returns> A new <see cref="Models.DefaultActionGroupResource"/> instance for mocking. </returns>
-        public static DefaultActionGroupResource DefaultActionGroupResource(ResourceIdentifier id = default)
+        /// <returns> A new <see cref="Models.DefaultActionGroupReference"/> instance for mocking. </returns>
+        public static DefaultActionGroupReference DefaultActionGroupReference(ResourceIdentifier id = default)
         {
-            return new DefaultActionGroupResource(id, default);
+            return new DefaultActionGroupReference(id, default);
         }
 
         /// <summary> The type used for updating an Azure Monitor Workspace. </summary>

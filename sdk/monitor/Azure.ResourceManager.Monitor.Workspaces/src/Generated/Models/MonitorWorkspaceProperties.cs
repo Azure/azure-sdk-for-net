@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         }
 
         /// <summary> The default action groups associated with the Azure Monitor Workspace. </summary>
-        public IList<DefaultActionGroupResource> ActionsDefaultActionGroups
+        public IList<DefaultActionGroupReference> ActionsDefaultActionGroups
         {
             get
             {

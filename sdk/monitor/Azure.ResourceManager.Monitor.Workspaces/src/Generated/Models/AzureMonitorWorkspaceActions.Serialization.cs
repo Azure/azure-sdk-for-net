@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             {
                 writer.WritePropertyName("defaultActionGroups"u8);
                 writer.WriteStartArray();
-                foreach (DefaultActionGroupResource item in DefaultActionGroups)
+                foreach (DefaultActionGroupReference item in DefaultActionGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             {
                 return null;
             }
-            IList<DefaultActionGroupResource> defaultActionGroups = default;
+            IList<DefaultActionGroupReference> defaultActionGroups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     {
                         continue;
                     }
-                    List<DefaultActionGroupResource> array = new List<DefaultActionGroupResource>();
+                    List<DefaultActionGroupReference> array = new List<DefaultActionGroupReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DefaultActionGroupResource.DeserializeDefaultActionGroupResource(item, options));
+                        array.Add(DefaultActionGroupReference.DeserializeDefaultActionGroupReference(item, options));
                     }
                     defaultActionGroups = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureMonitorWorkspaceActions(defaultActionGroups ?? new ChangeTrackingList<DefaultActionGroupResource>(), additionalBinaryDataProperties);
+            return new AzureMonitorWorkspaceActions(defaultActionGroups ?? new ChangeTrackingList<DefaultActionGroupReference>(), additionalBinaryDataProperties);
         }
     }
 }

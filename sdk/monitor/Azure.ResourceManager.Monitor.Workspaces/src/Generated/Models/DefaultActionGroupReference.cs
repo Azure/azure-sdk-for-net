@@ -12,20 +12,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
 {
     /// <summary> A reference to an Azure Monitor action group. </summary>
-    public partial class DefaultActionGroupResource
+    public partial class DefaultActionGroupReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DefaultActionGroupResource"/>. </summary>
-        public DefaultActionGroupResource()
+        /// <summary> Initializes a new instance of <see cref="DefaultActionGroupReference"/>. </summary>
+        public DefaultActionGroupReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DefaultActionGroupResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultActionGroupReference"/>. </summary>
         /// <param name="id"> The resource ID of the action group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultActionGroupResource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefaultActionGroupReference(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

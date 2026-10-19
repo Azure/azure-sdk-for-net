@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
     [ModelReaderWriterBuildable(typeof(AzureMonitorWorkspaceActions))]
     [ModelReaderWriterBuildable(typeof(AzureMonitorWorkspaceEndpoints))]
     [ModelReaderWriterBuildable(typeof(AzureMonitorWorkspaceResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(DefaultActionGroupResource))]
+    [ModelReaderWriterBuildable(typeof(DefaultActionGroupReference))]
     [ModelReaderWriterBuildable(typeof(FetchInvestigationResultContent))]
     [ModelReaderWriterBuildable(typeof(IngestionEndpoints))]
     [ModelReaderWriterBuildable(typeof(IssueCreationNotificationType))]
