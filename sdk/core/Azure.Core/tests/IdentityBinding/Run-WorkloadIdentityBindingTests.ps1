@@ -214,6 +214,7 @@ spec:
 
 try {
     foreach ($mode in @('enabled', 'disabled')) {
+        kubectl @kube --namespace wi-proxy wait --for=create pod --selector "job-name=wi-proxy-$mode" --timeout=180s
         kubectl @kube --namespace wi-proxy wait --for=condition=Ready pod --selector "job-name=wi-proxy-$mode" --timeout=180s
         $pod = kubectl @kube --namespace wi-proxy get pod --selector "job-name=wi-proxy-$mode" --output 'jsonpath={.items[0].metadata.name}'
         # The emptyDir root is kubelet-owned; do not restore its archived directory metadata.
