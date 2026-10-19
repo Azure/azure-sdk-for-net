@@ -42,7 +42,10 @@ jobs:
       - name: BinDirectory
         value: $(Pipeline.Workspace)/bin
       - name: ApiReviewSourceCommit
-        value: ''
+        ${{ if eq(parameters.kind, 'base') }}:
+          value: $(ApiReviewBaseCommit)
+        ${{ if eq(parameters.kind, 'target') }}:
+          value: $(ApiReviewTargetCommit)
       - name: ArtifactOutputDirectory
         value: $(Build.ArtifactStagingDirectory)/${{ parameters.kind }}
     steps:
@@ -53,6 +56,10 @@ jobs:
 
           if [[ "$REF" != refs/heads/* && "$REF" != refs/tags/* ]]; then
             echo "ref must be a fully-qualified branch or tag ref." >&2
+            exit 1
+          fi
+          if [[ ! "$SOURCE_COMMIT" =~ ^[0-9a-fA-F]{40}$ ]]; then
+            echo "A pinned 40-character source commit SHA is required." >&2
             exit 1
           fi
           if [[ ! "$REPOSITORY_FULL_NAME" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]]; then
@@ -72,16 +79,21 @@ jobs:
           mkdir -p "$SOURCE_DIRECTORY"
           git -C "$SOURCE_DIRECTORY" init
           git -C "$SOURCE_DIRECTORY" remote add origin "https://github.com/$REPOSITORY_FULL_NAME.git"
-          git -C "$SOURCE_DIRECTORY" fetch --depth=1 origin "$REF"
+          git -C "$SOURCE_DIRECTORY" fetch --depth=1 origin "$SOURCE_COMMIT"
           git -C "$SOURCE_DIRECTORY" checkout --detach FETCH_HEAD
           git -C "$SOURCE_DIRECTORY" clean -ffd
 
           source_commit=$(git -C "$SOURCE_DIRECTORY" rev-parse HEAD)
+          if [[ "${source_commit,,}" != "${SOURCE_COMMIT,,}" ]]; then
+            echo "Checked-out source commit does not match the requested SHA." >&2
+            exit 1
+          fi
           echo "ref=$REF sourceCommit=$source_commit"
           echo "##vso[task.setvariable variable=ApiReviewSourceCommit]$source_commit"
         displayName: Clone ${{ parameters.kind }} source ref
         env:
           REF: ${{ parameters.ref }}
+          SOURCE_COMMIT: $(ApiReviewSourceCommit)
           REPOSITORY_FULL_NAME: ${{ parameters.repositoryFullName }}
           SOURCE_DIRECTORY: $(Build.SourcesDirectory)
           PACKAGE_NAME: ${{ parameters.packageName }}
@@ -137,19 +149,6 @@ jobs:
         env:
           ARTIFACT_OUTPUT_DIRECTORY: $(ArtifactOutputDirectory)
           SOURCE_DIRECTORY: $(Build.SourcesDirectory)
-
-      - task: PowerShell@2
-        displayName: Record ${{ parameters.kind }} generation metadata
-        inputs:
-          pwsh: true
-          targetType: filePath
-          filePath: $(BinDirectory)/api-review-hub/Write-ApiReviewGenerationMetadata.ps1
-        env:
-          ARTIFACT_OUTPUT_DIRECTORY: $(ArtifactOutputDirectory)
-          OPERATION_ID: ${{ parameters.operationId }}
-          KIND: ${{ parameters.kind }}
-          REF: ${{ parameters.ref }}
-          SOURCE_COMMIT: $(ApiReviewSourceCommit)
 
       - publish: $(ArtifactOutputDirectory)
         artifact: ${{ parameters.kind }}-$(System.JobAttempt)
