@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.KoreAIArtemis.csproj" />
+  <Project Path="tests/Azure.ResourceManager.KoreAIArtemis.Tests.csproj" />
+</Solution>
