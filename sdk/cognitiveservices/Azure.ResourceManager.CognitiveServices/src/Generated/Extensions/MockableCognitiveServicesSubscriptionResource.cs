@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <returns> An object representing collection of RaiContentFilters and their operations over a RaiContentFilterResource. </returns>
         public virtual RaiContentFilterCollection GetRaiContentFilters(AzureLocation location)
         {
-            return GetCachedClient(client => new RaiContentFilterCollection(client, Id, location));
+            return new RaiContentFilterCollection(Client, Id, location);
         }
 
         /// <summary>
