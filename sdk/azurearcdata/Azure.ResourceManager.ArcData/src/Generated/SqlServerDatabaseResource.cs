@@ -21,15 +21,15 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.ArcData
 {
     /// <summary>
-    /// A class representing a SqlServerDatabaseResource along with the instance operations that can be performed on it.
+    /// A class representing a SqlServerDatabase along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerDatabaseResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerInstanceResource"/> using the GetSqlServerDatabaseResources method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerInstanceResource"/> using the GetSqlServerDatabases method.
     /// </summary>
     public partial class SqlServerDatabaseResource : ArmResource
     {
         private readonly ClientDiagnostics _sqlServerDatabasesClientDiagnostics;
         private readonly SqlServerDatabases _sqlServerDatabasesRestClient;
-        private readonly SqlServerDatabaseResourceData _data;
+        private readonly SqlServerDatabaseData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureArcData/sqlServerInstances/databases";
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ArcData
         /// <summary> Initializes a new instance of <see cref="SqlServerDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SqlServerDatabaseResource(ArmClient client, SqlServerDatabaseResourceData data) : this(client, data.Id)
+        internal SqlServerDatabaseResource(ArmClient client, SqlServerDatabaseData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlServerDatabaseResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string sqlServerDatabaseResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string sqlServerDatabaseApiVersion);
             _sqlServerDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArcData", ResourceType.Namespace, Diagnostics);
-            _sqlServerDatabasesRestClient = new SqlServerDatabases(_sqlServerDatabasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDatabaseResourceApiVersion ?? "2026-03-01-preview");
+            _sqlServerDatabasesRestClient = new SqlServerDatabases(_sqlServerDatabasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDatabaseApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ArcData
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual SqlServerDatabaseResourceData Data
+        public virtual SqlServerDatabaseData Data
         {
             get
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _sqlServerDatabasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SqlServerDatabaseResourceData> response = Response.FromValue(SqlServerDatabaseResourceData.FromResponse(result), result);
+                Response<SqlServerDatabaseData> response = Response.FromValue(SqlServerDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _sqlServerDatabasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SqlServerDatabaseResourceData> response = Response.FromValue(SqlServerDatabaseResourceData.FromResponse(result), result);
+                Response<SqlServerDatabaseData> response = Response.FromValue(SqlServerDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="patch"> The requested database resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlServerDatabaseResource>> UpdateAsync(WaitUntil waitUntil, SqlServerDatabaseResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlServerDatabaseResource>> UpdateAsync(WaitUntil waitUntil, SqlServerDatabasePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlServerDatabaseResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _sqlServerDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlServerDatabasePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArcDataArmOperation<SqlServerDatabaseResource> operation = new ArcDataArmOperation<SqlServerDatabaseResource>(
                     new SqlServerDatabaseResourceOperationSource(Client),
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="patch"> The requested database resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<SqlServerDatabaseResource> Update(WaitUntil waitUntil, SqlServerDatabaseResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlServerDatabaseResource> Update(WaitUntil waitUntil, SqlServerDatabasePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlServerDatabaseResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _sqlServerDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlServerDatabasePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArcDataArmOperation<SqlServerDatabaseResource> operation = new ArcDataArmOperation<SqlServerDatabaseResource>(
                     new SqlServerDatabaseResourceOperationSource(Client),
@@ -432,13 +432,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _sqlServerDatabasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SqlServerDatabaseResourceData> response = Response.FromValue(SqlServerDatabaseResourceData.FromResponse(result), result);
+                    Response<SqlServerDatabaseData> response = Response.FromValue(SqlServerDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerDatabaseResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SqlServerDatabaseResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SqlServerDatabaseResourcePatch patch = new SqlServerDatabaseResourcePatch();
+                    SqlServerDatabaseData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SqlServerDatabasePatch patch = new SqlServerDatabasePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -480,13 +480,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _sqlServerDatabasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SqlServerDatabaseResourceData> response = Response.FromValue(SqlServerDatabaseResourceData.FromResponse(result), result);
+                    Response<SqlServerDatabaseData> response = Response.FromValue(SqlServerDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerDatabaseResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SqlServerDatabaseResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SqlServerDatabaseResourcePatch patch = new SqlServerDatabaseResourcePatch();
+                    SqlServerDatabaseData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SqlServerDatabasePatch patch = new SqlServerDatabasePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -526,13 +526,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _sqlServerDatabasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SqlServerDatabaseResourceData> response = Response.FromValue(SqlServerDatabaseResourceData.FromResponse(result), result);
+                    Response<SqlServerDatabaseData> response = Response.FromValue(SqlServerDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerDatabaseResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SqlServerDatabaseResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SqlServerDatabaseResourcePatch patch = new SqlServerDatabaseResourcePatch();
+                    SqlServerDatabaseData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SqlServerDatabasePatch patch = new SqlServerDatabasePatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<SqlServerDatabaseResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -568,13 +568,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _sqlServerDatabasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SqlServerDatabaseResourceData> response = Response.FromValue(SqlServerDatabaseResourceData.FromResponse(result), result);
+                    Response<SqlServerDatabaseData> response = Response.FromValue(SqlServerDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerDatabaseResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SqlServerDatabaseResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SqlServerDatabaseResourcePatch patch = new SqlServerDatabaseResourcePatch();
+                    SqlServerDatabaseData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SqlServerDatabasePatch patch = new SqlServerDatabasePatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<SqlServerDatabaseResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -610,13 +610,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _sqlServerDatabasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SqlServerDatabaseResourceData> response = Response.FromValue(SqlServerDatabaseResourceData.FromResponse(result), result);
+                    Response<SqlServerDatabaseData> response = Response.FromValue(SqlServerDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerDatabaseResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SqlServerDatabaseResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SqlServerDatabaseResourcePatch patch = new SqlServerDatabaseResourcePatch();
+                    SqlServerDatabaseData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SqlServerDatabasePatch patch = new SqlServerDatabasePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -656,13 +656,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _sqlServerDatabasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SqlServerDatabaseResourceData> response = Response.FromValue(SqlServerDatabaseResourceData.FromResponse(result), result);
+                    Response<SqlServerDatabaseData> response = Response.FromValue(SqlServerDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerDatabaseResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SqlServerDatabaseResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SqlServerDatabaseResourcePatch patch = new SqlServerDatabaseResourcePatch();
+                    SqlServerDatabaseData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SqlServerDatabasePatch patch = new SqlServerDatabasePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

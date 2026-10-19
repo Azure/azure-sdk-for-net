@@ -71,6 +71,9 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Wait time (in milliseconds) for the sp_server_diagnostics system stored procedure to return server-health information, before the server instance is assumed to be slow or not responding. </summary>
         public int? HealthCheckTimeout { get; set; }
 
+        /// <summary> Specifies whether the availability group supports failover for database health conditions. </summary>
+        public DbFailover? DbFailover { get; set; }
+
         /// <summary> Specifies whether DTC support has been enabled for this availability group. </summary>
         public DtcSupport? DtcSupport { get; set; }
 

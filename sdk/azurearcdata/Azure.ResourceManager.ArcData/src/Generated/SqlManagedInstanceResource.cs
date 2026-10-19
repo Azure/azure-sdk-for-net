@@ -663,11 +663,11 @@ namespace Azure.ResourceManager.ArcData
             }
         }
 
-        /// <summary> Gets a collection of FailoverGroupResources in the <see cref="SqlManagedInstanceResource"/>. </summary>
-        /// <returns> An object representing collection of FailoverGroupResources and their operations over a FailoverGroupResource. </returns>
-        public virtual FailoverGroupResourceCollection GetFailoverGroupResources()
+        /// <summary> Gets a collection of FailoverGroups in the <see cref="SqlManagedInstanceResource"/>. </summary>
+        /// <returns> An object representing collection of FailoverGroups and their operations over a FailoverGroupResource. </returns>
+        public virtual FailoverGroupCollection GetFailoverGroups()
         {
-            return GetCachedClient(client => new FailoverGroupResourceCollection(client, Id));
+            return GetCachedClient(client => new FailoverGroupCollection(client, Id));
         }
 
         /// <summary> Retrieves a failover group resource. </summary>
@@ -676,11 +676,11 @@ namespace Azure.ResourceManager.ArcData
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FailoverGroupResource>> GetFailoverGroupResourceAsync(string failoverGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FailoverGroupResource>> GetFailoverGroupAsync(string failoverGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
-            return await GetFailoverGroupResources().GetAsync(failoverGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetFailoverGroups().GetAsync(failoverGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Retrieves a failover group resource. </summary>
@@ -689,11 +689,11 @@ namespace Azure.ResourceManager.ArcData
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FailoverGroupResource> GetFailoverGroupResource(string failoverGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<FailoverGroupResource> GetFailoverGroup(string failoverGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
-            return GetFailoverGroupResources().Get(failoverGroupName, cancellationToken);
+            return GetFailoverGroups().Get(failoverGroupName, cancellationToken);
         }
     }
 }

@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.ArcData
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlServerAvailabilityGroupResourceData, SqlServerAvailabilityGroupResource>(new SqlServerAvailabilityGroupResourceDataAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlServerAvailabilityGroupData, SqlServerAvailabilityGroupResource>(new SqlServerAvailabilityGroupDataAsyncCollectionResultOfT(
                 _sqlServerInstancesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.ArcData
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlServerAvailabilityGroupResourceData, SqlServerAvailabilityGroupResource>(new SqlServerAvailabilityGroupResourceDataCollectionResultOfT(
+            return new PageableWrapper<SqlServerAvailabilityGroupData, SqlServerAvailabilityGroupResource>(new SqlServerAvailabilityGroupDataCollectionResultOfT(
                 _sqlServerInstancesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -2606,11 +2606,11 @@ namespace Azure.ResourceManager.ArcData
             }
         }
 
-        /// <summary> Gets a collection of SqlServerAvailabilityGroupResources in the <see cref="SqlServerInstanceResource"/>. </summary>
-        /// <returns> An object representing collection of SqlServerAvailabilityGroupResources and their operations over a SqlServerAvailabilityGroupResource. </returns>
-        public virtual SqlServerAvailabilityGroupResourceCollection GetSqlServerAvailabilityGroupResources()
+        /// <summary> Gets a collection of SqlServerAvailabilityGroups in the <see cref="SqlServerInstanceResource"/>. </summary>
+        /// <returns> An object representing collection of SqlServerAvailabilityGroups and their operations over a SqlServerAvailabilityGroupResource. </returns>
+        public virtual SqlServerAvailabilityGroupCollection GetSqlServerAvailabilityGroups()
         {
-            return GetCachedClient(client => new SqlServerAvailabilityGroupResourceCollection(client, Id));
+            return GetCachedClient(client => new SqlServerAvailabilityGroupCollection(client, Id));
         }
 
         /// <summary> Retrieves an Arc Sql Server availability group. </summary>
@@ -2619,11 +2619,11 @@ namespace Azure.ResourceManager.ArcData
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="availabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlServerAvailabilityGroupResource>> GetSqlServerAvailabilityGroupResourceAsync(string availabilityGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerAvailabilityGroupResource>> GetSqlServerAvailabilityGroupAsync(string availabilityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(availabilityGroupName, nameof(availabilityGroupName));
 
-            return await GetSqlServerAvailabilityGroupResources().GetAsync(availabilityGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlServerAvailabilityGroups().GetAsync(availabilityGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Retrieves an Arc Sql Server availability group. </summary>
@@ -2632,31 +2632,18 @@ namespace Azure.ResourceManager.ArcData
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="availabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlServerAvailabilityGroupResource> GetSqlServerAvailabilityGroupResource(string availabilityGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerAvailabilityGroupResource> GetSqlServerAvailabilityGroup(string availabilityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(availabilityGroupName, nameof(availabilityGroupName));
 
-            return GetSqlServerAvailabilityGroupResources().Get(availabilityGroupName, cancellationToken);
+            return GetSqlServerAvailabilityGroups().Get(availabilityGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SqlServerDatabaseResources in the <see cref="SqlServerInstanceResource"/>. </summary>
-        /// <returns> An object representing collection of SqlServerDatabaseResources and their operations over a SqlServerDatabaseResource. </returns>
-        public virtual SqlServerDatabaseResourceCollection GetSqlServerDatabaseResources()
+        /// <summary> Gets a collection of SqlServerDatabases in the <see cref="SqlServerInstanceResource"/>. </summary>
+        /// <returns> An object representing collection of SqlServerDatabases and their operations over a SqlServerDatabaseResource. </returns>
+        public virtual SqlServerDatabaseCollection GetSqlServerDatabases()
         {
-            return GetCachedClient(client => new SqlServerDatabaseResourceCollection(client, Id));
-        }
-
-        /// <summary> Retrieves an Arc Sql Server database. </summary>
-        /// <param name="databaseName"> Name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SqlServerDatabaseResource>> GetSqlServerDatabaseResourceAsync(string databaseName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-
-            return await GetSqlServerDatabaseResources().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new SqlServerDatabaseCollection(client, Id));
         }
 
         /// <summary> Retrieves an Arc Sql Server database. </summary>
@@ -2665,11 +2652,24 @@ namespace Azure.ResourceManager.ArcData
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlServerDatabaseResource> GetSqlServerDatabaseResource(string databaseName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerDatabaseResource>> GetSqlServerDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            return GetSqlServerDatabaseResources().Get(databaseName, cancellationToken);
+            return await GetSqlServerDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieves an Arc Sql Server database. </summary>
+        /// <param name="databaseName"> Name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SqlServerDatabaseResource> GetSqlServerDatabase(string databaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            return GetSqlServerDatabases().Get(databaseName, cancellationToken);
         }
     }
 }

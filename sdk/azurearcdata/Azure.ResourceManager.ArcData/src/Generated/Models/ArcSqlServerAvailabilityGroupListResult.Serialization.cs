@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (SqlServerAvailabilityGroupResourceData item in Value)
+                foreach (SqlServerAvailabilityGroupData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            IReadOnlyList<SqlServerAvailabilityGroupResourceData> value = default;
+            IReadOnlyList<SqlServerAvailabilityGroupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    List<SqlServerAvailabilityGroupResourceData> array = new List<SqlServerAvailabilityGroupResourceData>();
+                    List<SqlServerAvailabilityGroupData> array = new List<SqlServerAvailabilityGroupData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerAvailabilityGroupResourceData.DeserializeSqlServerAvailabilityGroupResourceData(item, options));
+                        array.Add(SqlServerAvailabilityGroupData.DeserializeSqlServerAvailabilityGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ArcSqlServerAvailabilityGroupListResult(value ?? new ChangeTrackingList<SqlServerAvailabilityGroupResourceData>(), nextLink, additionalBinaryDataProperties);
+            return new ArcSqlServerAvailabilityGroupListResult(value ?? new ChangeTrackingList<SqlServerAvailabilityGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

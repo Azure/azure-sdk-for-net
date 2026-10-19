@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="healthCheckTimeout"> Wait time (in milliseconds) for the sp_server_diagnostics system stored procedure to return server-health information, before the server instance is assumed to be slow or not responding. </param>
         /// <param name="automatedBackupPreferenceDescription"> Preferred location for performing backups on the availability databases in this availability group. </param>
         /// <param name="version"> SQL Server availability group current version. </param>
-        /// <param name="basicFeatures"> Specifies whether this is a basic availability group. </param>
+        /// <param name="hasBasicFeatures"> Specifies whether this is a basic availability group. </param>
         /// <param name="dtcSupport"> Specifies whether DTC support has been enabled for this availability group. </param>
-        /// <param name="dbFailover"> Specifies whether the availability group supports failover for database health conditions. </param>
+        /// <param name="isDbFailoverSupported"> Specifies whether the availability group supports failover for database health conditions. </param>
         /// <param name="isDistributed"> Specifies whether this is a distributed availability group. </param>
         /// <param name="clusterTypeDescription"> SQL Server availability group cluster type description. </param>
         /// <param name="requiredSynchronizedSecondariesToCommit"> The number of secondary replicas that must be in a synchronized state for a commit to complete. </param>
@@ -40,15 +40,15 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="replicationPartnerType"></param>
         /// <param name="listener"> The listener for the sql server availability group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailabilityGroupInfo(int? failureConditionLevel, int? healthCheckTimeout, string automatedBackupPreferenceDescription, int? version, bool? basicFeatures, bool? dtcSupport, bool? dbFailover, bool? isDistributed, string clusterTypeDescription, int? requiredSynchronizedSecondariesToCommit, bool? isContained, string primaryReplica, string primaryRecoveryHealthDescription, string secondaryRecoveryHealthDescription, string synchronizationHealthDescription, ReplicationPartnerType? replicationPartnerType, SqlAvailabilityGroupStaticIPListenerProperties listener, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvailabilityGroupInfo(int? failureConditionLevel, int? healthCheckTimeout, string automatedBackupPreferenceDescription, int? version, bool? hasBasicFeatures, bool? dtcSupport, bool? isDbFailoverSupported, bool? isDistributed, string clusterTypeDescription, int? requiredSynchronizedSecondariesToCommit, bool? isContained, string primaryReplica, string primaryRecoveryHealthDescription, string secondaryRecoveryHealthDescription, string synchronizationHealthDescription, ReplicationPartnerType? replicationPartnerType, SqlAvailabilityGroupStaticIPListenerProperties listener, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FailureConditionLevel = failureConditionLevel;
             HealthCheckTimeout = healthCheckTimeout;
             AutomatedBackupPreferenceDescription = automatedBackupPreferenceDescription;
             Version = version;
-            BasicFeatures = basicFeatures;
+            HasBasicFeatures = hasBasicFeatures;
             DtcSupport = dtcSupport;
-            DbFailover = dbFailover;
+            IsDbFailoverSupported = isDbFailoverSupported;
             IsDistributed = isDistributed;
             ClusterTypeDescription = clusterTypeDescription;
             RequiredSynchronizedSecondariesToCommit = requiredSynchronizedSecondariesToCommit;
@@ -75,10 +75,13 @@ namespace Azure.ResourceManager.ArcData.Models
         public int? Version { get; }
 
         /// <summary> Specifies whether this is a basic availability group. </summary>
-        public bool? BasicFeatures { get; set; }
+        public bool? HasBasicFeatures { get; set; }
 
         /// <summary> Specifies whether DTC support has been enabled for this availability group. </summary>
         public bool? DtcSupport { get; set; }
+
+        /// <summary> Specifies whether the availability group supports failover for database health conditions. </summary>
+        public bool? IsDbFailoverSupported { get; set; }
 
         /// <summary> Specifies whether this is a distributed availability group. </summary>
         public bool? IsDistributed { get; set; }

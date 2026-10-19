@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="discoverySource"> Indicates the discovery agent or client for this instance. Default is Azure Arc. </param>
         /// <param name="patchLevel"> SQL Server update level. </param>
         /// <param name="collation"> SQL Server collation. </param>
-        /// <param name="dbMasterKeyExists"> Indicates whether database master key exists in SQL Server. </param>
+        /// <param name="hasDbMasterKey"> Indicates whether database master key exists in SQL Server. </param>
         /// <param name="isHadrEnabled"> Indicates whether always On availability groups is enabled in SQL Server. </param>
         /// <param name="traceFlags"> An array of integers, where each value represents the enabled trace flags in SQL Server. </param>
         /// <param name="currentVersion"> SQL Server current version. </param>
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="failoverCluster"> Failover Cluster Instance properties. </param>
         /// <param name="backupPolicy"> The backup profile for the SQL server. </param>
         /// <param name="upgradeLockedUntil"> Upgrade Action for this resource is locked until it expires. The Expiration time indicated by this value. It is not locked when it is empty. </param>
-        /// <param name="monitoring"> The monitoring configuration. </param>
+        /// <param name="isMonitoring"> The monitoring configuration. </param>
         /// <param name="migration"> Migration related configuration. </param>
         /// <param name="bestPracticesAssessment"> The configuration related to SQL best practices assessment. </param>
-        /// <param name="clientConnection"> Client connection related configuration. </param>
+        /// <param name="isClientConnection"> Client connection related configuration. </param>
         /// <param name="serviceType"> Indicates if the resource represents a SQL Server engine or a SQL Server component service installed on the host. </param>
         /// <param name="authentication"> Authentication related configuration for the SQL Server Instance. </param>
         /// <param name="databaseMirroringEndpoint"> Database mirroring endpoint related properties. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="isDigiCertPkiCertTrustConfigured"> Indicates whether DigiCert PKI root-authority certificate (trusted by Azure) exists in SQL Server and trusted for Azure database.windows.net domains. </param>
         /// <param name="maxServerMemoryMB"> maximum server memory (MB) value configured for this instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerInstanceUpdateProperties(SqlVersion? version, EditionType? edition, string containerResourceId, string vmId, string createTime, string vCore, string cores, ConnectionStatus? status, DiscoverySource? discoverySource, string patchLevel, string collation, bool? dbMasterKeyExists, bool? isHadrEnabled, IReadOnlyList<int> traceFlags, string currentVersion, string instanceName, string tcpDynamicPorts, string tcpStaticPorts, string productId, ArcSqlServerLicenseType? licenseType, DateTimeOffset? azureDefenderStatusLastUpdated, DefenderStatus? azureDefenderStatus, string provisioningState, DateTimeOffset? lastInventoryUploadOn, DateTimeOffset? lastUsageUploadOn, HostType? hostType, AlwaysOnRole? alwaysOnRole, FailoverCluster failoverCluster, BackupPolicy backupPolicy, DateTimeOffset? upgradeLockedUntil, Monitoring monitoring, SqlServerInstanceMigration migration, BestPracticesAssessment bestPracticesAssessment, ClientConnection clientConnection, ServiceType? serviceType, SqlServerAuthentication authentication, DbmEndpoint databaseMirroringEndpoint, bool? isMicrosoftPkiCertTrustConfigured, bool? isDigiCertPkiCertTrustConfigured, long? maxServerMemoryMB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerInstanceUpdateProperties(SqlVersion? version, EditionType? edition, string containerResourceId, string vmId, string createTime, string vCore, string cores, ConnectionStatus? status, DiscoverySource? discoverySource, string patchLevel, string collation, bool? hasDbMasterKey, bool? isHadrEnabled, IReadOnlyList<int> traceFlags, string currentVersion, string instanceName, string tcpDynamicPorts, string tcpStaticPorts, string productId, ArcSqlServerLicenseType? licenseType, DateTimeOffset? azureDefenderStatusLastUpdated, DefenderStatus? azureDefenderStatus, string provisioningState, DateTimeOffset? lastInventoryUploadOn, DateTimeOffset? lastUsageUploadOn, HostType? hostType, AlwaysOnRole? alwaysOnRole, FailoverCluster failoverCluster, BackupPolicy backupPolicy, DateTimeOffset? upgradeLockedUntil, Monitoring isMonitoring, SqlServerInstanceMigration migration, BestPracticesAssessment bestPracticesAssessment, ClientConnection isClientConnection, ServiceType? serviceType, SqlServerAuthentication authentication, DbmEndpoint databaseMirroringEndpoint, bool? isMicrosoftPkiCertTrustConfigured, bool? isDigiCertPkiCertTrustConfigured, long? maxServerMemoryMB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             Edition = edition;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ArcData.Models
             DiscoverySource = discoverySource;
             PatchLevel = patchLevel;
             Collation = collation;
-            DBMasterKeyExists = dbMasterKeyExists;
+            HasDbMasterKey = hasDbMasterKey;
             IsHadrEnabled = isHadrEnabled;
             TraceFlags = traceFlags;
             CurrentVersion = currentVersion;
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.ArcData.Models
             FailoverCluster = failoverCluster;
             BackupPolicy = backupPolicy;
             UpgradeLockedUntil = upgradeLockedUntil;
-            Monitoring = monitoring;
+            IsMonitoring = isMonitoring;
             Migration = migration;
             BestPracticesAssessment = bestPracticesAssessment;
-            ClientConnection = clientConnection;
+            IsClientConnection = isClientConnection;
             ServiceType = serviceType;
             Authentication = authentication;
             DatabaseMirroringEndpoint = databaseMirroringEndpoint;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public string Collation { get; }
 
         /// <summary> Indicates whether database master key exists in SQL Server. </summary>
-        public bool? DBMasterKeyExists { get; }
+        public bool? HasDbMasterKey { get; }
 
         /// <summary> Indicates whether always On availability groups is enabled in SQL Server. </summary>
         public bool? IsHadrEnabled { get; }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public DateTimeOffset? UpgradeLockedUntil { get; set; }
 
         /// <summary> The monitoring configuration. </summary>
-        internal Monitoring Monitoring { get; set; }
+        internal Monitoring IsMonitoring { get; set; }
 
         /// <summary> Migration related configuration. </summary>
         public SqlServerInstanceMigration Migration { get; set; }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public BestPracticesAssessment BestPracticesAssessment { get; set; }
 
         /// <summary> Client connection related configuration. </summary>
-        internal ClientConnection ClientConnection { get; set; }
+        internal ClientConnection IsClientConnection { get; set; }
 
         /// <summary> Indicates if the resource represents a SQL Server engine or a SQL Server component service installed on the host. </summary>
         public ServiceType? ServiceType { get; set; }
@@ -231,36 +231,36 @@ namespace Azure.ResourceManager.ArcData.Models
         public long? MaxServerMemoryMB { get; set; }
 
         /// <summary> Indicates if monitoring is enabled for this SQL Server instance. </summary>
-        public bool? MonitoringEnabled
+        public bool? IsMonitoringEnabled
         {
             get
             {
-                return Monitoring is null ? default : Monitoring.Enabled;
+                return IsMonitoring is null ? default : IsMonitoring.Enabled;
             }
             set
             {
-                if (Monitoring is null)
+                if (IsMonitoring is null)
                 {
-                    Monitoring = new Monitoring();
+                    IsMonitoring = new Monitoring();
                 }
-                Monitoring.Enabled = value;
+                IsMonitoring.Enabled = value;
             }
         }
 
         /// <summary> Indicates if client connection is enabled for this SQL Server instance. </summary>
-        public bool? ClientConnectionEnabled
+        public bool? IsClientConnectionEnabled
         {
             get
             {
-                return ClientConnection is null ? default : ClientConnection.Enabled;
+                return IsClientConnection is null ? default : IsClientConnection.Enabled;
             }
             set
             {
-                if (ClientConnection is null)
+                if (IsClientConnection is null)
                 {
-                    ClientConnection = new ClientConnection();
+                    IsClientConnection = new ClientConnection();
                 }
-                ClientConnection.Enabled = value;
+                IsClientConnection.Enabled = value;
             }
         }
     }

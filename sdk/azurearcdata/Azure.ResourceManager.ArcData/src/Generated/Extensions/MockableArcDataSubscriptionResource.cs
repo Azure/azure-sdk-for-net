@@ -366,13 +366,13 @@ namespace Azure.ResourceManager.ArcData.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataControllerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataControllerResource> GetDataControllerResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataControllerResource> GetDataControllersAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataControllerResourceData, DataControllerResource>(new DataControllerResourceDataAsync0CollectionResultOfT(DataControllersRestClient, Id.SubscriptionId, context, "MockableArcDataSubscriptionResource.GetDataControllerResources"), data => new DataControllerResource(Client, data));
+            return new AsyncPageableWrapper<DataControllerData, DataControllerResource>(new DataControllerDataAsync0CollectionResultOfT(DataControllersRestClient, Id.SubscriptionId, context, "MockableArcDataSubscriptionResource.GetDataControllers"), data => new DataControllerResource(Client, data));
         }
 
         /// <summary>
@@ -394,13 +394,13 @@ namespace Azure.ResourceManager.ArcData.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataControllerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataControllerResource> GetDataControllerResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<DataControllerResource> GetDataControllers(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataControllerResourceData, DataControllerResource>(new DataControllerResourceData0CollectionResultOfT(DataControllersRestClient, Id.SubscriptionId, context, "MockableArcDataSubscriptionResource.GetDataControllerResources"), data => new DataControllerResource(Client, data));
+            return new PageableWrapper<DataControllerData, DataControllerResource>(new DataControllerData0CollectionResultOfT(DataControllersRestClient, Id.SubscriptionId, context, "MockableArcDataSubscriptionResource.GetDataControllers"), data => new DataControllerResource(Client, data));
         }
     }
 }

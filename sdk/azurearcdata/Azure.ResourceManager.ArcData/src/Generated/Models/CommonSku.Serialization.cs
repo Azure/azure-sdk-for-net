@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ArcData.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Dev))
+            if (Optional.IsDefined(IsDevTestEnabled))
             {
                 writer.WritePropertyName("dev"u8);
-                writer.WriteBooleanValue(Dev.Value);
+                writer.WriteBooleanValue(IsDevTestEnabled.Value);
             }
             if (Optional.IsDefined(Size))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 return null;
             }
             string name = default;
-            bool? dev = default;
+            bool? isDevTestEnabled = default;
             string size = default;
             string family = default;
             int? capacity = default;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    dev = prop.Value.GetBoolean();
+                    isDevTestEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("size"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ArcData.Models
             }
             return new CommonSku(
                 name,
-                dev,
+                isDevTestEnabled,
                 size,
                 family,
                 capacity,

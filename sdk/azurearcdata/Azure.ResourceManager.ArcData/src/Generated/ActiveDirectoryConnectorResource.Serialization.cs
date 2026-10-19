@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ArcData
 {
     /// <summary></summary>
-    public partial class ActiveDirectoryConnectorResource : IJsonModel<ActiveDirectoryConnectorResourceData>
+    public partial class ActiveDirectoryConnectorResource : IJsonModel<ActiveDirectoryConnectorData>
     {
-        private static IJsonModel<ActiveDirectoryConnectorResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<ActiveDirectoryConnectorData> s_dataDeserializationInstance;
 
-        private static IJsonModel<ActiveDirectoryConnectorResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ActiveDirectoryConnectorResourceData();
+        private static IJsonModel<ActiveDirectoryConnectorData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ActiveDirectoryConnectorData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ActiveDirectoryConnectorResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ActiveDirectoryConnectorResourceData>)Data).Write(writer, options);
+        void IJsonModel<ActiveDirectoryConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ActiveDirectoryConnectorData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActiveDirectoryConnectorResourceData IJsonModel<ActiveDirectoryConnectorResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ActiveDirectoryConnectorData IJsonModel<ActiveDirectoryConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ActiveDirectoryConnectorResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ActiveDirectoryConnectorResourceData>(Data, options, AzureResourceManagerArcDataContext.Default);
+        BinaryData IPersistableModel<ActiveDirectoryConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ActiveDirectoryConnectorData>(Data, options, AzureResourceManagerArcDataContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActiveDirectoryConnectorResourceData IPersistableModel<ActiveDirectoryConnectorResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ActiveDirectoryConnectorResourceData>(data, options, AzureResourceManagerArcDataContext.Default);
+        ActiveDirectoryConnectorData IPersistableModel<ActiveDirectoryConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ActiveDirectoryConnectorData>(data, options, AzureResourceManagerArcDataContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ActiveDirectoryConnectorResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ActiveDirectoryConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

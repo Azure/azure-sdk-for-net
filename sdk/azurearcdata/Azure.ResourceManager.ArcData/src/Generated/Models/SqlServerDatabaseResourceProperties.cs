@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="lastDatabaseUploadOn"> The time when last successful database upload was performed. </param>
         /// <param name="migration"> Migration related configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerDatabaseResourceProperties(string collationName, DateTimeOffset? databaseCreatedOn, int? compatibilityLevel, float? sizeMB, float? logFileSizeMB, float? dataFileSizeMB, float? spaceAvailableMB, DatabaseState? state, bool? isReadOnly, RecoveryMode? recoveryMode, SqlServerDatabaseResourcePropertiesDatabaseOptions databaseOptions, SqlServerDatabaseResourcePropertiesBackupInformation backupInformation, BackupPolicy backupPolicy, DateTimeOffset? earliestRestoreOn, DatabaseCreateMode? createMode, string sourceDatabaseId, string vmId, DateTimeOffset? restorePointInTime, string provisioningState, DateTimeOffset? lastDatabaseUploadOn, DatabaseMigration migration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerDatabaseResourceProperties(string collationName, DateTimeOffset? databaseCreatedOn, int? compatibilityLevel, float? sizeMB, float? logFileSizeMB, float? dataFileSizeMB, float? spaceAvailableMB, DatabaseState? state, bool? isReadOnly, RecoveryMode? recoveryMode, SqlServerDatabaseConfig databaseOptions, SqlServerDatabaseResourcePropertiesBackupInformation backupInformation, BackupPolicy backupPolicy, DateTimeOffset? earliestRestoreOn, DatabaseCreateMode? createMode, string sourceDatabaseId, string vmId, DateTimeOffset? restorePointInTime, string provisioningState, DateTimeOffset? lastDatabaseUploadOn, DatabaseMigration migration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CollationName = collationName;
             DatabaseCreatedOn = databaseCreatedOn;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public RecoveryMode? RecoveryMode { get; set; }
 
         /// <summary> List of features that are enabled for the database. </summary>
-        public SqlServerDatabaseResourcePropertiesDatabaseOptions DatabaseOptions { get; set; }
+        public SqlServerDatabaseConfig DatabaseOptions { get; set; }
 
         /// <summary> Gets or sets the BackupInformation. </summary>
         public SqlServerDatabaseResourcePropertiesBackupInformation BackupInformation { get; set; }

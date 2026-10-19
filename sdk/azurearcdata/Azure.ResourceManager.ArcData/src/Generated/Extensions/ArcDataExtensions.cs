@@ -493,27 +493,27 @@ namespace Azure.ResourceManager.ArcData
         }
 
         /// <summary>
-        /// Gets a collection of DataControllerResources in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of DataControllers in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableArcDataResourceGroupResource.GetDataControllerResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableArcDataResourceGroupResource.GetDataControllers()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DataControllerResources and their operations over a DataControllerResource. </returns>
-        public static DataControllerResourceCollection GetDataControllerResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DataControllers and their operations over a DataControllerResource. </returns>
+        public static DataControllerCollection GetDataControllers(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableArcDataResourceGroupResource(resourceGroupResource).GetDataControllerResources();
+            return GetMockableArcDataResourceGroupResource(resourceGroupResource).GetDataControllers();
         }
 
         /// <summary>
         /// Retrieves a dataController resource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableArcDataResourceGroupResource.GetDataControllerResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableArcDataResourceGroupResource.GetDataControllerAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -521,18 +521,18 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DataControllerResource>> GetDataControllerResourceAsync(this ResourceGroupResource resourceGroupResource, string dataControllerName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataControllerResource>> GetDataControllerAsync(this ResourceGroupResource resourceGroupResource, string dataControllerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableArcDataResourceGroupResource(resourceGroupResource).GetDataControllerResourceAsync(dataControllerName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableArcDataResourceGroupResource(resourceGroupResource).GetDataControllerAsync(dataControllerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Retrieves a dataController resource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableArcDataResourceGroupResource.GetDataControllerResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableArcDataResourceGroupResource.GetDataController(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -540,11 +540,11 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DataControllerResource> GetDataControllerResource(this ResourceGroupResource resourceGroupResource, string dataControllerName, CancellationToken cancellationToken = default)
+        public static Response<DataControllerResource> GetDataController(this ResourceGroupResource resourceGroupResource, string dataControllerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableArcDataResourceGroupResource(resourceGroupResource).GetDataControllerResource(dataControllerName, cancellationToken);
+            return GetMockableArcDataResourceGroupResource(resourceGroupResource).GetDataController(dataControllerName, cancellationToken);
         }
 
         /// <summary>
@@ -731,36 +731,36 @@ namespace Azure.ResourceManager.ArcData
         /// List dataController resources in the subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableArcDataSubscriptionResource.GetDataControllerResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableArcDataSubscriptionResource.GetDataControllersAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataControllerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataControllerResource> GetDataControllerResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DataControllerResource> GetDataControllersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableArcDataSubscriptionResource(subscriptionResource).GetDataControllerResourcesAsync(cancellationToken);
+            return GetMockableArcDataSubscriptionResource(subscriptionResource).GetDataControllersAsync(cancellationToken);
         }
 
         /// <summary>
         /// List dataController resources in the subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableArcDataSubscriptionResource.GetDataControllerResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableArcDataSubscriptionResource.GetDataControllers(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataControllerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataControllerResource> GetDataControllerResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<DataControllerResource> GetDataControllers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableArcDataSubscriptionResource(subscriptionResource).GetDataControllerResources(cancellationToken);
+            return GetMockableArcDataSubscriptionResource(subscriptionResource).GetDataControllers(cancellationToken);
         }
     }
 }

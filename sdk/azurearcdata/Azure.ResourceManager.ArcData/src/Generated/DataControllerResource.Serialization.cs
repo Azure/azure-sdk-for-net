@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ArcData
 {
     /// <summary></summary>
-    public partial class DataControllerResource : IJsonModel<DataControllerResourceData>
+    public partial class DataControllerResource : IJsonModel<DataControllerData>
     {
-        private static IJsonModel<DataControllerResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<DataControllerData> s_dataDeserializationInstance;
 
-        private static IJsonModel<DataControllerResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataControllerResourceData();
+        private static IJsonModel<DataControllerData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataControllerData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DataControllerResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataControllerResourceData>)Data).Write(writer, options);
+        void IJsonModel<DataControllerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataControllerData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataControllerResourceData IJsonModel<DataControllerResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        DataControllerData IJsonModel<DataControllerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataControllerResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataControllerResourceData>(Data, options, AzureResourceManagerArcDataContext.Default);
+        BinaryData IPersistableModel<DataControllerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataControllerData>(Data, options, AzureResourceManagerArcDataContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataControllerResourceData IPersistableModel<DataControllerResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataControllerResourceData>(data, options, AzureResourceManagerArcDataContext.Default);
+        DataControllerData IPersistableModel<DataControllerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataControllerData>(data, options, AzureResourceManagerArcDataContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataControllerResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<DataControllerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

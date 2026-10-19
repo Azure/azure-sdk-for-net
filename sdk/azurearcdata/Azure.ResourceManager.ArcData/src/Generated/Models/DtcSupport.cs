@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.ArcData.Models
     public enum DtcSupport
     {
         /// <summary> PER_DB. </summary>
-        PERDB,
+        PerDb,
         /// <summary> NONE. </summary>
         None
     }

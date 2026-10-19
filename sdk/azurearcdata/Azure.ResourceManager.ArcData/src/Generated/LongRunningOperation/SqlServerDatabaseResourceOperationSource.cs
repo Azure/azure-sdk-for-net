@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ArcData
         SqlServerDatabaseResource IOperationSource<SqlServerDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SqlServerDatabaseResourceData data = SqlServerDatabaseResourceData.DeserializeSqlServerDatabaseResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            SqlServerDatabaseData data = SqlServerDatabaseData.DeserializeSqlServerDatabaseData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SqlServerDatabaseResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ArcData
         async ValueTask<SqlServerDatabaseResource> IOperationSource<SqlServerDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SqlServerDatabaseResourceData data = SqlServerDatabaseResourceData.DeserializeSqlServerDatabaseResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            SqlServerDatabaseData data = SqlServerDatabaseData.DeserializeSqlServerDatabaseData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SqlServerDatabaseResource(_client, data);
         }
     }

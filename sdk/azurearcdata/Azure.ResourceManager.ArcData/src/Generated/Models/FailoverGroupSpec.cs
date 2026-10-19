@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="sharedName"> The shared name of the failover group for this SQL managed instance. Both SQL managed instance and its partner have to use the same shared name. </param>
         /// <param name="sourceMI"> The name of the SQL managed instance with this failover group role. </param>
         /// <param name="partnerMI"> The name of the partner SQL managed instance. </param>
-        /// <param name="partnerMirroringURL"> The mirroring endpoint URL of the partner SQL managed instance. </param>
+        /// <param name="partnerMirroringUri"> The mirroring endpoint URL of the partner SQL managed instance. </param>
         /// <param name="partnerMirroringCert"> The mirroring endpoint public certificate for the partner SQL managed instance. Only PEM format is supported. </param>
         /// <param name="partnerSyncMode"> The partner sync mode of the SQL managed instance. </param>
         /// <param name="role"> The role of the SQL managed instance in this failover group. </param>
         /// <param name="additionalProperties"></param>
-        internal FailoverGroupSpec(string sharedName, string sourceMI, string partnerMI, string partnerMirroringURL, string partnerMirroringCert, FailoverGroupPartnerSyncMode? partnerSyncMode, InstanceFailoverGroupRole role, IDictionary<string, BinaryData> additionalProperties)
+        internal FailoverGroupSpec(string sharedName, string sourceMI, string partnerMI, string partnerMirroringUri, string partnerMirroringCert, FailoverGroupPartnerSyncMode? partnerSyncMode, InstanceFailoverGroupRole role, IDictionary<string, BinaryData> additionalProperties)
         {
             SharedName = sharedName;
             SourceMI = sourceMI;
             PartnerMI = partnerMI;
-            PartnerMirroringURL = partnerMirroringURL;
+            PartnerMirroringUri = partnerMirroringUri;
             PartnerMirroringCert = partnerMirroringCert;
             PartnerSyncMode = partnerSyncMode;
             Role = role;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public string PartnerMI { get; set; }
 
         /// <summary> The mirroring endpoint URL of the partner SQL managed instance. </summary>
-        public string PartnerMirroringURL { get; set; }
+        public string PartnerMirroringUri { get; set; }
 
         /// <summary> The mirroring endpoint public certificate for the partner SQL managed instance. Only PEM format is supported. </summary>
         public string PartnerMirroringCert { get; set; }

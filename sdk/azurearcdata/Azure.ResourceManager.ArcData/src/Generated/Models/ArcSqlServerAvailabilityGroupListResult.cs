@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Initializes a new instance of <see cref="ArcSqlServerAvailabilityGroupListResult"/>. </summary>
         internal ArcSqlServerAvailabilityGroupListResult()
         {
-            Value = new ChangeTrackingList<SqlServerAvailabilityGroupResourceData>();
+            Value = new ChangeTrackingList<SqlServerAvailabilityGroupData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcSqlServerAvailabilityGroupListResult"/>. </summary>
         /// <param name="value"> Array of Arc Sql Server Availability Groups. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcSqlServerAvailabilityGroupListResult(IReadOnlyList<SqlServerAvailabilityGroupResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArcSqlServerAvailabilityGroupListResult(IReadOnlyList<SqlServerAvailabilityGroupData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> Array of Arc Sql Server Availability Groups. </summary>
-        public IReadOnlyList<SqlServerAvailabilityGroupResourceData> Value { get; }
+        public IReadOnlyList<SqlServerAvailabilityGroupData> Value { get; }
 
         /// <summary> Link to retrieve next page of results. </summary>
         public Uri NextLink { get; }

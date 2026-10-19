@@ -21,15 +21,15 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.ArcData
 {
     /// <summary>
-    /// A class representing a DataControllerResource along with the instance operations that can be performed on it.
+    /// A class representing a DataController along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataControllerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataControllerResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataControllers method.
     /// </summary>
     public partial class DataControllerResource : ArmResource
     {
         private readonly ClientDiagnostics _dataControllersClientDiagnostics;
         private readonly DataControllers _dataControllersRestClient;
-        private readonly DataControllerResourceData _data;
+        private readonly DataControllerData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureArcData/dataControllers";
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ArcData
         /// <summary> Initializes a new instance of <see cref="DataControllerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataControllerResource(ArmClient client, DataControllerResourceData data) : this(client, data.Id)
+        internal DataControllerResource(ArmClient client, DataControllerData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ArcData
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual DataControllerResourceData Data
+        public virtual DataControllerData Data
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _dataControllersRestClient.CreateGetDataControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataControllerResourceData> response = Response.FromValue(DataControllerResourceData.FromResponse(result), result);
+                Response<DataControllerData> response = Response.FromValue(DataControllerData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _dataControllersRestClient.CreateGetDataControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataControllerResourceData> response = Response.FromValue(DataControllerResourceData.FromResponse(result), result);
+                Response<DataControllerData> response = Response.FromValue(DataControllerData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="patch"> The update data controller resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataControllerResource>> UpdateAsync(WaitUntil waitUntil, DataControllerResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataControllerResource>> UpdateAsync(WaitUntil waitUntil, DataControllerPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataControllersRestClient.CreatePatchDataControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataControllerResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _dataControllersRestClient.CreatePatchDataControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataControllerPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArcDataArmOperation<DataControllerResource> operation = new ArcDataArmOperation<DataControllerResource>(
                     new DataControllerResourceOperationSource(Client),
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="patch"> The update data controller resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<DataControllerResource> Update(WaitUntil waitUntil, DataControllerResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataControllerResource> Update(WaitUntil waitUntil, DataControllerPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataControllersRestClient.CreatePatchDataControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataControllerResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _dataControllersRestClient.CreatePatchDataControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataControllerPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArcDataArmOperation<DataControllerResource> operation = new ArcDataArmOperation<DataControllerResource>(
                     new DataControllerResourceOperationSource(Client),
@@ -430,13 +430,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _dataControllersRestClient.CreateGetDataControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DataControllerResourceData> response = Response.FromValue(DataControllerResourceData.FromResponse(result), result);
+                    Response<DataControllerData> response = Response.FromValue(DataControllerData.FromResponse(result), result);
                     return Response.FromValue(new DataControllerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataControllerResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DataControllerResourcePatch patch = new DataControllerResourcePatch();
+                    DataControllerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DataControllerPatch patch = new DataControllerPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -478,13 +478,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _dataControllersRestClient.CreateGetDataControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DataControllerResourceData> response = Response.FromValue(DataControllerResourceData.FromResponse(result), result);
+                    Response<DataControllerData> response = Response.FromValue(DataControllerData.FromResponse(result), result);
                     return Response.FromValue(new DataControllerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataControllerResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DataControllerResourcePatch patch = new DataControllerResourcePatch();
+                    DataControllerData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DataControllerPatch patch = new DataControllerPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -524,13 +524,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _dataControllersRestClient.CreateGetDataControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DataControllerResourceData> response = Response.FromValue(DataControllerResourceData.FromResponse(result), result);
+                    Response<DataControllerData> response = Response.FromValue(DataControllerData.FromResponse(result), result);
                     return Response.FromValue(new DataControllerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataControllerResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DataControllerResourcePatch patch = new DataControllerResourcePatch();
+                    DataControllerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DataControllerPatch patch = new DataControllerPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<DataControllerResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -566,13 +566,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _dataControllersRestClient.CreateGetDataControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DataControllerResourceData> response = Response.FromValue(DataControllerResourceData.FromResponse(result), result);
+                    Response<DataControllerData> response = Response.FromValue(DataControllerData.FromResponse(result), result);
                     return Response.FromValue(new DataControllerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataControllerResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DataControllerResourcePatch patch = new DataControllerResourcePatch();
+                    DataControllerData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DataControllerPatch patch = new DataControllerPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<DataControllerResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -608,13 +608,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _dataControllersRestClient.CreateGetDataControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DataControllerResourceData> response = Response.FromValue(DataControllerResourceData.FromResponse(result), result);
+                    Response<DataControllerData> response = Response.FromValue(DataControllerData.FromResponse(result), result);
                     return Response.FromValue(new DataControllerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataControllerResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DataControllerResourcePatch patch = new DataControllerResourcePatch();
+                    DataControllerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DataControllerPatch patch = new DataControllerPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -654,13 +654,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _dataControllersRestClient.CreateGetDataControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DataControllerResourceData> response = Response.FromValue(DataControllerResourceData.FromResponse(result), result);
+                    Response<DataControllerData> response = Response.FromValue(DataControllerData.FromResponse(result), result);
                     return Response.FromValue(new DataControllerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataControllerResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DataControllerResourcePatch patch = new DataControllerResourcePatch();
+                    DataControllerData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DataControllerPatch patch = new DataControllerPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -677,11 +677,11 @@ namespace Azure.ResourceManager.ArcData
             }
         }
 
-        /// <summary> Gets a collection of ActiveDirectoryConnectorResources in the <see cref="DataControllerResource"/>. </summary>
-        /// <returns> An object representing collection of ActiveDirectoryConnectorResources and their operations over a ActiveDirectoryConnectorResource. </returns>
-        public virtual ActiveDirectoryConnectorResourceCollection GetActiveDirectoryConnectorResources()
+        /// <summary> Gets a collection of ActiveDirectoryConnectors in the <see cref="DataControllerResource"/>. </summary>
+        /// <returns> An object representing collection of ActiveDirectoryConnectors and their operations over a ActiveDirectoryConnectorResource. </returns>
+        public virtual ActiveDirectoryConnectorCollection GetActiveDirectoryConnectors()
         {
-            return GetCachedClient(client => new ActiveDirectoryConnectorResourceCollection(client, Id));
+            return GetCachedClient(client => new ActiveDirectoryConnectorCollection(client, Id));
         }
 
         /// <summary> Retrieves an Active Directory connector resource. </summary>
@@ -690,11 +690,11 @@ namespace Azure.ResourceManager.ArcData
         /// <exception cref="ArgumentNullException"> <paramref name="activeDirectoryConnectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="activeDirectoryConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ActiveDirectoryConnectorResource>> GetActiveDirectoryConnectorResourceAsync(string activeDirectoryConnectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ActiveDirectoryConnectorResource>> GetActiveDirectoryConnectorAsync(string activeDirectoryConnectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activeDirectoryConnectorName, nameof(activeDirectoryConnectorName));
 
-            return await GetActiveDirectoryConnectorResources().GetAsync(activeDirectoryConnectorName, cancellationToken).ConfigureAwait(false);
+            return await GetActiveDirectoryConnectors().GetAsync(activeDirectoryConnectorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Retrieves an Active Directory connector resource. </summary>
@@ -703,11 +703,11 @@ namespace Azure.ResourceManager.ArcData
         /// <exception cref="ArgumentNullException"> <paramref name="activeDirectoryConnectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="activeDirectoryConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ActiveDirectoryConnectorResource> GetActiveDirectoryConnectorResource(string activeDirectoryConnectorName, CancellationToken cancellationToken = default)
+        public virtual Response<ActiveDirectoryConnectorResource> GetActiveDirectoryConnector(string activeDirectoryConnectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activeDirectoryConnectorName, nameof(activeDirectoryConnectorName));
 
-            return GetActiveDirectoryConnectorResources().Get(activeDirectoryConnectorName, cancellationToken);
+            return GetActiveDirectoryConnectors().Get(activeDirectoryConnectorName, cancellationToken);
         }
     }
 }

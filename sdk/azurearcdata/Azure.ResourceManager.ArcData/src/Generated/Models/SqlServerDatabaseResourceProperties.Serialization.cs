@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ArcData.Models
             DatabaseState? state = default;
             bool? isReadOnly = default;
             RecoveryMode? recoveryMode = default;
-            SqlServerDatabaseResourcePropertiesDatabaseOptions databaseOptions = default;
+            SqlServerDatabaseConfig databaseOptions = default;
             SqlServerDatabaseResourcePropertiesBackupInformation backupInformation = default;
             BackupPolicy backupPolicy = default;
             DateTimeOffset? earliestRestoreOn = default;
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    databaseOptions = SqlServerDatabaseResourcePropertiesDatabaseOptions.DeserializeSqlServerDatabaseResourcePropertiesDatabaseOptions(prop.Value, options);
+                    databaseOptions = SqlServerDatabaseConfig.DeserializeSqlServerDatabaseConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("backupInformation"u8))

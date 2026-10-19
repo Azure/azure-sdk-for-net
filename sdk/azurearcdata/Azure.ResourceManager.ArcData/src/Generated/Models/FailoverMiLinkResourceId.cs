@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Initializes a new instance of <see cref="FailoverMiLinkResourceId"/>. </summary>
         /// <param name="managedInstanceId"> Azure resource id for the sql managed instance. </param>
-        /// <param name="force"> Whether to perform a Force Failover as opposed to just a regular Failover. </param>
+        /// <param name="shouldForce"> Whether to perform a Force Failover as opposed to just a regular Failover. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FailoverMiLinkResourceId(ResourceIdentifier managedInstanceId, bool? force, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FailoverMiLinkResourceId(ResourceIdentifier managedInstanceId, bool? shouldForce, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedInstanceId = managedInstanceId;
-            Force = force;
+            ShouldForce = shouldForce;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public ResourceIdentifier ManagedInstanceId { get; set; }
 
         /// <summary> Whether to perform a Force Failover as opposed to just a regular Failover. </summary>
-        public bool? Force { get; set; }
+        public bool? ShouldForce { get; set; }
     }
 }

@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="domainName"> DNS domain name for which DNS lookups should be forwarded to the Active Directory DNS servers. </param>
         /// <param name="nameserverIPAddresses"> List of Active Directory DNS server IP addresses. </param>
         /// <param name="replicas"> Replica count for DNS proxy service. Default value is 1. </param>
-        /// <param name="preferK8sDnsForPtrLookups"> Flag indicating whether to prefer Kubernetes DNS server response over AD DNS server response for IP address lookups. </param>
+        /// <param name="shouldPreferK8sDnsForPtrLookups"> Flag indicating whether to prefer Kubernetes DNS server response over AD DNS server response for IP address lookups. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActiveDirectoryConnectorDnsDetails(string domainName, IList<string> nameserverIPAddresses, long? replicas, bool? preferK8sDnsForPtrLookups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActiveDirectoryConnectorDnsDetails(string domainName, IList<string> nameserverIPAddresses, long? replicas, bool? shouldPreferK8sDnsForPtrLookups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DomainName = domainName;
             NameserverIPAddresses = nameserverIPAddresses;
             Replicas = replicas;
-            PreferK8sDnsForPtrLookups = preferK8sDnsForPtrLookups;
+            ShouldPreferK8sDnsForPtrLookups = shouldPreferK8sDnsForPtrLookups;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public long? Replicas { get; set; }
 
         /// <summary> Flag indicating whether to prefer Kubernetes DNS server response over AD DNS server response for IP address lookups. </summary>
-        public bool? PreferK8sDnsForPtrLookups { get; set; }
+        public bool? ShouldPreferK8sDnsForPtrLookups { get; set; }
     }
 }

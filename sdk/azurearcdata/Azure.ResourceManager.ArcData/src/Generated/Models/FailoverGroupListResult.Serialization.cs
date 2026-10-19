@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (FailoverGroupResourceData item in Value)
+                foreach (FailoverGroupData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            IReadOnlyList<FailoverGroupResourceData> value = default;
+            IReadOnlyList<FailoverGroupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    List<FailoverGroupResourceData> array = new List<FailoverGroupResourceData>();
+                    List<FailoverGroupData> array = new List<FailoverGroupData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FailoverGroupResourceData.DeserializeFailoverGroupResourceData(item, options));
+                        array.Add(FailoverGroupData.DeserializeFailoverGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FailoverGroupListResult(value ?? new ChangeTrackingList<FailoverGroupResourceData>(), nextLink, additionalBinaryDataProperties);
+            return new FailoverGroupListResult(value ?? new ChangeTrackingList<FailoverGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

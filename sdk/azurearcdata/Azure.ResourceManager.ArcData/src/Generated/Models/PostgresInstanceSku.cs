@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Initializes a new instance of <see cref="PostgresInstanceSku"/>. </summary>
         /// <param name="name"> The name of the SKU.  It is typically a letter+number code. </param>
-        /// <param name="dev"> Whether dev/test is enabled. When the dev field is set to true, the resource is used for dev/test purpose. </param>
+        /// <param name="isDevTestEnabled"> Whether dev/test is enabled. When the dev field is set to true, the resource is used for dev/test purpose. </param>
         /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
         /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
         /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier. </param>
-        internal PostgresInstanceSku(string name, bool? dev, string size, string family, int? capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties, PostgresInstanceSkuTier? tier) : base(name, dev, size, family, capacity, additionalBinaryDataProperties)
+        internal PostgresInstanceSku(string name, bool? isDevTestEnabled, string size, string family, int? capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties, PostgresInstanceSkuTier? tier) : base(name, isDevTestEnabled, size, family, capacity, additionalBinaryDataProperties)
         {
             Tier = tier;
         }

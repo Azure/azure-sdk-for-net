@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ArcData
 {
     /// <summary></summary>
-    public partial class FailoverGroupResource : IJsonModel<FailoverGroupResourceData>
+    public partial class FailoverGroupResource : IJsonModel<FailoverGroupData>
     {
-        private static IJsonModel<FailoverGroupResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<FailoverGroupData> s_dataDeserializationInstance;
 
-        private static IJsonModel<FailoverGroupResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FailoverGroupResourceData();
+        private static IJsonModel<FailoverGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FailoverGroupData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FailoverGroupResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FailoverGroupResourceData>)Data).Write(writer, options);
+        void IJsonModel<FailoverGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FailoverGroupData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FailoverGroupResourceData IJsonModel<FailoverGroupResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        FailoverGroupData IJsonModel<FailoverGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FailoverGroupResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FailoverGroupResourceData>(Data, options, AzureResourceManagerArcDataContext.Default);
+        BinaryData IPersistableModel<FailoverGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FailoverGroupData>(Data, options, AzureResourceManagerArcDataContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FailoverGroupResourceData IPersistableModel<FailoverGroupResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FailoverGroupResourceData>(data, options, AzureResourceManagerArcDataContext.Default);
+        FailoverGroupData IPersistableModel<FailoverGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FailoverGroupData>(data, options, AzureResourceManagerArcDataContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FailoverGroupResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<FailoverGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

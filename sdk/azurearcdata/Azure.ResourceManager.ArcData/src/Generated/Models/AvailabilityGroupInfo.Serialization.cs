@@ -94,20 +94,20 @@ namespace Azure.ResourceManager.ArcData.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (Optional.IsDefined(BasicFeatures))
+            if (Optional.IsDefined(HasBasicFeatures))
             {
                 writer.WritePropertyName("basicFeatures"u8);
-                writer.WriteBooleanValue(BasicFeatures.Value);
+                writer.WriteBooleanValue(HasBasicFeatures.Value);
             }
             if (Optional.IsDefined(DtcSupport))
             {
                 writer.WritePropertyName("dtcSupport"u8);
                 writer.WriteBooleanValue(DtcSupport.Value);
             }
-            if (Optional.IsDefined(DbFailover))
+            if (Optional.IsDefined(IsDbFailoverSupported))
             {
                 writer.WritePropertyName("dbFailover"u8);
-                writer.WriteBooleanValue(DbFailover.Value);
+                writer.WriteBooleanValue(IsDbFailoverSupported.Value);
             }
             if (Optional.IsDefined(IsDistributed))
             {
@@ -205,9 +205,9 @@ namespace Azure.ResourceManager.ArcData.Models
             int? healthCheckTimeout = default;
             string automatedBackupPreferenceDescription = default;
             int? version = default;
-            bool? basicFeatures = default;
+            bool? hasBasicFeatures = default;
             bool? dtcSupport = default;
-            bool? dbFailover = default;
+            bool? isDbFailoverSupported = default;
             bool? isDistributed = default;
             string clusterTypeDescription = default;
             int? requiredSynchronizedSecondariesToCommit = default;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    basicFeatures = prop.Value.GetBoolean();
+                    hasBasicFeatures = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("dtcSupport"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    dbFailover = prop.Value.GetBoolean();
+                    isDbFailoverSupported = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("isDistributed"u8))
@@ -360,9 +360,9 @@ namespace Azure.ResourceManager.ArcData.Models
                 healthCheckTimeout,
                 automatedBackupPreferenceDescription,
                 version,
-                basicFeatures,
+                hasBasicFeatures,
                 dtcSupport,
-                dbFailover,
+                isDbFailoverSupported,
                 isDistributed,
                 clusterTypeDescription,
                 requiredSynchronizedSecondariesToCommit,

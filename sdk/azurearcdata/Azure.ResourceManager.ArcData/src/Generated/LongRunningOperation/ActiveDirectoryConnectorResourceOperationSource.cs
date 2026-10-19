@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ArcData
         ActiveDirectoryConnectorResource IOperationSource<ActiveDirectoryConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ActiveDirectoryConnectorResourceData data = ActiveDirectoryConnectorResourceData.DeserializeActiveDirectoryConnectorResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ActiveDirectoryConnectorData data = ActiveDirectoryConnectorData.DeserializeActiveDirectoryConnectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ActiveDirectoryConnectorResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ArcData
         async ValueTask<ActiveDirectoryConnectorResource> IOperationSource<ActiveDirectoryConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ActiveDirectoryConnectorResourceData data = ActiveDirectoryConnectorResourceData.DeserializeActiveDirectoryConnectorResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ActiveDirectoryConnectorData data = ActiveDirectoryConnectorData.DeserializeActiveDirectoryConnectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ActiveDirectoryConnectorResource(_client, data);
         }
     }

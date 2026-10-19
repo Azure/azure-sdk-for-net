@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 writer.WritePropertyName("resourceUpdateMode"u8);
                 writer.WriteStringValue(ResourceUpdateMode.Value.ToString());
             }
-            if (Optional.IsDefined(IncludeFileLevelRequirements))
+            if (Optional.IsDefined(ShouldIncludeFileLevelRequirements))
             {
                 writer.WritePropertyName("includeFileLevelRequirements"u8);
-                writer.WriteBooleanValue(IncludeFileLevelRequirements.Value);
+                writer.WriteBooleanValue(ShouldIncludeFileLevelRequirements.Value);
             }
             if (Optional.IsDefined(TargetLocation))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 return null;
             }
             ResourceUpdateMode? resourceUpdateMode = default;
-            bool? includeFileLevelRequirements = default;
+            bool? shouldIncludeFileLevelRequirements = default;
             string targetLocation = default;
             int? percentile = default;
             int? lookbackPeriodInDays = default;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    includeFileLevelRequirements = prop.Value.GetBoolean();
+                    shouldIncludeFileLevelRequirements = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("targetLocation"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ArcData.Models
             }
             return new ArcDataSqlServerInstanceRunTargetRecommendationJobRequestContent(
                 resourceUpdateMode,
-                includeFileLevelRequirements,
+                shouldIncludeFileLevelRequirements,
                 targetLocation,
                 percentile,
                 lookbackPeriodInDays,

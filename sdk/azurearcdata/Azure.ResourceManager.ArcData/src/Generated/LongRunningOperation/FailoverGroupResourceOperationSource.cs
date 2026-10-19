@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ArcData
         FailoverGroupResource IOperationSource<FailoverGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            FailoverGroupResourceData data = FailoverGroupResourceData.DeserializeFailoverGroupResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            FailoverGroupData data = FailoverGroupData.DeserializeFailoverGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new FailoverGroupResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ArcData
         async ValueTask<FailoverGroupResource> IOperationSource<FailoverGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            FailoverGroupResourceData data = FailoverGroupResourceData.DeserializeFailoverGroupResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            FailoverGroupData data = FailoverGroupData.DeserializeFailoverGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new FailoverGroupResource(_client, data);
         }
     }

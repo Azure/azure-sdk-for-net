@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Dev))
+            if (Optional.IsDefined(IsDevTestEnabled))
             {
                 writer.WritePropertyName("dev"u8);
-                writer.WriteBooleanValue(Dev.Value);
+                writer.WriteBooleanValue(IsDevTestEnabled.Value);
             }
             if (Optional.IsDefined(Size))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ArcData.Models
             }
             string name = default;
             SqlManagedInstanceSkuTier? tier = default;
-            bool? dev = default;
+            bool? isDevTestEnabled = default;
             string size = default;
             string family = default;
             int? capacity = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    dev = prop.Value.GetBoolean();
+                    isDevTestEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("size"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ArcData.Models
             return new SqlManagedInstanceSku(
                 name,
                 tier,
-                dev,
+                isDevTestEnabled,
                 size,
                 family,
                 capacity,

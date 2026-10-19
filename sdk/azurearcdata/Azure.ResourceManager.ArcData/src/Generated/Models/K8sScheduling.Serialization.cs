@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            K8sSchedulingOptions @default = default;
+            K8sSchedulingConfig @default = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    @default = K8sSchedulingOptions.DeserializeK8sSchedulingOptions(prop.Value, options);
+                    @default = K8sSchedulingConfig.DeserializeK8sSchedulingConfig(prop.Value, options);
                     continue;
                 }
                 additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());

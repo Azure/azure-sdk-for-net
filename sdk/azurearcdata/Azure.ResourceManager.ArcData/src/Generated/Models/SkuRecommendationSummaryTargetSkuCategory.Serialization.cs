@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 writer.WritePropertyName("sqlServiceTier"u8);
                 writer.WriteStringValue(SqlServiceTier);
             }
-            if (Optional.IsDefined(ZoneRedundancyAvailable))
+            if (Optional.IsDefined(IsZoneRedundancyAvailable))
             {
                 writer.WritePropertyName("zoneRedundancyAvailable"u8);
-                writer.WriteBooleanValue(ZoneRedundancyAvailable.Value);
+                writer.WriteBooleanValue(IsZoneRedundancyAvailable.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ArcData.Models
             string hardwareType = default;
             string sqlPurchasingModel = default;
             string sqlServiceTier = default;
-            bool? zoneRedundancyAvailable = default;
+            bool? isZoneRedundancyAvailable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    zoneRedundancyAvailable = prop.Value.GetBoolean();
+                    isZoneRedundancyAvailable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 hardwareType,
                 sqlPurchasingModel,
                 sqlServiceTier,
-                zoneRedundancyAvailable,
+                isZoneRedundancyAvailable,
                 additionalBinaryDataProperties);
         }
     }

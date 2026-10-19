@@ -356,11 +356,11 @@ namespace Azure.ResourceManager.ArcData.Mocking
             return GetSqlServerEsuLicenses().Get(sqlServerEsuLicenseName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataControllerResources in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of DataControllerResources and their operations over a DataControllerResource. </returns>
-        public virtual DataControllerResourceCollection GetDataControllerResources()
+        /// <summary> Gets a collection of DataControllers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DataControllers and their operations over a DataControllerResource. </returns>
+        public virtual DataControllerCollection GetDataControllers()
         {
-            return GetCachedClient(client => new DataControllerResourceCollection(client, Id));
+            return GetCachedClient(client => new DataControllerCollection(client, Id));
         }
 
         /// <summary>
@@ -385,11 +385,11 @@ namespace Azure.ResourceManager.ArcData.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="dataControllerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataControllerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataControllerResource>> GetDataControllerResourceAsync(string dataControllerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataControllerResource>> GetDataControllerAsync(string dataControllerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataControllerName, nameof(dataControllerName));
 
-            return await GetDataControllerResources().GetAsync(dataControllerName, cancellationToken).ConfigureAwait(false);
+            return await GetDataControllers().GetAsync(dataControllerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.ArcData.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="dataControllerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataControllerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataControllerResource> GetDataControllerResource(string dataControllerName, CancellationToken cancellationToken = default)
+        public virtual Response<DataControllerResource> GetDataController(string dataControllerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataControllerName, nameof(dataControllerName));
 
-            return GetDataControllerResources().Get(dataControllerName, cancellationToken);
+            return GetDataControllers().Get(dataControllerName, cancellationToken);
         }
     }
 }

@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> RC4. </summary>
         private const string RC4Value = "RC4";
         /// <summary> AES. </summary>
-        private const string AESValue = "AES";
+        private const string AesValue = "AES";
         /// <summary> NONE, RC4. </summary>
         private const string NoneRC4Value = "NONE, RC4";
         /// <summary> NONE, AES. </summary>
-        private const string NoneAESValue = "NONE, AES";
+        private const string NoneAesValue = "NONE, AES";
         /// <summary> RC4, AES. </summary>
-        private const string RC4AESValue = "RC4, AES";
+        private const string Rc4AesValue = "RC4, AES";
         /// <summary> AES, RC4. </summary>
-        private const string AESRC4Value = "AES, RC4";
+        private const string AesRc4Value = "AES, RC4";
         /// <summary> NONE, RC4, AES. </summary>
-        private const string NoneRC4AESValue = "NONE, RC4, AES";
+        private const string NoneRc4AesValue = "NONE, RC4, AES";
         /// <summary> NONE, AES, RC4. </summary>
-        private const string NoneAESRC4Value = "NONE, AES, RC4";
+        private const string NoneAesRc4Value = "NONE, AES, RC4";
 
         /// <summary> Initializes a new instance of <see cref="EncryptionAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -51,25 +51,25 @@ namespace Azure.ResourceManager.ArcData.Models
         public static EncryptionAlgorithm RC4 { get; } = new EncryptionAlgorithm(RC4Value);
 
         /// <summary> AES. </summary>
-        public static EncryptionAlgorithm AES { get; } = new EncryptionAlgorithm(AESValue);
+        public static EncryptionAlgorithm Aes { get; } = new EncryptionAlgorithm(AesValue);
 
         /// <summary> NONE, RC4. </summary>
         public static EncryptionAlgorithm NoneRC4 { get; } = new EncryptionAlgorithm(NoneRC4Value);
 
         /// <summary> NONE, AES. </summary>
-        public static EncryptionAlgorithm NoneAES { get; } = new EncryptionAlgorithm(NoneAESValue);
+        public static EncryptionAlgorithm NoneAes { get; } = new EncryptionAlgorithm(NoneAesValue);
 
         /// <summary> RC4, AES. </summary>
-        public static EncryptionAlgorithm RC4AES { get; } = new EncryptionAlgorithm(RC4AESValue);
+        public static EncryptionAlgorithm Rc4Aes { get; } = new EncryptionAlgorithm(Rc4AesValue);
 
         /// <summary> AES, RC4. </summary>
-        public static EncryptionAlgorithm AESRC4 { get; } = new EncryptionAlgorithm(AESRC4Value);
+        public static EncryptionAlgorithm AesRc4 { get; } = new EncryptionAlgorithm(AesRc4Value);
 
         /// <summary> NONE, RC4, AES. </summary>
-        public static EncryptionAlgorithm NoneRC4AES { get; } = new EncryptionAlgorithm(NoneRC4AESValue);
+        public static EncryptionAlgorithm NoneRc4Aes { get; } = new EncryptionAlgorithm(NoneRc4AesValue);
 
         /// <summary> NONE, AES, RC4. </summary>
-        public static EncryptionAlgorithm NoneAESRC4 { get; } = new EncryptionAlgorithm(NoneAESRC4Value);
+        public static EncryptionAlgorithm NoneAesRc4 { get; } = new EncryptionAlgorithm(NoneAesRc4Value);
 
         /// <summary> Determines if two <see cref="EncryptionAlgorithm"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

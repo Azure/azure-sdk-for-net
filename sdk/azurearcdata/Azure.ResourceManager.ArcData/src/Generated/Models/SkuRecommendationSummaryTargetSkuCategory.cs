@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="hardwareType"> The hardware type of the target SKU. </param>
         /// <param name="sqlPurchasingModel"> The SQL purchasing model of the target SKU. </param>
         /// <param name="sqlServiceTier"> The SQL service tier of the target SKU. </param>
-        /// <param name="zoneRedundancyAvailable"> Indicates if zone redundancy is available for the target SKU. </param>
+        /// <param name="isZoneRedundancyAvailable"> Indicates if zone redundancy is available for the target SKU. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkuRecommendationSummaryTargetSkuCategory(string computeTier, string hardwareType, string sqlPurchasingModel, string sqlServiceTier, bool? zoneRedundancyAvailable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SkuRecommendationSummaryTargetSkuCategory(string computeTier, string hardwareType, string sqlPurchasingModel, string sqlServiceTier, bool? isZoneRedundancyAvailable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputeTier = computeTier;
             HardwareType = hardwareType;
             SqlPurchasingModel = sqlPurchasingModel;
             SqlServiceTier = sqlServiceTier;
-            ZoneRedundancyAvailable = zoneRedundancyAvailable;
+            IsZoneRedundancyAvailable = isZoneRedundancyAvailable;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public string SqlServiceTier { get; }
 
         /// <summary> Indicates if zone redundancy is available for the target SKU. </summary>
-        public bool? ZoneRedundancyAvailable { get; }
+        public bool? IsZoneRedundancyAvailable { get; }
     }
 }

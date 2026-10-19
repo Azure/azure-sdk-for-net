@@ -18,19 +18,19 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Unknown. </summary>
         private const string UnknownValue = "Unknown";
         /// <summary> SQL Server 2012. </summary>
-        private const string SQLServer2012Value = "SQL Server 2012";
+        private const string SqlServer2012Value = "SQL Server 2012";
         /// <summary> SQL Server 2014. </summary>
-        private const string SQLServer2014Value = "SQL Server 2014";
+        private const string SqlServer2014Value = "SQL Server 2014";
         /// <summary> SQL Server 2016. </summary>
-        private const string SQLServer2016Value = "SQL Server 2016";
+        private const string SqlServer2016Value = "SQL Server 2016";
         /// <summary> SQL Server 2017. </summary>
-        private const string SQLServer2017Value = "SQL Server 2017";
+        private const string SqlServer2017Value = "SQL Server 2017";
         /// <summary> SQL Server 2019. </summary>
-        private const string SQLServer2019Value = "SQL Server 2019";
+        private const string SqlServer2019Value = "SQL Server 2019";
         /// <summary> SQL Server 2022. </summary>
-        private const string SQLServer2022Value = "SQL Server 2022";
+        private const string SqlServer2022Value = "SQL Server 2022";
         /// <summary> SQL Server 2025. </summary>
-        private const string SQLServer2025Value = "SQL Server 2025";
+        private const string SqlServer2025Value = "SQL Server 2025";
 
         /// <summary> Initializes a new instance of <see cref="SqlVersion"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -46,25 +46,25 @@ namespace Azure.ResourceManager.ArcData.Models
         public static SqlVersion Unknown { get; } = new SqlVersion(UnknownValue);
 
         /// <summary> SQL Server 2012. </summary>
-        public static SqlVersion SQLServer2012 { get; } = new SqlVersion(SQLServer2012Value);
+        public static SqlVersion SqlServer2012 { get; } = new SqlVersion(SqlServer2012Value);
 
         /// <summary> SQL Server 2014. </summary>
-        public static SqlVersion SQLServer2014 { get; } = new SqlVersion(SQLServer2014Value);
+        public static SqlVersion SqlServer2014 { get; } = new SqlVersion(SqlServer2014Value);
 
         /// <summary> SQL Server 2016. </summary>
-        public static SqlVersion SQLServer2016 { get; } = new SqlVersion(SQLServer2016Value);
+        public static SqlVersion SqlServer2016 { get; } = new SqlVersion(SqlServer2016Value);
 
         /// <summary> SQL Server 2017. </summary>
-        public static SqlVersion SQLServer2017 { get; } = new SqlVersion(SQLServer2017Value);
+        public static SqlVersion SqlServer2017 { get; } = new SqlVersion(SqlServer2017Value);
 
         /// <summary> SQL Server 2019. </summary>
-        public static SqlVersion SQLServer2019 { get; } = new SqlVersion(SQLServer2019Value);
+        public static SqlVersion SqlServer2019 { get; } = new SqlVersion(SqlServer2019Value);
 
         /// <summary> SQL Server 2022. </summary>
-        public static SqlVersion SQLServer2022 { get; } = new SqlVersion(SQLServer2022Value);
+        public static SqlVersion SqlServer2022 { get; } = new SqlVersion(SqlServer2022Value);
 
         /// <summary> SQL Server 2025. </summary>
-        public static SqlVersion SQLServer2025 { get; } = new SqlVersion(SQLServer2025Value);
+        public static SqlVersion SqlServer2025 { get; } = new SqlVersion(SqlServer2025Value);
 
         /// <summary> Determines if two <see cref="SqlVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

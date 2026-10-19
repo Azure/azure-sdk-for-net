@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Initializes a new instance of <see cref="ArcDataSqlServerInstanceRunTargetRecommendationJobRequestContent"/>. </summary>
         /// <param name="resourceUpdateMode"> Controls whether the SQL Server instance resource is updated with the target recommendation details after the job completes. </param>
-        /// <param name="includeFileLevelRequirements"> Specifies whether to include file-level requirements in the target recommendation report. </param>
+        /// <param name="shouldIncludeFileLevelRequirements"> Specifies whether to include file-level requirements in the target recommendation report. </param>
         /// <param name="targetLocation"> The Azure region used for target SKU pricing and availability (e.g., 'westus', 'eastus2', 'westeurope'). </param>
         /// <param name="percentile"> The percentile of performance data points used for aggregation (Range: 1-100). </param>
         /// <param name="lookbackPeriodInDays"> The lookback period in days for performance data used in the target recommendation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcDataSqlServerInstanceRunTargetRecommendationJobRequestContent(ResourceUpdateMode? resourceUpdateMode, bool? includeFileLevelRequirements, string targetLocation, int? percentile, int? lookbackPeriodInDays, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArcDataSqlServerInstanceRunTargetRecommendationJobRequestContent(ResourceUpdateMode? resourceUpdateMode, bool? shouldIncludeFileLevelRequirements, string targetLocation, int? percentile, int? lookbackPeriodInDays, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceUpdateMode = resourceUpdateMode;
-            IncludeFileLevelRequirements = includeFileLevelRequirements;
+            ShouldIncludeFileLevelRequirements = shouldIncludeFileLevelRequirements;
             TargetLocation = targetLocation;
             Percentile = percentile;
             LookbackPeriodInDays = lookbackPeriodInDays;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public ResourceUpdateMode? ResourceUpdateMode { get; set; }
 
         /// <summary> Specifies whether to include file-level requirements in the target recommendation report. </summary>
-        public bool? IncludeFileLevelRequirements { get; set; }
+        public bool? ShouldIncludeFileLevelRequirements { get; set; }
 
         /// <summary> The Azure region used for target SKU pricing and availability (e.g., 'westus', 'eastus2', 'westeurope'). </summary>
         public string TargetLocation { get; set; }

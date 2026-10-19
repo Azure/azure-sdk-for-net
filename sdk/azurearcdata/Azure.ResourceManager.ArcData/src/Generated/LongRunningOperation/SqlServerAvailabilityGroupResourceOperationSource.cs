@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ArcData
         SqlServerAvailabilityGroupResource IOperationSource<SqlServerAvailabilityGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SqlServerAvailabilityGroupResourceData data = SqlServerAvailabilityGroupResourceData.DeserializeSqlServerAvailabilityGroupResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            SqlServerAvailabilityGroupData data = SqlServerAvailabilityGroupData.DeserializeSqlServerAvailabilityGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SqlServerAvailabilityGroupResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ArcData
         async ValueTask<SqlServerAvailabilityGroupResource> IOperationSource<SqlServerAvailabilityGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SqlServerAvailabilityGroupResourceData data = SqlServerAvailabilityGroupResourceData.DeserializeSqlServerAvailabilityGroupResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            SqlServerAvailabilityGroupData data = SqlServerAvailabilityGroupData.DeserializeSqlServerAvailabilityGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SqlServerAvailabilityGroupResource(_client, data);
         }
     }

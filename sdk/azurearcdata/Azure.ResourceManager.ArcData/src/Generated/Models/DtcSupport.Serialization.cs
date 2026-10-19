@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DtcSupport value) => value switch
         {
-            DtcSupport.PERDB => "PER_DB",
+            DtcSupport.PerDb => "PER_DB",
             DtcSupport.None => "NONE",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DtcSupport value.")
         };
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ArcData.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "PER_DB"))
             {
-                return DtcSupport.PERDB;
+                return DtcSupport.PerDb;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "NONE"))
             {

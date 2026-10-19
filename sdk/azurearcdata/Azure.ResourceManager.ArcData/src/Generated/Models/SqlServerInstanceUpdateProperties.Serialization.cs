@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (options.Format != "W" && Optional.IsDefined(DBMasterKeyExists))
+            if (options.Format != "W" && Optional.IsDefined(HasDbMasterKey))
             {
                 writer.WritePropertyName("dbMasterKeyExists"u8);
-                writer.WriteBooleanValue(DBMasterKeyExists.Value);
+                writer.WriteBooleanValue(HasDbMasterKey.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(IsHadrEnabled))
             {
@@ -229,10 +229,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 writer.WritePropertyName("upgradeLockedUntil"u8);
                 writer.WriteStringValue(UpgradeLockedUntil.Value, "O");
             }
-            if (Optional.IsDefined(Monitoring))
+            if (Optional.IsDefined(IsMonitoring))
             {
                 writer.WritePropertyName("monitoring"u8);
-                writer.WriteObjectValue(Monitoring, options);
+                writer.WriteObjectValue(IsMonitoring, options);
             }
             if (Optional.IsDefined(Migration))
             {
@@ -244,10 +244,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 writer.WritePropertyName("bestPracticesAssessment"u8);
                 writer.WriteObjectValue(BestPracticesAssessment, options);
             }
-            if (Optional.IsDefined(ClientConnection))
+            if (Optional.IsDefined(IsClientConnection))
             {
                 writer.WritePropertyName("clientConnection"u8);
-                writer.WriteObjectValue(ClientConnection, options);
+                writer.WriteObjectValue(IsClientConnection, options);
             }
             if (Optional.IsDefined(ServiceType))
             {
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ArcData.Models
             DiscoverySource? discoverySource = default;
             string patchLevel = default;
             string collation = default;
-            bool? dbMasterKeyExists = default;
+            bool? hasDbMasterKey = default;
             bool? isHadrEnabled = default;
             IReadOnlyList<int> traceFlags = default;
             string currentVersion = default;
@@ -351,10 +351,10 @@ namespace Azure.ResourceManager.ArcData.Models
             FailoverCluster failoverCluster = default;
             BackupPolicy backupPolicy = default;
             DateTimeOffset? upgradeLockedUntil = default;
-            Monitoring monitoring = default;
+            Monitoring isMonitoring = default;
             SqlServerInstanceMigration migration = default;
             BestPracticesAssessment bestPracticesAssessment = default;
-            ClientConnection clientConnection = default;
+            ClientConnection isClientConnection = default;
             ServiceType? serviceType = default;
             SqlServerAuthentication authentication = default;
             DbmEndpoint databaseMirroringEndpoint = default;
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    dbMasterKeyExists = prop.Value.GetBoolean();
+                    hasDbMasterKey = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("isHadrEnabled"u8))
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    monitoring = Monitoring.DeserializeMonitoring(prop.Value, options);
+                    isMonitoring = Monitoring.DeserializeMonitoring(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("migration"u8))
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    clientConnection = ClientConnection.DeserializeClientConnection(prop.Value, options);
+                    isClientConnection = ClientConnection.DeserializeClientConnection(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("serviceType"u8))
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 discoverySource,
                 patchLevel,
                 collation,
-                dbMasterKeyExists,
+                hasDbMasterKey,
                 isHadrEnabled,
                 traceFlags ?? new ChangeTrackingList<int>(),
                 currentVersion,
@@ -713,10 +713,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 failoverCluster,
                 backupPolicy,
                 upgradeLockedUntil,
-                monitoring,
+                isMonitoring,
                 migration,
                 bestPracticesAssessment,
-                clientConnection,
+                isClientConnection,
                 serviceType,
                 authentication,
                 databaseMirroringEndpoint,

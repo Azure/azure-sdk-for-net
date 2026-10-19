@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ArcData
 {
     /// <summary></summary>
-    public partial class SqlServerAvailabilityGroupResource : IJsonModel<SqlServerAvailabilityGroupResourceData>
+    public partial class SqlServerAvailabilityGroupResource : IJsonModel<SqlServerAvailabilityGroupData>
     {
-        private static IJsonModel<SqlServerAvailabilityGroupResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<SqlServerAvailabilityGroupData> s_dataDeserializationInstance;
 
-        private static IJsonModel<SqlServerAvailabilityGroupResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlServerAvailabilityGroupResourceData();
+        private static IJsonModel<SqlServerAvailabilityGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlServerAvailabilityGroupData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SqlServerAvailabilityGroupResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerAvailabilityGroupResourceData>)Data).Write(writer, options);
+        void IJsonModel<SqlServerAvailabilityGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerAvailabilityGroupData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SqlServerAvailabilityGroupResourceData IJsonModel<SqlServerAvailabilityGroupResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        SqlServerAvailabilityGroupData IJsonModel<SqlServerAvailabilityGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SqlServerAvailabilityGroupResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerAvailabilityGroupResourceData>(Data, options, AzureResourceManagerArcDataContext.Default);
+        BinaryData IPersistableModel<SqlServerAvailabilityGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerAvailabilityGroupData>(Data, options, AzureResourceManagerArcDataContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SqlServerAvailabilityGroupResourceData IPersistableModel<SqlServerAvailabilityGroupResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerAvailabilityGroupResourceData>(data, options, AzureResourceManagerArcDataContext.Default);
+        SqlServerAvailabilityGroupData IPersistableModel<SqlServerAvailabilityGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerAvailabilityGroupData>(data, options, AzureResourceManagerArcDataContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SqlServerAvailabilityGroupResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<SqlServerAvailabilityGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

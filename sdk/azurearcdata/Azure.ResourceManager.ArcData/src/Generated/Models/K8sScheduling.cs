@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Initializes a new instance of <see cref="K8sScheduling"/>. </summary>
         /// <param name="default"> The kubernetes scheduling options. It describes restrictions used to help Kubernetes select appropriate nodes to host the database service. </param>
         /// <param name="additionalProperties"></param>
-        internal K8sScheduling(K8sSchedulingOptions @default, IDictionary<string, BinaryData> additionalProperties)
+        internal K8sScheduling(K8sSchedulingConfig @default, IDictionary<string, BinaryData> additionalProperties)
         {
             Default = @default;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> The kubernetes scheduling options. It describes restrictions used to help Kubernetes select appropriate nodes to host the database service. </summary>
-        public K8sSchedulingOptions Default { get; set; }
+        public K8sSchedulingConfig Default { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;

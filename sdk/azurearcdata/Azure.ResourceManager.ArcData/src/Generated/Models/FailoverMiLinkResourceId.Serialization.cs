@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 writer.WritePropertyName("managedInstanceId"u8);
                 writer.WriteStringValue(ManagedInstanceId);
             }
-            if (Optional.IsDefined(Force))
+            if (Optional.IsDefined(ShouldForce))
             {
                 writer.WritePropertyName("force"u8);
-                writer.WriteBooleanValue(Force.Value);
+                writer.WriteBooleanValue(ShouldForce.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 return null;
             }
             ResourceIdentifier managedInstanceId = default;
-            bool? force = default;
+            bool? shouldForce = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    force = prop.Value.GetBoolean();
+                    shouldForce = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FailoverMiLinkResourceId(managedInstanceId, force, additionalBinaryDataProperties);
+            return new FailoverMiLinkResourceId(managedInstanceId, shouldForce, additionalBinaryDataProperties);
         }
     }
 }

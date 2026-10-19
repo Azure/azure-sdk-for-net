@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (DataControllerResourceData item in Value)
+                foreach (DataControllerData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            IList<DataControllerResourceData> value = default;
+            IList<DataControllerData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    List<DataControllerResourceData> array = new List<DataControllerResourceData>();
+                    List<DataControllerData> array = new List<DataControllerData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DataControllerResourceData.DeserializeDataControllerResourceData(item, options));
+                        array.Add(DataControllerData.DeserializeDataControllerData(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PageOfDataControllerResource(value ?? new ChangeTrackingList<DataControllerResourceData>(), nextLink, additionalBinaryDataProperties);
+            return new PageOfDataControllerResource(value ?? new ChangeTrackingList<DataControllerData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

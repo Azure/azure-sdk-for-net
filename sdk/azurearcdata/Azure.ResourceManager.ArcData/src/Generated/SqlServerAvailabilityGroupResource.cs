@@ -21,15 +21,15 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.ArcData
 {
     /// <summary>
-    /// A class representing a SqlServerAvailabilityGroupResource along with the instance operations that can be performed on it.
+    /// A class representing a SqlServerAvailabilityGroup along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerAvailabilityGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerInstanceResource"/> using the GetSqlServerAvailabilityGroupResources method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerInstanceResource"/> using the GetSqlServerAvailabilityGroups method.
     /// </summary>
     public partial class SqlServerAvailabilityGroupResource : ArmResource
     {
         private readonly ClientDiagnostics _sqlServerAvailabilityGroupsClientDiagnostics;
         private readonly SqlServerAvailabilityGroups _sqlServerAvailabilityGroupsRestClient;
-        private readonly SqlServerAvailabilityGroupResourceData _data;
+        private readonly SqlServerAvailabilityGroupData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureArcData/sqlServerInstances/availabilityGroups";
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ArcData
         /// <summary> Initializes a new instance of <see cref="SqlServerAvailabilityGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SqlServerAvailabilityGroupResource(ArmClient client, SqlServerAvailabilityGroupResourceData data) : this(client, data.Id)
+        internal SqlServerAvailabilityGroupResource(ArmClient client, SqlServerAvailabilityGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlServerAvailabilityGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string sqlServerAvailabilityGroupResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string sqlServerAvailabilityGroupApiVersion);
             _sqlServerAvailabilityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArcData", ResourceType.Namespace, Diagnostics);
-            _sqlServerAvailabilityGroupsRestClient = new SqlServerAvailabilityGroups(_sqlServerAvailabilityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerAvailabilityGroupResourceApiVersion ?? "2026-03-01-preview");
+            _sqlServerAvailabilityGroupsRestClient = new SqlServerAvailabilityGroups(_sqlServerAvailabilityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerAvailabilityGroupApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ArcData
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual SqlServerAvailabilityGroupResourceData Data
+        public virtual SqlServerAvailabilityGroupData Data
         {
             get
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="patch"> The requested server availability group resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlServerAvailabilityGroupResource>> UpdateAsync(WaitUntil waitUntil, SqlServerAvailabilityGroupResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlServerAvailabilityGroupResource>> UpdateAsync(WaitUntil waitUntil, SqlServerAvailabilityGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlServerAvailabilityGroupResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlServerAvailabilityGroupPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArcDataArmOperation<SqlServerAvailabilityGroupResource> operation = new ArcDataArmOperation<SqlServerAvailabilityGroupResource>(
                     new SqlServerAvailabilityGroupResourceOperationSource(Client),
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="patch"> The requested server availability group resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<SqlServerAvailabilityGroupResource> Update(WaitUntil waitUntil, SqlServerAvailabilityGroupResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlServerAvailabilityGroupResource> Update(WaitUntil waitUntil, SqlServerAvailabilityGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlServerAvailabilityGroupResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlServerAvailabilityGroupPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArcDataArmOperation<SqlServerAvailabilityGroupResource> operation = new ArcDataArmOperation<SqlServerAvailabilityGroupResource>(
                     new SqlServerAvailabilityGroupResourceOperationSource(Client),
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateAddDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, Databases.ToRequestContent(databases), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateAddDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, Databases.ToRequestContent(databases), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateDetailViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateDetailViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateForceFailoverAllowDataLossRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1001,7 +1001,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateForceFailoverAllowDataLossRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateRemoveDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, Databases.ToRequestContent(databases), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1105,7 +1105,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateRemoveDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, Databases.ToRequestContent(databases), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1144,13 +1144,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                    Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SqlServerAvailabilityGroupResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SqlServerAvailabilityGroupResourcePatch patch = new SqlServerAvailabilityGroupResourcePatch();
+                    SqlServerAvailabilityGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SqlServerAvailabilityGroupPatch patch = new SqlServerAvailabilityGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1192,13 +1192,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                    Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SqlServerAvailabilityGroupResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SqlServerAvailabilityGroupResourcePatch patch = new SqlServerAvailabilityGroupResourcePatch();
+                    SqlServerAvailabilityGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SqlServerAvailabilityGroupPatch patch = new SqlServerAvailabilityGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1238,13 +1238,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                    Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SqlServerAvailabilityGroupResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SqlServerAvailabilityGroupResourcePatch patch = new SqlServerAvailabilityGroupResourcePatch();
+                    SqlServerAvailabilityGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SqlServerAvailabilityGroupPatch patch = new SqlServerAvailabilityGroupPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<SqlServerAvailabilityGroupResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1280,13 +1280,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                    Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SqlServerAvailabilityGroupResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SqlServerAvailabilityGroupResourcePatch patch = new SqlServerAvailabilityGroupResourcePatch();
+                    SqlServerAvailabilityGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SqlServerAvailabilityGroupPatch patch = new SqlServerAvailabilityGroupPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<SqlServerAvailabilityGroupResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1322,13 +1322,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                    Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SqlServerAvailabilityGroupResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SqlServerAvailabilityGroupResourcePatch patch = new SqlServerAvailabilityGroupResourcePatch();
+                    SqlServerAvailabilityGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SqlServerAvailabilityGroupPatch patch = new SqlServerAvailabilityGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1368,13 +1368,13 @@ namespace Azure.ResourceManager.ArcData
                     };
                     HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SqlServerAvailabilityGroupResourceData> response = Response.FromValue(SqlServerAvailabilityGroupResourceData.FromResponse(result), result);
+                    Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SqlServerAvailabilityGroupResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SqlServerAvailabilityGroupResourcePatch patch = new SqlServerAvailabilityGroupResourcePatch();
+                    SqlServerAvailabilityGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SqlServerAvailabilityGroupPatch patch = new SqlServerAvailabilityGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

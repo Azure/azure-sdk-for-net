@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ArcData
 {
     /// <summary>
-    /// A class representing a FailoverGroupResource along with the instance operations that can be performed on it.
+    /// A class representing a FailoverGroup along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FailoverGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlManagedInstanceResource"/> using the GetFailoverGroupResources method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlManagedInstanceResource"/> using the GetFailoverGroups method.
     /// </summary>
     public partial class FailoverGroupResource : ArmResource
     {
         private readonly ClientDiagnostics _failoverGroupsClientDiagnostics;
         private readonly FailoverGroups _failoverGroupsRestClient;
-        private readonly FailoverGroupResourceData _data;
+        private readonly FailoverGroupData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureArcData/sqlManagedInstances/failoverGroups";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ArcData
         /// <summary> Initializes a new instance of <see cref="FailoverGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal FailoverGroupResource(ArmClient client, FailoverGroupResourceData data) : this(client, data.Id)
+        internal FailoverGroupResource(ArmClient client, FailoverGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FailoverGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string failoverGroupResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string failoverGroupApiVersion);
             _failoverGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArcData", ResourceType.Namespace, Diagnostics);
-            _failoverGroupsRestClient = new FailoverGroups(_failoverGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, failoverGroupResourceApiVersion ?? "2026-03-01-preview");
+            _failoverGroupsRestClient = new FailoverGroups(_failoverGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, failoverGroupApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ArcData
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual FailoverGroupResourceData Data
+        public virtual FailoverGroupData Data
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _failoverGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FailoverGroupResourceData> response = Response.FromValue(FailoverGroupResourceData.FromResponse(result), result);
+                Response<FailoverGroupData> response = Response.FromValue(FailoverGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _failoverGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<FailoverGroupResourceData> response = Response.FromValue(FailoverGroupResourceData.FromResponse(result), result);
+                Response<FailoverGroupData> response = Response.FromValue(FailoverGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ArcData
         }
 
         /// <summary>
-        /// Update a FailoverGroupResource.
+        /// Update a FailoverGroup.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="data"> desc. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<FailoverGroupResource>> UpdateAsync(WaitUntil waitUntil, FailoverGroupResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FailoverGroupResource>> UpdateAsync(WaitUntil waitUntil, FailoverGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _failoverGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, FailoverGroupResourceData.ToRequestContent(data), context);
+                HttpMessage message = _failoverGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, FailoverGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArcDataArmOperation<FailoverGroupResource> operation = new ArcDataArmOperation<FailoverGroupResource>(
                     new FailoverGroupResourceOperationSource(Client),
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ArcData
         }
 
         /// <summary>
-        /// Update a FailoverGroupResource.
+        /// Update a FailoverGroup.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="data"> desc. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<FailoverGroupResource> Update(WaitUntil waitUntil, FailoverGroupResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FailoverGroupResource> Update(WaitUntil waitUntil, FailoverGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _failoverGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, FailoverGroupResourceData.ToRequestContent(data), context);
+                HttpMessage message = _failoverGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, FailoverGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArcDataArmOperation<FailoverGroupResource> operation = new ArcDataArmOperation<FailoverGroupResource>(
                     new FailoverGroupResourceOperationSource(Client),

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Initializes a new instance of <see cref="PageOfDataControllerResource"/>. </summary>
         internal PageOfDataControllerResource()
         {
-            Value = new ChangeTrackingList<DataControllerResourceData>();
+            Value = new ChangeTrackingList<DataControllerData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PageOfDataControllerResource"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PageOfDataControllerResource(IList<DataControllerResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PageOfDataControllerResource(IList<DataControllerData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> Array of results. </summary>
-        public IList<DataControllerResourceData> Value { get; }
+        public IList<DataControllerData> Value { get; }
 
         /// <summary> Link to retrieve next page of results. </summary>
         public Uri NextLink { get; }

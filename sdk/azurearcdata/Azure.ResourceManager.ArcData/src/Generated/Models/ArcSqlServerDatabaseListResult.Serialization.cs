@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (SqlServerDatabaseResourceData item in Value)
+                foreach (SqlServerDatabaseData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            IReadOnlyList<SqlServerDatabaseResourceData> value = default;
+            IReadOnlyList<SqlServerDatabaseData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    List<SqlServerDatabaseResourceData> array = new List<SqlServerDatabaseResourceData>();
+                    List<SqlServerDatabaseData> array = new List<SqlServerDatabaseData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerDatabaseResourceData.DeserializeSqlServerDatabaseResourceData(item, options));
+                        array.Add(SqlServerDatabaseData.DeserializeSqlServerDatabaseData(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ArcSqlServerDatabaseListResult(value ?? new ChangeTrackingList<SqlServerDatabaseResourceData>(), nextLink, additionalBinaryDataProperties);
+            return new ArcSqlServerDatabaseListResult(value ?? new ChangeTrackingList<SqlServerDatabaseData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

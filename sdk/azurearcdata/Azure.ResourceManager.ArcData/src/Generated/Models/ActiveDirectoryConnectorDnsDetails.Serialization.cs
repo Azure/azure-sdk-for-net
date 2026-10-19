@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 writer.WritePropertyName("replicas"u8);
                 writer.WriteNumberValue(Replicas.Value);
             }
-            if (Optional.IsDefined(PreferK8sDnsForPtrLookups))
+            if (Optional.IsDefined(ShouldPreferK8sDnsForPtrLookups))
             {
                 writer.WritePropertyName("preferK8sDnsForPtrLookups"u8);
-                writer.WriteBooleanValue(PreferK8sDnsForPtrLookups.Value);
+                writer.WriteBooleanValue(ShouldPreferK8sDnsForPtrLookups.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ArcData.Models
             string domainName = default;
             IList<string> nameserverIPAddresses = default;
             long? replicas = default;
-            bool? preferK8sDnsForPtrLookups = default;
+            bool? shouldPreferK8sDnsForPtrLookups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    preferK8sDnsForPtrLookups = prop.Value.GetBoolean();
+                    shouldPreferK8sDnsForPtrLookups = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ActiveDirectoryConnectorDnsDetails(domainName, nameserverIPAddresses ?? new ChangeTrackingList<string>(), replicas, preferK8sDnsForPtrLookups, additionalBinaryDataProperties);
+            return new ActiveDirectoryConnectorDnsDetails(domainName, nameserverIPAddresses ?? new ChangeTrackingList<string>(), replicas, shouldPreferK8sDnsForPtrLookups, additionalBinaryDataProperties);
         }
     }
 }

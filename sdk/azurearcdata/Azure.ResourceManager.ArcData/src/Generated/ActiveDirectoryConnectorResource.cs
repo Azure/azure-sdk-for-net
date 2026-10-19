@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ArcData
 {
     /// <summary>
-    /// A class representing a ActiveDirectoryConnectorResource along with the instance operations that can be performed on it.
+    /// A class representing a ActiveDirectoryConnector along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ActiveDirectoryConnectorResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataControllerResource"/> using the GetActiveDirectoryConnectorResources method.
+    /// Otherwise you can get one from its parent resource <see cref="DataControllerResource"/> using the GetActiveDirectoryConnectors method.
     /// </summary>
     public partial class ActiveDirectoryConnectorResource : ArmResource
     {
         private readonly ClientDiagnostics _activeDirectoryConnectorsClientDiagnostics;
         private readonly ActiveDirectoryConnectors _activeDirectoryConnectorsRestClient;
-        private readonly ActiveDirectoryConnectorResourceData _data;
+        private readonly ActiveDirectoryConnectorData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureArcData/dataControllers/activeDirectoryConnectors";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ArcData
         /// <summary> Initializes a new instance of <see cref="ActiveDirectoryConnectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ActiveDirectoryConnectorResource(ArmClient client, ActiveDirectoryConnectorResourceData data) : this(client, data.Id)
+        internal ActiveDirectoryConnectorResource(ArmClient client, ActiveDirectoryConnectorData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ActiveDirectoryConnectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string activeDirectoryConnectorResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string activeDirectoryConnectorApiVersion);
             _activeDirectoryConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArcData", ResourceType.Namespace, Diagnostics);
-            _activeDirectoryConnectorsRestClient = new ActiveDirectoryConnectors(_activeDirectoryConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, activeDirectoryConnectorResourceApiVersion ?? "2026-03-01-preview");
+            _activeDirectoryConnectorsRestClient = new ActiveDirectoryConnectors(_activeDirectoryConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, activeDirectoryConnectorApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ArcData
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ActiveDirectoryConnectorResourceData Data
+        public virtual ActiveDirectoryConnectorData Data
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _activeDirectoryConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ActiveDirectoryConnectorResourceData> response = Response.FromValue(ActiveDirectoryConnectorResourceData.FromResponse(result), result);
+                Response<ActiveDirectoryConnectorData> response = Response.FromValue(ActiveDirectoryConnectorData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ArcData
                 };
                 HttpMessage message = _activeDirectoryConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ActiveDirectoryConnectorResourceData> response = Response.FromValue(ActiveDirectoryConnectorResourceData.FromResponse(result), result);
+                Response<ActiveDirectoryConnectorData> response = Response.FromValue(ActiveDirectoryConnectorData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ArcData
         }
 
         /// <summary>
-        /// Update a ActiveDirectoryConnectorResource.
+        /// Update a ActiveDirectoryConnector.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="data"> desc. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ActiveDirectoryConnectorResource>> UpdateAsync(WaitUntil waitUntil, ActiveDirectoryConnectorResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ActiveDirectoryConnectorResource>> UpdateAsync(WaitUntil waitUntil, ActiveDirectoryConnectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _activeDirectoryConnectorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ActiveDirectoryConnectorResourceData.ToRequestContent(data), context);
+                HttpMessage message = _activeDirectoryConnectorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ActiveDirectoryConnectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArcDataArmOperation<ActiveDirectoryConnectorResource> operation = new ArcDataArmOperation<ActiveDirectoryConnectorResource>(
                     new ActiveDirectoryConnectorResourceOperationSource(Client),
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ArcData
         }
 
         /// <summary>
-        /// Update a ActiveDirectoryConnectorResource.
+        /// Update a ActiveDirectoryConnector.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ArcData
         /// <param name="data"> desc. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ActiveDirectoryConnectorResource> Update(WaitUntil waitUntil, ActiveDirectoryConnectorResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ActiveDirectoryConnectorResource> Update(WaitUntil waitUntil, ActiveDirectoryConnectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _activeDirectoryConnectorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ActiveDirectoryConnectorResourceData.ToRequestContent(data), context);
+                HttpMessage message = _activeDirectoryConnectorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ActiveDirectoryConnectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArcDataArmOperation<ActiveDirectoryConnectorResource> operation = new ArcDataArmOperation<ActiveDirectoryConnectorResource>(
                     new ActiveDirectoryConnectorResourceOperationSource(Client),

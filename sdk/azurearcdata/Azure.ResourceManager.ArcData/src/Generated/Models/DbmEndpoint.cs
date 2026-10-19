@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ArcData.Models
             ConnectionAuth = connectionAuth;
             Port = port;
             IsDynamicPort = isDynamicPort;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             CertificateName = certificateName;
             CertificateExpiryOn = certificateExpiryOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -68,6 +68,9 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Is the port number dynamically assigned. </summary>
         public bool? IsDynamicPort { get; }
+
+        /// <summary> Listener IP address. </summary>
+        public string IPAddress { get; }
 
         /// <summary> Name of the certificate. </summary>
         public string CertificateName { get; }

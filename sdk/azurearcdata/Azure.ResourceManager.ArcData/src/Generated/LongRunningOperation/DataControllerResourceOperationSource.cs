@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ArcData
         DataControllerResource IOperationSource<DataControllerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DataControllerResourceData data = DataControllerResourceData.DeserializeDataControllerResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            DataControllerData data = DataControllerData.DeserializeDataControllerData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DataControllerResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ArcData
         async ValueTask<DataControllerResource> IOperationSource<DataControllerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DataControllerResourceData data = DataControllerResourceData.DeserializeDataControllerResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            DataControllerData data = DataControllerData.DeserializeDataControllerData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DataControllerResource(_client, data);
         }
     }

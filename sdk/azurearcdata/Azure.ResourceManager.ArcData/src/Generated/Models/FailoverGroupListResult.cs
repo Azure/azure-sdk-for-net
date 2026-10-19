@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Initializes a new instance of <see cref="FailoverGroupListResult"/>. </summary>
         internal FailoverGroupListResult()
         {
-            Value = new ChangeTrackingList<FailoverGroupResourceData>();
+            Value = new ChangeTrackingList<FailoverGroupData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FailoverGroupListResult"/>. </summary>
         /// <param name="value"> Array of failover group results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FailoverGroupListResult(IReadOnlyList<FailoverGroupResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FailoverGroupListResult(IReadOnlyList<FailoverGroupData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> Array of failover group results. </summary>
-        public IReadOnlyList<FailoverGroupResourceData> Value { get; }
+        public IReadOnlyList<FailoverGroupData> Value { get; }
 
         /// <summary> Link to retrieve next page of results. </summary>
         public Uri NextLink { get; }

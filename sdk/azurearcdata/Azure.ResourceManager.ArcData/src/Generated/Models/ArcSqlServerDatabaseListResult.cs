@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Initializes a new instance of <see cref="ArcSqlServerDatabaseListResult"/>. </summary>
         internal ArcSqlServerDatabaseListResult()
         {
-            Value = new ChangeTrackingList<SqlServerDatabaseResourceData>();
+            Value = new ChangeTrackingList<SqlServerDatabaseData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcSqlServerDatabaseListResult"/>. </summary>
         /// <param name="value"> Array of  Arc Sql Server database. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcSqlServerDatabaseListResult(IReadOnlyList<SqlServerDatabaseResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArcSqlServerDatabaseListResult(IReadOnlyList<SqlServerDatabaseData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> Array of  Arc Sql Server database. </summary>
-        public IReadOnlyList<SqlServerDatabaseResourceData> Value { get; }
+        public IReadOnlyList<SqlServerDatabaseData> Value { get; }
 
         /// <summary> Link to retrieve next page of results. </summary>
         public Uri NextLink { get; }
