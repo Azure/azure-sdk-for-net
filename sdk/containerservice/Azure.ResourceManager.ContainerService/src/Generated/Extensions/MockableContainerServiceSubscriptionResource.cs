@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> An object representing collection of MeshRevisionProfiles and their operations over a MeshRevisionProfileResource. </returns>
         public virtual MeshRevisionProfileCollection GetMeshRevisionProfiles(AzureLocation location)
         {
-            return GetCachedClient(client => new MeshRevisionProfileCollection(client, Id, location));
+            return new MeshRevisionProfileCollection(Client, Id, location);
         }
 
         /// <summary>

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <returns> An object representing collection of MySqlFlexibleServersCapabilities and their operations over a MySqlFlexibleServersCapabilityResource. </returns>
         public virtual MySqlFlexibleServersCapabilityCollection GetMySqlFlexibleServersCapabilities(AzureLocation locationName)
         {
-            return GetCachedClient(client => new MySqlFlexibleServersCapabilityCollection(client, Id, locationName));
+            return new MySqlFlexibleServersCapabilityCollection(Client, Id, locationName);
         }
 
         /// <summary>
