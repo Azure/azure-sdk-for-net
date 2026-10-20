@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> An object representing collection of OsImages and their operations over a OsImageResource. </returns>
         public virtual OsImageCollection GetOsImages(AzureLocation location)
         {
-            return GetCachedClient(client => new OsImageCollection(client, Id, location));
+            return new OsImageCollection(Client, Id, location);
         }
 
         /// <summary>
