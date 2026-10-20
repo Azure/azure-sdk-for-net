@@ -3,13 +3,8 @@
 ## 1.2.0-beta.12 (2026-10-20)
 
 ### Features Added
-Release ScheduledEvents Acknowledge Error Details classes
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Release ScheduledEvents Acknowledge Error Details classes.
 
 ## 1.2.0-beta.11 (2026-08-24)
 
