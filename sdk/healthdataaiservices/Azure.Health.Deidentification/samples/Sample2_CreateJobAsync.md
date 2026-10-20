@@ -6,6 +6,8 @@ This sample demonstrates how to create a job which will deidentify all files wit
 ## Create Job and Check Status
 
 ```C# Snippet:AzHealthDeidSample2Async_CreateJob
+// Job names must be unique within the service.
+string jobName = "my-job-" + Guid.NewGuid().ToString("N").Substring(0, 12);
 DeidentificationJob job = new()
 {
     SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "example_patient_1/"),

@@ -107,6 +107,8 @@ Your target Azure Storage account and container where documents will be written 
 
 Create a job to de-identify documents:
 ```C# Snippet:AzHealthDeidSample2_CreateJob
+// Job names must be unique within the service.
+string jobName = "my-job-" + Guid.NewGuid().ToString("N").Substring(0, 12);
 DeidentificationJob job = new()
 {
     SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "example_patient_1/"),

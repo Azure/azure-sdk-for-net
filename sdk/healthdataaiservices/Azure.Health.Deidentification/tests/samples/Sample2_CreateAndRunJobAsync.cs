@@ -27,10 +27,10 @@ namespace Azure.Health.Deidentification.Samples
             );
 
             string storageAccountUrl = TestEnvironment.GetStorageAccountLocation();
-            // Unique per run so repeated live runs against the same resource don't collide.
-            string jobName = $"net-sample-{Guid.NewGuid():N}".Substring(0, 23);
 
             #region Snippet:AzHealthDeidSample2Async_CreateJob
+            // Job names must be unique within the service.
+            string jobName = "my-job-" + Guid.NewGuid().ToString("N").Substring(0, 12);
             DeidentificationJob job = new()
             {
                 SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "example_patient_1/"),
