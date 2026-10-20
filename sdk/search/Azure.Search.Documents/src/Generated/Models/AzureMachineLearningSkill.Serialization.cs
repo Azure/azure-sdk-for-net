@@ -81,7 +81,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(AzureMachineLearningSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_scoringUriIsDefined || Optional.IsDefined(ScoringUri))
+            if (Optional.IsDefined(ScoringUri, _scoringUriIsDefined))
             {
                 if (ScoringUri != null)
                 {
@@ -93,7 +93,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("uri"u8);
                 }
             }
-            if (_authenticationKeyIsDefined || Optional.IsDefined(AuthenticationKey))
+            if (Optional.IsDefined(AuthenticationKey, _authenticationKeyIsDefined))
             {
                 if (AuthenticationKey != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (_timeoutIsDefined || Optional.IsDefined(Timeout))
+            if (Optional.IsDefined(Timeout, _timeoutIsDefined))
             {
                 if (Timeout != null)
                 {
@@ -127,7 +127,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (_degreeOfParallelismIsDefined || Optional.IsDefined(DegreeOfParallelism))
+            if (Optional.IsDefined(DegreeOfParallelism, _degreeOfParallelismIsDefined))
             {
                 if (DegreeOfParallelism != null)
                 {

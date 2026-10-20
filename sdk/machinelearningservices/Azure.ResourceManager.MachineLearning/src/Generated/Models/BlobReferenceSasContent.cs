@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _assetId;
+        internal bool _assetIdIsDefined;
+        private Uri _blobUri;
+        internal bool _blobUriIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BlobReferenceSasContent"/>. </summary>
         public BlobReferenceSasContent()
@@ -28,17 +32,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BlobReferenceSasContent(string assetId, Uri blobUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AssetId = assetId;
-            BlobUri = blobUri;
+            _assetId = assetId;
+            _blobUri = blobUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Id of the asset to be accessed. </summary>
         [WirePath("assetId")]
-        public string AssetId { get; set; }
+        public string AssetId
+        {
+            get
+            {
+                return _assetId;
+            }
+            set
+            {
+                _assetId = value;
+                _assetIdIsDefined = true;
+            }
+        }
 
         /// <summary> Blob uri of the asset to be accessed. </summary>
         [WirePath("blobUri")]
-        public Uri BlobUri { get; set; }
+        public Uri BlobUri
+        {
+            get
+            {
+                return _blobUri;
+            }
+            set
+            {
+                _blobUri = value;
+                _blobUriIsDefined = true;
+            }
+        }
     }
 }

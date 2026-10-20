@@ -31,6 +31,62 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _amsGradient;
+        internal bool _amsGradientIsDefined;
+        private string _augmentations;
+        internal bool _augmentationsIsDefined;
+        private string _beta1;
+        internal bool _beta1IsDefined;
+        private string _beta2;
+        internal bool _beta2IsDefined;
+        private string _distributed;
+        internal bool _distributedIsDefined;
+        private string _earlyStopping;
+        internal bool _earlyStoppingIsDefined;
+        private string _earlyStoppingDelay;
+        internal bool _earlyStoppingDelayIsDefined;
+        private string _earlyStoppingPatience;
+        internal bool _earlyStoppingPatienceIsDefined;
+        private string _enableOnnxNormalization;
+        internal bool _enableOnnxNormalizationIsDefined;
+        private string _evaluationFrequency;
+        internal bool _evaluationFrequencyIsDefined;
+        private string _gradientAccumulationStep;
+        internal bool _gradientAccumulationStepIsDefined;
+        private string _layersToFreeze;
+        internal bool _layersToFreezeIsDefined;
+        private string _learningRate;
+        internal bool _learningRateIsDefined;
+        private string _learningRateScheduler;
+        internal bool _learningRateSchedulerIsDefined;
+        private string _modelName;
+        internal bool _modelNameIsDefined;
+        private string _momentum;
+        internal bool _momentumIsDefined;
+        private string _nesterov;
+        internal bool _nesterovIsDefined;
+        private string _numberOfEpochs;
+        internal bool _numberOfEpochsIsDefined;
+        private string _numberOfWorkers;
+        internal bool _numberOfWorkersIsDefined;
+        private string _optimizer;
+        internal bool _optimizerIsDefined;
+        private string _randomSeed;
+        internal bool _randomSeedIsDefined;
+        private string _stepLRGamma;
+        internal bool _stepLRGammaIsDefined;
+        private string _stepLRStepSize;
+        internal bool _stepLRStepSizeIsDefined;
+        private string _trainingBatchSize;
+        internal bool _trainingBatchSizeIsDefined;
+        private string _validationBatchSize;
+        internal bool _validationBatchSizeIsDefined;
+        private string _warmupCosineLRCycles;
+        internal bool _warmupCosineLRCyclesIsDefined;
+        private string _warmupCosineLRWarmupEpochs;
+        internal bool _warmupCosineLRWarmupEpochsIsDefined;
+        private string _weightDecay;
+        internal bool _weightDecayIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettings"/>. </summary>
         public ImageModelDistributionSettings()
@@ -88,82 +144,192 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ImageModelDistributionSettings(string amsGradient, string augmentations, string beta1, string beta2, string distributed, string earlyStopping, string earlyStoppingDelay, string earlyStoppingPatience, string enableOnnxNormalization, string evaluationFrequency, string gradientAccumulationStep, string layersToFreeze, string learningRate, string learningRateScheduler, string modelName, string momentum, string nesterov, string numberOfEpochs, string numberOfWorkers, string optimizer, string randomSeed, string stepLRGamma, string stepLRStepSize, string trainingBatchSize, string validationBatchSize, string warmupCosineLRCycles, string warmupCosineLRWarmupEpochs, string weightDecay, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AmsGradient = amsGradient;
-            Augmentations = augmentations;
-            Beta1 = beta1;
-            Beta2 = beta2;
-            Distributed = distributed;
-            EarlyStopping = earlyStopping;
-            EarlyStoppingDelay = earlyStoppingDelay;
-            EarlyStoppingPatience = earlyStoppingPatience;
-            EnableOnnxNormalization = enableOnnxNormalization;
-            EvaluationFrequency = evaluationFrequency;
-            GradientAccumulationStep = gradientAccumulationStep;
-            LayersToFreeze = layersToFreeze;
-            LearningRate = learningRate;
-            LearningRateScheduler = learningRateScheduler;
-            ModelName = modelName;
-            Momentum = momentum;
-            Nesterov = nesterov;
-            NumberOfEpochs = numberOfEpochs;
-            NumberOfWorkers = numberOfWorkers;
-            Optimizer = optimizer;
-            RandomSeed = randomSeed;
-            StepLRGamma = stepLRGamma;
-            StepLRStepSize = stepLRStepSize;
-            TrainingBatchSize = trainingBatchSize;
-            ValidationBatchSize = validationBatchSize;
-            WarmupCosineLRCycles = warmupCosineLRCycles;
-            WarmupCosineLRWarmupEpochs = warmupCosineLRWarmupEpochs;
-            WeightDecay = weightDecay;
+            _amsGradient = amsGradient;
+            _augmentations = augmentations;
+            _beta1 = beta1;
+            _beta2 = beta2;
+            _distributed = distributed;
+            _earlyStopping = earlyStopping;
+            _earlyStoppingDelay = earlyStoppingDelay;
+            _earlyStoppingPatience = earlyStoppingPatience;
+            _enableOnnxNormalization = enableOnnxNormalization;
+            _evaluationFrequency = evaluationFrequency;
+            _gradientAccumulationStep = gradientAccumulationStep;
+            _layersToFreeze = layersToFreeze;
+            _learningRate = learningRate;
+            _learningRateScheduler = learningRateScheduler;
+            _modelName = modelName;
+            _momentum = momentum;
+            _nesterov = nesterov;
+            _numberOfEpochs = numberOfEpochs;
+            _numberOfWorkers = numberOfWorkers;
+            _optimizer = optimizer;
+            _randomSeed = randomSeed;
+            _stepLRGamma = stepLRGamma;
+            _stepLRStepSize = stepLRStepSize;
+            _trainingBatchSize = trainingBatchSize;
+            _validationBatchSize = validationBatchSize;
+            _warmupCosineLRCycles = warmupCosineLRCycles;
+            _warmupCosineLRWarmupEpochs = warmupCosineLRWarmupEpochs;
+            _weightDecay = weightDecay;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </summary>
         [WirePath("amsGradient")]
-        public string AmsGradient { get; set; }
+        public string AmsGradient
+        {
+            get
+            {
+                return _amsGradient;
+            }
+            set
+            {
+                _amsGradient = value;
+                _amsGradientIsDefined = true;
+            }
+        }
 
         /// <summary> Settings for using Augmentations. </summary>
         [WirePath("augmentations")]
-        public string Augmentations { get; set; }
+        public string Augmentations
+        {
+            get
+            {
+                return _augmentations;
+            }
+            set
+            {
+                _augmentations = value;
+                _augmentationsIsDefined = true;
+            }
+        }
 
         /// <summary> Value of 'beta1' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </summary>
         [WirePath("beta1")]
-        public string Beta1 { get; set; }
+        public string Beta1
+        {
+            get
+            {
+                return _beta1;
+            }
+            set
+            {
+                _beta1 = value;
+                _beta1IsDefined = true;
+            }
+        }
 
         /// <summary> Value of 'beta2' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </summary>
         [WirePath("beta2")]
-        public string Beta2 { get; set; }
+        public string Beta2
+        {
+            get
+            {
+                return _beta2;
+            }
+            set
+            {
+                _beta2 = value;
+                _beta2IsDefined = true;
+            }
+        }
 
         /// <summary> Whether to use distributer training. </summary>
         [WirePath("distributed")]
-        public string Distributed { get; set; }
+        public string Distributed
+        {
+            get
+            {
+                return _distributed;
+            }
+            set
+            {
+                _distributed = value;
+                _distributedIsDefined = true;
+            }
+        }
 
         /// <summary> Enable early stopping logic during training. </summary>
         [WirePath("earlyStopping")]
-        public string EarlyStopping { get; set; }
+        public string EarlyStopping
+        {
+            get
+            {
+                return _earlyStopping;
+            }
+            set
+            {
+                _earlyStopping = value;
+                _earlyStoppingIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Minimum number of epochs or validation evaluations to wait before primary metric improvement
         /// is tracked for early stopping. Must be a positive integer.
         /// </summary>
         [WirePath("earlyStoppingDelay")]
-        public string EarlyStoppingDelay { get; set; }
+        public string EarlyStoppingDelay
+        {
+            get
+            {
+                return _earlyStoppingDelay;
+            }
+            set
+            {
+                _earlyStoppingDelay = value;
+                _earlyStoppingDelayIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Minimum number of epochs or validation evaluations with no primary metric improvement before
         /// the run is stopped. Must be a positive integer.
         /// </summary>
         [WirePath("earlyStoppingPatience")]
-        public string EarlyStoppingPatience { get; set; }
+        public string EarlyStoppingPatience
+        {
+            get
+            {
+                return _earlyStoppingPatience;
+            }
+            set
+            {
+                _earlyStoppingPatience = value;
+                _earlyStoppingPatienceIsDefined = true;
+            }
+        }
 
         /// <summary> Enable normalization when exporting ONNX model. </summary>
         [WirePath("enableOnnxNormalization")]
-        public string EnableOnnxNormalization { get; set; }
+        public string EnableOnnxNormalization
+        {
+            get
+            {
+                return _enableOnnxNormalization;
+            }
+            set
+            {
+                _enableOnnxNormalization = value;
+                _enableOnnxNormalizationIsDefined = true;
+            }
+        }
 
         /// <summary> Frequency to evaluate validation dataset to get metric scores. Must be a positive integer. </summary>
         [WirePath("evaluationFrequency")]
-        public string EvaluationFrequency { get; set; }
+        public string EvaluationFrequency
+        {
+            get
+            {
+                return _evaluationFrequency;
+            }
+            set
+            {
+                _evaluationFrequency = value;
+                _evaluationFrequencyIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Gradient accumulation means running a configured number of "GradAccumulationStep" steps without
@@ -171,7 +337,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// the accumulated gradients to compute the weight updates. Must be a positive integer.
         /// </summary>
         [WirePath("gradientAccumulationStep")]
-        public string GradientAccumulationStep { get; set; }
+        public string GradientAccumulationStep
+        {
+            get
+            {
+                return _gradientAccumulationStep;
+            }
+            set
+            {
+                _gradientAccumulationStep = value;
+                _gradientAccumulationStepIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Number of layers to freeze for the model. Must be a positive integer.
@@ -180,15 +357,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// see: https://docs.microsoft.com/en-us/azure/machine-learning/how-to-auto-train-image-models.
         /// </summary>
         [WirePath("layersToFreeze")]
-        public string LayersToFreeze { get; set; }
+        public string LayersToFreeze
+        {
+            get
+            {
+                return _layersToFreeze;
+            }
+            set
+            {
+                _layersToFreeze = value;
+                _layersToFreezeIsDefined = true;
+            }
+        }
 
         /// <summary> Initial learning rate. Must be a float in the range [0, 1]. </summary>
         [WirePath("learningRate")]
-        public string LearningRate { get; set; }
+        public string LearningRate
+        {
+            get
+            {
+                return _learningRate;
+            }
+            set
+            {
+                _learningRate = value;
+                _learningRateIsDefined = true;
+            }
+        }
 
         /// <summary> Type of learning rate scheduler. Must be 'warmup_cosine' or 'step'. </summary>
         [WirePath("learningRateScheduler")]
-        public string LearningRateScheduler { get; set; }
+        public string LearningRateScheduler
+        {
+            get
+            {
+                return _learningRateScheduler;
+            }
+            set
+            {
+                _learningRateScheduler = value;
+                _learningRateSchedulerIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Name of the model to use for training.
@@ -196,58 +406,212 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// https://docs.microsoft.com/en-us/azure/machine-learning/how-to-auto-train-image-models.
         /// </summary>
         [WirePath("modelName")]
-        public string ModelName { get; set; }
+        public string ModelName
+        {
+            get
+            {
+                return _modelName;
+            }
+            set
+            {
+                _modelName = value;
+                _modelNameIsDefined = true;
+            }
+        }
 
         /// <summary> Value of momentum when optimizer is 'sgd'. Must be a float in the range [0, 1]. </summary>
         [WirePath("momentum")]
-        public string Momentum { get; set; }
+        public string Momentum
+        {
+            get
+            {
+                return _momentum;
+            }
+            set
+            {
+                _momentum = value;
+                _momentumIsDefined = true;
+            }
+        }
 
         /// <summary> Enable nesterov when optimizer is 'sgd'. </summary>
         [WirePath("nesterov")]
-        public string Nesterov { get; set; }
+        public string Nesterov
+        {
+            get
+            {
+                return _nesterov;
+            }
+            set
+            {
+                _nesterov = value;
+                _nesterovIsDefined = true;
+            }
+        }
 
         /// <summary> Number of training epochs. Must be a positive integer. </summary>
         [WirePath("numberOfEpochs")]
-        public string NumberOfEpochs { get; set; }
+        public string NumberOfEpochs
+        {
+            get
+            {
+                return _numberOfEpochs;
+            }
+            set
+            {
+                _numberOfEpochs = value;
+                _numberOfEpochsIsDefined = true;
+            }
+        }
 
         /// <summary> Number of data loader workers. Must be a non-negative integer. </summary>
         [WirePath("numberOfWorkers")]
-        public string NumberOfWorkers { get; set; }
+        public string NumberOfWorkers
+        {
+            get
+            {
+                return _numberOfWorkers;
+            }
+            set
+            {
+                _numberOfWorkers = value;
+                _numberOfWorkersIsDefined = true;
+            }
+        }
 
         /// <summary> Type of optimizer. Must be either 'sgd', 'adam', or 'adamw'. </summary>
         [WirePath("optimizer")]
-        public string Optimizer { get; set; }
+        public string Optimizer
+        {
+            get
+            {
+                return _optimizer;
+            }
+            set
+            {
+                _optimizer = value;
+                _optimizerIsDefined = true;
+            }
+        }
 
         /// <summary> Random seed to be used when using deterministic training. </summary>
         [WirePath("randomSeed")]
-        public string RandomSeed { get; set; }
+        public string RandomSeed
+        {
+            get
+            {
+                return _randomSeed;
+            }
+            set
+            {
+                _randomSeed = value;
+                _randomSeedIsDefined = true;
+            }
+        }
 
         /// <summary> Value of gamma when learning rate scheduler is 'step'. Must be a float in the range [0, 1]. </summary>
         [WirePath("stepLRGamma")]
-        public string StepLRGamma { get; set; }
+        public string StepLRGamma
+        {
+            get
+            {
+                return _stepLRGamma;
+            }
+            set
+            {
+                _stepLRGamma = value;
+                _stepLRGammaIsDefined = true;
+            }
+        }
 
         /// <summary> Value of step size when learning rate scheduler is 'step'. Must be a positive integer. </summary>
         [WirePath("stepLRStepSize")]
-        public string StepLRStepSize { get; set; }
+        public string StepLRStepSize
+        {
+            get
+            {
+                return _stepLRStepSize;
+            }
+            set
+            {
+                _stepLRStepSize = value;
+                _stepLRStepSizeIsDefined = true;
+            }
+        }
 
         /// <summary> Training batch size. Must be a positive integer. </summary>
         [WirePath("trainingBatchSize")]
-        public string TrainingBatchSize { get; set; }
+        public string TrainingBatchSize
+        {
+            get
+            {
+                return _trainingBatchSize;
+            }
+            set
+            {
+                _trainingBatchSize = value;
+                _trainingBatchSizeIsDefined = true;
+            }
+        }
 
         /// <summary> Validation batch size. Must be a positive integer. </summary>
         [WirePath("validationBatchSize")]
-        public string ValidationBatchSize { get; set; }
+        public string ValidationBatchSize
+        {
+            get
+            {
+                return _validationBatchSize;
+            }
+            set
+            {
+                _validationBatchSize = value;
+                _validationBatchSizeIsDefined = true;
+            }
+        }
 
         /// <summary> Value of cosine cycle when learning rate scheduler is 'warmup_cosine'. Must be a float in the range [0, 1]. </summary>
         [WirePath("warmupCosineLRCycles")]
-        public string WarmupCosineLRCycles { get; set; }
+        public string WarmupCosineLRCycles
+        {
+            get
+            {
+                return _warmupCosineLRCycles;
+            }
+            set
+            {
+                _warmupCosineLRCycles = value;
+                _warmupCosineLRCyclesIsDefined = true;
+            }
+        }
 
         /// <summary> Value of warmup epochs when learning rate scheduler is 'warmup_cosine'. Must be a positive integer. </summary>
         [WirePath("warmupCosineLRWarmupEpochs")]
-        public string WarmupCosineLRWarmupEpochs { get; set; }
+        public string WarmupCosineLRWarmupEpochs
+        {
+            get
+            {
+                return _warmupCosineLRWarmupEpochs;
+            }
+            set
+            {
+                _warmupCosineLRWarmupEpochs = value;
+                _warmupCosineLRWarmupEpochsIsDefined = true;
+            }
+        }
 
         /// <summary> Value of weight decay when optimizer is 'sgd', 'adam', or 'adamw'. Must be a float in the range[0, 1]. </summary>
         [WirePath("weightDecay")]
-        public string WeightDecay { get; set; }
+        public string WeightDecay
+        {
+            get
+            {
+                return _weightDecay;
+            }
+            set
+            {
+                _weightDecay = value;
+                _weightDecayIsDefined = true;
+            }
+        }
     }
 }

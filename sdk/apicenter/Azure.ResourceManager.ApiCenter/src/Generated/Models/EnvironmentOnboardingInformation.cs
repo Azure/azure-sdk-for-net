@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public string Instructions { get; set; }
 
         /// <summary> The location of the development portal. </summary>
-        public IList<Uri> DeveloperPortalUri { get; }
+        public IList<Uri> DeveloperPortalUri { get; set; }
     }
 }

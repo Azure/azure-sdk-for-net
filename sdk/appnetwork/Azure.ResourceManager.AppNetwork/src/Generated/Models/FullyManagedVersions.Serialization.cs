@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FullyManagedVersions(releaseChannels, additionalBinaryDataProperties);
+            return new FullyManagedVersions(releaseChannels ?? new ChangeTrackingList<AppLinkReleaseChannelInfo>(), additionalBinaryDataProperties);
         }
     }
 }

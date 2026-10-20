@@ -110,10 +110,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(TaxiiLookbackOn))
+            if (_taxiiLookbackOnIsDefined || Optional.IsDefined(TaxiiLookbackOn))
             {
-                writer.WritePropertyName("taxiiLookbackPeriod"u8);
-                writer.WriteStringValue(TaxiiLookbackOn.Value, "O");
+                if (TaxiiLookbackOn != null)
+                {
+                    writer.WritePropertyName("taxiiLookbackPeriod"u8);
+                    writer.WriteStringValue(TaxiiLookbackOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("taxiiLookbackPeriod"u8);
+                }
             }
             if (Optional.IsDefined(PollingFrequency))
             {
@@ -161,6 +168,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string collectionId = default;
             string userName = default;
             string password = default;
+            bool taxiiLookbackOnIsDefined = false;
             DateTimeOffset? taxiiLookbackOn = default;
             PollingFrequency? pollingFrequency = default;
             TiTaxiiDataConnectorDataTypes dataTypes = default;
@@ -203,6 +211,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("taxiiLookbackPeriod"u8))
                 {
+                    taxiiLookbackOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         taxiiLookbackOn = null;
@@ -242,7 +251,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 password,
                 taxiiLookbackOn,
                 pollingFrequency,
-                dataTypes);
+                dataTypes)
+            {
+                _taxiiLookbackOnIsDefined = taxiiLookbackOnIsDefined
+            };
         }
     }
 }

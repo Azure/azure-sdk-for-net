@@ -74,55 +74,104 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningAksComputeProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ClusterFqdn))
+            if (_clusterFqdnIsDefined || Optional.IsDefined(ClusterFqdn))
             {
-                writer.WritePropertyName("clusterFqdn"u8);
-                writer.WriteStringValue(ClusterFqdn);
+                if (ClusterFqdn != null)
+                {
+                    writer.WritePropertyName("clusterFqdn"u8);
+                    writer.WriteStringValue(ClusterFqdn);
+                }
+                else
+                {
+                    writer.WriteNull("clusterFqdn"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SystemServices))
             {
-                writer.WritePropertyName("systemServices"u8);
-                writer.WriteStartArray();
-                foreach (MachineLearningComputeSystemService item in SystemServices)
+                if (SystemServices != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("systemServices"u8);
+                    writer.WriteStartArray();
+                    foreach (MachineLearningComputeSystemService item in SystemServices)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("systemServices"u8);
+                }
             }
-            if (Optional.IsDefined(AgentCount))
+            if (_agentCountIsDefined || Optional.IsDefined(AgentCount))
             {
-                writer.WritePropertyName("agentCount"u8);
-                writer.WriteNumberValue(AgentCount.Value);
+                if (AgentCount != null)
+                {
+                    writer.WritePropertyName("agentCount"u8);
+                    writer.WriteNumberValue(AgentCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("agentCount"u8);
+                }
             }
-            if (Optional.IsDefined(AgentVmSize))
+            if (_agentVmSizeIsDefined || Optional.IsDefined(AgentVmSize))
             {
-                writer.WritePropertyName("agentVmSize"u8);
-                writer.WriteStringValue(AgentVmSize);
+                if (AgentVmSize != null)
+                {
+                    writer.WritePropertyName("agentVmSize"u8);
+                    writer.WriteStringValue(AgentVmSize);
+                }
+                else
+                {
+                    writer.WriteNull("agentVmSize"u8);
+                }
             }
             if (Optional.IsDefined(ClusterPurpose))
             {
                 writer.WritePropertyName("clusterPurpose"u8);
                 writer.WriteStringValue(ClusterPurpose.Value.ToString());
             }
-            if (Optional.IsDefined(SslConfiguration))
+            if (_sslConfigurationIsDefined || Optional.IsDefined(SslConfiguration))
             {
-                writer.WritePropertyName("sslConfiguration"u8);
-                writer.WriteObjectValue(SslConfiguration, options);
+                if (SslConfiguration != null)
+                {
+                    writer.WritePropertyName("sslConfiguration"u8);
+                    writer.WriteObjectValue(SslConfiguration, options);
+                }
+                else
+                {
+                    writer.WriteNull("sslConfiguration"u8);
+                }
             }
-            if (Optional.IsDefined(AksNetworkingConfiguration))
+            if (_aksNetworkingConfigurationIsDefined || Optional.IsDefined(AksNetworkingConfiguration))
             {
-                writer.WritePropertyName("aksNetworkingConfiguration"u8);
-                writer.WriteObjectValue(AksNetworkingConfiguration, options);
+                if (AksNetworkingConfiguration != null)
+                {
+                    writer.WritePropertyName("aksNetworkingConfiguration"u8);
+                    writer.WriteObjectValue(AksNetworkingConfiguration, options);
+                }
+                else
+                {
+                    writer.WriteNull("aksNetworkingConfiguration"u8);
+                }
             }
             if (Optional.IsDefined(LoadBalancerType))
             {
                 writer.WritePropertyName("loadBalancerType"u8);
                 writer.WriteStringValue(LoadBalancerType.Value.ToString());
             }
-            if (Optional.IsDefined(LoadBalancerSubnet))
+            if (_loadBalancerSubnetIsDefined || Optional.IsDefined(LoadBalancerSubnet))
             {
-                writer.WritePropertyName("loadBalancerSubnet"u8);
-                writer.WriteStringValue(LoadBalancerSubnet);
+                if (LoadBalancerSubnet != null)
+                {
+                    writer.WritePropertyName("loadBalancerSubnet"u8);
+                    writer.WriteStringValue(LoadBalancerSubnet);
+                }
+                else
+                {
+                    writer.WriteNull("loadBalancerSubnet"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -166,20 +215,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool clusterFqdnIsDefined = false;
             string clusterFqdn = default;
-            IReadOnlyList<MachineLearningComputeSystemService> systemServices = default;
+            IReadOnlyList<MachineLearningComputeSystemService> systemServices = new ChangeTrackingList<MachineLearningComputeSystemService>();
+            bool agentCountIsDefined = false;
             int? agentCount = default;
+            bool agentVmSizeIsDefined = false;
             string agentVmSize = default;
             MachineLearningClusterPurpose? clusterPurpose = default;
+            bool sslConfigurationIsDefined = false;
             MachineLearningSslConfiguration sslConfiguration = default;
+            bool aksNetworkingConfigurationIsDefined = false;
             MachineLearningAksNetworkingConfiguration aksNetworkingConfiguration = default;
             MachineLearningLoadBalancerType? loadBalancerType = default;
+            bool loadBalancerSubnetIsDefined = false;
             string loadBalancerSubnet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("clusterFqdn"u8))
                 {
+                    clusterFqdnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         clusterFqdn = null;
@@ -192,6 +248,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        systemServices = null;
                         continue;
                     }
                     List<MachineLearningComputeSystemService> array = new List<MachineLearningComputeSystemService>();
@@ -204,6 +261,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("agentCount"u8))
                 {
+                    agentCountIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         agentCount = null;
@@ -214,6 +272,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("agentVmSize"u8))
                 {
+                    agentVmSizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         agentVmSize = null;
@@ -233,6 +292,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("sslConfiguration"u8))
                 {
+                    sslConfigurationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         sslConfiguration = null;
@@ -243,6 +303,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("aksNetworkingConfiguration"u8))
                 {
+                    aksNetworkingConfigurationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         aksNetworkingConfiguration = null;
@@ -262,6 +323,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("loadBalancerSubnet"u8))
                 {
+                    loadBalancerSubnetIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         loadBalancerSubnet = null;
@@ -277,7 +339,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new MachineLearningAksComputeProperties(
                 clusterFqdn,
-                systemServices ?? new ChangeTrackingList<MachineLearningComputeSystemService>(),
+                systemServices,
                 agentCount,
                 agentVmSize,
                 clusterPurpose,
@@ -285,7 +347,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 aksNetworkingConfiguration,
                 loadBalancerType,
                 loadBalancerSubnet,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _clusterFqdnIsDefined = clusterFqdnIsDefined,
+                _agentCountIsDefined = agentCountIsDefined,
+                _agentVmSizeIsDefined = agentVmSizeIsDefined,
+                _sslConfigurationIsDefined = sslConfigurationIsDefined,
+                _aksNetworkingConfigurationIsDefined = aksNetworkingConfigurationIsDefined,
+                _loadBalancerSubnetIsDefined = loadBalancerSubnetIsDefined
+            };
         }
     }
 }

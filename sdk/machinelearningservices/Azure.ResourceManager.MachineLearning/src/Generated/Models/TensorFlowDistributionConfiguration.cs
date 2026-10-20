@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> TensorFlow distribution configuration. </summary>
     public partial class TensorFlowDistributionConfiguration : MachineLearningDistributionConfiguration
     {
+        private int? _workerCount;
+        internal bool _workerCountIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="TensorFlowDistributionConfiguration"/>. </summary>
         public TensorFlowDistributionConfiguration() : base(DistributionType.TensorFlow)
         {
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal TensorFlowDistributionConfiguration(DistributionType distributionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? parameterServerCount, int? workerCount) : base(distributionType, additionalBinaryDataProperties)
         {
             ParameterServerCount = parameterServerCount;
-            WorkerCount = workerCount;
+            _workerCount = workerCount;
         }
 
         /// <summary> Number of parameter server tasks. </summary>
@@ -36,6 +39,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Number of workers. If not specified, will default to the instance count. </summary>
         [WirePath("workerCount")]
-        public int? WorkerCount { get; set; }
+        public int? WorkerCount
+        {
+            get
+            {
+                return _workerCount;
+            }
+            set
+            {
+                _workerCount = value;
+                _workerCountIsDefined = true;
+            }
+        }
     }
 }

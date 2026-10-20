@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             return new ContainerAppCorsPolicy(
-                allowedOrigins,
+                allowedOrigins ?? new ChangeTrackingList<string>(),
                 allowedMethods ?? new ChangeTrackingList<string>(),
                 allowedHeaders ?? new ChangeTrackingList<string>(),
                 exposeHeaders ?? new ChangeTrackingList<string>(),

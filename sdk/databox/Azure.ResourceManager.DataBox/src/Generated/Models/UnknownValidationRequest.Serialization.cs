@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownValidationRequest(validationCategory, individualRequestDetails, additionalBinaryDataProperties);
+            return new UnknownValidationRequest(validationCategory, individualRequestDetails ?? new ChangeTrackingList<DataBoxValidationInputContent>(), additionalBinaryDataProperties);
         }
     }
 }

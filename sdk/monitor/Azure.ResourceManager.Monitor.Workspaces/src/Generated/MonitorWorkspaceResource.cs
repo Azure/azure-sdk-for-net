@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MonitorWorkspaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string monitorWorkspaceApiVersion);
             _azureMonitorWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces", ResourceType.Namespace, Diagnostics);
-            _azureMonitorWorkspacesRestClient = new AzureMonitorWorkspaces(_azureMonitorWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, monitorWorkspaceApiVersion ?? "2026-09-03-preview");
+            _azureMonitorWorkspacesRestClient = new AzureMonitorWorkspaces(_azureMonitorWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Monitor/accounts", out string azureMonitorWorkspacesApiVersionOverride) ? azureMonitorWorkspacesApiVersionOverride : "2026-09-03-preview");
             ValidateResourceId(id);
         }
 

@@ -81,10 +81,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(ResourceProperties))
+            if (_resourcePropertiesIsDefined || Optional.IsDefined(ResourceProperties))
             {
-                writer.WritePropertyName("resourceProperties"u8);
-                writer.WriteObjectValue(ResourceProperties, options);
+                if (ResourceProperties != null)
+                {
+                    writer.WritePropertyName("resourceProperties"u8);
+                    writer.WriteObjectValue(ResourceProperties, options);
+                }
+                else
+                {
+                    writer.WriteNull("resourceProperties"u8);
+                }
             }
         }
 
@@ -116,6 +123,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             TargetServiceType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier id = default;
+            bool resourcePropertiesIsDefined = false;
             AzureResourceBaseProperties resourceProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -135,6 +143,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("resourceProperties"u8))
                 {
+                    resourcePropertiesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         resourceProperties = null;
@@ -148,7 +157,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureResourceInfo(@type, additionalBinaryDataProperties, id, resourceProperties);
+            return new AzureResourceInfo(@type, additionalBinaryDataProperties, id, resourceProperties)
+            {
+                _resourcePropertiesIsDefined = resourcePropertiesIsDefined
+            };
         }
     }
 }

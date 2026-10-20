@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.Resources.Policy
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/policyExemptions/", false);
             uri.AppendPath(policyExemptionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -73,10 +70,7 @@ namespace Azure.ResourceManager.Resources.Policy
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/policyExemptions/", false);
             uri.AppendPath(policyExemptionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,10 +90,7 @@ namespace Azure.ResourceManager.Resources.Policy
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/policyExemptions/", false);
             uri.AppendPath(policyExemptionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -119,10 +110,7 @@ namespace Azure.ResourceManager.Resources.Policy
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/policyExemptions/", false);
             uri.AppendPath(policyExemptionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -140,10 +128,7 @@ namespace Azure.ResourceManager.Resources.Policy
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Authorization/policyExemptions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-12-01-preview", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -168,10 +153,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-12-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -188,10 +170,7 @@ namespace Azure.ResourceManager.Resources.Policy
             uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
             uri.AppendPath(managementGroupId, true);
             uri.AppendPath("/providers/Microsoft.Authorization/policyExemptions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-12-01-preview", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -216,10 +195,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-12-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -236,10 +212,7 @@ namespace Azure.ResourceManager.Resources.Policy
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Authorization/policyExemptions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-12-01-preview", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -264,10 +237,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-12-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

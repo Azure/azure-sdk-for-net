@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _enableExplicitProxy;
+        internal bool _enableExplicitProxyIsDefined;
+        private bool? _enablePacFile;
+        internal bool _enablePacFileIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyExplicitProxy"/>. </summary>
         public FirewallPolicyExplicitProxy()
@@ -32,10 +36,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FirewallPolicyExplicitProxy(bool? enableExplicitProxy, int? httpPort, int? httpsPort, bool? enablePacFile, int? pacFilePort, string pacFile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EnableExplicitProxy = enableExplicitProxy;
+            _enableExplicitProxy = enableExplicitProxy;
             HttpPort = httpPort;
             HttpsPort = httpsPort;
-            EnablePacFile = enablePacFile;
+            _enablePacFile = enablePacFile;
             PacFilePort = pacFilePort;
             PacFile = pacFile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -43,7 +47,18 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> When set to true, explicit proxy mode is enabled. </summary>
         [WirePath("enableExplicitProxy")]
-        public bool? EnableExplicitProxy { get; set; }
+        public bool? EnableExplicitProxy
+        {
+            get
+            {
+                return _enableExplicitProxy;
+            }
+            set
+            {
+                _enableExplicitProxy = value;
+                _enableExplicitProxyIsDefined = true;
+            }
+        }
 
         /// <summary> Port number for explicit proxy http protocol, cannot be greater than 64000. </summary>
         [WirePath("httpPort")]
@@ -55,7 +70,18 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> When set to true, pac file port and url needs to be provided. </summary>
         [WirePath("enablePacFile")]
-        public bool? EnablePacFile { get; set; }
+        public bool? EnablePacFile
+        {
+            get
+            {
+                return _enablePacFile;
+            }
+            set
+            {
+                _enablePacFile = value;
+                _enablePacFileIsDefined = true;
+            }
+        }
 
         /// <summary> Port number for firewall to serve PAC file. </summary>
         [WirePath("pacFilePort")]

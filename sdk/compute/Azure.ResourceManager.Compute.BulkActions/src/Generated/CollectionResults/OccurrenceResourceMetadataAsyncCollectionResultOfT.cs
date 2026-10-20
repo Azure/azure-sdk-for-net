@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="client"> The Occurrences client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="scheduledActionName"> The name of the recurring bulk action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="occurrenceId"> The occurrence ID in UUID format. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <returns> The pages of OccurrenceResourceMetadataAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<OccurrenceResourceMetadata>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     yield break;
                 }
-                OccurrenceResourceListResponse result = OccurrenceResourceListResponse.FromResponse(response);
+                OccurrenceResourceListResult result = OccurrenceResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<OccurrenceResourceMetadata>.FromValues((IReadOnlyList<OccurrenceResourceMetadata>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

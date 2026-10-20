@@ -209,11 +209,11 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
             }
             return new OperatorApiConnectionDataProcessing(
                 processingOperation,
-                contexts,
+                contexts ?? new ChangeTrackingList<DataProcessingContext>(),
                 duration,
                 frequency,
-                transitRegions,
-                storageRegions,
+                transitRegions ?? new ChangeTrackingList<OperatorApiConnectionDataRegion>(),
+                storageRegions ?? new ChangeTrackingList<OperatorApiConnectionDataRegion>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _mediaType;
+        internal bool _mediaTypeIsDefined;
+        private FluxConfigurationOperationType? _operation;
+        internal bool _operationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxLayerSelector"/>. </summary>
         public FluxLayerSelector()
@@ -27,15 +31,37 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FluxLayerSelector(string mediaType, FluxConfigurationOperationType? operation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            MediaType = mediaType;
-            Operation = operation;
+            _mediaType = mediaType;
+            _operation = operation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The first layer matching the specified media type will be used. </summary>
-        public string MediaType { get; set; }
+        public string MediaType
+        {
+            get
+            {
+                return _mediaType;
+            }
+            set
+            {
+                _mediaType = value;
+                _mediaTypeIsDefined = true;
+            }
+        }
 
         /// <summary> The operation to be performed on the selected layer. The default value is 'extract', but it can be set to 'copy'. </summary>
-        public FluxConfigurationOperationType? Operation { get; set; }
+        public FluxConfigurationOperationType? Operation
+        {
+            get
+            {
+                return _operation;
+            }
+            set
+            {
+                _operation = value;
+                _operationIsDefined = true;
+            }
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private MachineLearningInferenceContainerRoute _startupRoute;
+        internal bool _startupRouteIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningInferenceContainerProperties"/>. </summary>
         public MachineLearningInferenceContainerProperties()
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             LivenessRoute = livenessRoute;
             ReadinessRoute = readinessRoute;
             ScoringRoute = scoringRoute;
-            StartupRoute = startupRoute;
+            _startupRoute = startupRoute;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +53,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The route to check the startup of the application in the container. </summary>
         [WirePath("startupRoute")]
-        public MachineLearningInferenceContainerRoute StartupRoute { get; set; }
+        public MachineLearningInferenceContainerRoute StartupRoute
+        {
+            get
+            {
+                return _startupRoute;
+            }
+            set
+            {
+                _startupRoute = value;
+                _startupRouteIsDefined = true;
+            }
+        }
     }
 }

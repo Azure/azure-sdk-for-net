@@ -76,7 +76,13 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string cosmosDBAccountApiVersion);
             _databaseAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _databaseAccountsRestClient = new DatabaseAccounts(_databaseAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _databaseAccountsRestClient = new DatabaseAccounts(
+                _databaseAccountsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                cosmosDBAccountApiVersion ?? "2026-04-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _collectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
             _collectionRestClient = new Collection(_collectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
             _collectionPartitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);

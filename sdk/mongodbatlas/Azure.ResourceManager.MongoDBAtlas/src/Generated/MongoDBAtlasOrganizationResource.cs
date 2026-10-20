@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MongoDBAtlasOrganizationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string mongoDBAtlasOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoDBAtlas", ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoDBAtlasOrganizationApiVersion ?? "2026-03-01-preview");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MongoDB.Atlas/organizations", out string organizationsApiVersionOverride) ? organizationsApiVersionOverride : "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

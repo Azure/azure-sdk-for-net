@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> The pages of LinkableEnvironmentResultCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<LinkableEnvironmentResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     yield break;
                 }
-                LinkableEnvironmentListResponse result = LinkableEnvironmentListResponse.FromResponse(response);
+                LinkableEnvironmentListResult result = LinkableEnvironmentListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<LinkableEnvironmentResult>.FromValues((IReadOnlyList<LinkableEnvironmentResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

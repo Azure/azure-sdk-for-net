@@ -79,25 +79,46 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Value))
+            if (_valueIsDefined || Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
+                if (Value != null)
+                {
+                    writer.WritePropertyName("value"u8);
+                    writer.WriteStringValue(Value);
+                }
+                else
+                {
+                    writer.WriteNull("value"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigType))
             {
                 writer.WritePropertyName("configType"u8);
                 writer.WriteStringValue(ConfigType.Value.ToString());
             }
-            if (Optional.IsDefined(KeyVaultReferenceIdentity))
+            if (_keyVaultReferenceIdentityIsDefined || Optional.IsDefined(KeyVaultReferenceIdentity))
             {
-                writer.WritePropertyName("keyVaultReferenceIdentity"u8);
-                writer.WriteStringValue(KeyVaultReferenceIdentity);
+                if (KeyVaultReferenceIdentity != null)
+                {
+                    writer.WritePropertyName("keyVaultReferenceIdentity"u8);
+                    writer.WriteStringValue(KeyVaultReferenceIdentity);
+                }
+                else
+                {
+                    writer.WriteNull("keyVaultReferenceIdentity"u8);
+                }
             }
-            if (Optional.IsDefined(Description))
+            if (_descriptionIsDefined || Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,9 +163,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 return null;
             }
             string name = default;
+            bool valueIsDefined = false;
             string value = default;
             LinkerConfigurationType? configType = default;
+            bool keyVaultReferenceIdentityIsDefined = false;
             string keyVaultReferenceIdentity = default;
+            bool descriptionIsDefined = false;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -156,6 +180,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("value"u8))
                 {
+                    valueIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         value = null;
@@ -175,6 +200,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("keyVaultReferenceIdentity"u8))
                 {
+                    keyVaultReferenceIdentityIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         keyVaultReferenceIdentity = null;
@@ -185,6 +211,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -204,7 +231,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 configType,
                 keyVaultReferenceIdentity,
                 description,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _valueIsDefined = valueIsDefined,
+                _keyVaultReferenceIdentityIsDefined = keyVaultReferenceIdentityIsDefined,
+                _descriptionIsDefined = descriptionIsDefined
+            };
         }
     }
 }

@@ -47,9 +47,10 @@ public class ResponseStoreIsolationProtocolTests
     }
 
     [TearDown]
-    public void TearDown()
+    public async Task TearDown()
     {
         _client.Dispose();
+        await _factory.StopAsync();
         _factory.Dispose();
         (_provider as IDisposable)?.Dispose();
         if (Directory.Exists(_directory))

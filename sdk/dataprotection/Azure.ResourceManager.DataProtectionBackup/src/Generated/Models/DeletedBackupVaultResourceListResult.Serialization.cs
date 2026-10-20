@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeletedBackupVaultResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DeletedBackupVaultResourceListResult(value ?? new ChangeTrackingList<DataProtectionDeletedBackupVaultData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

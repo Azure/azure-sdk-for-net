@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DscNodeConfigurationAssociationProperty _nodeConfiguration;
+        internal bool _nodeConfigurationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DscNodeProperties"/>. </summary>
         public DscNodeProperties()
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.Automation.Models
             RegistrationOn = registrationOn;
             IP = ip;
             AccountId = accountId;
-            NodeConfiguration = nodeConfiguration;
+            _nodeConfiguration = nodeConfiguration;
             Status = status;
             NodeId = nodeId;
             ETag = eTag;
@@ -64,7 +66,18 @@ namespace Azure.ResourceManager.Automation.Models
         public string AccountId { get; set; }
 
         /// <summary> Gets or sets the configuration of the node. </summary>
-        internal DscNodeConfigurationAssociationProperty NodeConfiguration { get; set; }
+        internal DscNodeConfigurationAssociationProperty NodeConfiguration
+        {
+            get
+            {
+                return _nodeConfiguration;
+            }
+            set
+            {
+                _nodeConfiguration = value;
+                _nodeConfigurationIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the status of the node. </summary>
         public string Status { get; set; }

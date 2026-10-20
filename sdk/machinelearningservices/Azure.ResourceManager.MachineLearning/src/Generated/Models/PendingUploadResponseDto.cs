@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private BlobReferenceForConsumptionDto _blobReferenceForConsumption;
+        internal bool _blobReferenceForConsumptionIsDefined;
+        private string _pendingUploadId;
+        internal bool _pendingUploadIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="PendingUploadResponseDto"/>. </summary>
         internal PendingUploadResponseDto()
@@ -29,19 +33,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal PendingUploadResponseDto(BlobReferenceForConsumptionDto blobReferenceForConsumption, string pendingUploadId, PendingUploadType? pendingUploadType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BlobReferenceForConsumption = blobReferenceForConsumption;
-            PendingUploadId = pendingUploadId;
+            _blobReferenceForConsumption = blobReferenceForConsumption;
+            _pendingUploadId = pendingUploadId;
             PendingUploadType = pendingUploadType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Container level read, write, list SAS. </summary>
         [WirePath("blobReferenceForConsumption")]
-        public BlobReferenceForConsumptionDto BlobReferenceForConsumption { get; }
+        public BlobReferenceForConsumptionDto BlobReferenceForConsumption
+        {
+            get
+            {
+                return _blobReferenceForConsumption;
+            }
+        }
 
         /// <summary> ID for this upload request. </summary>
         [WirePath("pendingUploadId")]
-        public string PendingUploadId { get; }
+        public string PendingUploadId
+        {
+            get
+            {
+                return _pendingUploadId;
+            }
+        }
 
         /// <summary> Type of storage to use for the pending upload location. </summary>
         [WirePath("pendingUploadType")]

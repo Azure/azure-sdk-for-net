@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _accessToken;
+        internal bool _accessTokenIsDefined;
+        private string _tokenType;
+        internal bool _tokenTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointAuthToken"/>. </summary>
         internal MachineLearningEndpointAuthToken()
@@ -30,16 +34,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningEndpointAuthToken(string accessToken, long? expiryTimeUtc, long? refreshAfterTimeUtc, string tokenType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AccessToken = accessToken;
+            _accessToken = accessToken;
             ExpiryTimeUtc = expiryTimeUtc;
             RefreshAfterTimeUtc = refreshAfterTimeUtc;
-            TokenType = tokenType;
+            _tokenType = tokenType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Access token for endpoint authentication. </summary>
         [WirePath("accessToken")]
-        public string AccessToken { get; }
+        public string AccessToken
+        {
+            get
+            {
+                return _accessToken;
+            }
+        }
 
         /// <summary> Access token expiry time (UTC). </summary>
         [WirePath("expiryTimeUtc")]
@@ -51,6 +61,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Access token type. </summary>
         [WirePath("tokenType")]
-        public string TokenType { get; }
+        public string TokenType
+        {
+            get
+            {
+                return _tokenType;
+            }
+        }
     }
 }

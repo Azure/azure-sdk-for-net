@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
 
         private ClientDiagnostics AzureMonitorWorkspacesClientDiagnostics => _azureMonitorWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AzureMonitorWorkspaces AzureMonitorWorkspacesRestClient => _azureMonitorWorkspacesRestClient ??= new AzureMonitorWorkspaces(AzureMonitorWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-03-preview");
+        private AzureMonitorWorkspaces AzureMonitorWorkspacesRestClient => _azureMonitorWorkspacesRestClient ??= new AzureMonitorWorkspaces(AzureMonitorWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Monitor/accounts", out string apiVersion) ? apiVersion : "2026-09-03-preview");
 
         /// <summary>
         /// Gets the trace association at the scope.

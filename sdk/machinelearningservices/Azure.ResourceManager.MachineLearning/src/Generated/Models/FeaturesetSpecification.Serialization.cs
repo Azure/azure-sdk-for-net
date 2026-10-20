@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(FeaturesetSpecification)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Path))
+            if (_pathIsDefined || Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path"u8);
-                writer.WriteStringValue(Path);
+                if (Path != null)
+                {
+                    writer.WritePropertyName("path"u8);
+                    writer.WriteStringValue(Path);
+                }
+                else
+                {
+                    writer.WriteNull("path"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,12 +128,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool pathIsDefined = false;
             string path = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("path"u8))
                 {
+                    pathIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         path = null;
@@ -140,7 +149,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FeaturesetSpecification(path, additionalBinaryDataProperties);
+            return new FeaturesetSpecification(path, additionalBinaryDataProperties)
+            {
+                _pathIsDefined = pathIsDefined
+            };
         }
     }
 }

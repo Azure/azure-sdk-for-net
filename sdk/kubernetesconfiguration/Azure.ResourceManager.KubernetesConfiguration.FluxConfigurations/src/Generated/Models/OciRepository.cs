@@ -15,6 +15,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Uri _uri;
+        internal bool _uriIsDefined;
+        private long? _timeoutInSeconds;
+        internal bool _timeoutInSecondsIsDefined;
+        private long? _syncIntervalInSeconds;
+        internal bool _syncIntervalInSecondsIsDefined;
+        private string _serviceAccountName;
+        internal bool _serviceAccountNameIsDefined;
+        private string _localAuthRef;
+        internal bool _localAuthRefIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="OciRepository"/>. </summary>
         public OciRepository()
@@ -36,28 +46,61 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal OciRepository(Uri uri, long? timeoutInSeconds, long? syncIntervalInSeconds, OciRepositoryRef repositoryRef, FluxLayerSelector layerSelector, OciRepositoryVerify verify, bool? isInsecure, bool? useWorkloadIdentity, string serviceAccountName, FluxTlsConfig tlsConfig, string localAuthRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Uri = uri;
-            TimeoutInSeconds = timeoutInSeconds;
-            SyncIntervalInSeconds = syncIntervalInSeconds;
+            _uri = uri;
+            _timeoutInSeconds = timeoutInSeconds;
+            _syncIntervalInSeconds = syncIntervalInSeconds;
             RepositoryRef = repositoryRef;
             LayerSelector = layerSelector;
             Verify = verify;
             IsInsecure = isInsecure;
             UseWorkloadIdentity = useWorkloadIdentity;
-            ServiceAccountName = serviceAccountName;
+            _serviceAccountName = serviceAccountName;
             TlsConfig = tlsConfig;
-            LocalAuthRef = localAuthRef;
+            _localAuthRef = localAuthRef;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The URL to sync for the flux configuration OCI repository. </summary>
-        public Uri Uri { get; set; }
+        public Uri Uri
+        {
+            get
+            {
+                return _uri;
+            }
+            set
+            {
+                _uri = value;
+                _uriIsDefined = true;
+            }
+        }
 
         /// <summary> The maximum time to attempt to reconcile the cluster OCI repository source with the remote. </summary>
-        public long? TimeoutInSeconds { get; set; }
+        public long? TimeoutInSeconds
+        {
+            get
+            {
+                return _timeoutInSeconds;
+            }
+            set
+            {
+                _timeoutInSeconds = value;
+                _timeoutInSecondsIsDefined = true;
+            }
+        }
 
         /// <summary> The interval at which to re-reconcile the cluster OCI repository source with the remote. </summary>
-        public long? SyncIntervalInSeconds { get; set; }
+        public long? SyncIntervalInSeconds
+        {
+            get
+            {
+                return _syncIntervalInSeconds;
+            }
+            set
+            {
+                _syncIntervalInSeconds = value;
+                _syncIntervalInSecondsIsDefined = true;
+            }
+        }
 
         /// <summary> The source reference for the OCIRepository object. </summary>
         public OciRepositoryRef RepositoryRef { get; set; }
@@ -75,12 +118,34 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public bool? UseWorkloadIdentity { get; set; }
 
         /// <summary> The service account name to authenticate with the OCI repository. </summary>
-        public string ServiceAccountName { get; set; }
+        public string ServiceAccountName
+        {
+            get
+            {
+                return _serviceAccountName;
+            }
+            set
+            {
+                _serviceAccountName = value;
+                _serviceAccountNameIsDefined = true;
+            }
+        }
 
         /// <summary> Parameters to authenticate using TLS config for OCI repository. </summary>
         public FluxTlsConfig TlsConfig { get; set; }
 
         /// <summary> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </summary>
-        public string LocalAuthRef { get; set; }
+        public string LocalAuthRef
+        {
+            get
+            {
+                return _localAuthRef;
+            }
+            set
+            {
+                _localAuthRef = value;
+                _localAuthRefIsDefined = true;
+            }
+        }
     }
 }

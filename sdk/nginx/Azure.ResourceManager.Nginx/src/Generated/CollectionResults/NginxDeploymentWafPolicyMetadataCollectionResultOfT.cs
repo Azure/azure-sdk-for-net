@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> The pages of NginxDeploymentWafPolicyMetadataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<NginxDeploymentWafPolicyMetadata>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     yield break;
                 }
-                NginxDeploymentWafPolicyListResponse result = NginxDeploymentWafPolicyListResponse.FromResponse(response);
+                NginxDeploymentWafPolicyListResult result = NginxDeploymentWafPolicyListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<NginxDeploymentWafPolicyMetadata>.FromValues((IReadOnlyList<NginxDeploymentWafPolicyMetadata>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

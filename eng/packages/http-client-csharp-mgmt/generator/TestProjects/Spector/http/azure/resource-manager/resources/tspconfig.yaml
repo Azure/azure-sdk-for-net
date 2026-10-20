@@ -1,0 +1,6 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
+# Additional imports are resolved relative to the installed resource spec's main.tsp.
+imports:
+  - "../../../../../../../generator/TestProjects/Spector/http/azure/resource-manager/resources/client.tsp"

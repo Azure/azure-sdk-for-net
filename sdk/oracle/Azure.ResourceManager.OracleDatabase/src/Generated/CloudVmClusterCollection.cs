@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CloudVmClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(CloudVmClusterResource.ResourceType, out string cloudVmClusterApiVersion);
             _cloudVmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudVmClusterResource.ResourceType.Namespace, Diagnostics);
-            _cloudVmClustersRestClient = new CloudVmClusters(_cloudVmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudVmClusterApiVersion ?? "2025-09-01");
+            _cloudVmClustersRestClient = new CloudVmClusters(_cloudVmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Oracle.Database/cloudVmClusters", out string cloudVmClustersApiVersionOverride) ? cloudVmClustersApiVersionOverride : "2025-09-01");
             ValidateResourceId(id);
         }
 

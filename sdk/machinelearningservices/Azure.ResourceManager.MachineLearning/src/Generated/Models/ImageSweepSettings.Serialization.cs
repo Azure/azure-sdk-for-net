@@ -79,10 +79,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(ImageSweepSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EarlyTermination))
+            if (_earlyTerminationIsDefined || Optional.IsDefined(EarlyTermination))
             {
-                writer.WritePropertyName("earlyTermination"u8);
-                writer.WriteObjectValue(EarlyTermination, options);
+                if (EarlyTermination != null)
+                {
+                    writer.WritePropertyName("earlyTermination"u8);
+                    writer.WriteObjectValue(EarlyTermination, options);
+                }
+                else
+                {
+                    writer.WriteNull("earlyTermination"u8);
+                }
             }
             writer.WritePropertyName("samplingAlgorithm"u8);
             writer.WriteStringValue(SamplingAlgorithm.ToString());
@@ -128,6 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool earlyTerminationIsDefined = false;
             MachineLearningEarlyTerminationPolicy earlyTermination = default;
             SamplingAlgorithmType samplingAlgorithm = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -135,6 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("earlyTermination"u8))
                 {
+                    earlyTerminationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         earlyTermination = null;
@@ -153,7 +162,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ImageSweepSettings(earlyTermination, samplingAlgorithm, additionalBinaryDataProperties);
+            return new ImageSweepSettings(earlyTermination, samplingAlgorithm, additionalBinaryDataProperties)
+            {
+                _earlyTerminationIsDefined = earlyTerminationIsDefined
+            };
         }
     }
 }

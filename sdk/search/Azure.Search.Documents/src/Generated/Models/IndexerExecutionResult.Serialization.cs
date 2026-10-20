@@ -99,7 +99,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime.Value, "O");
             }
-            if (options.Format != "W" && (_endTimeIsDefined || Optional.IsDefined(EndTime)))
+            if (options.Format != "W" && Optional.IsDefined(EndTime, _endTimeIsDefined))
             {
                 if (EndTime != null)
                 {

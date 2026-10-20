@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> The pages of SecurityInsightsAlertRuleTemplateDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<SecurityInsightsAlertRuleTemplateData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

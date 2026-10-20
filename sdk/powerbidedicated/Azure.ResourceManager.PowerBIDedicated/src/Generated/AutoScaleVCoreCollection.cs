@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AutoScaleVCoreCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AutoScaleVCoreResource.ResourceType, out string autoScaleVCoreApiVersion);
             _autoScaleVCoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PowerBIDedicated", AutoScaleVCoreResource.ResourceType.Namespace, Diagnostics);
-            _autoScaleVCoresRestClient = new AutoScaleVCores(_autoScaleVCoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autoScaleVCoreApiVersion ?? "2021-01-01");
+            _autoScaleVCoresRestClient = new AutoScaleVCores(_autoScaleVCoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.PowerBIDedicated/autoScaleVCores", out string autoScaleVCoresApiVersionOverride) ? autoScaleVCoresApiVersionOverride : "2021-01-01");
             ValidateResourceId(id);
         }
 

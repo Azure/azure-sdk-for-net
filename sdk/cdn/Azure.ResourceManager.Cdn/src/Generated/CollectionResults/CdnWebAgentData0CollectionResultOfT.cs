@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> The pages of CdnWebAgentData0CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<CdnWebAgentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

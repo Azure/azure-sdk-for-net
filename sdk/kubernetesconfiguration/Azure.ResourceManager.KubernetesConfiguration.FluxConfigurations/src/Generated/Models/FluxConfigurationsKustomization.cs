@@ -16,6 +16,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private long? _timeoutInSeconds;
+        internal bool _timeoutInSecondsIsDefined;
+        private long? _syncIntervalInSeconds;
+        internal bool _syncIntervalInSecondsIsDefined;
+        private long? _retryIntervalInSeconds;
+        internal bool _retryIntervalInSecondsIsDefined;
+        private FluxPostBuild _postBuild;
+        internal bool _postBuildIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxConfigurationsKustomization"/>. </summary>
         public FluxConfigurationsKustomization()
@@ -40,13 +48,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             Name = name;
             Path = path;
             DependsOn = dependsOn;
-            TimeoutInSeconds = timeoutInSeconds;
-            SyncIntervalInSeconds = syncIntervalInSeconds;
-            RetryIntervalInSeconds = retryIntervalInSeconds;
+            _timeoutInSeconds = timeoutInSeconds;
+            _syncIntervalInSeconds = syncIntervalInSeconds;
+            _retryIntervalInSeconds = retryIntervalInSeconds;
             IsPrune = isPrune;
             IsForce = isForce;
             IsWait = isWait;
-            PostBuild = postBuild;
+            _postBuild = postBuild;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,13 +68,46 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public IList<string> DependsOn { get; set; }
 
         /// <summary> The maximum time to attempt to reconcile the Kustomization on the cluster. </summary>
-        public long? TimeoutInSeconds { get; set; }
+        public long? TimeoutInSeconds
+        {
+            get
+            {
+                return _timeoutInSeconds;
+            }
+            set
+            {
+                _timeoutInSeconds = value;
+                _timeoutInSecondsIsDefined = true;
+            }
+        }
 
         /// <summary> The interval at which to re-reconcile the Kustomization on the cluster. </summary>
-        public long? SyncIntervalInSeconds { get; set; }
+        public long? SyncIntervalInSeconds
+        {
+            get
+            {
+                return _syncIntervalInSeconds;
+            }
+            set
+            {
+                _syncIntervalInSeconds = value;
+                _syncIntervalInSecondsIsDefined = true;
+            }
+        }
 
         /// <summary> The interval at which to re-reconcile the Kustomization on the cluster in the event of failure on reconciliation. </summary>
-        public long? RetryIntervalInSeconds { get; set; }
+        public long? RetryIntervalInSeconds
+        {
+            get
+            {
+                return _retryIntervalInSeconds;
+            }
+            set
+            {
+                _retryIntervalInSeconds = value;
+                _retryIntervalInSecondsIsDefined = true;
+            }
+        }
 
         /// <summary> Enable/disable garbage collections of Kubernetes objects created by this Kustomization. </summary>
         public bool? IsPrune { get; set; }
@@ -78,6 +119,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public bool? IsWait { get; set; }
 
         /// <summary> Used for variable substitution for this Kustomization after kustomize build. </summary>
-        public FluxPostBuild PostBuild { get; set; }
+        public FluxPostBuild PostBuild
+        {
+            get
+            {
+                return _postBuild;
+            }
+            set
+            {
+                _postBuild = value;
+                _postBuildIsDefined = true;
+            }
+        }
     }
 }

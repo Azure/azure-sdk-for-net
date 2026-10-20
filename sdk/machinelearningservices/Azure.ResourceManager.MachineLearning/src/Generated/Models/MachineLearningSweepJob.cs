@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Sweep job definition. </summary>
     public partial class MachineLearningSweepJob : MachineLearningJobProperties
     {
+        private MachineLearningEarlyTerminationPolicy _earlyTermination;
+        internal bool _earlyTerminationIsDefined;
+        private QueueSettings _queueSettings;
+        internal bool _queueSettingsIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
@@ -48,12 +53,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="trial"> [Required] Trial component definition. </param>
         internal MachineLearningSweepJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, MachineLearningEarlyTerminationPolicy earlyTermination, IDictionary<string, MachineLearningJobInput> inputs, MachineLearningSweepJobLimits limits, MachineLearningObjective objective, IDictionary<string, MachineLearningJobOutput> outputs, QueueSettings queueSettings, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, MachineLearningTrialComponent trial) : base(description, properties, tags, additionalBinaryDataProperties, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, services, status)
         {
-            EarlyTermination = earlyTermination;
+            _earlyTermination = earlyTermination;
             Inputs = inputs;
             Limits = limits;
             Objective = objective;
             Outputs = outputs;
-            QueueSettings = queueSettings;
+            _queueSettings = queueSettings;
             SamplingAlgorithm = samplingAlgorithm;
             SearchSpace = searchSpace;
             Trial = trial;
@@ -61,7 +66,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Early termination policies enable canceling poor-performing runs before they complete. </summary>
         [WirePath("earlyTermination")]
-        public MachineLearningEarlyTerminationPolicy EarlyTermination { get; set; }
+        public MachineLearningEarlyTerminationPolicy EarlyTermination
+        {
+            get
+            {
+                return _earlyTermination;
+            }
+            set
+            {
+                _earlyTermination = value;
+                _earlyTerminationIsDefined = true;
+            }
+        }
 
         /// <summary> Mapping of input data bindings used in the job. </summary>
         [WirePath("inputs")]
@@ -81,7 +97,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Queue settings for the job. </summary>
         [WirePath("queueSettings")]
-        internal QueueSettings QueueSettings { get; set; }
+        internal QueueSettings QueueSettings
+        {
+            get
+            {
+                return _queueSettings;
+            }
+            set
+            {
+                _queueSettings = value;
+                _queueSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] The hyperparameter sampling algorithm. </summary>
         [WirePath("samplingAlgorithm")]

@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private AzureLocation? _location;
+        internal bool _locationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenterStandardData"/>. </summary>
         public SecurityCenterStandardData()
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Properties = properties;
             Tags = tags;
-            Location = location;
+            _location = location;
             Kind = kind;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -54,7 +56,18 @@ namespace Azure.ResourceManager.SecurityCenter
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        public AzureLocation? Location { get; set; }
+        public AzureLocation? Location
+        {
+            get
+            {
+                return _location;
+            }
+            set
+            {
+                _location = value;
+                _locationIsDefined = true;
+            }
+        }
 
         /// <summary> Kind of the resource. </summary>
         public string Kind { get; set; }

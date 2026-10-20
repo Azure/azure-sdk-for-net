@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class ContentUnderstandingSkill : SearchIndexerSkill
     {
         private ContentUnderstandingSkillChunkingProperties _chunkingProperties;
-        internal bool _chunkingPropertiesIsDefined;
+        private bool _chunkingPropertiesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ContentUnderstandingSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
