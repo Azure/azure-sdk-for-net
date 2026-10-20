@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="userAssignedIdentities"> The list of user assigned identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesComputeIdentity(ManagedServiceIdentityType? @type, string tenantId, string principalId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesComputeIdentity(ManagedServiceIdentityType? @type, Guid? tenantId, Guid? principalId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             TenantId = tenantId;
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The tenant ID of resource. </summary>
         [WirePath("tenantId")]
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
 
         /// <summary> The principal ID of resource identity. </summary>
         [WirePath("principalId")]
-        public string PrincipalId { get; }
+        public Guid? PrincipalId { get; }
 
         /// <summary> The list of user assigned identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. </summary>
         [WirePath("userAssignedIdentities")]

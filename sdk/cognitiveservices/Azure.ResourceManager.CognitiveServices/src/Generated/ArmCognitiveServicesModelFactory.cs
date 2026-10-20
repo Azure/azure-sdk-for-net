@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="scopeType"> The scope type of the quota usage. </param>
         /// <param name="scopeId"> The scope identifier of the quota usage. </param>
         /// <returns> A new <see cref="Models.ServiceAccountUsage"/> instance for mocking. </returns>
-        public static ServiceAccountUsage ServiceAccountUsage(ResourceIdentifier id = default, string @type = default, ServiceAccountUsageUnitType? unit = default, ServiceAccountUsageMetricName name = default, string quotaPeriod = default, double? limit = default, double? currentValue = default, string nextResetTime = default, ServiceAccountQuotaUsageStatus? status = default, CognitiveServicesQuotaScopeType? scopeType = default, string scopeId = default)
+        public static ServiceAccountUsage ServiceAccountUsage(ResourceIdentifier id = default, ResourceType? @type = default, ServiceAccountUsageUnitType? unit = default, ServiceAccountUsageMetricName name = default, string quotaPeriod = default, double? limit = default, double? currentValue = default, string nextResetTime = default, ServiceAccountQuotaUsageStatus? status = default, CognitiveServicesQuotaScopeType? scopeType = default, string scopeId = default)
         {
             return new ServiceAccountUsage(
                 id,
@@ -4055,7 +4055,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="userAssignedIdentities"> The list of user assigned identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesComputeIdentity"/> instance for mocking. </returns>
-        public static CognitiveServicesComputeIdentity CognitiveServicesComputeIdentity(ManagedServiceIdentityType? @type = default, string tenantId = default, string principalId = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
+        public static CognitiveServicesComputeIdentity CognitiveServicesComputeIdentity(ManagedServiceIdentityType? @type = default, Guid? tenantId = default, Guid? principalId = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
         {
             userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
 
