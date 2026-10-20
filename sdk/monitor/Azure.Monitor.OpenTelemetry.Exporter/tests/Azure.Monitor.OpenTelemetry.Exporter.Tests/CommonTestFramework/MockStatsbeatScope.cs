@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -48,6 +49,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         {
             Add(AzureMonitorStatsbeat.BuildConnectionStringFromHost(endpoint, StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU));
             Add(AzureMonitorStatsbeat.BuildConnectionStringFromHost(endpoint, StatsbeatConstants.Statsbeat_InstrumentationKey_EU));
+        }
+
+        internal static EndpointRouteBatch CreateRouteBatch(params (string Key, string Endpoint)[] destinations)
+        {
+            var batch = new EndpointRouteBatch();
+            foreach (var destination in destinations)
+            {
+                batch.GetOrAdd(destination.Endpoint).TelemetryItems.Add(
+                    new TelemetryItem(DateTime.UtcNow, resource: null, instrumentationKey: destination.Key)
+                    {
+                        Data = new MonitorBase { BaseType = "MetricData", BaseData = new MetricsData(2) },
+                    });
+            }
+
+            return batch;
         }
 
         public void Dispose()

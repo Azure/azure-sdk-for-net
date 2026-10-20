@@ -422,11 +422,11 @@ In AOT scenarios, you can configure the Azure Monitor Exporter using one of the 
 
 ## Internal Attach statistics in multi-endpoint mode
 
-When the `Azure.Monitor.OpenTelemetry.EnableMultiEndpointRouting` AppContext switch is enabled, internal Attach SDK statistics describe the host application through `rp` and `rpId`. The `cikey` dimension is `"N/A"`, even if a connection string is configured, because one application can route telemetry for multiple customer instrumentation keys. Sending telemetry for additional keys does not create additional Attach measurements.
+When the `Azure.Monitor.OpenTelemetry.EnableMultiEndpointRouting` AppContext switch is enabled, internal Attach SDK statistics report a separate metric point for each customer instrumentation key observed in routed traces, logs, or metrics. Each point carries that key in `cikey` and the application's existing `rp` and `rpId`. Repeated observations across signals do not create additional points within the long reporting interval.
 
-Attach uses the existing SDKStats meter provider, periodic reader, startup behavior, and long reporting interval. A connection string is not required. Without one, the internal stats destination defaults to the existing non-EU destination. The `APPLICATIONINSIGHTS_STATS_CONNECTION_STRING` override still takes precedence. When distro SDKStats routing is enabled, the existing non-EU configuration endpoint is used for a host without a connection string, including its remote-disable and fallback behavior.
+Attach uses one SDKStats meter provider and periodic reader. A connection string is not required, and newly observed keys are eligible at the next collection without waiting for earlier keys' reporting intervals. Points go to the EU or non-EU internal stats destination according to the observed ingestion endpoint. The `APPLICATIONINSIGHTS_STATS_CONNECTION_STRING` override takes precedence. Distro configuration and disablement are resolved independently for each region.
 
-The existing internal SDKStats opt-outs still apply. This does not add per-customer Network SDK statistics, change resource-provider detection, or send internal Attach measurements to customer telemetry destinations.
+Each shared stats owner tracks up to 2,000 customer associations. Additional associations are skipped silently while at capacity, without changing customer telemetry delivery. Inactive associations expire after the long reporting interval once their metric slots can safely be reused. The existing internal SDKStats opt-outs still apply. This does not add per-customer Network SDK statistics or new resource-provider detection.
 
 ## Multi-endpoint routing with Microsoft Entra ID
 

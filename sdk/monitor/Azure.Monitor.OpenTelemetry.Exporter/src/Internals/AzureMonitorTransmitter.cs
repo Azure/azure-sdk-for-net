@@ -419,6 +419,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return ExportResult.Failure;
             }
 
+            _statsbeat?.ObserveAttach(routeBatch);
+
             // Shutdown flushes the final batch through this path. A group with a storage partition is
             // written to it; one without still gets a bounded POST rather than the pipeline's 100
             // second network timeout, so process exit is never held on an unreachable endpoint.

@@ -2,15 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
+using OpenTelemetry.Metrics;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -328,25 +334,123 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public async Task RoutingOnlyAttachUsesTheNonEuDistroConfiguration()
+        public async Task RoutingOnlyAttachUsesBothRegionalDistroConfigurations()
         {
-            string? requestedUrl = null;
+            var requestedUrls = new ConcurrentBag<string>();
             using var handler = new StubHandler(request =>
             {
-                requestedUrl = request.RequestUri!.AbsoluteUri;
+                requestedUrls.Add(request.RequestUri!.AbsoluteUri);
                 return OkJson("{\"ver\":1,\"enabled\":true,\"url\":\"stats.example.invalid\"}");
             });
             using var statsbeat = new AzureMonitorStatsbeat(
                 ConnectionVars.CreateUnconfigured(), _stats.Platform, handler, multiEndpointEnabled: true);
+            statsbeat.ObserveAttach(MockStatsbeatScope.CreateRouteBatch(
+                ("us", "https://eastus-1.in.applicationinsights.azure.com/"),
+                ("eu", "https://westeurope-5.in.applicationinsights.azure.com/")));
 
             await AwaitInitAsync(statsbeat);
 
-            Assert.Equal("https://data.stats.monitor.azure.com/cfg/v1.json", requestedUrl);
+            Assert.Equal(new[] { StatsbeatConstants.SdkStatsConfigUrl_NonEU, StatsbeatConstants.SdkStatsConfigUrl_EU }.OrderBy(url => url),
+                requestedUrls.OrderBy(url => url));
             Assert.Equal(
                 "InstrumentationKey=c4a29126-a7cb-47e5-b348-11414998b11e;IngestionEndpoint=https://stats.example.invalid/",
                 statsbeat._statsbeat_ConnectionString);
             Assert.NotNull(statsbeat._statsbeatMeterProvider);
             Assert.Null(statsbeat.NetworkSdkStatsManager);
+            Assert.True(statsbeat._statsbeatMeterProvider.ForceFlush());
+            Assert.Contains(_stats.TelemetryItems, item => item.InstrumentationKey == StatsbeatConstants.Statsbeat_InstrumentationKey_EU
+                && ((MetricsData)item.Data.BaseData).Properties["cikey"] == "eu");
+            Assert.Contains(_stats.TelemetryItems, item => item.InstrumentationKey == StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU
+                && ((MetricsData)item.Data.BaseData).Properties["cikey"] == "us");
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task DisablingOneRegionDoesNotDisableTheOther(bool disableEu)
+        {
+            using var handler = new StubHandler(request =>
+                request.RequestUri!.AbsoluteUri == (disableEu ? StatsbeatConstants.SdkStatsConfigUrl_EU : StatsbeatConstants.SdkStatsConfigUrl_NonEU)
+                    ? OkJson("{\"ver\":1,\"enabled\":false}")
+                    : OkJson("{\"ver\":1,\"enabled\":true,\"url\":\"stats.example.invalid\"}"));
+            using var statsbeat = new AzureMonitorStatsbeat(
+                ConnectionVars.CreateUnconfigured(), _stats.Platform, handler, multiEndpointEnabled: true);
+            statsbeat.ObserveAttach(MockStatsbeatScope.CreateRouteBatch(
+                ("us", "https://eastus-1.in.applicationinsights.azure.com/"),
+                ("eu", "https://westeurope-5.in.applicationinsights.azure.com/")));
+
+            await AwaitInitAsync(statsbeat);
+            Assert.True(statsbeat._statsbeatMeterProvider!.ForceFlush());
+
+            var item = Assert.Single(_stats.TelemetryItems);
+            Assert.Equal(disableEu ? "us" : "eu", ((MetricsData)item.Data.BaseData).Properties["cikey"]);
+            Assert.Equal(disableEu ? StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU : StatsbeatConstants.Statsbeat_InstrumentationKey_EU,
+                item.InstrumentationKey);
+        }
+
+        [Fact]
+        public async Task MultiEndpointConfigFailureFallsBackWithinEachRegion()
+        {
+            using var handler = new StubHandler(_ => new HttpResponseMessage(HttpStatusCode.NotFound));
+            using var statsbeat = new AzureMonitorStatsbeat(
+                ConnectionVars.CreateUnconfigured(), _stats.Platform, handler, multiEndpointEnabled: true);
+            statsbeat.ObserveAttach(MockStatsbeatScope.CreateRouteBatch(
+                ("us", "https://eastus-1.in.applicationinsights.azure.com/"),
+                ("eu", "https://westeurope-5.in.applicationinsights.azure.com/")));
+            await AwaitInitAsync(statsbeat);
+
+            Assert.True(statsbeat._statsbeatMeterProvider!.ForceFlush());
+            Assert.Equal(2, _stats.TelemetryItems.Count);
+            Assert.Contains(_stats.TelemetryItems, item => item.InstrumentationKey == StatsbeatConstants.Statsbeat_InstrumentationKey_EU);
+            Assert.Contains(_stats.TelemetryItems, item => item.InstrumentationKey == StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU);
+        }
+
+        [Fact]
+        public void MultiEndpointOverrideSkipsBothConfigurationRequests()
+        {
+            bool requested = false;
+            using var handler = new StubHandler(_ =>
+            {
+                requested = true;
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
+            });
+            var connectionString = $"InstrumentationKey={Guid.NewGuid()};IngestionEndpoint=https://override.example.invalid/";
+            _stats.Add(connectionString);
+            _stats.Platform.SetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_CONNECTION_STRING, connectionString);
+            using var statsbeat = new AzureMonitorStatsbeat(
+                ConnectionVars.CreateUnconfigured(), _stats.Platform, handler, multiEndpointEnabled: true);
+            statsbeat.ObserveAttach(MockStatsbeatScope.CreateRouteBatch(
+                ("us", "https://eastus-1.in.applicationinsights.azure.com/"),
+                ("eu", "https://westeurope-5.in.applicationinsights.azure.com/")));
+
+            Assert.Null(statsbeat._configInitializationTask);
+            Assert.True(statsbeat._statsbeatMeterProvider!.ForceFlush());
+            Assert.False(requested);
+            Assert.Equal(2, _stats.TelemetryItems.Count);
+            Assert.All(_stats.TelemetryItems, item =>
+                Assert.Equal(ConnectionStringParser.GetValues(connectionString).InstrumentationKey, item.InstrumentationKey));
+        }
+
+        [Fact]
+        public async Task DisposalDuringRegionalConfigurationReleasesBothSenders()
+        {
+            var release = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            using var handler = new DelayedConfigHandler(release.Task);
+            var nonEu = Assert.IsType<MockTransmitter>(
+                TransmitterFactory.Instance._transmitters[StatsbeatConstants.Statsbeat_ConnectionString_NonEU]);
+            var eu = Assert.IsType<MockTransmitter>(
+                TransmitterFactory.Instance._transmitters[StatsbeatConstants.Statsbeat_ConnectionString_EU]);
+            using var statsbeat = new AzureMonitorStatsbeat(
+                ConnectionVars.CreateUnconfigured(), _stats.Platform, handler, multiEndpointEnabled: true);
+
+            statsbeat.Dispose();
+            release.SetResult(true);
+            await AwaitInitAsync(statsbeat);
+
+            Assert.Null(statsbeat._statsbeatMeterProvider);
+            Assert.Equal(1, nonEu.DisposeCallCount);
+            Assert.Equal(1, eu.DisposeCallCount);
+            Assert.Empty(_stats.TelemetryItems);
         }
 
         [Fact]
@@ -504,6 +608,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 Content = new StringContent(body, Encoding.UTF8, "application/json"),
             };
+
+        private sealed class DelayedConfigHandler : HttpMessageHandler
+        {
+            private readonly Task _release;
+
+            internal DelayedConfigHandler(Task release) => _release = release;
+
+            protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+            {
+                await _release.ConfigureAwait(false);
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
+            }
+        }
 
         private sealed class StubHandler : HttpMessageHandler
         {

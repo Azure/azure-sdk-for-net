@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using OpenTelemetry;
@@ -21,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 {
     internal sealed class AzureMonitorStatsbeat : IDisposable
     {
-        private static readonly Meter s_myMeter = new(StatsbeatConstants.AttachStatsbeatMeterName, "1.0");
+        private static readonly Meter s_attachMeter = new(StatsbeatConstants.AttachStatsbeatMeterName, "1.0");
 
         internal string? _statsbeat_ConnectionString;
 
@@ -40,8 +41,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         private readonly IPlatform _platform;
 
         private readonly ObservableGauge<int> _attachInstrument;
+        internal readonly MultiEndpointStatsbeatExporter? _multiEndpointExporter;
 
         private readonly bool _isRoutingOnly;
+        private readonly bool _collectOtherStats;
 
         internal readonly int _networkExportIntervalMilliseconds;
 
@@ -69,7 +72,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         /// </summary>
         internal Task? _configInitializationTask;
 
-        internal static Regex s_endpoint_pattern => new("^https?://(?:www\\.)?([^/.-]+)");
+        internal static readonly Regex s_endpoint_pattern = new("^https?://(?:www\\.)?([^/.-]+)");
 
         internal AzureMonitorStatsbeat(
             ConnectionVars connectionStringVars,
@@ -94,17 +97,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
             var connectionStringOverride = platform.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_CONNECTION_STRING);
             _connectionStringOverride = string.IsNullOrWhiteSpace(connectionStringOverride) ? null : connectionStringOverride;
+            var routeToDistroEndpoint =
+                AppContext.TryGetSwitch(StatsbeatConstants.RouteSdkStatsToDistroEndpointSwitchName, out var enabled)
+                && enabled;
+            _collectOtherStats = !_isRoutingOnly
+                && (_connectionStringOverride != null || routeToDistroEndpoint
+                    || GetStatsbeatConnectionString(connectionStringVars.IngestionEndpoint) != null);
 
-            // Attach describes the host application, not any one of its routed customers.
-            _customer_Ikey = multiEndpointEnabled ? "N/A" : connectionStringVars.InstrumentationKey;
+            _customer_Ikey = connectionStringVars.InstrumentationKey;
+
+            if (multiEndpointEnabled)
+            {
+                _multiEndpointExporter = new MultiEndpointStatsbeatExporter(
+                    _connectionStringOverride, connectionStringVars.IngestionEndpoint,
+                    sdkStatsConfigHttpHandler, _attachEmissionInterval, CreateAttachMeasurement);
+            }
 
             // IEnumerable<Measurement<T>> overload lets the callback yield zero measurements
             // while throttled - see GetAttachStatsbeat. Created up-front for both code paths
             // so that any background MeterProvider that comes online later (distro path)
             // immediately picks it up.
-            _attachInstrument = s_myMeter.CreateObservableGauge(StatsbeatConstants.AttachStatsbeatMetricName, GetAttachStatsbeat);
+            Func<IEnumerable<Measurement<int>>> collectAttach = _multiEndpointExporter == null
+                ? GetAttachStatsbeat : _multiEndpointExporter.GetMeasurements;
+            _attachInstrument = s_attachMeter.CreateObservableGauge(StatsbeatConstants.AttachStatsbeatMetricName, collectAttach);
 
-            if (!_isRoutingOnly)
+            if (_collectOtherStats)
             {
                 try
                 {
@@ -116,9 +133,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 }
             }
 
-            var routeToDistroEndpoint =
-                AppContext.TryGetSwitch(StatsbeatConstants.RouteSdkStatsToDistroEndpointSwitchName, out var enabled)
-                && enabled;
+            if (_multiEndpointExporter != null)
+            {
+                if (routeToDistroEndpoint && _connectionStringOverride == null)
+                {
+                    _configInitializationTask = Task.Run(InitializeMultiEndpointAsync);
+                }
+                else
+                {
+                    _multiEndpointExporter.Initialize();
+                    CompleteMultiEndpointInitialization();
+                }
+                return;
+            }
 
             // Explicit destination override (spec: connectionString) wins over both the
             // distro-routed and region-derived endpoints.
@@ -157,6 +184,51 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
             BuildMeterProvider(_statsbeat_ConnectionString);
             ScheduleInitialAttachFlush();
+        }
+
+        internal void ObserveAttach(EndpointRouteBatch batch)
+            => _multiEndpointExporter?.Observe(batch, DateTime.UtcNow.Ticks);
+
+        private async Task InitializeMultiEndpointAsync()
+        {
+            try
+            {
+                await _multiEndpointExporter!.InitializeAsync().ConfigureAwait(false);
+                CompleteMultiEndpointInitialization();
+            }
+            catch (Exception ex)
+            {
+                _multiEndpointExporter!.Dispose();
+                AzureMonitorExporterEventSource.Log.StatsbeatFailed(ex);
+            }
+        }
+
+        private void CompleteMultiEndpointInitialization()
+        {
+            if (_isDisposed)
+            {
+                _multiEndpointExporter!.Dispose();
+                return;
+            }
+
+            _statsbeat_ConnectionString = _multiEndpointExporter!.DefaultConnectionString;
+            if (!_multiEndpointExporter.HasDestination)
+            {
+                _multiEndpointExporter.Registry.Clear();
+            }
+            if (_multiEndpointExporter.HasDestination)
+            {
+                try
+                {
+                    BuildMeterProvider(_statsbeat_ConnectionString);
+                    ScheduleInitialAttachFlush();
+                }
+                catch
+                {
+                    _multiEndpointExporter.Dispose();
+                    throw;
+                }
+            }
         }
 
         private async Task InitializeFromConfigAsync(
@@ -239,19 +311,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             return legacy ?? StatsbeatConstants.Statsbeat_ConnectionString_NonEU;
         }
 
-        private void BuildMeterProvider(string connectionString)
+        private void BuildMeterProvider(string? connectionString)
         {
             // One MeterProvider for both long and short-interval stats. The reader runs at
             // the Network (15 min) cadence. Delta temporality + the Attach throttle keep the
             // long-interval instruments on their native 24 hr cadence. EnableStatsbeat=false
             // avoids a recursive Statsbeat construction inside the transmitter we're about to
             // attach.
-            var exporterOptions = CreateExporterOptions(connectionString);
+            BaseExporter<Metric> exporter = _multiEndpointExporter != null
+                ? _multiEndpointExporter
+                : AzureMonitorMetricExporter.CreateForInternalTelemetry(CreateExporterOptions(connectionString!));
+            var attachView = _multiEndpointExporter != null
+                ? new MetricStreamConfiguration { CardinalityLimit = AttachStatsbeatRegistry.Capacity }
+                : null;
 
             var builder = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(StatsbeatConstants.AttachStatsbeatMeterName);
 
-            if (!_isRoutingOnly)
+            if (_collectOtherStats && (_multiEndpointExporter == null || _multiEndpointExporter.DefaultConnectionString != null))
             {
                 builder.AddMeter(
                     StatsbeatConstants.FeatureStatsbeatMeterName,
@@ -262,9 +339,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
             var meterProvider = builder
                 // Another stats owner's reader must not consume this owner's Attach throttle.
-                .AddView(instrument => instrument.Meter.Name == StatsbeatConstants.AttachStatsbeatMeterName
-                    && !ReferenceEquals(instrument, _attachInstrument) ? MetricStreamConfiguration.Drop : null)
-                .AddReader(new PeriodicExportingMetricReader(AzureMonitorMetricExporter.CreateForInternalTelemetry(exporterOptions), _networkExportIntervalMilliseconds)
+                .AddView(instrument => instrument.Meter.Name != StatsbeatConstants.AttachStatsbeatMeterName
+                    ? null : ReferenceEquals(instrument, _attachInstrument) ? attachView : MetricStreamConfiguration.Drop)
+                .AddReader(new PeriodicExportingMetricReader(exporter, _networkExportIntervalMilliseconds)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
 
@@ -385,7 +462,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 : StatsbeatConstants.SdkStatsConfigUrl_NonEU;
         }
 
-        private static bool IsEuRegion(string ingestionEndpoint)
+        internal static bool IsEuRegion(string ingestionEndpoint)
         {
             var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
             return patternMatch.Success
@@ -413,21 +490,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             Measurement<int> measurement;
             try
             {
-                if (_resourceProvider == null)
-                {
-                    SetResourceProviderDetails(_platform);
-                }
-
-                measurement = new Measurement<int>(1,
-                    new("rp", _resourceProvider),
-                    new("rpId", _resourceProviderId),
-                    new("attach", s_attachMode),
-                    new("cikey", _customer_Ikey),
-                    new("runtimeVersion", s_runtimeVersion),
-                    new("language", "dotnet"),
-                    // We don't memoize this version because it can be updated up to a minute into the application startup
-                    new("version", SdkVersionUtils.GetVersion()),
-                    new("os", _operatingSystem));
+                measurement = CreateAttachMeasurement(_customer_Ikey);
             }
             catch (Exception ex)
             {
@@ -438,6 +501,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             }
 
             yield return measurement;
+        }
+
+        private Measurement<int> CreateAttachMeasurement(string customerIkey)
+        {
+            if (_resourceProvider == null)
+            {
+                SetResourceProviderDetails(_platform);
+            }
+
+            return new Measurement<int>(1,
+                new("rp", _resourceProvider),
+                new("rpId", _resourceProviderId),
+                new("attach", s_attachMode),
+                new("cikey", customerIkey),
+                new("runtimeVersion", s_runtimeVersion),
+                new("language", "dotnet"),
+                new("version", SdkVersionUtils.GetVersion()),
+                new("os", _operatingSystem));
         }
 
         internal static VmMetadataResponse? GetVmMetadataResponse()
@@ -546,6 +627,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             var meterProvider = Interlocked.Exchange(ref _statsbeatMeterProvider, null);
             if (meterProvider == null)
             {
+                _multiEndpointExporter?.Dispose();
                 return;
             }
 

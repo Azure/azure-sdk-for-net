@@ -118,10 +118,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Null(transmitter._statsbeat.NetworkSdkStatsManager);
 
             Assert.Empty(listener.Messages.Where(e => e.EventName == "ErrorInitializingStatsbeat"));
+            transmitter._statsbeat.ObserveAttach(MockStatsbeatScope.CreateRouteBatch(
+                ("routed-customer", "https://eastus-1.in.applicationinsights.azure.com/")));
             Assert.True(transmitter._statsbeat._statsbeatMeterProvider!.ForceFlush());
             var attach = Assert.Single(stats.TelemetryItems.Select(item => item.Data.BaseData).OfType<MetricsData>());
             Assert.Equal("Attach", Assert.Single(attach.Metrics).Name);
-            Assert.Equal("N/A", attach.Properties["cikey"]);
+            Assert.Equal("routed-customer", attach.Properties["cikey"]);
         }
 
         // ---------- Routing off: unchanged ----------

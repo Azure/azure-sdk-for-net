@@ -3,8 +3,12 @@
 
 using System;
 using System.Diagnostics.Metrics;
+using System.Diagnostics.Tracing;
 using System.Linq;
+using System.Threading;
+using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -12,6 +16,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using Xunit;
+using TestEventListener = Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework.TestEventListener;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
@@ -20,13 +25,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     {
         private const string CustomerKey = "11111111-2222-3333-4444-555555555555";
         private const string CustomerConnectionString = "InstrumentationKey=" + CustomerKey + ";IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/";
+        private const string EastUs = "https://eastus-1.in.applicationinsights.azure.com/";
+        private const string WestEurope = "https://westeurope-5.in.applicationinsights.azure.com/";
 
         [Theory]
         [InlineData(false, CustomerKey)]
-        [InlineData(true, "N/A")]
+        [InlineData(true, "routed-key")]
         public void AttachUsesTheAppropriateCustomerIdentity(bool multiEndpointEnabled, string expectedCustomerKey)
         {
             using var scope = new AttachTestScope(multiEndpointEnabled, configured: true);
+            scope.Observe(("routed-key", EastUs));
 
             Assert.True(scope.Statsbeat._statsbeatMeterProvider!.ForceFlush());
 
@@ -41,16 +49,135 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void RoutingOnlyAttachUsesNAWithoutEnablingNetworkStats()
+        public void RoutingOnlyAttachReportsObservedKeysWithoutEnablingNetworkStats()
         {
             using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false);
+            scope.Observe(("first-key", EastUs), ("second-key", WestEurope));
 
             Assert.True(scope.Statsbeat._statsbeatMeterProvider!.ForceFlush());
 
-            var attach = Assert.Single(scope.AttachMeasurements());
-            Assert.Equal("N/A", attach.Properties["cikey"]);
+            Assert.Equal(new[] { "first-key", "second-key" },
+                scope.AttachMeasurements().Select(data => data.Properties["cikey"]).OrderBy(key => key));
+            Assert.All(scope.AttachMeasurements(), data => Assert.Equal(scope.ResourceProviderId, data.Properties["rpId"]));
             Assert.Null(scope.Statsbeat.NetworkSdkStatsManager);
             Assert.Equal(scope.StatsConnectionString, scope.Statsbeat._statsbeat_ConnectionString);
+        }
+
+        [Fact]
+        public void NoObservedCustomerDoesNotProduceAnAttach()
+        {
+            using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false);
+            Assert.True(scope.Statsbeat._statsbeatMeterProvider!.ForceFlush());
+            Assert.Empty(scope.AttachMeasurements());
+        }
+
+        [Fact]
+        public void AnUnrecognizedConfiguredRegionDoesNotNewlyEnableNetworkStats()
+        {
+            using var scope = new MockStatsbeatScope();
+            using var statsbeat = new AzureMonitorStatsbeat(
+                Internals.ConnectionString.ConnectionStringParser.GetValues(
+                    "InstrumentationKey=host;IngestionEndpoint=https://unknown.example.invalid/"),
+                scope.Platform,
+                multiEndpointEnabled: true);
+            statsbeat.ObserveAttach(MockStatsbeatScope.CreateRouteBatch(("observed", EastUs)));
+
+            Assert.Null(statsbeat.NetworkSdkStatsManager);
+            Assert.True(statsbeat._statsbeatMeterProvider!.ForceFlush());
+            Assert.Equal("observed", ((MetricsData)Assert.Single(scope.TelemetryItems).Data.BaseData).Properties["cikey"]);
+        }
+
+        [Fact]
+        public void MixedRegionsUseTheirOwnInternalInstrumentationKeys()
+        {
+            using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false, useOverride: false);
+            scope.Observe(("us-key", EastUs), ("eu-key", WestEurope));
+            Assert.True(scope.Statsbeat._statsbeatMeterProvider!.ForceFlush());
+
+            Assert.Contains(scope.Items(), item => item.InstrumentationKey == StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU
+                && ((MetricsData)item.Data.BaseData).Properties["cikey"] == "us-key");
+            Assert.Contains(scope.Items(), item => item.InstrumentationKey == StatsbeatConstants.Statsbeat_InstrumentationKey_EU
+                && ((MetricsData)item.Data.BaseData).Properties["cikey"] == "eu-key");
+        }
+
+        [Fact]
+        public void AnOverrideAppliesToBothRegions()
+        {
+            using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false);
+            scope.Observe(("us-key", EastUs), ("eu-key", WestEurope));
+            Assert.True(scope.Statsbeat._statsbeatMeterProvider!.ForceFlush());
+
+            var key = Internals.ConnectionString.ConnectionStringParser.GetValues(scope.StatsConnectionString).InstrumentationKey;
+            Assert.Equal(2, scope.Items().Length);
+            Assert.All(scope.Items(), item => Assert.Equal(key, item.InstrumentationKey));
+        }
+
+        [Fact]
+        public void OneRegionsSendFailureDoesNotPreventTheOtherRegion()
+        {
+            using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false, useOverride: false);
+            var nonEu = Assert.IsType<MockTransmitter>(
+                TransmitterFactory.Instance._transmitters[StatsbeatConstants.Statsbeat_ConnectionString_NonEU]);
+            nonEu.Result = ExportResult.Failure;
+            scope.Observe(("us", EastUs), ("eu", WestEurope));
+
+            Assert.False(scope.Statsbeat._statsbeatMeterProvider!.ForceFlush());
+            Assert.Contains(scope.Items(), item => item.InstrumentationKey == StatsbeatConstants.Statsbeat_InstrumentationKey_EU
+                && ((MetricsData)item.Data.BaseData).Properties["cikey"] == "eu");
+        }
+
+        [Fact]
+        public void LateKeysDoNotWaitForTheEarlierKeysLongInterval()
+        {
+            using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false);
+            scope.Observe(("early", EastUs));
+            Assert.True(scope.Statsbeat._statsbeatMeterProvider!.ForceFlush());
+            scope.Observe(("early", EastUs), ("late", EastUs));
+            Assert.True(scope.Statsbeat._statsbeatMeterProvider!.ForceFlush());
+
+            Assert.Equal(new[] { "early", "late" },
+                scope.AttachMeasurements().Select(data => data.Properties["cikey"]).OrderBy(key => key));
+        }
+
+        [Fact]
+        public void TheCapIsSilentAndDoesNotChangeCustomerDelivery()
+        {
+            int customerItems = 0;
+            var transport = new MockTransport(request =>
+            {
+                Assert.True(HttpPipelineHelper.TryGetRequestContent(request.Content, out var content));
+                customerItems += System.Text.Encoding.UTF8.GetString(content!).Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries).Length;
+                return new MockResponse(200);
+            });
+            using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false, transport: transport);
+            var batch = MockStatsbeatScope.CreateRouteBatch(
+                Enumerable.Range(0, AttachStatsbeatRegistry.Capacity + 1).Select(i => ($"key-{i}", EastUs)).ToArray());
+            using (var listener = new TestEventListener())
+            {
+                listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Verbose, EventKeywords.All);
+                scope.Statsbeat.ObserveAttach(batch);
+                Assert.Empty(listener.Messages);
+            }
+
+            Assert.Equal(ExportResult.Success,
+                scope.Transmitter.Track(batch, TelemetryItemOrigin.AzureMonitorTraceExporter, CancellationToken.None));
+            Assert.Equal(AttachStatsbeatRegistry.Capacity + 1, customerItems);
+            Assert.True(scope.Statsbeat._statsbeatMeterProvider!.ForceFlush());
+            Assert.Equal(AttachStatsbeatRegistry.Capacity, scope.AttachMeasurements().Length);
+        }
+
+        [Fact]
+        public void DuplicateKeysAcrossSignalsAreReportedOnce()
+        {
+            using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false);
+            foreach (var origin in new[] { TelemetryItemOrigin.AzureMonitorTraceExporter, TelemetryItemOrigin.AzureMonitorLogExporter, TelemetryItemOrigin.AzureMonitorMetricExporter })
+            {
+                Assert.Equal(ExportResult.Success, scope.Transmitter.Track(
+                    MockStatsbeatScope.CreateRouteBatch(("shared", EastUs)), origin, CancellationToken.None));
+            }
+
+            Assert.True(scope.Statsbeat._statsbeatMeterProvider!.ForceFlush());
+            Assert.Equal("shared", Assert.Single(scope.AttachMeasurements()).Properties["cikey"]);
         }
 
         [Theory]
@@ -67,6 +194,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void RoutingOnlyCollectorDoesNotEnableOtherSdkStats()
         {
             using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false);
+            scope.Observe(("key", EastUs));
             using var featureMeter = new Meter(StatsbeatConstants.DistroFeatureSdkStatsMeterName);
             using var networkMeter = new Meter(StatsbeatConstants.DistroNetworkSdkStatsMeterName);
             featureMeter.CreateObservableGauge("AttachTestFeature", () => 1);
@@ -83,6 +211,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void RepeatedCollectionsDoNotRepeatAttachBeforeTheLongInterval()
         {
             using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false);
+            scope.Observe(("key", EastUs));
             var provider = scope.Statsbeat._statsbeatMeterProvider!;
 
             Assert.True(provider.ForceFlush());
@@ -99,6 +228,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             using var first = new AttachTestScope(multiEndpointEnabled: true, configured: false);
             using var second = new AttachTestScope(multiEndpointEnabled: true, configured: false);
+            first.Observe(("first", EastUs));
+            second.Observe(("second", EastUs));
 
             Assert.True(first.Statsbeat._statsbeatMeterProvider!.ForceFlush());
             Assert.Single(first.AttachMeasurements());
@@ -112,6 +243,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void SignalExportersShareTheExistingAttachCollector()
         {
             using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false);
+            scope.Observe(("key", EastUs));
             var factory = new TransmitterFactory();
             factory.Set(string.Empty, scope.Transmitter);
             var options = new AzureMonitorExporterOptions();
@@ -159,7 +291,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             private readonly MockStatsbeatScope _stats = new();
 
-            internal AttachTestScope(bool multiEndpointEnabled, bool configured, bool useOverride = true)
+            internal AttachTestScope(bool multiEndpointEnabled, bool configured, bool useOverride = true, MockTransport? transport = null)
             {
                 ResourceProviderId = _stats.ResourceProviderId;
                 Platform = _stats.Platform;
@@ -179,6 +311,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     {
                         ConnectionString = configured ? CustomerConnectionString : null,
                         DisableOfflineStorage = true,
+                        Transport = transport ?? new MockTransport(_ => new MockResponse(200)),
                     },
                     Platform,
                     multiEndpointEnabled);
@@ -190,6 +323,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             internal MockPlatform Platform { get; }
             internal AzureMonitorTransmitter Transmitter { get; }
             internal AzureMonitorStatsbeat Statsbeat => Assert.IsType<AzureMonitorStatsbeat>(Transmitter._statsbeat);
+
+            internal void Observe(params (string Key, string Endpoint)[] destinations)
+                => Statsbeat.ObserveAttach(MockStatsbeatScope.CreateRouteBatch(destinations));
+
+            internal TelemetryItem[] Items()
+            {
+                lock (_stats.TelemetryItems)
+                {
+                    return _stats.TelemetryItems.ToArray();
+                }
+            }
 
             internal MetricsData[] AttachMeasurements() => Measurements()
                 .Where(data => data.Metrics.Any(metric => metric.Name == "Attach")
