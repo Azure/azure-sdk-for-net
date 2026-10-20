@@ -15,7 +15,7 @@ using Azure.Search.Documents.Indexes;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-    public static partial class DocumentsClientBuilderExtensions
+    public static partial class SearchClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="SearchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
@@ -26,16 +26,6 @@ namespace Microsoft.Extensions.Azure
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<SearchClient, SearchClientOptions>(options => new SearchClient(endpoint, indexName, credential, options));
-        }
-
-        /// <summary> Registers a <see cref="SearchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"></param>
-        /// <param name="indexName"></param>
-        public static IAzureClientBuilder<SearchClient, SearchClientOptions> AddSearchClient<TBuilder>(this TBuilder builder, Uri endpoint, string indexName)
-            where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            return builder.RegisterClientFactory<SearchClient, SearchClientOptions>((options, credential) => new SearchClient(endpoint, indexName, credential, options));
         }
 
         /// <summary> Registers a <see cref="SearchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
@@ -61,15 +51,6 @@ namespace Microsoft.Extensions.Azure
 
         /// <summary> Registers a <see cref="SearchIndexClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"></param>
-        public static IAzureClientBuilder<SearchIndexClient, SearchClientOptions> AddSearchIndexClient<TBuilder>(this TBuilder builder, Uri endpoint)
-            where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            return builder.RegisterClientFactory<SearchIndexClient, SearchClientOptions>((options, credential) => new SearchIndexClient(endpoint, credential, options));
-        }
-
-        /// <summary> Registers a <see cref="SearchIndexClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
@@ -87,15 +68,6 @@ namespace Microsoft.Extensions.Azure
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<SearchIndexerClient, SearchClientOptions>(options => new SearchIndexerClient(endpoint, credential, options));
-        }
-
-        /// <summary> Registers a <see cref="SearchIndexerClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"></param>
-        public static IAzureClientBuilder<SearchIndexerClient, SearchClientOptions> AddSearchIndexerClient<TBuilder>(this TBuilder builder, Uri endpoint)
-            where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            return builder.RegisterClientFactory<SearchIndexerClient, SearchClientOptions>((options, credential) => new SearchIndexerClient(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="SearchIndexerClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
