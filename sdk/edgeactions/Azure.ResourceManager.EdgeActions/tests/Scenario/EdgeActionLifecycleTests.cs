@@ -263,22 +263,15 @@ namespace Azure.ResourceManager.EdgeActions.Tests
             Assert.That(version.Data.Properties.ProvisioningState, Is.EqualTo(EdgeActionProvisioningState.Succeeded));
         }
 
-        private static string CreateCode(string deploymentType)
+        internal static string CreateCode(string deploymentType)
         {
-            byte[] content = Encoding.UTF8.GetBytes(Handler);
             if (deploymentType == "file")
             {
-                return Convert.ToBase64String(content);
+                return Convert.ToBase64String(Encoding.UTF8.GetBytes(Handler));
             }
-            using var stream = new MemoryStream();
-            using (var archive = new ZipArchive(stream, ZipArchiveMode.Create, leaveOpen: true))
-            {
-                ZipArchiveEntry entry = archive.CreateEntry("handler.js");
-                entry.LastWriteTime = new DateTimeOffset(1980, 1, 1, 0, 0, 0, TimeSpan.Zero);
-                using Stream entryStream = entry.Open();
-                entryStream.Write(content, 0, content.Length);
-            }
-            return Convert.ToBase64String(stream.ToArray());
+
+            // Use the recorded handler.js archive verbatim: ZipArchive metadata varies by OS.
+            return "UEsDBBQAAAAIAAAAIQCxoxB+JwAAACkAAAAKAAAAaGFuZGxlci5qc0srzUsuyczPU8hIzEvJSS3SSC1LzSvRVKhWKEotKS3KUwDzrRVqAVBLAQIUABQAAAAIAAAAIQCxoxB+JwAAACkAAAAKAAAAAAAAAAAAAAAAAAAAAABoYW5kbGVyLmpzUEsFBgAAAAABAAEAOAAAAE8AAAAAAA==";
         }
 
         private static void AssertCode(string content)

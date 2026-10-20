@@ -121,6 +121,8 @@ deployment, version-code retrieval, default-version swaps, and execution-filter 
 `ExecutionFilterLifecycle` independently covers filters referencing newly created versions, so
 deployment failures do not prevent filter creation, reassignment, update, and deletion from running.
 All scenarios participate in Record and Playback modes in both sync and async fixtures.
+The ZIP deployment payload is a fixed archive so operating-system-specific ZIP metadata does not
+change the request bytes during playback.
 Service failures must fail the recording run; do not skip scenarios or publish failed diagnostic
 recordings as successful coverage.
 
