@@ -21,8 +21,6 @@ namespace Azure.AI.Projects.Agents
         Openapi,
         /// <summary> A2aPreview. </summary>
         A2aPreview,
-        /// <summary> BrowserAutomationPreview. </summary>
-        BrowserAutomationPreview,
         /// <summary> ReminderPreview. </summary>
         ReminderPreview,
         /// <summary> WorkIqPreview. </summary>

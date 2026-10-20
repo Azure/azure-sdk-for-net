@@ -4,7 +4,7 @@
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> The legacy GitHub Copilot built-in tool names retained for compatibility. Use `MicrosoftCopilotBuiltInTool` for new integrations. </summary>
+    /// <summary> A customer-configurable GitHub Copilot built-in tool. </summary>
     public enum GitHubCopilotBuiltInTool
     {
         /// <summary> Read and search files in the harness workspace. </summary>

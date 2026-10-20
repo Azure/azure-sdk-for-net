@@ -333,7 +333,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// A managed runtime and agent loop used to execute a prompt agent.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.GitHubCopilotHarness"/> and <see cref="Agents.MicrosoftCopilotHarness"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.GitHubCopilotHarness"/>.
         /// </summary>
         /// <param name="type"> The type of managed harness. </param>
         /// <returns> A new <see cref="Agents.AgentHarness"/> instance for mocking. </returns>
@@ -343,15 +343,7 @@ namespace Azure.AI.Projects.Agents
             return new UnknownAgentHarness(@type, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The Microsoft Copilot managed harness for prompt agents. </summary>
-        /// <returns> A new <see cref="Agents.MicrosoftCopilotHarness"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static MicrosoftCopilotHarness MicrosoftCopilotHarness()
-        {
-            return new MicrosoftCopilotHarness("microsoft_copilot_preview", additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The legacy GitHub Copilot managed harness retained for compatibility. Use `MicrosoftCopilotHarness` for new prompt agents. </summary>
+        /// <summary> The GitHub Copilot managed harness for prompt agents. </summary>
         /// <returns> A new <see cref="Agents.GitHubCopilotHarness"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
         public static GitHubCopilotHarness GitHubCopilotHarness()
@@ -2338,7 +2330,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// An abstract representation of a tool stored in a toolbox.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.A2AToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.FileSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.ShellToolboxTool"/>, <see cref="Agents.ToolSearchToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, <see cref="Agents.WebIQPreviewToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, and <see cref="Agents.WorkIQPreviewToolboxTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.A2AToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.BrowserAutomationToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.FileSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.ShellToolboxTool"/>, <see cref="Agents.ToolSearchToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, <see cref="Agents.WebIQPreviewToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, and <see cref="Agents.WorkIQPreviewToolboxTool"/>.
         /// </summary>
         /// <param name="type"> The type of tool. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -2728,30 +2720,6 @@ namespace Azure.AI.Projects.Agents
                 agentCardPath,
                 projectConnectionId,
                 sendCredentialsForAgentCard);
-        }
-
-        /// <summary> A browser automation tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
-        /// <returns> A new <see cref="Agents.BrowserAutomationPreviewToolboxTool"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static BrowserAutomationPreviewToolboxTool BrowserAutomationPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BrowserAutomationToolOptions toolParameters = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new BrowserAutomationPreviewToolboxTool(
-                ToolboxToolType.BrowserAutomationPreview,
-                name,
-                description,
-                toolConfigs,
-                additionalBinaryDataProperties: null,
-                toolParameters);
         }
 
         /// <summary> A browser automation tool stored in a toolbox. </summary>

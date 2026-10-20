@@ -20,8 +20,6 @@ namespace Azure.AI.Projects.Agents
         /// <summary> GithubCopilotV1Preview. </summary>
         GithubCopilotV1Preview,
         /// <summary> SkillsV1Preview. </summary>
-        SkillsV1Preview,
-        /// <summary> The Microsoft Copilot V1 preview feature opt-in. </summary>
-        MicrosoftCopilotV1Preview
+        SkillsV1Preview
     }
 }

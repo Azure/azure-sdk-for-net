@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The legacy GitHub Copilot managed harness retained for compatibility. Use `MicrosoftCopilotHarness` for new prompt agents. </summary>
+    /// <summary> The GitHub Copilot managed harness for prompt agents. </summary>
     [Experimental("AAIP001")]
     public partial class GitHubCopilotHarness : AgentHarness
     {

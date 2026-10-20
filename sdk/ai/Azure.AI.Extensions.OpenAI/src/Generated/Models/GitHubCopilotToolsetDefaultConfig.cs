@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> The legacy default enablement setting retained for compatibility. Use `MicrosoftCopilotToolsetDefaultConfig` for new integrations. </summary>
+    /// <summary> The default enablement setting for GitHub Copilot built-in tools. </summary>
     public partial class GitHubCopilotToolsetDefaultConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
