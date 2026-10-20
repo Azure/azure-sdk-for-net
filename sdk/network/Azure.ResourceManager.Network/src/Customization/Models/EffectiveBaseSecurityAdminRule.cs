@@ -8,6 +8,13 @@ namespace Azure.ResourceManager.Network.Models
     public abstract partial class EffectiveBaseSecurityAdminRule
     {
         /// <summary> Initializes a new instance of the EffectiveBaseSecurityAdminRule class. </summary>
+        protected EffectiveBaseSecurityAdminRule()
+        {
+        }
+
+        // Absent in 1.15.0, but shipped in 1.17.0. Preserve the released subclass constructor signature.
+        /// <summary> Initializes a new instance of the EffectiveBaseSecurityAdminRule class. </summary>
+        /// <param name="_"> Reserved for compatibility. </param>
         protected EffectiveBaseSecurityAdminRule(bool _) { }
     }
 }

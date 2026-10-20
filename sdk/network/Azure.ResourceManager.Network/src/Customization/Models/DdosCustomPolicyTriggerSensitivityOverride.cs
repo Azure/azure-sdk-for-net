@@ -4,17 +4,13 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text.Json;
-using Azure;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> DDoS custom policy trigger sensitivity override. </summary>
-    [ObsoleteAttribute("This struct is obsolete and will be removed in a future release", false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This struct is obsolete and will be removed in a future release", false)]
     public readonly partial struct DdosCustomPolicyTriggerSensitivityOverride : IEquatable<DdosCustomPolicyTriggerSensitivityOverride>
     {
         private readonly string _value;

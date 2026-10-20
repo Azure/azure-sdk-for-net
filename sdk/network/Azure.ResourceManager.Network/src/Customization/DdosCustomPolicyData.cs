@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.Network
 
         // Keep the released obsolete public-IP view over the native collection.
         /// <summary> Gets the PublicIPAddresses compatibility property. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [WirePath("properties.publicIPAddresses")]
         public IReadOnlyList<WritableSubResource> PublicIPAddresses => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.PublicIPAddresses);
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.Network
         // Retain the obsolete 1.15 compatibility API; current TypeSpec has no protocolCustomSettings field.
         // Keep the persistent per-instance list shipped in 1.16.1/1.17 without adding wire serialization.
         /// <summary> The protocol-specific DDoS policy customization parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsolete and might be removed in a future version", false)]
         public IList<ProtocolCustomSettings> ProtocolCustomSettings { get; } = new List<ProtocolCustomSettings>();
     }

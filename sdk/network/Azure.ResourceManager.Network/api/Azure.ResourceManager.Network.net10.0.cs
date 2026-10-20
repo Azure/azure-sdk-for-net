@@ -1036,7 +1036,9 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ConnectionMonitorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ConnectionMonitorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This legacy query operation is not supported by the current connection monitor API.")]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult> Query(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        [System.ObsoleteAttribute("This legacy query operation is not supported by the current connection monitor API.")]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult>> QueryAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ConnectionMonitorResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ConnectionMonitorResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -12604,6 +12606,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleSensitivityType High { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleSensitivityType Low { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleSensitivityType Medium { get { throw null; } }
+        [System.ObsoleteAttribute("This compatibility value is not defined by the current service schema.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleSensitivityType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleSensitivityType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -12962,6 +12965,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointScopeItem ConnectionMonitorEndpointScopeItem(string address = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorHttpConfiguration ConnectionMonitorHttpConfiguration(int? port = default(int?), Azure.ResourceManager.Network.Models.NetworkHttpConfigurationMethod? method = default(Azure.ResourceManager.Network.Models.NetworkHttpConfigurationMethod?), string path = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkWatcherHttpHeader> requestHeaders = null, System.Collections.Generic.IEnumerable<string> validStatusCodeRanges = null, bool? preferHttps = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorOutput ConnectionMonitorOutput(Azure.ResourceManager.Network.Models.OutputType? type = default(Azure.ResourceManager.Network.Models.OutputType?), Azure.Core.ResourceIdentifier workspaceResourceId = null) { throw null; }
+        [System.ObsoleteAttribute("This legacy query result is not supported by the current connection monitor API.")]
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult ConnectionMonitorQueryResult(Azure.ResourceManager.Network.Models.ConnectionMonitorSourceStatus? sourceStatus = default(Azure.ResourceManager.Network.Models.ConnectionMonitorSourceStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectionStateSnapshot> states = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorResultProperties ConnectionMonitorResultProperties(Azure.ResourceManager.Network.Models.ConnectionMonitorSource source = null, Azure.ResourceManager.Network.Models.ConnectionMonitorDestination destination = null, bool? autoStart = default(bool?), int? monitoringIntervalInSeconds = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectionMonitorEndpoint> endpoints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectionMonitorTestConfiguration> testConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectionMonitorTestGroup> testGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectionMonitorOutput> outputs = null, string notes = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), string monitoringStatus = null, Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointType? connectionMonitorType = default(Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointType?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorResultProperties ConnectionMonitorResultProperties(Azure.ResourceManager.Network.Models.ConnectionMonitorSource source, Azure.ResourceManager.Network.Models.ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectionMonitorEndpoint> endpoints, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectionMonitorTestConfiguration> testConfigurations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectionMonitorTestGroup> testGroups, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectionMonitorOutput> outputs, string notes, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, System.DateTimeOffset? startOn, string monitoringStatus, Azure.ResourceManager.Network.Models.ConnectionMonitorType? monitorType) { throw null; }
@@ -12974,6 +12978,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ConnectionPolicyProperties ConnectionPolicyProperties(bool? enableInternetSecurity = default(bool?), Azure.ResourceManager.Network.Models.RoutingConfigurationNfv routingConfiguration = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IEnumerable<string> associatedConnections = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.ConnectionResetSharedKey ConnectionResetSharedKey(int keyLength = 0) { throw null; }
         public static Azure.ResourceManager.Network.Models.ConnectionSharedKey ConnectionSharedKey(Azure.Core.ResourceIdentifier id = null, string value = null) { throw null; }
+        [System.ObsoleteAttribute("This legacy query snapshot is not supported by the current connection monitor API.")]
         public static Azure.ResourceManager.Network.Models.ConnectionStateSnapshot ConnectionStateSnapshot(Azure.ResourceManager.Network.Models.NetworkConnectionState? networkConnectionState = default(Azure.ResourceManager.Network.Models.NetworkConnectionState?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.Network.Models.EvaluationState? evaluationState = default(Azure.ResourceManager.Network.Models.EvaluationState?), long? avgLatencyInMs = default(long?), long? minLatencyInMs = default(long?), long? maxLatencyInMs = default(long?), long? probesSent = default(long?), long? probesFailed = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityHopInfo> hops = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.ConnectivityCheckSettings ConnectivityCheckSettings(bool? shouldGeneratePath = default(bool?), Azure.ResourceManager.Network.Models.TestEvalPreferredIPVersion? preferredIPVersion = default(Azure.ResourceManager.Network.Models.TestEvalPreferredIPVersion?)) { throw null; }
         public static Azure.ResourceManager.Network.ConnectivityConfigurationData ConnectivityConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Network.Models.ConnectivityTopology? connectivityTopology = default(Azure.ResourceManager.Network.Models.ConnectivityTopology?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityHub> hubs = null, Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag? isGlobal = default(Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag?), Azure.ResourceManager.Network.Models.ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityGroupItem> appliesToGroups = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.DeleteExistingPeering? deleteExistingPeering = default(Azure.ResourceManager.Network.Models.DeleteExistingPeering?), System.Guid? resourceGuid = default(System.Guid?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
@@ -15508,7 +15513,9 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointType ExternalAddress { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointType MMAWorkspaceMachine { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointType MMAWorkspaceNetwork { get { throw null; } }
+        [System.ObsoleteAttribute("This value is not an endpoint type. Please use ConnectionMonitorType.MultiEndpoint instead.")]
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointType MultiEndpoint { get { throw null; } }
+        [System.ObsoleteAttribute("This value is not an endpoint type. Please use ConnectionMonitorType.SingleSourceDestination instead.")]
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointType SingleSourceDestination { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -15555,10 +15562,13 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionMonitorOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionMonitorOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This legacy query result is not supported by the current connection monitor API.")]
     public partial class ConnectionMonitorQueryResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult>
     {
         public ConnectionMonitorQueryResult() { }
+        [System.ObsoleteAttribute("This legacy query result is not supported by the current connection monitor API.")]
         public Azure.ResourceManager.Network.Models.ConnectionMonitorSourceStatus? SourceStatus { get { throw null; } }
+        [System.ObsoleteAttribute("This legacy query result is not supported by the current connection monitor API.")]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ConnectionStateSnapshot> States { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15601,6 +15611,7 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionMonitorSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionMonitorSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This legacy query status is not supported by the current connection monitor API.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConnectionMonitorSourceStatus : System.IEquatable<Azure.ResourceManager.Network.Models.ConnectionMonitorSourceStatus>
     {
@@ -15768,11 +15779,13 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionSharedKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionSharedKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This legacy query snapshot is not supported by the current connection monitor API.")]
     public partial class ConnectionStateSnapshot : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ConnectionStateSnapshot>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionStateSnapshot>
     {
         public ConnectionStateSnapshot() { }
         public long? AvgLatencyInMs { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
+        [System.ObsoleteAttribute("This legacy query evaluation state is not supported by the current connection monitor API.")]
         public Azure.ResourceManager.Network.Models.EvaluationState? EvaluationState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ConnectivityHopInfo> Hops { get { throw null; } }
         public long? MaxLatencyInMs { get { throw null; } }
@@ -15919,6 +15932,7 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ConnectivityHopInfo> Hops { get { throw null; } }
         public int? MaxLatencyInMs { get { throw null; } }
         public int? MinLatencyInMs { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete. Please use ConnectionStatus instead.")]
         public Azure.ResourceManager.Network.Models.NetworkConnectionStatus? NetworkConnectionStatus { get { throw null; } }
         public int? ProbesFailed { get { throw null; } }
         public int? ProbesSent { get { throw null; } }
@@ -16156,6 +16170,7 @@ namespace Azure.ResourceManager.Network.Models
         public DdosCustomPolicyProtocol(string value) { throw null; }
         public static Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol Syn { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol Tcp { get { throw null; } }
+        [System.ObsoleteAttribute("This value belongs to DdosTrafficType. Please use DdosTrafficType.TcpSyn instead.")]
         public static Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol TcpSyn { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol other) { throw null; }
@@ -16247,9 +16262,12 @@ namespace Azure.ResourceManager.Network.Models
         private readonly int _dummyPrimitive;
         public DdosSettingsProtectionCoverage(string value) { throw null; }
         public static Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage Basic { get { throw null; } }
+        [System.ObsoleteAttribute("This value belongs to DdosSettingsProtectionMode. Please use DdosSettingsProtectionMode.Disabled instead.")]
         public static Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage Disabled { get { throw null; } }
+        [System.ObsoleteAttribute("This value belongs to DdosSettingsProtectionMode. Please use DdosSettingsProtectionMode.Enabled instead.")]
         public static Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage Enabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage Standard { get { throw null; } }
+        [System.ObsoleteAttribute("This value belongs to DdosSettingsProtectionMode. Please use DdosSettingsProtectionMode.VirtualNetworkInherited instead.")]
         public static Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage VirtualNetworkInherited { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -16274,6 +16292,7 @@ namespace Azure.ResourceManager.Network.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.DdosSettingsProtectionMode left, Azure.ResourceManager.Network.Models.DdosSettingsProtectionMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.DdosSettingsProtectionMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.DdosSettingsProtectionMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.DdosSettingsProtectionMode left, Azure.ResourceManager.Network.Models.DdosSettingsProtectionMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -16291,6 +16310,7 @@ namespace Azure.ResourceManager.Network.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.DdosTrafficType left, Azure.ResourceManager.Network.Models.DdosTrafficType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.DdosTrafficType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.DdosTrafficType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.DdosTrafficType left, Azure.ResourceManager.Network.Models.DdosTrafficType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -16846,6 +16866,7 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.EvaluatedNetworkSecurityGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.EvaluatedNetworkSecurityGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This legacy query evaluation state is not supported by the current connection monitor API.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EvaluationState : System.IEquatable<Azure.ResourceManager.Network.Models.EvaluationState>
     {
@@ -18451,12 +18472,15 @@ namespace Azure.ResourceManager.Network.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public FirewallPolicyIntrusionDetectionProfileType(string value) { throw null; }
+        [System.ObsoleteAttribute("This compatibility value is not defined by the current service schema.")]
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType Advanced { get { throw null; } }
+        [System.ObsoleteAttribute("This compatibility value is not defined by the current service schema.")]
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType Basic { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType Core { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType Emerging { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType Extended { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType Off { get { throw null; } }
+        [System.ObsoleteAttribute("This compatibility value is not defined by the current service schema.")]
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -19933,6 +19957,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.IPsecIntegrity MD5 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.IPsecIntegrity Sha1 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.IPsecIntegrity Sha256 { get { throw null; } }
+        [System.ObsoleteAttribute("This compatibility value is not defined by the current service schema.")]
         public static Azure.ResourceManager.Network.Models.IPsecIntegrity Sha384 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.IPsecIntegrity other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -20490,6 +20515,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ManagedRuleSensitivityType High { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ManagedRuleSensitivityType Low { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ManagedRuleSensitivityType Medium { get { throw null; } }
+        [System.ObsoleteAttribute("This compatibility value is not defined by the current service schema.")]
         public static Azure.ResourceManager.Network.Models.ManagedRuleSensitivityType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ManagedRuleSensitivityType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -23215,9 +23241,11 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ProtocolCustomSettings
     {
         public ProtocolCustomSettings() { }
+        [System.ObsoleteAttribute("This compatibility property is not supported by the current DDoS API.")]
         public Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol? Protocol { get { throw null; } set { } }
         public string SourceRateOverride { get { throw null; } set { } }
         public string TriggerRateOverride { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This compatibility property is not supported by the current DDoS API.")]
         public Azure.ResourceManager.Network.Models.DdosCustomPolicyTriggerSensitivityOverride? TriggerSensitivityOverride { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

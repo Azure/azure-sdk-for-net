@@ -6,14 +6,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility type for connection state snapshots. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This legacy query snapshot is not supported by the current connection monitor API.")]
     public partial class ConnectionStateSnapshot : IJsonModel<ConnectionStateSnapshot>, IPersistableModel<ConnectionStateSnapshot>
     {
         /// <summary> Initializes a new instance of <see cref="ConnectionStateSnapshot"/>. </summary>
@@ -32,6 +32,8 @@ namespace Azure.ResourceManager.Network.Models
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> Evaluation state. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This legacy query evaluation state is not supported by the current connection monitor API.")]
         public EvaluationState? EvaluationState { get; }
 
         /// <summary> Average latency in milliseconds. </summary>

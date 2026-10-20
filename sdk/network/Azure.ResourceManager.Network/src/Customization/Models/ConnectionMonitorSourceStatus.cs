@@ -4,16 +4,14 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text.Json;
-using Azure;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Connection monitor source status. </summary>
+    // The legacy query schema is unreachable in the current C# input; deleting this partial removes the released type.
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This legacy query status is not supported by the current connection monitor API.")]
     public readonly partial struct ConnectionMonitorSourceStatus : IEquatable<ConnectionMonitorSourceStatus>
     {
         private readonly string _value;
@@ -21,6 +19,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorSourceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public ConnectionMonitorSourceStatus(string value) => _value = value;
+
+        /// <summary> Active. </summary>
+        public static ConnectionMonitorSourceStatus Active { get; } = new ConnectionMonitorSourceStatus("Active");
+        /// <summary> Inactive. </summary>
+        public static ConnectionMonitorSourceStatus Inactive { get; } = new ConnectionMonitorSourceStatus("Inactive");
+        /// <summary> Unknown. </summary>
+        public static ConnectionMonitorSourceStatus Unknown { get; } = new ConnectionMonitorSourceStatus("Unknown");
 
         /// <inheritdoc/>
         public bool Equals(ConnectionMonitorSourceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);

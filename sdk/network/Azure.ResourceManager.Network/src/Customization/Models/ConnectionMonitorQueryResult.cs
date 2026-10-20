@@ -6,14 +6,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility type for connection monitor query results. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This legacy query result is not supported by the current connection monitor API.")]
     public partial class ConnectionMonitorQueryResult : IJsonModel<ConnectionMonitorQueryResult>, IPersistableModel<ConnectionMonitorQueryResult>
     {
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorQueryResult"/>. </summary>
@@ -23,9 +23,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Source status. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This legacy query result is not supported by the current connection monitor API.")]
         public ConnectionMonitorSourceStatus? SourceStatus { get; }
 
         /// <summary> Connection state snapshots. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This legacy query result is not supported by the current connection monitor API.")]
         public IReadOnlyList<ConnectionStateSnapshot> States { get; }
 
         ConnectionMonitorQueryResult IJsonModel<ConnectionMonitorQueryResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new ConnectionMonitorQueryResult();

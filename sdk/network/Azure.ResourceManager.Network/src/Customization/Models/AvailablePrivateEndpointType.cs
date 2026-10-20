@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.Network.Models
     // The Type attributes direct callers to the canonical ResourceType property; inherited metadata owns serialization.
     public partial class AvailablePrivateEndpointType
     {
+        // The string Id was absent in 1.15.0 but shipped in 1.17.0.
         /// <summary> A unique identifier of the AvailablePrivateEndpoint Type resource. </summary>
         public new string Id => base.Id?.ToString();
 

@@ -10,6 +10,8 @@ namespace Azure.ResourceManager.Network.Models
 {
     public readonly partial struct ApplicationGatewaySslProtocol
     {
+        // TLSv10/TLSv11/TLSv12 were absent in 1.15.0; TLSv13 already existed.
+        // All four shipped in 1.17.0 and forward to the canonical generated spellings.
         /// <inheritdoc cref="Tls1_0"/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is deprecated and it will be removed in a future version. Please use Tls1_0 instead.")]

@@ -30,11 +30,14 @@ namespace Azure.ResourceManager.Network.Models
 
         // These monitor-category values were exposed on this type by the incorrect client name.
         // Keep them available for compatibility, but hide them from endpoint-value completion.
+        // Neither these values nor the uppercase VM aliases above existed in 1.15.0.
         /// <summary> MultiEndpoint. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This value is not an endpoint type. Please use ConnectionMonitorType.MultiEndpoint instead.")]
         public static ConnectionMonitorEndpointType MultiEndpoint { get; } = new ConnectionMonitorEndpointType("MultiEndpoint");
         /// <summary> SingleSourceDestination. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This value is not an endpoint type. Please use ConnectionMonitorType.SingleSourceDestination instead.")]
         public static ConnectionMonitorEndpointType SingleSourceDestination { get; } = new ConnectionMonitorEndpointType("SingleSourceDestination");
     }
 }

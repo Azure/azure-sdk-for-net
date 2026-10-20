@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -11,6 +12,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         // Preserve the 1.15 behavioral alias, including null and unknown protection modes.
         /// <summary> Compatibility member. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsolete and might be removed in a future version, use ProtectionMode instead", false)]
         public bool? ProtectedIP
         {
@@ -21,6 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         // Retain the obsolete 1.15 compatibility API as local storage; it had no wire mapping then.
         // There is no current coverage field or verified replacement to connect it to.
         /// <summary> Compatibility member. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsolete and might be removed in a future version", false)]
         public DdosSettingsProtectionCoverage? ProtectionCoverage { get; set; }
     }

@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableFloatingIP"> Whether floating IP is enabled. </param>
         /// <param name="enableTcpReset"> Whether TCP reset is enabled. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        /// <returns> A new <see cref="Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.LoadBalancerInboundNatPoolProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static LoadBalancerInboundNatPoolProperties LoadBalancerInboundNatPoolProperties(ResourceIdentifier frontendIPConfigurationId = default, LoadBalancingTransportProtocol protocol = default, int frontendPortRangeStart = 0, int frontendPortRangeEnd = 0, int backendPort = 0, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, NetworkProvisioningState? provisioningState = default)
         {
@@ -386,12 +386,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectionMonitorQueryResult"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This legacy query result is not supported by the current connection monitor API.")]
         public static ConnectionMonitorQueryResult ConnectionMonitorQueryResult(ConnectionMonitorSourceStatus? sourceStatus = default, IEnumerable<ConnectionStateSnapshot> states = default)
         {
             return new ConnectionMonitorQueryResult();
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectionStateSnapshot"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This legacy query snapshot is not supported by the current connection monitor API.")]
         public static ConnectionStateSnapshot ConnectionStateSnapshot(NetworkConnectionState? networkConnectionState = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, EvaluationState? evaluationState = default, long? avgLatencyInMs = default, long? minLatencyInMs = default, long? maxLatencyInMs = default, long? probesSent = default, long? probesFailed = default, IEnumerable<ConnectivityHopInfo> hops = default)
         {
             return new ConnectionStateSnapshot();

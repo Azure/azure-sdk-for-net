@@ -7,6 +7,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class BgpServiceCommunity
     {
+        // Absent in 1.15.0, but shipped in 1.17.0. Preserve the released subclass constructor signature.
         /// <summary> Initializes a new instance of the BgpServiceCommunity class. </summary>
         protected BgpServiceCommunity(bool _) { }
     }
