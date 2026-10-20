@@ -18,58 +18,58 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DurableTask
 {
     /// <summary> A diagnostic detector resource belonging to the scheduler. </summary>
-    public partial class DetectorData : ResourceData, IJsonModel<DetectorData>
+    public partial class DurableTaskDetectorData : ResourceData, IJsonModel<DurableTaskDetectorData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DetectorData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DurableTaskDetectorData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDetectorData(document.RootElement, options);
+                        return DeserializeDurableTaskDetectorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DetectorData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DurableTaskDetectorData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DetectorData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DurableTaskDetectorData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDurableTaskContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DetectorData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DurableTaskDetectorData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DetectorData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DurableTaskDetectorData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DetectorData IPersistableModel<DetectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DetectorData)PersistableModelCreateCore(data, options);
+        DurableTaskDetectorData IPersistableModel<DurableTaskDetectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DurableTaskDetectorData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DetectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DurableTaskDetectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DetectorData"/> from. </param>
-        internal static DetectorData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DurableTaskDetectorData"/> from. </param>
+        internal static DurableTaskDetectorData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDetectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDurableTaskDetectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DetectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DurableTaskDetectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DetectorData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DurableTaskDetectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DetectorData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DurableTaskDetectorData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.DurableTask
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DetectorData IJsonModel<DetectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DetectorData)JsonModelCreateCore(ref reader, options);
+        DurableTaskDetectorData IJsonModel<DurableTaskDetectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DurableTaskDetectorData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DetectorData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DurableTaskDetectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DetectorData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DurableTaskDetectorData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDetectorData(document.RootElement, options);
+            return DeserializeDurableTaskDetectorData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DetectorData DeserializeDetectorData(JsonElement element, ModelReaderWriterOptions options)
+        internal static DurableTaskDetectorData DeserializeDurableTaskDetectorData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DurableTask
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DetectorData(
+            return new DurableTaskDetectorData(
                 id,
                 name,
                 resourceType,

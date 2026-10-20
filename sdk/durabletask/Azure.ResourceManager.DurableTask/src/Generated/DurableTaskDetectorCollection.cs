@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DurableTask
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DetectorResource"/> and their operations.
-    /// Each <see cref="DetectorResource"/> in the collection will belong to the same instance of <see cref="DurableTaskSchedulerResource"/>.
-    /// To get a <see cref="DetectorCollection"/> instance call the GetDetectors method from an instance of <see cref="DurableTaskSchedulerResource"/>.
+    /// A class representing a collection of <see cref="DurableTaskDetectorResource"/> and their operations.
+    /// Each <see cref="DurableTaskDetectorResource"/> in the collection will belong to the same instance of <see cref="DurableTaskSchedulerResource"/>.
+    /// To get a <see cref="DurableTaskDetectorCollection"/> instance call the GetDurableTaskDetectors method from an instance of <see cref="DurableTaskSchedulerResource"/>.
     /// </summary>
-    public partial class DetectorCollection : ArmCollection, IEnumerable<DetectorResource>, IAsyncEnumerable<DetectorResource>
+    public partial class DurableTaskDetectorCollection : ArmCollection, IEnumerable<DurableTaskDetectorResource>, IAsyncEnumerable<DurableTaskDetectorResource>
     {
         private readonly ClientDiagnostics _detectorsClientDiagnostics;
         private readonly Detectors _detectorsRestClient;
 
-        /// <summary> Initializes a new instance of DetectorCollection for mocking. </summary>
-        protected DetectorCollection()
+        /// <summary> Initializes a new instance of DurableTaskDetectorCollection for mocking. </summary>
+        protected DurableTaskDetectorCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DetectorCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DurableTaskDetectorCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DurableTaskDetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DetectorResource.ResourceType, out string detectorApiVersion);
-            _detectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", DetectorResource.ResourceType.Namespace, Diagnostics);
-            _detectorsRestClient = new Detectors(_detectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, detectorApiVersion ?? "2026-07-01-preview");
+            TryGetApiVersion(DurableTaskDetectorResource.ResourceType, out string durableTaskDetectorApiVersion);
+            _detectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", DurableTaskDetectorResource.ResourceType.Namespace, Diagnostics);
+            _detectorsRestClient = new Detectors(_detectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskDetectorApiVersion ?? "2026-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DetectorResource>> GetAsync(string detectorId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DurableTaskDetectorResource>> GetAsync(string detectorId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
 
-            using DiagnosticScope scope = _detectorsClientDiagnostics.CreateScope("DetectorCollection.Get");
+            using DiagnosticScope scope = _detectorsClientDiagnostics.CreateScope("DurableTaskDetectorCollection.Get");
             scope.Start();
             try
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.DurableTask
                 };
                 HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DetectorData> response = Response.FromValue(DetectorData.FromResponse(result), result);
+                Response<DurableTaskDetectorData> response = Response.FromValue(DurableTaskDetectorData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DurableTaskDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DetectorResource> Get(string detectorId, CancellationToken cancellationToken = default)
+        public virtual Response<DurableTaskDetectorResource> Get(string detectorId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
 
-            using DiagnosticScope scope = _detectorsClientDiagnostics.CreateScope("DetectorCollection.Get");
+            using DiagnosticScope scope = _detectorsClientDiagnostics.CreateScope("DurableTaskDetectorCollection.Get");
             scope.Start();
             try
             {
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.DurableTask
                 };
                 HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DetectorData> response = Response.FromValue(DetectorData.FromResponse(result), result);
+                Response<DurableTaskDetectorData> response = Response.FromValue(DurableTaskDetectorData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DurableTaskDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,20 +170,20 @@ namespace Azure.ResourceManager.DurableTask
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DetectorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DurableTaskDetectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DurableTaskDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DetectorData, DetectorResource>(new DetectorDataAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DurableTaskDetectorData, DurableTaskDetectorResource>(new DurableTaskDetectorDataAsyncCollectionResultOfT(
                 _detectorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "DetectorCollection.GetAll"), data => new DetectorResource(Client, data));
+                "DurableTaskDetectorCollection.GetAll"), data => new DurableTaskDetectorResource(Client, data));
         }
 
         /// <summary>
@@ -204,20 +204,20 @@ namespace Azure.ResourceManager.DurableTask
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DetectorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DetectorResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DurableTaskDetectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DurableTaskDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DetectorData, DetectorResource>(new DetectorDataCollectionResultOfT(
+            return new PageableWrapper<DurableTaskDetectorData, DurableTaskDetectorResource>(new DurableTaskDetectorDataCollectionResultOfT(
                 _detectorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "DetectorCollection.GetAll"), data => new DetectorResource(Client, data));
+                "DurableTaskDetectorCollection.GetAll"), data => new DurableTaskDetectorResource(Client, data));
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
 
-            using DiagnosticScope scope = _detectorsClientDiagnostics.CreateScope("DetectorCollection.Exists");
+            using DiagnosticScope scope = _detectorsClientDiagnostics.CreateScope("DurableTaskDetectorCollection.Exists");
             scope.Start();
             try
             {
@@ -256,14 +256,14 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DetectorData> response = default;
+                Response<DurableTaskDetectorData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DetectorData.FromResponse(result), result);
+                        response = Response.FromValue(DurableTaskDetectorData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DetectorData)null, result);
+                        response = Response.FromValue((DurableTaskDetectorData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
 
-            using DiagnosticScope scope = _detectorsClientDiagnostics.CreateScope("DetectorCollection.Exists");
+            using DiagnosticScope scope = _detectorsClientDiagnostics.CreateScope("DurableTaskDetectorCollection.Exists");
             scope.Start();
             try
             {
@@ -313,14 +313,14 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DetectorData> response = default;
+                Response<DurableTaskDetectorData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DetectorData.FromResponse(result), result);
+                        response = Response.FromValue(DurableTaskDetectorData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DetectorData)null, result);
+                        response = Response.FromValue((DurableTaskDetectorData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DetectorResource>> GetIfExistsAsync(string detectorId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DurableTaskDetectorResource>> GetIfExistsAsync(string detectorId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
 
-            using DiagnosticScope scope = _detectorsClientDiagnostics.CreateScope("DetectorCollection.GetIfExists");
+            using DiagnosticScope scope = _detectorsClientDiagnostics.CreateScope("DurableTaskDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -370,23 +370,23 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DetectorData> response = default;
+                Response<DurableTaskDetectorData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DetectorData.FromResponse(result), result);
+                        response = Response.FromValue(DurableTaskDetectorData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DetectorData)null, result);
+                        response = Response.FromValue((DurableTaskDetectorData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<DetectorResource>(response.GetRawResponse());
+                    return new NoValueResponse<DurableTaskDetectorResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new DetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DurableTaskDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -416,11 +416,11 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DetectorResource> GetIfExists(string detectorId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DurableTaskDetectorResource> GetIfExists(string detectorId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
 
-            using DiagnosticScope scope = _detectorsClientDiagnostics.CreateScope("DetectorCollection.GetIfExists");
+            using DiagnosticScope scope = _detectorsClientDiagnostics.CreateScope("DurableTaskDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -431,23 +431,23 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DetectorData> response = default;
+                Response<DurableTaskDetectorData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DetectorData.FromResponse(result), result);
+                        response = Response.FromValue(DurableTaskDetectorData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DetectorData)null, result);
+                        response = Response.FromValue((DurableTaskDetectorData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<DetectorResource>(response.GetRawResponse());
+                    return new NoValueResponse<DurableTaskDetectorResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new DetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DurableTaskDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        IEnumerator<DetectorResource> IEnumerable<DetectorResource>.GetEnumerator()
+        IEnumerator<DurableTaskDetectorResource> IEnumerable<DurableTaskDetectorResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.DurableTask
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<DetectorResource> IAsyncEnumerable<DetectorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DurableTaskDetectorResource> IAsyncEnumerable<DurableTaskDetectorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

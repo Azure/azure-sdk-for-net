@@ -763,11 +763,11 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        /// <summary> Gets a collection of Detectors in the <see cref="DurableTaskSchedulerResource"/>. </summary>
-        /// <returns> An object representing collection of Detectors and their operations over a DetectorResource. </returns>
-        public virtual DetectorCollection GetDetectors()
+        /// <summary> Gets a collection of DurableTaskDetectors in the <see cref="DurableTaskSchedulerResource"/>. </summary>
+        /// <returns> An object representing collection of DurableTaskDetectors and their operations over a DurableTaskDetectorResource. </returns>
+        public virtual DurableTaskDetectorCollection GetDurableTaskDetectors()
         {
-            return GetCachedClient(client => new DetectorCollection(client, Id));
+            return GetCachedClient(client => new DurableTaskDetectorCollection(client, Id));
         }
 
         /// <summary> Gets a diagnostic detector. </summary>
@@ -776,11 +776,11 @@ namespace Azure.ResourceManager.DurableTask
         /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DetectorResource>> GetDetectorAsync(string detectorId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DurableTaskDetectorResource>> GetDurableTaskDetectorAsync(string detectorId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
 
-            return await GetDetectors().GetAsync(detectorId, cancellationToken).ConfigureAwait(false);
+            return await GetDurableTaskDetectors().GetAsync(detectorId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a diagnostic detector. </summary>
@@ -789,11 +789,11 @@ namespace Azure.ResourceManager.DurableTask
         /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DetectorResource> GetDetector(string detectorId, CancellationToken cancellationToken = default)
+        public virtual Response<DurableTaskDetectorResource> GetDurableTaskDetector(string detectorId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
 
-            return GetDetectors().Get(detectorId, cancellationToken);
+            return GetDurableTaskDetectors().Get(detectorId, cancellationToken);
         }
 
         /// <summary> Gets a collection of DurableTaskSchedulerPrivateLinkResources in the <see cref="DurableTaskSchedulerResource"/>. </summary>

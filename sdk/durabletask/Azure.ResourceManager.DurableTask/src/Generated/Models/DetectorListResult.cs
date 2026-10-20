@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DurableTask.Models
 
         /// <summary> Initializes a new instance of <see cref="DetectorListResult"/>. </summary>
         /// <param name="value"> The Detector items on this page. </param>
-        internal DetectorListResult(IEnumerable<DetectorData> value)
+        internal DetectorListResult(IEnumerable<DurableTaskDetectorData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="value"> The Detector items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectorListResult(IList<DetectorData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectorListResult(IList<DurableTaskDetectorData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         }
 
         /// <summary> The Detector items on this page. </summary>
-        public IList<DetectorData> Value { get; }
+        public IList<DurableTaskDetectorData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

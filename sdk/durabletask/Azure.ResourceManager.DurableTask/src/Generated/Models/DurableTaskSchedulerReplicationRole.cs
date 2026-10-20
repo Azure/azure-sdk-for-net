@@ -12,7 +12,7 @@ using Azure.ResourceManager.DurableTask;
 namespace Azure.ResourceManager.DurableTask.Models
 {
     /// <summary> The replication role of the scheduler. </summary>
-    public readonly partial struct ReplicationRole : IEquatable<ReplicationRole>
+    public readonly partial struct DurableTaskSchedulerReplicationRole : IEquatable<DurableTaskSchedulerReplicationRole>
     {
         private readonly string _value;
         /// <summary> The parent scheduler is the primary in the failover configuration. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <summary> The parent scheduler is the secondary in the failover configuration. </summary>
         private const string SecondaryValue = "Secondary";
 
-        /// <summary> Initializes a new instance of <see cref="ReplicationRole"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DurableTaskSchedulerReplicationRole"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ReplicationRole(string value)
+        public DurableTaskSchedulerReplicationRole(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.DurableTask.Models
         }
 
         /// <summary> The parent scheduler is the primary in the failover configuration. </summary>
-        public static ReplicationRole Primary { get; } = new ReplicationRole(PrimaryValue);
+        public static DurableTaskSchedulerReplicationRole Primary { get; } = new DurableTaskSchedulerReplicationRole(PrimaryValue);
 
         /// <summary> The parent scheduler is the secondary in the failover configuration. </summary>
-        public static ReplicationRole Secondary { get; } = new ReplicationRole(SecondaryValue);
+        public static DurableTaskSchedulerReplicationRole Secondary { get; } = new DurableTaskSchedulerReplicationRole(SecondaryValue);
 
-        /// <summary> Determines if two <see cref="ReplicationRole"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DurableTaskSchedulerReplicationRole"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ReplicationRole left, ReplicationRole right) => left.Equals(right);
+        public static bool operator ==(DurableTaskSchedulerReplicationRole left, DurableTaskSchedulerReplicationRole right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ReplicationRole"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DurableTaskSchedulerReplicationRole"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ReplicationRole left, ReplicationRole right) => !left.Equals(right);
+        public static bool operator !=(DurableTaskSchedulerReplicationRole left, DurableTaskSchedulerReplicationRole right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ReplicationRole"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DurableTaskSchedulerReplicationRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReplicationRole(string value) => new ReplicationRole(value);
+        public static implicit operator DurableTaskSchedulerReplicationRole(string value) => new DurableTaskSchedulerReplicationRole(value);
 
-        /// <summary> Converts a string to a <see cref="ReplicationRole"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DurableTaskSchedulerReplicationRole"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReplicationRole?(string value) => value == null ? null : new ReplicationRole(value);
+        public static implicit operator DurableTaskSchedulerReplicationRole?(string value) => value == null ? null : new DurableTaskSchedulerReplicationRole(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ReplicationRole other && Equals(other);
+        public override bool Equals(object obj) => obj is DurableTaskSchedulerReplicationRole other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ReplicationRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DurableTaskSchedulerReplicationRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

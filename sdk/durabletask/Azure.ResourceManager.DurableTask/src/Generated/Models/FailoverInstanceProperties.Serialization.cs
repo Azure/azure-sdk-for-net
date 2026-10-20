@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             if (options.Format != "W" && Optional.IsDefined(PartnerSchedulerLocation))
             {
                 writer.WritePropertyName("partnerSchedulerLocation"u8);
-                writer.WriteStringValue(PartnerSchedulerLocation);
+                writer.WriteStringValue(PartnerSchedulerLocation.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.DurableTask.Models
                 return null;
             }
             DurableTaskProvisioningState? provisioningState = default;
-            ReplicationRole? replicationRole = default;
-            FailoverState? failoverState = default;
+            DurableTaskSchedulerReplicationRole? replicationRole = default;
+            DurableTaskSchedulerFailoverState? failoverState = default;
             ResourceIdentifier partnerSchedulerResourceId = default;
-            string partnerSchedulerLocation = default;
+            AzureLocation? partnerSchedulerLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DurableTask.Models
                     {
                         continue;
                     }
-                    replicationRole = new ReplicationRole(prop.Value.GetString());
+                    replicationRole = new DurableTaskSchedulerReplicationRole(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("failoverState"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DurableTask.Models
                     {
                         continue;
                     }
-                    failoverState = new FailoverState(prop.Value.GetString());
+                    failoverState = new DurableTaskSchedulerFailoverState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("partnerSchedulerResourceId"u8))
@@ -186,7 +186,11 @@ namespace Azure.ResourceManager.DurableTask.Models
                 }
                 if (prop.NameEquals("partnerSchedulerLocation"u8))
                 {
-                    partnerSchedulerLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    partnerSchedulerLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

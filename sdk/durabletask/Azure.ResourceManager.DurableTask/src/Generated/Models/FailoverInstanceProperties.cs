@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="partnerSchedulerResourceId"> The resource ID of the partner scheduler in the failover configuration. </param>
         /// <param name="partnerSchedulerLocation"> The location of the partner scheduler in the failover configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FailoverInstanceProperties(DurableTaskProvisioningState? provisioningState, ReplicationRole? replicationRole, FailoverState? failoverState, ResourceIdentifier partnerSchedulerResourceId, string partnerSchedulerLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FailoverInstanceProperties(DurableTaskProvisioningState? provisioningState, DurableTaskSchedulerReplicationRole? replicationRole, DurableTaskSchedulerFailoverState? failoverState, ResourceIdentifier partnerSchedulerResourceId, AzureLocation? partnerSchedulerLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ReplicationRole = replicationRole;
@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.DurableTask.Models
         public DurableTaskProvisioningState? ProvisioningState { get; }
 
         /// <summary> The replication role of the parent scheduler. </summary>
-        public ReplicationRole? ReplicationRole { get; }
+        public DurableTaskSchedulerReplicationRole? ReplicationRole { get; }
 
         /// <summary> The current state of the failover operation. </summary>
-        public FailoverState? FailoverState { get; }
+        public DurableTaskSchedulerFailoverState? FailoverState { get; }
 
         /// <summary> The resource ID of the partner scheduler in the failover configuration. </summary>
         public ResourceIdentifier PartnerSchedulerResourceId { get; set; }
 
         /// <summary> The location of the partner scheduler in the failover configuration. </summary>
-        public string PartnerSchedulerLocation { get; }
+        public AzureLocation? PartnerSchedulerLocation { get; }
     }
 }

@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="DetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DurableTaskDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DetectorResource"/> object. </returns>
-        public virtual DetectorResource GetDetectorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DurableTaskDetectorResource"/> object. </returns>
+        public virtual DurableTaskDetectorResource GetDurableTaskDetectorResource(ResourceIdentifier id)
         {
-            DetectorResource.ValidateResourceId(id);
-            return new DetectorResource(Client, id);
+            DurableTaskDetectorResource.ValidateResourceId(id);
+            return new DurableTaskDetectorResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DurableTaskSchedulerResource"/> along with the instance operations that can be performed on it but with no data. </summary>

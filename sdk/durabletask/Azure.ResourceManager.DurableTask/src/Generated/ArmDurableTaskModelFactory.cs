@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DurableTask.DetectorData"/> instance for mocking. </returns>
-        public static DetectorData DetectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DetectorProperties properties = default)
+        /// <returns> A new <see cref="DurableTask.DurableTaskDetectorData"/> instance for mocking. </returns>
+        public static DurableTaskDetectorData DurableTaskDetectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DetectorProperties properties = default)
         {
-            return new DetectorData(
+            return new DurableTaskDetectorData(
                 id,
                 name,
                 resourceType,
@@ -442,11 +442,11 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="keySource"> The key source for the transparent data encryption. </param>
         /// <param name="keyVaultKeyUri"> The URI of the key in Key Vault to be used for transparent data encryption. </param>
-        /// <param name="autoRotationEnabled"> Indicates whether auto-rotation of the customer-managed keys is enabled for transparent data encryption. </param>
+        /// <param name="isAutoRotationEnabled"> Indicates whether auto-rotation of the customer-managed keys is enabled for transparent data encryption. </param>
         /// <returns> A new <see cref="Models.TransparentDataEncryptionProperties"/> instance for mocking. </returns>
-        public static TransparentDataEncryptionProperties TransparentDataEncryptionProperties(DurableTaskProvisioningState? provisioningState = default, TransparentDataEncryptionKeySource keySource = default, Uri keyVaultKeyUri = default, bool? autoRotationEnabled = default)
+        public static TransparentDataEncryptionProperties TransparentDataEncryptionProperties(DurableTaskProvisioningState? provisioningState = default, TransparentDataEncryptionKeySource keySource = default, Uri keyVaultKeyUri = default, bool? isAutoRotationEnabled = default)
         {
-            return new TransparentDataEncryptionProperties(provisioningState, keySource, keyVaultKeyUri, autoRotationEnabled, default);
+            return new TransparentDataEncryptionProperties(provisioningState, keySource, keyVaultKeyUri, isAutoRotationEnabled, default);
         }
 
         /// <summary> A failover instance belonging to the scheduler. </summary>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="partnerSchedulerResourceId"> The resource ID of the partner scheduler in the failover configuration. </param>
         /// <param name="partnerSchedulerLocation"> The location of the partner scheduler in the failover configuration. </param>
         /// <returns> A new <see cref="Models.FailoverInstanceProperties"/> instance for mocking. </returns>
-        public static FailoverInstanceProperties FailoverInstanceProperties(DurableTaskProvisioningState? provisioningState = default, ReplicationRole? replicationRole = default, FailoverState? failoverState = default, ResourceIdentifier partnerSchedulerResourceId = default, string partnerSchedulerLocation = default)
+        public static FailoverInstanceProperties FailoverInstanceProperties(DurableTaskProvisioningState? provisioningState = default, DurableTaskSchedulerReplicationRole? replicationRole = default, DurableTaskSchedulerFailoverState? failoverState = default, ResourceIdentifier partnerSchedulerResourceId = default, AzureLocation? partnerSchedulerLocation = default)
         {
             return new FailoverInstanceProperties(
                 provisioningState,

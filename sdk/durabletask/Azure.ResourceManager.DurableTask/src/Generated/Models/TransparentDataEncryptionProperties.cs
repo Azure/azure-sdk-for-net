@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="keySource"> The key source for the transparent data encryption. </param>
         /// <param name="keyVaultKeyUri"> The URI of the key in Key Vault to be used for transparent data encryption. </param>
-        /// <param name="autoRotationEnabled"> Indicates whether auto-rotation of the customer-managed keys is enabled for transparent data encryption. </param>
+        /// <param name="isAutoRotationEnabled"> Indicates whether auto-rotation of the customer-managed keys is enabled for transparent data encryption. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TransparentDataEncryptionProperties(DurableTaskProvisioningState? provisioningState, TransparentDataEncryptionKeySource keySource, Uri keyVaultKeyUri, bool? autoRotationEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TransparentDataEncryptionProperties(DurableTaskProvisioningState? provisioningState, TransparentDataEncryptionKeySource keySource, Uri keyVaultKeyUri, bool? isAutoRotationEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             KeySource = keySource;
             KeyVaultKeyUri = keyVaultKeyUri;
-            AutoRotationEnabled = autoRotationEnabled;
+            IsAutoRotationEnabled = isAutoRotationEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.DurableTask.Models
         public Uri KeyVaultKeyUri { get; set; }
 
         /// <summary> Indicates whether auto-rotation of the customer-managed keys is enabled for transparent data encryption. </summary>
-        public bool? AutoRotationEnabled { get; set; }
+        public bool? IsAutoRotationEnabled { get; set; }
     }
 }

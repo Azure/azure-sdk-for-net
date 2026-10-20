@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DetectorData item in Value)
+            foreach (DurableTaskDetectorData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.DurableTask.Models
             {
                 return null;
             }
-            IList<DetectorData> value = default;
+            IList<DurableTaskDetectorData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DetectorData> array = new List<DetectorData>();
+                    List<DurableTaskDetectorData> array = new List<DurableTaskDetectorData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DetectorData.DeserializeDetectorData(item, options));
+                        array.Add(DurableTaskDetectorData.DeserializeDurableTaskDetectorData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DurableTask.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DetectorListResult(value ?? new ChangeTrackingList<DetectorData>(), nextLink, additionalBinaryDataProperties);
+            return new DetectorListResult(value ?? new ChangeTrackingList<DurableTaskDetectorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

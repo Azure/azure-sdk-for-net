@@ -6,53 +6,53 @@ namespace Azure.ResourceManager.DurableTask
         public static Azure.ResourceManager.DurableTask.AzureResourceManagerDurableTaskContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-    public partial class DetectorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DurableTask.DetectorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DurableTask.DetectorResource>, System.Collections.IEnumerable
+    public partial class DurableTaskDetectorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DurableTask.DurableTaskDetectorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DurableTask.DurableTaskDetectorResource>, System.Collections.IEnumerable
     {
-        protected DetectorCollection() { }
+        protected DurableTaskDetectorCollection() { }
         public virtual Azure.Response<bool> Exists(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DurableTask.DetectorResource> Get(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DurableTask.DetectorResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DurableTask.DetectorResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DurableTask.DetectorResource>> GetAsync(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.DurableTask.DetectorResource> GetIfExists(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DurableTask.DetectorResource>> GetIfExistsAsync(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DurableTask.DetectorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DurableTask.DetectorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DurableTask.DetectorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DurableTask.DetectorResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskDetectorResource> Get(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DurableTask.DurableTaskDetectorResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DurableTask.DurableTaskDetectorResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskDetectorResource>> GetAsync(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DurableTask.DurableTaskDetectorResource> GetIfExists(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DurableTask.DurableTaskDetectorResource>> GetIfExistsAsync(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DurableTask.DurableTaskDetectorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DurableTask.DurableTaskDetectorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DurableTask.DurableTaskDetectorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DurableTask.DurableTaskDetectorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DetectorData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DetectorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DetectorData>
+    public partial class DurableTaskDetectorData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskDetectorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskDetectorData>
     {
-        internal DetectorData() { }
+        internal DurableTaskDetectorData() { }
         public Azure.ResourceManager.DurableTask.Models.DetectorProperties Properties { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DurableTask.DetectorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DetectorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DetectorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DurableTask.DetectorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DetectorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DetectorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DetectorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DurableTask.DurableTaskDetectorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskDetectorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskDetectorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DurableTask.DurableTaskDetectorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskDetectorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskDetectorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskDetectorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DetectorResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DetectorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DetectorData>
+    public partial class DurableTaskDetectorResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskDetectorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskDetectorData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected DetectorResource() { }
-        public virtual Azure.ResourceManager.DurableTask.DetectorData Data { get { throw null; } }
+        protected DurableTaskDetectorResource() { }
+        public virtual Azure.ResourceManager.DurableTask.DurableTaskDetectorData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string schedulerName, string detectorId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DurableTask.DetectorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DurableTask.DetectorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.DurableTask.DetectorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DetectorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DetectorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DurableTask.DetectorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DetectorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DetectorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DetectorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskDetectorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskDetectorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DurableTask.DurableTaskDetectorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskDetectorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskDetectorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DurableTask.DurableTaskDetectorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskDetectorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskDetectorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskDetectorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class DurableTaskExtensions
     {
-        public static Azure.ResourceManager.DurableTask.DetectorResource GetDetectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DurableTask.DurableTaskDetectorResource GetDurableTaskDetectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DurableTask.DurableTaskHubResource GetDurableTaskHubResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DurableTask.DurableTaskPrivateEndpointConnectionResource GetDurableTaskPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyResource GetDurableTaskRetentionPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.DurableTask
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskSchedulerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskSchedulerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DurableTask.DetectorResource> GetDetector(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DurableTask.DetectorResource>> GetDetectorAsync(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DurableTask.DetectorCollection GetDetectors() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskDetectorResource> GetDurableTaskDetector(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskDetectorResource>> GetDurableTaskDetectorAsync(string detectorId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DurableTask.DurableTaskDetectorCollection GetDurableTaskDetectors() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskHubResource> GetDurableTaskHub(string taskHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskHubResource>> GetDurableTaskHubAsync(string taskHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DurableTask.DurableTaskHubCollection GetDurableTaskHubs() { throw null; }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
     public partial class MockableDurableTaskArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableDurableTaskArmClient() { }
-        public virtual Azure.ResourceManager.DurableTask.DetectorResource GetDetectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DurableTask.DurableTaskDetectorResource GetDurableTaskDetectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DurableTask.DurableTaskHubResource GetDurableTaskHubResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DurableTask.DurableTaskPrivateEndpointConnectionResource GetDurableTaskPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyResource GetDurableTaskRetentionPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -483,7 +483,6 @@ namespace Azure.ResourceManager.DurableTask.Models
 {
     public static partial class ArmDurableTaskModelFactory
     {
-        public static Azure.ResourceManager.DurableTask.DetectorData DetectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DurableTask.Models.DetectorProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.DetectorDataset DetectorDataset(Azure.ResourceManager.DurableTask.Models.DetectorTable table = null, Azure.ResourceManager.DurableTask.Models.DetectorRenderingProperties renderingProperties = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.DetectorMetadata DetectorMetadata(string id = null, string name = null, string description = null, string author = null, string category = null, System.Collections.Generic.IEnumerable<string> supportTopicList = null, System.Collections.Generic.IEnumerable<string> analysisTypes = null, Azure.ResourceManager.DurableTask.Models.DetectorType? type = default(Azure.ResourceManager.DurableTask.Models.DetectorType?), double? score = default(double?)) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.DetectorProperties DetectorProperties(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState?), Azure.ResourceManager.DurableTask.Models.DetectorMetadata metadata = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DurableTask.Models.DetectorDataset> dataset = null, Azure.ResourceManager.DurableTask.Models.DetectorStatus status = null) { throw null; }
@@ -491,6 +490,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         public static Azure.ResourceManager.DurableTask.Models.DetectorStatus DetectorStatus(string message = null, Azure.ResourceManager.DurableTask.Models.DetectorStatusId? statusId = default(Azure.ResourceManager.DurableTask.Models.DetectorStatusId?)) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.DetectorTable DetectorTable(string tableName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DurableTask.Models.DetectorTableColumn> columns = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.BinaryData>> rows = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.DetectorTableColumn DetectorTableColumn(string columnName = null, string dataType = null, string columnType = null) { throw null; }
+        public static Azure.ResourceManager.DurableTask.DurableTaskDetectorData DurableTaskDetectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DurableTask.Models.DetectorProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.DurableTaskHubData DurableTaskHubData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties DurableTaskHubProperties(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState?), System.Uri dashboardUri = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties DurableTaskHubProperties(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? provisioningState, System.Uri dashboardUri, System.Collections.Generic.IEnumerable<string> capabilities) { throw null; }
@@ -515,12 +515,12 @@ namespace Azure.ResourceManager.DurableTask.Models
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku DurableTaskSchedulerSku(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName name = default(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName), int? capacity = default(int?), Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState? redundancyState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState?)) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate DurableTaskSchedulerSkuUpdate(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName? name = default(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName?), int? capacity = default(int?), Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState? redundancyState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState?)) { throw null; }
         public static Azure.ResourceManager.DurableTask.FailoverInstanceData FailoverInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DurableTask.Models.FailoverInstanceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.DurableTask.Models.FailoverInstanceProperties FailoverInstanceProperties(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState?), Azure.ResourceManager.DurableTask.Models.ReplicationRole? replicationRole = default(Azure.ResourceManager.DurableTask.Models.ReplicationRole?), Azure.ResourceManager.DurableTask.Models.FailoverState? failoverState = default(Azure.ResourceManager.DurableTask.Models.FailoverState?), Azure.Core.ResourceIdentifier partnerSchedulerResourceId = null, string partnerSchedulerLocation = null) { throw null; }
+        public static Azure.ResourceManager.DurableTask.Models.FailoverInstanceProperties FailoverInstanceProperties(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState?), Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerReplicationRole? replicationRole = default(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerReplicationRole?), Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerFailoverState? failoverState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerFailoverState?), Azure.Core.ResourceIdentifier partnerSchedulerResourceId = null, Azure.Core.AzureLocation? partnerSchedulerLocation = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.DurableTask.TaskQueueData TaskQueueData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DurableTask.Models.TaskQueueProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.TaskQueuePatch TaskQueuePatch(Azure.ResourceManager.DurableTask.Models.TaskQueueProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.TaskQueueProperties TaskQueueProperties(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState?), int? throughputActionsPerSecond = default(int?)) { throw null; }
         public static Azure.ResourceManager.DurableTask.TransparentDataEncryptionData TransparentDataEncryptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DurableTask.Models.TransparentDataEncryptionProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.DurableTask.Models.TransparentDataEncryptionProperties TransparentDataEncryptionProperties(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState?), Azure.ResourceManager.DurableTask.Models.TransparentDataEncryptionKeySource keySource = default(Azure.ResourceManager.DurableTask.Models.TransparentDataEncryptionKeySource), System.Uri keyVaultKeyUri = null, bool? autoRotationEnabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.DurableTask.Models.TransparentDataEncryptionProperties TransparentDataEncryptionProperties(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState?), Azure.ResourceManager.DurableTask.Models.TransparentDataEncryptionKeySource keySource = default(Azure.ResourceManager.DurableTask.Models.TransparentDataEncryptionKeySource), System.Uri keyVaultKeyUri = null, bool? isAutoRotationEnabled = default(bool?)) { throw null; }
     }
     public partial class DetectorDataset : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DetectorDataset>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DetectorDataset>
     {
@@ -933,6 +933,25 @@ namespace Azure.ResourceManager.DurableTask.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DurableTaskSchedulerFailoverState : System.IEquatable<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerFailoverState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DurableTaskSchedulerFailoverState(string value) { throw null; }
+        public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerFailoverState Failed { get { throw null; } }
+        public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerFailoverState InProgress { get { throw null; } }
+        public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerFailoverState None { get { throw null; } }
+        public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerFailoverState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerFailoverState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerFailoverState left, Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerFailoverState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerFailoverState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerFailoverState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerFailoverState left, Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerFailoverState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DurableTaskSchedulerPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatch>
     {
         public DurableTaskSchedulerPatch() { }
@@ -986,6 +1005,23 @@ namespace Azure.ResourceManager.DurableTask.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DurableTaskSchedulerReplicationRole : System.IEquatable<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerReplicationRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DurableTaskSchedulerReplicationRole(string value) { throw null; }
+        public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerReplicationRole Primary { get { throw null; } }
+        public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerReplicationRole Secondary { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerReplicationRole other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerReplicationRole left, Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerReplicationRole right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerReplicationRole (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerReplicationRole? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerReplicationRole left, Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerReplicationRole right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DurableTaskSchedulerSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku>
     {
         public DurableTaskSchedulerSku(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName name) { }
@@ -1038,11 +1074,11 @@ namespace Azure.ResourceManager.DurableTask.Models
     public partial class FailoverInstanceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.FailoverInstanceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.FailoverInstanceProperties>
     {
         public FailoverInstanceProperties(Azure.Core.ResourceIdentifier partnerSchedulerResourceId) { }
-        public Azure.ResourceManager.DurableTask.Models.FailoverState? FailoverState { get { throw null; } }
-        public string PartnerSchedulerLocation { get { throw null; } }
+        public Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerFailoverState? FailoverState { get { throw null; } }
+        public Azure.Core.AzureLocation? PartnerSchedulerLocation { get { throw null; } }
         public Azure.Core.ResourceIdentifier PartnerSchedulerResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.DurableTask.Models.ReplicationRole? ReplicationRole { get { throw null; } }
+        public Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerReplicationRole? ReplicationRole { get { throw null; } }
         protected virtual Azure.ResourceManager.DurableTask.Models.FailoverInstanceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DurableTask.Models.FailoverInstanceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1052,42 +1088,6 @@ namespace Azure.ResourceManager.DurableTask.Models
         Azure.ResourceManager.DurableTask.Models.FailoverInstanceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.FailoverInstanceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.FailoverInstanceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.FailoverInstanceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FailoverState : System.IEquatable<Azure.ResourceManager.DurableTask.Models.FailoverState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FailoverState(string value) { throw null; }
-        public static Azure.ResourceManager.DurableTask.Models.FailoverState Failed { get { throw null; } }
-        public static Azure.ResourceManager.DurableTask.Models.FailoverState InProgress { get { throw null; } }
-        public static Azure.ResourceManager.DurableTask.Models.FailoverState None { get { throw null; } }
-        public static Azure.ResourceManager.DurableTask.Models.FailoverState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DurableTask.Models.FailoverState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DurableTask.Models.FailoverState left, Azure.ResourceManager.DurableTask.Models.FailoverState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DurableTask.Models.FailoverState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DurableTask.Models.FailoverState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DurableTask.Models.FailoverState left, Azure.ResourceManager.DurableTask.Models.FailoverState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ReplicationRole : System.IEquatable<Azure.ResourceManager.DurableTask.Models.ReplicationRole>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ReplicationRole(string value) { throw null; }
-        public static Azure.ResourceManager.DurableTask.Models.ReplicationRole Primary { get { throw null; } }
-        public static Azure.ResourceManager.DurableTask.Models.ReplicationRole Secondary { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DurableTask.Models.ReplicationRole other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DurableTask.Models.ReplicationRole left, Azure.ResourceManager.DurableTask.Models.ReplicationRole right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DurableTask.Models.ReplicationRole (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DurableTask.Models.ReplicationRole? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DurableTask.Models.ReplicationRole left, Azure.ResourceManager.DurableTask.Models.ReplicationRole right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class TaskQueuePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.TaskQueuePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.TaskQueuePatch>
     {
@@ -1138,7 +1138,7 @@ namespace Azure.ResourceManager.DurableTask.Models
     public partial class TransparentDataEncryptionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.TransparentDataEncryptionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.TransparentDataEncryptionProperties>
     {
         public TransparentDataEncryptionProperties(Azure.ResourceManager.DurableTask.Models.TransparentDataEncryptionKeySource keySource) { }
-        public bool? AutoRotationEnabled { get { throw null; } set { } }
+        public bool? IsAutoRotationEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.DurableTask.Models.TransparentDataEncryptionKeySource KeySource { get { throw null; } set { } }
         public System.Uri KeyVaultKeyUri { get { throw null; } set { } }
         public Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? ProvisioningState { get { throw null; } }

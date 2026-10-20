@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.DurableTask.Models
                 writer.WritePropertyName("keyVaultKeyUri"u8);
                 writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(AutoRotationEnabled))
+            if (Optional.IsDefined(IsAutoRotationEnabled))
             {
                 writer.WritePropertyName("autoRotationEnabled"u8);
-                writer.WriteBooleanValue(AutoRotationEnabled.Value);
+                writer.WriteBooleanValue(IsAutoRotationEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             DurableTaskProvisioningState? provisioningState = default;
             TransparentDataEncryptionKeySource keySource = default;
             Uri keyVaultKeyUri = default;
-            bool? autoRotationEnabled = default;
+            bool? isAutoRotationEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DurableTask.Models
                     {
                         continue;
                     }
-                    autoRotationEnabled = prop.Value.GetBoolean();
+                    isAutoRotationEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DurableTask.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TransparentDataEncryptionProperties(provisioningState, keySource, keyVaultKeyUri, autoRotationEnabled, additionalBinaryDataProperties);
+            return new TransparentDataEncryptionProperties(provisioningState, keySource, keyVaultKeyUri, isAutoRotationEnabled, additionalBinaryDataProperties);
         }
     }
 }

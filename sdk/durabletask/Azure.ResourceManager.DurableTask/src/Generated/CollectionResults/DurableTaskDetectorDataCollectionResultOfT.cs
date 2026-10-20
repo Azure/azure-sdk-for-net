@@ -14,7 +14,7 @@ using Azure.ResourceManager.DurableTask.Models;
 
 namespace Azure.ResourceManager.DurableTask
 {
-    internal partial class DetectorDataCollectionResultOfT : Pageable<DetectorData>
+    internal partial class DurableTaskDetectorDataCollectionResultOfT : Pageable<DurableTaskDetectorData>
     {
         private readonly Detectors _client;
         private readonly Guid _subscriptionId;
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DurableTask
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DetectorDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of DurableTaskDetectorDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Detectors client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="schedulerName"> The name of the Scheduler. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DetectorDataCollectionResultOfT(Detectors client, Guid subscriptionId, string resourceGroupName, string schedulerName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DurableTaskDetectorDataCollectionResultOfT(Detectors client, Guid subscriptionId, string resourceGroupName, string schedulerName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.DurableTask
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DetectorDataCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DurableTaskDetectorDataCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DetectorDataCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DetectorData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of DurableTaskDetectorDataCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<DurableTaskDetectorData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DurableTask
                 }
                 DetectorListResult result = DetectorListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<DetectorData>.FromValues((IReadOnlyList<DetectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DurableTaskDetectorData>.FromValues((IReadOnlyList<DurableTaskDetectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

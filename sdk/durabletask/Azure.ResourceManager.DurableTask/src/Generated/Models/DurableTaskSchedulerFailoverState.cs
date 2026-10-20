@@ -12,7 +12,7 @@ using Azure.ResourceManager.DurableTask;
 namespace Azure.ResourceManager.DurableTask.Models
 {
     /// <summary> The current state of the failover operation. </summary>
-    public readonly partial struct FailoverState : IEquatable<FailoverState>
+    public readonly partial struct DurableTaskSchedulerFailoverState : IEquatable<DurableTaskSchedulerFailoverState>
     {
         private readonly string _value;
         /// <summary> No failover operation is active. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <summary> The failover operation failed. </summary>
         private const string FailedValue = "Failed";
 
-        /// <summary> Initializes a new instance of <see cref="FailoverState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DurableTaskSchedulerFailoverState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FailoverState(string value)
+        public DurableTaskSchedulerFailoverState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.DurableTask.Models
         }
 
         /// <summary> No failover operation is active. </summary>
-        public static FailoverState None { get; } = new FailoverState(NoneValue);
+        public static DurableTaskSchedulerFailoverState None { get; } = new DurableTaskSchedulerFailoverState(NoneValue);
 
         /// <summary> The failover operation is in progress. </summary>
-        public static FailoverState InProgress { get; } = new FailoverState(InProgressValue);
+        public static DurableTaskSchedulerFailoverState InProgress { get; } = new DurableTaskSchedulerFailoverState(InProgressValue);
 
         /// <summary> The failover operation completed successfully. </summary>
-        public static FailoverState Succeeded { get; } = new FailoverState(SucceededValue);
+        public static DurableTaskSchedulerFailoverState Succeeded { get; } = new DurableTaskSchedulerFailoverState(SucceededValue);
 
         /// <summary> The failover operation failed. </summary>
-        public static FailoverState Failed { get; } = new FailoverState(FailedValue);
+        public static DurableTaskSchedulerFailoverState Failed { get; } = new DurableTaskSchedulerFailoverState(FailedValue);
 
-        /// <summary> Determines if two <see cref="FailoverState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DurableTaskSchedulerFailoverState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(FailoverState left, FailoverState right) => left.Equals(right);
+        public static bool operator ==(DurableTaskSchedulerFailoverState left, DurableTaskSchedulerFailoverState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="FailoverState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DurableTaskSchedulerFailoverState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(FailoverState left, FailoverState right) => !left.Equals(right);
+        public static bool operator !=(DurableTaskSchedulerFailoverState left, DurableTaskSchedulerFailoverState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="FailoverState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DurableTaskSchedulerFailoverState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FailoverState(string value) => new FailoverState(value);
+        public static implicit operator DurableTaskSchedulerFailoverState(string value) => new DurableTaskSchedulerFailoverState(value);
 
-        /// <summary> Converts a string to a <see cref="FailoverState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DurableTaskSchedulerFailoverState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FailoverState?(string value) => value == null ? null : new FailoverState(value);
+        public static implicit operator DurableTaskSchedulerFailoverState?(string value) => value == null ? null : new DurableTaskSchedulerFailoverState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FailoverState other && Equals(other);
+        public override bool Equals(object obj) => obj is DurableTaskSchedulerFailoverState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(FailoverState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DurableTaskSchedulerFailoverState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

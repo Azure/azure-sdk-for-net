@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.DurableTask
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(DetectorData))]
     [ModelReaderWriterBuildable(typeof(DetectorDataset))]
     [ModelReaderWriterBuildable(typeof(DetectorMetadata))]
     [ModelReaderWriterBuildable(typeof(DetectorProperties))]
     [ModelReaderWriterBuildable(typeof(DetectorRenderingProperties))]
-    [ModelReaderWriterBuildable(typeof(DetectorResource))]
     [ModelReaderWriterBuildable(typeof(DetectorStatus))]
     [ModelReaderWriterBuildable(typeof(DetectorTable))]
     [ModelReaderWriterBuildable(typeof(DetectorTableColumn))]
+    [ModelReaderWriterBuildable(typeof(DurableTaskDetectorData))]
+    [ModelReaderWriterBuildable(typeof(DurableTaskDetectorResource))]
     [ModelReaderWriterBuildable(typeof(DurableTaskHubData))]
     [ModelReaderWriterBuildable(typeof(DurableTaskHubProperties))]
     [ModelReaderWriterBuildable(typeof(DurableTaskHubResource))]

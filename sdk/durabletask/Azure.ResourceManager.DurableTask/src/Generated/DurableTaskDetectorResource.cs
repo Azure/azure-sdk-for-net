@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DurableTask
 {
     /// <summary>
-    /// A class representing a Detector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DetectorResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DurableTaskSchedulerResource"/> using the GetDetectors method.
+    /// A class representing a DurableTaskDetector along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DurableTaskDetectorResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DurableTaskSchedulerResource"/> using the GetDurableTaskDetectors method.
     /// </summary>
-    public partial class DetectorResource : ArmResource
+    public partial class DurableTaskDetectorResource : ArmResource
     {
         private readonly ClientDiagnostics _detectorsClientDiagnostics;
         private readonly Detectors _detectorsRestClient;
-        private readonly DetectorData _data;
+        private readonly DurableTaskDetectorData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DurableTask/schedulers/detectors";
 
-        /// <summary> Initializes a new instance of DetectorResource for mocking. </summary>
-        protected DetectorResource()
+        /// <summary> Initializes a new instance of DurableTaskDetectorResource for mocking. </summary>
+        protected DurableTaskDetectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DetectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DurableTaskDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DetectorResource(ArmClient client, DetectorData data) : this(client, data.Id)
+        internal DurableTaskDetectorResource(ArmClient client, DurableTaskDetectorData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DetectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DurableTaskDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DetectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DurableTaskDetectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string detectorApiVersion);
+            TryGetApiVersion(ResourceType, out string durableTaskDetectorApiVersion);
             _detectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", ResourceType.Namespace, Diagnostics);
-            _detectorsRestClient = new Detectors(_detectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, detectorApiVersion ?? "2026-07-01-preview");
+            _detectorsRestClient = new Detectors(_detectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskDetectorApiVersion ?? "2026-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DurableTask
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual DetectorData Data
+        public virtual DurableTaskDetectorData Data
         {
             get
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DetectorResource"/>. </description>
+        /// <description> <see cref="DurableTaskDetectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DetectorResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DurableTaskDetectorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _detectorsClientDiagnostics.CreateScope("DetectorResource.Get");
+            using DiagnosticScope scope = _detectorsClientDiagnostics.CreateScope("DurableTaskDetectorResource.Get");
             scope.Start();
             try
             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.DurableTask
                 };
                 HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DetectorData> response = Response.FromValue(DetectorData.FromResponse(result), result);
+                Response<DurableTaskDetectorData> response = Response.FromValue(DurableTaskDetectorData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DurableTaskDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DetectorResource"/>. </description>
+        /// <description> <see cref="DurableTaskDetectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DetectorResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DurableTaskDetectorResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _detectorsClientDiagnostics.CreateScope("DetectorResource.Get");
+            using DiagnosticScope scope = _detectorsClientDiagnostics.CreateScope("DurableTaskDetectorResource.Get");
             scope.Start();
             try
             {
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.DurableTask
                 };
                 HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DetectorData> response = Response.FromValue(DetectorData.FromResponse(result), result);
+                Response<DurableTaskDetectorData> response = Response.FromValue(DurableTaskDetectorData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DurableTaskDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
