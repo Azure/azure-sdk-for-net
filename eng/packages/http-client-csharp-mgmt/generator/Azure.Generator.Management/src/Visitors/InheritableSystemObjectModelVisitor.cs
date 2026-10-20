@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Generator.Management.Primitives;
-using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -125,7 +123,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             var changed = false;
             foreach (var property in systemType.Properties)
             {
-                if (property.WireInfo is not null || !TryGetFrameworkWireMetadata(property, out var wireInfo))
+                if (property.WireInfo is not null || !ArmResourcePropertyProjection.TryGetFrameworkWireMetadata(property, out var wireInfo))
                 {
                     properties.Add(property);
                     continue;
@@ -146,32 +144,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
                 systemType.Update(properties: properties, reset: true);
             }
         }
-    }
-
-    private static bool TryGetFrameworkWireMetadata(PropertyProvider property, out PropertyWireInformation? wireInfo)
-    {
-        (string? name, Type? type, bool readOnly) = property.Name switch
-        {
-            nameof(ResourceData.Id) => ("id", typeof(ResourceIdentifier), true),
-            nameof(ResourceData.Name) => ("name", typeof(string), true),
-            nameof(ResourceData.ResourceType) => ("type", typeof(ResourceType), true),
-            nameof(ResourceData.SystemData) => ("systemData", typeof(SystemData), true),
-            nameof(TrackedResourceData.Location) => ("location", typeof(AzureLocation), false),
-            nameof(TrackedResourceData.Tags) => ("tags", typeof(IDictionary<string, string>), false),
-            _ => (null, null, false)
-        };
-        wireInfo = null;
-        if (name is null || type is null || !property.Type.WithNullable(false).Equals(new CSharpType(type)))
-        {
-            return false;
-        }
-
-        // An inherited ARM envelope retains the same wire fields as an explicitly customized
-        // framework base, even when the current input does not repeat those fields.
-        wireInfo = new PropertyWireInformation(
-            property.SerializationFormat, isRequired: false, isReadOnly: readOnly, isNullable: false,
-            isDiscriminator: false, serializedName: name, isHttpMetadata: false, isApiVersion: false);
-        return true;
     }
 
     private static HashSet<string> EnumerateBaseModelProperties(ModelProvider baseModel)
