@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ClientModel.Primitives;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -85,6 +87,89 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             AssertRequest(transport.Requests[4], RequestMethod.Delete, $"/costControls/{CostControlName}");
             Assert.That(transport.Requests[4].Headers.TryGetValue("If-Match", out string deleteEtag), Is.True);
             Assert.That(deleteEtag, Is.EqualTo("\"etag-2\""));
+        }
+
+        [Test]
+        public async Task CostControlUpdatePreservesDisplayNameIntent(
+            [Values(false, true)] bool isAsync,
+            [Values("omitted", "name", "null", "nameThenNull")] string assignment)
+        {
+            MockTransport transport = new(Json(200, CostControlBody("SDK test", 50, "etag-2"), "etag-2"));
+            ArmClient client = new(new MockCredential(), SubscriptionId, new ArmClientOptions { Transport = transport });
+            ResourceIdentifier resourceId = CognitiveServicesAccountCostControlResource.CreateResourceIdentifier(
+                SubscriptionId, ResourceGroupName, AccountName, CostControlName);
+            CognitiveServicesAccountCostControlResource resource = client.GetCognitiveServicesAccountCostControlResource(resourceId);
+            CostControlPatchProperties properties = new();
+            properties.Rules.Add(CreateRule(50));
+            if (assignment == "name" || assignment == "nameThenNull")
+            {
+                properties.DisplayName = "New name";
+            }
+            if (assignment == "null" || assignment == "nameThenNull")
+            {
+                properties.DisplayName = null;
+            }
+            CognitiveServicesAccountCostControlPatch patch = new() { Properties = properties };
+            if (isAsync)
+            {
+                await resource.UpdateAsync(patch);
+            }
+            else
+            {
+                resource.Update(patch);
+            }
+
+            Assert.That(transport.Requests, Has.Count.EqualTo(1));
+            AssertRequest(transport.Requests[0], RequestMethod.Patch, $"/costControls/{CostControlName}");
+            JsonElement body = BodyJson(transport.Requests[0]).GetProperty("properties");
+            Assert.That(body.GetProperty("rules")[0].GetProperty("amount").GetDouble(), Is.EqualTo(50));
+            bool present = body.TryGetProperty("displayName", out JsonElement displayName);
+            Assert.That(present, Is.EqualTo(assignment != "omitted"));
+            if (present)
+            {
+                Assert.That(displayName.ValueKind, Is.EqualTo(assignment == "name" ? JsonValueKind.String : JsonValueKind.Null));
+                if (assignment == "name")
+                {
+                    Assert.That(displayName.GetString(), Is.EqualTo("New name"));
+                }
+            }
+        }
+
+        [TestCase("{}", "J")]
+        [TestCase("{\"displayName\":null}", "J")]
+        [TestCase("{\"displayName\":\"New name\"}", "J")]
+        [TestCase("{}", "W")]
+        [TestCase("{\"displayName\":null}", "W")]
+        [TestCase("{\"displayName\":\"New name\"}", "W")]
+        public void CostControlPatchDisplayNameRoundTrips(string json, string format)
+        {
+            ModelReaderWriterOptions options = new(format);
+            CostControlPatchProperties model = ModelReaderWriter.Read<CostControlPatchProperties>(BinaryData.FromString(json), options);
+            using JsonDocument original = JsonDocument.Parse(json);
+            using JsonDocument serialized = JsonDocument.Parse(ModelReaderWriter.Write(model, options));
+            bool expectedPresence = original.RootElement.TryGetProperty("displayName", out JsonElement expected);
+            bool actualPresence = serialized.RootElement.TryGetProperty("displayName", out JsonElement actual);
+            Assert.That(actualPresence, Is.EqualTo(expectedPresence));
+            if (expectedPresence)
+            {
+                Assert.That(actual.GetRawText(), Is.EqualTo(expected.GetRawText()));
+            }
+        }
+
+        [TestCase("J", true)]
+        [TestCase("W", false)]
+        public void CostControlPatchPreservesUnknownPropertiesOnlyInPersistedFormat(string format, bool expectedPresence)
+        {
+            ModelReaderWriterOptions options = new(format);
+            CostControlPatchProperties model = ModelReaderWriter.Read<CostControlPatchProperties>(
+                BinaryData.FromString("{\"futureProperty\":{\"value\":1}}"), options);
+            using JsonDocument serialized = JsonDocument.Parse(ModelReaderWriter.Write(model, options));
+            bool present = serialized.RootElement.TryGetProperty("futureProperty", out JsonElement property);
+            Assert.That(present, Is.EqualTo(expectedPresence));
+            if (present)
+            {
+                Assert.That(property.GetProperty("value").GetInt32(), Is.EqualTo(1));
+            }
         }
 
         [Test]
