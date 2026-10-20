@@ -83,6 +83,22 @@ safe-outputs:
                 return;
               }
 
+              // This job's reasoning was computed by the agent run that analyzed
+              // context.payload.pull_request.head.sha. Queuing does not prevent pushes while that
+              // run (and this job) are in progress, so re-validate the PR is still open, non-draft,
+              // and at the same head before mutating -- otherwise a stale run can reopen a thread
+              // that a later, real commit already fixed.
+              const analyzedHeadSha = context.payload.pull_request?.head?.sha;
+              const pr = await github.rest.pulls.get({ owner, repo, pull_number: prNumber });
+              if (pr.data.state !== 'open' || pr.data.draft) {
+                core.warning(`PR #${prNumber} is not open and non-draft (state=${pr.data.state}, draft=${pr.data.draft}); skipping ${items.length} unresolve request(s).`);
+                return;
+              }
+              if (pr.data.head.sha !== analyzedHeadSha) {
+                core.warning(`PR #${prNumber} head moved from ${analyzedHeadSha} (analyzed) to ${pr.data.head.sha} (current); this run's reasoning is stale, skipping ${items.length} unresolve request(s).`);
+                return;
+              }
+
               async function findThread(commentId) {
                 let cursor = null;
                 let hasNextPage = true;
