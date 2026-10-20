@@ -1,5 +1,5 @@
 directory: specification/azurearcdata/resource-manager/Microsoft.AzureArcData/AzureArcData
-commit: 2614291f3b249f85d14d74cf211710760c860c35
+commit: 080ddf54ce4323ba25800275bea275096622119e
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
