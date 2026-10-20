@@ -465,19 +465,31 @@ Check `.github/CODEOWNERS` for the current owners before naming anyone.
   suppression by another name. Same ladder, same scrutiny.
 
 **Test projects.** `eng/NoWarnValidation.targets` gates on `'$(IsShippingClientLibrary)' == 'true'`,
-so test projects carry **no build enforcement at all** — review is the only gate, which makes this
-more important there, not less. The sanctioned baseline is what `sdk/template/Azure.Template/tests`
-ships: **`CS1591` only**. Any other project-wide code in a test project's `<NoWarn>` gets raised.
+so an entry added to a test project's `<NoWarn>` gets no validation against an allow-list —
+review is the only gate on *what gets suppressed* there, which matters more, not less. The
+sanctioned baseline is what `sdk/template/Azure.Template/tests` ships: **`CS1591` only**. Any
+other project-wide code in a test project's `<NoWarn>` gets raised. This is a gap in suppression
+validation, not a gap in analysis — see below for what actually still fires and fails the build.
 
-**What actually runs here.** `Microsoft.CodeAnalysis.NetAnalyzers` is referenced only when
-`IsShippingClientLibrary` is true, and the repo sets no `AnalysisLevel` or `AnalysisMode`, and no
-`.editorconfig` anywhere sets a `dotnet_diagnostic.CA*` severity — so `CA` rules run at the
-package's stock default severities, on shipping libraries only. Three consequences:
+**What actually runs here.** The repo's own `Microsoft.CodeAnalysis.NetAnalyzers` package
+reference (`EnableMicrosoftCodeAnalysisNetAnalyzers`) is added only when `IsShippingClientLibrary`
+is true — but it is not the only source of `CA` diagnostics. The .NET SDK bundles its own
+analyzers and enables them by default for any `net5.0+` target (`EnableNETAnalyzers`), independent
+of this repo's own gating and nothing here overrides it, and `EnableStyleCopAnalyzers` is gated on
+the broader `IsClientLibrary`, not `IsShippingClientLibrary`. Both fire on test projects too —
+evaluating `Azure.Messaging.EventHubs.Tests.csproj` for `net10.0` gives `EnableNETAnalyzers=true`
+and `EnableStyleCopAnalyzers=true` — and `TreatWarningsAsErrors=true` is unconditional, so an
+unsuppressed hit from either one fails the build there exactly as it would in a shipping library.
+The repo sets no `AnalysisLevel`/`AnalysisMode`, and no `.editorconfig` anywhere sets a
+`dotnet_diagnostic.CA*` severity, so whichever mechanism supplies a rule, it runs at its stock
+default severity. Three consequences:
 
-- **Test projects get no analyzers at all.** `EnableClientSdkAnalyzers`,
-  `EnableMicrosoftCodeAnalysisNetAnalyzers`, and `EnableBannedApiAnalyzers` are all gated on the
-  same `IsShippingClientLibrary` condition — the same gap `NoWarnValidation.targets` leaves,
-  approached from the other side.
+- **A test project loses the repo's own analyzer layer, not analysis itself.**
+  `EnableClientSdkAnalyzers`, `EnableMicrosoftCodeAnalysisNetAnalyzers`, and
+  `EnableBannedApiAnalyzers` are all gated on `IsShippingClientLibrary`, so `AZC` rules,
+  banned-API checks, and this repo's pinned analyzer package versions don't apply — but the
+  SDK-bundled analyzers and StyleCop still run and still fail the build. Check the specific
+  rule's own gate before treating a test-project diagnostic as something CI won't already catch.
 - **`CA` diagnostics are real diagnostics here.** The default set fires and is widely suppressed
   in this repo. A `#pragma warning disable CA…` is a suppression and takes the same ladder above
   as an `AZC` code — including `CA5351`/`CA5394`, which do fire.
