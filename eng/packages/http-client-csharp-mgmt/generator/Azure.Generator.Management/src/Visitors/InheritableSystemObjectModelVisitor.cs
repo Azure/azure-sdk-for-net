@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+using Azure.Generator.Management.Primitives;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -78,6 +81,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return;
         }
 
+        RestoreMissingFrameworkWireMetadata(model.BaseModelProvider!);
         var basePropertyNames = EnumerateBaseModelProperties(model.BaseModelProvider!);
         var removedPropertyNames = new HashSet<string>();
         var remainingProperties = new List<PropertyProvider>();
@@ -105,6 +109,69 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         model.Update(name: model.Name, properties: remainingProperties.ToArray(), reset: true);
 
         _regularUpdated.Add(model);
+    }
+
+    private static void RestoreMissingFrameworkWireMetadata(ModelProvider baseModel)
+    {
+        for (ModelProvider? current = baseModel; current is not null; current = current.BaseModelProvider)
+        {
+            if (current is not SystemObjectModelProvider systemType ||
+                !KnownManagementTypes.TryGetInheritableSystemType(systemType.SystemType, out _))
+            {
+                continue;
+            }
+
+            var properties = new List<PropertyProvider>();
+            var changed = false;
+            foreach (var property in systemType.Properties)
+            {
+                if (property.WireInfo is not null || !TryGetFrameworkWireMetadata(property, out var wireInfo))
+                {
+                    properties.Add(property);
+                    continue;
+                }
+
+                // Historical symbol properties are shared. Clone rather than attaching model-local
+                // fallback metadata to them; current input metadata always wins when it exists.
+                properties.Add(new PropertyProvider(
+                    property.Description, property.Modifiers, property.Type, property.Name, property.Body, systemType,
+                    property.ExplicitInterface, wireInfo, property.IsRef, property.Attributes, property.Suppressions));
+                changed = true;
+            }
+
+            if (changed)
+            {
+                // Rebuild canonical properties and constructor parameter links before the derived
+                // model rebuilds its own constructor and serializer below.
+                systemType.Update(properties: properties, reset: true);
+            }
+        }
+    }
+
+    private static bool TryGetFrameworkWireMetadata(PropertyProvider property, out PropertyWireInformation? wireInfo)
+    {
+        (string? name, Type? type, bool readOnly) = property.Name switch
+        {
+            nameof(ResourceData.Id) => ("id", typeof(ResourceIdentifier), true),
+            nameof(ResourceData.Name) => ("name", typeof(string), true),
+            nameof(ResourceData.ResourceType) => ("type", typeof(ResourceType), true),
+            nameof(ResourceData.SystemData) => ("systemData", typeof(SystemData), true),
+            nameof(TrackedResourceData.Location) => ("location", typeof(AzureLocation), false),
+            nameof(TrackedResourceData.Tags) => ("tags", typeof(IDictionary<string, string>), false),
+            _ => (null, null, false)
+        };
+        wireInfo = null;
+        if (name is null || type is null || !property.Type.WithNullable(false).Equals(new CSharpType(type)))
+        {
+            return false;
+        }
+
+        // An inherited ARM envelope retains the same wire fields as an explicitly customized
+        // framework base, even when the current input does not repeat those fields.
+        wireInfo = new PropertyWireInformation(
+            property.SerializationFormat, isRequired: false, isReadOnly: readOnly, isNullable: false,
+            isDiscriminator: false, serializedName: name, isHttpMetadata: false, isApiVersion: false);
+        return true;
     }
 
     private static HashSet<string> EnumerateBaseModelProperties(ModelProvider baseModel)

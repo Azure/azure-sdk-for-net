@@ -203,6 +203,34 @@ namespace Azure.Generator.Mgmt.Tests
                 "ARM identity properties must be inherited rather than redeclared on the flat model");
         }
 
+        [Test]
+        public void FlatHistoricalResourceDataKeepsEnvelopeDeserialization()
+        {
+            var model = InputFactory.Model("WidgetData", properties:
+                [InputFactory.Property("description", InputPrimitiveType.String)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                primaryNamespace: "Azure.ResourceManager.Test",
+                lastContractCompilation: () => Helpers.GetCompilationFromDirectory(
+                    method: nameof(KnownLastContractResourceDataCreatesMappedProvider)));
+            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+            var mappedBase = (SystemObjectModelProvider)provider.BaseModelProvider!;
+
+            foreach (string wireName in new[] { "id", "name", "type", "systemData" })
+            {
+                Assert.That(mappedBase.CanonicalView.Properties.Any(p => p.WireInfo?.SerializedName == wireName), Is.True, wireName);
+            }
+            Assert.That(model.Properties.Select(p => p.Name), Is.EqualTo(new[] { "description" }));
+            var historicalBase = plugin.Object.SourceInputModel.FindForTypeInLastContract(typeof(ResourceData).Namespace!, nameof(ResourceData))!;
+            Assert.That(historicalBase.Properties.All(p => p.WireInfo is null), Is.True,
+                "Historical symbol properties must not be mutated with per-model fallback metadata");
+            var serialization = new TypeProviderWriter(provider.SerializationProviders.Single()).Write().Content;
+            foreach (string wireName in new[] { "id", "name", "type", "systemData" })
+            {
+                Assert.That(serialization, Does.Contain($"prop.NameEquals(\"{wireName}\"u8)"));
+            }
+        }
+
         [TestCase("id")]
         [TestCase("name")]
         [TestCase("type")]
@@ -217,23 +245,96 @@ namespace Azure.Generator.Mgmt.Tests
                 InputFactory.Property(wireName, propertyType, isReadOnly: wireName is "id" or "name" or "type"));
         }
 
-        [TestCase("id")]
-        [TestCase("type")]
-        [TestCase("location")]
-        public void PlainStringLastContractPropertyIsNotConverted(string wireName)
+        [TestCase("id", typeof(ResourceIdentifier), false)]
+        [TestCase("type", typeof(ResourceType), false)]
+        [TestCase("location", typeof(AzureLocation), false)]
+        [TestCase("id", typeof(ResourceIdentifier), true)]
+        [TestCase("type", typeof(ResourceType), true)]
+        [TestCase("location", typeof(AzureLocation), true)]
+        public void PlainStringLastContractPropertyUsesHistoricalArmShape(string wireName, Type frameworkType, bool isFlat)
+        {
+            AssertHistoricalArmPropertyProjection(
+                InputFactory.Property(wireName, InputPrimitiveType.String, isReadOnly: wireName != "location"),
+                frameworkType, isFlat);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void OptionalNullableLocationUsesHistoricalArmShape(bool isFlat)
+        {
+            AssertHistoricalArmPropertyProjection(
+                InputFactory.Property("location", new InputNullableType(_azureLocation)), typeof(AzureLocation), isFlat);
+        }
+
+        private static void AssertHistoricalArmPropertyProjection(InputModelProperty inputProperty, Type frameworkType, bool isFlat)
+        {
+            var originalType = inputProperty.Type;
+            var currentBase = InputFactory.Model("CurrentResource", properties: [inputProperty]);
+            var model = InputFactory.Model("WidgetData",
+                properties: isFlat ? [inputProperty, InputFactory.Property("description", InputPrimitiveType.String)]
+                    : [InputFactory.Property("description", InputPrimitiveType.String)],
+                baseModel: isFlat ? null : currentBase);
+            var originalOwner = inputProperty.EnclosingType;
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => isFlat ? [model] : [currentBase, model],
+                primaryNamespace: "Azure.ResourceManager.Test",
+                lastContractCompilation: () => Helpers.GetCompilationFromDirectory(
+                    method: nameof(KnownLastContractTrackedResourceDataCreatesMappedProvider)));
+
+            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+            Assert.That(provider.BaseType?.FullyQualifiedName, Is.EqualTo(typeof(TrackedResourceData).FullName));
+            var mappedBase = (SystemObjectModelProvider)provider.BaseModelProvider!;
+            var property = mappedBase.Properties.Single(p => p.WireInfo?.SerializedName == inputProperty.Name);
+            Assert.Multiple(() =>
+            {
+                Assert.That(property.Type, Is.EqualTo(new CSharpType(frameworkType)));
+                Assert.That(property.AsParameter.Type, Is.EqualTo(property.Type));
+                Assert.That(property.Name, Is.EqualTo(inputProperty.Name switch { "id" => "Id", "type" => "ResourceType", _ => "Location" }));
+                Assert.That(property.Body.HasSetter, Is.EqualTo(!inputProperty.IsReadOnly));
+                Assert.That(property.WireInfo!.IsRequired, Is.EqualTo(inputProperty.IsRequired));
+                Assert.That(property.WireInfo.IsReadOnly, Is.EqualTo(inputProperty.IsReadOnly));
+                Assert.That(property.WireInfo.IsNullable, Is.EqualTo(originalType is InputNullableType));
+                Assert.That(inputProperty.Type, Is.SameAs(originalType));
+                Assert.That(inputProperty.EnclosingType, Is.SameAs(originalOwner));
+                Assert.That(model.BaseModel, Is.SameAs(isFlat ? null : currentBase));
+                Assert.That(provider.Properties.Select(p => p.Name), Is.EqualTo(new[] { "Description" }));
+            });
+
+            var parameter = provider.FullConstructor.Signature.Parameters.Single(p => p.Name == property.AsParameter.Name);
+            Assert.That(parameter.Type, Is.EqualTo(property.Type));
+            var serialization = new TypeProviderWriter(provider.SerializationProviders.Single()).Write().Content;
+            Assert.That(serialization, Does.Contain($"new global::{frameworkType.FullName}(prop.Value.GetString())"));
+        }
+
+        [TestCase("id", false)]
+        [TestCase("type", false)]
+        [TestCase("location", true)]
+        public void PlainStringHistoricalProjectionPreservesAccessorRejection(string wireName, bool isReadOnly)
         {
             AssertIncompatibleLastContractPropertyIsNotMapped(
-                InputFactory.Property(wireName, InputPrimitiveType.String, isReadOnly: wireName != "location"));
+                InputFactory.Property(wireName, InputPrimitiveType.String, isReadOnly: isReadOnly), isFlat: true);
         }
 
         [TestCase("id")]
         [TestCase("type")]
         [TestCase("location")]
-        public void PlainStringLastContractPropertyOnFlatModelIsNotConverted(string wireName)
+        public void PlainStringWithoutHistoricalBaseIsNotProjected(string wireName)
+        {
+            var model = InputFactory.Model("WidgetData", properties:
+                [InputFactory.Property(wireName, InputPrimitiveType.String, isReadOnly: wireName != "location")]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+
+            Assert.That(provider.BaseType, Is.Null);
+            Assert.That(provider.Properties.Single().Type.WithNullable(false), Is.EqualTo(new CSharpType(typeof(string))));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void RequiredNullableLocationIsNotProjected(bool isFlat)
         {
             AssertIncompatibleLastContractPropertyIsNotMapped(
-                InputFactory.Property(wireName, InputPrimitiveType.String, isReadOnly: wireName != "location"),
-                isFlat: true);
+                InputFactory.Property("location", new InputNullableType(_azureLocation), isRequired: true), isFlat);
         }
 
         [TestCase("name", false)]
@@ -245,7 +346,6 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [TestCase("type")]
-        [TestCase("location")]
         public void NullableLastContractValuePropertyIsNotMapped(string wireName)
         {
             AssertIncompatibleLastContractPropertyIsNotMapped(

@@ -103,8 +103,8 @@ namespace Azure.Generator.Management
 
             if (currentModel.BaseModel is null)
             {
-                // Historical CLR properties may not expose wire names. Check MPG aliases before
-                // MTG treats an incompatible property (such as string type) as model-local.
+                // Historical CLR properties may not expose wire names. Check MPG aliases with
+                // the same effective-shape policy before MTG treats them as model-local.
                 var systemBase = new SystemObjectModelProvider(knownBase, currentModel);
                 foreach (var property in currentModel.Properties)
                 {
@@ -140,7 +140,12 @@ namespace Azure.Generator.Management
             }
 
             var hasSetter = !currentProperty.IsReadOnly;
-            if (!ArmResourcePropertyProjection.TryGetName(currentProperty, currentType, out var expectedName))
+            string? expectedName;
+            if (ArmResourcePropertyProjection.TryGetHistoricalShape(currentProperty, currentType, out expectedName, out var historicalType))
+            {
+                currentType = historicalType;
+            }
+            else if (!ArmResourcePropertyProjection.TryGetName(currentProperty, currentType, out expectedName))
             {
                 // The base check requires a CLR setter for writable input, but mutable lists and
                 // dictionaries can be modified through a getter. Check their accessors below instead
