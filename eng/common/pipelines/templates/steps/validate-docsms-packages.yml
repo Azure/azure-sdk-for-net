@@ -1,0 +1,18 @@
+parameters:
+  - name: PackageInfoDirectory
+    type: string
+  - name: ArtifactRoot
+    type: string
+  - name: OutputDirectory
+    type: string
+
+steps:
+  - task: PowerShell@2
+    displayName: Validate built package reference documentation
+    inputs:
+      pwsh: true
+      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Validate-DocsMsPackages.ps1
+      arguments: >
+        -PackageInfoDirectory '${{ parameters.PackageInfoDirectory }}'
+        -ArtifactRoot '${{ parameters.ArtifactRoot }}'
+        -OutputDirectory '${{ parameters.OutputDirectory }}'
