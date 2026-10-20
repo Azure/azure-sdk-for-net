@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="gridImageOcid"> Grid Setup will be done using this Grid Image OCID. Can be obtained using giMinorVersions API. </param>
         /// <param name="gridImageType"> The type of Grid Image. </param>
         /// <param name="giVersion"> Oracle Grid Infrastructure (GI) software version. </param>
-        /// <param name="hostname"> The hostname for the  Exadata VM cluster on Exascale Infrastructure. </param>
+        /// <param name="hostnameV2"> The hostname for the  Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="licenseModel"> The Oracle license model that applies to the Exadata VM cluster on Exascale Infrastructure. The default is LICENSE_INCLUDED. . </param>
         /// <param name="memorySizeInGbs"> The memory that you want to be allocated in GBs. Memory is calculated based on 11 GB per VM core reserved. </param>
         /// <param name="nodeCount"> The number of nodes in the Exadata VM cluster on Exascale Infrastructure. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="subnetOcid"> Cluster subnet ocid. </param>
         /// <param name="shapeAttribute"> The type of Exascale storage used for Exadata VM cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExadbVmClusterProperties(string ocid, string clusterName, string backupSubnetCidr, Uri nsgUri, OracleDatabaseProvisioningState? provisioningState, ExadbVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, ResourceIdentifier subnetId, DiagnosticCollectionConfig dataCollectionOptions, string displayName, string domain, int enabledEcpuCount, ResourceIdentifier exascaleDBStorageVaultId, string gridImageOcid, GridImageType? gridImageType, string giVersion, string hostname, OracleLicenseModel? licenseModel, int? memorySizeInGbs, int nodeCount, IList<CloudVmClusterNsgCidr> nsgCidrs, string zoneOcid, string privateZoneOcid, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, int? listenerPort, string shape, IList<string> sshPublicKeys, string systemVersion, string timeZone, int totalEcpuCount, ExadbVmClusterStorageDetails vmFileSystem, string lifecycleDetails, string scanDnsName, IReadOnlyList<string> scanIPIds, string scanDnsRecordId, ExadbVmClusterStorageDetails snapshotFileSystemStorage, ExadbVmClusterStorageDetails totalFileSystemStorage, IReadOnlyList<string> vipIds, Uri ociUri, ExadataIormConfig iormConfigCache, string backupSubnetOcid, string subnetOcid, ExascaleStorageShapeAttribute? shapeAttribute, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExadbVmClusterProperties(string ocid, string clusterName, string backupSubnetCidr, Uri nsgUri, OracleDatabaseProvisioningState? provisioningState, ExadbVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, ResourceIdentifier subnetId, DiagnosticCollectionConfig dataCollectionOptions, string displayName, string domain, int enabledEcpuCount, ResourceIdentifier exascaleDBStorageVaultId, string gridImageOcid, GridImageType? gridImageType, string giVersion, string hostnameV2, OracleLicenseModel? licenseModel, int? memorySizeInGbs, int nodeCount, IList<CloudVmClusterNsgCidr> nsgCidrs, string zoneOcid, string privateZoneOcid, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, int? listenerPort, string shape, IList<string> sshPublicKeys, string systemVersion, string timeZone, int totalEcpuCount, ExadbVmClusterStorageDetails vmFileSystem, string lifecycleDetails, string scanDnsName, IReadOnlyList<string> scanIPIds, string scanDnsRecordId, ExadbVmClusterStorageDetails snapshotFileSystemStorage, ExadbVmClusterStorageDetails totalFileSystemStorage, IReadOnlyList<string> vipIds, Uri ociUri, ExadataIormConfig iormConfigCache, string backupSubnetOcid, string subnetOcid, ExascaleStorageShapeAttribute? shapeAttribute, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Ocid = ocid;
             ClusterName = clusterName;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             GridImageOcid = gridImageOcid;
             GridImageType = gridImageType;
             GiVersion = giVersion;
-            Hostname = hostname;
+            HostnameV2 = hostnameV2;
             LicenseModel = licenseModel;
             MemorySizeInGbs = memorySizeInGbs;
             NodeCount = nodeCount;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string GiVersion { get; }
 
         /// <summary> The hostname for the  Exadata VM cluster on Exascale Infrastructure. </summary>
-        public string Hostname { get; set; }
+        public string HostnameV2 { get; set; }
 
         /// <summary> The Oracle license model that applies to the Exadata VM cluster on Exascale Infrastructure. The default is LICENSE_INCLUDED. . </summary>
         public OracleLicenseModel? LicenseModel { get; set; }
@@ -211,9 +211,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Additional information about the current lifecycle state. </summary>
         public string LifecycleDetails { get; }
 
-        /// <summary> The FQDN of the DNS record for the SCAN IP addresses that are associated with the Exadata VM cluster on Exascale Infrastructure. . </summary>
-        public string ScanDnsName { get; }
-
         /// <summary> The Single Client Access Name (SCAN) IP addresses associated with the Exadata VM cluster on Exascale Infrastructure. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. <b>Note:</b> For a single-node DB system, this list is empty. </summary>
         public IReadOnlyList<string> ScanIPIds { get; }
 
@@ -262,7 +259,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             get
             {
-                return SnapshotFileSystemStorage is null ? default : SnapshotFileSystemStorage.TotalSizeInGbs;
+                return SnapshotFileSystemStorage is null ? (int?)default : SnapshotFileSystemStorage.TotalSizeInGbs;
             }
         }
 
@@ -271,7 +268,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             get
             {
-                return TotalFileSystemStorage is null ? default : TotalFileSystemStorage.TotalSizeInGbs;
+                return TotalFileSystemStorage is null ? (int?)default : TotalFileSystemStorage.TotalSizeInGbs;
             }
         }
     }

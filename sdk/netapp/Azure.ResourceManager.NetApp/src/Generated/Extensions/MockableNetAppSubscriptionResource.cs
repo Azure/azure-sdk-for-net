@@ -46,30 +46,30 @@ namespace Azure.ResourceManager.NetApp.Mocking
 
         private ClientDiagnostics ElasticAccountsClientDiagnostics => _elasticAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ElasticAccounts ElasticAccountsRestClient => _elasticAccountsRestClient ??= new ElasticAccounts(ElasticAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-15-preview");
+        private ElasticAccounts ElasticAccountsRestClient => _elasticAccountsRestClient ??= new ElasticAccounts(ElasticAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetApp/elasticAccounts", out string apiVersion) ? apiVersion : "2026-06-15-preview");
 
         private ClientDiagnostics ActiveDirectoryConfigsClientDiagnostics => _activeDirectoryConfigsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ActiveDirectoryConfigs ActiveDirectoryConfigsRestClient => _activeDirectoryConfigsRestClient ??= new ActiveDirectoryConfigs(ActiveDirectoryConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-15-preview");
+        private ActiveDirectoryConfigs ActiveDirectoryConfigsRestClient => _activeDirectoryConfigsRestClient ??= new ActiveDirectoryConfigs(ActiveDirectoryConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetApp/activeDirectoryConfigs", out string apiVersion0) ? apiVersion0 : "2026-06-15-preview");
 
         private ClientDiagnostics AccountsClientDiagnostics => _accountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-15-preview");
+        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetApp/netAppAccounts", out string apiVersion1) ? apiVersion1 : "2026-06-15-preview");
 
         private ClientDiagnostics NetAppResourceClientDiagnostics => _netAppResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetAppResource NetAppResourceRestClient => _netAppResourceRestClient ??= new NetAppResource(NetAppResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-15-preview");
+        private NetAppResource NetAppResourceRestClient => _netAppResourceRestClient ??= new NetAppResource(NetAppResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-15-preview");
 
         private ClientDiagnostics NetAppResourceUsagesClientDiagnostics => _netAppResourceUsagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetAppResourceUsages NetAppResourceUsagesRestClient => _netAppResourceUsagesRestClient ??= new NetAppResourceUsages(NetAppResourceUsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-15-preview");
+        private NetAppResourceUsages NetAppResourceUsagesRestClient => _netAppResourceUsagesRestClient ??= new NetAppResourceUsages(NetAppResourceUsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-15-preview");
 
         /// <summary> Gets a collection of NetAppSubscriptionQuotaItems in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
         /// <returns> An object representing collection of NetAppSubscriptionQuotaItems and their operations over a NetAppSubscriptionQuotaItemResource. </returns>
         public virtual NetAppSubscriptionQuotaItemCollection GetNetAppSubscriptionQuotaItems(AzureLocation location)
         {
-            return GetCachedClient(client => new NetAppSubscriptionQuotaItemCollection(client, Id, location));
+            return new NetAppSubscriptionQuotaItemCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetAppAccountData, NetAppAccountResource>(new AccountsGetBySubscriptionAsyncCollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetAppSubscriptionResource.GetNetAppAccounts"), data => new NetAppAccountResource(Client, data));
+            return new AsyncPageableWrapper<NetAppAccountData, NetAppAccountResource>(new NetAppAccountDataAsync0CollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetAppSubscriptionResource.GetNetAppAccounts"), data => new NetAppAccountResource(Client, data));
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetAppAccountData, NetAppAccountResource>(new AccountsGetBySubscriptionCollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetAppSubscriptionResource.GetNetAppAccounts"), data => new NetAppAccountResource(Client, data));
+            return new PageableWrapper<NetAppAccountData, NetAppAccountResource>(new NetAppAccountData0CollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetAppSubscriptionResource.GetNetAppAccounts"), data => new NetAppAccountResource(Client, data));
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new NetAppResourceUsagesGetNetAppResourceUsagesAsyncCollectionResultOfT(NetAppResourceUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetAppSubscriptionResource.GetNetAppResourceUsages");
+            return new NetAppUsageResultAsyncCollectionResultOfT(NetAppResourceUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetAppSubscriptionResource.GetNetAppResourceUsages");
         }
 
         /// <summary>
@@ -851,7 +851,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new NetAppResourceUsagesGetNetAppResourceUsagesCollectionResultOfT(NetAppResourceUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetAppSubscriptionResource.GetNetAppResourceUsages");
+            return new NetAppUsageResultCollectionResultOfT(NetAppResourceUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetAppSubscriptionResource.GetNetAppResourceUsages");
         }
 
         /// <summary>
@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

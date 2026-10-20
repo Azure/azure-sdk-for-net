@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, string targetDbName, bool? force, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, string targetDBName, bool? force, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/databaseMigrations/", false);
-            uri.AppendPath(targetDbName, true);
+            uri.AppendPath(targetDBName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataMigration
             return message;
         }
 
-        internal HttpMessage CreateCancelRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, string targetDbName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCancelRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, string targetDBName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/databaseMigrations/", false);
-            uri.AppendPath(targetDbName, true);
+            uri.AppendPath(targetDBName, true);
             uri.AppendPath("/cancel", false);
             if (_apiVersion != null)
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataMigration
             return message;
         }
 
-        internal HttpMessage CreateCutoverRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, string targetDbName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCutoverRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, string targetDBName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/databaseMigrations/", false);
-            uri.AppendPath(targetDbName, true);
+            uri.AppendPath(targetDBName, true);
             uri.AppendPath("/cutover", false);
             if (_apiVersion != null)
             {

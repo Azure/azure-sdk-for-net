@@ -14,7 +14,7 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// The abstract base class for RedactionPolicy.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CharacterMaskPolicyType"/>, <see cref="NoMaskPolicyType"/>, and <see cref="EntityMaskTypePolicyType"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskTypePolicyType"/>, and <see cref="NoMaskPolicyType"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownBaseRedactionPolicy))]
     public abstract partial class BaseRedactionPolicy : IJsonModel<BaseRedactionPolicy>
@@ -132,10 +132,10 @@ namespace Azure.AI.Language.Conversations.Models
                 {
                     case "characterMask":
                         return CharacterMaskPolicyType.DeserializeCharacterMaskPolicyType(element, options);
-                    case "noMask":
-                        return NoMaskPolicyType.DeserializeNoMaskPolicyType(element, options);
                     case "entityMask":
                         return EntityMaskTypePolicyType.DeserializeEntityMaskTypePolicyType(element, options);
+                    case "noMask":
+                        return NoMaskPolicyType.DeserializeNoMaskPolicyType(element, options);
                 }
             }
             return UnknownBaseRedactionPolicy.DeserializeUnknownBaseRedactionPolicy(element, options);

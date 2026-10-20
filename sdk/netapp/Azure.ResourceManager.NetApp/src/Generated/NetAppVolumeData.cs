@@ -131,7 +131,10 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Set of protocol types, default NFSv3, CIFS for SMB protocol. </summary>
+        /// <summary>
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </summary>
         public IList<string> ProtocolTypes
         {
             get

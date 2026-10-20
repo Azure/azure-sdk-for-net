@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.BotService.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.BotService
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.BotService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BotResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string botApiVersion);
             _botsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ResourceType.Namespace, Diagnostics);
-            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, botApiVersion ?? "2023-09-15-preview");
+            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.BotService/botServices", out string botsApiVersionOverride) ? botsApiVersionOverride : "2023-09-15-preview");
             ValidateResourceId(id);
         }
 
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new BotsGetPrivateLinkResourcesByBotResourceAsyncCollectionResultOfT(
+            return new BotServicePrivateLinkResourceDataAsyncCollectionResultOfT(
                 _botsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new BotsGetPrivateLinkResourcesByBotResourceCollectionResultOfT(
+            return new BotServicePrivateLinkResourceDataCollectionResultOfT(
                 _botsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -677,10 +677,9 @@ namespace Azure.ResourceManager.BotService
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -720,10 +719,9 @@ namespace Azure.ResourceManager.BotService
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

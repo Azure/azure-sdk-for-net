@@ -13,13 +13,13 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new AutoForecastHorizon. </summary>
         public AutoForecastHorizon()
         {
+            Mode.Assign(ForecastHorizonMode.Auto);
         }
 
         /// <summary> Define all the provisionable properties for AutoForecastHorizon. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("mode", new string[] { "mode" }, defaultValue: "Auto");
             DefineAdditionalProperties();
         }
 

@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CalloutPoliciesList(value, nextLink, additionalBinaryDataProperties);
+            return new CalloutPoliciesList(value ?? new ChangeTrackingList<KustoCalloutPolicy>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

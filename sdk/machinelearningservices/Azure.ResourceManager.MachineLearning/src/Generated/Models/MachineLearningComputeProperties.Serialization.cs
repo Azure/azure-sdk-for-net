@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Machine Learning compute object.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAksCompute"/>, <see cref="MachineLearningKubernetesCompute"/>, <see cref="AmlCompute"/>, <see cref="MachineLearningComputeInstance"/>, <see cref="MachineLearningVirtualMachineCompute"/>, <see cref="MachineLearningHDInsightCompute"/>, <see cref="MachineLearningDataFactoryCompute"/>, <see cref="MachineLearningDatabricksCompute"/>, <see cref="MachineLearningDataLakeAnalytics"/>, and <see cref="MachineLearningSynapseSpark"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AmlCompute"/>, <see cref="MachineLearningAksCompute"/>, <see cref="MachineLearningComputeInstance"/>, <see cref="MachineLearningDataFactoryCompute"/>, <see cref="MachineLearningDataLakeAnalytics"/>, <see cref="MachineLearningDatabricksCompute"/>, <see cref="MachineLearningHDInsightCompute"/>, <see cref="MachineLearningKubernetesCompute"/>, <see cref="MachineLearningSynapseSpark"/>, and <see cref="MachineLearningVirtualMachineCompute"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCompute))]
     public abstract partial class MachineLearningComputeProperties : IJsonModel<MachineLearningComputeProperties>
@@ -89,10 +89,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description, _descriptionIsDefined))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -111,13 +118,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningErrors))
             {
-                writer.WritePropertyName("provisioningErrors"u8);
-                writer.WriteStartArray();
-                foreach (MachineLearningError item in ProvisioningErrors)
+                if (ProvisioningErrors != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("provisioningErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (MachineLearningError item in ProvisioningErrors)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("provisioningErrors"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(IsAttachedCompute))
             {
@@ -175,26 +189,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AKS":
-                        return MachineLearningAksCompute.DeserializeMachineLearningAksCompute(element, options);
-                    case "Kubernetes":
-                        return MachineLearningKubernetesCompute.DeserializeMachineLearningKubernetesCompute(element, options);
                     case "AmlCompute":
                         return AmlCompute.DeserializeAmlCompute(element, options);
+                    case "AKS":
+                        return MachineLearningAksCompute.DeserializeMachineLearningAksCompute(element, options);
                     case "ComputeInstance":
                         return MachineLearningComputeInstance.DeserializeMachineLearningComputeInstance(element, options);
-                    case "VirtualMachine":
-                        return MachineLearningVirtualMachineCompute.DeserializeMachineLearningVirtualMachineCompute(element, options);
-                    case "HDInsight":
-                        return MachineLearningHDInsightCompute.DeserializeMachineLearningHDInsightCompute(element, options);
                     case "DataFactory":
                         return MachineLearningDataFactoryCompute.DeserializeMachineLearningDataFactoryCompute(element, options);
-                    case "Databricks":
-                        return MachineLearningDatabricksCompute.DeserializeMachineLearningDatabricksCompute(element, options);
                     case "DataLakeAnalytics":
                         return MachineLearningDataLakeAnalytics.DeserializeMachineLearningDataLakeAnalytics(element, options);
+                    case "Databricks":
+                        return MachineLearningDatabricksCompute.DeserializeMachineLearningDatabricksCompute(element, options);
+                    case "HDInsight":
+                        return MachineLearningHDInsightCompute.DeserializeMachineLearningHDInsightCompute(element, options);
+                    case "Kubernetes":
+                        return MachineLearningKubernetesCompute.DeserializeMachineLearningKubernetesCompute(element, options);
                     case "SynapseSpark":
                         return MachineLearningSynapseSpark.DeserializeMachineLearningSynapseSpark(element, options);
+                    case "VirtualMachine":
+                        return MachineLearningVirtualMachineCompute.DeserializeMachineLearningVirtualMachineCompute(element, options);
                 }
             }
             return UnknownCompute.DeserializeUnknownCompute(element, options);

@@ -24,6 +24,7 @@ namespace Azure.Security.Attestation
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AttestationRestClient _restClient;
         private readonly SigningCertificatesRestClient _metadataClient;
+        private readonly MetadataConfigurationRestClient _openIdMetadataClient;
         private readonly AttestationClientOptions _options;
         private IReadOnlyList<AttestationSigner> _signers;
         // NOTE The SemaphoreSlim type does NOT need Disposable based on the current usage because AvailableWaitHandle is not referenced.
@@ -40,9 +41,10 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationClient"/> class.
         /// </summary>
-        /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use.</param>
+        /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use. It must use https.</param>
         /// <param name="credential">Credentials to be used in the Client.</param>
-        public AttestationClient(Uri endpoint, TokenCredential credential): this(endpoint, credential, new AttestationClientOptions())
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not use https.</exception>
+        public AttestationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AttestationClientOptions())
         {
             Endpoint = endpoint;
         }
@@ -50,14 +52,16 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationClient"/> class.
         /// </summary>
-        /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use.</param>
+        /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use. It must use https.</param>
         /// <param name="credential">Credentials to be used in the Client.</param>
         /// <param name="options"><see cref="AttestationClientOptions"/> used to configure the API client.</param>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not use https.</exception>
         public AttestationClient(Uri endpoint, TokenCredential credential, AttestationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             /*Argument.AssertNotNull(credential, nameof(credential));*/
             Argument.AssertNotNull(options, nameof(options));
+            AssertHttps(endpoint);
 
             // Add the authentication policy to our builder.
             _pipeline = HttpPipelineBuilder.Build(options, credential != null ? new BearerTokenAuthenticationPolicy(credential, DefaultScope) : null);
@@ -70,9 +74,10 @@ namespace Azure.Security.Attestation
             Endpoint = endpoint;
 
             // Initialize the Rest Client.
-            _restClient = new AttestationRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri, options.Version);
+            _restClient = new AttestationRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
 
-            _metadataClient = new SigningCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
+            _metadataClient = new SigningCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
+            _openIdMetadataClient = new MetadataConfigurationRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
         }
         /// <summary>
         /// Parameterless constructor for mocking.
@@ -123,52 +128,40 @@ namespace Azure.Security.Attestation
             scope.Start();
             try
             {
-                var attestSgxEnclaveRequest = new AttestSgxEnclaveRequest
-                {
-                    Quote = request.Evidence.ToArray(),
-                    DraftPolicyForAttestation = request.DraftPolicyForAttestation,
-                };
-
+                InitTimeData initTimeData = null;
                 if (request.InittimeData != null)
                 {
-                    attestSgxEnclaveRequest.InitTimeData = new InitTimeData
+                    initTimeData = new InitTimeData
                     {
-                        Data = request.InittimeData.BinaryData.ToArray(),
-                        DataType = request.InittimeData.DataIsJson ? DataType.Json : DataType.Binary,
+                        Data = request.InittimeData.BinaryData,
+                        DataType = request.InittimeData.DataIsJson ? DataType.JSON : DataType.Binary,
                     };
-                }
-                else
-                {
-                    attestSgxEnclaveRequest.InitTimeData = null;
                 }
 
+                RuntimeData runtimeData = null;
                 if (request.RuntimeData != null)
                 {
-                    attestSgxEnclaveRequest.RuntimeData = new RuntimeData
+                    runtimeData = new RuntimeData
                     {
-                        Data = request.RuntimeData.BinaryData.ToArray(),
-                        DataType = request.RuntimeData.DataIsJson ? DataType.Json : DataType.Binary,
+                        Data = request.RuntimeData.BinaryData,
+                        DataType = request.RuntimeData.DataIsJson ? DataType.JSON : DataType.Binary,
                     };
-                }
-                else
-                {
-                    attestSgxEnclaveRequest.RuntimeData = null;
                 }
 
                 Response<AttestationResponse> response;
                 if (async)
                 {
-                    response = await _restClient.AttestSgxEnclaveAsync(attestSgxEnclaveRequest, cancellationToken).ConfigureAwait(false);
+                    response = await _restClient.AttestSgxEnclaveAsync(request.Evidence, runtimeData, initTimeData, request.DraftPolicyForAttestation, request.Nonce, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = _restClient.AttestSgxEnclave(attestSgxEnclaveRequest, cancellationToken);
+                    response = _restClient.AttestSgxEnclave(request.Evidence, runtimeData, initTimeData, request.DraftPolicyForAttestation, request.Nonce, cancellationToken);
                 }
                 var attestationToken = AttestationToken.Deserialize(response.Value.Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
-                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken).ConfigureAwait(false))
+                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, async, cancellationToken, allowUnsecured: request.DraftPolicyForAttestation != null).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, attestationToken);
                     }
@@ -223,40 +216,34 @@ namespace Azure.Security.Attestation
             scope.Start();
             try
             {
-                var attestOpenEnclaveRequest = new AttestOpenEnclaveRequest
-                {
-                    Report = request.Evidence.ToArray(),
-                    DraftPolicyForAttestation = request.DraftPolicyForAttestation,
-                    RuntimeData = null,
-                    InitTimeData = null,
-            };
-
+                InitTimeData initTimeData = null;
                 if (request.InittimeData != null)
                 {
-                    attestOpenEnclaveRequest.InitTimeData = new InitTimeData
+                    initTimeData = new InitTimeData
                     {
-                        Data = request.InittimeData.BinaryData.ToArray(),
-                        DataType = request.InittimeData.DataIsJson ? DataType.Json : DataType.Binary,
+                        Data = request.InittimeData.BinaryData,
+                        DataType = request.InittimeData.DataIsJson ? DataType.JSON : DataType.Binary,
                     };
                 }
 
+                RuntimeData runtimeData = null;
                 if (request.RuntimeData != null)
                 {
-                    attestOpenEnclaveRequest.RuntimeData = new RuntimeData
+                    runtimeData = new RuntimeData
                     {
-                        Data = request.RuntimeData.BinaryData.ToArray(),
-                        DataType = request.RuntimeData.DataIsJson ? DataType.Json : DataType.Binary,
+                        Data = request.RuntimeData.BinaryData,
+                        DataType = request.RuntimeData.DataIsJson ? DataType.JSON : DataType.Binary,
                     };
                 }
 
-                var response = async ? await _restClient.AttestOpenEnclaveAsync(attestOpenEnclaveRequest, cancellationToken).ConfigureAwait(false)
-                                    : _restClient.AttestOpenEnclave(attestOpenEnclaveRequest, cancellationToken);
+                var response = async ? await _restClient.AttestOpenEnclaveAsync(request.Evidence, runtimeData, initTimeData, request.DraftPolicyForAttestation, request.Nonce, cancellationToken).ConfigureAwait(false)
+                                    : _restClient.AttestOpenEnclave(request.Evidence, runtimeData, initTimeData, request.DraftPolicyForAttestation, request.Nonce, cancellationToken);
                 var attestationToken = AttestationToken.Deserialize(response.Value.Token, _clientDiagnostics);
 
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
-                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken).ConfigureAwait(false))
+                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, async, cancellationToken, allowUnsecured: request.DraftPolicyForAttestation != null).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, attestationToken);
                     }
@@ -269,6 +256,184 @@ namespace Azure.Security.Attestation
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Attest an Intel TDX confidential virtual machine.
+        /// </summary>
+        /// <param name="request">Aggregate type containing the information needed to perform an attestation operation.</param>
+        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
+        /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
+        /// <remarks>
+        /// The <see cref="AttestationRequest.Evidence"/> must be a TDX quote. TDX attestation requires
+        /// <see cref="AttestationClientOptions.ServiceVersion.V2025_06_01"/> or later, and does not support <see cref="AttestationRequest.DraftPolicyForAttestation"/>.
+        /// </remarks>
+        /// <exception cref="NotSupportedException">The client targets a service version that does not support TDX attestation.</exception>
+        /// <exception cref="ArgumentException"><see cref="AttestationRequest.DraftPolicyForAttestation"/> is set.</exception>
+        public virtual AttestationResponse<AttestationResult> AttestTdxVm(AttestationRequest request, CancellationToken cancellationToken = default)
+            => AttestTdxVmInternalAsync(request, false, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Attest an Intel TDX confidential virtual machine.
+        /// </summary>
+        /// <param name="request">Aggregate type containing the information needed to perform an attestation operation.</param>
+        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
+        /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
+        /// <remarks>
+        /// The <see cref="AttestationRequest.Evidence"/> must be a TDX quote. TDX attestation requires
+        /// <see cref="AttestationClientOptions.ServiceVersion.V2025_06_01"/> or later, and does not support <see cref="AttestationRequest.DraftPolicyForAttestation"/>.
+        /// </remarks>
+        /// <exception cref="NotSupportedException">The client targets a service version that does not support TDX attestation.</exception>
+        /// <exception cref="ArgumentException"><see cref="AttestationRequest.DraftPolicyForAttestation"/> is set.</exception>
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestTdxVmAsync(AttestationRequest request, CancellationToken cancellationToken = default)
+            => await AttestTdxVmInternalAsync(request, true, cancellationToken).ConfigureAwait(false);
+
+        private async Task<AttestationResponse<AttestationResult>> AttestTdxVmInternalAsync(AttestationRequest request, bool async, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(request.Evidence, nameof(request.Evidence));
+            if (request.DraftPolicyForAttestation != null)
+            {
+                throw new ArgumentException("TDX attestation does not support a draft attestation policy.", nameof(request));
+            }
+            if (string.CompareOrdinal(_options.Version, "2025-06-01") < 0)
+            {
+                throw new NotSupportedException($"TDX attestation requires service version {AttestationClientOptions.ServiceVersion.V2025_06_01} or later.");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestTdxVm)}");
+            scope.Start();
+            try
+            {
+                RuntimeData runtimeData = ToRuntimeData(request.RuntimeData);
+                InitTimeData initTimeData = ToInitTimeData(request.InittimeData);
+                Response<AttestationResponse> response = async
+                    ? await _restClient.AttestTdxVmAsync(request.Evidence, runtimeData, initTimeData, request.Nonce, cancellationToken).ConfigureAwait(false)
+                    : _restClient.AttestTdxVm(request.Evidence, runtimeData, initTimeData, request.Nonce, cancellationToken);
+                return await ValidateAttestationResponseAsync(response, isDraftPolicy: false, async, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Attest an AMD SEV-SNP confidential virtual machine.
+        /// </summary>
+        /// <param name="request">Aggregate type containing the information needed to perform an attestation operation.</param>
+        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
+        /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
+        /// <remarks>
+        /// The <see cref="AttestationRequest.Evidence"/> must be the SEV-SNP evidence document: JSON containing the <c>SnpReport</c>,
+        /// <c>VcekCertChain</c> and, optionally, <c>Endorsements</c> values produced by the guest attestation tooling.
+        /// </remarks>
+        public virtual AttestationResponse<AttestationResult> AttestSevSnpVm(AttestationRequest request, CancellationToken cancellationToken = default)
+            => AttestSevSnpVmInternalAsync(request, false, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Attest an AMD SEV-SNP confidential virtual machine.
+        /// </summary>
+        /// <param name="request">Aggregate type containing the information needed to perform an attestation operation.</param>
+        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
+        /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
+        /// <remarks>
+        /// The <see cref="AttestationRequest.Evidence"/> must be the SEV-SNP evidence document: JSON containing the <c>SnpReport</c>,
+        /// <c>VcekCertChain</c> and, optionally, <c>Endorsements</c> values produced by the guest attestation tooling.
+        /// </remarks>
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestSevSnpVmAsync(AttestationRequest request, CancellationToken cancellationToken = default)
+            => await AttestSevSnpVmInternalAsync(request, true, cancellationToken).ConfigureAwait(false);
+
+        private async Task<AttestationResponse<AttestationResult>> AttestSevSnpVmInternalAsync(AttestationRequest request, bool async, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(request.Evidence, nameof(request.Evidence));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestSevSnpVm)}");
+            scope.Start();
+            try
+            {
+                // The spec types the report as a string; the service expects the evidence document Base64Url-encoded.
+                string report = Base64Url.Encode(request.Evidence.ToArray());
+                RuntimeData runtimeData = ToRuntimeData(request.RuntimeData);
+                InitTimeData initTimeData = ToInitTimeData(request.InittimeData);
+                Response<AttestationResponse> response = async
+                    ? await _restClient.AttestSevSnpVmAsync(report, runtimeData, initTimeData, request.DraftPolicyForAttestation, request.Nonce, cancellationToken).ConfigureAwait(false)
+                    : _restClient.AttestSevSnpVm(report, runtimeData, initTimeData, request.DraftPolicyForAttestation, request.Nonce, cancellationToken);
+                return await ValidateAttestationResponseAsync(response, request.DraftPolicyForAttestation != null, async, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Attest an Azure confidential or Trusted Launch virtual machine.
+        /// </summary>
+        /// <param name="attestationInfo">The attestation information collected inside the virtual machine, such as by the guest attestation library.</param>
+        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
+        /// <returns>A <see cref="SealedAttestationResult"/> whose token is encrypted to the virtual machine's TPM.</returns>
+        /// <remarks>
+        /// The client cannot decrypt the token, so it does not validate it; see <see cref="SealedAttestationResult"/> for how to use it.
+        /// </remarks>
+        public virtual Response<SealedAttestationResult> AttestAzureGuest(BinaryData attestationInfo, CancellationToken cancellationToken = default)
+            => AttestAzureGuestInternalAsync(attestationInfo, false, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Attest an Azure confidential or Trusted Launch virtual machine.
+        /// </summary>
+        /// <param name="attestationInfo">The attestation information collected inside the virtual machine, such as by the guest attestation library.</param>
+        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
+        /// <returns>A <see cref="SealedAttestationResult"/> whose token is encrypted to the virtual machine's TPM.</returns>
+        /// <remarks>
+        /// The client cannot decrypt the token, so it does not validate it; see <see cref="SealedAttestationResult"/> for how to use it.
+        /// </remarks>
+        public virtual async Task<Response<SealedAttestationResult>> AttestAzureGuestAsync(BinaryData attestationInfo, CancellationToken cancellationToken = default)
+            => await AttestAzureGuestInternalAsync(attestationInfo, true, cancellationToken).ConfigureAwait(false);
+
+        private async Task<Response<SealedAttestationResult>> AttestAzureGuestInternalAsync(BinaryData attestationInfo, bool async, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(attestationInfo, nameof(attestationInfo));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestAzureGuest)}");
+            scope.Start();
+            try
+            {
+                // The spec types attestationInfo as a string; the service expects the document Base64Url-encoded.
+                string encoded = Base64Url.Encode(attestationInfo.ToArray());
+                return async
+                    ? await _restClient.AttestAzureGuestAsync(encoded, cancellationToken).ConfigureAwait(false)
+                    : _restClient.AttestAzureGuest(encoded, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private static RuntimeData ToRuntimeData(AttestationData data)
+            => data == null ? null : new RuntimeData { Data = data.BinaryData, DataType = data.DataIsJson ? DataType.JSON : DataType.Binary };
+
+        private static InitTimeData ToInitTimeData(AttestationData data)
+            => data == null ? null : new InitTimeData { Data = data.BinaryData, DataType = data.DataIsJson ? DataType.JSON : DataType.Binary };
+
+        private async Task<AttestationResponse<AttestationResult>> ValidateAttestationResponseAsync(Response<AttestationResponse> response, bool isDraftPolicy, bool async, CancellationToken cancellationToken)
+        {
+            var attestationToken = AttestationToken.Deserialize(response.Value.Token, _clientDiagnostics);
+            if (_options.TokenOptions.ValidateToken)
+            {
+                var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
+                if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, async, cancellationToken, allowUnsecured: isDraftPolicy).ConfigureAwait(false))
+                {
+                    AttestationTokenValidationFailedException.ThrowFailure(signers, attestationToken);
+                }
+            }
+
+            return new AttestationResponse<AttestationResult>(response.GetRawResponse(), attestationToken);
         }
 
         /// <summary>
@@ -285,7 +450,7 @@ namespace Azure.Security.Attestation
             scope.Start();
             try
             {
-                return _restClient.AttestTpm(request, cancellationToken);
+                return _restClient.AttestTpm(request.Data, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -308,7 +473,7 @@ namespace Azure.Security.Attestation
             scope.Start();
             try
             {
-                return await _restClient.AttestTpmAsync(request, cancellationToken).ConfigureAwait(false);
+                return await _restClient.AttestTpmAsync(request.Data, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -344,19 +509,71 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>An <see cref="AttestationResponse{T}"/> whose specialization contains a list of signers which can be used to sign attestation tokens.</returns>
-        public virtual Task<Response<IReadOnlyList<AttestationSigner>>> GetSigningCertificatesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<AttestationSigner>>> GetSigningCertificatesAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(GetSigningCertificates)}");
             scope.Start();
             try
             {
-                var keys = _metadataClient.Get(cancellationToken);
-                return Task.FromResult(Response.FromValue(AttestationSigner.FromJsonWebKeySet(keys), keys.GetRawResponse()));
+                var keys = await _metadataClient.GetAsync(cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(AttestationSigner.FromJsonWebKeySet(keys), keys.GetRawResponse());
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
                 throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the attestation provider's <see href="https://openid.net/specs/openid-connect-discovery-1_0.html">OpenID Connect discovery document</see>,
+        /// which relying parties can use to discover the provider's token issuer and signing keys.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
+        /// <returns>The provider's OpenID Connect metadata.</returns>
+        public virtual Response<AttestationOpenIdMetadata> GetOpenIdMetadata(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(GetOpenIdMetadata)}");
+            scope.Start();
+            try
+            {
+                return _openIdMetadataClient.Get(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the attestation provider's <see href="https://openid.net/specs/openid-connect-discovery-1_0.html">OpenID Connect discovery document</see>,
+        /// which relying parties can use to discover the provider's token issuer and signing keys.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
+        /// <returns>The provider's OpenID Connect metadata.</returns>
+        public virtual async Task<Response<AttestationOpenIdMetadata>> GetOpenIdMetadataAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(GetOpenIdMetadata)}");
+            scope.Start();
+            try
+            {
+                return await _openIdMetadataClient.GetAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        // The client fetches the certificates that validate tokens from the same endpoint that issues them, so the
+        // connection must be protected by TLS even when the client has no credential.
+        internal static void AssertHttps(Uri endpoint)
+        {
+            if (!string.Equals(endpoint.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"The attestation endpoint must use https, but '{endpoint}' does not.", nameof(endpoint));
             }
         }
 

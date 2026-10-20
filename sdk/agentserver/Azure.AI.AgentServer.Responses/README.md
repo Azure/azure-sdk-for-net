@@ -30,6 +30,22 @@ ResponsesServer.Run<EchoHandler>();
 
 This starts a Kestrel server with OpenTelemetry, health checks, server version header, inbound request logging, and your handler mapped to the Responses API endpoints. The `Azure.AI.AgentServer.Core` package is included as a transitive dependency.
 
+In a hosted Foundry environment, the one-line and `AgentHostBuilder` APIs bind the Foundry
+credential, project endpoint, and response options from the `ResponsesServer` configuration
+section. Response storage and resilient-task storage use that same bound identity and endpoint.
+
+No configuration is required in a hosted container. When the section has no `Endpoint`, the
+platform's `FOUNDRY_PROJECT_ENDPOINT` is used. When it has no `Credential` section, a
+`DefaultAzureCredential` limited by default to the production credentials (environment, workload
+identity and managed identity) is used. To select the identity explicitly, set
+`ResponsesServer__Credential__CredentialSource` (for example `ManagedIdentityCredential`), or set
+`AZURE_TOKEN_CREDENTIALS` to override the fallback chain. A `Credential` section that does not
+resolve still fails startup instead of falling back.
+
+Durable task execution is opt-in. Setting `ResponsesServerOptions.ResilientBackground` to
+`true` enables it automatically. Otherwise stored responses run in-process unless the host
+explicitly calls `SetResilientTasksEnabled()`.
+
 Alternatively, use `AgentHost.CreateBuilder()` for more control over service registration and middleware:
 
 ```C# Snippet:Responses_ReadMe_ConfigureServer_Manual
@@ -146,7 +162,7 @@ Injected into every `CreateAsync` call, `ResponseContext` provides access to the
 
 - **`GetInputItemsAsync(resolveReferences, cancellationToken)`** — returns the resolved input items from the request. Item references are resolved to their content by default; pass `resolveReferences: false` to receive them as-is. Computed once and cached.
 - **`GetInputTextAsync(resolveReferences, cancellationToken)`** — shorthand that resolves input items and concatenates all text content from `ItemMessage` entries.
-- **`GetHistoryAsync(cancellationToken)`** — returns output items from previous responses in the conversation chain (oldest-first). Uses `previous_response_id` to walk the conversation and resolves items via the provider. Limit controlled by `ResponsesServerOptions.DefaultFetchHistoryCount` (default: 100).
+- **`GetHistoryAsync(cancellationToken)`** — returns output items from previous responses in the conversation chain (oldest-first). Uses `previous_response_id` to walk the conversation and resolves items via the provider. Limit controlled by `ResponsesServerOptions.DefaultFetchHistoryCount` (default: `-1`, unlimited). Positive values retain only the newest items.
 - **`ResponseId`** — the unique ID for this response, used to construct child item IDs.
 - **`ClientHeaders`** — forwarded HTTP headers from the original client request.
 - **`QueryParameters`** — query parameters from the original request.
@@ -295,6 +311,29 @@ public class MultiUserHandler : ResponseHandler
 ```
 
 ## Troubleshooting
+
+### Local response storage and upgrades
+
+The built-in local response providers partition response envelopes, items, history, and
+conversation indexes by `PlatformContext.UserIdKey`. Requests without a user ID use a
+separate anonymous partition; a named user (including one named `anonymous`) does not
+share that partition. The per-request call ID does not change the storage partition.
+User IDs must come from the trusted hosting boundary; this partitioning is not a
+replacement for authentication.
+
+File-backed response state is stored under
+`{AGENTSERVER_STATE_ROOT}/responses/partitions-v1` (default root: `~/.agentserver`).
+Named-user directory names and record filenames use deterministic hashes, not raw IDs.
+New partitioned state survives restarts.
+
+**Upgrade compatibility:** the provider starts with a new namespace. Previously persisted
+global responses, items, and history are not visible after upgrade, even to anonymous
+requests or crash recovery. The old files remain untouched. There is no automatic copying,
+deletion, ownership inference, or legacy read fallback. To restore old data, operators must
+perform an explicit migration with independently verified ownership; no migration tool is
+included. Back up legacy state before any operator-controlled migration.
+
+This describes the local response store, not isolation of every process-wide service.
 
 ### Common errors
 

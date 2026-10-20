@@ -13,13 +13,13 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new AadAuthTypeConnectionProperties. </summary>
         public AadAuthTypeConnectionProperties()
         {
+            AuthType.Assign(ConnectionAuthType.AAD);
         }
 
         /// <summary> Define all the provisionable properties for AadAuthTypeConnectionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "AAD");
             DefineAdditionalProperties();
         }
 

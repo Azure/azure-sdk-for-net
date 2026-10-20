@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         {
             TryGetApiVersion(SapVirtualInstanceResource.ResourceType, out string sapVirtualInstanceApiVersion);
             _sapVirtualInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapVirtualInstance", SapVirtualInstanceResource.ResourceType.Namespace, Diagnostics);
-            _sapVirtualInstancesRestClient = new SapVirtualInstances(_sapVirtualInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapVirtualInstanceApiVersion ?? "2024-09-01");
+            _sapVirtualInstancesRestClient = new SapVirtualInstances(
+                _sapVirtualInstancesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                sapVirtualInstanceApiVersion ?? "2024-09-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetByResourceGroupAsyncCollectionResultOfT(_sapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SapVirtualInstanceCollection.GetAll"), data => new SapVirtualInstanceResource(Client, data));
+            return new AsyncPageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstanceDataAsyncCollectionResultOfT(_sapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SapVirtualInstanceCollection.GetAll"), data => new SapVirtualInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetByResourceGroupCollectionResultOfT(_sapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SapVirtualInstanceCollection.GetAll"), data => new SapVirtualInstanceResource(Client, data));
+            return new PageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstanceDataCollectionResultOfT(_sapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SapVirtualInstanceCollection.GetAll"), data => new SapVirtualInstanceResource(Client, data));
         }
 
         /// <summary>

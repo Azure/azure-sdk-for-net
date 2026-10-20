@@ -107,12 +107,19 @@ namespace Azure.AI.Projects
         /// <param name="enabled"> Whether the routine is enabled. </param>
         /// <param name="triggers"> The triggers configured for the routine. In v1, exactly one trigger entry is supported. </param>
         /// <param name="action"> The action executed when the routine fires. </param>
+        /// <param name="authorization"> Optional authorization configuration for dispatching a newly created routine. Ignored when updating an existing routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<ProjectsRoutine> CreateOrUpdate(string routineName, string description = default, bool? enabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<ProjectsRoutine> CreateOrUpdate(string routineName, string description = default, bool? enabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, RoutineAuthorization authorization = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            CreateOrUpdateRoutineRequest spreadModel = new CreateOrUpdateRoutineRequest(description, enabled, triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(), action, default);
+            CreateOrUpdateRoutineRequest spreadModel = new CreateOrUpdateRoutineRequest(
+                description,
+                enabled,
+                triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(),
+                action,
+                authorization,
+                default);
             ClientResult result = CreateOrUpdate(routineName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
@@ -123,12 +130,19 @@ namespace Azure.AI.Projects
         /// <param name="enabled"> Whether the routine is enabled. </param>
         /// <param name="triggers"> The triggers configured for the routine. In v1, exactly one trigger entry is supported. </param>
         /// <param name="action"> The action executed when the routine fires. </param>
+        /// <param name="authorization"> Optional authorization configuration for dispatching a newly created routine. Ignored when updating an existing routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<ProjectsRoutine>> CreateOrUpdateAsync(string routineName, string description = default, bool? enabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<ProjectsRoutine>> CreateOrUpdateAsync(string routineName, string description = default, bool? enabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, RoutineAuthorization authorization = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            CreateOrUpdateRoutineRequest spreadModel = new CreateOrUpdateRoutineRequest(description, enabled, triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(), action, default);
+            CreateOrUpdateRoutineRequest spreadModel = new CreateOrUpdateRoutineRequest(
+                description,
+                enabled,
+                triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(),
+                action,
+                authorization,
+                default);
             ClientResult result = await CreateOrUpdateAsync(routineName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }

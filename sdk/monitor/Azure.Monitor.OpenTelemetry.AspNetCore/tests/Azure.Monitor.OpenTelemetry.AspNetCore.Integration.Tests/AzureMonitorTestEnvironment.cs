@@ -5,10 +5,21 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     using System;
 
+    using Azure.Core;
     using Azure.Core.TestFramework;
+    using Azure.Identity;
 
     public class AzureMonitorTestEnvironment : TestEnvironment
     {
+        protected override TokenCredential CreateDeveloperCredential()
+        {
+            return new AzurePowerShellCredential(new AzurePowerShellCredentialOptions
+            {
+                TenantId = TenantId,
+                AuthorityHost = new Uri(AuthorityHostUrl)
+            });
+        }
+
         public Uri LogsEndpoint => new(GetRecordedVariable("LOGS_ENDPOINT"));
 
         /// <summary>
@@ -22,5 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         public string SecondaryConnectionString => GetRecordedVariable("SECONDARY_CONNECTION_STRING");
 
         public string SecondaryWorkspaceId => GetRecordedVariable("SECONDARY_WORKSPACE_ID");
+
+        public string MultiEndpointResources => GetRecordedVariable("MONITOR_MULTI_ENDPOINT_RESOURCES");
     }
 }

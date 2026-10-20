@@ -17,6 +17,18 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private SmbAccessBasedEnumeration? _smbAccessBasedEnumeration;
+        private bool _smbAccessBasedEnumerationIsDefined;
+        private float? _throughputMibps;
+        private bool _throughputMibpsIsDefined;
+        private string _unixPermissions;
+        private bool _unixPermissionsIsDefined;
+        private int? _cloneProgress;
+        private bool _cloneProgressIsDefined;
+        private string _provisionedAvailabilityZone;
+        private bool _provisionedAvailabilityZoneIsDefined;
+        private long? _inheritedSizeInBytes;
+        private bool _inheritedSizeInBytesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VolumeProperties"/>. </summary>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
@@ -51,7 +63,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
         /// </param>
         /// <param name="exportPolicy"> Set of export policy rules. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="snapshotId"> Resource identifier used to identify the Snapshot. </param>
         /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
@@ -148,10 +163,10 @@ namespace Azure.ResourceManager.NetApp.Models
             IsKerberosEnabled = isKerberosEnabled;
             SecurityStyle = securityStyle;
             IsSmbEncryptionEnabled = isSmbEncryptionEnabled;
-            SmbAccessBasedEnumeration = smbAccessBasedEnumeration;
+            _smbAccessBasedEnumeration = smbAccessBasedEnumeration;
             SmbNonBrowsable = smbNonBrowsable;
             IsSmbContinuouslyAvailable = isSmbContinuouslyAvailable;
-            ThroughputMibps = throughputMibps;
+            _throughputMibps = throughputMibps;
             ActualThroughputMibps = actualThroughputMibps;
             EncryptionKeySource = encryptionKeySource;
             KeyVaultPrivateEndpointResourceId = keyVaultPrivateEndpointResourceId;
@@ -161,8 +176,8 @@ namespace Azure.ResourceManager.NetApp.Models
             CoolnessPeriod = coolnessPeriod;
             CoolAccessRetrievalPolicy = coolAccessRetrievalPolicy;
             CoolAccessTieringPolicy = coolAccessTieringPolicy;
-            UnixPermissions = unixPermissions;
-            CloneProgress = cloneProgress;
+            _unixPermissions = unixPermissions;
+            _cloneProgress = cloneProgress;
             FileAccessLogs = fileAccessLogs;
             AvsDataStore = avsDataStore;
             DataStoreResourceId = dataStoreResourceId;
@@ -178,11 +193,11 @@ namespace Azure.ResourceManager.NetApp.Models
             IsEncrypted = isEncrypted;
             PlacementRules = placementRules;
             EnableSubvolumes = enableSubvolumes;
-            ProvisionedAvailabilityZone = provisionedAvailabilityZone;
+            _provisionedAvailabilityZone = provisionedAvailabilityZone;
             IsLargeVolume = isLargeVolume;
             LargeVolumeType = largeVolumeType;
             OriginatingResourceId = originatingResourceId;
-            InheritedSizeInBytes = inheritedSizeInBytes;
+            _inheritedSizeInBytes = inheritedSizeInBytes;
             Language = language;
             BreakthroughMode = breakthroughMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -207,7 +222,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Set of export policy rules. </summary>
         internal NetAppVolumeExportPolicy ExportPolicy { get; set; }
 
-        /// <summary> Set of protocol types, default NFSv3, CIFS for SMB protocol. </summary>
+        /// <summary>
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </summary>
         public IList<string> ProtocolTypes { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Azure lifecycle management. </summary>
@@ -268,7 +286,18 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? IsSmbEncryptionEnabled { get; set; }
 
         /// <summary> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
-        public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get; set; }
+        public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration
+        {
+            get
+            {
+                return _smbAccessBasedEnumeration;
+            }
+            set
+            {
+                _smbAccessBasedEnumeration = value;
+                _smbAccessBasedEnumerationIsDefined = true;
+            }
+        }
 
         /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
         public SmbNonBrowsable? SmbNonBrowsable { get; set; }
@@ -277,7 +306,18 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? IsSmbContinuouslyAvailable { get; set; }
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>
-        public float? ThroughputMibps { get; set; }
+        public float? ThroughputMibps
+        {
+            get
+            {
+                return _throughputMibps;
+            }
+            set
+            {
+                _throughputMibps = value;
+                _throughputMibpsIsDefined = true;
+            }
+        }
 
         /// <summary> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </summary>
         public float? ActualThroughputMibps { get; }
@@ -312,10 +352,27 @@ namespace Azure.ResourceManager.NetApp.Models
         public CoolAccessTieringPolicy? CoolAccessTieringPolicy { get; set; }
 
         /// <summary> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </summary>
-        public string UnixPermissions { get; set; }
+        public string UnixPermissions
+        {
+            get
+            {
+                return _unixPermissions;
+            }
+            set
+            {
+                _unixPermissions = value;
+                _unixPermissionsIsDefined = true;
+            }
+        }
 
         /// <summary> When a volume is being restored from another volume's snapshot, will show the percentage completion of this cloning process. When this value is empty/null there is no cloning process currently happening on this volume. This value will update every 5 minutes during cloning. </summary>
-        public int? CloneProgress { get; }
+        public int? CloneProgress
+        {
+            get
+            {
+                return _cloneProgress;
+            }
+        }
 
         /// <summary> Flag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume. </summary>
         public NetAppFileAccessLog? FileAccessLogs { get; }
@@ -366,7 +423,13 @@ namespace Azure.ResourceManager.NetApp.Models
         public EnableNetAppSubvolume? EnableSubvolumes { get; set; }
 
         /// <summary> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </summary>
-        public string ProvisionedAvailabilityZone { get; }
+        public string ProvisionedAvailabilityZone
+        {
+            get
+            {
+                return _provisionedAvailabilityZone;
+            }
+        }
 
         /// <summary> Specifies whether volume is a Large Volume or Regular Volume. </summary>
         public bool? IsLargeVolume { get; set; }
@@ -382,7 +445,13 @@ namespace Azure.ResourceManager.NetApp.Models
         public ResourceIdentifier OriginatingResourceId { get; }
 
         /// <summary> Space shared by short term clone volume with parent volume in bytes. </summary>
-        public long? InheritedSizeInBytes { get; }
+        public long? InheritedSizeInBytes
+        {
+            get
+            {
+                return _inheritedSizeInBytes;
+            }
+        }
 
         /// <summary> Language supported for volume. </summary>
         public NetAppVolumeLanguage? Language { get; set; }

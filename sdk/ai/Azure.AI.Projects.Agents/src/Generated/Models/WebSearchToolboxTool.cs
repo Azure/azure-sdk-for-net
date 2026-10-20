@@ -4,13 +4,22 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
+using System.Diagnostics.CodeAnalysis;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A web search tool stored in a toolbox. </summary>
     public partial class WebSearchToolboxTool : ToolboxTool
     {
+        [Experimental("AAIP002")]
+        private WebSearchToolFilters _filters;
+        private bool _filtersIsDefined;
+        [Experimental("AAIP002")]
+        private WebSearchToolApproximateLocation _userLocation;
+        private bool _userLocationIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="WebSearchToolboxTool"/>. </summary>
         public WebSearchToolboxTool() : base(ToolboxToolType.WebSearch)
         {
@@ -26,6 +35,7 @@ namespace Azure.AI.Projects.Agents
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="externalWebAccess"> Allow live internet access for web search. Defaults to true when omitted. When false, the web search tool runs in offline/cache-only mode and will not fetch new external content. </param>
         /// <param name="filters"></param>
         /// <param name="userLocation"></param>
         /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
@@ -33,27 +43,57 @@ namespace Azure.AI.Projects.Agents
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        internal WebSearchToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebSearchToolFilters filters, WebSearchApproximateLocation userLocation, WebSearchToolSearchContextSize? searchContextSize, ProjectWebSearchConfiguration customSearchConfiguration) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        [Experimental("AAIP002")]
+        internal WebSearchToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? externalWebAccess, WebSearchToolFilters filters, WebSearchToolApproximateLocation userLocation, WebSearchToolContextSize? searchContextSize, WebSearchConfiguration customSearchConfiguration) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
-            Filters = filters;
-            UserLocation = userLocation;
+            ExternalWebAccess = externalWebAccess;
+            _filters = filters;
+            _userLocation = userLocation;
             SearchContextSize = searchContextSize;
             CustomSearchConfiguration = customSearchConfiguration;
         }
 
+        /// <summary> Allow live internet access for web search. Defaults to true when omitted. When false, the web search tool runs in offline/cache-only mode and will not fetch new external content. </summary>
+        public bool? ExternalWebAccess { get; set; }
+
         /// <summary> Gets or sets the Filters. </summary>
-        public WebSearchToolFilters Filters { get; set; }
+        [Experimental("AAIP002")]
+        public WebSearchToolFilters Filters
+        {
+            get
+            {
+                return _filters;
+            }
+            set
+            {
+                _filters = value;
+                _filtersIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the UserLocation. </summary>
-        public WebSearchApproximateLocation UserLocation { get; set; }
+        [Experimental("AAIP002")]
+        public WebSearchToolApproximateLocation UserLocation
+        {
+            get
+            {
+                return _userLocation;
+            }
+            set
+            {
+                _userLocation = value;
+                _userLocationIsDefined = true;
+            }
+        }
 
         /// <summary> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </summary>
-        public WebSearchToolSearchContextSize? SearchContextSize { get; set; }
+        [Experimental("AAIP002")]
+        public WebSearchToolContextSize? SearchContextSize { get; set; }
 
         /// <summary>
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </summary>
-        public ProjectWebSearchConfiguration CustomSearchConfiguration { get; set; }
+        public WebSearchConfiguration CustomSearchConfiguration { get; set; }
     }
 }

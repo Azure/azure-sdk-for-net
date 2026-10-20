@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.SourceResourceType;
+                return Properties is null ? (ApplicationSourceResourceType?)default : Properties.SourceResourceType;
             }
             set
             {

@@ -187,13 +187,13 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AssetMetadata(
                 key,
                 kind,
-                roles,
+                roles ?? new ChangeTrackingList<string>(),
                 title,
                 description,
                 additionalBinaryDataProperties);

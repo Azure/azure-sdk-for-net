@@ -16,12 +16,5 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Property restored as workaround for issue #59298. </summary>
         public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
-
-        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public StagingSettings(DataFactoryLinkedServiceReference linkedServiceName)
-        {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            LinkedServiceName = linkedServiceName;
-        }
     }
 }

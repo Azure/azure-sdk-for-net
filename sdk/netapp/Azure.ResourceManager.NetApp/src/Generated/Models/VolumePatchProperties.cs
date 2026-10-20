@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _unixPermissions;
+        private bool _unixPermissionsIsDefined;
+        private SmbAccessBasedEnumeration? _smbAccessBasedEnumeration;
+        private bool _smbAccessBasedEnumerationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VolumePatchProperties"/>. </summary>
         public VolumePatchProperties()
@@ -31,7 +35,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
         /// </param>
         /// <param name="exportPolicy"> Set of export policy rules. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
         /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
         /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
         /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
@@ -62,13 +69,13 @@ namespace Azure.ResourceManager.NetApp.Models
             IsDefaultQuotaEnabled = isDefaultQuotaEnabled;
             DefaultUserQuotaInKiBs = defaultUserQuotaInKiBs;
             DefaultGroupQuotaInKiBs = defaultGroupQuotaInKiBs;
-            UnixPermissions = unixPermissions;
+            _unixPermissions = unixPermissions;
             IsCoolAccessEnabled = isCoolAccessEnabled;
             CoolnessPeriod = coolnessPeriod;
             CoolAccessRetrievalPolicy = coolAccessRetrievalPolicy;
             CoolAccessTieringPolicy = coolAccessTieringPolicy;
             IsSnapshotDirectoryVisible = isSnapshotDirectoryVisible;
-            SmbAccessBasedEnumeration = smbAccessBasedEnumeration;
+            _smbAccessBasedEnumeration = smbAccessBasedEnumeration;
             SmbNonBrowsable = smbNonBrowsable;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -86,7 +93,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Set of export policy rules. </summary>
         internal VolumePatchPropertiesExportPolicy ExportPolicy { get; set; }
 
-        /// <summary> Set of protocol types, default NFSv3, CIFS for SMB protocol. </summary>
+        /// <summary>
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </summary>
         public IList<string> ProtocolTypes { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>
@@ -105,7 +115,18 @@ namespace Azure.ResourceManager.NetApp.Models
         public long? DefaultGroupQuotaInKiBs { get; set; }
 
         /// <summary> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </summary>
-        public string UnixPermissions { get; set; }
+        public string UnixPermissions
+        {
+            get
+            {
+                return _unixPermissions;
+            }
+            set
+            {
+                _unixPermissions = value;
+                _unixPermissionsIsDefined = true;
+            }
+        }
 
         /// <summary> Specifies whether Cool Access(tiering) is enabled for the volume. </summary>
         public bool? IsCoolAccessEnabled { get; set; }
@@ -128,7 +149,18 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? IsSnapshotDirectoryVisible { get; set; }
 
         /// <summary> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
-        public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get; set; }
+        public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration
+        {
+            get
+            {
+                return _smbAccessBasedEnumeration;
+            }
+            set
+            {
+                _smbAccessBasedEnumeration = value;
+                _smbAccessBasedEnumerationIsDefined = true;
+            }
+        }
 
         /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
         public SmbNonBrowsable? SmbNonBrowsable { get; set; }

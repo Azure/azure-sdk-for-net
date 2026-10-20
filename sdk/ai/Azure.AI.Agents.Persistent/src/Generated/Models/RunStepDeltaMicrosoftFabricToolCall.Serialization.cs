@@ -159,7 +159,7 @@ namespace Azure.AI.Agents.Persistent
                     continue;
                 }
             }
-            return new RunStepDeltaMicrosoftFabricToolCall(index, id, @type, additionalBinaryDataProperties, microsoftFabric);
+            return new RunStepDeltaMicrosoftFabricToolCall(index, id, @type, additionalBinaryDataProperties, microsoftFabric ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

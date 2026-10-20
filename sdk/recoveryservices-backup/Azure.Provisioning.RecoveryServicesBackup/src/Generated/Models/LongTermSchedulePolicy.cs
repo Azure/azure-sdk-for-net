@@ -13,13 +13,13 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new LongTermSchedulePolicy. </summary>
         public LongTermSchedulePolicy()
         {
+            SchedulePolicyType.Assign("LongTermSchedulePolicy");
         }
 
         /// <summary> Define all the provisionable properties for LongTermSchedulePolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("schedulePolicyType", new string[] { "schedulePolicyType" }, defaultValue: "LongTermSchedulePolicy");
             DefineAdditionalProperties();
         }
 

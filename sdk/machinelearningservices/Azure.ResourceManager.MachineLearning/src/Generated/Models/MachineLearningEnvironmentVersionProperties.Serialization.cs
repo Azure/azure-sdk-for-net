@@ -100,11 +100,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (Optional.IsDefined(ImageDetails))
-            {
-                writer.WritePropertyName("imageDetails"u8);
-                writer.WriteObjectValue(ImageDetails, options);
-            }
             if (Optional.IsDefined(InferenceConfig))
             {
                 writer.WritePropertyName("inferenceConfig"u8);
@@ -120,10 +115,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Stage))
+            if (Optional.IsDefined(Stage, _stageIsDefined))
             {
-                writer.WritePropertyName("stage"u8);
-                writer.WriteStringValue(Stage);
+                if (Stage != null)
+                {
+                    writer.WritePropertyName("stage"u8);
+                    writer.WriteStringValue(Stage);
+                }
+                else
+                {
+                    writer.WriteNull("stage"u8);
+                }
             }
         }
 
@@ -152,9 +154,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? isAnonymous = default;
             bool? isArchived = default;
@@ -163,15 +166,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string condaFile = default;
             MachineLearningEnvironmentType? environmentType = default;
             string image = default;
-            ImageDetails imageDetails = default;
             MachineLearningInferenceContainerProperties inferenceConfig = default;
             MachineLearningOperatingSystemType? osType = default;
             RegistryAssetProvisioningState? provisioningState = default;
+            bool stageIsDefined = false;
             string stage = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -184,6 +188,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -205,6 +210,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -277,15 +283,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     image = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("imageDetails"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    imageDetails = ImageDetails.DeserializeImageDetails(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("inferenceConfig"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -315,6 +312,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("stage"u8))
                 {
+                    stageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stage = null;
@@ -325,13 +323,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MachineLearningEnvironmentVersionProperties(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                tags,
                 additionalBinaryDataProperties,
                 isAnonymous,
                 isArchived,
@@ -340,11 +338,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 condaFile,
                 environmentType,
                 image,
-                imageDetails,
                 inferenceConfig,
                 osType,
                 provisioningState,
-                stage);
+                stage)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _stageIsDefined = stageIsDefined
+            };
         }
     }
 }

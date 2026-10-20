@@ -41,15 +41,27 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
 
         private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(
+            WorkspacesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-03-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics QueryPacksClientDiagnostics => _queryPacksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private QueryPacks QueryPacksRestClient => _queryPacksRestClient ??= new QueryPacks(QueryPacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private QueryPacks QueryPacksRestClient => _queryPacksRestClient ??= new QueryPacks(
+            QueryPacksClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-03-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DeletedWorkspacesClientDiagnostics => _deletedWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeletedWorkspaces DeletedWorkspacesRestClient => _deletedWorkspacesRestClient ??= new DeletedWorkspaces(DeletedWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private DeletedWorkspaces DeletedWorkspacesRestClient => _deletedWorkspacesRestClient ??= new DeletedWorkspaces(DeletedWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
 
         /// <summary> Gets a collection of OperationalInsightsClusters in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of OperationalInsightsClusters and their operations over a OperationalInsightsClusterResource. </returns>
@@ -71,7 +83,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -100,7 +112,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,7 +148,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +177,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,7 +213,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,7 +242,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -260,7 +272,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,7 +324,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -363,7 +375,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -411,7 +423,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,7 +471,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -471,7 +483,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new DeletedWorkspacesGetByResourceGroupAsyncCollectionResultOfT(DeletedWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableOperationalInsightsResourceGroupResource.GetByResourceGroup"), data => new OperationalInsightsWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new OperationalInsightsWorkspaceDataAsync2CollectionResultOfT(DeletedWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableOperationalInsightsResourceGroupResource.GetByResourceGroup"), data => new OperationalInsightsWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -487,7 +499,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -499,7 +511,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new DeletedWorkspacesGetByResourceGroupCollectionResultOfT(DeletedWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableOperationalInsightsResourceGroupResource.GetByResourceGroup"), data => new OperationalInsightsWorkspaceResource(Client, data));
+            return new PageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new OperationalInsightsWorkspaceData2CollectionResultOfT(DeletedWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableOperationalInsightsResourceGroupResource.GetByResourceGroup"), data => new OperationalInsightsWorkspaceResource(Client, data));
         }
     }
 }

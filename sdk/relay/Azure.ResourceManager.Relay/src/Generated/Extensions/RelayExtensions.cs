@@ -147,6 +147,24 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="RelayClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRelayArmClient.GetRelayClusterResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RelayClusterResource"/> object. </returns>
+        public static RelayClusterResource GetRelayClusterResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableRelayArmClient(client).GetRelayClusterResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="RelayNamespaceAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -198,6 +216,61 @@ namespace Azure.ResourceManager.Relay
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRelayArmClient(client).GetRelayNetworkRuleSetResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of RelayClusters in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRelayResourceGroupResource.GetRelayClusters()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of RelayClusters and their operations over a RelayClusterResource. </returns>
+        public static RelayClusterCollection GetRelayClusters(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRelayResourceGroupResource(resourceGroupResource).GetRelayClusters();
+        }
+
+        /// <summary>
+        /// Gets a Relay cluster.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRelayResourceGroupResource.GetRelayClusterAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the Relay cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RelayClusterResource>> GetRelayClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableRelayResourceGroupResource(resourceGroupResource).GetRelayClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a Relay cluster.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRelayResourceGroupResource.GetRelayCluster(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="clusterName"> The name of the Relay cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<RelayClusterResource> GetRelayCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRelayResourceGroupResource(resourceGroupResource).GetRelayCluster(clusterName, cancellationToken);
         }
 
         /// <summary>
@@ -256,6 +329,42 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
+        /// Lists Relay clusters in a subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRelaySubscriptionResource.GetRelayClustersAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="RelayClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<RelayClusterResource> GetRelayClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableRelaySubscriptionResource(subscriptionResource).GetRelayClustersAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists Relay clusters in a subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRelaySubscriptionResource.GetRelayClusters(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="RelayClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<RelayClusterResource> GetRelayClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableRelaySubscriptionResource(subscriptionResource).GetRelayClusters(cancellationToken);
+        }
+
+        /// <summary>
         /// Lists all the available namespaces within the subscription regardless of the resourceGroups.
         /// <item>
         /// <term> Mocking. </term>
@@ -289,6 +398,40 @@ namespace Azure.ResourceManager.Relay
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRelaySubscriptionResource(subscriptionResource).GetRelayNamespaces(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists regions containing available pre-provisioned Relay clusters.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRelaySubscriptionResource.GetAvailableClusterRegionAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<AvailableRelayClustersList>> GetAvailableClusterRegionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableRelaySubscriptionResource(subscriptionResource).GetAvailableClusterRegionAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Lists regions containing available pre-provisioned Relay clusters.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRelaySubscriptionResource.GetAvailableClusterRegion(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<AvailableRelayClustersList> GetAvailableClusterRegion(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableRelaySubscriptionResource(subscriptionResource).GetAvailableClusterRegion(cancellationToken);
         }
 
         /// <summary>

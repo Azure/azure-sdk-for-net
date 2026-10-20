@@ -127,5 +127,54 @@ namespace Azure.ResourceManager.Compute
                 Properties.SupportsMultipleExtensions = value;
             }
         }
+
+        /// <summary> Summary of changes or updates in this extension version. </summary>
+        public string ReleaseNotes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReleaseNotes;
+            }
+        }
+
+        /// <summary> Categorizes the type of change introduced (e.g., BugFix, SecurityFix, CompatibilityUpdate, NewFeature, Other). </summary>
+        public ReleaseCategory? ReleaseCategory
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReleaseCategory;
+            }
+        }
+
+        /// <summary> Indicates the urgency level for applying this extension update. </summary>
+        public UrgencyLevel? UrgencyLevel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UrgencyLevel;
+            }
+        }
+
+        /// <summary> Specifies when and how the extension should be executed. </summary>
+        public RunProfile? RunProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunProfile;
+            }
+        }
+
+        /// <summary> List of additional metadata properties (e.g., compliance flags, supported features). </summary>
+        public IList<ExtensionFeatureTag> ExtensionFeatureTags
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionImageProperties();
+                }
+                return Properties.ExtensionFeatureTags;
+            }
+        }
     }
 }

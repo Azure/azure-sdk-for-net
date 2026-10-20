@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// The kind of the security setting
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DataExportSettings"/> and <see cref="AlertSyncSettings"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AlertSyncSettings"/> and <see cref="DataExportSettings"/>.
     /// </summary>
     public partial class SecuritySettingData : ResourceData, IJsonModel<SecuritySettingData>
     {
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataExportSettings":
-                        return DataExportSettings.DeserializeDataExportSettings(element, options);
                     case "AlertSyncSettings":
                         return AlertSyncSettings.DeserializeAlertSyncSettings(element, options);
+                    case "DataExportSettings":
+                        return DataExportSettings.DeserializeDataExportSettings(element, options);
                 }
             }
             return UnknownSecuritySetting.DeserializeUnknownSecuritySetting(element, options);

@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SubscriptionScopeMetricDefinitionCollection(value, nextLink, additionalBinaryDataProperties);
+            return new SubscriptionScopeMetricDefinitionCollection(value ?? new ChangeTrackingList<MonitorSubscriptionScopeMetric>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

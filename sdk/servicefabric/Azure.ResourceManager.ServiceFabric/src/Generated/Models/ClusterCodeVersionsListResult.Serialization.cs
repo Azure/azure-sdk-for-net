@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ClusterCodeVersionsListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ClusterCodeVersionsListResult(value ?? new ChangeTrackingList<ClusterCodeVersionsResult>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

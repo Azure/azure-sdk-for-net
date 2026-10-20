@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.Monitor.Agents.csproj" />
+  <Project Path="tests/Azure.ResourceManager.Monitor.Agents.Tests.csproj" />
+</Solution>

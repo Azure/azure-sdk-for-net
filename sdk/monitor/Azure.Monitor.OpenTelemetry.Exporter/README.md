@@ -280,6 +280,21 @@ graceful shutdown window and delivers the final batch without leaving it for a r
 Concurrent processes may share a directory safely, but separate directories keep one application's
 backlog from filling another's storage quota.
 
+**One application made of several processes or entry points** may find its telemetry split across
+several storage directories, because the directory name is derived from the process name and
+application base directory. A component that runs rarely then never drains its own backlog. Give
+each component the same `Azure.Monitor.OpenTelemetry.Exporter.StorageSubDirectory` value so they
+share one directory:
+
+```json
+{ "configProperties": { "Azure.Monitor.OpenTelemetry.Exporter.StorageSubDirectory": "my-app" } }
+```
+
+The value replaces only the process name and base directory in the name. The instrumentation key
+and user name still contribute, so different users and Application Insights resources stay
+isolated. Setting or changing the value moves storage to a new directory, and any backlog left in
+the previous one is not delivered.
+
 ## Examples
 
 Refer to [`Program.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/tests/Azure.Monitor.OpenTelemetry.Exporter.Demo/Program.cs) for a complete demo.
@@ -403,4 +418,16 @@ In AOT scenarios, you can configure the Azure Monitor Exporter using one of the 
             options.ConnectionString = "<your-connection-string>";
             // Set other options as needed
         });
+    ```
+
+## Multi-endpoint routing with Microsoft Entra ID
+
+With multi-endpoint routing enabled (the `Azure.Monitor.OpenTelemetry.EnableMultiEndpointRouting` AppContext switch), each telemetry item names its destination with the `microsoft.instrumentation_key` and `microsoft.ingestion_endpoint` attributes. To send to a resource that uses Microsoft Entra ID authentication:
+
+- Add `microsoft.ingestion_auth = "aad"` to that resource's telemetry. Resources with local authentication disabled require it; telemetry without it is sent without a token.
+- Set the same `AzureMonitorExporterOptions.Credential` on every exporter. One identity is used for all destinations and needs the Monitoring Metrics Publisher role on each resource that receives `"aad"` telemetry. Without a credential, `"aad"` telemetry is dropped.
+- Outside the public cloud, set the audience:
+
+    ```csharp
+    AppDomain.CurrentDomain.SetData("Azure.Monitor.OpenTelemetry.Exporter.MultiEndpointAadAudience", "https://monitor.azure.cn/");
     ```

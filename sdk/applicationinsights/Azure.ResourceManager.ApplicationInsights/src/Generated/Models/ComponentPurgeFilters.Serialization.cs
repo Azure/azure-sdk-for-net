@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    value = BinaryData.FromString(prop.Value.GetRawText());
+                    value = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("key"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ComponentPurgeFilters(column, @operator, value, key, additionalBinaryDataProperties);

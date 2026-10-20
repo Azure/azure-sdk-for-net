@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlMigrationServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SqlMigrationServiceResource.ResourceType, out string sqlMigrationServiceApiVersion);
             _sqlMigrationServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", SqlMigrationServiceResource.ResourceType.Namespace, Diagnostics);
-            _sqlMigrationServicesRestClient = new SqlMigrationServices(_sqlMigrationServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlMigrationServiceApiVersion ?? "2025-09-01-preview");
+            _sqlMigrationServicesRestClient = new SqlMigrationServices(_sqlMigrationServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DataMigration/sqlMigrationServices", out string sqlMigrationServicesApiVersionOverride) ? sqlMigrationServicesApiVersionOverride : "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlMigrationServiceData, SqlMigrationServiceResource>(new SqlMigrationServicesGetByResourceGroupAsyncCollectionResultOfT(_sqlMigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SqlMigrationServiceCollection.GetAll"), data => new SqlMigrationServiceResource(Client, data));
+            return new AsyncPageableWrapper<SqlMigrationServiceData, SqlMigrationServiceResource>(new SqlMigrationServiceDataAsyncCollectionResultOfT(_sqlMigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SqlMigrationServiceCollection.GetAll"), data => new SqlMigrationServiceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlMigrationServiceData, SqlMigrationServiceResource>(new SqlMigrationServicesGetByResourceGroupCollectionResultOfT(_sqlMigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SqlMigrationServiceCollection.GetAll"), data => new SqlMigrationServiceResource(Client, data));
+            return new PageableWrapper<SqlMigrationServiceData, SqlMigrationServiceResource>(new SqlMigrationServiceDataCollectionResultOfT(_sqlMigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SqlMigrationServiceCollection.GetAll"), data => new SqlMigrationServiceResource(Client, data));
         }
 
         /// <summary>

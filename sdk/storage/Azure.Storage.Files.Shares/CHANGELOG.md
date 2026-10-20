@@ -1,14 +1,27 @@
 # Release History
 
-## 12.28.0-beta.2 (Unreleased)
+## 12.29.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values. SAS times are now normalized to UTC before formatting/signing, preventing unintended validity windows in st/se (Start Time, Expiry Time) and related delegation key fields. Affected APIs include:
+  - `ShareClient.GenerateSasUri(...)`
+  - `ShareClient.GenerateUserDelegationSasUri(...)`
+  - `ShareDirectoryClient.GenerateSasUri(...)`
+  - `ShareFileClient.GenerateSasUri(...)`
+  - `ShareFileClient.GenerateUserDelegationSasUri(...)`
+  - `ShareServiceClient.GenerateAccountSasUri(...)`
+  - `ShareSasBuilder`
 
 ### Other Changes
+
+## 12.28.0 (2026-09-28)
+
+### Features Added
+- Includes all features from 12.28.0-beta.1
 
 ## 12.28.0-beta.1 (2026-07-21)
 

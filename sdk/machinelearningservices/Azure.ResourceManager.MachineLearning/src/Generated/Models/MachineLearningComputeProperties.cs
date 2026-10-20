@@ -14,12 +14,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Machine Learning compute object.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAksCompute"/>, <see cref="MachineLearningKubernetesCompute"/>, <see cref="AmlCompute"/>, <see cref="MachineLearningComputeInstance"/>, <see cref="MachineLearningVirtualMachineCompute"/>, <see cref="MachineLearningHDInsightCompute"/>, <see cref="MachineLearningDataFactoryCompute"/>, <see cref="MachineLearningDatabricksCompute"/>, <see cref="MachineLearningDataLakeAnalytics"/>, and <see cref="MachineLearningSynapseSpark"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AmlCompute"/>, <see cref="MachineLearningAksCompute"/>, <see cref="MachineLearningComputeInstance"/>, <see cref="MachineLearningDataFactoryCompute"/>, <see cref="MachineLearningDataLakeAnalytics"/>, <see cref="MachineLearningDatabricksCompute"/>, <see cref="MachineLearningHDInsightCompute"/>, <see cref="MachineLearningKubernetesCompute"/>, <see cref="MachineLearningSynapseSpark"/>, and <see cref="MachineLearningVirtualMachineCompute"/>.
     /// </summary>
     public abstract partial class MachineLearningComputeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _description;
+        private protected bool _descriptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeProperties"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
@@ -46,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ComputeType = computeType;
             ComputeLocation = computeLocation;
             ProvisioningState = provisioningState;
-            Description = description;
+            _description = description;
             CreatedOn = createdOn;
             ModifiedOn = modifiedOn;
             ResourceId = resourceId;
@@ -70,7 +72,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The description of the Machine Learning compute. </summary>
         [WirePath("description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+                _descriptionIsDefined = true;
+            }
+        }
 
         /// <summary> The time at which the compute was created. </summary>
         [WirePath("createdOn")]

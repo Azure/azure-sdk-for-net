@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResourceHealth
             _eventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceHealthEventResource.ResourceType.Namespace, Diagnostics);
             _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceHealthEventApiVersion ?? "2025-05-01");
             _eventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceHealthEventResource.ResourceType.Namespace, Diagnostics);
-            _eventsRestClient = new Events(_eventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceHealthEventApiVersion ?? "2025-05-01");
+            _eventsRestClient = new Events(_eventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ResourceHealth/events", out string eventsApiVersionOverride) ? eventsApiVersionOverride : "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceHealthEventData, ResourceHealthEventResource>(new EventsGetBySubscriptionIdAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ResourceHealthEventData, ResourceHealthEventResource>(new ResourceHealthEventDataAsyncCollectionResultOfT(
                 _eventsRestClient,
                 Id.SubscriptionId,
                 filter,
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceHealthEventData, ResourceHealthEventResource>(new EventsGetBySubscriptionIdCollectionResultOfT(
+            return new PageableWrapper<ResourceHealthEventData, ResourceHealthEventResource>(new ResourceHealthEventDataCollectionResultOfT(
                 _eventsRestClient,
                 Id.SubscriptionId,
                 filter,

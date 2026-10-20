@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.Allow;
+                return Properties is null ? (bool?)default : Properties.Allow;
             }
             set
             {

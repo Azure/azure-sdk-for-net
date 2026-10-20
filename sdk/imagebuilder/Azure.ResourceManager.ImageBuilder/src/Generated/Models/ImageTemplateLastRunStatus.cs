@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageTemplateLastRunStatus"/>. </summary>
-        /// <param name="startOn"> Start time of the last run (UTC). </param>
-        /// <param name="endOn"> End time of the last run (UTC). </param>
+        /// <param name="startsOn"> Start time of the last run (UTC). </param>
+        /// <param name="endsOn"> End time of the last run (UTC). </param>
         /// <param name="runState"> State of the last run. </param>
         /// <param name="runSubState"> Sub-state of the last run. </param>
         /// <param name="message"> Verbose information about the last run state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageTemplateLastRunStatus(DateTimeOffset? startOn, DateTimeOffset? endOn, ImageTemplateRunState? runState, ImageTemplateRunSubState? runSubState, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageTemplateLastRunStatus(DateTimeOffset? startsOn, DateTimeOffset? endsOn, ImageTemplateRunState? runState, ImageTemplateRunSubState? runSubState, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             RunState = runState;
             RunSubState = runSubState;
             Message = message;
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         }
 
         /// <summary> Start time of the last run (UTC). </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End time of the last run (UTC). </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> State of the last run. </summary>
         public ImageTemplateRunState? RunState { get; }

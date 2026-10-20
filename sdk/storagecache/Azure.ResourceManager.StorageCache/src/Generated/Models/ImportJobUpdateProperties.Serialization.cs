@@ -13,7 +13,7 @@ using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> The ImportJobUpdateProperties. </summary>
+    /// <summary> Properties for updating an import job. </summary>
     internal partial class ImportJobUpdateProperties : IJsonModel<ImportJobUpdateProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ImportJobUpdateProperties(adminStatus, additionalBinaryDataProperties);

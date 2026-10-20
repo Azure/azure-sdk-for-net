@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(LogicAppResource.ResourceType, out string logicAppApiVersion);
             _logicAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", LogicAppResource.ResourceType.Namespace, Diagnostics);
-            _logicAppsRestClient = new LogicApps(_logicAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, logicAppApiVersion ?? "2025-10-02-preview");
+            _logicAppsRestClient = new LogicApps(_logicAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, logicAppApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -61,24 +61,23 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LogicApps_CreateOrUpdate. </description>
+        /// <description> LogicApps_CreateOrUpdateStable. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="logicAppName"> Name of the Logic App, the extension resource. </param>
-        /// <param name="data"> Logic app resource properties. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logicAppName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logicAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="logicAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<LogicAppResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string logicAppName, LogicAppData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(logicAppName, nameof(logicAppName));
-            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _logicAppsClientDiagnostics.CreateScope("LogicAppCollection.CreateOrUpdate");
             scope.Start();
@@ -116,24 +115,23 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LogicApps_CreateOrUpdate. </description>
+        /// <description> LogicApps_CreateOrUpdateStable. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="logicAppName"> Name of the Logic App, the extension resource. </param>
-        /// <param name="data"> Logic app resource properties. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logicAppName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logicAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="logicAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<LogicAppResource> CreateOrUpdate(WaitUntil waitUntil, string logicAppName, LogicAppData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(logicAppName, nameof(logicAppName));
-            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _logicAppsClientDiagnostics.CreateScope("LogicAppCollection.CreateOrUpdate");
             scope.Start();
@@ -175,7 +173,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,7 +222,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,7 +271,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,7 +328,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -387,7 +385,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -448,7 +446,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -267,7 +267,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         {
             get
             {
-                return AgentConfiguration.Cpu;
+                return AgentConfiguration is null ? default : AgentConfiguration.Cpu;
             }
         }
 

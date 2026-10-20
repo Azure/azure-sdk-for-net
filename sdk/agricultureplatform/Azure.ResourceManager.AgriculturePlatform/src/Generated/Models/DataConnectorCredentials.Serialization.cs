@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUri"u8);
-                writer.WriteStringValue(KeyVaultUri);
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(KeyName))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             }
             AuthCredentialsKind? kind = default;
             string clientId = default;
-            string keyVaultUri = default;
+            Uri keyVaultUri = default;
             string keyName = default;
             string keyVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -165,7 +165,11 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 }
                 if (prop.NameEquals("keyVaultUri"u8))
                 {
-                    keyVaultUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("keyName"u8))
@@ -180,7 +184,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DataConnectorCredentials(

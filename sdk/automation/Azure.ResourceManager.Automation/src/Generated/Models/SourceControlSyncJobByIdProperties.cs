@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _startsOn;
+        private bool _startsOnIsDefined;
+        private DateTimeOffset? _endsOn;
+        private bool _endsOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobByIdProperties"/>. </summary>
         internal SourceControlSyncJobByIdProperties()
@@ -25,18 +29,18 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
         /// <param name="createdOn"> The creation time of the job. </param>
         /// <param name="provisioningState"> The provisioning state of the job. </param>
-        /// <param name="startOn"> The start time of the job. </param>
-        /// <param name="endOn"> The end time of the job. </param>
+        /// <param name="startsOn"> The start time of the job. </param>
+        /// <param name="endsOn"> The end time of the job. </param>
         /// <param name="syncType"> The sync type. </param>
         /// <param name="exception"> The exceptions that occurred while running the sync job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SourceControlSyncJobByIdProperties(string sourceControlSyncJobId, DateTimeOffset? createdOn, SourceControlProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, SourceControlSyncType? syncType, string exception, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SourceControlSyncJobByIdProperties(string sourceControlSyncJobId, DateTimeOffset? createdOn, SourceControlProvisioningState? provisioningState, DateTimeOffset? startsOn, DateTimeOffset? endsOn, SourceControlSyncType? syncType, string exception, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceControlSyncJobId = sourceControlSyncJobId;
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
-            StartOn = startOn;
-            EndOn = endOn;
+            _startsOn = startsOn;
+            _endsOn = endsOn;
             SyncType = syncType;
             Exception = exception;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -52,10 +56,22 @@ namespace Azure.ResourceManager.Automation.Models
         public SourceControlProvisioningState? ProvisioningState { get; }
 
         /// <summary> The start time of the job. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn
+        {
+            get
+            {
+                return _startsOn;
+            }
+        }
 
         /// <summary> The end time of the job. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn
+        {
+            get
+            {
+                return _endsOn;
+            }
+        }
 
         /// <summary> The sync type. </summary>
         public SourceControlSyncType? SyncType { get; }

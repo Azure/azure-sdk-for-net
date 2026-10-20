@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.Dns.Models
         internal DnsResourceReferenceRequestProperties Properties { get; set; }
 
         /// <summary> A list of references to azure resources for which referencing dns records need to be queried. </summary>
-        public IList<WritableSubResource> TargetResources
+        public IList<DnsSubResourceInfo> TargetResourceReferences
         {
             get
             {
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.Dns.Models
                 {
                     Properties = new DnsResourceReferenceRequestProperties();
                 }
-                return Properties.TargetResources;
+                return Properties.TargetResourceReferences;
             }
         }
     }

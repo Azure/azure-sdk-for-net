@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 throw new FormatException($"The model {nameof(ConfigurationStore)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AppConfigurationId))
+            if (Optional.IsDefined(AppConfigurationId, _appConfigurationIdIsDefined))
             {
-                writer.WritePropertyName("appConfigurationId"u8);
-                writer.WriteStringValue(AppConfigurationId);
+                if (AppConfigurationId != null)
+                {
+                    writer.WritePropertyName("appConfigurationId"u8);
+                    writer.WriteStringValue(AppConfigurationId);
+                }
+                else
+                {
+                    writer.WriteNull("appConfigurationId"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,12 +128,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
+            bool appConfigurationIdIsDefined = false;
             string appConfigurationId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("appConfigurationId"u8))
                 {
+                    appConfigurationIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         appConfigurationId = null;
@@ -137,10 +146,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConfigurationStore(appConfigurationId, additionalBinaryDataProperties);
+            return new ConfigurationStore(appConfigurationId, additionalBinaryDataProperties)
+            {
+                _appConfigurationIdIsDefined = appConfigurationIdIsDefined
+            };
         }
     }
 }

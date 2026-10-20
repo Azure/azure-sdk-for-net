@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.HanaOnAzure.csproj" />
+  <Project Path="tests/Azure.ResourceManager.HanaOnAzure.Tests.csproj" />
+</Solution>

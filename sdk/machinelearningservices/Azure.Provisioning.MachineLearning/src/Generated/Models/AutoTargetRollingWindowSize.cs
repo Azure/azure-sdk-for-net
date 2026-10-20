@@ -13,13 +13,13 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new AutoTargetRollingWindowSize. </summary>
         public AutoTargetRollingWindowSize()
         {
+            Mode.Assign(TargetRollingWindowSizeMode.Auto);
         }
 
         /// <summary> Define all the provisionable properties for AutoTargetRollingWindowSize. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("mode", new string[] { "mode" }, defaultValue: "Auto");
             DefineAdditionalProperties();
         }
 

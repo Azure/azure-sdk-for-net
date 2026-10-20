@@ -15,6 +15,7 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new ServiceTagOutboundRule. </summary>
         public ServiceTagOutboundRule()
         {
+            Type.Assign(RuleType.ServiceTag);
         }
 
         /// <summary> Gets or sets the Destination. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.CognitiveServices
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "ServiceTag");
             _destination = DefineModelProperty<ServiceTagOutboundRuleDestination>(nameof(Destination), new string[] { "destination" });
             DefineAdditionalProperties();
         }

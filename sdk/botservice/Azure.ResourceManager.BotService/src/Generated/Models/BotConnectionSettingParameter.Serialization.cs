@@ -79,10 +79,17 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value, _valueIsDefined))
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
+                if (Value != null)
+                {
+                    writer.WritePropertyName("value"u8);
+                    writer.WriteStringValue(Value);
+                }
+                else
+                {
+                    writer.WriteNull("value"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,6 +134,7 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             string key = default;
+            bool valueIsDefined = false;
             string value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -138,6 +146,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("value"u8))
                 {
+                    valueIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         value = null;
@@ -148,10 +157,13 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BotConnectionSettingParameter(key, value, additionalBinaryDataProperties);
+            return new BotConnectionSettingParameter(key, value, additionalBinaryDataProperties)
+            {
+                _valueIsDefined = valueIsDefined
+            };
         }
     }
 }

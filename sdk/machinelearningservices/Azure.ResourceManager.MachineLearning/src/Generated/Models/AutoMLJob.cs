@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class AutoMLJob : MachineLearningJobProperties
     {
+        private string _environmentId;
+        private bool _environmentIdIsDefined;
+        private QueueSettings _queueSettings;
+        private bool _queueSettingsIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="AutoMLJob"/>. </summary>
         /// <param name="taskDetails"> [Required] This represents scenario which can be one of Tables/NLP/Image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskDetails"/> is null. </exception>
@@ -47,7 +52,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="jobType"> [Required] Specifies the type of job. </param>
         /// <param name="notificationSetting"> Notification setting for the job. </param>
-        /// <param name="parentJobName"> Parent job name. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
@@ -62,12 +66,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="queueSettings"> Queue settings for the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
         /// <param name="taskDetails"> [Required] This represents scenario which can be one of Tables/NLP/Image. </param>
-        internal AutoMLJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, string parentJobName, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, MachineLearningJobOutput> outputs, QueueSettings queueSettings, MachineLearningJobResourceConfiguration resources, AutoMLVertical taskDetails) : base(description, properties, tags, additionalBinaryDataProperties, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, parentJobName, services, status)
+        internal AutoMLJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, MachineLearningJobOutput> outputs, QueueSettings queueSettings, MachineLearningJobResourceConfiguration resources, AutoMLVertical taskDetails) : base(description, properties, tags, additionalBinaryDataProperties, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, services, status)
         {
-            EnvironmentId = environmentId;
+            _environmentId = environmentId;
             EnvironmentVariables = environmentVariables;
             Outputs = outputs;
-            QueueSettings = queueSettings;
+            _queueSettings = queueSettings;
             Resources = resources;
             TaskDetails = taskDetails;
         }
@@ -77,7 +81,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// This is optional value to provide, if not provided, AutoML will default this to Production AutoML curated environment version when running the job.
         /// </summary>
         [WirePath("environmentId")]
-        public string EnvironmentId { get; set; }
+        public string EnvironmentId
+        {
+            get
+            {
+                return _environmentId;
+            }
+            set
+            {
+                _environmentId = value;
+                _environmentIdIsDefined = true;
+            }
+        }
 
         /// <summary> Environment variables included in the job. </summary>
         [WirePath("environmentVariables")]
@@ -89,7 +104,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Queue settings for the job. </summary>
         [WirePath("queueSettings")]
-        internal QueueSettings QueueSettings { get; set; }
+        internal QueueSettings QueueSettings
+        {
+            get
+            {
+                return _queueSettings;
+            }
+            set
+            {
+                _queueSettings = value;
+                _queueSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> Compute Resource configuration for the job. </summary>
         [WirePath("resources")]

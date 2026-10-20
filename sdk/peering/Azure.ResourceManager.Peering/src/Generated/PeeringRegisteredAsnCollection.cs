@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeeringRegisteredAsnData, PeeringRegisteredAsnResource>(new RegisteredAsnsGetByPeeringAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PeeringRegisteredAsnData, PeeringRegisteredAsnResource>(new PeeringRegisteredAsnDataAsyncCollectionResultOfT(
                 _registeredAsnsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeeringRegisteredAsnData, PeeringRegisteredAsnResource>(new RegisteredAsnsGetByPeeringCollectionResultOfT(
+            return new PageableWrapper<PeeringRegisteredAsnData, PeeringRegisteredAsnResource>(new PeeringRegisteredAsnDataCollectionResultOfT(
                 _registeredAsnsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

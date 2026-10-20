@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("effectiveDateTime"u8);
                 writer.WriteStringValue(EffectiveOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BenefitStartOn))
+            if (options.Format != "W" && Optional.IsDefined(BenefitStartsOn))
             {
                 writer.WritePropertyName("benefitStartTime"u8);
-                writer.WriteStringValue(BenefitStartOn.Value, "O");
+                writer.WriteStringValue(BenefitStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ExpiryOn))
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Billing.Models
             BillingAppliedScopeProperties appliedScopeProperties = default;
             BillingBenefitCommitment commitment = default;
             DateTimeOffset? effectiveOn = default;
-            DateTimeOffset? benefitStartOn = default;
+            DateTimeOffset? benefitStartsOn = default;
             DateTimeOffset? expiryOn = default;
             DateTimeOffset? purchaseOn = default;
             SavingsPlanUtilization utilization = default;
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    benefitStartOn = prop.Value.GetDateTimeOffset("O");
+                    benefitStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expiryDateTime"u8))
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SavingsPlanModelProperties(
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Billing.Models
                 appliedScopeProperties,
                 commitment,
                 effectiveOn,
-                benefitStartOn,
+                benefitStartsOn,
                 expiryOn,
                 purchaseOn,
                 utilization,

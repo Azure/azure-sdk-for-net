@@ -205,8 +205,6 @@ public class MCPVoiceAssistant : IDisposable
                 if (_audioProcessor != null)
                     await _audioProcessor.StopPlaybackAsync().ConfigureAwait(false);
 
-                try { await _session!.CancelResponseAsync(cancellationToken).ConfigureAwait(false); }
-                catch (Exception ex) { _logger.LogDebug(ex, "No response to cancel"); }
                 break;
 
             case SessionUpdateInputAudioBufferSpeechStopped:

@@ -164,16 +164,6 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> The template status of the session pool, showing active template, or desired template during session pool update. This is only available if the containerType is CustomContainer. </summary>
-        [WirePath("properties.templateUpdateStatus")]
-        public TemplateUpdateStatus TemplateUpdateStatus
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TemplateUpdateStatus;
-            }
-        }
-
         /// <summary> The endpoint to manage the pool. </summary>
         [WirePath("properties.poolManagementEndpoint")]
         public Uri PoolManagementEndpoint
@@ -205,24 +195,6 @@ namespace Azure.ResourceManager.AppContainers
                     Properties = new SessionPoolProperties();
                 }
                 return Properties.ManagedIdentitySettings;
-            }
-        }
-
-        /// <summary> The MCP (Model Context Protocol) server settings of the session pool. </summary>
-        [WirePath("properties.mcpServerSettings")]
-        public McpServerSettings McpServerSettings
-        {
-            get
-            {
-                return Properties is null ? default : Properties.McpServerSettings;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SessionPoolProperties();
-                }
-                Properties.McpServerSettings = value;
             }
         }
 

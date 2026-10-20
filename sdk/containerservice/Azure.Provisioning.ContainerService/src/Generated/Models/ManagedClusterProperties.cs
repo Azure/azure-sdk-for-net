@@ -36,6 +36,7 @@ namespace Azure.Provisioning.ContainerService
         private ManagedClusterNodeResourceGroupProfile _nodeResourceGroupProfile;
         private BicepValue<bool> _isRbacEnabled;
         private BicepValue<KubernetesSupportPlan> _supportPlan;
+        private BicepValue<bool> _isFipsEnabled;
         private ContainerServiceNetworkProfile _networkProfile;
         private ManagedClusterAadProfile _aadProfile;
         private ManagedClusterAutoUpgradeProfile _autoUpgradeProfile;
@@ -59,6 +60,8 @@ namespace Azure.Provisioning.ContainerService
         private ManagedClusterNodeProvisioningProfile _nodeProvisioningProfile;
         private ManagedClusterBootstrapProfile _bootstrapProfile;
         private ManagedClusterAIToolchainOperatorProfile _aiToolchainOperatorProfile;
+        private SchedulerProfile _schedulerProfile;
+        private ManagedClusterHostedSystemProfile _hostedSystemProfile;
         private ManagedClusterStatus _status;
 
         /// <summary> Creates a new ManagedClusterProperties. </summary>
@@ -346,6 +349,21 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the IsFipsEnabled. </summary>
+        public BicepValue<bool> IsFipsEnabled
+        {
+            get
+            {
+                Initialize();
+                return _isFipsEnabled;
+            }
+            set
+            {
+                Initialize();
+                _isFipsEnabled.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the NetworkProfile. </summary>
         public ContainerServiceNetworkProfile NetworkProfile
         {
@@ -542,7 +560,7 @@ namespace Azure.Provisioning.ContainerService
         }
 
         /// <summary> Gets or sets the IngressProfile. </summary>
-        internal ManagedClusterIngressProfile IngressProfile
+        public ManagedClusterIngressProfile IngressProfile
         {
             get
             {
@@ -587,7 +605,7 @@ namespace Azure.Provisioning.ContainerService
         }
 
         /// <summary> Gets or sets the AzureMonitorProfile. </summary>
-        internal ManagedClusterAzureMonitorProfile AzureMonitorProfile
+        public ManagedClusterAzureMonitorProfile AzureMonitorProfile
         {
             get
             {
@@ -686,6 +704,36 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the SchedulerProfile. </summary>
+        internal SchedulerProfile SchedulerProfile
+        {
+            get
+            {
+                Initialize();
+                return _schedulerProfile;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _schedulerProfile, value);
+            }
+        }
+
+        /// <summary> Gets or sets the HostedSystemProfile. </summary>
+        public ManagedClusterHostedSystemProfile HostedSystemProfile
+        {
+            get
+            {
+                Initialize();
+                return _hostedSystemProfile;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _hostedSystemProfile, value);
+            }
+        }
+
         /// <summary> Gets or sets the Status. </summary>
         internal ManagedClusterStatus Status
         {
@@ -706,7 +754,7 @@ namespace Azure.Provisioning.ContainerService
         {
             get
             {
-                return PowerState.Code;
+                return PowerState is null ? default : PowerState.Code;
             }
         }
 
@@ -744,40 +792,6 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the WebAppRouting. </summary>
-        public ManagedClusterIngressProfileWebAppRouting IngressWebAppRouting
-        {
-            get
-            {
-                return IngressProfile is null ? default : IngressProfile.WebAppRouting;
-            }
-            set
-            {
-                if (IngressProfile is null)
-                {
-                    IngressProfile = new ManagedClusterIngressProfile();
-                }
-                IngressProfile.WebAppRouting = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Metrics. </summary>
-        public ManagedClusterMonitorProfileMetrics AzureMonitorMetrics
-        {
-            get
-            {
-                return AzureMonitorProfile is null ? default : AzureMonitorProfile.Metrics;
-            }
-            set
-            {
-                if (AzureMonitorProfile is null)
-                {
-                    AzureMonitorProfile = new ManagedClusterAzureMonitorProfile();
-                }
-                AzureMonitorProfile.Metrics = value;
-            }
-        }
-
         /// <summary> Gets or sets the IsCostAnalysisEnabled. </summary>
         public BicepValue<bool> MetricsIsCostAnalysisEnabled
         {
@@ -809,6 +823,23 @@ namespace Azure.Provisioning.ContainerService
                     AiToolchainOperatorProfile = new ManagedClusterAIToolchainOperatorProfile();
                 }
                 AiToolchainOperatorProfile.IsAIToolchainOperatorEnabled = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SchedulerConfigMode. </summary>
+        public BicepValue<SchedulerConfigMode> UpstreamSchedulerConfigMode
+        {
+            get
+            {
+                return SchedulerProfile is null ? default : SchedulerProfile.UpstreamSchedulerConfigMode;
+            }
+            set
+            {
+                if (SchedulerProfile is null)
+                {
+                    SchedulerProfile = new SchedulerProfile();
+                }
+                SchedulerProfile.UpstreamSchedulerConfigMode = value;
             }
         }
 
@@ -850,6 +881,7 @@ namespace Azure.Provisioning.ContainerService
             _nodeResourceGroupProfile = DefineModelProperty<ManagedClusterNodeResourceGroupProfile>(nameof(NodeResourceGroupProfile), new string[] { "nodeResourceGroupProfile" });
             _isRbacEnabled = DefineProperty<bool>(nameof(IsRbacEnabled), new string[] { "enableRBAC" });
             _supportPlan = DefineProperty<KubernetesSupportPlan>(nameof(SupportPlan), new string[] { "supportPlan" });
+            _isFipsEnabled = DefineProperty<bool>(nameof(IsFipsEnabled), new string[] { "enableFIPS" });
             _networkProfile = DefineModelProperty<ContainerServiceNetworkProfile>(nameof(NetworkProfile), new string[] { "networkProfile" });
             _aadProfile = DefineModelProperty<ManagedClusterAadProfile>(nameof(AadProfile), new string[] { "aadProfile" });
             _autoUpgradeProfile = DefineModelProperty<ManagedClusterAutoUpgradeProfile>(nameof(AutoUpgradeProfile), new string[] { "autoUpgradeProfile" });
@@ -873,6 +905,8 @@ namespace Azure.Provisioning.ContainerService
             _nodeProvisioningProfile = DefineModelProperty<ManagedClusterNodeProvisioningProfile>(nameof(NodeProvisioningProfile), new string[] { "nodeProvisioningProfile" });
             _bootstrapProfile = DefineModelProperty<ManagedClusterBootstrapProfile>(nameof(BootstrapProfile), new string[] { "bootstrapProfile" });
             _aiToolchainOperatorProfile = DefineModelProperty<ManagedClusterAIToolchainOperatorProfile>(nameof(AiToolchainOperatorProfile), new string[] { "aiToolchainOperatorProfile" });
+            _schedulerProfile = DefineModelProperty<SchedulerProfile>(nameof(SchedulerProfile), new string[] { "schedulerProfile" });
+            _hostedSystemProfile = DefineModelProperty<ManagedClusterHostedSystemProfile>(nameof(HostedSystemProfile), new string[] { "hostedSystemProfile" });
             _status = DefineModelProperty<ManagedClusterStatus>(nameof(Status), new string[] { "status" });
             DefineAdditionalProperties();
         }

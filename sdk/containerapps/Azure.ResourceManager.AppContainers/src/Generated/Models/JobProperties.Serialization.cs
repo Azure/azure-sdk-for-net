@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             ContainerAppJobProvisioningState? provisioningState = default;
-            JobRunningState? runningState = default;
+            ContainerAppJobRunningState? runningState = default;
             string environmentId = default;
             string workloadProfileName = default;
             ContainerAppJobConfiguration configuration = default;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    runningState = new JobRunningState(prop.Value.GetString());
+                    runningState = new ContainerAppJobRunningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("environmentId"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new JobProperties(

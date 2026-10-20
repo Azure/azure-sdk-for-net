@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    entitiesFilter = BinaryData.FromString(prop.Value.GetRawText());
+                    entitiesFilter = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    chartQuery = BinaryData.FromString(prop.Value.GetRawText());
+                    chartQuery = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("additionalQuery"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new InsightQueryItemProperties(

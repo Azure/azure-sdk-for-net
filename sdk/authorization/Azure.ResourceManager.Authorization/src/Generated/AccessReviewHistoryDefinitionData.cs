@@ -53,21 +53,21 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> Date time used when selecting review data, all reviews included in data start on or after this date. For use only with one-time/non-recurring reports. </summary>
         [WirePath("properties.reviewHistoryPeriodStartDateTime")]
-        public DateTimeOffset? ReviewHistoryPeriodStartOn
+        public DateTimeOffset? ReviewHistoryPeriodStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ReviewHistoryPeriodStartOn;
+                return Properties is null ? default : Properties.ReviewHistoryPeriodStartsOn;
             }
         }
 
         /// <summary> Date time used when selecting review data, all reviews included in data end on or before this date. For use only with one-time/non-recurring reports. </summary>
         [WirePath("properties.reviewHistoryPeriodEndDateTime")]
-        public DateTimeOffset? ReviewHistoryPeriodEndOn
+        public DateTimeOffset? ReviewHistoryPeriodEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ReviewHistoryPeriodEndOn;
+                return Properties is null ? default : Properties.ReviewHistoryPeriodEndsOn;
             }
         }
 

@@ -16,6 +16,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Command job definition. </summary>
     public partial class MachineLearningCommandJob : MachineLearningJobProperties
     {
+        private MachineLearningDistributionConfiguration _distribution;
+        private bool _distributionIsDefined;
+        private BinaryData _parameters;
+        private bool _parametersIsDefined;
+        private QueueSettings _queueSettings;
+        private bool _queueSettingsIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningCommandJob"/>. </summary>
         /// <param name="command"> [Required] The command to execute on startup of the job. eg. "python train.py". </param>
         /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
@@ -48,7 +55,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="jobType"> [Required] Specifies the type of job. </param>
         /// <param name="notificationSetting"> Notification setting for the job. </param>
-        /// <param name="parentJobName"> Parent job name. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
@@ -65,18 +71,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="parameters"> Input parameters. </param>
         /// <param name="queueSettings"> Queue settings for the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
-        internal MachineLearningCommandJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, string parentJobName, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, ResourceIdentifier codeId, string command, MachineLearningDistributionConfiguration distribution, ResourceIdentifier environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, MachineLearningJobInput> inputs, MachineLearningCommandJobLimits limits, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData parameters, QueueSettings queueSettings, MachineLearningJobResourceConfiguration resources) : base(description, properties, tags, additionalBinaryDataProperties, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, parentJobName, services, status)
+        internal MachineLearningCommandJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, ResourceIdentifier codeId, string command, MachineLearningDistributionConfiguration distribution, ResourceIdentifier environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, MachineLearningJobInput> inputs, MachineLearningCommandJobLimits limits, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData parameters, QueueSettings queueSettings, MachineLearningJobResourceConfiguration resources) : base(description, properties, tags, additionalBinaryDataProperties, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, services, status)
         {
             CodeId = codeId;
             Command = command;
-            Distribution = distribution;
+            _distribution = distribution;
             EnvironmentId = environmentId;
             EnvironmentVariables = environmentVariables;
             Inputs = inputs;
             Limits = limits;
             Outputs = outputs;
-            Parameters = parameters;
-            QueueSettings = queueSettings;
+            _parameters = parameters;
+            _queueSettings = queueSettings;
             Resources = resources;
         }
 
@@ -90,7 +96,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </summary>
         [WirePath("distribution")]
-        public MachineLearningDistributionConfiguration Distribution { get; set; }
+        public MachineLearningDistributionConfiguration Distribution
+        {
+            get
+            {
+                return _distribution;
+            }
+            set
+            {
+                _distribution = value;
+                _distributionIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] The ARM resource ID of the Environment specification for the job. </summary>
         [WirePath("environmentId")]
@@ -135,11 +152,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </para>
         /// </summary>
         [WirePath("parameters")]
-        public BinaryData Parameters { get; }
+        public BinaryData Parameters
+        {
+            get
+            {
+                return _parameters;
+            }
+        }
 
         /// <summary> Queue settings for the job. </summary>
         [WirePath("queueSettings")]
-        internal QueueSettings QueueSettings { get; set; }
+        internal QueueSettings QueueSettings
+        {
+            get
+            {
+                return _queueSettings;
+            }
+            set
+            {
+                _queueSettings = value;
+                _queueSettingsIsDefined = true;
+            }
+        }
 
         /// <summary> Compute Resource configuration for the job. </summary>
         [WirePath("resources")]

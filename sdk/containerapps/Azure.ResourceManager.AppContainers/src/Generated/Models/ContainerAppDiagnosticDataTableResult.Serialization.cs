@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     rows = array;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ContainerAppDiagnosticDataTableResult(tableName, columns ?? new ChangeTrackingList<ContainerAppDiagnosticDataColumn>(), rows ?? new ChangeTrackingList<BinaryData>(), additionalBinaryDataProperties);

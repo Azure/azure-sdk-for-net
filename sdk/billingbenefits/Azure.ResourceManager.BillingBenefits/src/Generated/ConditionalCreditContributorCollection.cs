@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorsGetFromPrimaryAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorDataAsyncCollectionResultOfT(
                 _conditionalCreditContributorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorsGetFromPrimaryCollectionResultOfT(
+            return new PageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorDataCollectionResultOfT(
                 _conditionalCreditContributorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

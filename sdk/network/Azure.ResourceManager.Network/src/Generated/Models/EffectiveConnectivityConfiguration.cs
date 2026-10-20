@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ConnectivityTopology;
+                return Properties is null ? (ConnectivityTopology?)default : Properties.ConnectivityTopology;
             }
         }
 

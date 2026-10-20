@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class MachineLearningDistributionConfiguration : ProvisionableConstruct
     {
+        private BicepValue<DistributionType> _distributionType;
+
         /// <summary> Creates a new MachineLearningDistributionConfiguration. </summary>
         public MachineLearningDistributionConfiguration()
         {
+        }
+
+        /// <summary> [Required] Specifies the type of distribution framework. </summary>
+        internal BicepValue<DistributionType> DistributionType
+        {
+            get
+            {
+                Initialize();
+                return _distributionType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for MachineLearningDistributionConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _distributionType = DefineProperty<DistributionType>(nameof(DistributionType), new string[] { "distributionType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

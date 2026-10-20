@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Sql.Models
         {
             get
             {
-                return Properties is null ? default : Properties.DataMaskingFunction;
+                return Properties is null ? (SqlDataMaskingFunction?)default : Properties.DataMaskingFunction;
             }
             set
             {

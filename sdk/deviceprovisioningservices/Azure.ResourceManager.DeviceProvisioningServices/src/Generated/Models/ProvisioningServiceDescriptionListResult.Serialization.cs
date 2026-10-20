@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProvisioningServiceDescriptionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ProvisioningServiceDescriptionListResult(value ?? new ChangeTrackingList<DeviceProvisioningServiceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

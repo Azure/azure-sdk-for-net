@@ -69,6 +69,8 @@ namespace Azure.ResourceManager.StorageCache
         public float? NewStorageCapacityTiB { get { throw null; } set { } }
         public float? PercentComplete { get { throw null; } }
         public Azure.ResourceManager.StorageCache.Models.AmlFileSystemExpansionJobProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RebalanceJobId { get { throw null; } }
+        public bool? ShouldRunRebalanceJob { get { throw null; } set { } }
         public System.DateTimeOffset? StartedOn { get { throw null; } }
         public Azure.ResourceManager.StorageCache.Models.AmlFileSystemExpansionJobStatusType? State { get { throw null; } }
         public string StatusCode { get { throw null; } }
@@ -137,6 +139,9 @@ namespace Azure.ResourceManager.StorageCache
         public virtual Azure.Response<Azure.ResourceManager.StorageCache.StorageCacheImportJobResource> GetStorageCacheImportJob(string importJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageCache.StorageCacheImportJobResource>> GetStorageCacheImportJobAsync(string importJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.StorageCache.StorageCacheImportJobCollection GetStorageCacheImportJobs() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource> GetStorageCacheRebalanceJob(string rebalanceJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource>> GetStorageCacheRebalanceJobAsync(string rebalanceJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobCollection GetStorageCacheRebalanceJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageCache.AmlFileSystemResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageCache.AmlFileSystemResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageCache.AmlFileSystemResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -375,6 +380,7 @@ namespace Azure.ResourceManager.StorageCache
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageCache.Models.StorageCacheAscOperationInfo>> GetStorageCacheAscOperationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageCache.StorageCacheResource>> GetStorageCacheAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string cacheName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.StorageCache.StorageCacheImportJobResource GetStorageCacheImportJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource GetStorageCacheRebalanceJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.StorageCache.StorageCacheResource GetStorageCacheResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.StorageCache.StorageCacheCollection GetStorageCaches(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.StorageCache.StorageCacheResource> GetStorageCaches(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -462,6 +468,54 @@ namespace Azure.ResourceManager.StorageCache
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.StorageCacheImportJobData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageCache.StorageCacheImportJobResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageCache.Models.StorageCacheImportJobPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageCache.StorageCacheImportJobResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageCache.Models.StorageCacheImportJobPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class StorageCacheRebalanceJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource>, System.Collections.IEnumerable
+    {
+        protected StorageCacheRebalanceJobCollection() { }
+        public virtual Azure.Response<bool> Exists(string rebalanceJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string rebalanceJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource> Get(string rebalanceJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource>> GetAsync(string rebalanceJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource> GetIfExists(string rebalanceJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource>> GetIfExistsAsync(string rebalanceJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class StorageCacheRebalanceJobData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData>
+    {
+        internal StorageCacheRebalanceJobData() { }
+        public Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class StorageCacheRebalanceJobResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected StorageCacheRebalanceJobResource() { }
+        public virtual Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string amlFilesystemName, string rebalanceJobName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StorageCacheResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.StorageCacheData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.StorageCacheData>
     {
@@ -597,6 +651,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         public virtual Azure.ResourceManager.StorageCache.AutoExportJobResource GetAutoExportJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.StorageCache.AutoImportJobResource GetAutoImportJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.StorageCache.StorageCacheImportJobResource GetStorageCacheImportJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobResource GetStorageCacheRebalanceJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.StorageCache.StorageCacheResource GetStorageCacheResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.StorageCache.StorageTargetResource GetStorageTargetResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
@@ -993,6 +1048,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.AmlFileSystemData AmlFileSystemData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string skuName = null, System.Collections.Generic.IEnumerable<string> zones = null, float? storageCapacityTiB = default(float?), Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealth health = null, Azure.ResourceManager.StorageCache.Models.AmlFileSystemProvisioningStateType? provisioningState = default(Azure.ResourceManager.StorageCache.Models.AmlFileSystemProvisioningStateType?), string filesystemSubnet = null, Azure.ResourceManager.StorageCache.Models.AmlFileSystemClientInfo clientInfo = null, int? throughputProvisionedMBps = default(int?), Azure.ResourceManager.StorageCache.Models.StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = null, Azure.ResourceManager.StorageCache.Models.AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = null, Azure.ResourceManager.StorageCache.Models.AmlFileSystemPropertiesHsm hsm = null, Azure.ResourceManager.StorageCache.Models.AmlFileSystemRootSquashSettings rootSquashSettings = null) { throw null; }
         public static Azure.ResourceManager.StorageCache.AmlFileSystemData AmlFileSystemData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), float? storageCapacityTiB = default(float?), float? currentStorageCapacityTiB = default(float?), System.Guid? clusterUuid = default(System.Guid?), Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealth health = null, Azure.ResourceManager.StorageCache.Models.AmlFileSystemProvisioningStateType? provisioningState = default(Azure.ResourceManager.StorageCache.Models.AmlFileSystemProvisioningStateType?), string filesystemSubnet = null, Azure.ResourceManager.StorageCache.Models.AmlFileSystemClientInfo clientInfo = null, int? throughputProvisionedMBps = default(int?), Azure.ResourceManager.StorageCache.Models.AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = null, Azure.ResourceManager.StorageCache.Models.AmlFileSystemPropertiesHsm hsm = null, Azure.ResourceManager.StorageCache.Models.AmlFileSystemRootSquashSettings rootSquashSettings = null, Azure.ResourceManager.StorageCache.Models.StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string skuName = null, System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
         public static Azure.ResourceManager.StorageCache.AmlFileSystemExpansionJobData AmlFileSystemExpansionJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.StorageCache.Models.AmlFileSystemExpansionJobProvisioningState? provisioningState = default(Azure.ResourceManager.StorageCache.Models.AmlFileSystemExpansionJobProvisioningState?), float? newStorageCapacityTiB = default(float?), Azure.ResourceManager.StorageCache.Models.AmlFileSystemExpansionJobStatusType? state = default(Azure.ResourceManager.StorageCache.Models.AmlFileSystemExpansionJobStatusType?), string statusCode = null, string statusMessage = null, float? percentComplete = default(float?), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.StorageCache.AmlFileSystemExpansionJobData AmlFileSystemExpansionJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.StorageCache.Models.AmlFileSystemExpansionJobProvisioningState? provisioningState = default(Azure.ResourceManager.StorageCache.Models.AmlFileSystemExpansionJobProvisioningState?), float? newStorageCapacityTiB = default(float?), bool? shouldRunRebalanceJob = default(bool?), Azure.Core.ResourceIdentifier rebalanceJobId = null, Azure.ResourceManager.StorageCache.Models.AmlFileSystemExpansionJobStatusType? state = default(Azure.ResourceManager.StorageCache.Models.AmlFileSystemExpansionJobStatusType?), string statusCode = null, string statusMessage = null, float? percentComplete = default(float?), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.StorageCache.Models.AmlFileSystemExpansionJobPatch AmlFileSystemExpansionJobPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealth AmlFileSystemHealth(Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealthStateType? state = default(Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealthStateType?), string statusCode = null, string statusDescription = null) { throw null; }
         public static Azure.ResourceManager.StorageCache.Models.AmlFileSystemHsmSettings AmlFileSystemHsmSettings(string container = null, string loggingContainer = null, string importPrefix = null, System.Collections.Generic.IEnumerable<string> importPrefixesInitial = null) { throw null; }
@@ -1031,6 +1087,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static Azure.ResourceManager.StorageCache.StorageCacheImportJobData StorageCacheImportJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.StorageCache.Models.ImportJobProvisioningStateType? provisioningState = default(Azure.ResourceManager.StorageCache.Models.ImportJobProvisioningStateType?), Azure.ResourceManager.StorageCache.Models.ImportJobAdminStatus? adminStatus = default(Azure.ResourceManager.StorageCache.Models.ImportJobAdminStatus?), System.Collections.Generic.IEnumerable<string> importPrefixes = null, Azure.ResourceManager.StorageCache.Models.ConflictResolutionMode? conflictResolutionMode = default(Azure.ResourceManager.StorageCache.Models.ConflictResolutionMode?), int? maximumErrors = default(int?), Azure.ResourceManager.StorageCache.Models.ImportStatusType? state = default(Azure.ResourceManager.StorageCache.Models.ImportStatusType?), string statusMessage = null, long? totalBlobsWalked = default(long?), long? blobsWalkedPerSecond = default(long?), long? totalBlobsImported = default(long?), long? importedFiles = default(long?), long? importedDirectories = default(long?), long? importedSymlinks = default(long?), long? preexistingFiles = default(long?), long? preexistingDirectories = default(long?), long? preexistingSymlinks = default(long?), long? blobsImportedPerSecond = default(long?), System.DateTimeOffset? lastCompletionOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastStartedOn = default(System.DateTimeOffset?), int? totalErrors = default(int?), int? totalConflicts = default(int?)) { throw null; }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheImportJobPatch StorageCacheImportJobPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.StorageCache.Models.ImportJobAdminStatus? adminStatus = default(Azure.ResourceManager.StorageCache.Models.ImportJobAdminStatus?)) { throw null; }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheNetworkSettings StorageCacheNetworkSettings(int? mtu = default(int?), System.Collections.Generic.IEnumerable<System.Net.IPAddress> utilityAddresses = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> dnsServers = null, string dnsSearchDomain = null, string ntpServer = null) { throw null; }
+        public static Azure.ResourceManager.StorageCache.StorageCacheRebalanceJobData StorageCacheRebalanceJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPatch StorageCacheRebalanceJobPatch(Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobAdminStatus? rebalanceJobUpdateAdminStatus = default(Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobAdminStatus?)) { throw null; }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobProperties StorageCacheRebalanceJobProperties(Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState? provisioningState = default(Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState?), Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobAdminStatus? adminStatus = default(Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobAdminStatus?), Azure.Core.ResourceIdentifier expansionJobId = null, Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesStatus status = null) { throw null; }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesStatus StorageCacheRebalanceJobPropertiesStatus(Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType? state = default(Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType?), string statusCode = null, string statusMessage = null, float? percentComplete = default(float?), double? balancePercent = default(double?), int? estimatedRemainingSeconds = default(int?), long? filesMigrated = default(long?), long? dirsMigrated = default(long?), long? bytesMoved = default(long?), double? filesMovedPerSecond = default(double?), double? throughputMiBps = default(double?), int? totalErrors = default(int?), long? totalSkipped = default(long?), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheRestriction StorageCacheRestriction(string restrictionType = null, System.Collections.Generic.IEnumerable<string> values = null, Azure.ResourceManager.StorageCache.Models.StorageCacheRestrictionReasonCode? reasonCode = default(Azure.ResourceManager.StorageCache.Models.StorageCacheRestrictionReasonCode?)) { throw null; }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheSku StorageCacheSku(string resourceType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageCache.Models.StorageCacheSkuCapability> capabilities = null, System.Collections.Generic.IEnumerable<string> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageCache.Models.StorageCacheSkuLocationInfo> locationInfo = null, string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageCache.Models.StorageCacheRestriction> restrictions = null) { throw null; }
         public static Azure.ResourceManager.StorageCache.Models.StorageCacheSkuCapability StorageCacheSkuCapability(string name = null, string value = null) { throw null; }
@@ -1790,6 +1850,125 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static implicit operator Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType left, Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageCacheRebalanceJobAdminStatus : System.IEquatable<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobAdminStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageCacheRebalanceJobAdminStatus(string value) { throw null; }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobAdminStatus Active { get { throw null; } }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobAdminStatus Cancel { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobAdminStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobAdminStatus left, Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobAdminStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobAdminStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobAdminStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobAdminStatus left, Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobAdminStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class StorageCacheRebalanceJobPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPatch>
+    {
+        public StorageCacheRebalanceJobPatch() { }
+        public Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobAdminStatus? RebalanceJobUpdateAdminStatus { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class StorageCacheRebalanceJobProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobProperties>
+    {
+        internal StorageCacheRebalanceJobProperties() { }
+        public Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobAdminStatus? AdminStatus { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ExpansionJobId { get { throw null; } }
+        public Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesStatus Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageCacheRebalanceJobPropertiesProvisioningState : System.IEquatable<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageCacheRebalanceJobPropertiesProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState left, Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState left, Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class StorageCacheRebalanceJobPropertiesStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesStatus>
+    {
+        internal StorageCacheRebalanceJobPropertiesStatus() { }
+        public double? BalancePercent { get { throw null; } }
+        public long? BytesMoved { get { throw null; } }
+        public System.DateTimeOffset? CompletedOn { get { throw null; } }
+        public long? DirsMigrated { get { throw null; } }
+        public int? EstimatedRemainingSeconds { get { throw null; } }
+        public long? FilesMigrated { get { throw null; } }
+        public double? FilesMovedPerSecond { get { throw null; } }
+        public float? PercentComplete { get { throw null; } }
+        public System.DateTimeOffset? StartedOn { get { throw null; } }
+        public Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType? State { get { throw null; } }
+        public string StatusCode { get { throw null; } }
+        public string StatusMessage { get { throw null; } }
+        public double? ThroughputMiBps { get { throw null; } }
+        public int? TotalErrors { get { throw null; } }
+        public long? TotalSkipped { get { throw null; } }
+        protected virtual Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobPropertiesStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageCacheRebalanceJobStatusType : System.IEquatable<Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageCacheRebalanceJobStatusType(string value) { throw null; }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType Canceled { get { throw null; } }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType Cancelling { get { throw null; } }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType Completed { get { throw null; } }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType Deleting { get { throw null; } }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType Failed { get { throw null; } }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType InProgress { get { throw null; } }
+        public static Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType RollingBack { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType left, Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType left, Azure.ResourceManager.StorageCache.Models.StorageCacheRebalanceJobStatusType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class StorageCacheRestriction : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRestriction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageCache.Models.StorageCacheRestriction>

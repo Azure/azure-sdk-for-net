@@ -94,7 +94,7 @@ namespace Azure.Provisioning.Kusto
         {
             get
             {
-                return Properties.GroupId;
+                return Properties is null ? default : Properties.GroupId;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.Provisioning.Kusto
         {
             get
             {
-                return Properties.RequiredMembers;
+                return Properties is null ? default : Properties.RequiredMembers;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.Kusto
         {
             get
             {
-                return Properties.RequiredZoneNames;
+                return Properties is null ? default : Properties.RequiredZoneNames;
             }
         }
 

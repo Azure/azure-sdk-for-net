@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    contents = BinaryData.FromString(prop.Value.GetRawText());
+                    contents = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("createdDate"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ArmTemplateProperties(

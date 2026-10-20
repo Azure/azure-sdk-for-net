@@ -40,16 +40,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Indicates whether or not enable live trace.
-        /// When it's set to true, live trace client can connect to the service.
-        /// Otherwise, live trace client can't connect to the service, so that you are unable to receive any log, no matter what you configure in "categories".
-        /// Available values: true, false.
-        /// Case insensitive.
-        /// </summary>
-        [WirePath("enabled")]
-        public bool? IsEnabled { get; set; }
-
         /// <summary> Gets or sets the list of category configurations. </summary>
         [WirePath("categories")]
         public IList<LiveTraceCategory> Categories { get; }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 throw new FormatException($"The model {nameof(RoleAssignmentScheduleRequestPropertiesScheduleInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (Optional.IsDefined(Expiration))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration expiration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expiration"u8))
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RoleAssignmentScheduleRequestPropertiesScheduleInfo(startOn, expiration, additionalBinaryDataProperties);
+            return new RoleAssignmentScheduleRequestPropertiesScheduleInfo(startsOn, expiration, additionalBinaryDataProperties);
         }
     }
 }

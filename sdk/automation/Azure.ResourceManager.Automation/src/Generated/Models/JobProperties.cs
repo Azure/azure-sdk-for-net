@@ -15,6 +15,14 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _startsOn;
+        private bool _startsOnIsDefined;
+        private DateTimeOffset? _endsOn;
+        private bool _endsOnIsDefined;
+        private DateTimeOffset? _lastModifiedOn;
+        private bool _lastModifiedOnIsDefined;
+        private DateTimeOffset? _lastStatusModifiedOn;
+        private bool _lastStatusModifiedOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="JobProperties"/>. </summary>
         public JobProperties()
@@ -31,15 +39,15 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="createdOn"> Gets or sets the creation time of the job. </param>
         /// <param name="status"> Gets or sets the status of the job. </param>
         /// <param name="statusDetails"> Gets or sets the status details of the job. </param>
-        /// <param name="startOn"> Gets or sets the start time of the job. </param>
-        /// <param name="endOn"> Gets or sets the end time of the job. </param>
+        /// <param name="startsOn"> Gets or sets the start time of the job. </param>
+        /// <param name="endsOn"> Gets or sets the end time of the job. </param>
         /// <param name="exception"> Gets or sets the exception of the job. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time of the job. </param>
         /// <param name="lastStatusModifiedOn"> Gets or sets the last status modified time of the job. </param>
         /// <param name="parameters"> Gets or sets the parameters of the job. </param>
         /// <param name="provisioningState"> The current provisioning state of the job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobProperties(RunbookAssociationProperty runbook, string startedBy, string runOn, JobRuntimeEnvironment jobRuntimeEnvironment, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, string statusDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters, JobProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobProperties(RunbookAssociationProperty runbook, string startedBy, string runOn, JobRuntimeEnvironment jobRuntimeEnvironment, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, string statusDetails, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters, JobProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Runbook = runbook;
             StartedBy = startedBy;
@@ -49,11 +57,11 @@ namespace Azure.ResourceManager.Automation.Models
             CreatedOn = createdOn;
             Status = status;
             StatusDetails = statusDetails;
-            StartOn = startOn;
-            EndOn = endOn;
+            _startsOn = startsOn;
+            _endsOn = endsOn;
             Exception = exception;
-            LastModifiedOn = lastModifiedOn;
-            LastStatusModifiedOn = lastStatusModifiedOn;
+            _lastModifiedOn = lastModifiedOn;
+            _lastStatusModifiedOn = lastStatusModifiedOn;
             Parameters = parameters;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -84,19 +92,63 @@ namespace Azure.ResourceManager.Automation.Models
         public string StatusDetails { get; set; }
 
         /// <summary> Gets or sets the start time of the job. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn
+        {
+            get
+            {
+                return _startsOn;
+            }
+            set
+            {
+                _startsOn = value;
+                _startsOnIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the end time of the job. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn
+        {
+            get
+            {
+                return _endsOn;
+            }
+            set
+            {
+                _endsOn = value;
+                _endsOnIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the exception of the job. </summary>
         public string Exception { get; set; }
 
         /// <summary> Gets or sets the last modified time of the job. </summary>
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return _lastModifiedOn;
+            }
+            set
+            {
+                _lastModifiedOn = value;
+                _lastModifiedOnIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the last status modified time of the job. </summary>
-        public DateTimeOffset? LastStatusModifiedOn { get; set; }
+        public DateTimeOffset? LastStatusModifiedOn
+        {
+            get
+            {
+                return _lastStatusModifiedOn;
+            }
+            set
+            {
+                _lastStatusModifiedOn = value;
+                _lastStatusModifiedOnIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the parameters of the job. </summary>
         public IDictionary<string, string> Parameters { get; } = new ChangeTrackingDictionary<string, string>();
