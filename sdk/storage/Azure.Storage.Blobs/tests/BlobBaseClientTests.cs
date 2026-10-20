@@ -527,6 +527,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        [Ignore("Smart Tier feature is paused by the service team; re-enable once the feature is restored.")]
         public async Task DownloadAsync_Streaming_AccessTierProperties()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2125,6 +2126,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        [Ignore("Smart Tier feature is paused by the service team; re-enable once the feature is restored.")]
         public async Task StartCopyFromUriAsync_SmartAccessTier()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2956,6 +2958,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        [Ignore("Smart Tier feature is paused by the service team; re-enable once the feature is restored.")]
         public async Task SyncCopyFromUriAsync_SmartAccessTier()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -7123,6 +7126,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        [Ignore("Smart Tier feature is paused by the service team; re-enable once the feature is restored.")]
         public async Task SetTierAsync_Smart()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -7141,6 +7145,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        [Ignore("Smart Tier feature is paused by the service team; re-enable once the feature is restored.")]
         public async Task SetTierAsync_Smart_GetBlobsAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -7162,6 +7167,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        [Ignore("Smart Tier feature is paused by the service team; re-enable once the feature is restored.")]
         public async Task SetTierAsync_Smart_Rehydrate()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -7181,6 +7187,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        [Ignore("Smart Tier feature is paused by the service team; re-enable once the feature is restored.")]
         public async Task SetTierAsync_Smart_Rehydrate_GetBlobsAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
