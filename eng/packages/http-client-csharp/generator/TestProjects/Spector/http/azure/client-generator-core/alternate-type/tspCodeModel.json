@@ -461,7 +461,6 @@
                 "$id": "39",
                 "name": "getModel",
                 "isExactName": false,
-                "resourceName": "ExternalType",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -558,7 +557,6 @@
                 "$id": "43",
                 "name": "putModel",
                 "isExactName": false,
-                "resourceName": "ExternalType",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -694,7 +692,6 @@
                 "$id": "49",
                 "name": "getProperty",
                 "isExactName": false,
-                "resourceName": "ExternalType",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -791,7 +788,6 @@
                 "$id": "53",
                 "name": "putProperty",
                 "isExactName": false,
-                "resourceName": "ExternalType",
                 "accessibility": "public",
                 "parameters": [
                   {

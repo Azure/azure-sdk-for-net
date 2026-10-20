@@ -69,7 +69,6 @@
                 "$id": "7",
                 "name": "exists",
                 "isExactName": false,
-                "resourceName": "HeadAsBoolean",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -126,7 +125,6 @@
                 "$id": "10",
                 "name": "notExists",
                 "isExactName": false,
-                "resourceName": "HeadAsBoolean",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
