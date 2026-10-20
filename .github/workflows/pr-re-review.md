@@ -69,7 +69,31 @@ safe-outputs:
             script: |
               const fs = require('fs');
               const output = JSON.parse(fs.readFileSync(process.env.GH_AW_AGENT_OUTPUT, 'utf8'));
-              const items = (output?.items || []).filter(item => item.type === 'unresolve_review_thread');
+
+              // safe-outputs.jobs.* custom jobs cannot declare `needs: validate_agent_output`
+              // (gh-aw rejects it as an unknown needs target), so `safe_outputs` succeeding is not
+              // proof the terminal output was valid -- report_incomplete/missing_tool/missing_data
+              // items and ingestion errors can coexist with an otherwise well-formed
+              // unresolve_review_thread item. Re-check what validate_agent_output checks before
+              // acting on it.
+              if ((!Array.isArray(output?.items)) || (output.items.length === 0)) {
+                core.warning('Agent produced no terminal safe output; skipping unresolve request(s).');
+                return;
+              }
+              if ((!Array.isArray(output.errors)) || (output.errors.length !== 0)) {
+                core.warning('Agent output ingestion reported errors; skipping unresolve request(s) to avoid acting on an unvalidated result.');
+                return;
+              }
+              if (output.items.some(item => (!item) || (typeof item.type !== 'string') || (!item.type.trim()))) {
+                core.warning('Agent output contains an invalid item; skipping unresolve request(s) to avoid acting on an unvalidated result.');
+                return;
+              }
+              if (output.items.some(item => ['report_incomplete', 'missing_tool', 'missing_data'].includes(item.type))) {
+                core.warning('Agent reported incomplete work or unavailable tools/data; skipping unresolve request(s) because the review that produced them did not fully complete.');
+                return;
+              }
+
+              const items = output.items.filter(item => item.type === 'unresolve_review_thread');
               if (items.length === 0) {
                 core.info('No unresolve_review_thread items in agent output.');
                 return;
