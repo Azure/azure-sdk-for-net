@@ -44,12 +44,11 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <param name="queryParameters"> Query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> A collection of <see cref="CarbonEmission"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CarbonEmission> QueryCarbonEmissionReportsByBillingAccountAsync(this ArmClient client, ResourceIdentifier scope, BillingAccountQueryFilter queryParameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<CarbonEmissionListResult>> QueryCarbonEmissionReportsByBillingAccountAsync(this ArmClient client, ResourceIdentifier scope, BillingAccountQueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCarbonOptimizationArmClient(client).QueryCarbonEmissionReportsByBillingAccountAsync(scope, queryParameters, cancellationToken);
+            return await GetMockableCarbonOptimizationArmClient(client).QueryCarbonEmissionReportsByBillingAccountAsync(scope, queryParameters, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -64,8 +63,7 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <param name="queryParameters"> Query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> A collection of <see cref="CarbonEmission"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CarbonEmission> QueryCarbonEmissionReportsByBillingAccount(this ArmClient client, ResourceIdentifier scope, BillingAccountQueryFilter queryParameters, CancellationToken cancellationToken = default)
+        public static Response<CarbonEmissionListResult> QueryCarbonEmissionReportsByBillingAccount(this ArmClient client, ResourceIdentifier scope, BillingAccountQueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -83,12 +81,11 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <param name="queryParameters"> Query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CarbonEmission"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CarbonEmission> QueryCarbonEmissionReportsAsync(this TenantResource tenantResource, CarbonEmissionQueryFilter queryParameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<CarbonEmissionListResult>> QueryCarbonEmissionReportsAsync(this TenantResource tenantResource, CarbonEmissionQueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableCarbonOptimizationTenantResource(tenantResource).QueryCarbonEmissionReportsAsync(queryParameters, cancellationToken);
+            return await GetMockableCarbonOptimizationTenantResource(tenantResource).QueryCarbonEmissionReportsAsync(queryParameters, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -102,8 +99,7 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <param name="queryParameters"> Query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CarbonEmission"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CarbonEmission> QueryCarbonEmissionReports(this TenantResource tenantResource, CarbonEmissionQueryFilter queryParameters, CancellationToken cancellationToken = default)
+        public static Response<CarbonEmissionListResult> QueryCarbonEmissionReports(this TenantResource tenantResource, CarbonEmissionQueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
