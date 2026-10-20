@@ -28,8 +28,8 @@ param(
     [string]$OutputDirectory
 )
 
-. (Join-Path $PSScriptRoot 'common.ps1')
 $ErrorActionPreference = 'Stop'
+. (Join-Path $PSScriptRoot 'common.ps1')
 Set-StrictMode -Version 4
 
 foreach ($directory in @($ArtifactRoot, $PackageInfoDirectory)) {
