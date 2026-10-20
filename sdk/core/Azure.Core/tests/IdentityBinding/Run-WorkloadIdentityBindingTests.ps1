@@ -123,6 +123,22 @@ subjects:
 $identityManifest | kubectl @kube apply --filename -
 kubectl @kube --namespace wi-proxy delete job wi-proxy-enabled wi-proxy-disabled --ignore-not-found --wait=true
 
+$jobTimeoutSeconds = 600
+
+function Get-RemainingJobSeconds {
+    param(
+        [System.Diagnostics.Stopwatch] $Timer,
+        [int] $MaximumSeconds = $jobTimeoutSeconds
+    )
+
+    $remaining = [int][Math]::Floor($jobTimeoutSeconds - $Timer.Elapsed.TotalSeconds)
+    if ($remaining -le 0) {
+        throw "Live job exceeded its $jobTimeoutSeconds-second lifecycle budget. See redacted logs in $state."
+    }
+    return [Math]::Min($remaining, $MaximumSeconds)
+}
+
+$logCollectionFailures = @()
 foreach ($mode in @('enabled', 'disabled')) {
     $testMethod = if ($mode -eq 'enabled') { 'AuthenticateWithProxy' } else { 'AuthenticateWithoutProxy' }
     $jobManifest = @"
@@ -133,7 +149,7 @@ metadata:
   namespace: wi-proxy
 spec:
   backoffLimit: 0
-  activeDeadlineSeconds: 600
+  activeDeadlineSeconds: $jobTimeoutSeconds
   template:
     metadata:
       labels:
@@ -209,48 +225,55 @@ spec:
         - name: tmp
           emptyDir: {}
 "@
-    $jobManifest | kubectl @kube apply --filename -
+    $jobTimer = [System.Diagnostics.Stopwatch]::StartNew()
+    try {
+        $remaining = Get-RemainingJobSeconds $jobTimer
+        $jobManifest | kubectl @kube --request-timeout="${remaining}s" apply --filename -
+        $remaining = Get-RemainingJobSeconds $jobTimer
+        $waitTimeout = Get-RemainingJobSeconds $jobTimer -MaximumSeconds 180
+        kubectl @kube --request-timeout="${remaining}s" --namespace wi-proxy wait --for=create pod --selector "job-name=wi-proxy-$mode" --timeout="${waitTimeout}s"
+        $remaining = Get-RemainingJobSeconds $jobTimer
+        $waitTimeout = Get-RemainingJobSeconds $jobTimer -MaximumSeconds 180
+        kubectl @kube --request-timeout="${remaining}s" --namespace wi-proxy wait --for=condition=Ready pod --selector "job-name=wi-proxy-$mode" --timeout="${waitTimeout}s"
+        $remaining = Get-RemainingJobSeconds $jobTimer
+        $pod = kubectl @kube --request-timeout="${remaining}s" --namespace wi-proxy get pod --selector "job-name=wi-proxy-$mode" --output 'jsonpath={.items[0].metadata.name}'
+        # The emptyDir root is kubelet-owned; do not restore its archived directory metadata.
+        $remaining = Get-RemainingJobSeconds $jobTimer
+        tar -C $publish -cf - . | kubectl @kube --request-timeout="${remaining}s" --namespace wi-proxy exec --stdin $pod --container app -- tar --no-same-owner --no-same-permissions --no-overwrite-dir -xf - -C /app
+        $remaining = Get-RemainingJobSeconds $jobTimer
+        kubectl @kube --request-timeout="${remaining}s" --namespace wi-proxy exec $pod --container app -- touch /app/.ready
+        do {
+            $remaining = Get-RemainingJobSeconds $jobTimer
+            $job = kubectl @kube --request-timeout="${remaining}s" --namespace wi-proxy get job "wi-proxy-$mode" --output json | ConvertFrom-Json
+            $failed = @($job.status.conditions | Where-Object { $_.type -in @('Failed', 'FailureTarget') -and $_.status -eq 'True' })
+            if ($failed.Count -gt 0) {
+                throw "Live job failed: wi-proxy-$mode. See redacted logs in $state."
+            }
+            $complete = @($job.status.conditions | Where-Object { $_.type -eq 'Complete' -and $_.status -eq 'True' })
+            if ($complete.Count -gt 0) {
+                break
+            }
+            Start-Sleep -Seconds (Get-RemainingJobSeconds $jobTimer -MaximumSeconds 5)
+        } while ($true)
+    }
+    finally {
+        try {
+            $output = @(kubectl @kube --request-timeout=30s --namespace wi-proxy logs "job/wi-proxy-$mode" --container app)
+            $output | Set-Content (Join-Path $state "$mode.log") -Encoding utf8
+            # NUnit repeats live console output in the detailed per-test result.
+            $output | Where-Object { $_.TrimStart().StartsWith('{"scenario":') } |
+                ForEach-Object { $_.Trim() } | Select-Object -Unique |
+                Set-Content (Join-Path $state "$mode.jsonl") -Encoding utf8
+        }
+        catch {
+            $logCollectionFailures += $mode
+            Write-Warning "Could not collect logs for wi-proxy-${mode}: $($_.Exception.Message)"
+        }
+    }
 }
 
-try {
-    foreach ($mode in @('enabled', 'disabled')) {
-        kubectl @kube --namespace wi-proxy wait --for=create pod --selector "job-name=wi-proxy-$mode" --timeout=180s
-        kubectl @kube --namespace wi-proxy wait --for=condition=Ready pod --selector "job-name=wi-proxy-$mode" --timeout=180s
-        $pod = kubectl @kube --namespace wi-proxy get pod --selector "job-name=wi-proxy-$mode" --output 'jsonpath={.items[0].metadata.name}'
-        # The emptyDir root is kubelet-owned; do not restore its archived directory metadata.
-        tar -C $publish -cf - . | kubectl @kube --namespace wi-proxy exec --stdin $pod --container app -- tar --no-same-owner --no-same-permissions --no-overwrite-dir -xf - -C /app
-        kubectl @kube --namespace wi-proxy exec $pod --container app -- touch /app/.ready
-    }
-    $deadline = [DateTimeOffset]::UtcNow.AddMinutes(6)
-    do {
-        $jobs = kubectl @kube --namespace wi-proxy get jobs wi-proxy-enabled wi-proxy-disabled --output json | ConvertFrom-Json
-        $failed = @($jobs.items | Where-Object {
-            $_.status.conditions | Where-Object { $_.type -in @('Failed', 'FailureTarget') -and $_.status -eq 'True' }
-        })
-        if ($failed.Count -gt 0) {
-            throw "Live job failed: $($failed.metadata.name -join ', '). See redacted logs in $state."
-        }
-        $complete = @($jobs.items | Where-Object {
-            $_.status.conditions | Where-Object { $_.type -eq 'Complete' -and $_.status -eq 'True' }
-        })
-        if ($complete.Count -eq 2) {
-            break
-        }
-        if ([DateTimeOffset]::UtcNow -ge $deadline) {
-            throw "Live jobs did not complete within six minutes. See redacted logs in $state."
-        }
-        Start-Sleep -Seconds 5
-    } while ($true)
-}
-finally {
-    foreach ($mode in @('enabled', 'disabled')) {
-        $output = @(kubectl @kube --namespace wi-proxy logs "job/wi-proxy-$mode" --container app)
-        $output | Set-Content (Join-Path $state "$mode.log") -Encoding utf8
-        # NUnit repeats live console output in the detailed per-test result.
-        $output | Where-Object { $_.TrimStart().StartsWith('{"scenario":') } |
-            ForEach-Object { $_.Trim() } | Select-Object -Unique |
-            Set-Content (Join-Path $state "$mode.jsonl") -Encoding utf8
-    }
+if ($logCollectionFailures.Count -gt 0) {
+    throw "Live job logs are unavailable for: $($logCollectionFailures -join ', '). See the collection warnings."
 }
 
 $nunitResults = @{}

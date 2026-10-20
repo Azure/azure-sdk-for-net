@@ -40,6 +40,13 @@ It grants only the `wi-proxy` service account permission to use the identity,
 publishes `Azure.Core.Tests.csproj`, and directly uploads the published tests into
 two nonroot, read-only-root-filesystem .NET SDK containers.
 
+Jobs run sequentially: each is created, prepared, executed, and its logs collected
+before the next is created. Each Job has a shared 600-second lifecycle budget,
+including Pod creation, readiness, upload, and test execution. Client waits use
+the remaining budget, matching the Kubernetes Job deadline. Log collection uses
+its own bounded request and warns on failure without replacing a test failure;
+missing logs still prevent an otherwise successful run from passing validation.
+
 Each Kubernetes Job executes one test from `Azure.Core.Tests.dll` using
 `dotnet vstest`, `AZURE_TEST_MODE=Live`, and
 `AZURE_CORE_IDENTITY_BINDING_TESTS=true`. The runner requires genuine TRX counters
