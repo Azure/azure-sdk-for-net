@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Fabric
         {
             TryGetApiVersion(FabricCapacityResource.ResourceType, out string fabricCapacityApiVersion);
             _fabricCapacitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Fabric", FabricCapacityResource.ResourceType.Namespace, Diagnostics);
-            _fabricCapacitiesRestClient = new FabricCapacities(_fabricCapacitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fabricCapacityApiVersion ?? "2026-08-01-preview");
+            _fabricCapacitiesRestClient = new FabricCapacities(
+                _fabricCapacitiesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                fabricCapacityApiVersion ?? "2026-09-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -68,7 +74,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +132,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +190,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +239,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +288,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.Fabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetByResourceGroupAsyncCollectionResultOfT(_fabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FabricCapacityCollection.GetAll"), data => new FabricCapacityResource(Client, data));
+            return new AsyncPageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacityDataAsyncCollectionResultOfT(_fabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FabricCapacityCollection.GetAll"), data => new FabricCapacityResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +316,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.Fabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetByResourceGroupCollectionResultOfT(_fabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FabricCapacityCollection.GetAll"), data => new FabricCapacityResource(Client, data));
+            return new PageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacityDataCollectionResultOfT(_fabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FabricCapacityCollection.GetAll"), data => new FabricCapacityResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +344,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +401,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +458,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +519,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

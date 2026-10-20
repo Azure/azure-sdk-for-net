@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MySqlFlexibleServersPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new MySqlFlexibleServersPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

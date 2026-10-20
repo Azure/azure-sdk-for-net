@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DatabaseMigrationCosmosDBMongoListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DatabaseMigrationCosmosDBMongoListResult(value ?? new ChangeTrackingList<DatabaseMigrationCosmosDBMongoData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

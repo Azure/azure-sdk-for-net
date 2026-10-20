@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UnknownPrometheusEnrichmentItem(
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 alertEnrichmentType,
                 additionalBinaryDataProperties,
                 linkToApi,
-                datasources,
+                datasources ?? new ChangeTrackingList<string>(),
                 grafanaExplorePath,
                 query);
         }

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RedisLinkedServerWithPropertyData, RedisLinkedServerWithPropertyResource>(new LinkedServerGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RedisLinkedServerWithPropertyData, RedisLinkedServerWithPropertyResource>(new RedisLinkedServerWithPropertyDataAsyncCollectionResultOfT(
                 _linkedServerRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RedisLinkedServerWithPropertyData, RedisLinkedServerWithPropertyResource>(new LinkedServerGetAllCollectionResultOfT(
+            return new PageableWrapper<RedisLinkedServerWithPropertyData, RedisLinkedServerWithPropertyResource>(new RedisLinkedServerWithPropertyDataCollectionResultOfT(
                 _linkedServerRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

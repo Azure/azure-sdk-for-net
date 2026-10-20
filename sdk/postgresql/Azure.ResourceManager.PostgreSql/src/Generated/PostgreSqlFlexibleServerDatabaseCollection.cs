@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PostgreSqlFlexibleServerDatabaseData, PostgreSqlFlexibleServerDatabaseResource>(new DatabasesGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PostgreSqlFlexibleServerDatabaseData, PostgreSqlFlexibleServerDatabaseResource>(new PostgreSqlFlexibleServerDatabaseDataAsyncCollectionResultOfT(
                 _databasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PostgreSqlFlexibleServerDatabaseData, PostgreSqlFlexibleServerDatabaseResource>(new DatabasesGetByServerCollectionResultOfT(
+            return new PageableWrapper<PostgreSqlFlexibleServerDatabaseData, PostgreSqlFlexibleServerDatabaseResource>(new PostgreSqlFlexibleServerDatabaseDataCollectionResultOfT(
                 _databasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary>
     /// SignalDefinition properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResourceMetricSignalDefinitionProperties"/>, <see cref="LogAnalyticsQuerySignalDefinitionProperties"/>, and <see cref="PrometheusMetricsSignalDefinitionProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LogAnalyticsQuerySignalDefinitionProperties"/>, <see cref="PrometheusMetricsSignalDefinitionProperties"/>, and <see cref="ResourceMetricSignalDefinitionProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownHealthModelSignalDefinitionProperties))]
     public abstract partial class HealthModelSignalDefinitionProperties : IJsonModel<HealthModelSignalDefinitionProperties>
@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureResourceMetric":
-                        return ResourceMetricSignalDefinitionProperties.DeserializeResourceMetricSignalDefinitionProperties(element, options);
                     case "LogAnalyticsQuery":
                         return LogAnalyticsQuerySignalDefinitionProperties.DeserializeLogAnalyticsQuerySignalDefinitionProperties(element, options);
                     case "PrometheusMetricsQuery":
                         return PrometheusMetricsSignalDefinitionProperties.DeserializePrometheusMetricsSignalDefinitionProperties(element, options);
+                    case "AzureResourceMetric":
+                        return ResourceMetricSignalDefinitionProperties.DeserializeResourceMetricSignalDefinitionProperties(element, options);
                 }
             }
             return UnknownHealthModelSignalDefinitionProperties.DeserializeUnknownHealthModelSignalDefinitionProperties(element, options);

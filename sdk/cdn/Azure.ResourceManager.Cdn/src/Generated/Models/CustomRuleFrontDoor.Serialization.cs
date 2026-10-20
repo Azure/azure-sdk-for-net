@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CustomRuleFrontDoor(
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 rateLimitDurationInMinutes,
                 rateLimitThreshold,
                 groupBy ?? new ChangeTrackingList<RateLimitGroupByVariable>(),
-                matchConditions,
+                matchConditions ?? new ChangeTrackingList<MatchConditionFrontDoor>(),
                 action,
                 additionalBinaryDataProperties);
         }

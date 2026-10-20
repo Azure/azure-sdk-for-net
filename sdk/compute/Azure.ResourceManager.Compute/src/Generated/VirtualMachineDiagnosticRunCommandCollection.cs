@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineDiagnosticRunCommandData, VirtualMachineDiagnosticRunCommandResource>(new VirtualMachineDiagnosticRunCommandsDiagnosticListByVirtualMachineAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualMachineDiagnosticRunCommandData, VirtualMachineDiagnosticRunCommandResource>(new VirtualMachineDiagnosticRunCommandDataAsync0CollectionResultOfT(
                 _virtualMachineDiagnosticRunCommandsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineDiagnosticRunCommandData, VirtualMachineDiagnosticRunCommandResource>(new VirtualMachineDiagnosticRunCommandsDiagnosticListByVirtualMachineCollectionResultOfT(
+            return new PageableWrapper<VirtualMachineDiagnosticRunCommandData, VirtualMachineDiagnosticRunCommandResource>(new VirtualMachineDiagnosticRunCommandData0CollectionResultOfT(
                 _virtualMachineDiagnosticRunCommandsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

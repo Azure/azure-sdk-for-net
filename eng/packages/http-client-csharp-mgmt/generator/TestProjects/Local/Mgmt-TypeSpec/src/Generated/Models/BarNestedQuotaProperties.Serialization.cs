@@ -190,7 +190,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BarNestedQuotaProperties(
@@ -198,8 +198,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 innerProp2,
                 additionalBinaryDataProperties,
                 middleProp1,
-                middleProp2,
-                prop1,
+                middleProp2 ?? new ChangeTrackingDictionary<string, string>(),
+                prop1 ?? new ChangeTrackingList<string>(),
                 prop2);
         }
     }

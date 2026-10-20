@@ -220,12 +220,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ForwardingRuleProperties(
                 domainName,
-                targetDnsServers,
+                targetDnsServers ?? new ChangeTrackingList<TargetDnsServer>(),
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 dnsForwardingRuleState,
                 provisioningState,

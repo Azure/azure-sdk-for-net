@@ -85,20 +85,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(DestinationAssetContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DestinationName))
+            if (Optional.IsDefined(DestinationName, _destinationNameIsDefined))
             {
-                writer.WritePropertyName("destinationName"u8);
-                writer.WriteStringValue(DestinationName);
+                if (DestinationName != null)
+                {
+                    writer.WritePropertyName("destinationName"u8);
+                    writer.WriteStringValue(DestinationName);
+                }
+                else
+                {
+                    writer.WriteNull("destinationName"u8);
+                }
             }
-            if (Optional.IsDefined(DestinationVersion))
+            if (Optional.IsDefined(DestinationVersion, _destinationVersionIsDefined))
             {
-                writer.WritePropertyName("destinationVersion"u8);
-                writer.WriteStringValue(DestinationVersion);
+                if (DestinationVersion != null)
+                {
+                    writer.WritePropertyName("destinationVersion"u8);
+                    writer.WriteStringValue(DestinationVersion);
+                }
+                else
+                {
+                    writer.WriteNull("destinationVersion"u8);
+                }
             }
-            if (Optional.IsDefined(RegistryName))
+            if (Optional.IsDefined(RegistryName, _registryNameIsDefined))
             {
-                writer.WritePropertyName("registryName"u8);
-                writer.WriteStringValue(RegistryName);
+                if (RegistryName != null)
+                {
+                    writer.WritePropertyName("registryName"u8);
+                    writer.WriteStringValue(RegistryName);
+                }
+                else
+                {
+                    writer.WriteNull("registryName"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,14 +163,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool destinationNameIsDefined = false;
             string destinationName = default;
+            bool destinationVersionIsDefined = false;
             string destinationVersion = default;
+            bool registryNameIsDefined = false;
             string registryName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("destinationName"u8))
                 {
+                    destinationNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         destinationName = null;
@@ -160,6 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("destinationVersion"u8))
                 {
+                    destinationVersionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         destinationVersion = null;
@@ -170,6 +196,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("registryName"u8))
                 {
+                    registryNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         registryName = null;
@@ -180,10 +207,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DestinationAssetContent(destinationName, destinationVersion, registryName, additionalBinaryDataProperties);
+            return new DestinationAssetContent(destinationName, destinationVersion, registryName, additionalBinaryDataProperties)
+            {
+                _destinationNameIsDefined = destinationNameIsDefined,
+                _destinationVersionIsDefined = destinationVersionIsDefined,
+                _registryNameIsDefined = registryNameIsDefined
+            };
         }
     }
 }

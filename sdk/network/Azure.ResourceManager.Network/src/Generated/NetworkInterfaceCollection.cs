@@ -39,10 +39,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkInterfaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(NetworkInterfaceResource.ResourceType, out string networkInterfaceApiVersion);
             _networkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkInterfaceResource.ResourceType.Namespace, Diagnostics);
-            _networkInterfacesRestClient = new NetworkInterfaces(_networkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkInterfaceApiVersion ?? "2025-09-01");
-            NetworkInterfaceCollection.ValidateResourceId(id);
+            _networkInterfacesRestClient = new NetworkInterfaces(_networkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            ValidateResourceId(id);
         }
 
         /// <param name="id"></param>
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,7 +233,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfacesListAsyncCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkInterfaceCollection.GetAll"), data => new NetworkInterfaceResource(Client, data));
+            return new AsyncPageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfaceDataAsyncCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkInterfaceCollection.GetAll"), data => new NetworkInterfaceResource(Client, data));
         }
 
         /// <summary>
@@ -312,7 +311,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfacesListCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkInterfaceCollection.GetAll"), data => new NetworkInterfaceResource(Client, data));
+            return new PageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfaceDataCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkInterfaceCollection.GetAll"), data => new NetworkInterfaceResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +339,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -398,7 +397,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,7 +455,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -518,7 +517,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -569,18 +568,18 @@ namespace Azure.ResourceManager.Network
 
         IEnumerator<NetworkInterfaceResource> IEnumerable<NetworkInterfaceResource>.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkInterfaceResource> IAsyncEnumerable<NetworkInterfaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

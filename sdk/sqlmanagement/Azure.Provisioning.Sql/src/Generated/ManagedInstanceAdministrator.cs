@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -25,7 +26,7 @@ namespace Azure.Provisioning.Sql
         /// <summary> Creates a new ManagedInstanceAdministrator. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ManagedInstanceAdministrator(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Sql/managedInstances/administrators", resourceVersion ?? "2025-01-01")
+        public ManagedInstanceAdministrator(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Sql/managedInstances/administrators", resourceVersion ?? "2025-08-01-preview")
         {
         }
 
@@ -162,6 +163,23 @@ namespace Azure.Provisioning.Sql
             }
         }
 
+        /// <summary> Gets or sets the PrincipalType. </summary>
+        public BicepValue<ManagedInstanceAdministratorPrincipalType> PrincipalType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrincipalType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceAdministratorProperties();
+                }
+                Properties.PrincipalType = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ManagedInstanceAdministrator. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -190,6 +208,12 @@ namespace Azure.Provisioning.Sql
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2025-08-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_08_01_PREVIEW = "2025-08-01-preview";
+            /// <summary> API version "2025-02-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_02_01_PREVIEW = "2025-02-01-preview";
             /// <summary> API version "2025-01-01". </summary>
             public static readonly string V2025_01_01 = "2025-01-01";
         }

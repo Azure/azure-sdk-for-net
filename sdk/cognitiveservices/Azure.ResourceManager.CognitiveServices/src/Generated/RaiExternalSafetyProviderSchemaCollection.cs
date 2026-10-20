@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RaiExternalSafetyProviderSchemaData, RaiExternalSafetyProviderSchemaResource>(new RaiExternalSafetyProviderSchemasGetAllAsyncCollectionResultOfT(_raiExternalSafetyProviderSchemasRestClient, Id.SubscriptionId, context, "RaiExternalSafetyProviderSchemaCollection.GetAll"), data => new RaiExternalSafetyProviderSchemaResource(Client, data));
+            return new AsyncPageableWrapper<RaiExternalSafetyProviderSchemaData, RaiExternalSafetyProviderSchemaResource>(new RaiExternalSafetyProviderSchemaDataAsyncCollectionResultOfT(_raiExternalSafetyProviderSchemasRestClient, Id.SubscriptionId, context, "RaiExternalSafetyProviderSchemaCollection.GetAll"), data => new RaiExternalSafetyProviderSchemaResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RaiExternalSafetyProviderSchemaData, RaiExternalSafetyProviderSchemaResource>(new RaiExternalSafetyProviderSchemasGetAllCollectionResultOfT(_raiExternalSafetyProviderSchemasRestClient, Id.SubscriptionId, context, "RaiExternalSafetyProviderSchemaCollection.GetAll"), data => new RaiExternalSafetyProviderSchemaResource(Client, data));
+            return new PageableWrapper<RaiExternalSafetyProviderSchemaData, RaiExternalSafetyProviderSchemaResource>(new RaiExternalSafetyProviderSchemaDataCollectionResultOfT(_raiExternalSafetyProviderSchemasRestClient, Id.SubscriptionId, context, "RaiExternalSafetyProviderSchemaCollection.GetAll"), data => new RaiExternalSafetyProviderSchemaResource(Client, data));
         }
 
         /// <summary>

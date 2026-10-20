@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
 
         private ClientDiagnostics BackupVaultResourcesClientDiagnostics => _backupVaultResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupVaultResources BackupVaultResourcesRestClient => _backupVaultResourcesRestClient ??= new BackupVaultResources(BackupVaultResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private BackupVaultResources BackupVaultResourcesRestClient => _backupVaultResourcesRestClient ??= new BackupVaultResources(BackupVaultResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DataProtection/backupVaults", out string apiVersion) ? apiVersion : "2026-06-01");
 
         private ClientDiagnostics ResourceGuardResourcesClientDiagnostics => _resourceGuardResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceGuardResources ResourceGuardResourcesRestClient => _resourceGuardResourcesRestClient ??= new ResourceGuardResources(ResourceGuardResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private ResourceGuardResources ResourceGuardResourcesRestClient => _resourceGuardResourcesRestClient ??= new ResourceGuardResources(ResourceGuardResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DataProtection/resourceGuards", out string apiVersion0) ? apiVersion0 : "2026-06-01");
 
         private ClientDiagnostics DataProtectionOperationGroupClientDiagnostics => _dataProtectionOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> An object representing collection of DataProtectionDeletedBackupVaults and their operations over a DataProtectionDeletedBackupVaultResource. </returns>
         public virtual DataProtectionDeletedBackupVaultCollection GetDataProtectionDeletedBackupVaults(AzureLocation location)
         {
-            return GetCachedClient(client => new DataProtectionDeletedBackupVaultCollection(client, Id, location));
+            return new DataProtectionDeletedBackupVaultCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultResourcesGetInSubscriptionAsyncCollectionResultOfT(BackupVaultResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataProtectionBackupSubscriptionResource.GetDataProtectionBackupVaults"), data => new DataProtectionBackupVaultResource(Client, data));
+            return new AsyncPageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new DataProtectionBackupVaultDataAsyncCollectionResultOfT(BackupVaultResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataProtectionBackupSubscriptionResource.GetDataProtectionBackupVaults"), data => new DataProtectionBackupVaultResource(Client, data));
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultResourcesGetInSubscriptionCollectionResultOfT(BackupVaultResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataProtectionBackupSubscriptionResource.GetDataProtectionBackupVaults"), data => new DataProtectionBackupVaultResource(Client, data));
+            return new PageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new DataProtectionBackupVaultDataCollectionResultOfT(BackupVaultResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataProtectionBackupSubscriptionResource.GetDataProtectionBackupVaults"), data => new DataProtectionBackupVaultResource(Client, data));
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInSubscriptionAsyncCollectionResultOfT(ResourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataProtectionBackupSubscriptionResource.GetResourceGuards"), data => new ResourceGuardResource(Client, data));
+            return new AsyncPageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardDataAsync0CollectionResultOfT(ResourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataProtectionBackupSubscriptionResource.GetResourceGuards"), data => new ResourceGuardResource(Client, data));
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInSubscriptionCollectionResultOfT(ResourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataProtectionBackupSubscriptionResource.GetResourceGuards"), data => new ResourceGuardResource(Client, data));
+            return new PageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardData0CollectionResultOfT(ResourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataProtectionBackupSubscriptionResource.GetResourceGuards"), data => new ResourceGuardResource(Client, data));
         }
 
         /// <summary>

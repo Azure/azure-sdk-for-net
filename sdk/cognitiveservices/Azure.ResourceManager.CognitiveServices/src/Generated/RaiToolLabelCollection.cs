@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RaiToolLabelData, RaiToolLabelResource>(new RaiToolLabelsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RaiToolLabelData, RaiToolLabelResource>(new RaiToolLabelDataAsyncCollectionResultOfT(
                 _raiToolLabelsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RaiToolLabelData, RaiToolLabelResource>(new RaiToolLabelsGetAllCollectionResultOfT(
+            return new PageableWrapper<RaiToolLabelData, RaiToolLabelResource>(new RaiToolLabelDataCollectionResultOfT(
                 _raiToolLabelsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

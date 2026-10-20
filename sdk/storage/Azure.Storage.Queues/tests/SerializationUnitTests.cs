@@ -1216,11 +1216,11 @@ namespace Azure.Storage.Queues.Tests
         [Test]
         public void ListQueuesResponse_WriteAndCreate_RoundTrips()
         {
-            var original = new ListQueuesResponse("https://account.queue.core.windows.net/", "prefix", 10, "nextMarker");
-            IPersistableModel<ListQueuesResponse> persistable = original;
+            var original = new ListQueuesResult("https://account.queue.core.windows.net/", "prefix", 10, "nextMarker");
+            IPersistableModel<ListQueuesResult> persistable = original;
 
             BinaryData data = persistable.Write(XmlOptions);
-            ListQueuesResponse deserialized = persistable.Create(data, XmlOptions);
+            ListQueuesResult deserialized = persistable.Create(data, XmlOptions);
 
             Assert.AreEqual(original.ServiceEndpoint, deserialized.ServiceEndpoint);
             Assert.AreEqual(original.Prefix, deserialized.Prefix);
@@ -1229,29 +1229,29 @@ namespace Azure.Storage.Queues.Tests
         [Test]
         public void ListQueuesResponse_GetFormatFromOptions_ReturnsX()
         {
-            var original = new ListQueuesResponse("https://account.queue.core.windows.net/", "", 10, "");
-            IPersistableModel<ListQueuesResponse> persistable = original;
+            var original = new ListQueuesResult("https://account.queue.core.windows.net/", "", 10, "");
+            IPersistableModel<ListQueuesResult> persistable = original;
             Assert.AreEqual("X", persistable.GetFormatFromOptions(XmlOptions));
         }
 
         [Test]
         public void ListQueuesResponse_Write_ThrowsForInvalidFormat()
         {
-            IPersistableModel<ListQueuesResponse> persistable = new ListQueuesResponse("https://account.queue.core.windows.net/", "", 10, "");
+            IPersistableModel<ListQueuesResult> persistable = new ListQueuesResult("https://account.queue.core.windows.net/", "", 10, "");
             Assert.Throws<FormatException>(() => persistable.Write(InvalidOptions));
         }
 
         [Test]
         public void ListQueuesResponse_Create_ThrowsForInvalidFormat()
         {
-            IPersistableModel<ListQueuesResponse> persistable = new ListQueuesResponse("https://account.queue.core.windows.net/", "", 10, "");
+            IPersistableModel<ListQueuesResult> persistable = new ListQueuesResult("https://account.queue.core.windows.net/", "", 10, "");
             Assert.Throws<FormatException>(() => persistable.Create(BinaryData.FromString("<EnumerationResults/>"), InvalidOptions));
         }
 
         [Test]
         public void ListQueuesResponse_XmlModelWriteCore_ThrowsForInvalidFormat()
         {
-            var response = new ListQueuesResponse("https://account.queue.core.windows.net/", "", 10, "");
+            var response = new ListQueuesResult("https://account.queue.core.windows.net/", "", 10, "");
             using var stream = new MemoryStream();
             using var writer = XmlWriter.Create(stream);
             Assert.Throws<FormatException>(() => response.XmlModelWriteCore(writer, InvalidOptions));
@@ -1260,13 +1260,13 @@ namespace Azure.Storage.Queues.Tests
         [Test]
         public void ListQueuesResponse_Deserialize_ReturnsNullForNullElement()
         {
-            Assert.IsNull(ListQueuesResponse.DeserializeListQueuesResponse(null, XmlOptions));
+            Assert.IsNull(ListQueuesResult.DeserializeListQueuesResult(null, XmlOptions));
         }
 
         [Test]
         public void ListQueuesResponse_IXmlSerializable_Write()
         {
-            var response = new ListQueuesResponse("https://account.queue.core.windows.net/", "", 10, "");
+            var response = new ListQueuesResult("https://account.queue.core.windows.net/", "", 10, "");
             IXmlSerializable serializable = response;
 
             using var stream = new MemoryStream();

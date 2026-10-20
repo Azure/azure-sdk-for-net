@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new EdgeNodesGetEdgeNodesAsyncCollectionResultOfT(EdgeNodesRestClient, context, "MockableCdnTenantResource.GetEdgeNodes");
+            return new EdgeNodeAsyncCollectionResultOfT(EdgeNodesRestClient, context, "MockableCdnTenantResource.GetEdgeNodes");
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new EdgeNodesGetEdgeNodesCollectionResultOfT(EdgeNodesRestClient, context, "MockableCdnTenantResource.GetEdgeNodes");
+            return new EdgeNodeCollectionResultOfT(EdgeNodesRestClient, context, "MockableCdnTenantResource.GetEdgeNodes");
         }
     }
 }

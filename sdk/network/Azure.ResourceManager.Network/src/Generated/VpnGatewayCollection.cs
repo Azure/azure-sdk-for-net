@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VpnGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(VpnGatewayResource.ResourceType, out string vpnGatewayApiVersion);
             _vpnGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnGatewayResource.ResourceType.Namespace, Diagnostics);
-            _vpnGatewaysRestClient = new VpnGateways(_vpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vpnGatewayApiVersion ?? "2025-09-01");
+            _vpnGatewaysRestClient = new VpnGateways(_vpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VpnGatewayData, VpnGatewayResource>(new VpnGatewaysGetByResourceGroupAsyncCollectionResultOfT(_vpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VpnGatewayCollection.GetAll"), data => new VpnGatewayResource(Client, data));
+            return new AsyncPageableWrapper<VpnGatewayData, VpnGatewayResource>(new VpnGatewayDataAsyncCollectionResultOfT(_vpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VpnGatewayCollection.GetAll"), data => new VpnGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VpnGatewayData, VpnGatewayResource>(new VpnGatewaysGetByResourceGroupCollectionResultOfT(_vpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VpnGatewayCollection.GetAll"), data => new VpnGatewayResource(Client, data));
+            return new PageableWrapper<VpnGatewayData, VpnGatewayResource>(new VpnGatewayDataCollectionResultOfT(_vpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VpnGatewayCollection.GetAll"), data => new VpnGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -14,6 +14,7 @@
 
 ### Bugs Fixed
 
+- Fixed AZC0015 incorrectly rejecting non-generic `CollectionResult` and `AsyncCollectionResult` from `System.ClientModel.Primitives`, including derived types.
 - Updated AZC0004, AZC0015, and AZC0035 to recognize `AsyncStreamingResult<T>` while retaining support for the experimental `AsyncStreamingClientResult<T>` name.
 
 ### Other Changes

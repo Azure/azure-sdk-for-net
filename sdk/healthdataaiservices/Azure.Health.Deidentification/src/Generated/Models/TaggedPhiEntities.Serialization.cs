@@ -154,7 +154,7 @@ namespace Azure.Health.Deidentification
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TaggedPhiEntities(encoding, entities, additionalBinaryDataProperties);
+            return new TaggedPhiEntities(encoding, entities ?? new ChangeTrackingList<SimplePhiEntity>(), additionalBinaryDataProperties);
         }
     }
 }

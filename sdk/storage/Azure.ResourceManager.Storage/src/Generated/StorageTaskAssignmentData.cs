@@ -37,6 +37,13 @@ namespace Azure.ResourceManager.Storage
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentData"/>. </summary>
+        /// <param name="properties"> Properties of the storage task assignment. </param>
+        public StorageTaskAssignmentData(StorageTaskAssignmentProperties properties) : this()
+        {
+            Properties = properties;
+        }
+
         /// <summary> Properties of the storage task assignment. </summary>
         [WirePath("properties")]
         public StorageTaskAssignmentProperties Properties { get; set; }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary>
     /// Type representing an agent deployment as a management construct.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CognitiveServicesManagedAgentDeployment"/> and <see cref="CognitiveServicesHostedAgentDeployment"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CognitiveServicesHostedAgentDeployment"/> and <see cref="CognitiveServicesManagedAgentDeployment"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCognitiveServicesAgentDeploymentProperties))]
     public abstract partial class CognitiveServicesAgentDeploymentProperties : CognitiveServicesResourceBase, IJsonModel<CognitiveServicesAgentDeploymentProperties>
@@ -83,40 +83,75 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 throw new FormatException($"The model {nameof(CognitiveServicesAgentDeploymentProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName, _displayNameIsDefined))
             {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
+                if (DisplayName != null)
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
+                else
+                {
+                    writer.WriteNull("displayName"u8);
+                }
             }
-            if (Optional.IsDefined(DeploymentId))
+            if (Optional.IsDefined(DeploymentId, _deploymentIdIsDefined))
             {
-                writer.WritePropertyName("deploymentId"u8);
-                writer.WriteStringValue(DeploymentId);
+                if (DeploymentId != null)
+                {
+                    writer.WritePropertyName("deploymentId"u8);
+                    writer.WriteStringValue(DeploymentId);
+                }
+                else
+                {
+                    writer.WriteNull("deploymentId"u8);
+                }
             }
-            if (Optional.IsDefined(State))
+            if (Optional.IsDefined(State, _stateIsDefined))
             {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                if (State != null)
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("state"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Protocols))
             {
-                writer.WritePropertyName("protocols"u8);
-                writer.WriteStartArray();
-                foreach (CognitiveServicesAgentProtocolVersion item in Protocols)
+                if (Protocols != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("protocols"u8);
+                    writer.WriteStartArray();
+                    foreach (CognitiveServicesAgentProtocolVersion item in Protocols)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("protocols"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Agents))
             {
-                writer.WritePropertyName("agents"u8);
-                writer.WriteStartArray();
-                foreach (CognitiveServicesVersionedAgentReference item in Agents)
+                if (Agents != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("agents"u8);
+                    writer.WriteStartArray();
+                    foreach (CognitiveServicesVersionedAgentReference item in Agents)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("agents"u8);
+                }
             }
             writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
@@ -156,10 +191,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Managed":
-                        return CognitiveServicesManagedAgentDeployment.DeserializeCognitiveServicesManagedAgentDeployment(element, options);
                     case "Hosted":
                         return CognitiveServicesHostedAgentDeployment.DeserializeCognitiveServicesHostedAgentDeployment(element, options);
+                    case "Managed":
+                        return CognitiveServicesManagedAgentDeployment.DeserializeCognitiveServicesManagedAgentDeployment(element, options);
                 }
             }
             return UnknownCognitiveServicesAgentDeploymentProperties.DeserializeUnknownCognitiveServicesAgentDeploymentProperties(element, options);

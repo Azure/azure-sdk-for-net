@@ -11,7 +11,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The operation performed by the scheduled action. </summary>
+    /// <summary> The operation performed by the recurring bulk action. </summary>
     public readonly partial struct ScheduledActionType : IEquatable<ScheduledActionType>
     {
         private readonly string _value;

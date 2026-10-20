@@ -89,10 +89,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
             }
-            if (Optional.IsDefined(NfsV4IdDomain))
+            if (Optional.IsDefined(NfsV4IdDomain, _nfsV4IdDomainIsDefined))
             {
-                writer.WritePropertyName("nfsV4IDDomain"u8);
-                writer.WriteStringValue(NfsV4IdDomain);
+                if (NfsV4IdDomain != null)
+                {
+                    writer.WritePropertyName("nfsV4IDDomain"u8);
+                    writer.WriteStringValue(NfsV4IdDomain);
+                }
+                else
+                {
+                    writer.WriteNull("nfsV4IDDomain"u8);
+                }
             }
             if (Optional.IsDefined(EntraIdConfig))
             {
@@ -148,6 +155,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             IList<NetAppAccountActiveDirectory> activeDirectories = default;
             NetAppAccountEncryption encryption = default;
+            bool nfsV4IdDomainIsDefined = false;
             string nfsV4IdDomain = default;
             EntraIdConfigPatch entraIdConfig = default;
             LdapConfigurationPatch ldapConfiguration = default;
@@ -179,6 +187,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("nfsV4IDDomain"u8))
                 {
+                    nfsV4IdDomainIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nfsV4IdDomain = null;
@@ -207,7 +216,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AccountPropertiesPatch(
@@ -216,7 +225,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 nfsV4IdDomain,
                 entraIdConfig,
                 ldapConfiguration,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _nfsV4IdDomainIsDefined = nfsV4IdDomainIsDefined
+            };
         }
     }
 }

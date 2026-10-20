@@ -4,11 +4,15 @@
 
 ### Features Added
 
+- Updated the default Network API version to `2026-01-01`, adding support for new resources and properties.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Migrated code generation to TypeSpec.
 
 ## 1.1.0 (2026-04-16)
 

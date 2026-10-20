@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
 
         private ClientDiagnostics LoadTestsClientDiagnostics => _loadTestsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LoadTesting.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LoadTests LoadTestsRestClient => _loadTestsRestClient ??= new LoadTests(LoadTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01-preview");
+        private LoadTests LoadTestsRestClient => _loadTestsRestClient ??= new LoadTests(LoadTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.LoadTestService/loadTests", out string apiVersion) ? apiVersion : "2024-12-01-preview");
 
         /// <summary> Gets a collection of LoadTestingQuota in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
         /// <returns> An object representing collection of LoadTestingQuota and their operations over a LoadTestingQuotaResource. </returns>
         public virtual LoadTestingQuotaCollection GetAllLoadTestingQuota(AzureLocation location)
         {
-            return GetCachedClient(client => new LoadTestingQuotaCollection(client, Id, location));
+            return new LoadTestingQuotaCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadTestingResourceData, LoadTestingResource>(new LoadTestsGetBySubscriptionAsyncCollectionResultOfT(LoadTestsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableLoadTestingSubscriptionResource.GetLoadTestingResources"), data => new LoadTestingResource(Client, data));
+            return new AsyncPageableWrapper<LoadTestingResourceData, LoadTestingResource>(new LoadTestingResourceDataAsyncCollectionResultOfT(LoadTestsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableLoadTestingSubscriptionResource.GetLoadTestingResources"), data => new LoadTestingResource(Client, data));
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadTestingResourceData, LoadTestingResource>(new LoadTestsGetBySubscriptionCollectionResultOfT(LoadTestsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableLoadTestingSubscriptionResource.GetLoadTestingResources"), data => new LoadTestingResource(Client, data));
+            return new PageableWrapper<LoadTestingResourceData, LoadTestingResource>(new LoadTestingResourceDataCollectionResultOfT(LoadTestsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableLoadTestingSubscriptionResource.GetLoadTestingResources"), data => new LoadTestingResource(Client, data));
         }
     }
 }

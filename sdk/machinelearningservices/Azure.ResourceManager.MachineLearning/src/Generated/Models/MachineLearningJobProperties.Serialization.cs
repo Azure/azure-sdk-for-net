@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition for a job.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/>, and <see cref="MachineLearningSweepJob"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="MachineLearningSweepJob"/>, and <see cref="SparkJob"/>.
     /// </summary>
     public partial class MachineLearningJobProperties : MachineLearningResourceBase, IJsonModel<MachineLearningJobProperties>
     {
@@ -87,20 +87,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("computeId"u8);
                 writer.WriteStringValue(ComputeId);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName, _displayNameIsDefined))
             {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
+                if (DisplayName != null)
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
+                else
+                {
+                    writer.WriteNull("displayName"u8);
+                }
             }
             if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName"u8);
                 writer.WriteStringValue(ExperimentName);
             }
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity, _identityIsDefined))
             {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity, options);
+                }
+                else
+                {
+                    writer.WriteNull("identity"u8);
+                }
             }
             if (Optional.IsDefined(IsArchived))
             {
@@ -109,21 +123,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
-            if (Optional.IsDefined(NotificationSetting))
+            if (Optional.IsDefined(NotificationSetting, _notificationSettingIsDefined))
             {
-                writer.WritePropertyName("notificationSetting"u8);
-                writer.WriteObjectValue(NotificationSetting, options);
+                if (NotificationSetting != null)
+                {
+                    writer.WritePropertyName("notificationSetting"u8);
+                    writer.WriteObjectValue(NotificationSetting, options);
+                }
+                else
+                {
+                    writer.WriteNull("notificationSetting"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Services))
             {
-                writer.WritePropertyName("services"u8);
-                writer.WriteStartObject();
-                foreach (var item in Services)
+                if (Services != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WritePropertyName("services"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Services)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value, options);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("services"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -167,10 +195,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return MachineLearningCommandJob.DeserializeMachineLearningCommandJob(element, options);
                     case "Pipeline":
                         return MachineLearningPipelineJob.DeserializeMachineLearningPipelineJob(element, options);
-                    case "Spark":
-                        return SparkJob.DeserializeSparkJob(element, options);
                     case "Sweep":
                         return MachineLearningSweepJob.DeserializeMachineLearningSweepJob(element, options);
+                    case "Spark":
+                        return SparkJob.DeserializeSparkJob(element, options);
                 }
             }
             return UnknownMachineLearningJobProperties.DeserializeUnknownMachineLearningJobProperties(element, options);

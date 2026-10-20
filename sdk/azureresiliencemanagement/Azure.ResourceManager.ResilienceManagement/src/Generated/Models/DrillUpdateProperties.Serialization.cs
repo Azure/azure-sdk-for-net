@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("recoveryPlanProperties"u8);
                 writer.WriteObjectValue(RecoveryPlanProperties, options);
             }
+            if (Optional.IsDefined(GoalAssignmentProperties))
+            {
+                writer.WritePropertyName("goalAssignmentProperties"u8);
+                writer.WriteObjectValue(GoalAssignmentProperties, options);
+            }
             if (Optional.IsDefined(DrillAssetProperties))
             {
                 writer.WritePropertyName("drillAssetProperties"u8);
@@ -98,6 +103,30 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("monitoringProperties"u8);
                 writer.WriteObjectValue(MonitoringProperties, options);
+            }
+            if (Optional.IsDefined(HealthModelMonitoringProperties, _healthModelMonitoringPropertiesIsDefined))
+            {
+                if (HealthModelMonitoringProperties != null)
+                {
+                    writer.WritePropertyName("healthModelMonitoringProperties"u8);
+                    writer.WriteObjectValue(HealthModelMonitoringProperties, options);
+                }
+                else
+                {
+                    writer.WriteNull("healthModelMonitoringProperties"u8);
+                }
+            }
+            if (Optional.IsDefined(SliMonitoringProperties, _sliMonitoringPropertiesIsDefined))
+            {
+                if (SliMonitoringProperties != null)
+                {
+                    writer.WritePropertyName("sliMonitoringProperties"u8);
+                    writer.WriteObjectValue(SliMonitoringProperties, options);
+                }
+                else
+                {
+                    writer.WriteNull("sliMonitoringProperties"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,10 +171,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default;
+            GoalAssignmentPropertiesOfDrill goalAssignmentProperties = default;
             AssetPropertiesOfDrill drillAssetProperties = default;
             ChaosResourcePropertiesOfDrill chaosResourceProperties = default;
             ResilienceManagementRbacSetupMode? rbacSetupMode = default;
             MonitoringPropertiesOfDrill monitoringProperties = default;
+            bool healthModelMonitoringPropertiesIsDefined = false;
+            HealthModelMonitoringProperties healthModelMonitoringProperties = default;
+            bool sliMonitoringPropertiesIsDefined = false;
+            SliMonitoringProperties sliMonitoringProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,6 +190,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                         continue;
                     }
                     recoveryPlanProperties = RecoveryPlanPropertiesOfDrill.DeserializeRecoveryPlanPropertiesOfDrill(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("goalAssignmentProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    goalAssignmentProperties = GoalAssignmentPropertiesOfDrill.DeserializeGoalAssignmentPropertiesOfDrill(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("drillAssetProperties"u8))
@@ -194,18 +237,47 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     monitoringProperties = MonitoringPropertiesOfDrill.DeserializeMonitoringPropertiesOfDrill(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("healthModelMonitoringProperties"u8))
+                {
+                    healthModelMonitoringPropertiesIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        healthModelMonitoringProperties = null;
+                        continue;
+                    }
+                    healthModelMonitoringProperties = HealthModelMonitoringProperties.DeserializeHealthModelMonitoringProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("sliMonitoringProperties"u8))
+                {
+                    sliMonitoringPropertiesIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sliMonitoringProperties = null;
+                        continue;
+                    }
+                    sliMonitoringProperties = SliMonitoringProperties.DeserializeSliMonitoringProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DrillUpdateProperties(
                 recoveryPlanProperties,
+                goalAssignmentProperties,
                 drillAssetProperties,
                 chaosResourceProperties,
                 rbacSetupMode,
                 monitoringProperties,
-                additionalBinaryDataProperties);
+                healthModelMonitoringProperties,
+                sliMonitoringProperties,
+                additionalBinaryDataProperties)
+            {
+                _healthModelMonitoringPropertiesIsDefined = healthModelMonitoringPropertiesIsDefined,
+                _sliMonitoringPropertiesIsDefined = sliMonitoringPropertiesIsDefined
+            };
         }
     }
 }

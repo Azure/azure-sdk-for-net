@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationFabricAgentData, DataReplicationFabricAgentResource>(new FabricAgentGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataReplicationFabricAgentData, DataReplicationFabricAgentResource>(new DataReplicationFabricAgentDataAsyncCollectionResultOfT(
                 _fabricAgentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationFabricAgentData, DataReplicationFabricAgentResource>(new FabricAgentGetAllCollectionResultOfT(
+            return new PageableWrapper<DataReplicationFabricAgentData, DataReplicationFabricAgentResource>(new DataReplicationFabricAgentDataCollectionResultOfT(
                 _fabricAgentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

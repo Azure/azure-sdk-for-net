@@ -1,0 +1,33 @@
+import:
+  - ../../.vscode/cspell.json
+words:
+  - adbbackupid
+  - adbscharsetname
+  - adbsncharsetname
+  - autonomousdbversionsname
+  - cloudexadatainfrastructurename
+  - cloudvmclustername
+  - dbnodeocid
+  - dbserverocid
+  - dbsystemshapename
+  - dbversionsname
+  - dnsprivateviewocid
+  - ecpu
+  - exadata
+  - exadb
+  - exascale
+  - ezconnect
+  - ezconnectplus
+  - ggsa
+  - iorm
+  - ncharacter
+  - ocid
+  - ocids
+  - ocpu
+  - oltp
+  - ords
+  - reco
+  - tcps
+  - tpurgent
+  - vmdb
+  - vnic

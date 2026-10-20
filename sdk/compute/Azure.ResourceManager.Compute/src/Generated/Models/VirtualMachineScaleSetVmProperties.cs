@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier AvailabilitySetId
+        public virtual ResourceIdentifier AvailabilitySetId
         {
             get
             {

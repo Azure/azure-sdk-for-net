@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 {
     /// <summary>
     /// Defines the resource properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CloudInventoryItem"/>, <see cref="VirtualNetworkInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/>, and <see cref="VirtualMachineInventoryItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CloudInventoryItem"/>, <see cref="VirtualMachineInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/>, and <see cref="VirtualNetworkInventoryItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownInventoryItemProperties))]
     public abstract partial class ScVmmInventoryItemProperties : IJsonModel<ScVmmInventoryItemProperties>
@@ -147,12 +147,12 @@ namespace Azure.ResourceManager.ScVmm.Models
                 {
                     case "Cloud":
                         return CloudInventoryItem.DeserializeCloudInventoryItem(element, options);
-                    case "VirtualNetwork":
-                        return VirtualNetworkInventoryItem.DeserializeVirtualNetworkInventoryItem(element, options);
-                    case "VirtualMachineTemplate":
-                        return VirtualMachineTemplateInventoryItem.DeserializeVirtualMachineTemplateInventoryItem(element, options);
                     case "VirtualMachine":
                         return VirtualMachineInventoryItem.DeserializeVirtualMachineInventoryItem(element, options);
+                    case "VirtualMachineTemplate":
+                        return VirtualMachineTemplateInventoryItem.DeserializeVirtualMachineTemplateInventoryItem(element, options);
+                    case "VirtualNetwork":
+                        return VirtualNetworkInventoryItem.DeserializeVirtualNetworkInventoryItem(element, options);
                 }
             }
             return UnknownInventoryItemProperties.DeserializeUnknownInventoryItemProperties(element, options);

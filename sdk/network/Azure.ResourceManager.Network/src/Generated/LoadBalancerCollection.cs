@@ -42,7 +42,13 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(LoadBalancerResource.ResourceType, out string loadBalancerApiVersion);
             _loadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", LoadBalancerResource.ResourceType.Namespace, Diagnostics);
-            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, loadBalancerApiVersion ?? "2025-09-01");
+            _loadBalancersRestClient = new LoadBalancers(
+                _loadBalancersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                loadBalancerApiVersion ?? "2026-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -69,7 +75,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,7 +133,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,7 +191,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,7 +242,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,7 +293,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,7 +305,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancersListAsyncCollectionResultOfT(_loadBalancersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LoadBalancerCollection.GetAll"), data => new LoadBalancerResource(Client, data));
+            return new AsyncPageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancerDataAsyncCollectionResultOfT(_loadBalancersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LoadBalancerCollection.GetAll"), data => new LoadBalancerResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +333,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancersListCollectionResultOfT(_loadBalancersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LoadBalancerCollection.GetAll"), data => new LoadBalancerResource(Client, data));
+            return new PageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancerDataCollectionResultOfT(_loadBalancersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LoadBalancerCollection.GetAll"), data => new LoadBalancerResource(Client, data));
         }
 
         /// <summary>
@@ -343,7 +349,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,7 +408,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -461,7 +467,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +530,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup ProtectionIntent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RecoveryServiceVaultProtectionIntent"/>, <see cref="ResourceProtectionIntent"/>, <see cref="WorkloadContainerAutoProtectionIntent"/>, <see cref="WorkloadAutoProtectionIntent"/>, and <see cref="WorkloadSqlAutoProtectionIntent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RecoveryServiceVaultProtectionIntent"/>, <see cref="ResourceProtectionIntent"/>, <see cref="WorkloadAutoProtectionIntent"/>, <see cref="WorkloadContainerAutoProtectionIntent"/>, and <see cref="WorkloadSqlAutoProtectionIntent"/>.
     /// </summary>
     public abstract partial class BackupGenericProtectionIntent
     {

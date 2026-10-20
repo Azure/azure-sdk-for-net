@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DefenderForAISettingData, DefenderForAISettingResource>(new DefenderForAISettingsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DefenderForAISettingData, DefenderForAISettingResource>(new DefenderForAISettingDataAsyncCollectionResultOfT(
                 _defenderForAISettingsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DefenderForAISettingData, DefenderForAISettingResource>(new DefenderForAISettingsGetAllCollectionResultOfT(
+            return new PageableWrapper<DefenderForAISettingData, DefenderForAISettingResource>(new DefenderForAISettingDataCollectionResultOfT(
                 _defenderForAISettingsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

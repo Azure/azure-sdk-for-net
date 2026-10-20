@@ -14,12 +14,20 @@ parameters:
 - name: ExportAsOutputVariable
   type: boolean 
   default: false
+- name: TokenRequest
+  # Optional GitHub access-token request body restricting repositories and permissions.
+  type: object
+  default: {}
 - name: ScriptDirectory
   default: eng/common/scripts
+- name: Condition
+  type: string
+  default: succeeded()
 
 steps:
 - task: AzureCLI@2
   displayName: "Login to GitHub"
+  condition: ${{ parameters.Condition }}
   inputs:
     azureSubscription: 'AzureSDKEngKeyVault Secrets'
     scriptType: pscore
@@ -30,3 +38,5 @@ steps:
       -VariableNamePrefix '${{ parameters.VariableNamePrefix }}'
       -AlwaysUseOwnerSuffix:$${{ parameters.AlwaysUseOwnerSuffix }}
       -ExportAsOutputVariable:$${{ parameters.ExportAsOutputVariable }}
+  env:
+    GITHUB_TOKEN_REQUEST: ${{ convertToJson(parameters.TokenRequest) }}

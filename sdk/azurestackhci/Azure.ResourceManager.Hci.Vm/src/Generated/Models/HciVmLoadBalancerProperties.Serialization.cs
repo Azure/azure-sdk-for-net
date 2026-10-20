@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HciVmLoadBalancerProperties(
-                frontendIPConfigurations,
+                frontendIPConfigurations ?? new ChangeTrackingList<HciVmFrontendIPConfiguration>(),
                 backendAddressPools ?? new ChangeTrackingList<HciVmBackendAddressPool>(),
                 loadBalancingRules ?? new ChangeTrackingList<HciVmLoadBalancerRule>(),
                 probes ?? new ChangeTrackingList<HciVmLoadBalancerHealthProbe>(),

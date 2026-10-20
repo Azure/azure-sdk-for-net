@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Mocking
 
         private ClientDiagnostics SapMonitorsClientDiagnostics => _sapMonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HanaOnAzure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SapMonitors SapMonitorsRestClient => _sapMonitorsRestClient ??= new SapMonitors(SapMonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-02-07-preview");
+        private SapMonitors SapMonitorsRestClient => _sapMonitorsRestClient ??= new SapMonitors(SapMonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HanaOnAzure/sapMonitors", out string apiVersion) ? apiVersion : "2020-02-07-preview");
 
         /// <summary>
         /// The product Microsoft.Workloads/sapMonitors (AMS Classic) is officially retired as of May 31, 2023.
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapMonitorData, SapMonitorResource>(new SapMonitorsGetAllAsyncCollectionResultOfT(SapMonitorsRestClient, Id.SubscriptionId, context, "MockableHanaOnAzureSubscriptionResource.GetSapMonitors"), data => new SapMonitorResource(Client, data));
+            return new AsyncPageableWrapper<SapMonitorData, SapMonitorResource>(new SapMonitorDataAsyncCollectionResultOfT(SapMonitorsRestClient, Id.SubscriptionId, context, "MockableHanaOnAzureSubscriptionResource.GetSapMonitors"), data => new SapMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapMonitorData, SapMonitorResource>(new SapMonitorsGetAllCollectionResultOfT(SapMonitorsRestClient, Id.SubscriptionId, context, "MockableHanaOnAzureSubscriptionResource.GetSapMonitors"), data => new SapMonitorResource(Client, data));
+            return new PageableWrapper<SapMonitorData, SapMonitorResource>(new SapMonitorDataCollectionResultOfT(SapMonitorsRestClient, Id.SubscriptionId, context, "MockableHanaOnAzureSubscriptionResource.GetSapMonitors"), data => new SapMonitorResource(Client, data));
         }
     }
 }

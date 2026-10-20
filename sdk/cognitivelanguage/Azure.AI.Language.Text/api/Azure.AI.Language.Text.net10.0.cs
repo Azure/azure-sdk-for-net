@@ -988,7 +988,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.EntityCategory GeoPoliticalEntity { get { throw null; } }
         public static Azure.AI.Language.Text.EntityCategory Height { get { throw null; } }
         public static Azure.AI.Language.Text.EntityCategory Information { get { throw null; } }
-        public static Azure.AI.Language.Text.EntityCategory IpAddress { get { throw null; } }
+        public static Azure.AI.Language.Text.EntityCategory IPAddress { get { throw null; } }
         public static Azure.AI.Language.Text.EntityCategory Length { get { throw null; } }
         public static Azure.AI.Language.Text.EntityCategory Location { get { throw null; } }
         public static Azure.AI.Language.Text.EntityCategory NaturalEvent { get { throw null; } }

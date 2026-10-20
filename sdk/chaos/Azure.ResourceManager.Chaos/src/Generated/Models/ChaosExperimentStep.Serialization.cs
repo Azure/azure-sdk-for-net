@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ChaosExperimentStep(name, branches, additionalBinaryDataProperties);
+            return new ChaosExperimentStep(name, branches ?? new ChangeTrackingList<ChaosExperimentBranch>(), additionalBinaryDataProperties);
         }
     }
 }

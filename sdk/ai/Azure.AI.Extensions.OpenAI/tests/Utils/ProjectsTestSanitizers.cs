@@ -22,6 +22,7 @@ namespace Azure.AI.Extensions.OpenAI.Tests.Utils
         public const string SANITIZED_CONTAINER = "sanitized-container";
         public const string SANITIZED_CONNECTION = "sanitizedconnection";
         public const string SANITIZED_AZURE_OPENAI_ENDPOINT = "sanitized";
+        public const string SANITIZED_STAINLESS = "sanitized_stainless_header";
 
         // Common patterns for sanitization
         public static readonly UriRegexSanitizerBody AZURE_SUBSCRIPTION_PATTERN = BodySanitizer(@"(?<=/subscriptions/)([^/]+)(?=/)", SANITIZED_SUBSCRIPTION);
@@ -36,6 +37,7 @@ namespace Azure.AI.Extensions.OpenAI.Tests.Utils
         public static readonly UriRegexSanitizerBody AZURE_CONNECTION_PATTERN = BodySanitizer(@"(?<=/connections/)([^/]+)$", SANITIZED_CONNECTION);
         public static readonly UriRegexSanitizerBody AZURE_CONNECTION_PATTERN_URI = BodySanitizer(@"(?<=/connections/)([^?]+)(?=[?])", SANITIZED_CONNECTION);
         public static readonly UriRegexSanitizerBody AZURE_OPENAI_ENDPOINT = BodySanitizer(@"(?<=https://)([^/]+)(?=\.cognitiveservices\.azure.com\/)", SANITIZED_AZURE_OPENAI_ENDPOINT);
+        public static readonly UriRegexSanitizerBody STAINLESS_HEADER = BodySanitizer(".+", SANITIZED_STAINLESS);
 
         // UUID pattern for various IDs
         public const string UUID_PATTERN = @"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
@@ -90,6 +92,36 @@ namespace Azure.AI.Extensions.OpenAI.Tests.Utils
             {
                 Regex = AZURE_PROJECT_NAME_PATTERN.Regex,
                 Value = AZURE_PROJECT_NAME_PATTERN.Value
+            }));
+            testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("X-Stainless-Arch")
+            {
+                Regex = STAINLESS_HEADER.Regex,
+                Value = STAINLESS_HEADER.Value
+            }));
+            testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("X-Stainless-Lang")
+            {
+                Regex = STAINLESS_HEADER.Regex,
+                Value = STAINLESS_HEADER.Value
+            }));
+            testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("X-Stainless-OS")
+            {
+                Regex = STAINLESS_HEADER.Regex,
+                Value = STAINLESS_HEADER.Value
+            }));
+            testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("X-Stainless-Package-Version")
+            {
+                Regex = STAINLESS_HEADER.Regex,
+                Value = STAINLESS_HEADER.Value
+            }));
+            testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("X-Stainless-Runtime")
+            {
+                Regex = STAINLESS_HEADER.Regex,
+                Value = STAINLESS_HEADER.Value
+            }));
+            testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("X-Stainless-Runtime-Version")
+            {
+                Regex = STAINLESS_HEADER.Regex,
+                Value = STAINLESS_HEADER.Value
             }));
             testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("Azure-AsyncOperation")
             {

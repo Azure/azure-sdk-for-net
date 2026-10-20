@@ -105,10 +105,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(FeatureWindow))
+            if (Optional.IsDefined(FeatureWindow, _featureWindowIsDefined))
             {
-                writer.WritePropertyName("featureWindow"u8);
-                writer.WriteObjectValue(FeatureWindow, options);
+                if (FeatureWindow != null)
+                {
+                    writer.WritePropertyName("featureWindow"u8);
+                    writer.WriteObjectValue(FeatureWindow, options);
+                }
+                else
+                {
+                    writer.WriteNull("featureWindow"u8);
+                }
             }
             if (Optional.IsDefined(JobId))
             {
@@ -213,6 +220,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IList<DataAvailabilityStatus> dataAvailabilityStatus = default;
             string description = default;
             string displayName = default;
+            bool featureWindowIsDefined = false;
             FeatureWindow featureWindow = default;
             string jobId = default;
             IDictionary<string, string> properties = default;
@@ -248,6 +256,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("featureWindow"u8))
                 {
+                    featureWindowIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         featureWindow = null;
@@ -335,7 +344,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FeatureSetVersionBackfillContent(
@@ -348,7 +357,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 resource,
                 sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _featureWindowIsDefined = featureWindowIsDefined
+            };
         }
     }
 }

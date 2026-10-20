@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.OracleDatabase
             TryGetApiVersion(OracleFlexComponentResource.ResourceType, out string oracleFlexComponentApiVersion);
             _location = location;
             _flexComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleFlexComponentResource.ResourceType.Namespace, Diagnostics);
-            _flexComponentsRestClient = new FlexComponents(_flexComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleFlexComponentApiVersion ?? "2025-09-01");
+            _flexComponentsRestClient = new FlexComponents(_flexComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleFlexComponentApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleFlexComponentData, OracleFlexComponentResource>(new FlexComponentsGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OracleFlexComponentData, OracleFlexComponentResource>(new OracleFlexComponentDataAsyncCollectionResultOfT(
                 _flexComponentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleFlexComponentData, OracleFlexComponentResource>(new FlexComponentsGetByParentCollectionResultOfT(
+            return new PageableWrapper<OracleFlexComponentData, OracleFlexComponentResource>(new OracleFlexComponentDataCollectionResultOfT(
                 _flexComponentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

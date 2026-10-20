@@ -179,7 +179,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
-            return new MetricsData(version, kind, additionalProperties, metrics, properties ?? new ChangeTrackingDictionary<string, string>());
+            return new MetricsData(version, kind, additionalProperties, metrics ?? new ChangeTrackingList<MetricDataPoint>(), properties ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

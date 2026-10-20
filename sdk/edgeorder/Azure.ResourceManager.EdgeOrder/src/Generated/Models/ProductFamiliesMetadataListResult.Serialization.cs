@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProductFamiliesMetadataListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ProductFamiliesMetadataListResult(value ?? new ChangeTrackingList<ProductFamiliesMetadata>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

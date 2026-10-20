@@ -85,10 +85,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("adminKubeConfig"u8);
                 writer.WriteStringValue(AdminKubeConfig);
             }
-            if (Optional.IsDefined(ImagePullSecretName))
+            if (Optional.IsDefined(ImagePullSecretName, _imagePullSecretNameIsDefined))
             {
-                writer.WritePropertyName("imagePullSecretName"u8);
-                writer.WriteStringValue(ImagePullSecretName);
+                if (ImagePullSecretName != null)
+                {
+                    writer.WritePropertyName("imagePullSecretName"u8);
+                    writer.WriteStringValue(ImagePullSecretName);
+                }
+                else
+                {
+                    writer.WriteNull("imagePullSecretName"u8);
+                }
             }
         }
 
@@ -121,6 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string userKubeConfig = default;
             string adminKubeConfig = default;
+            bool imagePullSecretNameIsDefined = false;
             string imagePullSecretName = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,6 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("imagePullSecretName"u8))
                 {
+                    imagePullSecretNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         imagePullSecretName = null;
@@ -151,10 +160,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningAksComputeSecrets(computeType, additionalBinaryDataProperties, userKubeConfig, adminKubeConfig, imagePullSecretName);
+            return new MachineLearningAksComputeSecrets(computeType, additionalBinaryDataProperties, userKubeConfig, adminKubeConfig, imagePullSecretName)
+            {
+                _imagePullSecretNameIsDefined = imagePullSecretNameIsDefined
+            };
         }
     }
 }

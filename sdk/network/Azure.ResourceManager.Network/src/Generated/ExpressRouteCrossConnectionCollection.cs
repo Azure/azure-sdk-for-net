@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExpressRouteCrossConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ExpressRouteCrossConnectionResource.ResourceType, out string expressRouteCrossConnectionApiVersion);
             _expressRouteCrossConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCrossConnectionResource.ResourceType.Namespace, Diagnostics);
-            _expressRouteCrossConnectionsRestClient = new ExpressRouteCrossConnections(_expressRouteCrossConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCrossConnectionApiVersion ?? "2025-09-01");
+            _expressRouteCrossConnectionsRestClient = new ExpressRouteCrossConnections(_expressRouteCrossConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRouteCrossConnectionData, ExpressRouteCrossConnectionResource>(new ExpressRouteCrossConnectionsGetByResourceGroupAsyncCollectionResultOfT(_expressRouteCrossConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteCrossConnectionCollection.GetAll"), data => new ExpressRouteCrossConnectionResource(Client, data));
+            return new AsyncPageableWrapper<ExpressRouteCrossConnectionData, ExpressRouteCrossConnectionResource>(new ExpressRouteCrossConnectionDataAsyncCollectionResultOfT(_expressRouteCrossConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteCrossConnectionCollection.GetAll"), data => new ExpressRouteCrossConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRouteCrossConnectionData, ExpressRouteCrossConnectionResource>(new ExpressRouteCrossConnectionsGetByResourceGroupCollectionResultOfT(_expressRouteCrossConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteCrossConnectionCollection.GetAll"), data => new ExpressRouteCrossConnectionResource(Client, data));
+            return new PageableWrapper<ExpressRouteCrossConnectionData, ExpressRouteCrossConnectionResource>(new ExpressRouteCrossConnectionDataCollectionResultOfT(_expressRouteCrossConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteCrossConnectionCollection.GetAll"), data => new ExpressRouteCrossConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

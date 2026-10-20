@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TrafficSelectorPolicy(localAddressRanges, remoteAddressRanges, additionalBinaryDataProperties);
+            return new TrafficSelectorPolicy(localAddressRanges ?? new ChangeTrackingList<string>(), remoteAddressRanges ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

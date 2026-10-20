@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BrokerRetainMessagesPolicy"/>. </summary>
+        protected BrokerRetainMessagesPolicy() : this(default)
+        {
+        }
+
         /// <summary> 'All' to persist all retain messages, 'None' to not persist any, 'Custom' to persist only the specified topics. </summary>
         internal BrokerPersistencePolicyMode Mode { get; set; }
     }

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningRegistryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MachineLearningRegistryResource.ResourceType, out string machineLearningRegistryApiVersion);
             _registriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningRegistryResource.ResourceType.Namespace, Diagnostics);
-            _registriesRestClient = new Registries(_registriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningRegistryApiVersion ?? "2026-07-01");
+            _registriesRestClient = new Registries(_registriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.MachineLearningServices/registries", out string registriesApiVersionOverride) ? registriesApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MachineLearningRegistryData, MachineLearningRegistryResource>(new RegistriesGetAllAsyncCollectionResultOfT(_registriesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "MachineLearningRegistryCollection.GetAll"), data => new MachineLearningRegistryResource(Client, data));
+            return new AsyncPageableWrapper<MachineLearningRegistryData, MachineLearningRegistryResource>(new MachineLearningRegistryDataAsyncCollectionResultOfT(_registriesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "MachineLearningRegistryCollection.GetAll"), data => new MachineLearningRegistryResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MachineLearningRegistryData, MachineLearningRegistryResource>(new RegistriesGetAllCollectionResultOfT(_registriesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "MachineLearningRegistryCollection.GetAll"), data => new MachineLearningRegistryResource(Client, data));
+            return new PageableWrapper<MachineLearningRegistryData, MachineLearningRegistryResource>(new MachineLearningRegistryDataCollectionResultOfT(_registriesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "MachineLearningRegistryCollection.GetAll"), data => new MachineLearningRegistryResource(Client, data));
         }
 
         /// <summary>

@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    additionalData = BinaryData.FromString(prop.Value.GetRawText());
+                    additionalData = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BookmarkConnectedEntity(targetEntityId, additionalData, additionalBinaryDataProperties);

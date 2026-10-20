@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsageDetailsGetConsumptionUsageDetailsAsyncCollectionResultOfT(
+            return new ConsumptionUsageDetailAsyncCollectionResultOfT(
                 UsageDetailsRestClient,
                 scope.ToString(),
                 expand,
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsageDetailsGetConsumptionUsageDetailsCollectionResultOfT(
+            return new ConsumptionUsageDetailCollectionResultOfT(
                 UsageDetailsRestClient,
                 scope.ToString(),
                 expand,
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MarketplacesGetConsumptionMarketPlacesAsyncCollectionResultOfT(
+            return new ConsumptionMarketplaceAsyncCollectionResultOfT(
                 MarketplacesRestClient,
                 scope.ToString(),
                 filter,
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MarketplacesGetConsumptionMarketPlacesCollectionResultOfT(
+            return new ConsumptionMarketplaceCollectionResultOfT(
                 MarketplacesRestClient,
                 scope.ToString(),
                 filter,
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsSummariesGetByReservationOrderAsyncCollectionResultOfT(
+            return new ConsumptionReservationSummaryAsyncCollectionResultOfT(
                 ReservationsSummariesRestClient,
                 scope.Name,
                 grain.ToString(),
@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsSummariesGetByReservationOrderCollectionResultOfT(
+            return new ConsumptionReservationSummaryCollectionResultOfT(
                 ReservationsSummariesRestClient,
                 scope.Name,
                 grain.ToString(),
@@ -996,7 +996,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsSummariesGetByReservationOrderAndReservationAsyncCollectionResultOfT(
+            return new ConsumptionReservationSummaryAsync0CollectionResultOfT(
                 ReservationsSummariesRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsSummariesGetByReservationOrderAndReservationCollectionResultOfT(
+            return new ConsumptionReservationSummary0CollectionResultOfT(
                 ReservationsSummariesRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -1082,7 +1082,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsSummariesGetAllAsyncCollectionResultOfT(
+            return new ConsumptionReservationSummaryAsync1CollectionResultOfT(
                 ReservationsSummariesRestClient,
                 scope.ToString(),
                 grain.ToString(),
@@ -1130,7 +1130,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsSummariesGetAllCollectionResultOfT(
+            return new ConsumptionReservationSummary1CollectionResultOfT(
                 ReservationsSummariesRestClient,
                 scope.ToString(),
                 grain.ToString(),
@@ -1175,7 +1175,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsDetailsGetByReservationOrderAsyncCollectionResultOfT(ReservationsDetailsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetByReservationOrder");
+            return new ConsumptionReservationDetailAsyncCollectionResultOfT(ReservationsDetailsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetByReservationOrder");
         }
 
         /// <summary>
@@ -1210,7 +1210,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsDetailsGetByReservationOrderCollectionResultOfT(ReservationsDetailsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetByReservationOrder");
+            return new ConsumptionReservationDetailCollectionResultOfT(ReservationsDetailsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetByReservationOrder");
         }
 
         /// <summary>
@@ -1245,7 +1245,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsDetailsGetByReservationOrderAndReservationAsyncCollectionResultOfT(
+            return new ConsumptionReservationDetailAsync0CollectionResultOfT(
                 ReservationsDetailsRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -1286,7 +1286,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsDetailsGetByReservationOrderAndReservationCollectionResultOfT(
+            return new ConsumptionReservationDetail0CollectionResultOfT(
                 ReservationsDetailsRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -1329,7 +1329,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsDetailsGetConsumptionReservationsDetailsAsyncCollectionResultOfT(
+            return new ConsumptionReservationDetailAsync1CollectionResultOfT(
                 ReservationsDetailsRestClient,
                 scope.ToString(),
                 startDate,
@@ -1375,7 +1375,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsDetailsGetConsumptionReservationsDetailsCollectionResultOfT(
+            return new ConsumptionReservationDetail1CollectionResultOfT(
                 ReservationsDetailsRestClient,
                 scope.ToString(),
                 startDate,
@@ -1417,7 +1417,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationRecommendationsGetConsumptionReservationRecommendationsAsyncCollectionResultOfT(ReservationRecommendationsRestClient, scope.ToString(), filter, context, "MockableConsumptionArmClient.GetConsumptionReservationRecommendations");
+            return new ConsumptionReservationRecommendationAsyncCollectionResultOfT(ReservationRecommendationsRestClient, scope.ToString(), filter, context, "MockableConsumptionArmClient.GetConsumptionReservationRecommendations");
         }
 
         /// <summary>
@@ -1450,7 +1450,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationRecommendationsGetConsumptionReservationRecommendationsCollectionResultOfT(ReservationRecommendationsRestClient, scope.ToString(), filter, context, "MockableConsumptionArmClient.GetConsumptionReservationRecommendations");
+            return new ConsumptionReservationRecommendationCollectionResultOfT(ReservationRecommendationsRestClient, scope.ToString(), filter, context, "MockableConsumptionArmClient.GetConsumptionReservationRecommendations");
         }
 
         /// <summary>
@@ -1599,7 +1599,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationTransactionsGetAllAsyncCollectionResultOfT(
+            return new ConsumptionReservationTransactionAsyncCollectionResultOfT(
                 ReservationTransactionsRestClient,
                 scope.Name,
                 filter,
@@ -1641,7 +1641,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationTransactionsGetAllCollectionResultOfT(
+            return new ConsumptionReservationTransactionCollectionResultOfT(
                 ReservationTransactionsRestClient,
                 scope.Name,
                 filter,
@@ -1681,7 +1681,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationTransactionsGetByBillingProfileAsyncCollectionResultOfT(
+            return new ConsumptionModernReservationTransactionAsyncCollectionResultOfT(
                 ReservationTransactionsRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -1720,7 +1720,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationTransactionsGetByBillingProfileCollectionResultOfT(
+            return new ConsumptionModernReservationTransactionCollectionResultOfT(
                 ReservationTransactionsRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -1859,7 +1859,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new EventsGetByBillingProfileAsyncCollectionResultOfT(
+            return new ConsumptionEventSummaryAsyncCollectionResultOfT(
                 EventsRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -1903,7 +1903,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new EventsGetByBillingProfileCollectionResultOfT(
+            return new ConsumptionEventSummaryCollectionResultOfT(
                 EventsRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -1943,7 +1943,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new EventsGetEventsAsyncCollectionResultOfT(EventsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetEvents");
+            return new ConsumptionEventSummaryAsync0CollectionResultOfT(EventsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetEvents");
         }
 
         /// <summary>
@@ -1976,7 +1976,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new EventsGetEventsCollectionResultOfT(EventsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetEvents");
+            return new ConsumptionEventSummary0CollectionResultOfT(EventsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetEvents");
         }
 
         /// <summary>
@@ -2008,7 +2008,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LotsGetByBillingProfileAsyncCollectionResultOfT(LotsRestClient, scope.Parent.Name, scope.Name, context, "MockableConsumptionArmClient.GetByBillingProfile");
+            return new ConsumptionLotSummaryAsyncCollectionResultOfT(LotsRestClient, scope.Parent.Name, scope.Name, context, "MockableConsumptionArmClient.GetByBillingProfile");
         }
 
         /// <summary>
@@ -2040,7 +2040,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LotsGetByBillingProfileCollectionResultOfT(LotsRestClient, scope.Parent.Name, scope.Name, context, "MockableConsumptionArmClient.GetByBillingProfile");
+            return new ConsumptionLotSummaryCollectionResultOfT(LotsRestClient, scope.Parent.Name, scope.Name, context, "MockableConsumptionArmClient.GetByBillingProfile");
         }
 
         /// <summary>
@@ -2073,7 +2073,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LotsGetByBillingAccountAsyncCollectionResultOfT(LotsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetByBillingAccount");
+            return new ConsumptionLotSummaryAsync0CollectionResultOfT(LotsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetByBillingAccount");
         }
 
         /// <summary>
@@ -2106,7 +2106,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LotsGetByBillingAccountCollectionResultOfT(LotsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetByBillingAccount");
+            return new ConsumptionLotSummary0CollectionResultOfT(LotsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetByBillingAccount");
         }
 
         /// <summary>
@@ -2139,7 +2139,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LotsGetByCustomerAsyncCollectionResultOfT(
+            return new ConsumptionLotSummaryAsync1CollectionResultOfT(
                 LotsRestClient,
                 scope.Parent.Name,
                 scope.Name,
@@ -2178,7 +2178,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LotsGetByCustomerCollectionResultOfT(
+            return new ConsumptionLotSummary1CollectionResultOfT(
                 LotsRestClient,
                 scope.Parent.Name,
                 scope.Name,

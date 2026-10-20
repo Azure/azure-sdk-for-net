@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ExportResourceTerraform(
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 azureResourcesToExclude ?? new ChangeTrackingList<string>(),
                 terraformResourcesToExclude ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties,
-                resourceIds,
+                resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 resourceName,
                 resourceType,
                 namePattern,
