@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
 
         private ClientDiagnostics BackupInstancesExtensionRoutingOperationGroupClientDiagnostics => _backupInstancesExtensionRoutingOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupInstancesExtensionRoutingOperationGroup BackupInstancesExtensionRoutingOperationGroupRestClient => _backupInstancesExtensionRoutingOperationGroupRestClient ??= new BackupInstancesExtensionRoutingOperationGroup(BackupInstancesExtensionRoutingOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private BackupInstancesExtensionRoutingOperationGroup BackupInstancesExtensionRoutingOperationGroupRestClient => _backupInstancesExtensionRoutingOperationGroupRestClient ??= new BackupInstancesExtensionRoutingOperationGroup(BackupInstancesExtensionRoutingOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-31-preview");
 
         /// <summary> Gets an object representing a <see cref="DataProtectionBackupVaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -73,22 +73,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             return new DataProtectionBackupInstanceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DataProtectionBackupRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="AzureBackupRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataProtectionBackupRecoveryPointResource"/> object. </returns>
-        public virtual DataProtectionBackupRecoveryPointResource GetDataProtectionBackupRecoveryPointResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AzureBackupRecoveryPointResource"/> object. </returns>
+        public virtual AzureBackupRecoveryPointResource GetAzureBackupRecoveryPointResource(ResourceIdentifier id)
         {
-            DataProtectionBackupRecoveryPointResource.ValidateResourceId(id);
-            return new DataProtectionBackupRecoveryPointResource(Client, id);
+            AzureBackupRecoveryPointResource.ValidateResourceId(id);
+            return new AzureBackupRecoveryPointResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DataProtectionBackupJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="AzureBackupJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataProtectionBackupJobResource"/> object. </returns>
-        public virtual DataProtectionBackupJobResource GetDataProtectionBackupJobResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AzureBackupJobResource"/> object. </returns>
+        public virtual AzureBackupJobResource GetAzureBackupJobResource(ResourceIdentifier id)
         {
-            DataProtectionBackupJobResource.ValidateResourceId(id);
-            return new DataProtectionBackupJobResource(Client, id);
+            AzureBackupJobResource.ValidateResourceId(id);
+            return new AzureBackupJobResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DeletedDataProtectionBackupInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -118,6 +118,42 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             return new ResourceGuardProxyBaseResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="CrossTenantVaultMappingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CrossTenantVaultMappingResource"/> object. </returns>
+        public virtual CrossTenantVaultMappingResource GetCrossTenantVaultMappingResource(ResourceIdentifier id)
+        {
+            CrossTenantVaultMappingResource.ValidateResourceId(id);
+            return new CrossTenantVaultMappingResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CrossTenantBackupInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CrossTenantBackupInstanceResource"/> object. </returns>
+        public virtual CrossTenantBackupInstanceResource GetCrossTenantBackupInstanceResource(ResourceIdentifier id)
+        {
+            CrossTenantBackupInstanceResource.ValidateResourceId(id);
+            return new CrossTenantBackupInstanceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RecoveryPointFromDppCrossTenantVaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RecoveryPointFromDppCrossTenantVaultResource"/> object. </returns>
+        public virtual RecoveryPointFromDppCrossTenantVaultResource GetRecoveryPointFromDppCrossTenantVaultResource(ResourceIdentifier id)
+        {
+            RecoveryPointFromDppCrossTenantVaultResource.ValidateResourceId(id);
+            return new RecoveryPointFromDppCrossTenantVaultResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="JobFromDppCrossTenantVaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JobFromDppCrossTenantVaultResource"/> object. </returns>
+        public virtual JobFromDppCrossTenantVaultResource GetJobFromDppCrossTenantVaultResource(ResourceIdentifier id)
+        {
+            JobFromDppCrossTenantVaultResource.ValidateResourceId(id);
+            return new JobFromDppCrossTenantVaultResource(Client, id);
+        }
+
         /// <summary>
         /// Gets a list of backup instances associated with a tracked resource
         /// <list type="bullet">
@@ -131,7 +167,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,7 +199,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

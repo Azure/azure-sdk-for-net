@@ -14,7 +14,7 @@ using Azure.ResourceManager.DataProtectionBackup;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Immutability Settings at vault level. </summary>
-    internal partial class ImmutabilitySettings : IJsonModel<ImmutabilitySettings>
+    public partial class ImmutabilitySettings : IJsonModel<ImmutabilitySettings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
+            if (Optional.IsDefined(Configuration))
+            {
+                writer.WritePropertyName("configuration"u8);
+                writer.WriteObjectValue(Configuration, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             BackupVaultImmutabilityState? state = default;
+            ImmutabilityConfiguration configuration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +140,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     state = new BackupVaultImmutabilityState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("configuration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    configuration = ImmutabilityConfiguration.DeserializeImmutabilityConfiguration(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ImmutabilitySettings(state, additionalBinaryDataProperties);
+            return new ImmutabilitySettings(state, configuration, additionalBinaryDataProperties);
         }
     }
 }
