@@ -101,6 +101,12 @@ Once the `AIProjectClient` is created, you can use properties such as `.Datasets
 
 ## Examples
 
+### Native GPT Live Voice Agents
+
+Use `AIProjectClient.ProjectsLiveClient` for native Live agents. It is a sibling of, not a
+replacement for, `ProjectsRealtimeClient`. See the [Live connection, multi-turn text, real-audio, and tool-calling
+samples](samples/Sample_VoiceAgent_Live.md) for startup, generated events, and graceful shutdown.
+
 ### Voice Agent realtime transport
 
 To select a transport for a Voice Agent connection, pass `ProjectsRealtimeSessionClientOptions`

@@ -188,7 +188,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
             // metadata without changing the existing telemetry for other agent definitions.
             ProjectsAgentDefinition definition = creationOptions.Definition ?? ReadVoiceAgentDefinition(binaryData);
 #pragma warning disable AAIP001
-            bool isVoiceAgent = definition is VoiceAgentDefinition;
+            bool isVoiceAgent = definition is VoiceAgentBaseDefinition;
 #pragma warning restore AAIP001
             string operationName = isVoiceAgent ? OperationNameValueCreateAgent : OperationNameValueCreateAgent + " " + creationOptions.Name;
             var scope = new OpenTelemetryScope(operationName, endpoint, OperationNameValueCreateAgent, isVoiceAgent);
@@ -211,7 +211,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 kind.ValueKind == JsonValueKind.String && kind.ValueEquals("voice"))
             {
 #pragma warning disable AAIP001
-                return VoiceAgentDefinition.DeserializeVoiceAgentDefinition(definition, ModelSerializationExtensions.WireOptions);
+                return VoiceAgentBaseDefinition.DeserializeVoiceAgentBaseDefinition(definition, ModelSerializationExtensions.WireOptions);
 #pragma warning restore AAIP001
             }
             return null;
@@ -244,7 +244,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
             );
 
 #pragma warning disable AAIP001
-            bool isVoiceAgent = updateOptions.Definition is VoiceAgentDefinition;
+            bool isVoiceAgent = updateOptions.Definition is VoiceAgentBaseDefinition;
 #pragma warning restore AAIP001
             string operationName = isVoiceAgent ? OperationNameValueCreateAgent : OperationNameValueCreateAgent + " " + agentName;
             var scope = new OpenTelemetryScope(operationName, endpoint, OperationNameValueCreateAgent, isVoiceAgent);
@@ -285,7 +285,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
             );
 
 #pragma warning disable AAIP001
-            bool isVoiceAgent = creationOptions.Definition is VoiceAgentDefinition;
+            bool isVoiceAgent = creationOptions.Definition is VoiceAgentBaseDefinition;
 #pragma warning restore AAIP001
             string operationName = isVoiceAgent ? OperationNameValueCreateAgent : OperationNameValueCreateAgent + " " + agentName;
             var scope = new OpenTelemetryScope(operationName, endpoint, OperationNameValueCreateAgent, isVoiceAgent);
@@ -330,9 +330,15 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 RecordSystemInstructions(scope, promptAgentDefinition.Instructions);
             }
 #pragma warning disable AAIP001
-            else if (agentDefinition is VoiceAgentDefinition voiceAgentDefinition)
+            else if (agentDefinition is VoiceAgentBaseDefinition voiceAgentDefinition)
             {
-                scope.SetTagMaybe(GenAiRequestModelKey, voiceAgentDefinition.Model);
+                string model = voiceAgentDefinition switch
+                {
+                    VoiceAgentDefinition realtime => realtime.Model,
+                    VoiceAgentLiveDefinition live => live.Model,
+                    _ => null
+                };
+                scope.SetTagMaybe(GenAiRequestModelKey, model);
                 if (s_traceContent && !string.IsNullOrEmpty(voiceAgentDefinition.Instructions))
                 {
                     string instructions = voiceAgentDefinition.Instructions;
@@ -467,7 +473,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
 
             // Check for workflow agent
 #pragma warning disable AAIP001
-            if (agentDefinition is VoiceAgentDefinition)
+            if (agentDefinition is VoiceAgentBaseDefinition)
             {
                 return AgentTypeVoice;
             }
